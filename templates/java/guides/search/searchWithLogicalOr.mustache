@@ -12,7 +12,7 @@ public static void main(String[] args) throws Exception {
 
       String query = "the query";
 
-      OptionalWords optionalWords = OptionalWords.of(query);
+      OptionalWords optionalWords = OptionalWords.of(List.of("the", "query"));
 
       SearchParams searchParams = new SearchParamsObject()
         .setQuery(query)
