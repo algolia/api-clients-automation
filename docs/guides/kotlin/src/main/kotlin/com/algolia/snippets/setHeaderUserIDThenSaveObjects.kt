@@ -14,16 +14,20 @@ suspend fun setHeaderUserIDThenSaveObjects() {
 
   playlists.forEach { playlist ->
     val playlistUserID = playlist["userID"].toString()
-    client.saveObjects(
-      indexName = "<YOUR_INDEX_NAME>",
-      objects = playlists,
-      waitForTasks = false,
-      batchSize = 1000,
-      requestOptions = RequestOptions(
-        headers = buildMap {
-          put("X-Algolia-User-ID", playlistUserID)
-        },
-      ),
-    )
+    try {
+      client.saveObjects(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects = playlists,
+        waitForTasks = false,
+        batchSize = 1000,
+        requestOptions = RequestOptions(
+          headers = buildMap {
+            put("X-Algolia-User-ID", playlistUserID)
+          },
+        ),
+      )
+    } catch (exception: Exception) {
+      println(exception.message)
+    }
   }
 }

@@ -12,6 +12,6 @@ try {
     const chunk = records.slice(beginIndex, beginIndex + chunkSize);
     await client.saveObjects({ indexName: 'actors', objects: chunk });
   }
-} catch (e) {
+} catch (e: any) {
   console.error(e);
 }

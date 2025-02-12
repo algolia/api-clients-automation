@@ -31,6 +31,6 @@ try {
     await client.multipleBatch({ requests: requests });
     console.log('Deleted replica indices.');
   }
-} catch (e) {
+} catch (e: any) {
   console.error(e);
 }

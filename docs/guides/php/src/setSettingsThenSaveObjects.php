@@ -2,6 +2,7 @@
 
 require __DIR__.'/../vendor/autoload.php';
 use Algolia\AlgoliaSearch\Api\SearchClient;
+use Algolia\AlgoliaSearch\Model\Search\IndexSettings;
 
 $playlists = [/* Your records */];
 
@@ -23,7 +24,11 @@ try {
         $apiKey = $getIndexingApiKeyFor($playlist['user']);
 
         $client = SearchClient::create($appID, $apiKey);
-        $settings = ['attributesForFaceting' => ['filterOnly(user)']];
+
+        $settings = [
+            (new IndexSettings())
+                ->setAttributesForFaceting(['filterOnly(user)']),
+        ];
         $client->setSettings(
             '<YOUR_INDEX_NAME>',
             $settings,

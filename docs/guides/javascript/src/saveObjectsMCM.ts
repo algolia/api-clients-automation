@@ -20,7 +20,7 @@ Object.keys(configurations).forEach(async (appID) => {
     const client = algoliasearch(appID, configurations[appID]);
 
     await client.saveObjects({ indexName: 'indexName', objects: playlists });
-  } catch (e) {
+  } catch (e: any) {
     console.error(e);
   }
 });

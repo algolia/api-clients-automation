@@ -28,14 +28,18 @@ suspend fun setSettingsThenSaveObjects() {
       attributesForFaceting = listOf("filterOnly(user)"),
     )
 
-    client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = settings,
-    )
+    try {
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = settings,
+      )
 
-    client.saveObjects(
-      indexName = "<YOUR_INDEX_NAME>",
-      objects = playlists,
-    )
+      client.saveObjects(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects = playlists,
+      )
+    } catch (exception: Exception) {
+      println(exception.message)
+    }
   }
 }

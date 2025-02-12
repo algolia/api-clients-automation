@@ -26,7 +26,7 @@ playlists.forEach(async (playlist) => {
     await client.setSettings({ indexName: 'indexName', indexSettings: settings });
 
     await client.saveObjects({ indexName: 'indexName', objects: playlists });
-  } catch (e) {
+  } catch (e: any) {
     console.error(e);
   }
 });
