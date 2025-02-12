@@ -20,6 +20,7 @@ import { pushToRepositoryConfiguration } from './types.ts';
 
 import { getClientsConfigField } from '../../config.ts';
 import { commitStartRelease } from './text.ts';
+import { sleep } from './waitForAllReleases.ts';
 
 async function handleSpecFiles(spec: SpecsToPush, tempGitDir: string): Promise<void> {
   const pathToSpecs = toAbsolutePath(`${tempGitDir}/${spec.output}`);
@@ -157,6 +158,9 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
       base: config.baseBranch,
       head: task.prBranch,
     });
+
+    // the graphql api of gh might have some cache so we need to wait a bit
+    await sleep(10_000);
 
     await run(`gh pr merge ${data.number} --auto`);
 

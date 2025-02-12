@@ -9,10 +9,10 @@ import (
 
 {{> snippets/import}}
 
-func searchRecentlyPublishedBooks() {
+func searchFuturePublishedBooks() {
   {{> snippets/init}}
 
-  dateTimestamp := time.Now().AddDate(-1, 0, 0).Unix()
+  dateTimestamp := time.Now().UnixMilli()
   searchParams := search.SearchParamsObjectAsSearchParams(
     search.NewSearchParamsObject().
       SetQuery("<YOUR_SEARCH_QUERY>").

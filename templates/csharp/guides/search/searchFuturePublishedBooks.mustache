@@ -7,20 +7,18 @@ using System.Collections.Generic;
 
 {{> snippets/import}}
 
-class SearchRecentlyPublishedBooks {
+class SearchFuturePublishedBooks {
 
   async Task Main(string[] args)
   {
 
     try {
       {{> snippets/init}}
-      var date = DateTime.UtcNow.AddYears(-1);
-      var sTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-      var unixTime = (long)(date - sTime).TotalSeconds;
+      var dateTimestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
       var searchParams = new SearchParams(new SearchParamsObject
           {
               Query = "<YOUR_SEARCH_QUERY>",
-              Filters = $"date_timestamp > {unixTime}"
+              Filters = $"date_timestamp > {dateTimestamp}"
           }
       );
 
