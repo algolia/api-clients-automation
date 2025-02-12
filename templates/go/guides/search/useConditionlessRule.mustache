@@ -1,0 +1,30 @@
+package main
+
+import (
+  "encoding/json"
+  "fmt"
+  "net/http"
+)
+
+{{> snippets/import}}
+
+func useConditionlessRule() {
+  {{> snippets/init}}
+
+  objectID := "a-rule-id";
+
+  rule := search.NewRule(
+    objectID,
+    *search.NewConsequence(/* Set relevant consequence */),
+  ). // Set validity (optional)
+    SetValidity(
+      []search.TimeRange{
+        *search.NewTimeRange(1_688_774_400, 1_738_972_800),
+      },
+    )
+
+  _, err = {{#dynamicSnippet}}saveRule{{/dynamicSnippet}}
+  if err != nil {
+    panic(err)
+  }
+}
