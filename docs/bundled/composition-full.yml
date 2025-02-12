@@ -2237,6 +2237,7 @@ components:
           type: object
           additionalProperties:
             title: compositionIdRankingInfo
+            x-additionalPropertiesName: composition-id
             type: object
             properties:
               index:
@@ -2326,6 +2327,7 @@ components:
           type: object
           additionalProperties:
             title: resultsCompositionInfoResponse
+            x-additionalPropertiesName: composition-id
             type: object
             properties:
               injectedItems:
