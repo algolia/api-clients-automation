@@ -1,11 +1,10 @@
 import 'package:algolia_client_search/algolia_client_search.dart';
 
-void searchRecentlyPublishedBooks() async {
+void searchFuturePublishedBooks() async {
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
-  final dateTimestamp =
-      DateTime.now().subtract(Duration(days: 365)).millisecondsSinceEpoch;
+  final dateTimestamp = DateTime.now().millisecondsSinceEpoch;
   final searchParams = SearchParamsObject(
       query: "<YOUR_SEARCH_QUERY>", filters: "date_timestamp > $dateTimestamp");
 

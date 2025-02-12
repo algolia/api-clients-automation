@@ -7,14 +7,14 @@ import (
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
 )
 
-func searchRecentlyPublishedBooks() {
+func searchFuturePublishedBooks() {
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
 		panic(err)
 	}
 
-	dateTimestamp := time.Now().AddDate(-1, 0, 0).Unix()
+	dateTimestamp := time.Now().UnixMilli()
 	searchParams := search.SearchParamsObjectAsSearchParams(
 		search.NewSearchParamsObject().
 			SetQuery("<YOUR_SEARCH_QUERY>").

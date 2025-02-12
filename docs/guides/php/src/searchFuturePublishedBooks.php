@@ -7,7 +7,7 @@ use Algolia\AlgoliaSearch\Model\Search\SearchParamsObject;
 try {
     $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
-    $dateTimestamp = strtotime('-1 years');
+    $dateTimestamp = time();
     $searchParams = (new SearchParamsObject())
         ->setQuery('<YOUR_SEARCH_QUERY>')
         ->setFilters('date_timestamp > '.$dateTimestamp)

@@ -1,4 +1,3 @@
-import datetime
 import time
 
 from algoliasearch.search.client import SearchClientSync
@@ -8,8 +7,7 @@ if __name__ == "__main__":
     try:
         _client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
-        date = datetime.datetime.now() - datetime.timedelta(days=365)
-        date_timestamp = int(time.mktime(date.timetuple()))
+        date_timestamp = time.time()  # Get current timestamp
         search_params = {
             "query": "<YOUR_SEARCH_QUERY>",
             "filters": f"date_timestamp > {date_timestamp}",

@@ -8,21 +8,19 @@ using Algolia.Search.Clients;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Search;
 
-class SearchRecentlyPublishedBooks
+class SearchFuturePublishedBooks
 {
   async Task Main(string[] args)
   {
     try
     {
       var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
-      var date = DateTime.UtcNow.AddYears(-1);
-      var sTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-      var unixTime = (long)(date - sTime).TotalSeconds;
+      var dateTimestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
       var searchParams = new SearchParams(
         new SearchParamsObject
         {
           Query = "<YOUR_SEARCH_QUERY>",
-          Filters = $"date_timestamp > {unixTime}",
+          Filters = $"date_timestamp > {dateTimestamp}",
         }
       );
 
