@@ -158,6 +158,8 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
       head: task.prBranch,
     });
 
+    await run(`gh pr merge ${data.number} --auto`);
+
     console.log(`Pull request created on ${OWNER}/${repository}`);
     console.log(`  > ${data.url}`);
   }
