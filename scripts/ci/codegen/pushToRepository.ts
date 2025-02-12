@@ -24,7 +24,6 @@ import { commitStartRelease } from './text.ts';
 async function handleSpecFiles(spec: SpecsToPush, tempGitDir: string): Promise<void> {
   const pathToSpecs = toAbsolutePath(`${tempGitDir}/${spec.output}`);
 
-  await run(`rm -rf ${pathToSpecs}/* || true`);
   await run(`cp ${toAbsolutePath('specs/bundled/README.md')} ${pathToSpecs}`);
   await run(`cp ${toAbsolutePath('specs/major-breaking-changes-rename.json')} ${pathToSpecs}`);
   await run(`cp ${toAbsolutePath('config/clients.config.json')} ${pathToSpecs}`);
