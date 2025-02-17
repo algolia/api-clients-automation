@@ -6,13 +6,6 @@ import scala.concurrent.duration.Duration
 {{> snippets/import}}
 import algoliasearch.search.{FacetFilters, SearchParamsObject}
 
-val getAppIDFor: String => String = _ => {
-  "" // Implement your own logic here
-}
-val getIndexingApiKeyFor: String => String = _ => {
-  "" // Implement your own logic here
-}
-
 def mcmSearchWithout(): Future[Unit] = {
   val getAppIDFor: String => String = _ => {
     "" // Implement your own logic here
