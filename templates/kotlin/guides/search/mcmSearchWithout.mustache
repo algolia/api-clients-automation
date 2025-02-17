@@ -1,0 +1,26 @@
+import kotlinx.serialization.json.JsonObject
+
+{{> snippets/import}}
+import com.algolia.client.model.search.*
+
+val getAppIDFor: (String) -> String = {
+    "" // Implement your own logic here
+}
+val getIndexingApiKeyFor: (String) -> String = {
+    "" // Implement your own logic here
+}
+
+suspend fun mcmSearchWithout() {
+  // Fetch from your own data storage and with your own code
+  // the associated application ID and API key for this user
+  val appID = getAppIDFor("user42");
+  val apiKey = getIndexingApiKeyFor("user42");
+
+  val client = SearchClient(appID, apiKey)
+  val searchParams = SearchParamsObject(
+  query = "<YOUR_SEARCH_QUERY>",
+    facetFilters = listOf("user:user42", "user:public")
+  )
+
+  client.{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+}

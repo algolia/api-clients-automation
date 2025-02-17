@@ -1,0 +1,22 @@
+namespace Algolia;
+
+using System;
+using System.Text.Json;
+using System.Net.Http;
+using System.Collections.Generic;
+
+{{> snippets/import}}
+
+class GlobalAlgoliaUserID
+{
+  async Task Main(string[] args)
+  {
+    var client = new SearchClient(
+      new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+      {
+        DefaultHeaders = new Dictionary<string, string> { { "X-Algolia-UserToken", "test-user-123" } }
+      }
+    );
+    Console.WriteLine(client.Config.DefaultHeaders);
+  }
+}

@@ -1,0 +1,8 @@
+{{> snippets/import}}
+
+const client = algoliasearch(appID, apiKey, {
+  baseHeaders: {
+    'X-Algolia-User-ID': 'test-user-123',
+  },
+});
+console.log(client);

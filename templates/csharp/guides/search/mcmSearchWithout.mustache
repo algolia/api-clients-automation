@@ -1,0 +1,38 @@
+namespace Algolia;
+
+using System;
+using System.Text.Json;
+using System.Net.Http;
+using System.Collections.Generic;
+
+{{> snippets/import}}
+
+class McmSearchWithout {
+
+  private static string GetAppIdFor(string user) {
+    return ""; // Implement your own logic here
+  }
+
+  private static string GetIndexingApiKeyFor(string user) {
+    return ""; // Implement your own logic here
+  }
+
+  async Task Main(string[] args)
+  {
+
+    // Fetch from your own data storage and with your own code
+    // the associated application ID and API key for this user
+    var appId = GetAppIdFor("user42");
+    var apiKey = GetIndexingApiKeyFor("user42");
+
+    var client = new SearchClient(new SearchConfig(appId, apiKey));
+    var searchParams = new SearchParams(new SearchParamsObject
+          {
+              Query = "<YOUR_SEARCH_QUERY>",
+              FacetFilters = new List<string> { "user:user42", "user:public" }
+          }
+      );
+
+      {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+  }
+}

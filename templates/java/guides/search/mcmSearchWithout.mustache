@@ -1,0 +1,35 @@
+package com.algolia;
+
+import java.util.List;
+import java.util.Map;
+
+{{> snippets/import}}
+
+public class mcmSearchWithout {
+
+  private static String getAppIDFor(String user) {
+    return ""; // Implement your own logic here
+  }
+
+  private static String getIndexingApiKeyFor(String user) {
+    return ""; // Implement your own logic here
+  }
+
+  public static void main(String[] args) throws Exception {
+
+    // Fetch from your own data storage and with your own code
+    // the associated application ID and API key for this user
+    String appID = getAppIDFor("user42");
+    String apiKey = getIndexingApiKeyFor("user42");
+
+    try (SearchClient client = new SearchClient(appID, apiKey)) {
+      SearchParams searchParams = new SearchParamsObject()
+        .setQuery("<YOUR_SEARCH_QUERY>")
+        .setFacetFilters(List.of("user:user42", "user:public"));
+
+      {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+    } catch (Exception e) {
+      System.out.println("An error occurred: " + e.getMessage());
+    }
+  }
+}

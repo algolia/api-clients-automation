@@ -1,0 +1,25 @@
+import Foundation
+#if os(Linux) // For linux interop
+  import FoundationNetworking
+#endif
+
+import Core
+{{> snippets/import}}
+
+let getAppIDFor = {(_: String) in ""} // Implement your own logic here
+let getIndexingApiKeyFor = {(_: String) in ""} // Implement your own logic here
+
+func mcmSearchWithout() async throws {
+  // Fetch from your own data storage and with your own code
+  // the associated application ID and API key for this user
+  let appID = getAppIDFor("user42");
+  let apiKey = getIndexingApiKeyFor("user42");
+
+  let client = try SearchClient(appID: appID, apiKey: apiKey)
+  let searchParams = SearchSearchParams.searchSearchParamsObject(
+    SearchSearchParamsObject(query: "<YOUR_SEARCH_QUERY>", facetFilters: ["user:user42", "user:public"])
+  )
+
+  let response: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+  print(response)
+}
