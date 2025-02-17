@@ -6678,7 +6678,7 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions. (optional)
    */
   public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects, boolean waitForTasks, RequestOptions requestOptions) {
-    return saveObjects(indexName, objects, false, 1000, requestOptions);
+    return saveObjects(indexName, objects, waitForTasks, 1000, requestOptions);
   }
 
   /**
