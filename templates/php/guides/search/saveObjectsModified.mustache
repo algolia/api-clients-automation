@@ -3,41 +3,37 @@
 require __DIR__.'/../vendor/autoload.php';
 {{> snippets/import}}
 
-try {
-    {{> snippets/init}}
+{{> snippets/init}}
 
-    $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . "products.json";
+$path = dirname(__FILE__) . DIRECTORY_SEPARATOR . "products.json";
 
-    if (!file_exists($path)) {
-        throw new Exception("File not found: $path");
-    }
-
-    $data = file_get_contents($path);
-
-    if ($data === false) {
-        throw new Exception("Failed to read file: $path");
-    }
-
-    $products = json_decode($data, true);
-
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        throw new Exception("JSON decode error: " . json_last_error_msg());
-    }
-
-    $records = array_map(function ($product) {
-        $reference = $product['product_reference'];
-        $suffixes = [];
-
-        while (strlen($reference) > 1) {
-            $reference = substr($reference, 1);
-            $suffixes[] = $reference;
-        }
-
-        $product['product_reference_suffixes'] = $suffixes;
-        return $product;
-    }, $products);
-
-    {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}};
-} catch (Exception $e) {
-    echo $e->getMessage() . PHP_EOL;
+if (!file_exists($path)) {
+    throw new Exception("File not found: $path");
 }
+
+$data = file_get_contents($path);
+
+if ($data === false) {
+    throw new Exception("Failed to read file: $path");
+}
+
+$products = json_decode($data, true);
+
+if (json_last_error() !== JSON_ERROR_NONE) {
+    throw new Exception("JSON decode error: " . json_last_error_msg());
+}
+
+$records = array_map(function ($product) {
+    $reference = $product['product_reference'];
+    $suffixes = [];
+
+    while (strlen($reference) > 1) {
+        $reference = substr($reference, 1);
+        $suffixes[] = $reference;
+    }
+
+    $product['product_reference_suffixes'] = $suffixes;
+    return $product;
+}, $products);
+
+{{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}};

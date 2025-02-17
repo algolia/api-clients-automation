@@ -5,13 +5,13 @@ require __DIR__.'/../vendor/autoload.php';
 
 $playlists = [ /* Your records */ ];
 
-try {
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  foreach ($playlists as $playlist) {
+foreach ($playlists as $playlist) {
+  try {
     $playlistUserID = $playlist['userID'];
     {{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}};
+  } catch (Exception $e) {
+    echo $e->getMessage() . PHP_EOL;
   }
-} catch (Exception $e) {
-  echo $e->getMessage() . PHP_EOL;
 }
