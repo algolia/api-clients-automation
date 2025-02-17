@@ -1,20 +1,16 @@
 {{> snippets/import}}
 
-try {
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  const records: Array<Record<string, any>> = [];
+const records: Array<Record<string, any>> = [];
 
-  await client.browseObjects<Record<string, any>>({ indexName: "<YOUR_INDEX_NAME>", browseParams: undefined, aggregator: (res) =>
-      records.push(
-        res.hits.map((record) => ({
-          ...record,
-          isPopular: record.nbFollowers >= 1_000_000,
-        }))
-      )
-  });
+await client.browseObjects<Record<string, any>>({ indexName: "<YOUR_INDEX_NAME>", browseParams: undefined, aggregator: (res) =>
+    records.push(
+      res.hits.map((record) => ({
+        ...record,
+        isPopular: record.nbFollowers >= 1_000_000,
+      }))
+    )
+});
 
-  {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}}
-} catch (e: any) {
-  console.error(e);
-}
+{{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}}

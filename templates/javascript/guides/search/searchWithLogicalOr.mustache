@@ -1,15 +1,11 @@
 {{> snippets/import}}
 import type { SearchParamsObject, OptionalWords } from 'algoliasearch';
 
-try {
-    {{> snippets/init}}
-    const query = 'the query';
-    const optionalWords: OptionalWords = ['the', 'query'];
-    const searchParams: SearchParamsObject = {
-      query,
-      optionalWords
-    };
-    {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
-} catch (e: any) {
-  console.error(e.message);
-}
+{{> snippets/init}}
+const query = 'the query';
+const optionalWords: OptionalWords = ['the', 'query'];
+const searchParams: SearchParamsObject = {
+  query,
+  optionalWords
+};
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
