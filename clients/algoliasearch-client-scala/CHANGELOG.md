@@ -1,3 +1,7 @@
+## [2.13.3](https://github.com/algolia/algoliasearch-client-scala/compare/2.13.2...2.13.3)
+
+- [dafa519689](https://github.com/algolia/api-clients-automation/commit/dafa519689) chore: more composition API update for docs ([#4453](https://github.com/algolia/api-clients-automation/pull/4453)) by [@e-krebs](https://github.com/e-krebs/)
+
 ## [2.13.2](https://github.com/algolia/algoliasearch-client-scala/compare/2.13.1...2.13.2)
 
 - [5e18968d10](https://github.com/algolia/api-clients-automation/commit/5e18968d10) chore(specs): update composition specs for the doc website ([#4450](https://github.com/algolia/api-clients-automation/pull/4450)) by [@e-krebs](https://github.com/e-krebs/)
