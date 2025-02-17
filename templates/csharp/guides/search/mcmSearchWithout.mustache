@@ -29,7 +29,7 @@ class McmSearchWithout {
     var searchParams = new SearchParams(new SearchParamsObject
           {
               Query = "<YOUR_SEARCH_QUERY>",
-              FacetFilters = new List<string> { "user:user42", "user:public" }
+              FacetFilters = new FacetFilters([new FacetFilters("user:user42"), new FacetFilters("user:public")])
           }
       );
 
