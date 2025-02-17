@@ -634,7 +634,7 @@ def snippet_for_push_events1():
                     "index": "products",
                     "userToken": "user-123456",
                     "authenticatedUserToken": "user-123456",
-                    "timestamp": 1739491200000,
+                    "timestamp": 1739750400000,
                     "objectIDs": [
                         "9780545139700",
                         "9780439784542",
@@ -647,7 +647,7 @@ def snippet_for_push_events1():
                     "index": "products",
                     "userToken": "user-123456",
                     "authenticatedUserToken": "user-123456",
-                    "timestamp": 1739491200000,
+                    "timestamp": 1739750400000,
                     "objectIDs": [
                         "9780545139700",
                         "9780439784542",
