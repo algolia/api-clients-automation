@@ -8,16 +8,16 @@ import (
 
 {{> snippets/import}}
 
-func getAppIDFor(_ string) (string, error) {
-  return "", nil // Implement your logic here
-}
-
-func getIndexingApiKeyFor(_ string) (string, error) {
-  return "", nil // Implement your logic here
-}
-
 func mcmSearchWithout() {
-  // Fetch from your own data storage and with your own code
+	getAppIDFor := func(_ string) (string, error) {
+		return "", nil // Implement your logic here
+	}
+
+	getIndexingApiKeyFor := func(_ string) (string, error) {
+		return "", nil // Implement your logic here
+	}
+
+	// Fetch from your own data storage and with your own code
   // the associated application ID and API key for this user
   appID, err := getAppIDFor("user42")
   if err != nil {
@@ -38,10 +38,17 @@ func mcmSearchWithout() {
   }
 
   searchParams := search.SearchParamsObjectAsSearchParams(
-    search.NewSearchParamsObject().
-      SetQuery("<YOUR_SEARCH_QUERY>").
-      SetFacetFilters([]string{"user:user42", "user:public"}),
-  )
+		search.NewSearchParamsObject().
+			SetQuery("<YOUR_SEARCH_QUERY>").
+			SetFacetFilters(
+        search.ArrayOfFacetFiltersAsFacetFilters(
+          []search.FacetFilters{
+            *search.StringAsFacetFilters("user:user42"),
+            *search.StringAsFacetFilters("user:public"),
+          },
+        ),
+      ),
+	)
 
   _, err = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
   if err != nil {

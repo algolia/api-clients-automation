@@ -29,7 +29,7 @@ class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
         if api_key is None or not api_key:
              raise ValueError("`api_key` is missing.")
 
-        self.headers: Dict[string, string] = {
+        self.headers = {
              "x-algolia-application-id": app_id,
              "x-algolia-api-key": api_key,
              "user-agent": self._user_agent.get(),
