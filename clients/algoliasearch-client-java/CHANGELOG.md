@@ -1,3 +1,8 @@
+## [4.12.2](https://github.com/algolia/algoliasearch-client-java/compare/4.12.1...4.12.2)
+
+- [095bb02ce2](https://github.com/algolia/api-clients-automation/commit/095bb02ce2) fix(java): saveObjects always passing waitForTasks as false ([#4460](https://github.com/algolia/api-clients-automation/pull/4460)) by [@Giglium](https://github.com/Giglium/)
+- [ecd6bc4fed](https://github.com/algolia/api-clients-automation/commit/ecd6bc4fed) chore(deps): dependencies 2025-02-17 ([#4459](https://github.com/algolia/api-clients-automation/pull/4459)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [4.12.1](https://github.com/algolia/algoliasearch-client-java/compare/4.12.0...4.12.1)
 
 - [506b8a5636](https://github.com/algolia/api-clients-automation/commit/506b8a5636) fix(specs): responseFields description ([#4399](https://github.com/algolia/api-clients-automation/pull/4399)) by [@kai687](https://github.com/kai687/)
