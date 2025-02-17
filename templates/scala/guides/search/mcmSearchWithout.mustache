@@ -4,7 +4,7 @@ import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 
 {{> snippets/import}}
-import algoliasearch.search.SearchParamsObject
+import algoliasearch.search.{FacetFilters, SearchParamsObject}
 
 val getAppIDFor: String => String = _ => {
   "" // Implement your own logic here
@@ -14,6 +14,13 @@ val getIndexingApiKeyFor: String => String = _ => {
 }
 
 def mcmSearchWithout(): Future[Unit] = {
+  val getAppIDFor: String => String = _ => {
+    "" // Implement your own logic here
+  }
+  val getIndexingApiKeyFor: String => String = _ => {
+    "" // Implement your own logic here
+  }
+
   // Fetch from your own data storage and with your own code
   // the associated application ID and API key for this user
   val appID = getAppIDFor("user42")
@@ -22,7 +29,14 @@ def mcmSearchWithout(): Future[Unit] = {
   val client = SearchClient(appID, apiKey)
   val searchParams = SearchParamsObject(
     query = Some("<YOUR_SEARCH_QUERY>"),
-    facetFilters = Some(Seq("user:user42", "user:public"))
+    facetFilters = Some(
+      FacetFilters.SeqOfFacetFilters(
+        Seq(
+          FacetFilters.StringValue("user:user42"),
+          FacetFilters.StringValue("user:public")
+        )
+      )
+    )
   )
 
   {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}.map { response =>

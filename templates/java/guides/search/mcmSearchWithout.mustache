@@ -25,7 +25,14 @@ public class mcmSearchWithout {
     try (SearchClient client = new SearchClient(appID, apiKey)) {
       SearchParams searchParams = new SearchParamsObject()
         .setQuery("<YOUR_SEARCH_QUERY>")
-        .setFacetFilters(List.of("user:user42", "user:public"));
+        .setFacetFilters(
+          FacetFilters.of(
+            List.of(
+              FacetFilters.of("user:user42"),
+              FacetFilters.of("user:public")
+            )
+          )
+        );
 
       {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
     } catch (Exception e) {
