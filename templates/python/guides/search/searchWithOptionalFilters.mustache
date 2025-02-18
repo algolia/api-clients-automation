@@ -9,15 +9,12 @@ def _reduce_labels_to_filters(_labels):
 if __name__ == "__main__":
   labels = [] # A list of labels
 
-  try:
-    _{{> snippets/init}}
+  _{{> snippets/init}}
 
-    optional_filters = _reduce_labels_to_filters(labels)
-    search_params = SearchParams(
-      query="<YOUR_SEARCH_QUERY>",
-      optional_filters=optional_filters,
-    )
+  optional_filters = _reduce_labels_to_filters(labels)
+  search_params = SearchParams(
+    query="<YOUR_SEARCH_QUERY>",
+    optional_filters=optional_filters,
+  )
 
-    {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
-  except Exception as e:
-    print(f"Error: {e}")
+  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}

@@ -13,17 +13,17 @@ def _get_indexing_api_key_for(_user):
 if __name__ == "__main__":
   playlists = [] # Your records
 
-  try:
-    for playlist in playlists:
-        app_id = _get_app_id_for(playlist["user"])
-        api_key = _get_indexing_api_key_for(playlist["user"])
+  for playlist in playlists:
+    app_id = _get_app_id_for(playlist["user"])
+    api_key = _get_indexing_api_key_for(playlist["user"])
 
-        _client = SearchClientSync(app_id, api_key)
-        settings = IndexSettings(
-          attributes_for_faceting=["filterOnly(user)"]
-        )
-        {{#dynamicSnippet}}setSettings{{/dynamicSnippet}}
+    _client = SearchClientSync(app_id, api_key)
+    settings = IndexSettings(
+      attributes_for_faceting=["filterOnly(user)"]
+    )
+    try:
+      {{#dynamicSnippet}}setSettings{{/dynamicSnippet}}
 
-        {{#dynamicSnippet}}saveObjectsPlaylists{{/dynamicSnippet}}
-  except Exception as e:
-    print(f"Error: {e}")
+      {{#dynamicSnippet}}saveObjectsPlaylists{{/dynamicSnippet}}
+    except Exception as e:
+      print(f"Error: {e}")
