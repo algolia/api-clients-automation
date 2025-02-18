@@ -6678,7 +6678,7 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions. (optional)
    */
   public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects, boolean waitForTasks, RequestOptions requestOptions) {
-    return saveObjects(indexName, objects, false, 1000, requestOptions);
+    return saveObjects(indexName, objects, waitForTasks, 1000, requestOptions);
   }
 
   /**
@@ -7022,7 +7022,10 @@ public class SearchClient extends ApiClient {
   public String generateSecuredApiKey(@Nonnull String parentApiKey, @Nonnull SecuredApiKeyRestrictions restrictions) throws Exception {
     Map<String, String> restrictionsMap = new HashMap<>();
     if (restrictions.getFilters() != null) restrictionsMap.put("filters", StringUtils.paramToString(restrictions.getFilters()));
-    if (restrictions.getValidUntil() != 0) restrictionsMap.put("validUntil", StringUtils.paramToString(restrictions.getValidUntil()));
+    if (restrictions.getValidUntil() != null && restrictions.getValidUntil() != 0) restrictionsMap.put(
+      "validUntil",
+      StringUtils.paramToString(restrictions.getValidUntil())
+    );
     if (restrictions.getRestrictIndices() != null) restrictionsMap.put(
       "restrictIndices",
       StringUtils.paramToString(restrictions.getRestrictIndices())

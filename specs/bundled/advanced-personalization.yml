@@ -273,8 +273,6 @@ paths:
                 $ref: '#/components/schemas/configurationObject'
         '401':
           $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/ConfigurationNotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
     put:
@@ -407,10 +405,10 @@ paths:
                     type: string
                 required:
                   - users
-        '400':
-          $ref: '#/components/responses/BadRequest-2'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/GenericUnprocessableEntity'
         '500':
           $ref: '#/components/responses/InternalServerError'
   /2/users/{userID}:
@@ -434,11 +432,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/user'
         '400':
-          $ref: '#/components/responses/BadRequest-2'
+          $ref: '#/components/responses/BadUserID'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '404':
-          $ref: '#/components/responses/UserNotFound'
+          $ref: '#/components/responses/GenericNotFound'
         '422':
           $ref: '#/components/responses/InvalidUserID'
         '500':
@@ -475,11 +473,9 @@ paths:
                   deletedAt:
                     type: string
         '400':
-          $ref: '#/components/responses/BadRequest-2'
+          $ref: '#/components/responses/BadUserID'
         '401':
           $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/UserNotFound'
         '422':
           $ref: '#/components/responses/InvalidUserID'
         '500':
@@ -744,6 +740,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/errorCodes'
+        lastUpdatedAt:
+          type: string
     configurationObject:
       type: object
       properties:
@@ -795,15 +793,57 @@ components:
         - personalzationReRanking
         - profileType
         - status
-    BaseResponse:
+    unauthorized:
+      type: integer
+      description: HTTP status code for an authorization error.
+      enum:
+        - 401
+    ErrorMessages_unauthorized:
+      type: string
+      description: Details about the response, such as error messages.
+      enum:
+        - Unauthorized
+    ErrorResponses_unauthorized:
       type: object
       properties:
         status:
-          type: integer
-          description: HTTP status code.
+          $ref: '#/components/schemas/unauthorized'
         message:
-          type: string
-          description: Details about the response, such as error messages.
+          $ref: '#/components/schemas/ErrorMessages_unauthorized'
+    internalServerError:
+      type: integer
+      description: HTTP status code for an internal server error.
+      enum:
+        - 500
+    ErrorMessages_internalServerError:
+      type: string
+      description: Details about the response, such as error messages.
+      enum:
+        - Internal Server Error
+    ErrorResponses_internalServerError:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/internalServerError'
+        message:
+          $ref: '#/components/schemas/ErrorMessages_internalServerError'
+    badRequest:
+      type: integer
+      description: HTTP status code for a bad request error.
+      enum:
+        - 400
+    ErrorMessages_badRequest:
+      type: string
+      description: Details about the response, such as error messages.
+      enum:
+        - Invalid request body
+    ErrorResponses_badRequest:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/badRequest'
+        message:
+          $ref: '#/components/schemas/ErrorMessages_badRequest'
     user:
       type: object
       properties:
@@ -842,6 +882,70 @@ components:
         - userID
         - affinities
         - lastUpdatedAt
+    unprocessableEntity:
+      type: integer
+      description: HTTP status code for an unprocessable entity error.
+      enum:
+        - 422
+    genericUnprocessableEntity:
+      type: string
+      description: Details about the response, such as error messages.
+      enum:
+        - Unprocessable Entity
+    ErrorResponses_genericUnprocessableEntity:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/unprocessableEntity'
+        message:
+          $ref: '#/components/schemas/genericUnprocessableEntity'
+    badUserID:
+      type: string
+      description: Details about the response, such as error messages.
+      enum:
+        - Invalid userID format
+    ErrorResponses_badUserID:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/badRequest'
+        message:
+          $ref: '#/components/schemas/badUserID'
+    notFound:
+      type: integer
+      description: HTTP status code for a not found error.
+      enum:
+        - 404
+    genericNotFound:
+      type: string
+      description: Details about the response, such as error messages.
+      enum:
+        - Not Found
+    ErrorResponses_genericNotFound:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/notFound'
+        message:
+          $ref: '#/components/schemas/genericNotFound'
+    invalidUserID:
+      type: string
+      description: Details about the response, such as error messages.
+      enum:
+        - UserID must contain only alphanumeric
+        - equal
+        - plus
+        - slash
+        - hyphen
+        - or underscore characters
+        - and be between 1 and 129 characters long
+    ErrorResponses_invalidUserID:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/unprocessableEntity'
+        message:
+          $ref: '#/components/schemas/invalidUserID'
   responses:
     BadRequest:
       description: Bad request or request arguments.
@@ -872,37 +976,43 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BaseResponse'
-    ConfigurationNotFound:
-      description: Configuration not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BaseResponse'
+            $ref: '#/components/schemas/ErrorResponses_unauthorized'
     InternalServerError:
       description: Internal server error.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BaseResponse'
+            $ref: '#/components/schemas/ErrorResponses_internalServerError'
     BadRequest-2:
       description: Bad request.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BaseResponse'
-    UserNotFound:
-      description: User not found.
+            $ref: '#/components/schemas/ErrorResponses_badRequest'
+    GenericUnprocessableEntity:
+      description: Unprocessable entity.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BaseResponse'
+            $ref: '#/components/schemas/ErrorResponses_genericUnprocessableEntity'
+    BadUserID:
+      description: Bad user ID.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponses_badUserID'
+    GenericNotFound:
+      description: Not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponses_genericNotFound'
     InvalidUserID:
       description: Invalid user ID format.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BaseResponse'
+            $ref: '#/components/schemas/ErrorResponses_invalidUserID'
 x-tagGroups:
   - name: Advanced Personalization
     tags:

@@ -1,0 +1,17 @@
+{{> snippets/import}}
+
+{{> snippets/init}}
+
+records = []
+
+client.browse_objects(
+  index_name="<YOUR_INDEX_NAME>",
+) do |resp|
+  resp.hits.each { |hit|
+    record = hit
+    record['isPopular'] = hit['nbFollowers'] > 1000000
+    records.append(record)
+  }
+end
+
+{{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}}

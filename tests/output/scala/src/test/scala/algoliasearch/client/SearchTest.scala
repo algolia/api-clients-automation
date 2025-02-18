@@ -231,7 +231,7 @@ class SearchTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.12.0\).*""".r
+    val regexp = """^Algolia for Scala \(2.13.3\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }
@@ -299,6 +299,45 @@ class SearchTest extends AnyFunSuite {
         Duration.Inf
       )
     }
+  }
+
+  test("with algolia user id") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6686)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.searchSingleIndex(
+        indexName = "playlists",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("foo")
+          )
+        ),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("X-Algolia-User-ID", "user1234")
+            .build()
+        )
+      ),
+      Duration.Inf
+    )
   }
 
   test("switch API key") {

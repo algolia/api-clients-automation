@@ -1,0 +1,11 @@
+{{> snippets/import}}
+
+const playlists: Record<string, any>[] = [] // Your records
+
+try {
+  {{> snippets/init}}
+
+  {{#dynamicSnippet}}saveObjectsPlaylistsWithUserIDPublic{{/dynamicSnippet}}
+} catch (e: any) {
+  console.error(e);
+}

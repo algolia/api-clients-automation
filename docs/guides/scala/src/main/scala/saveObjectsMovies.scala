@@ -3,6 +3,7 @@ import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
 
 import algoliasearch.api.SearchClient
+import algoliasearch.config.*
 import algoliasearch.extension.SearchClientExtensions
 
 import algoliasearch.extension.SearchClientExtensions
@@ -16,7 +17,7 @@ object Main {
     implicit val formats: org.json4s.Formats = org.json4s.DefaultFormats
 
     // Fetch sample dataset
-    val url = "https://dashboard.algolia.com/sample_datasets/movie.json"
+    val url = "https://dashboard.algolia.com/api/1/sample_datasets?type=movie"
     val result = Source.fromURL(url).mkString
     val movies = JsonMethods.parse(result).extract[Seq[Map[String, Any]]]
 

@@ -5,9 +5,32 @@ import 'package:algolia_client_search/algolia_client_search.dart';
 
 // Snippet for the addApiKey method.
 //
-// addApiKey
+// minimal
 void snippetForaddApiKey() async {
-  // >SEPARATOR addApiKey default
+  // >SEPARATOR addApiKey minimal
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.addApiKey(
+    apiKey: ApiKey(
+      acl: [
+        Acl.fromJson("search"),
+        Acl.fromJson("addObject"),
+      ],
+      description: "my new api key",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the addApiKey method.
+//
+// all
+void snippetForaddApiKey1() async {
+  // >SEPARATOR addApiKey all
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -72,18 +95,38 @@ void snippetForappendSource() async {
 
 // Snippet for the assignUserId method.
 //
-// assignUserId
+// simple
 void snippetForassignUserId() async {
-  // >SEPARATOR assignUserId default
+  // >SEPARATOR assignUserId simple
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.assignUserId(
-    xAlgoliaUserID: "userID",
+    xAlgoliaUserID: "user42",
     assignUserIdParams: AssignUserIdParams(
-      cluster: "theCluster",
+      cluster: "d4242-eu",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the assignUserId method.
+//
+// it should not encode the userID
+void snippetForassignUserId1() async {
+  // >SEPARATOR assignUserId it should not encode the userID
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.assignUserId(
+    xAlgoliaUserID: "user id with spaces",
+    assignUserIdParams: AssignUserIdParams(
+      cluster: "cluster with spaces",
     ),
   );
   // >LOG
@@ -411,7 +454,7 @@ void snippetForbatchDictionaryEntries2() async {
 //
 // browse with minimal parameters
 void snippetForbrowse() async {
-  // >SEPARATOR browse default
+  // >SEPARATOR browse browse with minimal parameters
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -419,6 +462,49 @@ void snippetForbrowse() async {
   // Call the API
   final response = await client.browse(
     indexName: "<YOUR_INDEX_NAME>",
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the browse method.
+//
+// browse with search parameters
+void snippetForbrowse1() async {
+  // >SEPARATOR browse browse with search parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.browse(
+    indexName: "<YOUR_INDEX_NAME>",
+    browseParams: BrowseParamsObject(
+      query: "myQuery",
+      facetFilters: [
+        "tags:algolia",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the browse method.
+//
+// browse allow a cursor in parameters
+void snippetForbrowse2() async {
+  // >SEPARATOR browse browse allow a cursor in parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.browse(
+    indexName: "<YOUR_INDEX_NAME>",
+    browseParams: BrowseParamsObject(
+      cursor: "test",
+    ),
   );
   // >LOG
   // SEPARATOR<
@@ -479,7 +565,7 @@ void snippetForclearSynonyms() async {
 //
 // allow del method for a custom path with minimal parameters
 void snippetForcustomDelete() async {
-  // >SEPARATOR customDelete default
+  // >SEPARATOR customDelete allow del method for a custom path with minimal parameters
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -492,11 +578,31 @@ void snippetForcustomDelete() async {
   // SEPARATOR<
 }
 
+// Snippet for the customDelete method.
+//
+// allow del method for a custom path with all parameters
+void snippetForcustomDelete1() async {
+  // >SEPARATOR customDelete allow del method for a custom path with all parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customDelete(
+    path: "test/all",
+    parameters: {
+      'query': "parameters",
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the customGet method.
 //
 // allow get method for a custom path with minimal parameters
 void snippetForcustomGet() async {
-  // >SEPARATOR customGet default
+  // >SEPARATOR customGet allow get method for a custom path with minimal parameters
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -509,11 +615,63 @@ void snippetForcustomGet() async {
   // SEPARATOR<
 }
 
+// Snippet for the customGet method.
+//
+// allow get method for a custom path with all parameters
+void snippetForcustomGet1() async {
+  // >SEPARATOR customGet allow get method for a custom path with all parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customGet(
+    path: "test/all",
+    parameters: {
+      'query': "parameters with space",
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customGet method.
+//
+// requestOptions should be escaped too
+void snippetForcustomGet2() async {
+  // >SEPARATOR customGet requestOptions should be escaped too
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customGet(
+    path: "test/all",
+    parameters: {
+      'query': "to be overriden",
+    },
+    requestOptions: RequestOptions(
+      headers: {
+        'x-header-1': 'spaces are left alone',
+      },
+      urlParameters: {
+        'query': "parameters with space",
+        'and an array': [
+          "array",
+          "with spaces",
+        ],
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the customPost method.
 //
 // allow post method for a custom path with minimal parameters
 void snippetForcustomPost() async {
-  // >SEPARATOR customPost default
+  // >SEPARATOR customPost allow post method for a custom path with minimal parameters
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -526,11 +684,296 @@ void snippetForcustomPost() async {
   // SEPARATOR<
 }
 
+// Snippet for the customPost method.
+//
+// allow post method for a custom path with all parameters
+void snippetForcustomPost1() async {
+  // >SEPARATOR customPost allow post method for a custom path with all parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/all",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'body': "parameters",
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions can override default query parameters
+void snippetForcustomPost2() async {
+  // >SEPARATOR customPost requestOptions can override default query parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'query': "myQueryParameter",
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions merges query parameters with default ones
+void snippetForcustomPost3() async {
+  // >SEPARATOR customPost requestOptions merges query parameters with default ones
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'query2': "myQueryParameter",
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions can override default headers
+void snippetForcustomPost4() async {
+  // >SEPARATOR customPost requestOptions can override default headers
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      headers: {
+        'x-algolia-api-key': 'ALGOLIA_API_KEY',
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions merges headers with default ones
+void snippetForcustomPost5() async {
+  // >SEPARATOR customPost requestOptions merges headers with default ones
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      headers: {
+        'x-algolia-api-key': 'ALGOLIA_API_KEY',
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts booleans
+void snippetForcustomPost6() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts booleans
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'isItWorking': true,
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts integers
+void snippetForcustomPost7() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts integers
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'myParam': 2,
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of string
+void snippetForcustomPost8() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of string
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'myParam': [
+          "b and c",
+          "d",
+        ],
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of booleans
+void snippetForcustomPost9() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'myParam': [
+          true,
+          true,
+          false,
+        ],
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of integers
+void snippetForcustomPost10() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'myParam': [
+          1,
+          2,
+        ],
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the customPut method.
 //
 // allow put method for a custom path with minimal parameters
 void snippetForcustomPut() async {
-  // >SEPARATOR customPut default
+  // >SEPARATOR customPut allow put method for a custom path with minimal parameters
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -538,6 +981,29 @@ void snippetForcustomPut() async {
   // Call the API
   final response = await client.customPut(
     path: "test/minimal",
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPut method.
+//
+// allow put method for a custom path with all parameters
+void snippetForcustomPut1() async {
+  // >SEPARATOR customPut allow put method for a custom path with all parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPut(
+    path: "test/all",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'body': "parameters",
+    },
   );
   // >LOG
   // SEPARATOR<
@@ -640,7 +1106,7 @@ void snippetFordeleteObjects() async {
 //
 // delete rule simple case
 void snippetFordeleteRule() async {
-  // >SEPARATOR deleteRule default
+  // >SEPARATOR deleteRule delete rule simple case
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -649,6 +1115,24 @@ void snippetFordeleteRule() async {
   final response = await client.deleteRule(
     indexName: "<YOUR_INDEX_NAME>",
     objectID: "id1",
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the deleteRule method.
+//
+// delete rule with simple characters to encode in objectID
+void snippetFordeleteRule1() async {
+  // >SEPARATOR deleteRule delete rule with simple characters to encode in objectID
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.deleteRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "test/with/slash",
   );
   // >LOG
   // SEPARATOR<
@@ -691,9 +1175,9 @@ void snippetFordeleteSynonym() async {
 
 // Snippet for the generateSecuredApiKey method.
 //
-// generate secured api key basic
+// api key basic
 void snippetForgenerateSecuredApiKey() async {
-  // >SEPARATOR generateSecuredApiKey generate secured api key basic
+  // >SEPARATOR generateSecuredApiKey api key basic
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -714,9 +1198,9 @@ void snippetForgenerateSecuredApiKey() async {
 
 // Snippet for the generateSecuredApiKey method.
 //
-// generate secured api key with searchParams
+// with searchParams
 void snippetForgenerateSecuredApiKey1() async {
-  // >SEPARATOR generateSecuredApiKey generate secured api key with searchParams
+  // >SEPARATOR generateSecuredApiKey with searchParams
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -744,6 +1228,67 @@ void snippetForgenerateSecuredApiKey1() async {
           "two",
         ],
       ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the generateSecuredApiKey method.
+//
+// with filters
+void snippetForgenerateSecuredApiKey2() async {
+  // >SEPARATOR generateSecuredApiKey with filters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = client.generateSecuredApiKey(
+    parentApiKey: "2640659426d5107b6e47d75db9cbaef8",
+    restrictions: SecuredApiKeyRestrictions(
+      filters:
+          "user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the generateSecuredApiKey method.
+//
+// with visible_by filter
+void snippetForgenerateSecuredApiKey3() async {
+  // >SEPARATOR generateSecuredApiKey with visible_by filter
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = client.generateSecuredApiKey(
+    parentApiKey: "2640659426d5107b6e47d75db9cbaef8",
+    restrictions: SecuredApiKeyRestrictions(
+      filters: "visible_by:group/Finance",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the generateSecuredApiKey method.
+//
+// with userID
+void snippetForgenerateSecuredApiKey4() async {
+  // >SEPARATOR generateSecuredApiKey with userID
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = client.generateSecuredApiKey(
+    parentApiKey: "2640659426d5107b6e47d75db9cbaef8",
+    restrictions: SecuredApiKeyRestrictions(
+      userToken: "user42",
     ),
   );
   // >LOG
@@ -818,7 +1363,7 @@ void snippetForgetDictionarySettings() async {
 //
 // getLogs with minimal parameters
 void snippetForgetLogs() async {
-  // >SEPARATOR getLogs default
+  // >SEPARATOR getLogs getLogs with minimal parameters
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -829,11 +1374,31 @@ void snippetForgetLogs() async {
   // SEPARATOR<
 }
 
+// Snippet for the getLogs method.
+//
+// getLogs with parameters
+void snippetForgetLogs1() async {
+  // >SEPARATOR getLogs getLogs with parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getLogs(
+    offset: 5,
+    length: 10,
+    indexName: "<YOUR_INDEX_NAME>",
+    type: LogType.fromJson("all"),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the getObject method.
 //
 // getObject
 void snippetForgetObject() async {
-  // >SEPARATOR getObject default
+  // >SEPARATOR getObject getObject
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -851,11 +1416,81 @@ void snippetForgetObject() async {
   // SEPARATOR<
 }
 
+// Snippet for the getObject method.
+//
+// search with a real object
+void snippetForgetObject1() async {
+  // >SEPARATOR getObject search with a real object
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getObject(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "Batman and Robin",
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the getObjects method.
 //
-// getObjects
+// by ID
 void snippetForgetObjects() async {
-  // >SEPARATOR getObjects default
+  // >SEPARATOR getObjects by ID
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getObjects(
+    getObjectsParams: GetObjectsParams(
+      requests: [
+        GetObjectsRequest(
+          objectID: "uniqueID",
+          indexName: "<YOUR_INDEX_NAME>",
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the getObjects method.
+//
+// multiple IDs
+void snippetForgetObjects1() async {
+  // >SEPARATOR getObjects multiple IDs
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getObjects(
+    getObjectsParams: GetObjectsParams(
+      requests: [
+        GetObjectsRequest(
+          objectID: "uniqueID1",
+          indexName: "<YOUR_INDEX_NAME>",
+        ),
+        GetObjectsRequest(
+          objectID: "uniqueID2",
+          indexName: "<YOUR_INDEX_NAME>",
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the getObjects method.
+//
+// with attributesToRetrieve
+void snippetForgetObjects2() async {
+  // >SEPARATOR getObjects with attributesToRetrieve
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1001,13 +1636,30 @@ void snippetForgetUserId() async {
 //
 // hasPendingMappings with minimal parameters
 void snippetForhasPendingMappings() async {
-  // >SEPARATOR hasPendingMappings default
+  // >SEPARATOR hasPendingMappings hasPendingMappings with minimal parameters
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.hasPendingMappings();
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the hasPendingMappings method.
+//
+// hasPendingMappings with parameters
+void snippetForhasPendingMappings1() async {
+  // >SEPARATOR hasPendingMappings hasPendingMappings with parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.hasPendingMappings(
+    getClusters: true,
+  );
   // >LOG
   // SEPARATOR<
 }
@@ -1097,7 +1749,7 @@ void snippetForlistClusters() async {
 //
 // listIndices with minimal parameters
 void snippetForlistIndices() async {
-  // >SEPARATOR listIndices default
+  // >SEPARATOR listIndices listIndices with minimal parameters
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1108,17 +1760,53 @@ void snippetForlistIndices() async {
   // SEPARATOR<
 }
 
+// Snippet for the listIndices method.
+//
+// listIndices with parameters
+void snippetForlistIndices1() async {
+  // >SEPARATOR listIndices listIndices with parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.listIndices(
+    page: 8,
+    hitsPerPage: 3,
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the listUserIds method.
 //
 // listUserIds with minimal parameters
 void snippetForlistUserIds() async {
-  // >SEPARATOR listUserIds default
+  // >SEPARATOR listUserIds listUserIds with minimal parameters
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
   // Call the API
   final response = await client.listUserIds();
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the listUserIds method.
+//
+// listUserIds with parameters
+void snippetForlistUserIds1() async {
+  // >SEPARATOR listUserIds listUserIds with parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.listUserIds(
+    page: 8,
+    hitsPerPage: 100,
+  );
   // >LOG
   // SEPARATOR<
 }
@@ -1221,7 +1909,7 @@ void snippetForoperationIndex2() async {
 //
 // Partial update with a new value for a string attribute
 void snippetForpartialUpdateObject() async {
-  // >SEPARATOR partialUpdateObject default
+  // >SEPARATOR partialUpdateObject Partial update with a new value for a string attribute
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1232,6 +1920,169 @@ void snippetForpartialUpdateObject() async {
     objectID: "uniqueID",
     attributesToUpdate: {
       'attributeId': "new value",
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the partialUpdateObject method.
+//
+// Partial update with a new value for an integer attribute
+void snippetForpartialUpdateObject1() async {
+  // >SEPARATOR partialUpdateObject Partial update with a new value for an integer attribute
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.partialUpdateObject(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "uniqueID",
+    attributesToUpdate: {
+      'attributeId': 1,
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the partialUpdateObject method.
+//
+// Partial update with a new value for a boolean attribute
+void snippetForpartialUpdateObject2() async {
+  // >SEPARATOR partialUpdateObject Partial update with a new value for a boolean attribute
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.partialUpdateObject(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "uniqueID",
+    attributesToUpdate: {
+      'attributeId': true,
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the partialUpdateObject method.
+//
+// Partial update with a new value for an array attribute
+void snippetForpartialUpdateObject3() async {
+  // >SEPARATOR partialUpdateObject Partial update with a new value for an array attribute
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.partialUpdateObject(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "uniqueID",
+    attributesToUpdate: {
+      'attributeId': [
+        "one",
+        "two",
+        "three",
+      ],
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the partialUpdateObject method.
+//
+// Partial update with a new value for an object attribute
+void snippetForpartialUpdateObject4() async {
+  // >SEPARATOR partialUpdateObject Partial update with a new value for an object attribute
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.partialUpdateObject(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "uniqueID",
+    attributesToUpdate: {
+      'attributeId': {
+        'nested': "value",
+      },
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the partialUpdateObject method.
+//
+// with visible_by filter
+void snippetForpartialUpdateObject5() async {
+  // >SEPARATOR partialUpdateObject with visible_by filter
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.partialUpdateObject(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "uniqueID",
+    attributesToUpdate: {
+      'visible_by': [
+        "Angela",
+        "group/Finance",
+        "group/Shareholders",
+      ],
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the partialUpdateObject method.
+//
+// add men pant
+void snippetForpartialUpdateObject6() async {
+  // >SEPARATOR partialUpdateObject add men pant
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.partialUpdateObject(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "productId",
+    attributesToUpdate: {
+      'categoryPageId': {
+        '_operation': "Add",
+        'value': "men-clothing-pants",
+      },
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the partialUpdateObject method.
+//
+// remove men pant
+void snippetForpartialUpdateObject7() async {
+  // >SEPARATOR partialUpdateObject remove men pant
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.partialUpdateObject(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "productId",
+    attributesToUpdate: {
+      'categoryPageId': {
+        '_operation': "Remove",
+        'value': "men-clothing-pants",
+      },
     },
   );
   // >LOG
@@ -1482,8 +2333,10 @@ void snippetForsaveObject() async {
   final response = await client.saveObject(
     indexName: "<YOUR_INDEX_NAME>",
     body: {
-      'objectID': "id",
-      'test': "val",
+      'name': "Black T-shirt",
+      'color': "#000000||black",
+      'availableIn': "https://source.unsplash.com/100x100/?paris||Paris",
+      'objectID': "myID",
     },
   );
   // >LOG
@@ -1544,11 +2397,70 @@ void snippetForsaveObjects1() async {
   // SEPARATOR<
 }
 
+// Snippet for the saveObjects method.
+//
+// saveObjectsPlaylist
+void snippetForsaveObjects2() async {
+  // >SEPARATOR saveObjects saveObjectsPlaylist
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveObjects(
+    indexName: "<YOUR_INDEX_NAME>",
+    objects: [
+      {
+        'objectID': "1",
+        'visibility': "public",
+        'name': "Hot 100 Billboard Charts",
+        'playlistId': "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
+        'createdAt': "1500240452",
+      },
+    ],
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveObjects method.
+//
+// saveObjectsPublicUser
+void snippetForsaveObjects3() async {
+  // >SEPARATOR saveObjects saveObjectsPublicUser
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveObjects(
+    indexName: "<YOUR_INDEX_NAME>",
+    objects: [
+      {
+        'objectID': "1",
+        'visibility': "public",
+        'name': "Hot 100 Billboard Charts",
+        'playlistId': "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
+        'createdAt': "1500240452",
+      },
+    ],
+    waitForTasks: false,
+    batchSize: 1000,
+    requestOptions: RequestOptions(
+      headers: {
+        'X-Algolia-User-ID': '*',
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the saveRule method.
 //
 // saveRule with minimal parameters
 void snippetForsaveRule() async {
-  // >SEPARATOR saveRule default
+  // >SEPARATOR saveRule saveRule with minimal parameters
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1576,11 +2488,796 @@ void snippetForsaveRule() async {
   // SEPARATOR<
 }
 
+// Snippet for the saveRule method.
+//
+// saveRule with all parameters
+void snippetForsaveRule1() async {
+  // >SEPARATOR saveRule saveRule with all parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "id1",
+    rule: Rule(
+      objectID: "id1",
+      conditions: [
+        Condition(
+          pattern: "apple",
+          anchoring: Anchoring.fromJson("contains"),
+          alternatives: false,
+          context: "search",
+        ),
+      ],
+      consequence: Consequence(
+        params: ConsequenceParams(
+          filters: "brand:apple",
+          query: ConsequenceQueryObject(
+            remove: [
+              "algolia",
+            ],
+            edits: [
+              Edit(
+                type: EditType.fromJson("remove"),
+                delete: "abc",
+                insert: "cde",
+              ),
+              Edit(
+                type: EditType.fromJson("replace"),
+                delete: "abc",
+                insert: "cde",
+              ),
+            ],
+          ),
+        ),
+        hide: [
+          ConsequenceHide(
+            objectID: "321",
+          ),
+        ],
+        filterPromotes: false,
+        userData: {
+          'algolia': "aloglia",
+        },
+        promote: [
+          PromoteObjectID(
+            objectID: "abc",
+            position: 3,
+          ),
+          PromoteObjectIDs(
+            objectIDs: [
+              "abc",
+              "def",
+            ],
+            position: 1,
+          ),
+        ],
+      ),
+      description: "test",
+      enabled: true,
+      validity: [
+        TimeRange(
+          from: 1656670273,
+          until: 1656670277,
+        ),
+      ],
+    ),
+    forwardToReplicas: true,
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// b2b catalog
+void snippetForsaveRule2() async {
+  // >SEPARATOR saveRule b2b catalog
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "article-rule",
+    rule: Rule(
+      objectID: "article-rule",
+      conditions: [
+        Condition(
+          pattern: "article",
+          anchoring: Anchoring.fromJson("startsWith"),
+        ),
+      ],
+      consequence: Consequence(
+        params: ConsequenceParams(
+          query: ConsequenceQueryObject(
+            edits: [
+              Edit(
+                type: EditType.fromJson("remove"),
+                delete: "article",
+              ),
+            ],
+          ),
+          restrictSearchableAttributes: [
+            "title",
+            "book_id",
+          ],
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// merchandising and promoting
+void snippetForsaveRule3() async {
+  // >SEPARATOR saveRule merchandising and promoting
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "director-rule",
+    rule: Rule(
+      objectID: "director-rule",
+      conditions: [
+        Condition(
+          pattern: "{facet:director} director",
+          anchoring: Anchoring.fromJson("contains"),
+        ),
+      ],
+      consequence: Consequence(
+        params: ConsequenceParams(
+          restrictSearchableAttributes: [
+            "title",
+            "book_id",
+          ],
+          automaticFacetFilters: [
+            AutomaticFacetFilter(
+              facet: "director",
+            ),
+          ],
+          query: ConsequenceQueryObject(
+            edits: [
+              Edit(
+                type: EditType.fromJson("remove"),
+                delete: "director",
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// harry potter
+void snippetForsaveRule4() async {
+  // >SEPARATOR saveRule harry potter
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "harry-potter-rule",
+    rule: Rule(
+      objectID: "harry-potter-rule",
+      conditions: [
+        Condition(
+          pattern: "harry potter",
+          anchoring: Anchoring.fromJson("contains"),
+        ),
+      ],
+      consequence: Consequence(
+        userData: {
+          'promo_content': "20% OFF on all Harry Potter books!",
+        },
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// merchandising empty query
+void snippetForsaveRule5() async {
+  // >SEPARATOR saveRule merchandising empty query
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "clearance-category-filter",
+    rule: Rule(
+      objectID: "clearance-category-filter",
+      conditions: [
+        Condition(
+          pattern: "",
+          anchoring: Anchoring.fromJson("is"),
+          context: "landing",
+        ),
+      ],
+      consequence: Consequence(
+        params: ConsequenceParams(
+          optionalFilters: "clearance:true",
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// redirect
+void snippetForsaveRule6() async {
+  // >SEPARATOR saveRule redirect
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "redirect-help-rule",
+    rule: Rule(
+      objectID: "redirect-help-rule",
+      conditions: [
+        Condition(
+          pattern: "help",
+          anchoring: Anchoring.fromJson("contains"),
+        ),
+      ],
+      consequence: Consequence(
+        userData: {
+          'redirect': "https://www.algolia.com/support",
+        },
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// promote some results over others
+void snippetForsaveRule7() async {
+  // >SEPARATOR saveRule promote some results over others
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "tomato-fruit",
+    rule: Rule(
+      objectID: "tomato-fruit",
+      conditions: [
+        Condition(
+          pattern: "tomato",
+          anchoring: Anchoring.fromJson("contains"),
+        ),
+      ],
+      consequence: Consequence(
+        params: ConsequenceParams(
+          optionalFilters: "food_group:fruit",
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// promote several hits
+void snippetForsaveRule8() async {
+  // >SEPARATOR saveRule promote several hits
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "Promote-Apple-Newest",
+    rule: Rule(
+      objectID: "Promote-Apple-Newest",
+      conditions: [
+        Condition(
+          pattern: "apple",
+          anchoring: Anchoring.fromJson("is"),
+        ),
+      ],
+      consequence: Consequence(
+        promote: [
+          PromoteObjectIDs(
+            objectIDs: [
+              "iPhone-12345",
+              "watch-123",
+            ],
+            position: 0,
+          ),
+        ],
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// promote newest release
+void snippetForsaveRule9() async {
+  // >SEPARATOR saveRule promote newest release
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "Promote-iPhone-X",
+    rule: Rule(
+      objectID: "Promote-iPhone-X",
+      conditions: [
+        Condition(
+          pattern: "iPhone",
+          anchoring: Anchoring.fromJson("contains"),
+        ),
+      ],
+      consequence: Consequence(
+        promote: [
+          PromoteObjectID(
+            objectID: "iPhone-12345",
+            position: 0,
+          ),
+        ],
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// promote single item
+void snippetForsaveRule10() async {
+  // >SEPARATOR saveRule promote single item
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "promote-harry-potter-box-set",
+    rule: Rule(
+      objectID: "promote-harry-potter-box-set",
+      conditions: [
+        Condition(
+          pattern: "Harry Potter",
+          anchoring: Anchoring.fromJson("contains"),
+        ),
+      ],
+      consequence: Consequence(
+        promote: [
+          PromoteObjectID(
+            objectID: "HP-12345",
+            position: 0,
+          ),
+        ],
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// limit search results
+void snippetForsaveRule11() async {
+  // >SEPARATOR saveRule limit search results
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "article-rule",
+    rule: Rule(
+      objectID: "article-rule",
+      conditions: [
+        Condition(
+          pattern: "article",
+          anchoring: Anchoring.fromJson("startsWith"),
+        ),
+      ],
+      consequence: Consequence(
+        params: ConsequenceParams(
+          query: ConsequenceQueryObject(
+            edits: [
+              Edit(
+                type: EditType.fromJson("remove"),
+                delete: "article",
+              ),
+            ],
+          ),
+          restrictSearchableAttributes: [
+            "title",
+            "book_id",
+          ],
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// query match
+void snippetForsaveRule12() async {
+  // >SEPARATOR saveRule query match
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "tagged-brand-rule",
+    rule: Rule(
+      conditions: [
+        Condition(
+          pattern: "brand: {facet:brand}",
+          anchoring: Anchoring.fromJson("contains"),
+          alternatives: false,
+        ),
+      ],
+      consequence: Consequence(
+        params: ConsequenceParams(
+          automaticFacetFilters: [
+            AutomaticFacetFilter(
+              facet: "brand",
+            ),
+          ],
+          query: ConsequenceQueryObject(
+            remove: [
+              "brand:",
+              "{facet:brand}",
+            ],
+          ),
+        ),
+      ),
+      description: "filter on brand: {brand}",
+      objectID: "tagged-brand-rule",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// dynamic filtering
+void snippetForsaveRule13() async {
+  // >SEPARATOR saveRule dynamic filtering
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "color-facets",
+    rule: Rule(
+      objectID: "color-facets",
+      conditions: [
+        Condition(
+          pattern: "{facet:color}",
+        ),
+      ],
+      consequence: Consequence(
+        params: ConsequenceParams(
+          automaticFacetFilters: [
+            AutomaticFacetFilter(
+              facet: "color",
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// hide hits
+void snippetForsaveRule14() async {
+  // >SEPARATOR saveRule hide hits
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "hide-12345",
+    rule: Rule(
+      objectID: "hide-12345",
+      conditions: [
+        Condition(
+          pattern: "cheap",
+          anchoring: Anchoring.fromJson("contains"),
+        ),
+      ],
+      consequence: Consequence(
+        hide: [
+          ConsequenceHide(
+            objectID: "to-hide-12345",
+          ),
+        ],
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// one rule per facet
+void snippetForsaveRule15() async {
+  // >SEPARATOR saveRule one rule per facet
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "red-color",
+    rule: Rule(
+      objectID: "red-color",
+      conditions: [
+        Condition(
+          pattern: "red",
+          anchoring: Anchoring.fromJson("contains"),
+        ),
+      ],
+      consequence: Consequence(
+        params: ConsequenceParams(
+          query: ConsequenceQueryObject(
+            remove: [
+              "red",
+            ],
+          ),
+          filters: "color:red",
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// numerical filters
+void snippetForsaveRule16() async {
+  // >SEPARATOR saveRule numerical filters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "cheap",
+    rule: Rule(
+      objectID: "cheap",
+      conditions: [
+        Condition(
+          pattern: "cheap",
+          anchoring: Anchoring.fromJson("contains"),
+        ),
+      ],
+      consequence: Consequence(
+        params: ConsequenceParams(
+          query: ConsequenceQueryObject(
+            remove: [
+              "cheap",
+            ],
+          ),
+          filters: "price < 10",
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// negative filters
+void snippetForsaveRule17() async {
+  // >SEPARATOR saveRule negative filters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "gluten-free-rule",
+    rule: Rule(
+      objectID: "gluten-free-rule",
+      conditions: [
+        Condition(
+          pattern: "gluten-free",
+          anchoring: Anchoring.fromJson("contains"),
+        ),
+      ],
+      consequence: Consequence(
+        params: ConsequenceParams(
+          filters: "NOT allergens:gluten",
+          query: ConsequenceQueryObject(
+            edits: [
+              Edit(
+                type: EditType.fromJson("remove"),
+                delete: "gluten-free",
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// positive filters
+void snippetForsaveRule18() async {
+  // >SEPARATOR saveRule positive filters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "diet-rule",
+    rule: Rule(
+      objectID: "diet-rule",
+      conditions: [
+        Condition(
+          pattern: "diet",
+          anchoring: Anchoring.fromJson("contains"),
+        ),
+      ],
+      consequence: Consequence(
+        params: ConsequenceParams(
+          filters: "'low-carb' OR 'low-fat'",
+          query: ConsequenceQueryObject(
+            edits: [
+              Edit(
+                type: EditType.fromJson("remove"),
+                delete: "diet",
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// conditionless
+void snippetForsaveRule19() async {
+  // >SEPARATOR saveRule conditionless
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "diet-rule",
+    rule: Rule(
+      objectID: "diet-rule",
+      consequence: Consequence(
+        params: ConsequenceParams(
+          filters: "'low-carb' OR 'low-fat'",
+          query: ConsequenceQueryObject(
+            edits: [
+              Edit(
+                type: EditType.fromJson("remove"),
+                delete: "diet",
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// contextual
+void snippetForsaveRule20() async {
+  // >SEPARATOR saveRule contextual
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "a-rule-id",
+    rule: Rule(
+      objectID: "a-rule-id",
+      conditions: [
+        Condition(
+          context: "mobile",
+        ),
+      ],
+      consequence: Consequence(
+        params: ConsequenceParams(
+          filters: "release_date >= 1577836800",
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the saveRules method.
 //
 // saveRules with minimal parameters
 void snippetForsaveRules() async {
-  // >SEPARATOR saveRules default
+  // >SEPARATOR saveRules saveRules with minimal parameters
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1620,6 +3317,194 @@ void snippetForsaveRules() async {
     ],
     forwardToReplicas: false,
     clearExistingRules: true,
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRules method.
+//
+// saveRules with all parameters
+void snippetForsaveRules1() async {
+  // >SEPARATOR saveRules saveRules with all parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRules(
+    indexName: "<YOUR_INDEX_NAME>",
+    rules: [
+      Rule(
+        objectID: "id1",
+        conditions: [
+          Condition(
+            pattern: "apple",
+            anchoring: Anchoring.fromJson("contains"),
+            alternatives: false,
+            context: "search",
+          ),
+        ],
+        consequence: Consequence(
+          params: ConsequenceParams(
+            filters: "brand:apple",
+            query: ConsequenceQueryObject(
+              remove: [
+                "algolia",
+              ],
+              edits: [
+                Edit(
+                  type: EditType.fromJson("remove"),
+                  delete: "abc",
+                  insert: "cde",
+                ),
+                Edit(
+                  type: EditType.fromJson("replace"),
+                  delete: "abc",
+                  insert: "cde",
+                ),
+              ],
+            ),
+          ),
+          hide: [
+            ConsequenceHide(
+              objectID: "321",
+            ),
+          ],
+          filterPromotes: false,
+          userData: {
+            'algolia': "aloglia",
+          },
+          promote: [
+            PromoteObjectID(
+              objectID: "abc",
+              position: 3,
+            ),
+            PromoteObjectIDs(
+              objectIDs: [
+                "abc",
+                "def",
+              ],
+              position: 1,
+            ),
+          ],
+        ),
+        description: "test",
+        enabled: true,
+        validity: [
+          TimeRange(
+            from: 1656670273,
+            until: 1656670277,
+          ),
+        ],
+      ),
+    ],
+    forwardToReplicas: true,
+    clearExistingRules: true,
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRules method.
+//
+// dynamic filtering
+void snippetForsaveRules2() async {
+  // >SEPARATOR saveRules dynamic filtering
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRules(
+    indexName: "<YOUR_INDEX_NAME>",
+    rules: [
+      Rule(
+        objectID: "toaster",
+        conditions: [
+          Condition(
+            pattern: "toaster",
+            anchoring: Anchoring.fromJson("contains"),
+          ),
+        ],
+        consequence: Consequence(
+          params: ConsequenceParams(
+            query: ConsequenceQueryObject(
+              remove: [
+                "toaster",
+              ],
+            ),
+            filters: "product_type:toaster",
+          ),
+        ),
+      ),
+      Rule(
+        objectID: "cheap",
+        conditions: [
+          Condition(
+            pattern: "cheap",
+            anchoring: Anchoring.fromJson("contains"),
+          ),
+        ],
+        consequence: Consequence(
+          params: ConsequenceParams(
+            query: ConsequenceQueryObject(
+              remove: [
+                "cheap",
+              ],
+            ),
+            filters: "price < 15",
+          ),
+        ),
+      ),
+    ],
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRules method.
+//
+// enhance search results
+void snippetForsaveRules3() async {
+  // >SEPARATOR saveRules enhance search results
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRules(
+    indexName: "<YOUR_INDEX_NAME>",
+    rules: [
+      Rule(
+        objectID: "country",
+        conditions: [
+          Condition(
+            pattern: "{facet:country}",
+            anchoring: Anchoring.fromJson("contains"),
+          ),
+        ],
+        consequence: Consequence(
+          params: ConsequenceParams(
+            aroundLatLngViaIP: false,
+          ),
+        ),
+      ),
+      Rule(
+        objectID: "city",
+        conditions: [
+          Condition(
+            pattern: "{facet:city}",
+            anchoring: Anchoring.fromJson("contains"),
+          ),
+        ],
+        consequence: Consequence(
+          params: ConsequenceParams(
+            aroundLatLngViaIP: false,
+          ),
+        ),
+      ),
+    ],
   );
   // >LOG
   // SEPARATOR<
@@ -1795,8 +3680,64 @@ void snippetForsearch3() async {
 
 // Snippet for the search method.
 //
-// retrieveFacets
+// search for a single hits request with minimal parameters
 void snippetForsearch4() async {
+  // >SEPARATOR search search for a single hits request with minimal parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    searchMethodParams: SearchMethodParams(
+      requests: [
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search with highlight and snippet results
+void snippetForsearch5() async {
+  // >SEPARATOR search search with highlight and snippet results
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    searchMethodParams: SearchMethodParams(
+      requests: [
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+          query: "vim",
+          attributesToSnippet: [
+            "*:20",
+          ],
+          attributesToHighlight: [
+            "*",
+          ],
+          attributesToRetrieve: [
+            "*",
+          ],
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// retrieveFacets
+void snippetForsearch6() async {
   // >SEPARATOR search retrieveFacets
   // Initialize the client
   final client =
@@ -1824,7 +3765,7 @@ void snippetForsearch4() async {
 // Snippet for the search method.
 //
 // retrieveFacetsWildcard
-void snippetForsearch5() async {
+void snippetForsearch7() async {
   // >SEPARATOR search retrieveFacetsWildcard
   // Initialize the client
   final client =
@@ -1848,11 +3789,461 @@ void snippetForsearch5() async {
   // SEPARATOR<
 }
 
+// Snippet for the search method.
+//
+// search for a single facet request with minimal parameters
+void snippetForsearch8() async {
+  // >SEPARATOR search search for a single facet request with minimal parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    searchMethodParams: SearchMethodParams(
+      requests: [
+        SearchForFacets(
+          indexName: "<YOUR_INDEX_NAME>",
+          type: SearchTypeFacet.fromJson("facet"),
+          facet: "editor",
+        ),
+      ],
+      strategy: SearchStrategy.fromJson("stopIfEnoughMatches"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search for a single hits request with all parameters
+void snippetForsearch9() async {
+  // >SEPARATOR search search for a single hits request with all parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    searchMethodParams: SearchMethodParams(
+      requests: [
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+          query: "myQuery",
+          hitsPerPage: 50,
+          type: SearchTypeDefault.fromJson("default"),
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search for a single facet request with all parameters
+void snippetForsearch10() async {
+  // >SEPARATOR search search for a single facet request with all parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    searchMethodParams: SearchMethodParams(
+      requests: [
+        SearchForFacets(
+          indexName: "<YOUR_INDEX_NAME>",
+          type: SearchTypeFacet.fromJson("facet"),
+          facet: "theFacet",
+          facetQuery: "theFacetQuery",
+          query: "theQuery",
+          maxFacetHits: 50,
+        ),
+      ],
+      strategy: SearchStrategy.fromJson("stopIfEnoughMatches"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search for multiple mixed requests in multiple indices with minimal parameters
+void snippetForsearch11() async {
+  // >SEPARATOR search search for multiple mixed requests in multiple indices with minimal parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    searchMethodParams: SearchMethodParams(
+      requests: [
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+        ),
+        SearchForFacets(
+          indexName: "<YOUR_INDEX_NAME>",
+          type: SearchTypeFacet.fromJson("facet"),
+          facet: "theFacet",
+        ),
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+          type: SearchTypeDefault.fromJson("default"),
+        ),
+      ],
+      strategy: SearchStrategy.fromJson("stopIfEnoughMatches"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search for multiple mixed requests in multiple indices with all parameters
+void snippetForsearch12() async {
+  // >SEPARATOR search search for multiple mixed requests in multiple indices with all parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    searchMethodParams: SearchMethodParams(
+      requests: [
+        SearchForFacets(
+          indexName: "<YOUR_INDEX_NAME>",
+          type: SearchTypeFacet.fromJson("facet"),
+          facet: "theFacet",
+          facetQuery: "theFacetQuery",
+          query: "theQuery",
+          maxFacetHits: 50,
+        ),
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+          query: "myQuery",
+          hitsPerPage: 50,
+          type: SearchTypeDefault.fromJson("default"),
+        ),
+      ],
+      strategy: SearchStrategy.fromJson("stopIfEnoughMatches"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search filters accept all of the possible shapes
+void snippetForsearch13() async {
+  // >SEPARATOR search search filters accept all of the possible shapes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    searchMethodParams: SearchMethodParams(
+      requests: [
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+          facetFilters: "mySearch:filters",
+          reRankingApplyFilter: "mySearch:filters",
+          tagFilters: "mySearch:filters",
+          numericFilters: "mySearch:filters",
+          optionalFilters: "mySearch:filters",
+        ),
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+          facetFilters: [
+            "mySearch:filters",
+            [
+              "mySearch:filters",
+              [
+                "mySearch:filters",
+              ],
+            ],
+          ],
+          reRankingApplyFilter: [
+            "mySearch:filters",
+            [
+              "mySearch:filters",
+            ],
+          ],
+          tagFilters: [
+            "mySearch:filters",
+            [
+              "mySearch:filters",
+            ],
+          ],
+          numericFilters: [
+            "mySearch:filters",
+            [
+              "mySearch:filters",
+            ],
+          ],
+          optionalFilters: [
+            "mySearch:filters",
+            [
+              "mySearch:filters",
+            ],
+          ],
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search filters end to end
+void snippetForsearch14() async {
+  // >SEPARATOR search search filters end to end
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    searchMethodParams: SearchMethodParams(
+      requests: [
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+          filters: "editor:'visual studio' OR editor:neovim",
+        ),
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+          facetFilters: [
+            "editor:'visual studio'",
+            "editor:neovim",
+          ],
+        ),
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+          facetFilters: [
+            "editor:'visual studio'",
+            [
+              "editor:neovim",
+            ],
+          ],
+        ),
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+          facetFilters: [
+            "editor:'visual studio'",
+            [
+              "editor:neovim",
+              [
+                "editor:goland",
+              ],
+            ],
+          ],
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search with all search parameters
+void snippetForsearch15() async {
+  // >SEPARATOR search search with all search parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    searchMethodParams: SearchMethodParams(
+      requests: [
+        SearchForHits(
+          advancedSyntax: true,
+          advancedSyntaxFeatures: [
+            AdvancedSyntaxFeatures.fromJson("exactPhrase"),
+          ],
+          allowTyposOnNumericTokens: true,
+          alternativesAsExact: [
+            AlternativesAsExact.fromJson("multiWordsSynonym"),
+          ],
+          analytics: true,
+          analyticsTags: [
+            "",
+          ],
+          aroundLatLng: "",
+          aroundLatLngViaIP: true,
+          aroundPrecision: 0,
+          aroundRadius: AroundRadiusAll.fromJson("all"),
+          attributeCriteriaComputedByMinProximity: true,
+          attributesToHighlight: [
+            "",
+          ],
+          attributesToRetrieve: [
+            "",
+          ],
+          attributesToSnippet: [
+            "",
+          ],
+          clickAnalytics: true,
+          decompoundQuery: true,
+          disableExactOnAttributes: [
+            "",
+          ],
+          disableTypoToleranceOnAttributes: [
+            "",
+          ],
+          distinct: 0,
+          enableABTest: true,
+          enablePersonalization: true,
+          enableReRanking: true,
+          enableRules: true,
+          exactOnSingleWordQuery: ExactOnSingleWordQuery.fromJson("attribute"),
+          facetFilters: [
+            "",
+          ],
+          facetingAfterDistinct: true,
+          facets: [
+            "",
+          ],
+          filters: "",
+          getRankingInfo: true,
+          highlightPostTag: "",
+          highlightPreTag: "",
+          hitsPerPage: 1,
+          ignorePlurals: false,
+          indexName: "<YOUR_INDEX_NAME>",
+          insideBoundingBox: [
+            [
+              47.3165,
+              4.9665,
+              47.3424,
+              5.0201,
+            ],
+            [
+              40.9234,
+              2.1185,
+              38.643,
+              1.9916,
+            ],
+          ],
+          insidePolygon: [
+            [
+              47.3165,
+              4.9665,
+              47.3424,
+              5.0201,
+              47.32,
+              4.9,
+            ],
+            [
+              40.9234,
+              2.1185,
+              38.643,
+              1.9916,
+              39.2587,
+              2.0104,
+            ],
+          ],
+          length: 1,
+          maxValuesPerFacet: 0,
+          minProximity: 1,
+          minWordSizefor1Typo: 0,
+          minWordSizefor2Typos: 0,
+          minimumAroundRadius: 1,
+          naturalLanguages: [
+            SupportedLanguage.fromJson("fr"),
+          ],
+          numericFilters: [
+            "",
+          ],
+          offset: 0,
+          optionalFilters: [
+            "",
+          ],
+          optionalWords: [
+            "",
+          ],
+          page: 0,
+          percentileComputation: true,
+          personalizationImpact: 0,
+          query: "",
+          queryLanguages: [
+            SupportedLanguage.fromJson("fr"),
+          ],
+          queryType: QueryType.fromJson("prefixAll"),
+          ranking: [
+            "",
+          ],
+          reRankingApplyFilter: [
+            "",
+          ],
+          relevancyStrictness: 0,
+          removeStopWords: true,
+          removeWordsIfNoResults:
+              RemoveWordsIfNoResults.fromJson("allOptional"),
+          renderingContent: RenderingContent(
+            facetOrdering: FacetOrdering(
+              facets: Facets(
+                order: [
+                  "a",
+                  "b",
+                ],
+              ),
+              values: {
+                'a': Value(
+                  order: [
+                    "b",
+                  ],
+                  sortRemainingBy: SortRemainingBy.fromJson("count"),
+                ),
+              },
+            ),
+          ),
+          replaceSynonymsInHighlight: true,
+          responseFields: [
+            "",
+          ],
+          restrictHighlightAndSnippetArrays: true,
+          restrictSearchableAttributes: [
+            "",
+          ],
+          ruleContexts: [
+            "",
+          ],
+          similarQuery: "",
+          snippetEllipsisText: "",
+          sortFacetValuesBy: "",
+          sumOrFiltersScores: true,
+          synonyms: true,
+          tagFilters: [
+            "",
+          ],
+          type: SearchTypeDefault.fromJson("default"),
+          typoTolerance: TypoToleranceEnum.fromJson("min"),
+          userToken: "",
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the searchDictionaryEntries method.
 //
 // get searchDictionaryEntries results with minimal parameters
 void snippetForsearchDictionaryEntries() async {
-  // >SEPARATOR searchDictionaryEntries default
+  // >SEPARATOR searchDictionaryEntries get searchDictionaryEntries results with minimal parameters
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1868,11 +4259,34 @@ void snippetForsearchDictionaryEntries() async {
   // SEPARATOR<
 }
 
+// Snippet for the searchDictionaryEntries method.
+//
+// get searchDictionaryEntries results with all parameters
+void snippetForsearchDictionaryEntries1() async {
+  // >SEPARATOR searchDictionaryEntries get searchDictionaryEntries results with all parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchDictionaryEntries(
+    dictionaryName: DictionaryType.fromJson("compounds"),
+    searchDictionaryEntriesParams: SearchDictionaryEntriesParams(
+      query: "foo",
+      page: 4,
+      hitsPerPage: 2,
+      language: SupportedLanguage.fromJson("fr"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the searchForFacetValues method.
 //
 // get searchForFacetValues results with minimal parameters
 void snippetForsearchForFacetValues() async {
-  // >SEPARATOR searchForFacetValues default
+  // >SEPARATOR searchForFacetValues get searchForFacetValues results with minimal parameters
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1881,6 +4295,50 @@ void snippetForsearchForFacetValues() async {
   final response = await client.searchForFacetValues(
     indexName: "<YOUR_INDEX_NAME>",
     facetName: "facetName",
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchForFacetValues method.
+//
+// get searchForFacetValues results with all parameters
+void snippetForsearchForFacetValues1() async {
+  // >SEPARATOR searchForFacetValues get searchForFacetValues results with all parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchForFacetValues(
+    indexName: "<YOUR_INDEX_NAME>",
+    facetName: "facetName",
+    searchForFacetValuesRequest: SearchForFacetValuesRequest(
+      params: "query=foo&facetFilters=['bar']",
+      facetQuery: "foo",
+      maxFacetHits: 42,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchForFacetValues method.
+//
+// facetName and facetQuery
+void snippetForsearchForFacetValues2() async {
+  // >SEPARATOR searchForFacetValues facetName and facetQuery
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchForFacetValues(
+    indexName: "<YOUR_INDEX_NAME>",
+    facetName: "author",
+    searchForFacetValuesRequest: SearchForFacetValuesRequest(
+      facetQuery: "stephen",
+    ),
   );
   // >LOG
   // SEPARATOR<
@@ -1908,9 +4366,43 @@ void snippetForsearchRules() async {
 
 // Snippet for the searchSingleIndex method.
 //
-// search with searchParams
+// search with minimal parameters
 void snippetForsearchSingleIndex() async {
-  // >SEPARATOR searchSingleIndex default
+  // >SEPARATOR searchSingleIndex search with minimal parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// search with special characters in indexName
+void snippetForsearchSingleIndex1() async {
+  // >SEPARATOR searchSingleIndex search with special characters in indexName
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// search with searchParams
+void snippetForsearchSingleIndex2() async {
+  // >SEPARATOR searchSingleIndex search with searchParams
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1929,11 +4421,2913 @@ void snippetForsearchSingleIndex() async {
   // SEPARATOR<
 }
 
+// Snippet for the searchSingleIndex method.
+//
+// single search retrieve snippets
+void snippetForsearchSingleIndex3() async {
+  // >SEPARATOR searchSingleIndex single search retrieve snippets
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "batman mask of the phantasm",
+      attributesToRetrieve: [
+        "*",
+      ],
+      attributesToSnippet: [
+        "*:20",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// query
+void snippetForsearchSingleIndex4() async {
+  // >SEPARATOR searchSingleIndex query
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "phone",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// filters
+void snippetForsearchSingleIndex5() async {
+  // >SEPARATOR searchSingleIndex filters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      filters: "country:US AND price.gross < 2.0",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// filters for stores
+void snippetForsearchSingleIndex6() async {
+  // >SEPARATOR searchSingleIndex filters for stores
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "ben",
+      filters: "categories:politics AND store:Gibert Joseph Saint-Michel",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// filters boolean
+void snippetForsearchSingleIndex7() async {
+  // >SEPARATOR searchSingleIndex filters boolean
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      filters: "is_available:true",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// distinct
+void snippetForsearchSingleIndex8() async {
+  // >SEPARATOR searchSingleIndex distinct
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      distinct: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// filtersNumeric
+void snippetForsearchSingleIndex9() async {
+  // >SEPARATOR searchSingleIndex filtersNumeric
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      filters: "price < 10",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// filtersTimestamp
+void snippetForsearchSingleIndex10() async {
+  // >SEPARATOR searchSingleIndex filtersTimestamp
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      filters: "NOT date_timestamp:1514764800 TO 1546300799",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// filtersSumOrFiltersScoresFalse
+void snippetForsearchSingleIndex11() async {
+  // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresFalse
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      filters:
+          "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+      sumOrFiltersScores: false,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// filtersSumOrFiltersScoresTrue
+void snippetForsearchSingleIndex12() async {
+  // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresTrue
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      filters:
+          "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+      sumOrFiltersScores: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// filtersStephenKing
+void snippetForsearchSingleIndex13() async {
+  // >SEPARATOR searchSingleIndex filtersStephenKing
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      filters: "author:\"Stephen King\"",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// filtersNotTags
+void snippetForsearchSingleIndex14() async {
+  // >SEPARATOR searchSingleIndex filtersNotTags
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "harry",
+      filters: "_tags:non-fiction",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// facetFiltersList
+void snippetForsearchSingleIndex15() async {
+  // >SEPARATOR searchSingleIndex facetFiltersList
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      facetFilters: [
+        "publisher:Penguin",
+        [
+          "author:Stephen King",
+          "genre:Horror",
+        ],
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// facetFiltersBook
+void snippetForsearchSingleIndex16() async {
+  // >SEPARATOR searchSingleIndex facetFiltersBook
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      facetFilters: [
+        "category:Book",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// facetFiltersAND
+void snippetForsearchSingleIndex17() async {
+  // >SEPARATOR searchSingleIndex facetFiltersAND
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      facetFilters: [
+        "category:Book",
+        "author:John Doe",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// facetFiltersOR
+void snippetForsearchSingleIndex18() async {
+  // >SEPARATOR searchSingleIndex facetFiltersOR
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      facetFilters: [
+        [
+          "category:Book",
+          "author:John Doe",
+        ],
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// facetFiltersCombined
+void snippetForsearchSingleIndex19() async {
+  // >SEPARATOR searchSingleIndex facetFiltersCombined
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      facetFilters: [
+        "author:John Doe",
+        [
+          "category:Book",
+          "category:Movie",
+        ],
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// facetFiltersNeg
+void snippetForsearchSingleIndex20() async {
+  // >SEPARATOR searchSingleIndex facetFiltersNeg
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      facetFilters: "category:-Ebook",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// filtersAndFacetFilters
+void snippetForsearchSingleIndex21() async {
+  // >SEPARATOR searchSingleIndex filtersAndFacetFilters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      filters: "(author:\"Stephen King\" OR genre:\"Horror\")",
+      facetFilters: [
+        "publisher:Penguin",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// facet author genre
+void snippetForsearchSingleIndex22() async {
+  // >SEPARATOR searchSingleIndex facet author genre
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      facets: [
+        "author",
+        "genre",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// facet wildcard
+void snippetForsearchSingleIndex23() async {
+  // >SEPARATOR searchSingleIndex facet wildcard
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      facets: [
+        "*",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// maxValuesPerFacet
+void snippetForsearchSingleIndex24() async {
+  // >SEPARATOR searchSingleIndex maxValuesPerFacet
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      maxValuesPerFacet: 1000,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// aroundLatLng
+void snippetForsearchSingleIndex25() async {
+  // >SEPARATOR searchSingleIndex aroundLatLng
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      aroundLatLng: "40.71, -74.01",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// aroundLatLngViaIP
+void snippetForsearchSingleIndex26() async {
+  // >SEPARATOR searchSingleIndex aroundLatLngViaIP
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      aroundLatLngViaIP: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// aroundRadius
+void snippetForsearchSingleIndex27() async {
+  // >SEPARATOR searchSingleIndex aroundRadius
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      aroundLatLng: "40.71, -74.01",
+      aroundRadius: 1000000,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// insideBoundingBox
+void snippetForsearchSingleIndex28() async {
+  // >SEPARATOR searchSingleIndex insideBoundingBox
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      insideBoundingBox: [
+        [
+          49.067996905313834,
+          65.73828125,
+          25.905859247243498,
+          128.8046875,
+        ],
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// insidePolygon
+void snippetForsearchSingleIndex29() async {
+  // >SEPARATOR searchSingleIndex insidePolygon
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      insidePolygon: [
+        [
+          42.01,
+          -124.31,
+          48.835509470063045,
+          -124.40453125000005,
+          45.01082951668149,
+          -65.95726562500005,
+          31.247243545293433,
+          -81.06578125000004,
+          25.924152577235226,
+          -97.68234374999997,
+          32.300311895879545,
+          -117.54828125,
+        ],
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// insidePolygon
+void snippetForsearchSingleIndex30() async {
+  // >SEPARATOR searchSingleIndex insidePolygon
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      insidePolygon: [
+        [
+          42.01,
+          -124.31,
+          48.835509470063045,
+          -124.40453125000005,
+          45.01082951668149,
+          -65.95726562500005,
+          31.247243545293433,
+          -81.06578125000004,
+          25.924152577235226,
+          -97.68234374999997,
+          32.300311895879545,
+          -117.54828125,
+        ],
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// optionalFilters
+void snippetForsearchSingleIndex31() async {
+  // >SEPARATOR searchSingleIndex optionalFilters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      optionalFilters: [
+        "can_deliver_quickly:true",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// optionalFiltersMany
+void snippetForsearchSingleIndex32() async {
+  // >SEPARATOR searchSingleIndex optionalFiltersMany
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      optionalFilters: [
+        "brand:Apple<score=3>",
+        "brand:Samsung<score=2>",
+        "brand:-Huawei",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// optionalFiltersSimple
+void snippetForsearchSingleIndex33() async {
+  // >SEPARATOR searchSingleIndex optionalFiltersSimple
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      optionalFilters: [
+        "brand:Apple<score=2>",
+        "type:tablet",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// restrictSearchableAttributes
+void snippetForsearchSingleIndex34() async {
+  // >SEPARATOR searchSingleIndex restrictSearchableAttributes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      restrictSearchableAttributes: [
+        "title_fr",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// getRankingInfo
+void snippetForsearchSingleIndex35() async {
+  // >SEPARATOR searchSingleIndex getRankingInfo
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      getRankingInfo: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// clickAnalytics
+void snippetForsearchSingleIndex36() async {
+  // >SEPARATOR searchSingleIndex clickAnalytics
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      clickAnalytics: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// clickAnalyticsUserToken
+void snippetForsearchSingleIndex37() async {
+  // >SEPARATOR searchSingleIndex clickAnalyticsUserToken
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      clickAnalytics: true,
+      userToken: "user-1",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// enablePersonalization
+void snippetForsearchSingleIndex38() async {
+  // >SEPARATOR searchSingleIndex enablePersonalization
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      enablePersonalization: true,
+      userToken: "user-1",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// userToken
+void snippetForsearchSingleIndex39() async {
+  // >SEPARATOR searchSingleIndex userToken
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      userToken: "user-1",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// userToken1234
+void snippetForsearchSingleIndex40() async {
+  // >SEPARATOR searchSingleIndex userToken1234
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      userToken: "user-1234",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// analyticsTag
+void snippetForsearchSingleIndex41() async {
+  // >SEPARATOR searchSingleIndex analyticsTag
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      analyticsTags: [
+        "YOUR_ANALYTICS_TAG",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// facetFiltersUsers
+void snippetForsearchSingleIndex42() async {
+  // >SEPARATOR searchSingleIndex facetFiltersUsers
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      facetFilters: [
+        "user:user42",
+        "user:public",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// buildTheQuery
+void snippetForsearchSingleIndex43() async {
+  // >SEPARATOR searchSingleIndex buildTheQuery
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      filters: "categoryPageId: Men's Clothing",
+      hitsPerPage: 50,
+      analyticsTags: [
+        "mens-clothing",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// attributesToHighlightOverride
+void snippetForsearchSingleIndex44() async {
+  // >SEPARATOR searchSingleIndex attributesToHighlightOverride
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      attributesToHighlight: [
+        "title",
+        "content",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// disableTypoToleranceOnAttributes
+void snippetForsearchSingleIndex45() async {
+  // >SEPARATOR searchSingleIndex disableTypoToleranceOnAttributes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      disableTypoToleranceOnAttributes: [
+        "serial_number",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// search_a_query
+void snippetForsearchSingleIndex46() async {
+  // >SEPARATOR searchSingleIndex search_a_query
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "shirt",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// search_everything
+void snippetForsearchSingleIndex47() async {
+  // >SEPARATOR searchSingleIndex search_everything
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// api_filtering_range_example
+void snippetForsearchSingleIndex48() async {
+  // >SEPARATOR searchSingleIndex api_filtering_range_example
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "books",
+      filters: "price:10 TO 20",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// search_a_query
+void snippetForsearchSingleIndex49() async {
+  // >SEPARATOR searchSingleIndex search_a_query
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "",
+      similarQuery:
+          "Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen",
+      filters: "year:1991 TO 2001",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// override_retrievable_attributes
+void snippetForsearchSingleIndex50() async {
+  // >SEPARATOR searchSingleIndex override_retrievable_attributes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      attributesToRetrieve: [
+        "title",
+        "content",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// restrict_searchable_attributes
+void snippetForsearchSingleIndex51() async {
+  // >SEPARATOR searchSingleIndex restrict_searchable_attributes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      restrictSearchableAttributes: [
+        "title",
+        "author",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// override_default_relevancy
+void snippetForsearchSingleIndex52() async {
+  // >SEPARATOR searchSingleIndex override_default_relevancy
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      relevancyStrictness: 70,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// apply_filters
+void snippetForsearchSingleIndex53() async {
+  // >SEPARATOR searchSingleIndex apply_filters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      filters: "(category:Book OR category:Ebook) AND _tags:published",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// apply_all_filters
+void snippetForsearchSingleIndex54() async {
+  // >SEPARATOR searchSingleIndex apply_all_filters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      filters:
+          "available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\"John Doe\"",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// escape_spaces
+void snippetForsearchSingleIndex55() async {
+  // >SEPARATOR searchSingleIndex escape_spaces
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      filters: "category:\"Books and Comics\"",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// escape_keywords
+void snippetForsearchSingleIndex56() async {
+  // >SEPARATOR searchSingleIndex escape_keywords
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      filters: "keyword:\"OR\"",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// escape_single_quotes
+void snippetForsearchSingleIndex57() async {
+  // >SEPARATOR searchSingleIndex escape_single_quotes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      filters: "content:\"It's a wonderful day\"",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// escape_double_quotes
+void snippetForsearchSingleIndex58() async {
+  // >SEPARATOR searchSingleIndex escape_double_quotes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      filters: "content:\"She said \"Hello World\"",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// apply_filters
+void snippetForsearchSingleIndex59() async {
+  // >SEPARATOR searchSingleIndex apply_filters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      optionalFilters: [
+        "category:Book",
+        "author:John Doe",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// apply_negative_filters
+void snippetForsearchSingleIndex60() async {
+  // >SEPARATOR searchSingleIndex apply_negative_filters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      optionalFilters: [
+        "category:Book",
+        "author:-John Doe",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// apply_negative_filters_restaurants
+void snippetForsearchSingleIndex61() async {
+  // >SEPARATOR searchSingleIndex apply_negative_filters_restaurants
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      optionalFilters: [
+        "restaurant:-Bert's Inn",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// apply_numeric_filters
+void snippetForsearchSingleIndex62() async {
+  // >SEPARATOR searchSingleIndex apply_numeric_filters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      numericFilters: [
+        "price < 1000",
+        [
+          "inStock = 1",
+          "deliveryDate < 1441755506",
+        ],
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// apply_tag_filters
+void snippetForsearchSingleIndex63() async {
+  // >SEPARATOR searchSingleIndex apply_tag_filters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      tagFilters: [
+        "SciFi",
+        [
+          "Book",
+          "Movie",
+        ],
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// apply_filters
+void snippetForsearchSingleIndex64() async {
+  // >SEPARATOR searchSingleIndex apply_filters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      sumOrFiltersScores: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// facets_all
+void snippetForsearchSingleIndex65() async {
+  // >SEPARATOR searchSingleIndex facets_all
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      facets: [
+        "*",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// retrieve_only_some_facets
+void snippetForsearchSingleIndex66() async {
+  // >SEPARATOR searchSingleIndex retrieve_only_some_facets
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      facets: [
+        "category",
+        "author",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// override_default_max_values_per_facet
+void snippetForsearchSingleIndex67() async {
+  // >SEPARATOR searchSingleIndex override_default_max_values_per_facet
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      maxValuesPerFacet: 20,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// enable_faceting_after_distinct
+void snippetForsearchSingleIndex68() async {
+  // >SEPARATOR searchSingleIndex enable_faceting_after_distinct
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      facetingAfterDistinct: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// sort_facet_values_alphabetically
+void snippetForsearchSingleIndex69() async {
+  // >SEPARATOR searchSingleIndex sort_facet_values_alphabetically
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      sortFacetValuesBy: "count",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// override_attributes_to_snippet
+void snippetForsearchSingleIndex70() async {
+  // >SEPARATOR searchSingleIndex override_attributes_to_snippet
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      attributesToSnippet: [
+        "title",
+        "content:80",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// override_default_highlight_pre_tag
+void snippetForsearchSingleIndex71() async {
+  // >SEPARATOR searchSingleIndex override_default_highlight_pre_tag
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      highlightPreTag: "<strong>",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// override_default_highlight_post_tag
+void snippetForsearchSingleIndex72() async {
+  // >SEPARATOR searchSingleIndex override_default_highlight_post_tag
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      highlightPostTag: "</strong>",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// override_default_snippet_ellipsis_text
+void snippetForsearchSingleIndex73() async {
+  // >SEPARATOR searchSingleIndex override_default_snippet_ellipsis_text
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      snippetEllipsisText: "",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// enable_restrict_highlight_and_snippet_arrays
+void snippetForsearchSingleIndex74() async {
+  // >SEPARATOR searchSingleIndex enable_restrict_highlight_and_snippet_arrays
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      restrictHighlightAndSnippetArrays: false,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// access_page
+void snippetForsearchSingleIndex75() async {
+  // >SEPARATOR searchSingleIndex access_page
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      page: 0,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// override_default_hits_per_page
+void snippetForsearchSingleIndex76() async {
+  // >SEPARATOR searchSingleIndex override_default_hits_per_page
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      hitsPerPage: 10,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// get_nth_hit
+void snippetForsearchSingleIndex77() async {
+  // >SEPARATOR searchSingleIndex get_nth_hit
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      offset: 4,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// get_n_results
+void snippetForsearchSingleIndex78() async {
+  // >SEPARATOR searchSingleIndex get_n_results
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      length: 4,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// override_default_min_word_size_for_one_typo
+void snippetForsearchSingleIndex79() async {
+  // >SEPARATOR searchSingleIndex override_default_min_word_size_for_one_typo
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      minWordSizefor1Typo: 2,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// override_default_min_word_size_for_two_typos
+void snippetForsearchSingleIndex80() async {
+  // >SEPARATOR searchSingleIndex override_default_min_word_size_for_two_typos
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      minWordSizefor2Typos: 2,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// override_default_typo_tolerance_mode
+void snippetForsearchSingleIndex81() async {
+  // >SEPARATOR searchSingleIndex override_default_typo_tolerance_mode
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      typoTolerance: false,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// disable_typos_on_numeric_tokens_at_search_time
+void snippetForsearchSingleIndex82() async {
+  // >SEPARATOR searchSingleIndex disable_typos_on_numeric_tokens_at_search_time
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      allowTyposOnNumericTokens: false,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// search_around_a_position
+void snippetForsearchSingleIndex83() async {
+  // >SEPARATOR searchSingleIndex search_around_a_position
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      aroundLatLng: "40.71, -74.01",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// search_around_server_ip
+void snippetForsearchSingleIndex84() async {
+  // >SEPARATOR searchSingleIndex search_around_server_ip
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      aroundLatLngViaIP: true,
+    ),
+    requestOptions: RequestOptions(
+      headers: {
+        'x-forwarded-for':
+            '94.228.178.246 // should be replaced with the actual IP you would like to search around',
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// set_around_radius
+void snippetForsearchSingleIndex85() async {
+  // >SEPARATOR searchSingleIndex set_around_radius
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      aroundRadius: 1000,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// disable_automatic_radius
+void snippetForsearchSingleIndex86() async {
+  // >SEPARATOR searchSingleIndex disable_automatic_radius
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      aroundRadius: AroundRadiusAll.fromJson("all"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// set_geo_search_precision
+void snippetForsearchSingleIndex87() async {
+  // >SEPARATOR searchSingleIndex set_geo_search_precision
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      aroundPrecision: 100,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// set_geo_search_precision_non_linear
+void snippetForsearchSingleIndex88() async {
+  // >SEPARATOR searchSingleIndex set_geo_search_precision_non_linear
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      aroundPrecision: [
+        Range(
+          from: 0,
+          value: 25,
+        ),
+        Range(
+          from: 2000,
+          value: 1000,
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// set_minimum_geo_search_radius
+void snippetForsearchSingleIndex89() async {
+  // >SEPARATOR searchSingleIndex set_minimum_geo_search_radius
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      minimumAroundRadius: 1000,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// search_inside_rectangular_area
+void snippetForsearchSingleIndex90() async {
+  // >SEPARATOR searchSingleIndex search_inside_rectangular_area
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      insideBoundingBox: [
+        [
+          46.650828100116044,
+          7.123046875,
+          45.17210966999772,
+          1.009765625,
+        ],
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// search_inside_multiple_rectangular_areas
+void snippetForsearchSingleIndex91() async {
+  // >SEPARATOR searchSingleIndex search_inside_multiple_rectangular_areas
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      insideBoundingBox: [
+        [
+          46.650828100116044,
+          7.123046875,
+          45.17210966999772,
+          1.009765625,
+        ],
+        [
+          49.62625916704081,
+          4.6181640625,
+          47.715070300900194,
+          0.482421875,
+        ],
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// search_inside_polygon_area
+void snippetForsearchSingleIndex92() async {
+  // >SEPARATOR searchSingleIndex search_inside_polygon_area
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      insidePolygon: [
+        [
+          46.650828100116044,
+          7.123046875,
+          45.17210966999772,
+          1.009765625,
+          49.62625916704081,
+          4.6181640625,
+        ],
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// search_inside_multiple_polygon_areas
+void snippetForsearchSingleIndex93() async {
+  // >SEPARATOR searchSingleIndex search_inside_multiple_polygon_areas
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      insidePolygon: [
+        [
+          46.650828100116044,
+          7.123046875,
+          45.17210966999772,
+          1.009765625,
+          49.62625916704081,
+          4.6181640625,
+        ],
+        [
+          49.62625916704081,
+          4.6181640625,
+          47.715070300900194,
+          0.482421875,
+          45.17210966999772,
+          1.009765625,
+          50.62626704081,
+          4.6181640625,
+        ],
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// set_querylanguages_override
+void snippetForsearchSingleIndex94() async {
+  // >SEPARATOR searchSingleIndex set_querylanguages_override
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      ignorePlurals: [
+        SupportedLanguage.fromJson("ca"),
+        SupportedLanguage.fromJson("es"),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// set_querylanguages_override
+void snippetForsearchSingleIndex95() async {
+  // >SEPARATOR searchSingleIndex set_querylanguages_override
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      removeStopWords: [
+        SupportedLanguage.fromJson("ca"),
+        SupportedLanguage.fromJson("es"),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// set_querylanguages_override
+void snippetForsearchSingleIndex96() async {
+  // >SEPARATOR searchSingleIndex set_querylanguages_override
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      removeStopWords: [
+        SupportedLanguage.fromJson("ca"),
+        SupportedLanguage.fromJson("es"),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// set_querylanguages_with_japanese_query
+void snippetForsearchSingleIndex97() async {
+  // >SEPARATOR searchSingleIndex set_querylanguages_with_japanese_query
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      queryLanguages: [
+        SupportedLanguage.fromJson("ja"),
+        SupportedLanguage.fromJson("en"),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// set_natural_languages
+void snippetForsearchSingleIndex98() async {
+  // >SEPARATOR searchSingleIndex set_natural_languages
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "",
+      naturalLanguages: [
+        SupportedLanguage.fromJson("fr"),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// override_natural_languages_with_query
+void snippetForsearchSingleIndex99() async {
+  // >SEPARATOR searchSingleIndex override_natural_languages_with_query
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "",
+      naturalLanguages: [
+        SupportedLanguage.fromJson("fr"),
+      ],
+      removeWordsIfNoResults: RemoveWordsIfNoResults.fromJson("firstWords"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// enable_decompound_query_search_time
+void snippetForsearchSingleIndex100() async {
+  // >SEPARATOR searchSingleIndex enable_decompound_query_search_time
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      decompoundQuery: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// enable_rules_search_time
+void snippetForsearchSingleIndex101() async {
+  // >SEPARATOR searchSingleIndex enable_rules_search_time
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      enableRules: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// set_rule_contexts
+void snippetForsearchSingleIndex102() async {
+  // >SEPARATOR searchSingleIndex set_rule_contexts
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      ruleContexts: [
+        "front_end",
+        "website2",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// enable_personalization
+void snippetForsearchSingleIndex103() async {
+  // >SEPARATOR searchSingleIndex enable_personalization
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      enablePersonalization: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// enable_personalization_with_user_token
+void snippetForsearchSingleIndex104() async {
+  // >SEPARATOR searchSingleIndex enable_personalization_with_user_token
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      enablePersonalization: true,
+      userToken: "123456",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// personalization_impact
+void snippetForsearchSingleIndex105() async {
+  // >SEPARATOR searchSingleIndex personalization_impact
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      personalizationImpact: 20,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// set_user_token
+void snippetForsearchSingleIndex106() async {
+  // >SEPARATOR searchSingleIndex set_user_token
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      userToken: "123456",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// set_user_token_with_personalization
+void snippetForsearchSingleIndex107() async {
+  // >SEPARATOR searchSingleIndex set_user_token_with_personalization
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      enablePersonalization: true,
+      userToken: "123456",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// override_default_query_type
+void snippetForsearchSingleIndex108() async {
+  // >SEPARATOR searchSingleIndex override_default_query_type
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      queryType: QueryType.fromJson("prefixAll"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// override_default_remove_words_if_no_results
+void snippetForsearchSingleIndex109() async {
+  // >SEPARATOR searchSingleIndex override_default_remove_words_if_no_results
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      removeWordsIfNoResults: RemoveWordsIfNoResults.fromJson("lastWords"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// enable_advanced_syntax_search_time
+void snippetForsearchSingleIndex110() async {
+  // >SEPARATOR searchSingleIndex enable_advanced_syntax_search_time
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      advancedSyntax: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// overide_default_optional_words
+void snippetForsearchSingleIndex111() async {
+  // >SEPARATOR searchSingleIndex overide_default_optional_words
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      optionalWords: [
+        "toyota",
+        "2020 2021",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// disabling_exact_for_some_attributes_search_time
+void snippetForsearchSingleIndex112() async {
+  // >SEPARATOR searchSingleIndex disabling_exact_for_some_attributes_search_time
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      disableExactOnAttributes: [
+        "description",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// override_default_exact_single_word_query
+void snippetForsearchSingleIndex113() async {
+  // >SEPARATOR searchSingleIndex override_default_exact_single_word_query
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      exactOnSingleWordQuery: ExactOnSingleWordQuery.fromJson("none"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// override_default_aternative_as_exact
+void snippetForsearchSingleIndex114() async {
+  // >SEPARATOR searchSingleIndex override_default_aternative_as_exact
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      alternativesAsExact: [
+        AlternativesAsExact.fromJson("multiWordsSynonym"),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// enable_advanced_syntax_exact_phrase
+void snippetForsearchSingleIndex115() async {
+  // >SEPARATOR searchSingleIndex enable_advanced_syntax_exact_phrase
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      advancedSyntax: true,
+      advancedSyntaxFeatures: [
+        AdvancedSyntaxFeatures.fromJson("exactPhrase"),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// enable_advanced_syntax_exclude_words
+void snippetForsearchSingleIndex116() async {
+  // >SEPARATOR searchSingleIndex enable_advanced_syntax_exclude_words
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      advancedSyntax: true,
+      advancedSyntaxFeatures: [
+        AdvancedSyntaxFeatures.fromJson("excludeWords"),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// override_distinct
+void snippetForsearchSingleIndex117() async {
+  // >SEPARATOR searchSingleIndex override_distinct
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      distinct: 0,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// get_ranking_info
+void snippetForsearchSingleIndex118() async {
+  // >SEPARATOR searchSingleIndex get_ranking_info
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      getRankingInfo: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// disable_click_analytics
+void snippetForsearchSingleIndex119() async {
+  // >SEPARATOR searchSingleIndex disable_click_analytics
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      clickAnalytics: false,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// enable_click_analytics
+void snippetForsearchSingleIndex120() async {
+  // >SEPARATOR searchSingleIndex enable_click_analytics
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      clickAnalytics: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// disable_analytics
+void snippetForsearchSingleIndex121() async {
+  // >SEPARATOR searchSingleIndex disable_analytics
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      analytics: false,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// add_analytics_tags
+void snippetForsearchSingleIndex122() async {
+  // >SEPARATOR searchSingleIndex add_analytics_tags
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      analyticsTags: [
+        "front_end",
+        "website2",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// disable_synonyms
+void snippetForsearchSingleIndex123() async {
+  // >SEPARATOR searchSingleIndex disable_synonyms
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      synonyms: false,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// override_replace_synonyms_in_highlights
+void snippetForsearchSingleIndex124() async {
+  // >SEPARATOR searchSingleIndex override_replace_synonyms_in_highlights
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      replaceSynonymsInHighlight: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// override_min_proximity
+void snippetForsearchSingleIndex125() async {
+  // >SEPARATOR searchSingleIndex override_min_proximity
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      minProximity: 2,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// override_default_field
+void snippetForsearchSingleIndex126() async {
+  // >SEPARATOR searchSingleIndex override_default_field
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      responseFields: [
+        "hits",
+        "facets",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// override_percentile_computation
+void snippetForsearchSingleIndex127() async {
+  // >SEPARATOR searchSingleIndex override_percentile_computation
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      percentileComputation: false,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// set_ab_test
+void snippetForsearchSingleIndex128() async {
+  // >SEPARATOR searchSingleIndex set_ab_test
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      enableABTest: false,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// set_enable_re_ranking
+void snippetForsearchSingleIndex129() async {
+  // >SEPARATOR searchSingleIndex set_enable_re_ranking
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      enableReRanking: false,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// with algolia user id
+void snippetForsearchSingleIndex130() async {
+  // >SEPARATOR searchSingleIndex with algolia user id
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+    ),
+    requestOptions: RequestOptions(
+      headers: {
+        'X-Algolia-User-ID': 'user1234',
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the searchSynonyms method.
 //
 // searchSynonyms with minimal parameters
 void snippetForsearchSynonyms() async {
-  // >SEPARATOR searchSynonyms default
+  // >SEPARATOR searchSynonyms searchSynonyms with minimal parameters
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1941,6 +7335,29 @@ void snippetForsearchSynonyms() async {
   // Call the API
   final response = await client.searchSynonyms(
     indexName: "<YOUR_INDEX_NAME>",
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSynonyms method.
+//
+// searchSynonyms with all parameters
+void snippetForsearchSynonyms1() async {
+  // >SEPARATOR searchSynonyms searchSynonyms with all parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSynonyms(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchSynonymsParams: SearchSynonymsParams(
+      query: "myQuery",
+      type: SynonymType.fromJson("altcorrection1"),
+      page: 10,
+      hitsPerPage: 10,
+    ),
   );
   // >LOG
   // SEPARATOR<
@@ -1989,7 +7406,7 @@ void snippetForsetClientApiKey() async {
 //
 // get setDictionarySettings results with minimal parameters
 void snippetForsetDictionarySettings() async {
-  // >SEPARATOR setDictionarySettings default
+  // >SEPARATOR setDictionarySettings get setDictionarySettings results with minimal parameters
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -2010,11 +7427,1122 @@ void snippetForsetDictionarySettings() async {
   // SEPARATOR<
 }
 
+// Snippet for the setDictionarySettings method.
+//
+// get setDictionarySettings results with all parameters
+void snippetForsetDictionarySettings1() async {
+  // >SEPARATOR setDictionarySettings get setDictionarySettings results with all parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setDictionarySettings(
+    dictionarySettingsParams: DictionarySettingsParams(
+      disableStandardEntries: StandardEntries(
+        plurals: {
+          'fr': false,
+          'en': false,
+          'ru': true,
+        },
+        stopwords: {
+          'fr': false,
+        },
+        compounds: {
+          'ru': true,
+        },
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the setSettings method.
 //
-// setSettingsAttributesForFaceting
+// minimal parameters
 void snippetForsetSettings() async {
-  // >SEPARATOR setSettings default
+  // >SEPARATOR setSettings minimal parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      paginationLimitedTo: 10,
+    ),
+    forwardToReplicas: true,
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// boolean typoTolerance
+void snippetForsetSettings1() async {
+  // >SEPARATOR setSettings boolean typoTolerance
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      typoTolerance: true,
+    ),
+    forwardToReplicas: true,
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// enum typoTolerance
+void snippetForsetSettings2() async {
+  // >SEPARATOR setSettings enum typoTolerance
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      typoTolerance: TypoToleranceEnum.fromJson("min"),
+    ),
+    forwardToReplicas: true,
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// ignorePlurals
+void snippetForsetSettings3() async {
+  // >SEPARATOR setSettings ignorePlurals
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      ignorePlurals: true,
+    ),
+    forwardToReplicas: true,
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// list of string ignorePlurals
+void snippetForsetSettings4() async {
+  // >SEPARATOR setSettings list of string ignorePlurals
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      ignorePlurals: [
+        SupportedLanguage.fromJson("fr"),
+      ],
+    ),
+    forwardToReplicas: true,
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// removeStopWords boolean
+void snippetForsetSettings5() async {
+  // >SEPARATOR setSettings removeStopWords boolean
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      removeStopWords: true,
+    ),
+    forwardToReplicas: true,
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// removeStopWords list of string
+void snippetForsetSettings6() async {
+  // >SEPARATOR setSettings removeStopWords list of string
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      removeStopWords: [
+        SupportedLanguage.fromJson("fr"),
+      ],
+    ),
+    forwardToReplicas: true,
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// boolean distinct
+void snippetForsetSettings7() async {
+  // >SEPARATOR setSettings boolean distinct
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      distinct: true,
+    ),
+    forwardToReplicas: true,
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// integer distinct
+void snippetForsetSettings8() async {
+  // >SEPARATOR setSettings integer distinct
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      distinct: 1,
+    ),
+    forwardToReplicas: true,
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// distinct company
+void snippetForsetSettings9() async {
+  // >SEPARATOR setSettings distinct company
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributeForDistinct: "company",
+      distinct: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// distinct design
+void snippetForsetSettings10() async {
+  // >SEPARATOR setSettings distinct design
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributeForDistinct: "design",
+      distinct: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// distinct true
+void snippetForsetSettings11() async {
+  // >SEPARATOR setSettings distinct true
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      distinct: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// distinct section
+void snippetForsetSettings12() async {
+  // >SEPARATOR setSettings distinct section
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributeForDistinct: "section",
+      distinct: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesForFaceting allergens
+void snippetForsetSettings13() async {
+  // >SEPARATOR setSettings attributesForFaceting allergens
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesForFaceting: [
+        "allergens",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesForFaceting availableIn
+void snippetForsetSettings14() async {
+  // >SEPARATOR setSettings attributesForFaceting availableIn
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesForFaceting: [
+        "color",
+        "availableIn",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// api_attributes_for_faceting
+void snippetForsetSettings15() async {
+  // >SEPARATOR setSettings api_attributes_for_faceting
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesForFaceting: [
+        "genre",
+        "author",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// api_attributes_for_faceting_searchable
+void snippetForsetSettings16() async {
+  // >SEPARATOR setSettings api_attributes_for_faceting_searchable
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesForFaceting: [
+        "genre",
+        "searchable(author)",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// api_attributes_for_filter_only
+void snippetForsetSettings17() async {
+  // >SEPARATOR setSettings api_attributes_for_filter_only
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesForFaceting: [
+        "filterOnly(genre)",
+        "author",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesForFaceting categoryPageId
+void snippetForsetSettings18() async {
+  // >SEPARATOR setSettings attributesForFaceting categoryPageId
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesForFaceting: [
+        "searchable(categoryPageId)",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// unretrievableAttributes
+void snippetForsetSettings19() async {
+  // >SEPARATOR setSettings unretrievableAttributes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      unretrievableAttributes: [
+        "visible_by",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesForFaceting user restricted data
+void snippetForsetSettings20() async {
+  // >SEPARATOR setSettings attributesForFaceting user restricted data
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesForFaceting: [
+        "filterOnly(visible_by)",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesForFaceting optional filters
+void snippetForsetSettings21() async {
+  // >SEPARATOR setSettings attributesForFaceting optional filters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesForFaceting: [
+        "can_deliver_quickly",
+        "restaurant",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesForFaceting redirect index
+void snippetForsetSettings22() async {
+  // >SEPARATOR setSettings attributesForFaceting redirect index
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesForFaceting: [
+        "query_terms",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesForFaceting multiple consequences
+void snippetForsetSettings23() async {
+  // >SEPARATOR setSettings attributesForFaceting multiple consequences
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesForFaceting: [
+        "director",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesForFaceting in-depth optional filters
+void snippetForsetSettings24() async {
+  // >SEPARATOR setSettings attributesForFaceting in-depth optional filters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesForFaceting: [
+        "filterOnly(brand)",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// mode neuralSearch
+void snippetForsetSettings25() async {
+  // >SEPARATOR setSettings mode neuralSearch
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      mode: Mode.fromJson("neuralSearch"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// mode keywordSearch
+void snippetForsetSettings26() async {
+  // >SEPARATOR setSettings mode keywordSearch
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      mode: Mode.fromJson("keywordSearch"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributes same priority
+void snippetForsetSettings27() async {
+  // >SEPARATOR setSettings searchableAttributes same priority
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      searchableAttributes: [
+        "title,comments",
+        "ingredients",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributes higher priority
+void snippetForsetSettings28() async {
+  // >SEPARATOR setSettings searchableAttributes higher priority
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      searchableAttributes: [
+        "title",
+        "ingredients",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// customRanking retweets
+void snippetForsetSettings29() async {
+  // >SEPARATOR setSettings customRanking retweets
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      customRanking: [
+        "desc(retweets)",
+        "desc(likes)",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// customRanking boosted
+void snippetForsetSettings30() async {
+  // >SEPARATOR setSettings customRanking boosted
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      customRanking: [
+        "desc(boosted)",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// customRanking pageviews
+void snippetForsetSettings31() async {
+  // >SEPARATOR setSettings customRanking pageviews
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      customRanking: [
+        "desc(pageviews)",
+        "desc(comments)",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// customRanking applying search parameters for a specific query
+void snippetForsetSettings32() async {
+  // >SEPARATOR setSettings customRanking applying search parameters for a specific query
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      customRanking: [
+        "desc(nb_airline_liaisons)",
+      ],
+      attributesForFaceting: [
+        "city, country",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// customRanking rounded pageviews
+void snippetForsetSettings33() async {
+  // >SEPARATOR setSettings customRanking rounded pageviews
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      customRanking: [
+        "desc(rounded_pageviews)",
+        "desc(comments)",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// customRanking price
+void snippetForsetSettings34() async {
+  // >SEPARATOR setSettings customRanking price
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      customRanking: [
+        "desc(price)",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// ranking exhaustive (price)
+void snippetForsetSettings35() async {
+  // >SEPARATOR setSettings ranking exhaustive (price)
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      ranking: [
+        "desc(price)",
+        "typo",
+        "geo",
+        "words",
+        "filters",
+        "proximity",
+        "attribute",
+        "exact",
+        "custom",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// ranking exhaustive (is_popular)
+void snippetForsetSettings36() async {
+  // >SEPARATOR setSettings ranking exhaustive (is_popular)
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      ranking: [
+        "desc(is_popular)",
+        "typo",
+        "geo",
+        "words",
+        "filters",
+        "proximity",
+        "attribute",
+        "exact",
+        "custom",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// ranking standard replica
+void snippetForsetSettings37() async {
+  // >SEPARATOR setSettings ranking standard replica
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      ranking: [
+        "desc(post_date_timestamp)",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// ranking virtual replica
+void snippetForsetSettings38() async {
+  // >SEPARATOR setSettings ranking virtual replica
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      customRanking: [
+        "desc(post_date_timestamp)",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// customRanking and ranking sort alphabetically
+void snippetForsetSettings39() async {
+  // >SEPARATOR setSettings customRanking and ranking sort alphabetically
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      customRanking: [
+        "asc(textual_attribute)",
+      ],
+      ranking: [
+        "custom",
+        "typo",
+        "geo",
+        "words",
+        "filters",
+        "proximity",
+        "attribute",
+        "exact",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// relevancyStrictness
+void snippetForsetSettings40() async {
+  // >SEPARATOR setSettings relevancyStrictness
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      customRanking: [
+        "asc(textual_attribute)",
+      ],
+      relevancyStrictness: 0,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// create replica index
+void snippetForsetSettings41() async {
+  // >SEPARATOR setSettings create replica index
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      replicas: [
+        "products_price_desc",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// create replica index articles
+void snippetForsetSettings42() async {
+  // >SEPARATOR setSettings create replica index articles
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      replicas: [
+        "articles_date_desc",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// create virtual replica index
+void snippetForsetSettings43() async {
+  // >SEPARATOR setSettings create virtual replica index
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      replicas: [
+        "virtual(products_price_desc)",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// unlink replica index
+void snippetForsetSettings44() async {
+  // >SEPARATOR setSettings unlink replica index
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      replicas: [
+        "",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// forwardToReplicas
+void snippetForsetSettings45() async {
+  // >SEPARATOR setSettings forwardToReplicas
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      searchableAttributes: [
+        "name",
+        "description",
+      ],
+    ),
+    forwardToReplicas: true,
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// maxValuesPerFacet
+void snippetForsetSettings46() async {
+  // >SEPARATOR setSettings maxValuesPerFacet
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      maxValuesPerFacet: 1000,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// maxFacetHits
+void snippetForsetSettings47() async {
+  // >SEPARATOR setSettings maxFacetHits
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      maxFacetHits: 100,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesForFaceting complex
+void snippetForsetSettings48() async {
+  // >SEPARATOR setSettings attributesForFaceting complex
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -2028,6 +8556,1917 @@ void snippetForsetSettings() async {
         "filterOnly(category)",
         "searchable(publisher)",
       ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// ranking closest dates
+void snippetForsetSettings49() async {
+  // >SEPARATOR setSettings ranking closest dates
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      ranking: [
+        "asc(date_timestamp)",
+        "typo",
+        "geo",
+        "words",
+        "filters",
+        "proximity",
+        "attribute",
+        "exact",
+        "custom",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributes item variation
+void snippetForsetSettings50() async {
+  // >SEPARATOR setSettings searchableAttributes item variation
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      searchableAttributes: [
+        "design",
+        "type",
+        "color",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributes around location
+void snippetForsetSettings51() async {
+  // >SEPARATOR setSettings searchableAttributes around location
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      searchableAttributes: [
+        "name",
+        "country",
+        "city",
+        "iata_code",
+      ],
+      customRanking: [
+        "desc(links_count)",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesToHighlight
+void snippetForsetSettings52() async {
+  // >SEPARATOR setSettings attributesToHighlight
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesToHighlight: [
+        "author",
+        "title",
+        "content",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesToHighlightStar
+void snippetForsetSettings53() async {
+  // >SEPARATOR setSettings attributesToHighlightStar
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesToHighlight: [
+        "*",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// everything
+void snippetForsetSettings54() async {
+  // >SEPARATOR setSettings everything
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      advancedSyntax: true,
+      advancedSyntaxFeatures: [
+        AdvancedSyntaxFeatures.fromJson("exactPhrase"),
+      ],
+      allowCompressionOfIntegerArray: true,
+      allowTyposOnNumericTokens: true,
+      alternativesAsExact: [
+        AlternativesAsExact.fromJson("singleWordSynonym"),
+      ],
+      attributeCriteriaComputedByMinProximity: true,
+      attributeForDistinct: "test",
+      attributesForFaceting: [
+        "algolia",
+      ],
+      attributesToHighlight: [
+        "algolia",
+      ],
+      attributesToRetrieve: [
+        "algolia",
+      ],
+      attributesToSnippet: [
+        "algolia",
+      ],
+      attributesToTransliterate: [
+        "algolia",
+      ],
+      camelCaseAttributes: [
+        "algolia",
+      ],
+      customNormalization: {
+        'algolia': {
+          'aloglia': "aglolia",
+        },
+      },
+      customRanking: [
+        "algolia",
+      ],
+      decompoundQuery: false,
+      decompoundedAttributes: {
+        'algolia': "aloglia",
+      },
+      disableExactOnAttributes: [
+        "algolia",
+      ],
+      disablePrefixOnAttributes: [
+        "algolia",
+      ],
+      disableTypoToleranceOnAttributes: [
+        "algolia",
+      ],
+      disableTypoToleranceOnWords: [
+        "algolia",
+      ],
+      distinct: 3,
+      enablePersonalization: true,
+      enableReRanking: false,
+      enableRules: true,
+      exactOnSingleWordQuery: ExactOnSingleWordQuery.fromJson("attribute"),
+      highlightPreTag: "<span>",
+      highlightPostTag: "</span>",
+      hitsPerPage: 10,
+      ignorePlurals: false,
+      indexLanguages: [
+        SupportedLanguage.fromJson("fr"),
+      ],
+      keepDiacriticsOnCharacters: "abc",
+      maxFacetHits: 20,
+      maxValuesPerFacet: 30,
+      minProximity: 6,
+      minWordSizefor1Typo: 5,
+      minWordSizefor2Typos: 11,
+      mode: Mode.fromJson("neuralSearch"),
+      numericAttributesForFiltering: [
+        "algolia",
+      ],
+      optionalWords: [
+        "myspace",
+      ],
+      paginationLimitedTo: 0,
+      queryLanguages: [
+        SupportedLanguage.fromJson("fr"),
+      ],
+      queryType: QueryType.fromJson("prefixLast"),
+      ranking: [
+        "geo",
+      ],
+      reRankingApplyFilter: "mySearch:filters",
+      relevancyStrictness: 10,
+      removeStopWords: false,
+      removeWordsIfNoResults: RemoveWordsIfNoResults.fromJson("lastWords"),
+      renderingContent: RenderingContent(
+        facetOrdering: FacetOrdering(
+          facets: Facets(
+            order: [
+              "a",
+              "b",
+            ],
+          ),
+          values: {
+            'a': Value(
+              order: [
+                "b",
+              ],
+              sortRemainingBy: SortRemainingBy.fromJson("count"),
+            ),
+          },
+        ),
+      ),
+      replaceSynonymsInHighlight: true,
+      replicas: [
+        "",
+      ],
+      responseFields: [
+        "algolia",
+      ],
+      restrictHighlightAndSnippetArrays: true,
+      searchableAttributes: [
+        "foo",
+      ],
+      semanticSearch: SemanticSearch(
+        eventSources: [
+          "foo",
+        ],
+      ),
+      separatorsToIndex: "bar",
+      snippetEllipsisText: "---",
+      sortFacetValuesBy: "date",
+      typoTolerance: false,
+      unretrievableAttributes: [
+        "foo",
+      ],
+      userData: {
+        'user': "data",
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributesWithCustomRankingsAndAttributesForFaceting
+void snippetForsetSettings55() async {
+  // >SEPARATOR setSettings searchableAttributesWithCustomRankingsAndAttributesForFaceting
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      searchableAttributes: [
+        "brand",
+        "name",
+        "categories",
+        "unordered(description)",
+      ],
+      customRanking: [
+        "desc(popularity)",
+      ],
+      attributesForFaceting: [
+        "searchable(brand)",
+        "type",
+        "categories",
+        "price",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributesOrdering
+void snippetForsetSettings56() async {
+  // >SEPARATOR setSettings searchableAttributesOrdering
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      searchableAttributes: [
+        "unordered(title)",
+        "cast",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributesProductReferenceSuffixes
+void snippetForsetSettings57() async {
+  // >SEPARATOR setSettings searchableAttributesProductReferenceSuffixes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      searchableAttributes: [
+        "name",
+        "product_reference",
+        "product_reference_suffixes",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// queryLanguageAndIgnorePlurals
+void snippetForsetSettings58() async {
+  // >SEPARATOR setSettings queryLanguageAndIgnorePlurals
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      queryLanguages: [
+        SupportedLanguage.fromJson("en"),
+      ],
+      ignorePlurals: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributesInMovies
+void snippetForsetSettings59() async {
+  // >SEPARATOR setSettings searchableAttributesInMovies
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      searchableAttributes: [
+        "title_eng",
+        "title_fr",
+        "title_es",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// disablePrefixOnAttributes
+void snippetForsetSettings60() async {
+  // >SEPARATOR setSettings disablePrefixOnAttributes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      disablePrefixOnAttributes: [
+        "serial_number",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// disableTypoToleranceOnAttributes
+void snippetForsetSettings61() async {
+  // >SEPARATOR setSettings disableTypoToleranceOnAttributes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      disableTypoToleranceOnAttributes: [
+        "serial_number",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributesSimpleExample
+void snippetForsetSettings62() async {
+  // >SEPARATOR setSettings searchableAttributesSimpleExample
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      searchableAttributes: [
+        "serial_number",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// searchableAttributesSimpleExampleAlt
+void snippetForsetSettings63() async {
+  // >SEPARATOR setSettings searchableAttributesSimpleExampleAlt
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      searchableAttributes: [
+        "serial_number",
+        "serial_number_suffixes",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_searchable_attributes
+void snippetForsetSettings64() async {
+  // >SEPARATOR setSettings set_searchable_attributes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      searchableAttributes: [
+        "title,alternative_title",
+        "author",
+        "unordered(text)",
+        "emails.personal",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_searchable_attributes
+void snippetForsetSettings65() async {
+  // >SEPARATOR setSettings set_searchable_attributes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesForFaceting: [
+        "author",
+        "filterOnly(isbn)",
+        "searchable(edition)",
+        "afterDistinct(category)",
+        "afterDistinct(searchable(publisher))",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// unretrievable_attributes
+void snippetForsetSettings66() async {
+  // >SEPARATOR setSettings unretrievable_attributes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      unretrievableAttributes: [
+        "total_number_of_sales",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_retrievable_attributes
+void snippetForsetSettings67() async {
+  // >SEPARATOR setSettings set_retrievable_attributes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesToRetrieve: [
+        "author",
+        "title",
+        "content",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_all_attributes_as_retrievable
+void snippetForsetSettings68() async {
+  // >SEPARATOR setSettings set_all_attributes_as_retrievable
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesToRetrieve: [
+        "*",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// specify_attributes_not_to_retrieve
+void snippetForsetSettings69() async {
+  // >SEPARATOR setSettings specify_attributes_not_to_retrieve
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesToRetrieve: [
+        "*",
+        "-SKU",
+        "-internal_desc",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// neural_search
+void snippetForsetSettings70() async {
+  // >SEPARATOR setSettings neural_search
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      mode: Mode.fromJson("neuralSearch"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// keyword_search
+void snippetForsetSettings71() async {
+  // >SEPARATOR setSettings keyword_search
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      mode: Mode.fromJson("keywordSearch"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_default_ranking
+void snippetForsetSettings72() async {
+  // >SEPARATOR setSettings set_default_ranking
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      ranking: [
+        "typo",
+        "geo",
+        "words",
+        "filters",
+        "attribute",
+        "proximity",
+        "exact",
+        "custom",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_ranking_by_attribute_asc
+void snippetForsetSettings73() async {
+  // >SEPARATOR setSettings set_ranking_by_attribute_asc
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      ranking: [
+        "asc(price)",
+        "typo",
+        "geo",
+        "words",
+        "filters",
+        "proximity",
+        "attribute",
+        "exact",
+        "custom",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_ranking_by_attribute_desc
+void snippetForsetSettings74() async {
+  // >SEPARATOR setSettings set_ranking_by_attribute_desc
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      ranking: [
+        "desc(price)",
+        "typo",
+        "geo",
+        "words",
+        "filters",
+        "proximity",
+        "attribute",
+        "exact",
+        "custom",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// restrict_searchable_attributes
+void snippetForsetSettings75() async {
+  // >SEPARATOR setSettings restrict_searchable_attributes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      customRanking: [
+        "desc(popularity)",
+        "asc(price)",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_default_relevancy
+void snippetForsetSettings76() async {
+  // >SEPARATOR setSettings set_default_relevancy
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      relevancyStrictness: 90,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_replicas
+void snippetForsetSettings77() async {
+  // >SEPARATOR setSettings set_replicas
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      replicas: [
+        "name_of_replica_index1",
+        "name_of_replica_index2",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_default_max_values_per_facet
+void snippetForsetSettings78() async {
+  // >SEPARATOR setSettings set_default_max_values_per_facet
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      maxValuesPerFacet: 100,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_default_sort_facet_values_by
+void snippetForsetSettings79() async {
+  // >SEPARATOR setSettings set_default_sort_facet_values_by
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      sortFacetValuesBy: "alpha",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_attributes_to_snippet
+void snippetForsetSettings80() async {
+  // >SEPARATOR setSettings set_attributes_to_snippet
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesToSnippet: [
+        "content:80",
+        "description",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_all_attributes_to_snippet
+void snippetForsetSettings81() async {
+  // >SEPARATOR setSettings set_all_attributes_to_snippet
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesToSnippet: [
+        "*:80",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_default_highlight_pre_tag
+void snippetForsetSettings82() async {
+  // >SEPARATOR setSettings set_default_highlight_pre_tag
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      highlightPreTag: "<em>",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_default_highlight_post_tag
+void snippetForsetSettings83() async {
+  // >SEPARATOR setSettings set_default_highlight_post_tag
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      highlightPostTag: "</em>",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_default_snippet_ellipsis_text
+void snippetForsetSettings84() async {
+  // >SEPARATOR setSettings set_default_snippet_ellipsis_text
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      snippetEllipsisText: "…",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// enable_restrict_highlight_and_snippet_arrays_by_default
+void snippetForsetSettings85() async {
+  // >SEPARATOR setSettings enable_restrict_highlight_and_snippet_arrays_by_default
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      restrictHighlightAndSnippetArrays: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_default_hits_per_page
+void snippetForsetSettings86() async {
+  // >SEPARATOR setSettings set_default_hits_per_page
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      hitsPerPage: 20,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_pagination_limit
+void snippetForsetSettings87() async {
+  // >SEPARATOR setSettings set_pagination_limit
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      paginationLimitedTo: 1000,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_default_min_word_size_for_one_typo
+void snippetForsetSettings88() async {
+  // >SEPARATOR setSettings set_default_min_word_size_for_one_typo
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      minWordSizefor1Typo: 4,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_default_min_word_size_for_two_typos
+void snippetForsetSettings89() async {
+  // >SEPARATOR setSettings set_default_min_word_size_for_two_typos
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      minWordSizefor2Typos: 4,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_default_typo_tolerance_mode
+void snippetForsetSettings90() async {
+  // >SEPARATOR setSettings set_default_typo_tolerance_mode
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      typoTolerance: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// disable_typos_on_numeric_tokens_by_default
+void snippetForsetSettings91() async {
+  // >SEPARATOR setSettings disable_typos_on_numeric_tokens_by_default
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      allowTyposOnNumericTokens: false,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// disable_typo_tolerance_for_words
+void snippetForsetSettings92() async {
+  // >SEPARATOR setSettings disable_typo_tolerance_for_words
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      disableTypoToleranceOnWords: [
+        "wheel",
+        "1X2BCD",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_separators_to_index
+void snippetForsetSettings93() async {
+  // >SEPARATOR setSettings set_separators_to_index
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      separatorsToIndex: "+#",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_languages_using_querylanguages
+void snippetForsetSettings94() async {
+  // >SEPARATOR setSettings set_languages_using_querylanguages
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      queryLanguages: [
+        SupportedLanguage.fromJson("es"),
+      ],
+      ignorePlurals: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_attributes_to_transliterate
+void snippetForsetSettings95() async {
+  // >SEPARATOR setSettings set_attributes_to_transliterate
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      indexLanguages: [
+        SupportedLanguage.fromJson("ja"),
+      ],
+      attributesToTransliterate: [
+        "name",
+        "description",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_languages_using_querylanguages
+void snippetForsetSettings96() async {
+  // >SEPARATOR setSettings set_languages_using_querylanguages
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      queryLanguages: [
+        SupportedLanguage.fromJson("es"),
+      ],
+      removeStopWords: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_camel_case_attributes
+void snippetForsetSettings97() async {
+  // >SEPARATOR setSettings set_camel_case_attributes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      camelCaseAttributes: [
+        "description",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_decompounded_attributes
+void snippetForsetSettings98() async {
+  // >SEPARATOR setSettings set_decompounded_attributes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      decompoundedAttributes: {
+        'de': [
+          "name",
+        ],
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_decompounded_multiple_attributes
+void snippetForsetSettings99() async {
+  // >SEPARATOR setSettings set_decompounded_multiple_attributes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      decompoundedAttributes: {
+        'de': [
+          "name_de",
+          "description_de",
+        ],
+        'fi': [
+          "name_fi",
+          "description_fi",
+        ],
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_keep_diacritics_on_characters
+void snippetForsetSettings100() async {
+  // >SEPARATOR setSettings set_keep_diacritics_on_characters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      keepDiacriticsOnCharacters: "øé",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_custom_normalization
+void snippetForsetSettings101() async {
+  // >SEPARATOR setSettings set_custom_normalization
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      customNormalization: {
+        'default': {
+          'ä': "ae",
+        },
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_languages_using_querylanguages
+void snippetForsetSettings102() async {
+  // >SEPARATOR setSettings set_languages_using_querylanguages
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      queryLanguages: [
+        SupportedLanguage.fromJson("es"),
+      ],
+      removeStopWords: true,
+      ignorePlurals: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_indexlanguages
+void snippetForsetSettings103() async {
+  // >SEPARATOR setSettings set_indexlanguages
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      indexLanguages: [
+        SupportedLanguage.fromJson("ja"),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// enable_decompound_query_by_default
+void snippetForsetSettings104() async {
+  // >SEPARATOR setSettings enable_decompound_query_by_default
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      decompoundQuery: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// enable_rules_syntax_by_default
+void snippetForsetSettings105() async {
+  // >SEPARATOR setSettings enable_rules_syntax_by_default
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      enableRules: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// enable_personalization_settings
+void snippetForsetSettings106() async {
+  // >SEPARATOR setSettings enable_personalization_settings
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      enablePersonalization: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_default_query_type
+void snippetForsetSettings107() async {
+  // >SEPARATOR setSettings set_default_query_type
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      queryType: QueryType.fromJson("prefixLast"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_default_remove_words_if_no_result
+void snippetForsetSettings108() async {
+  // >SEPARATOR setSettings set_default_remove_words_if_no_result
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      removeWordsIfNoResults: RemoveWordsIfNoResults.fromJson("none"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// enable_advanced_syntax_by_default
+void snippetForsetSettings109() async {
+  // >SEPARATOR setSettings enable_advanced_syntax_by_default
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      advancedSyntax: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_default_optional_words
+void snippetForsetSettings110() async {
+  // >SEPARATOR setSettings set_default_optional_words
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      optionalWords: [
+        "blue",
+        "iphone case",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// disabling_prefix_search_for_some_attributes_by_default
+void snippetForsetSettings111() async {
+  // >SEPARATOR setSettings disabling_prefix_search_for_some_attributes_by_default
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      disablePrefixOnAttributes: [
+        "sku",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// disabling_exact_for_some_attributes_by_default
+void snippetForsetSettings112() async {
+  // >SEPARATOR setSettings disabling_exact_for_some_attributes_by_default
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      disableExactOnAttributes: [
+        "description",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_default_exact_single_word_query
+void snippetForsetSettings113() async {
+  // >SEPARATOR setSettings set_default_exact_single_word_query
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      exactOnSingleWordQuery: ExactOnSingleWordQuery.fromJson("attribute"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_default_aternative_as_exact
+void snippetForsetSettings114() async {
+  // >SEPARATOR setSettings set_default_aternative_as_exact
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      alternativesAsExact: [
+        AlternativesAsExact.fromJson("ignorePlurals"),
+        AlternativesAsExact.fromJson("singleWordSynonym"),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// enable_advanced_syntax_by_default
+void snippetForsetSettings115() async {
+  // >SEPARATOR setSettings enable_advanced_syntax_by_default
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      advancedSyntax: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_numeric_attributes_for_filtering
+void snippetForsetSettings116() async {
+  // >SEPARATOR setSettings set_numeric_attributes_for_filtering
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      numericAttributesForFiltering: [
+        "quantity",
+        "popularity",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// enable_compression_of_integer_array
+void snippetForsetSettings117() async {
+  // >SEPARATOR setSettings enable_compression_of_integer_array
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      allowCompressionOfIntegerArray: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_attributes_for_distinct
+void snippetForsetSettings118() async {
+  // >SEPARATOR setSettings set_attributes_for_distinct
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributeForDistinct: "url",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_distinct
+void snippetForsetSettings119() async {
+  // >SEPARATOR setSettings set_distinct
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      distinct: 1,
+      attributeForDistinct: "url",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_replace_synonyms_in_highlights
+void snippetForsetSettings120() async {
+  // >SEPARATOR setSettings set_replace_synonyms_in_highlights
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      replaceSynonymsInHighlight: false,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_min_proximity
+void snippetForsetSettings121() async {
+  // >SEPARATOR setSettings set_min_proximity
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      minProximity: 1,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_default_field
+void snippetForsetSettings122() async {
+  // >SEPARATOR setSettings set_default_field
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      responseFields: [
+        "hits",
+        "hitsPerPage",
+        "nbPages",
+        "page",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_max_facet_hits
+void snippetForsetSettings123() async {
+  // >SEPARATOR setSettings set_max_facet_hits
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      maxFacetHits: 10,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_attribute_criteria_computed_by_min_proximity
+void snippetForsetSettings124() async {
+  // >SEPARATOR setSettings set_attribute_criteria_computed_by_min_proximity
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributeCriteriaComputedByMinProximity: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_user_data
+void snippetForsetSettings125() async {
+  // >SEPARATOR setSettings set_user_data
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      userData: {
+        'extraData':
+            "This is the custom data that you want to store in your index",
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// set_rendering_content
+void snippetForsetSettings126() async {
+  // >SEPARATOR setSettings set_rendering_content
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      renderingContent: RenderingContent(
+        facetOrdering: FacetOrdering(
+          facets: Facets(
+            order: [
+              "size",
+              "brand",
+            ],
+          ),
+          values: {
+            'brand': Value(
+              order: [
+                "uniqlo",
+              ],
+              hide: [
+                "muji",
+              ],
+              sortRemainingBy: SortRemainingBy.fromJson("count"),
+            ),
+            'size': Value(
+              order: [
+                "S",
+                "M",
+                "L",
+              ],
+              sortRemainingBy: SortRemainingBy.fromJson("hidden"),
+            ),
+          },
+        ),
+      ),
     ),
   );
   // >LOG

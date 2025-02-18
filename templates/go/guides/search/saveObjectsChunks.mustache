@@ -1,0 +1,37 @@
+package main
+
+import (
+  "os"
+  "encoding/json"
+  "fmt"
+  "net/http"
+)
+
+{{> snippets/import}}
+
+func saveObjectsChunks() {
+  {{> snippets/init}}
+
+  content, err := os.ReadFile("actors.json")
+  if err != nil {
+    panic(err)
+  }
+
+  var records []map[string]any
+
+  err = json.Unmarshal(content, &records)
+  if err != nil {
+    panic(err)
+  }
+
+  chunkSize := 10000
+
+	for beginIndex := 0; beginIndex < len(records); beginIndex += chunkSize {
+		chunk := records[beginIndex:min(beginIndex+chunkSize, len(records))]
+
+    _, err = {{#dynamicSnippet}}saveObjectsChunks{{/dynamicSnippet}}
+    if err != nil {
+      panic(err)
+    }
+  }
+}

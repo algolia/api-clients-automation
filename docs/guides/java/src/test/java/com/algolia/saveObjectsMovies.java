@@ -1,4 +1,7 @@
+package com.algolia;
+
 import com.algolia.api.SearchClient;
+import com.algolia.config.*;
 import com.algolia.model.search.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -12,7 +15,7 @@ public class saveObjectsMovies {
 
   public static void main(String[] args) throws Exception {
     // Fetch sample dataset
-    URL url = new URI("https://dashboard.algolia.com/sample_datasets/movie.json").toURL();
+    URL url = new URI("https://dashboard.algolia.com/api/1/sample_datasets?type=movie").toURL();
     InputStream stream = url.openStream();
     ObjectMapper mapper = new ObjectMapper();
     List<JsonNode> movies = mapper.readValue(stream, new TypeReference<List<JsonNode>>() {});

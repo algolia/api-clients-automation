@@ -251,7 +251,7 @@ class SearchTest {
   }
 
   @Test
-  fun `setSettings with minimal parameters1`() = runTest {
+  fun `minimal parameters`() = runTest {
     client.runTest(
       call = {
         setSettings(

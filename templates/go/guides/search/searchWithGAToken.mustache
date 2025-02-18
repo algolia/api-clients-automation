@@ -1,0 +1,44 @@
+package main
+
+import (
+  "encoding/json"
+  "fmt"
+  "net/http"
+)
+
+{{> snippets/import}}
+
+func getGoogleAnalyticsUserIdFromBrowserCookie(_ string) (string, error) {
+  return "", nil // Implement your logic here
+}
+
+func searchWithGAToken() {
+  {{> snippets/init}}
+
+  userToken, err := getGoogleAnalyticsUserIdFromBrowserCookie("_ga")
+	if err != nil {
+		panic(err)
+	}
+
+	searchParams := search.SearchParamsObjectAsSearchParams(
+		search.NewSearchParamsObject().
+			SetQuery("<YOUR_SEARCH_QUERY>").
+			SetUserToken(userToken),
+	)
+
+  _, err = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+  if err != nil {
+    panic(err)
+  }
+
+  var loggedInUser *string
+
+	if loggedInUser != nil {
+		searchParams = search.SearchParamsObjectAsSearchParams(searchParams.SearchParamsObject.SetUserToken(*loggedInUser))
+	}
+
+  _, err = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+  if err != nil {
+    panic(err)
+  }
+}

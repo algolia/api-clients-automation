@@ -38,11 +38,11 @@ info:
     - `<api-key>`. The Crawler API key.
 
 
-    You can find both in the [Crawler
-    dashboard](https://crawler.algolia.com/admin/settings/).
+    You can find both on the [Crawler
+    settings](https://dashboard.algolia.com/crawler/settings) page in the
+    Algolia dashboard.
 
-    The Crawler dashboard and API key are different from the regular Algolia
-    dashboard and API keys.
+    The Crawler credentials are different from your regular Algolia credentials.
 
 
     ## Request format
@@ -75,7 +75,9 @@ info:
 
 
     Successful responses return a `2xx` status. Client errors return a `4xx`
-    status. Server errors are indicated by a `5xx` status.
+    status.
+
+    Server errors are indicated by a `5xx` status.
 
     Error responses have a `message` property with more information.
 
@@ -95,7 +97,7 @@ tags:
   - name: actions
     x-displayName: Actions
     description: >
-      Actions change the state of crawlers, such as pausing and unpausing crawl
+      Actions change the state of crawlers, such as pausing and unpausing
       schedules or testing the crawler with specific URLs.
   - name: config
     x-displayName: Configuration
@@ -104,11 +106,13 @@ tags:
       crawl, how to extract records from the crawl, and where to index the
       extracted records.
 
+
       The configuration is versioned, so you can always restore a previous
       version.
 
-      It's easiest to make configuration changes in the [Crawler
-      dashboard](https://crawler.algolia.com/admin/).
+
+      It's easiest to make configuration changes on the [Crawler
+      page](https://dashboard.algolia.com/crawler) in the Algolia dashboard.
 
       The editor has autocomplete and built-in validation so you can try your
       configuration changes before committing them.
@@ -122,7 +126,7 @@ tags:
     description: List registered domains.
   - name: tasks
     x-displayName: Tasks
-    description: Tasks
+    description: Task operations.
 paths:
   /1/crawlers:
     get:
@@ -221,27 +225,23 @@ paths:
           $ref: '#/components/responses/NoRightsOnCrawler'
     patch:
       operationId: patchCrawler
-      summary: Update crawler
+      summary: Change crawler name
       description: >
-        Updates the crawler, either its name or its configuration.
+        Change the crawler's name.
 
 
-        Use this endpoint to update the crawler's name.
-
-        While you can use this endpoint to completely replace the crawler's
+        While you _could_ use this endpoint to replace the crawler
         configuration,
 
-        you should [update the crawler
-        configuration](#tag/config/operation/patchConfig) instead.
+        you should [update it](#tag/config/operation/patchConfig) instead since
+        cnfiguration changes made here aren't
+        [versioned](#tag/config/operation/listConfigVersions).
 
 
         If you replace the configuration, you must provide the full
         configuration,
 
-        including the settings you want to keep.
-
-        Configuration changes from this endpoint aren't
-        [versioned](#tag/config/operation/listConfigVersions).
+        including any settings you want to keep.
       tags:
         - crawler
       parameters:
@@ -257,6 +257,23 @@ paths:
                   $ref: '#/components/schemas/CrawlerName'
                 config:
                   $ref: '#/components/schemas/Configuration'
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionAcknowledged'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/MissingAuthorization'
+        '403':
+          $ref: '#/components/responses/NoRightsOnCrawler'
+    delete:
+      operationId: deleteCrawler
+      summary: Delete a crawler
+      description: Delete the specified crawler.
+      tags:
+        - crawler
+      parameters:
+        - $ref: '#/components/parameters/CrawlerIdParameter'
       responses:
         '200':
           $ref: '#/components/responses/ActionAcknowledged'
@@ -326,14 +343,14 @@ paths:
   /1/crawlers/{id}/test:
     post:
       operationId: testUrl
-      summary: Test crawling a URL
+      summary: Test crawl a URL
       description: >
         Tests a URL with the crawler's configuration and shows the extracted
         records.
 
 
-        You can override parts of the configuration to test your changes before
-        updating the configuration.
+        You can test configuration changes by overriding specific parts before
+        updating the full configuration.
       tags:
         - crawler
       parameters:
@@ -443,6 +460,7 @@ paths:
                     description: >
                       External data associated with the tested URL.
 
+
                       External data is refreshed automatically at the beginning
                       of the crawl.
                     example:
@@ -485,7 +503,7 @@ paths:
         the index.
 
         If a crawl is currently running (the crawler's `reindexing` property is
-        true),
+        `true`),
 
         the records are added to a temporary index.
       tags:
@@ -594,8 +612,8 @@ paths:
         Lists previous versions of the specified crawler's configuration,
         including who authored the change.
 
-        Every time you [update the
-        configuration](#tag/config/operation/patchConfig) of a crawler,
+        Every time you update a crawler's
+        [configuration](#tag/config/operation/patchConfig),
 
         a new version is added.
       tags:
@@ -798,29 +816,8 @@ components:
         Whether the crawler should cache crawled pages.
 
 
-        With caching, the crawler only crawls changed pages.
-
-        To detect changed pages, the crawler makes [HTTP conditional
-        requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests)
-        to your pages.
-
-        The crawler uses the `ETag` and `Last-Modified` response headers
-        returned by your web server during the previous crawl.
-
-        The crawler sends this information in the `If-None-Match` and
-        `If-Modified-Since` request headers.
-
-
-        If your web server responds with `304 Not Modified` to the conditional
-        request, the crawler reuses the records from the previous crawl.
-
-
-        Caching is ignored in these cases:
-
-
-        - If your crawler configuration changed between two crawls.
-
-        - If `externalData` changed between two crawls.
+        For more information, see the [`cache`
+        documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/cache/).
       properties:
         enabled:
           type: boolean
@@ -831,26 +828,18 @@ components:
       description: >
         Pattern for matching URLs.
 
-        Wildcards and negations are supported via the
-        [micromatch](https://github.com/micromatch/micromatch) library.
+
+        Uses [micromatch](https://github.com/micromatch/micromatch) for
+        negation, wildcards, and more.
       example: https://www.algolia.com/**
     fileTypes:
       type: string
       description: >
         Supported file type for indexing non-HTML documents.
 
-        A single type can match multiple file formats:
 
-
-        - `doc`: `.doc`, `.docx`
-
-        - `ppt`: `.ppt`, `.pptx`
-
-        - `xls`: `.xls`, `.xlsx`
-
-
-        The `email` type supports crawling Microsoft Outlook mail message
-        (`.msg`) documents.
+        For more information, see [Extract data from non-HTML
+        documents](https://www.algolia.com/doc/tools/crawler/extracting-data/non-html-documents/).
       enum:
         - doc
         - email
@@ -866,16 +855,13 @@ components:
       example:
         dev.example.com: example.com
       description: >
-        Key-value pairs to replace matching hostnames found in a sitemap, on a
-        page, in canonical links, or redirects.
+        Key-value pairs to replace matching hostnames found in a sitemap,
+
+        on a page, in canonical links, or redirects.
 
 
-        The crawler continues from the _transformed_ URLs.
-
-        The mapping doesn't transform URLs listed in the `startUrls`,
-        `siteMaps`, `pathsToMatch`, and other settings.
-
-        The mapping also doesn't replace hostnames found in extracted text.
+        For more information, see the [`hostnameAliases`
+        documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/hostname-aliases/).
       additionalProperties:
         type: string
         description: Hostname that should be added in the records.
@@ -889,12 +875,15 @@ components:
         Key-value pairs to replace matching paths with new values.
 
 
+        It doesn't replace:
+          
+        - URLs in the `startUrls`, `sitemaps`, `pathsToMatch`, and other
+        settings.
+
+        - Paths found in extracted text.
+
+
         The crawl continues from the _transformed_ URLs.
-
-        The mapping doesn't transform URLs listed in the `startUrls`,
-        `siteMaps`, `pathsToMatch`, and other settings.
-
-        The mapping also doesn't replace paths found in extracted text.
       additionalProperties:
         type: object
         description: Hostname for which matching paths should be replaced.
@@ -909,28 +898,32 @@ components:
         - function
     Action:
       type: object
-      description: Instructions about how to process crawled URLs.
+      description: |
+        How to process crawled URLs.
+
+        Each action defines:
+
+        - The targeted subset of URLs it processes.
+        - What information to extract from the web pages.
+        - The Algolia indices where the extracted records will be stored.
+
+        If a single web page matches several actions,
+        one record is generated for each action.
       properties:
         autoGenerateObjectIDs:
           type: boolean
-          description: >
-            Whether to generate `objectID` properties for each extracted record.
-
-
-            If false, you must manually add `objectID` properties to the
-            extracted records.
+          description: Whether to generate an `objectID` for records that don't have one.
           default: true
         cache:
           $ref: '#/components/schemas/cache'
         discoveryPatterns:
           type: array
           description: >
-            Patterns for additional pages to visit to find links without
-            extracting records.
+            Indicates additional pages that the crawler should visit.
 
 
-            The crawler looks for matching pages and crawls them for links, but
-            doesn't extract records from the (intermediate) pages themselves.
+            For more information, see the [`discoveryPatterns`
+            documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/discovery-patterns/).
           items:
             $ref: '#/components/schemas/urlPattern'
         fileTypesToMatch:
@@ -939,24 +932,8 @@ components:
             File types for crawling non-HTML documents.
 
 
-            Non-HTML documents are first converted to HTML by an [Apache
-            Tika](https://tika.apache.org/) server.
-
-
-            Crawling non-HTML documents has the following limitations:
-
-
-            - It's slower than crawling HTML documents.
-
-            - PDFs must include the used fonts.
-
-            - The produced HTML pages might not be semantic. This makes
-            achieving good relevance more difficult.
-
-            - Natural language detection isn't supported.
-
-            - Extracted metadata might vary between files produced by different
-            programs and versions.
+            For more information, see [Extract data from non-HTML
+            documents](https://www.algolia.com/doc/tools/crawler/extracting-data/non-html-documents/).
           maxItems: 100
           items:
             $ref: '#/components/schemas/fileTypes'
@@ -971,10 +948,10 @@ components:
           type: string
           maxLength: 256
           description: >
-            Index name where to store the extracted records from this action.
+            Reference to the index used to store the action's extracted records.
 
-            The name is combined with the prefix you specified in the
-            `indexPrefix` option.
+            `indexName` is combined with the prefix you specified in
+            `indexPrefix`.
           example: algolia_website
         name:
           type: string
@@ -985,7 +962,12 @@ components:
           $ref: '#/components/schemas/pathAliases'
         pathsToMatch:
           type: array
-          description: Patterns for URLs to which this action should apply.
+          description: >
+            URLs to which this action should apply.
+
+
+            Uses [micromatch](https://github.com/micromatch/micromatch) for
+            negation, wildcards, and more.
           minItems: 1
           maxItems: 100
           items:
@@ -993,23 +975,26 @@ components:
         recordExtractor:
           title: recordExtractor
           type: object
-          description: >-
+          description: >
             Function for extracting information from a crawled page and
             transforming it into Algolia records for indexing.
+
+            The Crawler has an
+            [editor](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/#the-editor)
+            with autocomplete and validation to help you update the
+            `recordExtractor` property.
+
+
+            For details, consult the [`recordExtractor`
+            documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/actions/#parameter-param-recordextractor).
           properties:
             __type:
               $ref: '#/components/schemas/configurationRecordExtractorType'
             source:
               type: string
               description: >
-                JavaScript function (as a string) for extracting information
-                from a crawled page and transforming it into Algolia records for
-                indexing.
-
-                The [Crawler dashboard](https://crawler.algolia.com/admin) has
-                an editor with autocomplete and validation,
-
-                which makes editing the `recordExtractor` property easier.
+                A JavaScript function (as a string) that returns one or more
+                Algolia records for each crawled page.
         selectorsToMatch:
           type: array
           description: >
@@ -2000,14 +1985,14 @@ components:
         url:
           type: string
     bannerImageUrl:
-      description: url for a search banner image.
+      description: URL for an image to show inside a banner.
       type: object
       additionalProperties: false
       properties:
         url:
           type: string
     bannerImage:
-      description: image of a search banner.
+      description: Image to show inside a banner.
       type: object
       additionalProperties: false
       properties:
@@ -2018,14 +2003,14 @@ components:
         title:
           type: string
     bannerLink:
-      description: link for a banner defined in merchandising studio.
+      description: Link for a banner defined in the Merchandising Studio.
       type: object
       additionalProperties: false
       properties:
         url:
           type: string
     banner:
-      description: a search banner with image and url.
+      description: Banner with image and link to redirect users.
       type: object
       additionalProperties: false
       properties:
@@ -2034,12 +2019,12 @@ components:
         link:
           $ref: '#/components/schemas/bannerLink'
     banners:
-      description: banners defined in the merchandising studio for the given search.
+      description: Banners defined in the Merchandising Studio for a given search.
       type: array
       items:
         $ref: '#/components/schemas/banner'
     widgets:
-      description: widgets returned from any rules that are applied to the current search.
+      description: Widgets returned from any rules that are applied to the current search.
       type: object
       additionalProperties: false
       properties:
@@ -2559,25 +2544,35 @@ components:
           items:
             type: string
           description: >
-            Properties to include in the API response of `search` and `browse`
+            Properties to include in the API response of search and browse
             requests.
 
 
             By default, all response properties are included.
 
-            To reduce the response size, you can select, which attributes should
+            To reduce the response size, you can select which properties should
             be included.
+
+
+            An empty list may lead to an empty API response (except properties
+            you can't exclude).
 
 
             You can't exclude these properties:
 
-            `message`, `warning`, `cursor`, `serverUsed`, `indexUsed`,
+            `message`, `warning`, `cursor`, `abTestVariantID`,
 
-            `abTestVariantID`, `parsedQuery`, or any property triggered by the
-            `getRankingInfo` parameter.
+            or any property added by setting `getRankingInfo` to true.
 
 
-            Don't exclude properties that you might need in your search UI.
+            Your search depends on the `hits` field. If you omit this field,
+            searches won't return any results.
+
+            Your UI might also depend on other properties, for example, for
+            pagination.
+
+            Before restricting the response size, check the impact on your
+            search experience.
           default:
             - '*'
           x-categories:
@@ -2700,6 +2695,7 @@ components:
       required:
         - url
     waitTime:
+      type: object
       description: Timeout for the HTTP request.
       properties:
         min:
@@ -2811,43 +2807,30 @@ components:
         - $ref: '#/components/schemas/oauthRequest'
     renderJavaScript:
       description: >
-        Crawl JavaScript-rendered pages by rendering them with a headless
-        browser.
+        Crawl JavaScript-rendered pages with a headless browser.
 
 
-        Rendering JavaScript-based pages is slower than crawling regular HTML
-        pages.
+        For more information, see the [`renderJavaScript`
+        documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/render-java-script/).
       oneOf:
         - type: boolean
-          description: Whether to render all pages with a headless browser.
+          description: Whether to render all pages.
         - type: array
-          description: URLs or patterns which to render with a headless browser.
+          description: URLs or URL patterns to render.
           items:
             type: string
-            description: >
-              URL or pattern for matching URLs which to render with a headless
-              browser.
-
-
-              The pattern support globs and wildcard matching with
-              [micromark](https://github.com/micromatch/micromatch).
+            description: URL or URL pattern to render.
             example: https://www.example.com
         - title: headlessBrowserConfig
           type: object
-          description: Configuration for rendering HTML with a headless browser.
+          description: Configuration for rendering HTML.
           properties:
             enabled:
               type: boolean
-              description: Whether to render matching URLs with a headless browser.
+              description: Whether to render matching URLs.
             patterns:
               type: array
-              description: >
-                URLs or patterns for matching URLs that should be rendered with
-                a headless browser.
-
-
-                The pattern support globs and wildcard matching with
-                [micromark](https://github.com/micromatch/micromatch).
+              description: URLs or URL patterns to render.
               items:
                 type: string
             adBlock:
@@ -2856,7 +2839,7 @@ components:
                 Whether to turn on the built-in adblocker.
 
                 This blocks most ads and tracking scripts but can break some
-                websites.
+                sites.
             waitTime:
               $ref: '#/components/schemas/waitTime'
           required:
@@ -2882,56 +2865,40 @@ components:
     beforeIndexPublishing:
       type: object
       description: >-
-        These checks are triggered after the crawl finishes but before the
-        records are added to the Algolia index.
+        Checks triggered after the crawl finishes but before the records are
+        added to the Algolia index.
       properties:
         maxLostRecordsPercentage:
           type: number
-          description: >
+          description: >-
             Maximum difference in percent between the numbers of records between
             crawls.
-
-
-            If the current crawl results in fewer than `1 - maxLostPercentage`
-            records compared to the previous crawl,
-
-            the current crawling task is stopped with a `SafeReindexingError`.
-
-            The crawler will be blocked until you cancel the blocking task.
           minimum: 1
           maximum: 100
           default: 10
         maxFailedUrls:
           type: number
-          description: |
-            Stops the crawler if a specified number of pages fail to crawl.
-            If undefined, the crawler won't stop if it encounters such errors.
+          description: Stops the crawler if a specified number of pages fail to crawl.
     safetyChecks:
       type: object
-      description: Checks to ensure the crawl was successful.
+      description: >
+        Checks to ensure the crawl was successful.
+
+
+        For more information, see the [Safety
+        checks](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/#safety-checks)
+        documentation.
       properties:
         beforeIndexPublishing:
           $ref: '#/components/schemas/beforeIndexPublishing'
     schedule:
       type: string
       description: >
-        Schedule for running the crawl, expressed in
-        [Later.js](https://bunkat.github.io/later/) syntax.
-
-        If omitted, you must start crawls manually.
+        Schedule for running the crawl.
 
 
-        - The interval between two scheduled crawls must be at least 24 hours.
-
-        - Times are in UTC.
-
-        - Minutes must be explicit: `at 3:00 pm` not `at 3 pm`.
-
-        - Everyday is `every 1 day`.
-
-        - Midnight is `at 12:00 pm`.
-
-        - If you omit the time, a crawl might start any time after midnight UTC.
+        For more information, see the [`schedule`
+        documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/schedule/).
       example: every weekday at 12:00 pm
     Configuration:
       type: object
@@ -2943,24 +2910,7 @@ components:
       properties:
         actions:
           type: array
-          description: >
-            Instructions about how to process crawled URLs.
-
-
-            Each action defines:
-
-
-            - The targeted subset of URLs it processes.
-
-            - What information to extract from the web pages.
-
-            - The Algolia indices where the extracted records will be stored.
-
-
-            A single web page can match multiple actions.
-
-            In this case, the crawler produces one record for each matched
-            action.
+          description: A list of actions.
           minItems: 1
           maxItems: 30
           items:
@@ -2971,19 +2921,8 @@ components:
             Algolia API key for indexing the records.
 
 
-            The API key must have the following access control list (ACL)
-            permissions:
-
-            `search`, `browse`, `listIndexes`, `addObject`, `deleteObject`,
-            `deleteIndex`, `settings`, `editSettings`.
-
-            The API key must not be the admin API key of the application.
-
-            The API key must have access to create the indices that the crawler
-            will use.
-
-            For example, if `indexPrefix` is `crawler_`, the API key must have
-            access to all `crawler_*` indices.
+            For more information, see the [`apiKey`
+            documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/api-key/).
         appId:
           $ref: '#/components/schemas/applicationID'
         exclusionPatterns:
@@ -2997,11 +2936,11 @@ components:
           items:
             type: string
             description: >
-              Pattern for matching URLs to exclude from crawling.
+              URLs to exclude from crawling.
 
 
-              The pattern support globs and wildcard matching with
-              [micromark](https://github.com/micromatch/micromatch).
+              Uses [micromatch](https://github.com/micromatch/micromatch) for
+              negation, wildcards, and more.
         externalData:
           type: array
           description: >
@@ -3025,10 +2964,8 @@ components:
             URLs from where to start crawling.
 
 
-            These are the same as `startUrls`.
-
-            URLs you [crawl manually](#tag/actions/operation/testUrl) can be
-            added to `extraUrls`.
+            For more information, see the [`extraUrls`
+            documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/extra-urls/).
           items:
             type: string
         ignoreCanonicalTo:
@@ -3038,13 +2975,14 @@ components:
           description: >
             Whether to ignore the `nofollow` meta tag or link attribute.
 
-            If true, links with the `rel="nofollow"` attribute or links on pages
-            with the `nofollow` robots meta tag will be crawled.
+
+            For more information, see the [`ignoreNoFollowTo`
+            documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/ignore-no-follow-to/).
         ignoreNoIndex:
           type: boolean
           description: |
             Whether to ignore the `noindex` robots meta tag.
-            If true, pages with this meta tag will be crawled.
+            If `true` pages with this meta tag _will_ be crawled.
         ignoreQueryParams:
           type: array
           description: >
@@ -3054,8 +2992,11 @@ components:
             All URLs with the matching query parameters will be treated as
             identical.
 
-            This prevents indexing duplicated URLs, that just differ by their
-            query parameters.
+            This prevents indexing URLs that just differ by their query
+            parameters.
+
+
+            You can use wildcard characters to pattern match.
           maxItems: 9999
           example:
             - ref
@@ -3078,39 +3019,28 @@ components:
         initialIndexSettings:
           type: object
           description: >
-            Initial index settings, one settings object per index.
+            Crawler index settings.
 
 
-            This setting is only applied when the index is first created.
-
-            Settings are not re-applied.
-
-            This prevents overriding any settings changes after the index was
-            created.
+            For more information, see the [`initialIndexSettings`
+            documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/initial-index-settings/).
           additionalProperties:
             $ref: '#/components/schemas/indexSettings'
             x-additionalPropertiesName: indexName
         linkExtractor:
           title: linkExtractor
           type: object
-          description: Function for extracting URLs for links found on crawled pages.
+          description: >
+            Function for extracting URLs from links on crawled pages.
+
+
+            For more information, see the [`linkExtractor`
+            documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/link-extractor/).
           properties:
             __type:
               $ref: '#/components/schemas/configurationRecordExtractorType'
             source:
               type: string
-              description: >
-                JavaScript function (as a string) for extracting URLs for links
-                found on crawled pages.
-
-                By default, all URLs that comply with the `pathsToMatch`,
-                `fileTypesToMatch`, and `exclusions` settings are added to the
-                crawl.
-
-                The [Crawler dashboard](https://crawler.algolia.com/admin) has
-                an editor with autocomplete and validation,
-
-                which makes editing the `linkExtractor` property easier.
               example: |
                 ({ $, url, defaultExtractor }) => {
                   if (/example.com\/doc\//.test(url.href)) {
@@ -3210,18 +3140,19 @@ components:
           description: Whether this crawler is active.
         reindexing:
           type: boolean
-          description: >-
-            Whether this crawler is currently completely reindexing your
-            content.
+          description: Whether this crawler is completely reindexing your content.
         blocked:
           type: boolean
           description: >
             Whether this crawler is currently blocked.
 
 
-            If true, you need to unblock this crawler in the [Crawler
-            dashboard](https://crawler.algolia.com/admin/) or by [cancelling the
-            blocking task](#tag/tasks/operation/cancelBlockingAction).
+            If `true`, you can unblock it from the [Crawler
+            page](https://dashboard.algolia.com/crawler) in the Algolia
+            dashboard
+
+            or by [cancelling the blocking
+            task](#tag/tasks/operation/cancelBlockingAction).
         blockingError:
           type: string
           description: Reason why the crawler is blocked.
@@ -3237,14 +3168,12 @@ components:
               description: Date and time when the last crawl started, in RFC 3339 format.
               example: '2024-04-07T09:16:04Z'
             - type: 'null'
-              description: If null, this crawler hasn't indexed anything yet.
         lastReindexEndedAt:
           default: null
           oneOf:
             - type: string
               description: Date and time when the last crawl finished, in RFC 3339 format.
             - type: 'null'
-              description: If null, this crawler hasn't indexed anything yet.
       required:
         - name
         - createdAt
@@ -3291,14 +3220,24 @@ components:
         - $ref: '#/components/schemas/Configuration'
     urlsCrawledGroupStatus:
       type: string
-      description: Status of crawling these URLs.
+      description: >
+        Crawled URL status.
+
+
+        For more information, see [Troubleshooting by crawl
+        status](https://www.algolia.com/doc/tools/crawler/troubleshooting/crawl-status/).
       enum:
         - DONE
         - SKIPPED
         - FAILED
     urlsCrawledGroupCategory:
       type: string
-      description: Step where the status information was generated.
+      description: >
+        Step where the status information was generated.
+
+
+        For more information, see [Troubleshooting by crawl
+        status](https://www.algolia.com/doc/tools/crawler/troubleshooting/crawl-status/).
       enum:
         - fetch
         - extraction
@@ -3320,7 +3259,7 @@ components:
           description: Number of URLs with this status.
         readable:
           type: string
-          description: Readable representation of the reason for the status message.
+          description: Reason for this status.
       example:
         status: SKIPPED
         reason: forbidden_by_robotstxt
@@ -3416,7 +3355,7 @@ components:
     CrawlerVersionParameter:
       name: version
       in: path
-      description: The version of the targeted Crawler revision.
+      description: This crawler's version nmber.
       required: true
       schema:
         type: integer

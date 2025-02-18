@@ -30,7 +30,7 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSyncClien
         assert _req.query_parameters.items() == {{#queryParameters}}{{{.}}}{{/queryParameters}}{{^queryParameters}}{}{{/queryParameters}}.items()
         assert _req.headers.items() >= {{#headers}}{{{.}}}{{/headers}}{{^headers}}{}{{/headers}}.items()
         {{#body}}
-        assert loads(_req.data) == loads("""{{{.}}}""")
+        assert loads(_req.data) == loads("""{{#lambda.escapeSlash}}{{{.}}}{{/lambda.escapeSlash}}""")
         {{/body}}
         {{^body}}
         {{#assertNullBody}}

@@ -15,7 +15,29 @@ class TestSearchClient:
 
     async def test_add_api_key_(self):
         """
-        addApiKey
+        minimal
+        """
+        _req = await self._client.add_api_key_with_http_info(
+            api_key={
+                "acl": [
+                    "search",
+                    "addObject",
+                ],
+                "description": "my new api key",
+            },
+        )
+
+        assert _req.path == "/1/keys"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"acl":["search","addObject"],"description":"my new api key"}"""
+        )
+
+    async def test_add_api_key_1(self):
+        """
+        all
         """
         _req = await self._client.add_api_key_with_http_info(
             api_key={
@@ -77,20 +99,20 @@ class TestSearchClient:
 
     async def test_assign_user_id_(self):
         """
-        assignUserId
+        simple
         """
         _req = await self._client.assign_user_id_with_http_info(
-            x_algolia_user_id="userID",
+            x_algolia_user_id="user42",
             assign_user_id_params={
-                "cluster": "theCluster",
+                "cluster": "d4242-eu",
             },
         )
 
         assert _req.path == "/1/clusters/mapping"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {"x-algolia-user-id": "userID"}.items()
-        assert loads(_req.data) == loads("""{"cluster":"theCluster"}""")
+        assert _req.headers.items() >= {"x-algolia-user-id": "user42"}.items()
+        assert loads(_req.data) == loads("""{"cluster":"d4242-eu"}""")
 
     async def test_assign_user_id_1(self):
         """
@@ -1143,7 +1165,57 @@ class TestSearchClient:
 
     async def test_get_objects_(self):
         """
-        getObjects
+        by ID
+        """
+        _req = await self._client.get_objects_with_http_info(
+            get_objects_params={
+                "requests": [
+                    {
+                        "objectID": "uniqueID",
+                        "indexName": "theIndexName",
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/*/objects"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"objectID":"uniqueID","indexName":"theIndexName"}]}"""
+        )
+
+    async def test_get_objects_1(self):
+        """
+        multiple IDs
+        """
+        _req = await self._client.get_objects_with_http_info(
+            get_objects_params={
+                "requests": [
+                    {
+                        "objectID": "uniqueID1",
+                        "indexName": "theIndexName1",
+                    },
+                    {
+                        "objectID": "uniqueID2",
+                        "indexName": "theIndexName2",
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/*/objects"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"objectID":"uniqueID1","indexName":"theIndexName1"},{"objectID":"uniqueID2","indexName":"theIndexName2"}]}"""
+        )
+
+    async def test_get_objects_2(self):
+        """
+        with attributesToRetrieve
         """
         _req = await self._client.get_objects_with_http_info(
             get_objects_params={
@@ -1559,6 +1631,76 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"attributeId":{"nested":"value"}}""")
 
+    async def test_partial_update_object_5(self):
+        """
+        with visible_by filter
+        """
+        _req = await self._client.partial_update_object_with_http_info(
+            index_name="theIndexName",
+            object_id="uniqueID",
+            attributes_to_update={
+                "visible_by": [
+                    "Angela",
+                    "group/Finance",
+                    "group/Shareholders",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/uniqueID/partial"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"visible_by":["Angela","group/Finance","group/Shareholders"]}"""
+        )
+
+    async def test_partial_update_object_6(self):
+        """
+        add men pant
+        """
+        _req = await self._client.partial_update_object_with_http_info(
+            index_name="theIndexName",
+            object_id="productId",
+            attributes_to_update={
+                "categoryPageId": {
+                    "_operation": "Add",
+                    "value": "men-clothing-pants",
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/productId/partial"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"categoryPageId":{"_operation":"Add","value":"men-clothing-pants"}}"""
+        )
+
+    async def test_partial_update_object_7(self):
+        """
+        remove men pant
+        """
+        _req = await self._client.partial_update_object_with_http_info(
+            index_name="theIndexName",
+            object_id="productId",
+            attributes_to_update={
+                "categoryPageId": {
+                    "_operation": "Remove",
+                    "value": "men-clothing-pants",
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/productId/partial"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"categoryPageId":{"_operation":"Remove","value":"men-clothing-pants"}}"""
+        )
+
     async def test_remove_user_id_(self):
         """
         removeUserId
@@ -1614,8 +1756,10 @@ class TestSearchClient:
         _req = await self._client.save_object_with_http_info(
             index_name="<YOUR_INDEX_NAME>",
             body={
-                "objectID": "id",
-                "test": "val",
+                "name": "Black T-shirt",
+                "color": "#000000||black",
+                "availableIn": "https://source.unsplash.com/100x100/?paris||Paris",
+                "objectID": "myID",
             },
         )
 
@@ -1623,7 +1767,9 @@ class TestSearchClient:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"objectID":"id","test":"val"}""")
+        assert loads(_req.data) == loads(
+            """{"name":"Black T-shirt","color":"#000000||black","availableIn":"https://source.unsplash.com/100x100/?paris||Paris","objectID":"myID"}"""
+        )
 
     async def test_save_rule_(self):
         """
@@ -1700,7 +1846,9 @@ class TestSearchClient:
                         },
                     ],
                     "filterPromotes": False,
-                    "userData": {"algolia": "aloglia"},
+                    "userData": {
+                        "algolia": "aloglia",
+                    },
                     "promote": [
                         {
                             "objectID": "abc",
@@ -1733,6 +1881,690 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}"""
+        )
+
+    async def test_save_rule_2(self):
+        """
+        b2b catalog
+        """
+        _req = await self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="article-rule",
+            rule={
+                "objectID": "article-rule",
+                "conditions": [
+                    {
+                        "pattern": "article",
+                        "anchoring": "startsWith",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "query": {
+                            "edits": [
+                                {
+                                    "type": "remove",
+                                    "delete": "article",
+                                },
+                            ],
+                        },
+                        "restrictSearchableAttributes": [
+                            "title",
+                            "book_id",
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/article-rule"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"article-rule","conditions":[{"pattern":"article","anchoring":"startsWith"}],"consequence":{"params":{"query":{"edits":[{"type":"remove","delete":"article"}]},"restrictSearchableAttributes":["title","book_id"]}}}"""
+        )
+
+    async def test_save_rule_3(self):
+        """
+        merchandising and promoting
+        """
+        _req = await self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="director-rule",
+            rule={
+                "objectID": "director-rule",
+                "conditions": [
+                    {
+                        "pattern": "{facet:director} director",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "restrictSearchableAttributes": [
+                            "title",
+                            "book_id",
+                        ],
+                        "automaticFacetFilters": [
+                            {
+                                "facet": "director",
+                            },
+                        ],
+                        "query": {
+                            "edits": [
+                                {
+                                    "type": "remove",
+                                    "delete": "director",
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/director-rule"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"director-rule","conditions":[{"pattern":"{facet:director} director","anchoring":"contains"}],"consequence":{"params":{"restrictSearchableAttributes":["title","book_id"],"automaticFacetFilters":[{"facet":"director"}],"query":{"edits":[{"type":"remove","delete":"director"}]}}}}"""
+        )
+
+    async def test_save_rule_4(self):
+        """
+        harry potter
+        """
+        _req = await self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="harry-potter-rule",
+            rule={
+                "objectID": "harry-potter-rule",
+                "conditions": [
+                    {
+                        "pattern": "harry potter",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "userData": {
+                        "promo_content": "20% OFF on all Harry Potter books!",
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/harry-potter-rule"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"harry-potter-rule","conditions":[{"pattern":"harry potter","anchoring":"contains"}],"consequence":{"userData":{"promo_content":"20% OFF on all Harry Potter books!"}}}"""
+        )
+
+    async def test_save_rule_5(self):
+        """
+        merchandising empty query
+        """
+        _req = await self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="clearance-category-filter",
+            rule={
+                "objectID": "clearance-category-filter",
+                "conditions": [
+                    {
+                        "pattern": "",
+                        "anchoring": "is",
+                        "context": "landing",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "optionalFilters": "clearance:true",
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/clearance-category-filter"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"clearance-category-filter","conditions":[{"pattern":"","anchoring":"is","context":"landing"}],"consequence":{"params":{"optionalFilters":"clearance:true"}}}"""
+        )
+
+    async def test_save_rule_6(self):
+        """
+        redirect
+        """
+        _req = await self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="redirect-help-rule",
+            rule={
+                "objectID": "redirect-help-rule",
+                "conditions": [
+                    {
+                        "pattern": "help",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "userData": {
+                        "redirect": "https://www.algolia.com/support",
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/redirect-help-rule"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"redirect-help-rule","conditions":[{"pattern":"help","anchoring":"contains"}],"consequence":{"userData":{"redirect":"https://www.algolia.com/support"}}}"""
+        )
+
+    async def test_save_rule_7(self):
+        """
+        promote some results over others
+        """
+        _req = await self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="tomato-fruit",
+            rule={
+                "objectID": "tomato-fruit",
+                "conditions": [
+                    {
+                        "pattern": "tomato",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "optionalFilters": "food_group:fruit",
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/tomato-fruit"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"tomato-fruit","conditions":[{"pattern":"tomato","anchoring":"contains"}],"consequence":{"params":{"optionalFilters":"food_group:fruit"}}}"""
+        )
+
+    async def test_save_rule_8(self):
+        """
+        promote several hits
+        """
+        _req = await self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="Promote-Apple-Newest",
+            rule={
+                "objectID": "Promote-Apple-Newest",
+                "conditions": [
+                    {
+                        "pattern": "apple",
+                        "anchoring": "is",
+                    },
+                ],
+                "consequence": {
+                    "promote": [
+                        {
+                            "objectIDs": [
+                                "iPhone-12345",
+                                "watch-123",
+                            ],
+                            "position": 0,
+                        },
+                    ],
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/Promote-Apple-Newest"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"Promote-Apple-Newest","conditions":[{"pattern":"apple","anchoring":"is"}],"consequence":{"promote":[{"objectIDs":["iPhone-12345","watch-123"],"position":0}]}}"""
+        )
+
+    async def test_save_rule_9(self):
+        """
+        promote newest release
+        """
+        _req = await self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="Promote-iPhone-X",
+            rule={
+                "objectID": "Promote-iPhone-X",
+                "conditions": [
+                    {
+                        "pattern": "iPhone",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "promote": [
+                        {
+                            "objectID": "iPhone-12345",
+                            "position": 0,
+                        },
+                    ],
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/Promote-iPhone-X"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"Promote-iPhone-X","conditions":[{"pattern":"iPhone","anchoring":"contains"}],"consequence":{"promote":[{"objectID":"iPhone-12345","position":0}]}}"""
+        )
+
+    async def test_save_rule_10(self):
+        """
+        promote single item
+        """
+        _req = await self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="promote-harry-potter-box-set",
+            rule={
+                "objectID": "promote-harry-potter-box-set",
+                "conditions": [
+                    {
+                        "pattern": "Harry Potter",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "promote": [
+                        {
+                            "objectID": "HP-12345",
+                            "position": 0,
+                        },
+                    ],
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/promote-harry-potter-box-set"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"promote-harry-potter-box-set","conditions":[{"pattern":"Harry Potter","anchoring":"contains"}],"consequence":{"promote":[{"objectID":"HP-12345","position":0}]}}"""
+        )
+
+    async def test_save_rule_11(self):
+        """
+        limit search results
+        """
+        _req = await self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="article-rule",
+            rule={
+                "objectID": "article-rule",
+                "conditions": [
+                    {
+                        "pattern": "article",
+                        "anchoring": "startsWith",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "query": {
+                            "edits": [
+                                {
+                                    "type": "remove",
+                                    "delete": "article",
+                                },
+                            ],
+                        },
+                        "restrictSearchableAttributes": [
+                            "title",
+                            "book_id",
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/article-rule"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"article-rule","conditions":[{"pattern":"article","anchoring":"startsWith"}],"consequence":{"params":{"query":{"edits":[{"type":"remove","delete":"article"}]},"restrictSearchableAttributes":["title","book_id"]}}}"""
+        )
+
+    async def test_save_rule_12(self):
+        """
+        query match
+        """
+        _req = await self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="tagged-brand-rule",
+            rule={
+                "conditions": [
+                    {
+                        "pattern": "brand: {facet:brand}",
+                        "anchoring": "contains",
+                        "alternatives": False,
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "automaticFacetFilters": [
+                            {
+                                "facet": "brand",
+                            },
+                        ],
+                        "query": {
+                            "remove": [
+                                "brand:",
+                                "{facet:brand}",
+                            ],
+                        },
+                    },
+                },
+                "description": "filter on brand: {brand}",
+                "objectID": "tagged-brand-rule",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/tagged-brand-rule"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"conditions":[{"pattern":"brand: {facet:brand}","anchoring":"contains","alternatives":false}],"consequence":{"params":{"automaticFacetFilters":[{"facet":"brand"}],"query":{"remove":["brand:","{facet:brand}"]}}},"description":"filter on brand: {brand}","objectID":"tagged-brand-rule"}"""
+        )
+
+    async def test_save_rule_13(self):
+        """
+        dynamic filtering
+        """
+        _req = await self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="color-facets",
+            rule={
+                "objectID": "color-facets",
+                "conditions": [
+                    {
+                        "pattern": "{facet:color}",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "automaticFacetFilters": [
+                            {
+                                "facet": "color",
+                            },
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/color-facets"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"color-facets","conditions":[{"pattern":"{facet:color}"}],"consequence":{"params":{"automaticFacetFilters":[{"facet":"color"}]}}}"""
+        )
+
+    async def test_save_rule_14(self):
+        """
+        hide hits
+        """
+        _req = await self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="hide-12345",
+            rule={
+                "objectID": "hide-12345",
+                "conditions": [
+                    {
+                        "pattern": "cheap",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "hide": [
+                        {
+                            "objectID": "to-hide-12345",
+                        },
+                    ],
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/hide-12345"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"hide-12345","conditions":[{"pattern":"cheap","anchoring":"contains"}],"consequence":{"hide":[{"objectID":"to-hide-12345"}]}}"""
+        )
+
+    async def test_save_rule_15(self):
+        """
+        one rule per facet
+        """
+        _req = await self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="red-color",
+            rule={
+                "objectID": "red-color",
+                "conditions": [
+                    {
+                        "pattern": "red",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "query": {
+                            "remove": [
+                                "red",
+                            ],
+                        },
+                        "filters": "color:red",
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/red-color"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"red-color","conditions":[{"pattern":"red","anchoring":"contains"}],"consequence":{"params":{"query":{"remove":["red"]},"filters":"color:red"}}}"""
+        )
+
+    async def test_save_rule_16(self):
+        """
+        numerical filters
+        """
+        _req = await self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="cheap",
+            rule={
+                "objectID": "cheap",
+                "conditions": [
+                    {
+                        "pattern": "cheap",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "query": {
+                            "remove": [
+                                "cheap",
+                            ],
+                        },
+                        "filters": "price < 10",
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/cheap"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"cheap","conditions":[{"pattern":"cheap","anchoring":"contains"}],"consequence":{"params":{"query":{"remove":["cheap"]},"filters":"price < 10"}}}"""
+        )
+
+    async def test_save_rule_17(self):
+        """
+        negative filters
+        """
+        _req = await self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="gluten-free-rule",
+            rule={
+                "objectID": "gluten-free-rule",
+                "conditions": [
+                    {
+                        "pattern": "gluten-free",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "filters": "NOT allergens:gluten",
+                        "query": {
+                            "edits": [
+                                {
+                                    "type": "remove",
+                                    "delete": "gluten-free",
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/gluten-free-rule"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"gluten-free-rule","conditions":[{"pattern":"gluten-free","anchoring":"contains"}],"consequence":{"params":{"filters":"NOT allergens:gluten","query":{"edits":[{"type":"remove","delete":"gluten-free"}]}}}}"""
+        )
+
+    async def test_save_rule_18(self):
+        """
+        positive filters
+        """
+        _req = await self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="diet-rule",
+            rule={
+                "objectID": "diet-rule",
+                "conditions": [
+                    {
+                        "pattern": "diet",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "filters": "'low-carb' OR 'low-fat'",
+                        "query": {
+                            "edits": [
+                                {
+                                    "type": "remove",
+                                    "delete": "diet",
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/diet-rule"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"diet-rule","conditions":[{"pattern":"diet","anchoring":"contains"}],"consequence":{"params":{"filters":"'low-carb' OR 'low-fat'","query":{"edits":[{"type":"remove","delete":"diet"}]}}}}"""
+        )
+
+    async def test_save_rule_19(self):
+        """
+        conditionless
+        """
+        _req = await self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="diet-rule",
+            rule={
+                "objectID": "diet-rule",
+                "consequence": {
+                    "params": {
+                        "filters": "'low-carb' OR 'low-fat'",
+                        "query": {
+                            "edits": [
+                                {
+                                    "type": "remove",
+                                    "delete": "diet",
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/diet-rule"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"diet-rule","consequence":{"params":{"filters":"'low-carb' OR 'low-fat'","query":{"edits":[{"type":"remove","delete":"diet"}]}}}}"""
+        )
+
+    async def test_save_rule_20(self):
+        """
+        contextual
+        """
+        _req = await self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="a-rule-id",
+            rule={
+                "objectID": "a-rule-id",
+                "conditions": [
+                    {
+                        "context": "mobile",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "filters": "release_date >= 1577836800",
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/a-rule-id"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"a-rule-id","conditions":[{"context":"mobile"}],"consequence":{"params":{"filters":"release_date >= 1577836800"}}}"""
         )
 
     async def test_save_rules_(self):
@@ -1830,7 +2662,9 @@ class TestSearchClient:
                             },
                         ],
                         "filterPromotes": False,
-                        "userData": {"algolia": "aloglia"},
+                        "userData": {
+                            "algolia": "aloglia",
+                        },
                         "promote": [
                             {
                                 "objectID": "abc",
@@ -1868,6 +2702,108 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """[{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}]"""
+        )
+
+    async def test_save_rules_2(self):
+        """
+        dynamic filtering
+        """
+        _req = await self._client.save_rules_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            rules=[
+                {
+                    "objectID": "toaster",
+                    "conditions": [
+                        {
+                            "pattern": "toaster",
+                            "anchoring": "contains",
+                        },
+                    ],
+                    "consequence": {
+                        "params": {
+                            "query": {
+                                "remove": [
+                                    "toaster",
+                                ],
+                            },
+                            "filters": "product_type:toaster",
+                        },
+                    },
+                },
+                {
+                    "objectID": "cheap",
+                    "conditions": [
+                        {
+                            "pattern": "cheap",
+                            "anchoring": "contains",
+                        },
+                    ],
+                    "consequence": {
+                        "params": {
+                            "query": {
+                                "remove": [
+                                    "cheap",
+                                ],
+                            },
+                            "filters": "price < 15",
+                        },
+                    },
+                },
+            ],
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """[{"objectID":"toaster","conditions":[{"pattern":"toaster","anchoring":"contains"}],"consequence":{"params":{"query":{"remove":["toaster"]},"filters":"product_type:toaster"}}},{"objectID":"cheap","conditions":[{"pattern":"cheap","anchoring":"contains"}],"consequence":{"params":{"query":{"remove":["cheap"]},"filters":"price < 15"}}}]"""
+        )
+
+    async def test_save_rules_3(self):
+        """
+        enhance search results
+        """
+        _req = await self._client.save_rules_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            rules=[
+                {
+                    "objectID": "country",
+                    "conditions": [
+                        {
+                            "pattern": "{facet:country}",
+                            "anchoring": "contains",
+                        },
+                    ],
+                    "consequence": {
+                        "params": {
+                            "aroundLatLngViaIP": False,
+                        },
+                    },
+                },
+                {
+                    "objectID": "city",
+                    "conditions": [
+                        {
+                            "pattern": "{facet:city}",
+                            "anchoring": "contains",
+                        },
+                    ],
+                    "consequence": {
+                        "params": {
+                            "aroundLatLngViaIP": False,
+                        },
+                    },
+                },
+            ],
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """[{"objectID":"country","conditions":[{"pattern":"{facet:country}","anchoring":"contains"}],"consequence":{"params":{"aroundLatLngViaIP":false}}},{"objectID":"city","conditions":[{"pattern":"{facet:city}","anchoring":"contains"}],"consequence":{"params":{"aroundLatLngViaIP":false}}}]"""
         )
 
     async def test_save_synonym_(self):
@@ -2659,6 +3595,24 @@ class TestSearchClient:
             """{"params":"query=foo&facetFilters=['bar']","facetQuery":"foo","maxFacetHits":42}"""
         )
 
+    async def test_search_for_facet_values_2(self):
+        """
+        facetName and facetQuery
+        """
+        _req = await self._client.search_for_facet_values_with_http_info(
+            index_name="indexName",
+            facet_name="author",
+            search_for_facet_values_request={
+                "facetQuery": "stephen",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/facets/author/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facetQuery":"stephen"}""")
+
     async def test_search_rules_(self):
         """
         searchRules
@@ -2750,6 +3704,2671 @@ class TestSearchClient:
         assert loads(_req.data) == loads(
             """{"query":"batman mask of the phantasm","attributesToRetrieve":["*"],"attributesToSnippet":["*:20"]}"""
         )
+
+    async def test_search_single_index_4(self):
+        """
+        query
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "phone",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"phone"}""")
+
+    async def test_search_single_index_5(self):
+        """
+        filters
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "filters": "country:US AND price.gross < 2.0",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"filters":"country:US AND price.gross < 2.0"}"""
+        )
+
+    async def test_search_single_index_6(self):
+        """
+        filters for stores
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "ben",
+                "filters": "categories:politics AND store:Gibert Joseph Saint-Michel",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"ben","filters":"categories:politics AND store:Gibert Joseph Saint-Michel"}"""
+        )
+
+    async def test_search_single_index_7(self):
+        """
+        filters boolean
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "filters": "is_available:true",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"filters":"is_available:true"}""")
+
+    async def test_search_single_index_8(self):
+        """
+        distinct
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "distinct": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"distinct":true}""")
+
+    async def test_search_single_index_9(self):
+        """
+        filtersNumeric
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "filters": "price < 10",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"filters":"price < 10"}""")
+
+    async def test_search_single_index_10(self):
+        """
+        filtersTimestamp
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "filters": "NOT date_timestamp:1514764800 TO 1546300799",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"filters":"NOT date_timestamp:1514764800 TO 1546300799"}"""
+        )
+
+    async def test_search_single_index_11(self):
+        """
+        filtersSumOrFiltersScoresFalse
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "filters": "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+                "sumOrFiltersScores": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"filters":"(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)","sumOrFiltersScores":false}"""
+        )
+
+    async def test_search_single_index_12(self):
+        """
+        filtersSumOrFiltersScoresTrue
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "filters": "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+                "sumOrFiltersScores": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"filters":"(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)","sumOrFiltersScores":true}"""
+        )
+
+    async def test_search_single_index_13(self):
+        """
+        filtersStephenKing
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "filters": 'author:"Stephen King"',
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"filters":"author:\\"Stephen King\\""}""")
+
+    async def test_search_single_index_14(self):
+        """
+        filtersNotTags
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "harry",
+                "filters": "_tags:non-fiction",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"harry","filters":"_tags:non-fiction"}"""
+        )
+
+    async def test_search_single_index_15(self):
+        """
+        facetFiltersList
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "facetFilters": [
+                    "publisher:Penguin",
+                    [
+                        "author:Stephen King",
+                        "genre:Horror",
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"facetFilters":["publisher:Penguin",["author:Stephen King","genre:Horror"]]}"""
+        )
+
+    async def test_search_single_index_16(self):
+        """
+        facetFiltersBook
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "facetFilters": [
+                    "category:Book",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","facetFilters":["category:Book"]}"""
+        )
+
+    async def test_search_single_index_17(self):
+        """
+        facetFiltersAND
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "facetFilters": [
+                    "category:Book",
+                    "author:John Doe",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","facetFilters":["category:Book","author:John Doe"]}"""
+        )
+
+    async def test_search_single_index_18(self):
+        """
+        facetFiltersOR
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "facetFilters": [
+                    [
+                        "category:Book",
+                        "author:John Doe",
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","facetFilters":[["category:Book","author:John Doe"]]}"""
+        )
+
+    async def test_search_single_index_19(self):
+        """
+        facetFiltersCombined
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "facetFilters": [
+                    "author:John Doe",
+                    [
+                        "category:Book",
+                        "category:Movie",
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","facetFilters":["author:John Doe",["category:Book","category:Movie"]]}"""
+        )
+
+    async def test_search_single_index_20(self):
+        """
+        facetFiltersNeg
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "facetFilters": "category:-Ebook",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facetFilters":"category:-Ebook"}""")
+
+    async def test_search_single_index_21(self):
+        """
+        filtersAndFacetFilters
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "filters": '(author:"Stephen King" OR genre:"Horror")',
+                "facetFilters": [
+                    "publisher:Penguin",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"filters":"(author:\\"Stephen King\\" OR genre:\\"Horror\\")","facetFilters":["publisher:Penguin"]}"""
+        )
+
+    async def test_search_single_index_22(self):
+        """
+        facet author genre
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "facets": [
+                    "author",
+                    "genre",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facets":["author","genre"]}""")
+
+    async def test_search_single_index_23(self):
+        """
+        facet wildcard
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "facets": [
+                    "*",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facets":["*"]}""")
+
+    async def test_search_single_index_24(self):
+        """
+        maxValuesPerFacet
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "maxValuesPerFacet": 1000,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"maxValuesPerFacet":1000}""")
+
+    async def test_search_single_index_25(self):
+        """
+        aroundLatLng
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "aroundLatLng": "40.71, -74.01",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"aroundLatLng":"40.71, -74.01"}""")
+
+    async def test_search_single_index_26(self):
+        """
+        aroundLatLngViaIP
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "aroundLatLngViaIP": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"aroundLatLngViaIP":true}""")
+
+    async def test_search_single_index_27(self):
+        """
+        aroundRadius
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "aroundLatLng": "40.71, -74.01",
+                "aroundRadius": 1000000,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"aroundLatLng":"40.71, -74.01","aroundRadius":1000000}"""
+        )
+
+    async def test_search_single_index_28(self):
+        """
+        insideBoundingBox
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "insideBoundingBox": [
+                    [
+                        49.067996905313834,
+                        65.73828125,
+                        25.905859247243498,
+                        128.8046875,
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"insideBoundingBox":[[49.067996905313834,65.73828125,25.905859247243498,128.8046875]]}"""
+        )
+
+    async def test_search_single_index_29(self):
+        """
+        insidePolygon
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "insidePolygon": [
+                    [
+                        42.01,
+                        -124.31,
+                        48.835509470063045,
+                        -124.40453125000005,
+                        45.01082951668149,
+                        -65.95726562500005,
+                        31.247243545293433,
+                        -81.06578125000004,
+                        25.924152577235226,
+                        -97.68234374999997,
+                        32.300311895879545,
+                        -117.54828125,
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}"""
+        )
+
+    async def test_search_single_index_30(self):
+        """
+        insidePolygon
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "insidePolygon": [
+                    [
+                        42.01,
+                        -124.31,
+                        48.835509470063045,
+                        -124.40453125000005,
+                        45.01082951668149,
+                        -65.95726562500005,
+                        31.247243545293433,
+                        -81.06578125000004,
+                        25.924152577235226,
+                        -97.68234374999997,
+                        32.300311895879545,
+                        -117.54828125,
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}"""
+        )
+
+    async def test_search_single_index_31(self):
+        """
+        optionalFilters
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "optionalFilters": [
+                    "can_deliver_quickly:true",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"optionalFilters":["can_deliver_quickly:true"]}"""
+        )
+
+    async def test_search_single_index_32(self):
+        """
+        optionalFiltersMany
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "optionalFilters": [
+                    "brand:Apple<score=3>",
+                    "brand:Samsung<score=2>",
+                    "brand:-Huawei",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"optionalFilters":["brand:Apple<score=3>","brand:Samsung<score=2>","brand:-Huawei"]}"""
+        )
+
+    async def test_search_single_index_33(self):
+        """
+        optionalFiltersSimple
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "optionalFilters": [
+                    "brand:Apple<score=2>",
+                    "type:tablet",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"optionalFilters":["brand:Apple<score=2>","type:tablet"]}"""
+        )
+
+    async def test_search_single_index_34(self):
+        """
+        restrictSearchableAttributes
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "restrictSearchableAttributes": [
+                    "title_fr",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"restrictSearchableAttributes":["title_fr"]}"""
+        )
+
+    async def test_search_single_index_35(self):
+        """
+        getRankingInfo
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "getRankingInfo": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"getRankingInfo":true}""")
+
+    async def test_search_single_index_36(self):
+        """
+        clickAnalytics
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "clickAnalytics": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"clickAnalytics":true}""")
+
+    async def test_search_single_index_37(self):
+        """
+        clickAnalyticsUserToken
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "clickAnalytics": True,
+                "userToken": "user-1",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"clickAnalytics":true,"userToken":"user-1"}"""
+        )
+
+    async def test_search_single_index_38(self):
+        """
+        enablePersonalization
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "enablePersonalization": True,
+                "userToken": "user-1",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"enablePersonalization":true,"userToken":"user-1"}"""
+        )
+
+    async def test_search_single_index_39(self):
+        """
+        userToken
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "userToken": "user-1",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"userToken":"user-1"}""")
+
+    async def test_search_single_index_40(self):
+        """
+        userToken1234
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "userToken": "user-1234",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","userToken":"user-1234"}"""
+        )
+
+    async def test_search_single_index_41(self):
+        """
+        analyticsTag
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "analyticsTags": [
+                    "YOUR_ANALYTICS_TAG",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"analyticsTags":["YOUR_ANALYTICS_TAG"]}""")
+
+    async def test_search_single_index_42(self):
+        """
+        facetFiltersUsers
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "facetFilters": [
+                    "user:user42",
+                    "user:public",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"facetFilters":["user:user42","user:public"]}"""
+        )
+
+    async def test_search_single_index_43(self):
+        """
+        buildTheQuery
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "filters": "categoryPageId: Men's Clothing",
+                "hitsPerPage": 50,
+                "analyticsTags": [
+                    "mens-clothing",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"filters":"categoryPageId: Men's Clothing","hitsPerPage":50,"analyticsTags":["mens-clothing"]}"""
+        )
+
+    async def test_search_single_index_44(self):
+        """
+        attributesToHighlightOverride
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "attributesToHighlight": [
+                    "title",
+                    "content",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","attributesToHighlight":["title","content"]}"""
+        )
+
+    async def test_search_single_index_45(self):
+        """
+        disableTypoToleranceOnAttributes
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "disableTypoToleranceOnAttributes": [
+                    "serial_number",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","disableTypoToleranceOnAttributes":["serial_number"]}"""
+        )
+
+    async def test_search_single_index_46(self):
+        """
+        search_a_query
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "shirt",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"shirt"}""")
+
+    async def test_search_single_index_47(self):
+        """
+        search_everything
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":""}""")
+
+    async def test_search_single_index_48(self):
+        """
+        api_filtering_range_example
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "books",
+                "filters": "price:10 TO 20",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"books","filters":"price:10 TO 20"}"""
+        )
+
+    async def test_search_single_index_49(self):
+        """
+        search_a_query
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "",
+                "similarQuery": "Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen",
+                "filters": "year:1991 TO 2001",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"","similarQuery":"Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen","filters":"year:1991 TO 2001"}"""
+        )
+
+    async def test_search_single_index_50(self):
+        """
+        override_retrievable_attributes
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "attributesToRetrieve": [
+                    "title",
+                    "content",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","attributesToRetrieve":["title","content"]}"""
+        )
+
+    async def test_search_single_index_51(self):
+        """
+        restrict_searchable_attributes
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "restrictSearchableAttributes": [
+                    "title",
+                    "author",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","restrictSearchableAttributes":["title","author"]}"""
+        )
+
+    async def test_search_single_index_52(self):
+        """
+        override_default_relevancy
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "relevancyStrictness": 70,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","relevancyStrictness":70}"""
+        )
+
+    async def test_search_single_index_53(self):
+        """
+        apply_filters
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "filters": "(category:Book OR category:Ebook) AND _tags:published",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","filters":"(category:Book OR category:Ebook) AND _tags:published"}"""
+        )
+
+    async def test_search_single_index_54(self):
+        """
+        apply_all_filters
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "filters": 'available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:"John Doe"',
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","filters":"available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\\"John Doe\\""}"""
+        )
+
+    async def test_search_single_index_55(self):
+        """
+        escape_spaces
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "filters": 'category:"Books and Comics"',
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","filters":"category:\\"Books and Comics\\""}"""
+        )
+
+    async def test_search_single_index_56(self):
+        """
+        escape_keywords
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "filters": 'keyword:"OR"',
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","filters":"keyword:\\"OR\\""}"""
+        )
+
+    async def test_search_single_index_57(self):
+        """
+        escape_single_quotes
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "filters": 'content:"It\'s a wonderful day"',
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","filters":"content:\\"It's a wonderful day\\""}"""
+        )
+
+    async def test_search_single_index_58(self):
+        """
+        escape_double_quotes
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "filters": 'content:"She said "Hello World"',
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","filters":"content:\\"She said \\"Hello World\\""}"""
+        )
+
+    async def test_search_single_index_59(self):
+        """
+        apply_filters
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "optionalFilters": [
+                    "category:Book",
+                    "author:John Doe",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","optionalFilters":["category:Book","author:John Doe"]}"""
+        )
+
+    async def test_search_single_index_60(self):
+        """
+        apply_negative_filters
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "optionalFilters": [
+                    "category:Book",
+                    "author:-John Doe",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","optionalFilters":["category:Book","author:-John Doe"]}"""
+        )
+
+    async def test_search_single_index_61(self):
+        """
+        apply_negative_filters_restaurants
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "optionalFilters": [
+                    "restaurant:-Bert's Inn",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","optionalFilters":["restaurant:-Bert's Inn"]}"""
+        )
+
+    async def test_search_single_index_62(self):
+        """
+        apply_numeric_filters
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "numericFilters": [
+                    "price < 1000",
+                    [
+                        "inStock = 1",
+                        "deliveryDate < 1441755506",
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","numericFilters":["price < 1000",["inStock = 1","deliveryDate < 1441755506"]]}"""
+        )
+
+    async def test_search_single_index_63(self):
+        """
+        apply_tag_filters
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "tagFilters": [
+                    "SciFi",
+                    [
+                        "Book",
+                        "Movie",
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","tagFilters":["SciFi",["Book","Movie"]]}"""
+        )
+
+    async def test_search_single_index_64(self):
+        """
+        apply_filters
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "sumOrFiltersScores": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","sumOrFiltersScores":true}"""
+        )
+
+    async def test_search_single_index_65(self):
+        """
+        facets_all
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "facets": [
+                    "*",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","facets":["*"]}""")
+
+    async def test_search_single_index_66(self):
+        """
+        retrieve_only_some_facets
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "facets": [
+                    "category",
+                    "author",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","facets":["category","author"]}"""
+        )
+
+    async def test_search_single_index_67(self):
+        """
+        override_default_max_values_per_facet
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "maxValuesPerFacet": 20,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","maxValuesPerFacet":20}""")
+
+    async def test_search_single_index_68(self):
+        """
+        enable_faceting_after_distinct
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "facetingAfterDistinct": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","facetingAfterDistinct":true}"""
+        )
+
+    async def test_search_single_index_69(self):
+        """
+        sort_facet_values_alphabetically
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "sortFacetValuesBy": "count",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","sortFacetValuesBy":"count"}"""
+        )
+
+    async def test_search_single_index_70(self):
+        """
+        override_attributes_to_snippet
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "attributesToSnippet": [
+                    "title",
+                    "content:80",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","attributesToSnippet":["title","content:80"]}"""
+        )
+
+    async def test_search_single_index_71(self):
+        """
+        override_default_highlight_pre_tag
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "highlightPreTag": "<strong>",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","highlightPreTag":"<strong>"}"""
+        )
+
+    async def test_search_single_index_72(self):
+        """
+        override_default_highlight_post_tag
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "highlightPostTag": "</strong>",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","highlightPostTag":"</strong>"}"""
+        )
+
+    async def test_search_single_index_73(self):
+        """
+        override_default_snippet_ellipsis_text
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "snippetEllipsisText": "",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","snippetEllipsisText":""}"""
+        )
+
+    async def test_search_single_index_74(self):
+        """
+        enable_restrict_highlight_and_snippet_arrays
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "restrictHighlightAndSnippetArrays": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","restrictHighlightAndSnippetArrays":false}"""
+        )
+
+    async def test_search_single_index_75(self):
+        """
+        access_page
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "page": 0,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","page":0}""")
+
+    async def test_search_single_index_76(self):
+        """
+        override_default_hits_per_page
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "hitsPerPage": 10,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","hitsPerPage":10}""")
+
+    async def test_search_single_index_77(self):
+        """
+        get_nth_hit
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "offset": 4,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","offset":4}""")
+
+    async def test_search_single_index_78(self):
+        """
+        get_n_results
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "length": 4,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","length":4}""")
+
+    async def test_search_single_index_79(self):
+        """
+        override_default_min_word_size_for_one_typo
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "minWordSizefor1Typo": 2,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","minWordSizefor1Typo":2}"""
+        )
+
+    async def test_search_single_index_80(self):
+        """
+        override_default_min_word_size_for_two_typos
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "minWordSizefor2Typos": 2,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","minWordSizefor2Typos":2}"""
+        )
+
+    async def test_search_single_index_81(self):
+        """
+        override_default_typo_tolerance_mode
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "typoTolerance": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","typoTolerance":false}""")
+
+    async def test_search_single_index_82(self):
+        """
+        disable_typos_on_numeric_tokens_at_search_time
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "allowTyposOnNumericTokens": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","allowTyposOnNumericTokens":false}"""
+        )
+
+    async def test_search_single_index_83(self):
+        """
+        search_around_a_position
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "aroundLatLng": "40.71, -74.01",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","aroundLatLng":"40.71, -74.01"}"""
+        )
+
+    async def test_search_single_index_84(self):
+        """
+        search_around_server_ip
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "aroundLatLngViaIP": True,
+            },
+            request_options={
+                "headers": loads(
+                    """{"x-forwarded-for":"94.228.178.246 // should be replaced with the actual IP you would like to search around"}"""
+                ),
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert (
+            _req.headers.items()
+            >= {
+                "x-forwarded-for": "94.228.178.246 // should be replaced with the actual IP you would like to search around"
+            }.items()
+        )
+        assert loads(_req.data) == loads(
+            """{"query":"query","aroundLatLngViaIP":true}"""
+        )
+
+    async def test_search_single_index_85(self):
+        """
+        set_around_radius
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "aroundRadius": 1000,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","aroundRadius":1000}""")
+
+    async def test_search_single_index_86(self):
+        """
+        disable_automatic_radius
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "aroundRadius": "all",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","aroundRadius":"all"}""")
+
+    async def test_search_single_index_87(self):
+        """
+        set_geo_search_precision
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "aroundPrecision": 100,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","aroundPrecision":100}""")
+
+    async def test_search_single_index_88(self):
+        """
+        set_geo_search_precision_non_linear
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "aroundPrecision": [
+                    {
+                        "from": 0,
+                        "value": 25,
+                    },
+                    {
+                        "from": 2000,
+                        "value": 1000,
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","aroundPrecision":[{"from":0,"value":25},{"from":2000,"value":1000}]}"""
+        )
+
+    async def test_search_single_index_89(self):
+        """
+        set_minimum_geo_search_radius
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "minimumAroundRadius": 1000,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","minimumAroundRadius":1000}"""
+        )
+
+    async def test_search_single_index_90(self):
+        """
+        search_inside_rectangular_area
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "insideBoundingBox": [
+                    [
+                        46.650828100116044,
+                        7.123046875,
+                        45.17210966999772,
+                        1.009765625,
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","insideBoundingBox":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625]]}"""
+        )
+
+    async def test_search_single_index_91(self):
+        """
+        search_inside_multiple_rectangular_areas
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "insideBoundingBox": [
+                    [
+                        46.650828100116044,
+                        7.123046875,
+                        45.17210966999772,
+                        1.009765625,
+                    ],
+                    [
+                        49.62625916704081,
+                        4.6181640625,
+                        47.715070300900194,
+                        0.482421875,
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","insideBoundingBox":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875]]}"""
+        )
+
+    async def test_search_single_index_92(self):
+        """
+        search_inside_polygon_area
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "insidePolygon": [
+                    [
+                        46.650828100116044,
+                        7.123046875,
+                        45.17210966999772,
+                        1.009765625,
+                        49.62625916704081,
+                        4.6181640625,
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","insidePolygon":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625]]}"""
+        )
+
+    async def test_search_single_index_93(self):
+        """
+        search_inside_multiple_polygon_areas
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "insidePolygon": [
+                    [
+                        46.650828100116044,
+                        7.123046875,
+                        45.17210966999772,
+                        1.009765625,
+                        49.62625916704081,
+                        4.6181640625,
+                    ],
+                    [
+                        49.62625916704081,
+                        4.6181640625,
+                        47.715070300900194,
+                        0.482421875,
+                        45.17210966999772,
+                        1.009765625,
+                        50.62626704081,
+                        4.6181640625,
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","insidePolygon":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875,45.17210966999772,1.009765625,50.62626704081,4.6181640625]]}"""
+        )
+
+    async def test_search_single_index_94(self):
+        """
+        set_querylanguages_override
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "ignorePlurals": [
+                    "ca",
+                    "es",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","ignorePlurals":["ca","es"]}"""
+        )
+
+    async def test_search_single_index_95(self):
+        """
+        set_querylanguages_override
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "removeStopWords": [
+                    "ca",
+                    "es",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","removeStopWords":["ca","es"]}"""
+        )
+
+    async def test_search_single_index_96(self):
+        """
+        set_querylanguages_override
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "removeStopWords": [
+                    "ca",
+                    "es",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","removeStopWords":["ca","es"]}"""
+        )
+
+    async def test_search_single_index_97(self):
+        """
+        set_querylanguages_with_japanese_query
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "queryLanguages": [
+                    "ja",
+                    "en",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","queryLanguages":["ja","en"]}"""
+        )
+
+    async def test_search_single_index_98(self):
+        """
+        set_natural_languages
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "",
+                "naturalLanguages": [
+                    "fr",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"","naturalLanguages":["fr"]}""")
+
+    async def test_search_single_index_99(self):
+        """
+        override_natural_languages_with_query
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "",
+                "naturalLanguages": [
+                    "fr",
+                ],
+                "removeWordsIfNoResults": "firstWords",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"","naturalLanguages":["fr"],"removeWordsIfNoResults":"firstWords"}"""
+        )
+
+    async def test_search_single_index_100(self):
+        """
+        enable_decompound_query_search_time
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "decompoundQuery": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","decompoundQuery":true}""")
+
+    async def test_search_single_index_101(self):
+        """
+        enable_rules_search_time
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "enableRules": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","enableRules":true}""")
+
+    async def test_search_single_index_102(self):
+        """
+        set_rule_contexts
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "ruleContexts": [
+                    "front_end",
+                    "website2",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","ruleContexts":["front_end","website2"]}"""
+        )
+
+    async def test_search_single_index_103(self):
+        """
+        enable_personalization
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "enablePersonalization": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","enablePersonalization":true}"""
+        )
+
+    async def test_search_single_index_104(self):
+        """
+        enable_personalization_with_user_token
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "enablePersonalization": True,
+                "userToken": "123456",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","enablePersonalization":true,"userToken":"123456"}"""
+        )
+
+    async def test_search_single_index_105(self):
+        """
+        personalization_impact
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "personalizationImpact": 20,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","personalizationImpact":20}"""
+        )
+
+    async def test_search_single_index_106(self):
+        """
+        set_user_token
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "userToken": "123456",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","userToken":"123456"}""")
+
+    async def test_search_single_index_107(self):
+        """
+        set_user_token_with_personalization
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "enablePersonalization": True,
+                "userToken": "123456",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","enablePersonalization":true,"userToken":"123456"}"""
+        )
+
+    async def test_search_single_index_108(self):
+        """
+        override_default_query_type
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "queryType": "prefixAll",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","queryType":"prefixAll"}"""
+        )
+
+    async def test_search_single_index_109(self):
+        """
+        override_default_remove_words_if_no_results
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "removeWordsIfNoResults": "lastWords",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","removeWordsIfNoResults":"lastWords"}"""
+        )
+
+    async def test_search_single_index_110(self):
+        """
+        enable_advanced_syntax_search_time
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "advancedSyntax": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","advancedSyntax":true}""")
+
+    async def test_search_single_index_111(self):
+        """
+        overide_default_optional_words
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "optionalWords": [
+                    "toyota",
+                    "2020 2021",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","optionalWords":["toyota","2020 2021"]}"""
+        )
+
+    async def test_search_single_index_112(self):
+        """
+        disabling_exact_for_some_attributes_search_time
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "disableExactOnAttributes": [
+                    "description",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","disableExactOnAttributes":["description"]}"""
+        )
+
+    async def test_search_single_index_113(self):
+        """
+        override_default_exact_single_word_query
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "exactOnSingleWordQuery": "none",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","exactOnSingleWordQuery":"none"}"""
+        )
+
+    async def test_search_single_index_114(self):
+        """
+        override_default_aternative_as_exact
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "alternativesAsExact": [
+                    "multiWordsSynonym",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","alternativesAsExact":["multiWordsSynonym"]}"""
+        )
+
+    async def test_search_single_index_115(self):
+        """
+        enable_advanced_syntax_exact_phrase
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "advancedSyntax": True,
+                "advancedSyntaxFeatures": [
+                    "exactPhrase",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"]}"""
+        )
+
+    async def test_search_single_index_116(self):
+        """
+        enable_advanced_syntax_exclude_words
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "advancedSyntax": True,
+                "advancedSyntaxFeatures": [
+                    "excludeWords",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","advancedSyntax":true,"advancedSyntaxFeatures":["excludeWords"]}"""
+        )
+
+    async def test_search_single_index_117(self):
+        """
+        override_distinct
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "distinct": 0,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","distinct":0}""")
+
+    async def test_search_single_index_118(self):
+        """
+        get_ranking_info
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "getRankingInfo": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","getRankingInfo":true}""")
+
+    async def test_search_single_index_119(self):
+        """
+        disable_click_analytics
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "clickAnalytics": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","clickAnalytics":false}""")
+
+    async def test_search_single_index_120(self):
+        """
+        enable_click_analytics
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "clickAnalytics": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","clickAnalytics":true}""")
+
+    async def test_search_single_index_121(self):
+        """
+        disable_analytics
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "analytics": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","analytics":false}""")
+
+    async def test_search_single_index_122(self):
+        """
+        add_analytics_tags
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "analyticsTags": [
+                    "front_end",
+                    "website2",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","analyticsTags":["front_end","website2"]}"""
+        )
+
+    async def test_search_single_index_123(self):
+        """
+        disable_synonyms
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "synonyms": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","synonyms":false}""")
+
+    async def test_search_single_index_124(self):
+        """
+        override_replace_synonyms_in_highlights
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "replaceSynonymsInHighlight": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","replaceSynonymsInHighlight":true}"""
+        )
+
+    async def test_search_single_index_125(self):
+        """
+        override_min_proximity
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "minProximity": 2,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","minProximity":2}""")
+
+    async def test_search_single_index_126(self):
+        """
+        override_default_field
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "responseFields": [
+                    "hits",
+                    "facets",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","responseFields":["hits","facets"]}"""
+        )
+
+    async def test_search_single_index_127(self):
+        """
+        override_percentile_computation
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "percentileComputation": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","percentileComputation":false}"""
+        )
+
+    async def test_search_single_index_128(self):
+        """
+        set_ab_test
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "enableABTest": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","enableABTest":false}""")
+
+    async def test_search_single_index_129(self):
+        """
+        set_enable_re_ranking
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "enableReRanking": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","enableReRanking":false}"""
+        )
+
+    async def test_search_single_index_130(self):
+        """
+        with algolia user id
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+            },
+            request_options={
+                "headers": loads("""{"X-Algolia-User-ID":"user1234"}"""),
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query"}""")
 
     async def test_search_synonyms_(self):
         """
@@ -2864,7 +6483,997 @@ class TestSearchClient:
 
     async def test_set_settings_(self):
         """
-        setSettingsAttributesForFaceting
+        minimal parameters
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="cts_e2e_settings",
+            index_settings={
+                "paginationLimitedTo": 10,
+            },
+            forward_to_replicas=True,
+        )
+
+        assert _req.path == "/1/indexes/cts_e2e_settings/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"paginationLimitedTo":10}""")
+
+    async def test_set_settings_1(self):
+        """
+        boolean typoTolerance
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "typoTolerance": True,
+            },
+            forward_to_replicas=True,
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"typoTolerance":true}""")
+
+    async def test_set_settings_2(self):
+        """
+        enum typoTolerance
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "typoTolerance": "min",
+            },
+            forward_to_replicas=True,
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"typoTolerance":"min"}""")
+
+    async def test_set_settings_3(self):
+        """
+        ignorePlurals
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "ignorePlurals": True,
+            },
+            forward_to_replicas=True,
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"ignorePlurals":true}""")
+
+    async def test_set_settings_4(self):
+        """
+        list of string ignorePlurals
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "ignorePlurals": [
+                    "fr",
+                ],
+            },
+            forward_to_replicas=True,
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"ignorePlurals":["fr"]}""")
+
+    async def test_set_settings_5(self):
+        """
+        removeStopWords boolean
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "removeStopWords": True,
+            },
+            forward_to_replicas=True,
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"removeStopWords":true}""")
+
+    async def test_set_settings_6(self):
+        """
+        removeStopWords list of string
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "removeStopWords": [
+                    "fr",
+                ],
+            },
+            forward_to_replicas=True,
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"removeStopWords":["fr"]}""")
+
+    async def test_set_settings_7(self):
+        """
+        boolean distinct
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "distinct": True,
+            },
+            forward_to_replicas=True,
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"distinct":true}""")
+
+    async def test_set_settings_8(self):
+        """
+        integer distinct
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "distinct": 1,
+            },
+            forward_to_replicas=True,
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"distinct":1}""")
+
+    async def test_set_settings_9(self):
+        """
+        distinct company
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributeForDistinct": "company",
+                "distinct": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributeForDistinct":"company","distinct":true}"""
+        )
+
+    async def test_set_settings_10(self):
+        """
+        distinct design
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributeForDistinct": "design",
+                "distinct": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributeForDistinct":"design","distinct":true}"""
+        )
+
+    async def test_set_settings_11(self):
+        """
+        distinct true
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "distinct": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"distinct":true}""")
+
+    async def test_set_settings_12(self):
+        """
+        distinct section
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributeForDistinct": "section",
+                "distinct": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributeForDistinct":"section","distinct":true}"""
+        )
+
+    async def test_set_settings_13(self):
+        """
+        attributesForFaceting allergens
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "allergens",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"attributesForFaceting":["allergens"]}""")
+
+    async def test_set_settings_14(self):
+        """
+        attributesForFaceting availableIn
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "color",
+                    "availableIn",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesForFaceting":["color","availableIn"]}"""
+        )
+
+    async def test_set_settings_15(self):
+        """
+        api_attributes_for_faceting
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "genre",
+                    "author",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesForFaceting":["genre","author"]}"""
+        )
+
+    async def test_set_settings_16(self):
+        """
+        api_attributes_for_faceting_searchable
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "genre",
+                    "searchable(author)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesForFaceting":["genre","searchable(author)"]}"""
+        )
+
+    async def test_set_settings_17(self):
+        """
+        api_attributes_for_filter_only
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "filterOnly(genre)",
+                    "author",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesForFaceting":["filterOnly(genre)","author"]}"""
+        )
+
+    async def test_set_settings_18(self):
+        """
+        attributesForFaceting categoryPageId
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "searchable(categoryPageId)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesForFaceting":["searchable(categoryPageId)"]}"""
+        )
+
+    async def test_set_settings_19(self):
+        """
+        unretrievableAttributes
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "unretrievableAttributes": [
+                    "visible_by",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"unretrievableAttributes":["visible_by"]}"""
+        )
+
+    async def test_set_settings_20(self):
+        """
+        attributesForFaceting user restricted data
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "filterOnly(visible_by)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesForFaceting":["filterOnly(visible_by)"]}"""
+        )
+
+    async def test_set_settings_21(self):
+        """
+        attributesForFaceting optional filters
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "can_deliver_quickly",
+                    "restaurant",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesForFaceting":["can_deliver_quickly","restaurant"]}"""
+        )
+
+    async def test_set_settings_22(self):
+        """
+        attributesForFaceting redirect index
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "query_terms",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesForFaceting":["query_terms"]}"""
+        )
+
+    async def test_set_settings_23(self):
+        """
+        attributesForFaceting multiple consequences
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "director",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"attributesForFaceting":["director"]}""")
+
+    async def test_set_settings_24(self):
+        """
+        attributesForFaceting in-depth optional filters
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "filterOnly(brand)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesForFaceting":["filterOnly(brand)"]}"""
+        )
+
+    async def test_set_settings_25(self):
+        """
+        mode neuralSearch
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "mode": "neuralSearch",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"mode":"neuralSearch"}""")
+
+    async def test_set_settings_26(self):
+        """
+        mode keywordSearch
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "mode": "keywordSearch",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"mode":"keywordSearch"}""")
+
+    async def test_set_settings_27(self):
+        """
+        searchableAttributes same priority
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "title,comments",
+                    "ingredients",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["title,comments","ingredients"]}"""
+        )
+
+    async def test_set_settings_28(self):
+        """
+        searchableAttributes higher priority
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "title",
+                    "ingredients",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["title","ingredients"]}"""
+        )
+
+    async def test_set_settings_29(self):
+        """
+        customRanking retweets
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(retweets)",
+                    "desc(likes)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["desc(retweets)","desc(likes)"]}"""
+        )
+
+    async def test_set_settings_30(self):
+        """
+        customRanking boosted
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(boosted)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"customRanking":["desc(boosted)"]}""")
+
+    async def test_set_settings_31(self):
+        """
+        customRanking pageviews
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(pageviews)",
+                    "desc(comments)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["desc(pageviews)","desc(comments)"]}"""
+        )
+
+    async def test_set_settings_32(self):
+        """
+        customRanking applying search parameters for a specific query
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(nb_airline_liaisons)",
+                ],
+                "attributesForFaceting": [
+                    "city, country",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["desc(nb_airline_liaisons)"],"attributesForFaceting":["city, country"]}"""
+        )
+
+    async def test_set_settings_33(self):
+        """
+        customRanking rounded pageviews
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(rounded_pageviews)",
+                    "desc(comments)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["desc(rounded_pageviews)","desc(comments)"]}"""
+        )
+
+    async def test_set_settings_34(self):
+        """
+        customRanking price
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(price)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"customRanking":["desc(price)"]}""")
+
+    async def test_set_settings_35(self):
+        """
+        ranking exhaustive (price)
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "ranking": [
+                    "desc(price)",
+                    "typo",
+                    "geo",
+                    "words",
+                    "filters",
+                    "proximity",
+                    "attribute",
+                    "exact",
+                    "custom",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"ranking":["desc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}"""
+        )
+
+    async def test_set_settings_36(self):
+        """
+        ranking exhaustive (is_popular)
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "ranking": [
+                    "desc(is_popular)",
+                    "typo",
+                    "geo",
+                    "words",
+                    "filters",
+                    "proximity",
+                    "attribute",
+                    "exact",
+                    "custom",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"ranking":["desc(is_popular)","typo","geo","words","filters","proximity","attribute","exact","custom"]}"""
+        )
+
+    async def test_set_settings_37(self):
+        """
+        ranking standard replica
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "ranking": [
+                    "desc(post_date_timestamp)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"ranking":["desc(post_date_timestamp)"]}"""
+        )
+
+    async def test_set_settings_38(self):
+        """
+        ranking virtual replica
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(post_date_timestamp)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["desc(post_date_timestamp)"]}"""
+        )
+
+    async def test_set_settings_39(self):
+        """
+        customRanking and ranking sort alphabetically
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "asc(textual_attribute)",
+                ],
+                "ranking": [
+                    "custom",
+                    "typo",
+                    "geo",
+                    "words",
+                    "filters",
+                    "proximity",
+                    "attribute",
+                    "exact",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["asc(textual_attribute)"],"ranking":["custom","typo","geo","words","filters","proximity","attribute","exact"]}"""
+        )
+
+    async def test_set_settings_40(self):
+        """
+        relevancyStrictness
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "asc(textual_attribute)",
+                ],
+                "relevancyStrictness": 0,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["asc(textual_attribute)"],"relevancyStrictness":0}"""
+        )
+
+    async def test_set_settings_41(self):
+        """
+        create replica index
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "replicas": [
+                    "products_price_desc",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"replicas":["products_price_desc"]}""")
+
+    async def test_set_settings_42(self):
+        """
+        create replica index articles
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "replicas": [
+                    "articles_date_desc",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"replicas":["articles_date_desc"]}""")
+
+    async def test_set_settings_43(self):
+        """
+        create virtual replica index
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "replicas": [
+                    "virtual(products_price_desc)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"replicas":["virtual(products_price_desc)"]}"""
+        )
+
+    async def test_set_settings_44(self):
+        """
+        unlink replica index
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "replicas": [
+                    "",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"replicas":[""]}""")
+
+    async def test_set_settings_45(self):
+        """
+        forwardToReplicas
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "name",
+                    "description",
+                ],
+            },
+            forward_to_replicas=True,
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["name","description"]}"""
+        )
+
+    async def test_set_settings_46(self):
+        """
+        maxValuesPerFacet
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "maxValuesPerFacet": 1000,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"maxValuesPerFacet":1000}""")
+
+    async def test_set_settings_47(self):
+        """
+        maxFacetHits
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "maxFacetHits": 100,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"maxFacetHits":100}""")
+
+    async def test_set_settings_48(self):
+        """
+        attributesForFaceting complex
         """
         _req = await self._client.set_settings_with_http_info(
             index_name="<YOUR_INDEX_NAME>",
@@ -2885,175 +7494,130 @@ class TestSearchClient:
             """{"attributesForFaceting":["actor","filterOnly(category)","searchable(publisher)"]}"""
         )
 
-    async def test_set_settings_1(self):
+    async def test_set_settings_49(self):
         """
-        setSettings with minimal parameters
-        """
-        _req = await self._client.set_settings_with_http_info(
-            index_name="cts_e2e_settings",
-            index_settings={
-                "paginationLimitedTo": 10,
-            },
-            forward_to_replicas=True,
-        )
-
-        assert _req.path == "/1/indexes/cts_e2e_settings/settings"
-        assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"paginationLimitedTo":10}""")
-
-    async def test_set_settings_2(self):
-        """
-        setSettings allow boolean `typoTolerance`
+        ranking closest dates
         """
         _req = await self._client.set_settings_with_http_info(
             index_name="theIndexName",
             index_settings={
-                "typoTolerance": True,
-            },
-            forward_to_replicas=True,
-        )
-
-        assert _req.path == "/1/indexes/theIndexName/settings"
-        assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"typoTolerance":true}""")
-
-    async def test_set_settings_3(self):
-        """
-        setSettings allow enum `typoTolerance`
-        """
-        _req = await self._client.set_settings_with_http_info(
-            index_name="theIndexName",
-            index_settings={
-                "typoTolerance": "min",
-            },
-            forward_to_replicas=True,
-        )
-
-        assert _req.path == "/1/indexes/theIndexName/settings"
-        assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"typoTolerance":"min"}""")
-
-    async def test_set_settings_4(self):
-        """
-        setSettings allow boolean `ignorePlurals`
-        """
-        _req = await self._client.set_settings_with_http_info(
-            index_name="theIndexName",
-            index_settings={
-                "ignorePlurals": True,
-            },
-            forward_to_replicas=True,
-        )
-
-        assert _req.path == "/1/indexes/theIndexName/settings"
-        assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"ignorePlurals":true}""")
-
-    async def test_set_settings_5(self):
-        """
-        setSettings allow list of string `ignorePlurals`
-        """
-        _req = await self._client.set_settings_with_http_info(
-            index_name="theIndexName",
-            index_settings={
-                "ignorePlurals": [
-                    "fr",
+                "ranking": [
+                    "asc(date_timestamp)",
+                    "typo",
+                    "geo",
+                    "words",
+                    "filters",
+                    "proximity",
+                    "attribute",
+                    "exact",
+                    "custom",
                 ],
             },
-            forward_to_replicas=True,
         )
 
         assert _req.path == "/1/indexes/theIndexName/settings"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"ignorePlurals":["fr"]}""")
-
-    async def test_set_settings_6(self):
-        """
-        setSettings allow boolean `removeStopWords`
-        """
-        _req = await self._client.set_settings_with_http_info(
-            index_name="theIndexName",
-            index_settings={
-                "removeStopWords": True,
-            },
-            forward_to_replicas=True,
+        assert loads(_req.data) == loads(
+            """{"ranking":["asc(date_timestamp)","typo","geo","words","filters","proximity","attribute","exact","custom"]}"""
         )
 
-        assert _req.path == "/1/indexes/theIndexName/settings"
-        assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"removeStopWords":true}""")
-
-    async def test_set_settings_7(self):
+    async def test_set_settings_50(self):
         """
-        setSettings allow list of string `removeStopWords`
+        searchableAttributes item variation
         """
         _req = await self._client.set_settings_with_http_info(
             index_name="theIndexName",
             index_settings={
-                "removeStopWords": [
-                    "fr",
+                "searchableAttributes": [
+                    "design",
+                    "type",
+                    "color",
                 ],
             },
-            forward_to_replicas=True,
         )
 
         assert _req.path == "/1/indexes/theIndexName/settings"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"removeStopWords":["fr"]}""")
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["design","type","color"]}"""
+        )
 
-    async def test_set_settings_8(self):
+    async def test_set_settings_51(self):
         """
-        setSettings allow boolean `distinct`
+        searchableAttributes around location
         """
         _req = await self._client.set_settings_with_http_info(
             index_name="theIndexName",
             index_settings={
-                "distinct": True,
+                "searchableAttributes": [
+                    "name",
+                    "country",
+                    "city",
+                    "iata_code",
+                ],
+                "customRanking": [
+                    "desc(links_count)",
+                ],
             },
-            forward_to_replicas=True,
         )
 
         assert _req.path == "/1/indexes/theIndexName/settings"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"distinct":true}""")
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["name","country","city","iata_code"],"customRanking":["desc(links_count)"]}"""
+        )
 
-    async def test_set_settings_9(self):
+    async def test_set_settings_52(self):
         """
-        setSettings allow integers for `distinct`
+        attributesToHighlight
         """
         _req = await self._client.set_settings_with_http_info(
             index_name="theIndexName",
             index_settings={
-                "distinct": 1,
+                "attributesToHighlight": [
+                    "author",
+                    "title",
+                    "content",
+                ],
             },
-            forward_to_replicas=True,
         )
 
         assert _req.path == "/1/indexes/theIndexName/settings"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"distinct":1}""")
+        assert loads(_req.data) == loads(
+            """{"attributesToHighlight":["author","title","content"]}"""
+        )
 
-    async def test_set_settings_10(self):
+    async def test_set_settings_53(self):
         """
-        setSettings allow all `indexSettings`
+        attributesToHighlightStar
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributesToHighlight": [
+                    "*",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"attributesToHighlight":["*"]}""")
+
+    async def test_set_settings_54(self):
+        """
+        everything
         """
         _req = await self._client.set_settings_with_http_info(
             index_name="theIndexName",
@@ -3203,6 +7767,1493 @@ class TestSearchClient:
             """{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["fr"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["fr"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}"""
         )
 
+    async def test_set_settings_55(self):
+        """
+        searchableAttributesWithCustomRankingsAndAttributesForFaceting
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "brand",
+                    "name",
+                    "categories",
+                    "unordered(description)",
+                ],
+                "customRanking": [
+                    "desc(popularity)",
+                ],
+                "attributesForFaceting": [
+                    "searchable(brand)",
+                    "type",
+                    "categories",
+                    "price",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["brand","name","categories","unordered(description)"],"customRanking":["desc(popularity)"],"attributesForFaceting":["searchable(brand)","type","categories","price"]}"""
+        )
+
+    async def test_set_settings_56(self):
+        """
+        searchableAttributesOrdering
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "unordered(title)",
+                    "cast",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["unordered(title)","cast"]}"""
+        )
+
+    async def test_set_settings_57(self):
+        """
+        searchableAttributesProductReferenceSuffixes
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "name",
+                    "product_reference",
+                    "product_reference_suffixes",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["name","product_reference","product_reference_suffixes"]}"""
+        )
+
+    async def test_set_settings_58(self):
+        """
+        queryLanguageAndIgnorePlurals
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "queryLanguages": [
+                    "en",
+                ],
+                "ignorePlurals": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"queryLanguages":["en"],"ignorePlurals":true}"""
+        )
+
+    async def test_set_settings_59(self):
+        """
+        searchableAttributesInMovies
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="movies",
+            index_settings={
+                "searchableAttributes": [
+                    "title_eng",
+                    "title_fr",
+                    "title_es",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/movies/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["title_eng","title_fr","title_es"]}"""
+        )
+
+    async def test_set_settings_60(self):
+        """
+        disablePrefixOnAttributes
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "disablePrefixOnAttributes": [
+                    "serial_number",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"disablePrefixOnAttributes":["serial_number"]}"""
+        )
+
+    async def test_set_settings_61(self):
+        """
+        disableTypoToleranceOnAttributes
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "disableTypoToleranceOnAttributes": [
+                    "serial_number",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"disableTypoToleranceOnAttributes":["serial_number"]}"""
+        )
+
+    async def test_set_settings_62(self):
+        """
+        searchableAttributesSimpleExample
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "serial_number",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["serial_number"]}"""
+        )
+
+    async def test_set_settings_63(self):
+        """
+        searchableAttributesSimpleExampleAlt
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "serial_number",
+                    "serial_number_suffixes",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["serial_number","serial_number_suffixes"]}"""
+        )
+
+    async def test_set_settings_64(self):
+        """
+        set_searchable_attributes
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "title,alternative_title",
+                    "author",
+                    "unordered(text)",
+                    "emails.personal",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["title,alternative_title","author","unordered(text)","emails.personal"]}"""
+        )
+
+    async def test_set_settings_65(self):
+        """
+        set_searchable_attributes
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributesForFaceting": [
+                    "author",
+                    "filterOnly(isbn)",
+                    "searchable(edition)",
+                    "afterDistinct(category)",
+                    "afterDistinct(searchable(publisher))",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesForFaceting":["author","filterOnly(isbn)","searchable(edition)","afterDistinct(category)","afterDistinct(searchable(publisher))"]}"""
+        )
+
+    async def test_set_settings_66(self):
+        """
+        unretrievable_attributes
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "unretrievableAttributes": [
+                    "total_number_of_sales",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"unretrievableAttributes":["total_number_of_sales"]}"""
+        )
+
+    async def test_set_settings_67(self):
+        """
+        set_retrievable_attributes
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributesToRetrieve": [
+                    "author",
+                    "title",
+                    "content",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesToRetrieve":["author","title","content"]}"""
+        )
+
+    async def test_set_settings_68(self):
+        """
+        set_all_attributes_as_retrievable
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributesToRetrieve": [
+                    "*",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"attributesToRetrieve":["*"]}""")
+
+    async def test_set_settings_69(self):
+        """
+        specify_attributes_not_to_retrieve
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributesToRetrieve": [
+                    "*",
+                    "-SKU",
+                    "-internal_desc",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesToRetrieve":["*","-SKU","-internal_desc"]}"""
+        )
+
+    async def test_set_settings_70(self):
+        """
+        neural_search
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "mode": "neuralSearch",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"mode":"neuralSearch"}""")
+
+    async def test_set_settings_71(self):
+        """
+        keyword_search
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "mode": "keywordSearch",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"mode":"keywordSearch"}""")
+
+    async def test_set_settings_72(self):
+        """
+        set_default_ranking
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "ranking": [
+                    "typo",
+                    "geo",
+                    "words",
+                    "filters",
+                    "attribute",
+                    "proximity",
+                    "exact",
+                    "custom",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"ranking":["typo","geo","words","filters","attribute","proximity","exact","custom"]}"""
+        )
+
+    async def test_set_settings_73(self):
+        """
+        set_ranking_by_attribute_asc
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "ranking": [
+                    "asc(price)",
+                    "typo",
+                    "geo",
+                    "words",
+                    "filters",
+                    "proximity",
+                    "attribute",
+                    "exact",
+                    "custom",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"ranking":["asc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}"""
+        )
+
+    async def test_set_settings_74(self):
+        """
+        set_ranking_by_attribute_desc
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "ranking": [
+                    "desc(price)",
+                    "typo",
+                    "geo",
+                    "words",
+                    "filters",
+                    "proximity",
+                    "attribute",
+                    "exact",
+                    "custom",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"ranking":["desc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}"""
+        )
+
+    async def test_set_settings_75(self):
+        """
+        restrict_searchable_attributes
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(popularity)",
+                    "asc(price)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["desc(popularity)","asc(price)"]}"""
+        )
+
+    async def test_set_settings_76(self):
+        """
+        set_default_relevancy
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "relevancyStrictness": 90,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"relevancyStrictness":90}""")
+
+    async def test_set_settings_77(self):
+        """
+        set_replicas
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "replicas": [
+                    "name_of_replica_index1",
+                    "name_of_replica_index2",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"replicas":["name_of_replica_index1","name_of_replica_index2"]}"""
+        )
+
+    async def test_set_settings_78(self):
+        """
+        set_default_max_values_per_facet
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "maxValuesPerFacet": 100,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"maxValuesPerFacet":100}""")
+
+    async def test_set_settings_79(self):
+        """
+        set_default_sort_facet_values_by
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "sortFacetValuesBy": "alpha",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"sortFacetValuesBy":"alpha"}""")
+
+    async def test_set_settings_80(self):
+        """
+        set_attributes_to_snippet
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributesToSnippet": [
+                    "content:80",
+                    "description",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesToSnippet":["content:80","description"]}"""
+        )
+
+    async def test_set_settings_81(self):
+        """
+        set_all_attributes_to_snippet
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributesToSnippet": [
+                    "*:80",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"attributesToSnippet":["*:80"]}""")
+
+    async def test_set_settings_82(self):
+        """
+        set_default_highlight_pre_tag
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "highlightPreTag": "<em>",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"highlightPreTag":"<em>"}""")
+
+    async def test_set_settings_83(self):
+        """
+        set_default_highlight_post_tag
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "highlightPostTag": "</em>",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"highlightPostTag":"</em>"}""")
+
+    async def test_set_settings_84(self):
+        """
+        set_default_snippet_ellipsis_text
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "snippetEllipsisText": "…",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"snippetEllipsisText":"…"}""")
+
+    async def test_set_settings_85(self):
+        """
+        enable_restrict_highlight_and_snippet_arrays_by_default
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "restrictHighlightAndSnippetArrays": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"restrictHighlightAndSnippetArrays":true}"""
+        )
+
+    async def test_set_settings_86(self):
+        """
+        set_default_hits_per_page
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "hitsPerPage": 20,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"hitsPerPage":20}""")
+
+    async def test_set_settings_87(self):
+        """
+        set_pagination_limit
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "paginationLimitedTo": 1000,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"paginationLimitedTo":1000}""")
+
+    async def test_set_settings_88(self):
+        """
+        set_default_min_word_size_for_one_typo
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "minWordSizefor1Typo": 4,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"minWordSizefor1Typo":4}""")
+
+    async def test_set_settings_89(self):
+        """
+        set_default_min_word_size_for_two_typos
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "minWordSizefor2Typos": 4,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"minWordSizefor2Typos":4}""")
+
+    async def test_set_settings_90(self):
+        """
+        set_default_typo_tolerance_mode
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "typoTolerance": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"typoTolerance":true}""")
+
+    async def test_set_settings_91(self):
+        """
+        disable_typos_on_numeric_tokens_by_default
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "allowTyposOnNumericTokens": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"allowTyposOnNumericTokens":false}""")
+
+    async def test_set_settings_92(self):
+        """
+        disable_typo_tolerance_for_words
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "disableTypoToleranceOnWords": [
+                    "wheel",
+                    "1X2BCD",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"disableTypoToleranceOnWords":["wheel","1X2BCD"]}"""
+        )
+
+    async def test_set_settings_93(self):
+        """
+        set_separators_to_index
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "separatorsToIndex": "+#",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"separatorsToIndex":"+#"}""")
+
+    async def test_set_settings_94(self):
+        """
+        set_languages_using_querylanguages
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "queryLanguages": [
+                    "es",
+                ],
+                "ignorePlurals": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"queryLanguages":["es"],"ignorePlurals":true}"""
+        )
+
+    async def test_set_settings_95(self):
+        """
+        set_attributes_to_transliterate
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "indexLanguages": [
+                    "ja",
+                ],
+                "attributesToTransliterate": [
+                    "name",
+                    "description",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"indexLanguages":["ja"],"attributesToTransliterate":["name","description"]}"""
+        )
+
+    async def test_set_settings_96(self):
+        """
+        set_languages_using_querylanguages
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "queryLanguages": [
+                    "es",
+                ],
+                "removeStopWords": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"queryLanguages":["es"],"removeStopWords":true}"""
+        )
+
+    async def test_set_settings_97(self):
+        """
+        set_camel_case_attributes
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "camelCaseAttributes": [
+                    "description",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"camelCaseAttributes":["description"]}""")
+
+    async def test_set_settings_98(self):
+        """
+        set_decompounded_attributes
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "decompoundedAttributes": {
+                    "de": [
+                        "name",
+                    ],
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"decompoundedAttributes":{"de":["name"]}}"""
+        )
+
+    async def test_set_settings_99(self):
+        """
+        set_decompounded_multiple_attributes
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "decompoundedAttributes": {
+                    "de": [
+                        "name_de",
+                        "description_de",
+                    ],
+                    "fi": [
+                        "name_fi",
+                        "description_fi",
+                    ],
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"decompoundedAttributes":{"de":["name_de","description_de"],"fi":["name_fi","description_fi"]}}"""
+        )
+
+    async def test_set_settings_100(self):
+        """
+        set_keep_diacritics_on_characters
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "keepDiacriticsOnCharacters": "øé",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"keepDiacriticsOnCharacters":"øé"}""")
+
+    async def test_set_settings_101(self):
+        """
+        set_custom_normalization
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customNormalization": {
+                    "default": {
+                        "ä": "ae",
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customNormalization":{"default":{"ä":"ae"}}}"""
+        )
+
+    async def test_set_settings_102(self):
+        """
+        set_languages_using_querylanguages
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "queryLanguages": [
+                    "es",
+                ],
+                "removeStopWords": True,
+                "ignorePlurals": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"queryLanguages":["es"],"removeStopWords":true,"ignorePlurals":true}"""
+        )
+
+    async def test_set_settings_103(self):
+        """
+        set_indexlanguages
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "indexLanguages": [
+                    "ja",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"indexLanguages":["ja"]}""")
+
+    async def test_set_settings_104(self):
+        """
+        enable_decompound_query_by_default
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "decompoundQuery": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"decompoundQuery":true}""")
+
+    async def test_set_settings_105(self):
+        """
+        enable_rules_syntax_by_default
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "enableRules": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"enableRules":true}""")
+
+    async def test_set_settings_106(self):
+        """
+        enable_personalization_settings
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "enablePersonalization": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"enablePersonalization":true}""")
+
+    async def test_set_settings_107(self):
+        """
+        set_default_query_type
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "queryType": "prefixLast",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"queryType":"prefixLast"}""")
+
+    async def test_set_settings_108(self):
+        """
+        set_default_remove_words_if_no_result
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "removeWordsIfNoResults": "none",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"removeWordsIfNoResults":"none"}""")
+
+    async def test_set_settings_109(self):
+        """
+        enable_advanced_syntax_by_default
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "advancedSyntax": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"advancedSyntax":true}""")
+
+    async def test_set_settings_110(self):
+        """
+        set_default_optional_words
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "optionalWords": [
+                    "blue",
+                    "iphone case",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"optionalWords":["blue","iphone case"]}""")
+
+    async def test_set_settings_111(self):
+        """
+        disabling_prefix_search_for_some_attributes_by_default
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "disablePrefixOnAttributes": [
+                    "sku",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"disablePrefixOnAttributes":["sku"]}""")
+
+    async def test_set_settings_112(self):
+        """
+        disabling_exact_for_some_attributes_by_default
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "disableExactOnAttributes": [
+                    "description",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"disableExactOnAttributes":["description"]}"""
+        )
+
+    async def test_set_settings_113(self):
+        """
+        set_default_exact_single_word_query
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "exactOnSingleWordQuery": "attribute",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"exactOnSingleWordQuery":"attribute"}""")
+
+    async def test_set_settings_114(self):
+        """
+        set_default_aternative_as_exact
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "alternativesAsExact": [
+                    "ignorePlurals",
+                    "singleWordSynonym",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"alternativesAsExact":["ignorePlurals","singleWordSynonym"]}"""
+        )
+
+    async def test_set_settings_115(self):
+        """
+        enable_advanced_syntax_by_default
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "advancedSyntax": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"advancedSyntax":true}""")
+
+    async def test_set_settings_116(self):
+        """
+        set_numeric_attributes_for_filtering
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "numericAttributesForFiltering": [
+                    "quantity",
+                    "popularity",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"numericAttributesForFiltering":["quantity","popularity"]}"""
+        )
+
+    async def test_set_settings_117(self):
+        """
+        enable_compression_of_integer_array
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "allowCompressionOfIntegerArray": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"allowCompressionOfIntegerArray":true}""")
+
+    async def test_set_settings_118(self):
+        """
+        set_attributes_for_distinct
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributeForDistinct": "url",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"attributeForDistinct":"url"}""")
+
+    async def test_set_settings_119(self):
+        """
+        set_distinct
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "distinct": 1,
+                "attributeForDistinct": "url",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"distinct":1,"attributeForDistinct":"url"}"""
+        )
+
+    async def test_set_settings_120(self):
+        """
+        set_replace_synonyms_in_highlights
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "replaceSynonymsInHighlight": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"replaceSynonymsInHighlight":false}""")
+
+    async def test_set_settings_121(self):
+        """
+        set_min_proximity
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "minProximity": 1,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"minProximity":1}""")
+
+    async def test_set_settings_122(self):
+        """
+        set_default_field
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "responseFields": [
+                    "hits",
+                    "hitsPerPage",
+                    "nbPages",
+                    "page",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"responseFields":["hits","hitsPerPage","nbPages","page"]}"""
+        )
+
+    async def test_set_settings_123(self):
+        """
+        set_max_facet_hits
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "maxFacetHits": 10,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"maxFacetHits":10}""")
+
+    async def test_set_settings_124(self):
+        """
+        set_attribute_criteria_computed_by_min_proximity
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributeCriteriaComputedByMinProximity": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributeCriteriaComputedByMinProximity":true}"""
+        )
+
+    async def test_set_settings_125(self):
+        """
+        set_user_data
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "userData": {
+                    "extraData": "This is the custom data that you want to store in your index",
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"userData":{"extraData":"This is the custom data that you want to store in your index"}}"""
+        )
+
+    async def test_set_settings_126(self):
+        """
+        set_rendering_content
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "renderingContent": {
+                    "facetOrdering": {
+                        "facets": {
+                            "order": [
+                                "size",
+                                "brand",
+                            ],
+                        },
+                        "values": {
+                            "brand": {
+                                "order": [
+                                    "uniqlo",
+                                ],
+                                "hide": [
+                                    "muji",
+                                ],
+                                "sortRemainingBy": "count",
+                            },
+                            "size": {
+                                "order": [
+                                    "S",
+                                    "M",
+                                    "L",
+                                ],
+                                "sortRemainingBy": "hidden",
+                            },
+                        },
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"renderingContent":{"facetOrdering":{"facets":{"order":["size","brand"]},"values":{"brand":{"order":["uniqlo"],"hide":["muji"],"sortRemainingBy":"count"},"size":{"order":["S","M","L"],"sortRemainingBy":"hidden"}}}}}"""
+        )
+
     async def test_update_api_key_(self):
         """
         updateApiKey
@@ -3237,7 +9288,29 @@ class TestSearchClientSync:
 
     def test_add_api_key_(self):
         """
-        addApiKey
+        minimal
+        """
+        _req = self._client.add_api_key_with_http_info(
+            api_key={
+                "acl": [
+                    "search",
+                    "addObject",
+                ],
+                "description": "my new api key",
+            },
+        )
+
+        assert _req.path == "/1/keys"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"acl":["search","addObject"],"description":"my new api key"}"""
+        )
+
+    def test_add_api_key_1(self):
+        """
+        all
         """
         _req = self._client.add_api_key_with_http_info(
             api_key={
@@ -3299,20 +9372,20 @@ class TestSearchClientSync:
 
     def test_assign_user_id_(self):
         """
-        assignUserId
+        simple
         """
         _req = self._client.assign_user_id_with_http_info(
-            x_algolia_user_id="userID",
+            x_algolia_user_id="user42",
             assign_user_id_params={
-                "cluster": "theCluster",
+                "cluster": "d4242-eu",
             },
         )
 
         assert _req.path == "/1/clusters/mapping"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {"x-algolia-user-id": "userID"}.items()
-        assert loads(_req.data) == loads("""{"cluster":"theCluster"}""")
+        assert _req.headers.items() >= {"x-algolia-user-id": "user42"}.items()
+        assert loads(_req.data) == loads("""{"cluster":"d4242-eu"}""")
 
     def test_assign_user_id_1(self):
         """
@@ -4365,7 +10438,57 @@ class TestSearchClientSync:
 
     def test_get_objects_(self):
         """
-        getObjects
+        by ID
+        """
+        _req = self._client.get_objects_with_http_info(
+            get_objects_params={
+                "requests": [
+                    {
+                        "objectID": "uniqueID",
+                        "indexName": "theIndexName",
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/*/objects"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"objectID":"uniqueID","indexName":"theIndexName"}]}"""
+        )
+
+    def test_get_objects_1(self):
+        """
+        multiple IDs
+        """
+        _req = self._client.get_objects_with_http_info(
+            get_objects_params={
+                "requests": [
+                    {
+                        "objectID": "uniqueID1",
+                        "indexName": "theIndexName1",
+                    },
+                    {
+                        "objectID": "uniqueID2",
+                        "indexName": "theIndexName2",
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/*/objects"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"objectID":"uniqueID1","indexName":"theIndexName1"},{"objectID":"uniqueID2","indexName":"theIndexName2"}]}"""
+        )
+
+    def test_get_objects_2(self):
+        """
+        with attributesToRetrieve
         """
         _req = self._client.get_objects_with_http_info(
             get_objects_params={
@@ -4781,6 +10904,76 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"attributeId":{"nested":"value"}}""")
 
+    def test_partial_update_object_5(self):
+        """
+        with visible_by filter
+        """
+        _req = self._client.partial_update_object_with_http_info(
+            index_name="theIndexName",
+            object_id="uniqueID",
+            attributes_to_update={
+                "visible_by": [
+                    "Angela",
+                    "group/Finance",
+                    "group/Shareholders",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/uniqueID/partial"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"visible_by":["Angela","group/Finance","group/Shareholders"]}"""
+        )
+
+    def test_partial_update_object_6(self):
+        """
+        add men pant
+        """
+        _req = self._client.partial_update_object_with_http_info(
+            index_name="theIndexName",
+            object_id="productId",
+            attributes_to_update={
+                "categoryPageId": {
+                    "_operation": "Add",
+                    "value": "men-clothing-pants",
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/productId/partial"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"categoryPageId":{"_operation":"Add","value":"men-clothing-pants"}}"""
+        )
+
+    def test_partial_update_object_7(self):
+        """
+        remove men pant
+        """
+        _req = self._client.partial_update_object_with_http_info(
+            index_name="theIndexName",
+            object_id="productId",
+            attributes_to_update={
+                "categoryPageId": {
+                    "_operation": "Remove",
+                    "value": "men-clothing-pants",
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/productId/partial"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"categoryPageId":{"_operation":"Remove","value":"men-clothing-pants"}}"""
+        )
+
     def test_remove_user_id_(self):
         """
         removeUserId
@@ -4836,8 +11029,10 @@ class TestSearchClientSync:
         _req = self._client.save_object_with_http_info(
             index_name="<YOUR_INDEX_NAME>",
             body={
-                "objectID": "id",
-                "test": "val",
+                "name": "Black T-shirt",
+                "color": "#000000||black",
+                "availableIn": "https://source.unsplash.com/100x100/?paris||Paris",
+                "objectID": "myID",
             },
         )
 
@@ -4845,7 +11040,9 @@ class TestSearchClientSync:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"objectID":"id","test":"val"}""")
+        assert loads(_req.data) == loads(
+            """{"name":"Black T-shirt","color":"#000000||black","availableIn":"https://source.unsplash.com/100x100/?paris||Paris","objectID":"myID"}"""
+        )
 
     def test_save_rule_(self):
         """
@@ -4922,7 +11119,9 @@ class TestSearchClientSync:
                         },
                     ],
                     "filterPromotes": False,
-                    "userData": {"algolia": "aloglia"},
+                    "userData": {
+                        "algolia": "aloglia",
+                    },
                     "promote": [
                         {
                             "objectID": "abc",
@@ -4955,6 +11154,690 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}"""
+        )
+
+    def test_save_rule_2(self):
+        """
+        b2b catalog
+        """
+        _req = self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="article-rule",
+            rule={
+                "objectID": "article-rule",
+                "conditions": [
+                    {
+                        "pattern": "article",
+                        "anchoring": "startsWith",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "query": {
+                            "edits": [
+                                {
+                                    "type": "remove",
+                                    "delete": "article",
+                                },
+                            ],
+                        },
+                        "restrictSearchableAttributes": [
+                            "title",
+                            "book_id",
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/article-rule"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"article-rule","conditions":[{"pattern":"article","anchoring":"startsWith"}],"consequence":{"params":{"query":{"edits":[{"type":"remove","delete":"article"}]},"restrictSearchableAttributes":["title","book_id"]}}}"""
+        )
+
+    def test_save_rule_3(self):
+        """
+        merchandising and promoting
+        """
+        _req = self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="director-rule",
+            rule={
+                "objectID": "director-rule",
+                "conditions": [
+                    {
+                        "pattern": "{facet:director} director",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "restrictSearchableAttributes": [
+                            "title",
+                            "book_id",
+                        ],
+                        "automaticFacetFilters": [
+                            {
+                                "facet": "director",
+                            },
+                        ],
+                        "query": {
+                            "edits": [
+                                {
+                                    "type": "remove",
+                                    "delete": "director",
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/director-rule"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"director-rule","conditions":[{"pattern":"{facet:director} director","anchoring":"contains"}],"consequence":{"params":{"restrictSearchableAttributes":["title","book_id"],"automaticFacetFilters":[{"facet":"director"}],"query":{"edits":[{"type":"remove","delete":"director"}]}}}}"""
+        )
+
+    def test_save_rule_4(self):
+        """
+        harry potter
+        """
+        _req = self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="harry-potter-rule",
+            rule={
+                "objectID": "harry-potter-rule",
+                "conditions": [
+                    {
+                        "pattern": "harry potter",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "userData": {
+                        "promo_content": "20% OFF on all Harry Potter books!",
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/harry-potter-rule"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"harry-potter-rule","conditions":[{"pattern":"harry potter","anchoring":"contains"}],"consequence":{"userData":{"promo_content":"20% OFF on all Harry Potter books!"}}}"""
+        )
+
+    def test_save_rule_5(self):
+        """
+        merchandising empty query
+        """
+        _req = self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="clearance-category-filter",
+            rule={
+                "objectID": "clearance-category-filter",
+                "conditions": [
+                    {
+                        "pattern": "",
+                        "anchoring": "is",
+                        "context": "landing",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "optionalFilters": "clearance:true",
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/clearance-category-filter"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"clearance-category-filter","conditions":[{"pattern":"","anchoring":"is","context":"landing"}],"consequence":{"params":{"optionalFilters":"clearance:true"}}}"""
+        )
+
+    def test_save_rule_6(self):
+        """
+        redirect
+        """
+        _req = self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="redirect-help-rule",
+            rule={
+                "objectID": "redirect-help-rule",
+                "conditions": [
+                    {
+                        "pattern": "help",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "userData": {
+                        "redirect": "https://www.algolia.com/support",
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/redirect-help-rule"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"redirect-help-rule","conditions":[{"pattern":"help","anchoring":"contains"}],"consequence":{"userData":{"redirect":"https://www.algolia.com/support"}}}"""
+        )
+
+    def test_save_rule_7(self):
+        """
+        promote some results over others
+        """
+        _req = self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="tomato-fruit",
+            rule={
+                "objectID": "tomato-fruit",
+                "conditions": [
+                    {
+                        "pattern": "tomato",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "optionalFilters": "food_group:fruit",
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/tomato-fruit"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"tomato-fruit","conditions":[{"pattern":"tomato","anchoring":"contains"}],"consequence":{"params":{"optionalFilters":"food_group:fruit"}}}"""
+        )
+
+    def test_save_rule_8(self):
+        """
+        promote several hits
+        """
+        _req = self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="Promote-Apple-Newest",
+            rule={
+                "objectID": "Promote-Apple-Newest",
+                "conditions": [
+                    {
+                        "pattern": "apple",
+                        "anchoring": "is",
+                    },
+                ],
+                "consequence": {
+                    "promote": [
+                        {
+                            "objectIDs": [
+                                "iPhone-12345",
+                                "watch-123",
+                            ],
+                            "position": 0,
+                        },
+                    ],
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/Promote-Apple-Newest"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"Promote-Apple-Newest","conditions":[{"pattern":"apple","anchoring":"is"}],"consequence":{"promote":[{"objectIDs":["iPhone-12345","watch-123"],"position":0}]}}"""
+        )
+
+    def test_save_rule_9(self):
+        """
+        promote newest release
+        """
+        _req = self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="Promote-iPhone-X",
+            rule={
+                "objectID": "Promote-iPhone-X",
+                "conditions": [
+                    {
+                        "pattern": "iPhone",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "promote": [
+                        {
+                            "objectID": "iPhone-12345",
+                            "position": 0,
+                        },
+                    ],
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/Promote-iPhone-X"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"Promote-iPhone-X","conditions":[{"pattern":"iPhone","anchoring":"contains"}],"consequence":{"promote":[{"objectID":"iPhone-12345","position":0}]}}"""
+        )
+
+    def test_save_rule_10(self):
+        """
+        promote single item
+        """
+        _req = self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="promote-harry-potter-box-set",
+            rule={
+                "objectID": "promote-harry-potter-box-set",
+                "conditions": [
+                    {
+                        "pattern": "Harry Potter",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "promote": [
+                        {
+                            "objectID": "HP-12345",
+                            "position": 0,
+                        },
+                    ],
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/promote-harry-potter-box-set"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"promote-harry-potter-box-set","conditions":[{"pattern":"Harry Potter","anchoring":"contains"}],"consequence":{"promote":[{"objectID":"HP-12345","position":0}]}}"""
+        )
+
+    def test_save_rule_11(self):
+        """
+        limit search results
+        """
+        _req = self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="article-rule",
+            rule={
+                "objectID": "article-rule",
+                "conditions": [
+                    {
+                        "pattern": "article",
+                        "anchoring": "startsWith",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "query": {
+                            "edits": [
+                                {
+                                    "type": "remove",
+                                    "delete": "article",
+                                },
+                            ],
+                        },
+                        "restrictSearchableAttributes": [
+                            "title",
+                            "book_id",
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/article-rule"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"article-rule","conditions":[{"pattern":"article","anchoring":"startsWith"}],"consequence":{"params":{"query":{"edits":[{"type":"remove","delete":"article"}]},"restrictSearchableAttributes":["title","book_id"]}}}"""
+        )
+
+    def test_save_rule_12(self):
+        """
+        query match
+        """
+        _req = self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="tagged-brand-rule",
+            rule={
+                "conditions": [
+                    {
+                        "pattern": "brand: {facet:brand}",
+                        "anchoring": "contains",
+                        "alternatives": False,
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "automaticFacetFilters": [
+                            {
+                                "facet": "brand",
+                            },
+                        ],
+                        "query": {
+                            "remove": [
+                                "brand:",
+                                "{facet:brand}",
+                            ],
+                        },
+                    },
+                },
+                "description": "filter on brand: {brand}",
+                "objectID": "tagged-brand-rule",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/tagged-brand-rule"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"conditions":[{"pattern":"brand: {facet:brand}","anchoring":"contains","alternatives":false}],"consequence":{"params":{"automaticFacetFilters":[{"facet":"brand"}],"query":{"remove":["brand:","{facet:brand}"]}}},"description":"filter on brand: {brand}","objectID":"tagged-brand-rule"}"""
+        )
+
+    def test_save_rule_13(self):
+        """
+        dynamic filtering
+        """
+        _req = self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="color-facets",
+            rule={
+                "objectID": "color-facets",
+                "conditions": [
+                    {
+                        "pattern": "{facet:color}",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "automaticFacetFilters": [
+                            {
+                                "facet": "color",
+                            },
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/color-facets"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"color-facets","conditions":[{"pattern":"{facet:color}"}],"consequence":{"params":{"automaticFacetFilters":[{"facet":"color"}]}}}"""
+        )
+
+    def test_save_rule_14(self):
+        """
+        hide hits
+        """
+        _req = self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="hide-12345",
+            rule={
+                "objectID": "hide-12345",
+                "conditions": [
+                    {
+                        "pattern": "cheap",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "hide": [
+                        {
+                            "objectID": "to-hide-12345",
+                        },
+                    ],
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/hide-12345"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"hide-12345","conditions":[{"pattern":"cheap","anchoring":"contains"}],"consequence":{"hide":[{"objectID":"to-hide-12345"}]}}"""
+        )
+
+    def test_save_rule_15(self):
+        """
+        one rule per facet
+        """
+        _req = self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="red-color",
+            rule={
+                "objectID": "red-color",
+                "conditions": [
+                    {
+                        "pattern": "red",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "query": {
+                            "remove": [
+                                "red",
+                            ],
+                        },
+                        "filters": "color:red",
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/red-color"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"red-color","conditions":[{"pattern":"red","anchoring":"contains"}],"consequence":{"params":{"query":{"remove":["red"]},"filters":"color:red"}}}"""
+        )
+
+    def test_save_rule_16(self):
+        """
+        numerical filters
+        """
+        _req = self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="cheap",
+            rule={
+                "objectID": "cheap",
+                "conditions": [
+                    {
+                        "pattern": "cheap",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "query": {
+                            "remove": [
+                                "cheap",
+                            ],
+                        },
+                        "filters": "price < 10",
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/cheap"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"cheap","conditions":[{"pattern":"cheap","anchoring":"contains"}],"consequence":{"params":{"query":{"remove":["cheap"]},"filters":"price < 10"}}}"""
+        )
+
+    def test_save_rule_17(self):
+        """
+        negative filters
+        """
+        _req = self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="gluten-free-rule",
+            rule={
+                "objectID": "gluten-free-rule",
+                "conditions": [
+                    {
+                        "pattern": "gluten-free",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "filters": "NOT allergens:gluten",
+                        "query": {
+                            "edits": [
+                                {
+                                    "type": "remove",
+                                    "delete": "gluten-free",
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/gluten-free-rule"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"gluten-free-rule","conditions":[{"pattern":"gluten-free","anchoring":"contains"}],"consequence":{"params":{"filters":"NOT allergens:gluten","query":{"edits":[{"type":"remove","delete":"gluten-free"}]}}}}"""
+        )
+
+    def test_save_rule_18(self):
+        """
+        positive filters
+        """
+        _req = self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="diet-rule",
+            rule={
+                "objectID": "diet-rule",
+                "conditions": [
+                    {
+                        "pattern": "diet",
+                        "anchoring": "contains",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "filters": "'low-carb' OR 'low-fat'",
+                        "query": {
+                            "edits": [
+                                {
+                                    "type": "remove",
+                                    "delete": "diet",
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/diet-rule"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"diet-rule","conditions":[{"pattern":"diet","anchoring":"contains"}],"consequence":{"params":{"filters":"'low-carb' OR 'low-fat'","query":{"edits":[{"type":"remove","delete":"diet"}]}}}}"""
+        )
+
+    def test_save_rule_19(self):
+        """
+        conditionless
+        """
+        _req = self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="diet-rule",
+            rule={
+                "objectID": "diet-rule",
+                "consequence": {
+                    "params": {
+                        "filters": "'low-carb' OR 'low-fat'",
+                        "query": {
+                            "edits": [
+                                {
+                                    "type": "remove",
+                                    "delete": "diet",
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/diet-rule"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"diet-rule","consequence":{"params":{"filters":"'low-carb' OR 'low-fat'","query":{"edits":[{"type":"remove","delete":"diet"}]}}}}"""
+        )
+
+    def test_save_rule_20(self):
+        """
+        contextual
+        """
+        _req = self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="a-rule-id",
+            rule={
+                "objectID": "a-rule-id",
+                "conditions": [
+                    {
+                        "context": "mobile",
+                    },
+                ],
+                "consequence": {
+                    "params": {
+                        "filters": "release_date >= 1577836800",
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/a-rule-id"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"a-rule-id","conditions":[{"context":"mobile"}],"consequence":{"params":{"filters":"release_date >= 1577836800"}}}"""
         )
 
     def test_save_rules_(self):
@@ -5052,7 +11935,9 @@ class TestSearchClientSync:
                             },
                         ],
                         "filterPromotes": False,
-                        "userData": {"algolia": "aloglia"},
+                        "userData": {
+                            "algolia": "aloglia",
+                        },
                         "promote": [
                             {
                                 "objectID": "abc",
@@ -5090,6 +11975,108 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """[{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}]"""
+        )
+
+    def test_save_rules_2(self):
+        """
+        dynamic filtering
+        """
+        _req = self._client.save_rules_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            rules=[
+                {
+                    "objectID": "toaster",
+                    "conditions": [
+                        {
+                            "pattern": "toaster",
+                            "anchoring": "contains",
+                        },
+                    ],
+                    "consequence": {
+                        "params": {
+                            "query": {
+                                "remove": [
+                                    "toaster",
+                                ],
+                            },
+                            "filters": "product_type:toaster",
+                        },
+                    },
+                },
+                {
+                    "objectID": "cheap",
+                    "conditions": [
+                        {
+                            "pattern": "cheap",
+                            "anchoring": "contains",
+                        },
+                    ],
+                    "consequence": {
+                        "params": {
+                            "query": {
+                                "remove": [
+                                    "cheap",
+                                ],
+                            },
+                            "filters": "price < 15",
+                        },
+                    },
+                },
+            ],
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """[{"objectID":"toaster","conditions":[{"pattern":"toaster","anchoring":"contains"}],"consequence":{"params":{"query":{"remove":["toaster"]},"filters":"product_type:toaster"}}},{"objectID":"cheap","conditions":[{"pattern":"cheap","anchoring":"contains"}],"consequence":{"params":{"query":{"remove":["cheap"]},"filters":"price < 15"}}}]"""
+        )
+
+    def test_save_rules_3(self):
+        """
+        enhance search results
+        """
+        _req = self._client.save_rules_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            rules=[
+                {
+                    "objectID": "country",
+                    "conditions": [
+                        {
+                            "pattern": "{facet:country}",
+                            "anchoring": "contains",
+                        },
+                    ],
+                    "consequence": {
+                        "params": {
+                            "aroundLatLngViaIP": False,
+                        },
+                    },
+                },
+                {
+                    "objectID": "city",
+                    "conditions": [
+                        {
+                            "pattern": "{facet:city}",
+                            "anchoring": "contains",
+                        },
+                    ],
+                    "consequence": {
+                        "params": {
+                            "aroundLatLngViaIP": False,
+                        },
+                    },
+                },
+            ],
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """[{"objectID":"country","conditions":[{"pattern":"{facet:country}","anchoring":"contains"}],"consequence":{"params":{"aroundLatLngViaIP":false}}},{"objectID":"city","conditions":[{"pattern":"{facet:city}","anchoring":"contains"}],"consequence":{"params":{"aroundLatLngViaIP":false}}}]"""
         )
 
     def test_save_synonym_(self):
@@ -5881,6 +12868,24 @@ class TestSearchClientSync:
             """{"params":"query=foo&facetFilters=['bar']","facetQuery":"foo","maxFacetHits":42}"""
         )
 
+    def test_search_for_facet_values_2(self):
+        """
+        facetName and facetQuery
+        """
+        _req = self._client.search_for_facet_values_with_http_info(
+            index_name="indexName",
+            facet_name="author",
+            search_for_facet_values_request={
+                "facetQuery": "stephen",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/facets/author/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facetQuery":"stephen"}""")
+
     def test_search_rules_(self):
         """
         searchRules
@@ -5972,6 +12977,2671 @@ class TestSearchClientSync:
         assert loads(_req.data) == loads(
             """{"query":"batman mask of the phantasm","attributesToRetrieve":["*"],"attributesToSnippet":["*:20"]}"""
         )
+
+    def test_search_single_index_4(self):
+        """
+        query
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "phone",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"phone"}""")
+
+    def test_search_single_index_5(self):
+        """
+        filters
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "filters": "country:US AND price.gross < 2.0",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"filters":"country:US AND price.gross < 2.0"}"""
+        )
+
+    def test_search_single_index_6(self):
+        """
+        filters for stores
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "ben",
+                "filters": "categories:politics AND store:Gibert Joseph Saint-Michel",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"ben","filters":"categories:politics AND store:Gibert Joseph Saint-Michel"}"""
+        )
+
+    def test_search_single_index_7(self):
+        """
+        filters boolean
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "filters": "is_available:true",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"filters":"is_available:true"}""")
+
+    def test_search_single_index_8(self):
+        """
+        distinct
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "distinct": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"distinct":true}""")
+
+    def test_search_single_index_9(self):
+        """
+        filtersNumeric
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "filters": "price < 10",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"filters":"price < 10"}""")
+
+    def test_search_single_index_10(self):
+        """
+        filtersTimestamp
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "filters": "NOT date_timestamp:1514764800 TO 1546300799",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"filters":"NOT date_timestamp:1514764800 TO 1546300799"}"""
+        )
+
+    def test_search_single_index_11(self):
+        """
+        filtersSumOrFiltersScoresFalse
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "filters": "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+                "sumOrFiltersScores": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"filters":"(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)","sumOrFiltersScores":false}"""
+        )
+
+    def test_search_single_index_12(self):
+        """
+        filtersSumOrFiltersScoresTrue
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "filters": "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+                "sumOrFiltersScores": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"filters":"(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)","sumOrFiltersScores":true}"""
+        )
+
+    def test_search_single_index_13(self):
+        """
+        filtersStephenKing
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "filters": 'author:"Stephen King"',
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"filters":"author:\\"Stephen King\\""}""")
+
+    def test_search_single_index_14(self):
+        """
+        filtersNotTags
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "harry",
+                "filters": "_tags:non-fiction",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"harry","filters":"_tags:non-fiction"}"""
+        )
+
+    def test_search_single_index_15(self):
+        """
+        facetFiltersList
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "facetFilters": [
+                    "publisher:Penguin",
+                    [
+                        "author:Stephen King",
+                        "genre:Horror",
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"facetFilters":["publisher:Penguin",["author:Stephen King","genre:Horror"]]}"""
+        )
+
+    def test_search_single_index_16(self):
+        """
+        facetFiltersBook
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "facetFilters": [
+                    "category:Book",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","facetFilters":["category:Book"]}"""
+        )
+
+    def test_search_single_index_17(self):
+        """
+        facetFiltersAND
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "facetFilters": [
+                    "category:Book",
+                    "author:John Doe",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","facetFilters":["category:Book","author:John Doe"]}"""
+        )
+
+    def test_search_single_index_18(self):
+        """
+        facetFiltersOR
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "facetFilters": [
+                    [
+                        "category:Book",
+                        "author:John Doe",
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","facetFilters":[["category:Book","author:John Doe"]]}"""
+        )
+
+    def test_search_single_index_19(self):
+        """
+        facetFiltersCombined
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "facetFilters": [
+                    "author:John Doe",
+                    [
+                        "category:Book",
+                        "category:Movie",
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","facetFilters":["author:John Doe",["category:Book","category:Movie"]]}"""
+        )
+
+    def test_search_single_index_20(self):
+        """
+        facetFiltersNeg
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "facetFilters": "category:-Ebook",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facetFilters":"category:-Ebook"}""")
+
+    def test_search_single_index_21(self):
+        """
+        filtersAndFacetFilters
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "filters": '(author:"Stephen King" OR genre:"Horror")',
+                "facetFilters": [
+                    "publisher:Penguin",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"filters":"(author:\\"Stephen King\\" OR genre:\\"Horror\\")","facetFilters":["publisher:Penguin"]}"""
+        )
+
+    def test_search_single_index_22(self):
+        """
+        facet author genre
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "facets": [
+                    "author",
+                    "genre",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facets":["author","genre"]}""")
+
+    def test_search_single_index_23(self):
+        """
+        facet wildcard
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "facets": [
+                    "*",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facets":["*"]}""")
+
+    def test_search_single_index_24(self):
+        """
+        maxValuesPerFacet
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "maxValuesPerFacet": 1000,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"maxValuesPerFacet":1000}""")
+
+    def test_search_single_index_25(self):
+        """
+        aroundLatLng
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "aroundLatLng": "40.71, -74.01",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"aroundLatLng":"40.71, -74.01"}""")
+
+    def test_search_single_index_26(self):
+        """
+        aroundLatLngViaIP
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "aroundLatLngViaIP": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"aroundLatLngViaIP":true}""")
+
+    def test_search_single_index_27(self):
+        """
+        aroundRadius
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "aroundLatLng": "40.71, -74.01",
+                "aroundRadius": 1000000,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"aroundLatLng":"40.71, -74.01","aroundRadius":1000000}"""
+        )
+
+    def test_search_single_index_28(self):
+        """
+        insideBoundingBox
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "insideBoundingBox": [
+                    [
+                        49.067996905313834,
+                        65.73828125,
+                        25.905859247243498,
+                        128.8046875,
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"insideBoundingBox":[[49.067996905313834,65.73828125,25.905859247243498,128.8046875]]}"""
+        )
+
+    def test_search_single_index_29(self):
+        """
+        insidePolygon
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "insidePolygon": [
+                    [
+                        42.01,
+                        -124.31,
+                        48.835509470063045,
+                        -124.40453125000005,
+                        45.01082951668149,
+                        -65.95726562500005,
+                        31.247243545293433,
+                        -81.06578125000004,
+                        25.924152577235226,
+                        -97.68234374999997,
+                        32.300311895879545,
+                        -117.54828125,
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}"""
+        )
+
+    def test_search_single_index_30(self):
+        """
+        insidePolygon
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "insidePolygon": [
+                    [
+                        42.01,
+                        -124.31,
+                        48.835509470063045,
+                        -124.40453125000005,
+                        45.01082951668149,
+                        -65.95726562500005,
+                        31.247243545293433,
+                        -81.06578125000004,
+                        25.924152577235226,
+                        -97.68234374999997,
+                        32.300311895879545,
+                        -117.54828125,
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}"""
+        )
+
+    def test_search_single_index_31(self):
+        """
+        optionalFilters
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "optionalFilters": [
+                    "can_deliver_quickly:true",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"optionalFilters":["can_deliver_quickly:true"]}"""
+        )
+
+    def test_search_single_index_32(self):
+        """
+        optionalFiltersMany
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "optionalFilters": [
+                    "brand:Apple<score=3>",
+                    "brand:Samsung<score=2>",
+                    "brand:-Huawei",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"optionalFilters":["brand:Apple<score=3>","brand:Samsung<score=2>","brand:-Huawei"]}"""
+        )
+
+    def test_search_single_index_33(self):
+        """
+        optionalFiltersSimple
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "optionalFilters": [
+                    "brand:Apple<score=2>",
+                    "type:tablet",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"optionalFilters":["brand:Apple<score=2>","type:tablet"]}"""
+        )
+
+    def test_search_single_index_34(self):
+        """
+        restrictSearchableAttributes
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "restrictSearchableAttributes": [
+                    "title_fr",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"restrictSearchableAttributes":["title_fr"]}"""
+        )
+
+    def test_search_single_index_35(self):
+        """
+        getRankingInfo
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "getRankingInfo": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"getRankingInfo":true}""")
+
+    def test_search_single_index_36(self):
+        """
+        clickAnalytics
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "clickAnalytics": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"clickAnalytics":true}""")
+
+    def test_search_single_index_37(self):
+        """
+        clickAnalyticsUserToken
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "clickAnalytics": True,
+                "userToken": "user-1",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"clickAnalytics":true,"userToken":"user-1"}"""
+        )
+
+    def test_search_single_index_38(self):
+        """
+        enablePersonalization
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "enablePersonalization": True,
+                "userToken": "user-1",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"enablePersonalization":true,"userToken":"user-1"}"""
+        )
+
+    def test_search_single_index_39(self):
+        """
+        userToken
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "userToken": "user-1",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"userToken":"user-1"}""")
+
+    def test_search_single_index_40(self):
+        """
+        userToken1234
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "userToken": "user-1234",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","userToken":"user-1234"}"""
+        )
+
+    def test_search_single_index_41(self):
+        """
+        analyticsTag
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "analyticsTags": [
+                    "YOUR_ANALYTICS_TAG",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"analyticsTags":["YOUR_ANALYTICS_TAG"]}""")
+
+    def test_search_single_index_42(self):
+        """
+        facetFiltersUsers
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "facetFilters": [
+                    "user:user42",
+                    "user:public",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"facetFilters":["user:user42","user:public"]}"""
+        )
+
+    def test_search_single_index_43(self):
+        """
+        buildTheQuery
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "filters": "categoryPageId: Men's Clothing",
+                "hitsPerPage": 50,
+                "analyticsTags": [
+                    "mens-clothing",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"filters":"categoryPageId: Men's Clothing","hitsPerPage":50,"analyticsTags":["mens-clothing"]}"""
+        )
+
+    def test_search_single_index_44(self):
+        """
+        attributesToHighlightOverride
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "attributesToHighlight": [
+                    "title",
+                    "content",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","attributesToHighlight":["title","content"]}"""
+        )
+
+    def test_search_single_index_45(self):
+        """
+        disableTypoToleranceOnAttributes
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "disableTypoToleranceOnAttributes": [
+                    "serial_number",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","disableTypoToleranceOnAttributes":["serial_number"]}"""
+        )
+
+    def test_search_single_index_46(self):
+        """
+        search_a_query
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "shirt",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"shirt"}""")
+
+    def test_search_single_index_47(self):
+        """
+        search_everything
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":""}""")
+
+    def test_search_single_index_48(self):
+        """
+        api_filtering_range_example
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "books",
+                "filters": "price:10 TO 20",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"books","filters":"price:10 TO 20"}"""
+        )
+
+    def test_search_single_index_49(self):
+        """
+        search_a_query
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "",
+                "similarQuery": "Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen",
+                "filters": "year:1991 TO 2001",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"","similarQuery":"Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen","filters":"year:1991 TO 2001"}"""
+        )
+
+    def test_search_single_index_50(self):
+        """
+        override_retrievable_attributes
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "attributesToRetrieve": [
+                    "title",
+                    "content",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","attributesToRetrieve":["title","content"]}"""
+        )
+
+    def test_search_single_index_51(self):
+        """
+        restrict_searchable_attributes
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "restrictSearchableAttributes": [
+                    "title",
+                    "author",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","restrictSearchableAttributes":["title","author"]}"""
+        )
+
+    def test_search_single_index_52(self):
+        """
+        override_default_relevancy
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "relevancyStrictness": 70,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","relevancyStrictness":70}"""
+        )
+
+    def test_search_single_index_53(self):
+        """
+        apply_filters
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "filters": "(category:Book OR category:Ebook) AND _tags:published",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","filters":"(category:Book OR category:Ebook) AND _tags:published"}"""
+        )
+
+    def test_search_single_index_54(self):
+        """
+        apply_all_filters
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "filters": 'available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:"John Doe"',
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","filters":"available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\\"John Doe\\""}"""
+        )
+
+    def test_search_single_index_55(self):
+        """
+        escape_spaces
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "filters": 'category:"Books and Comics"',
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","filters":"category:\\"Books and Comics\\""}"""
+        )
+
+    def test_search_single_index_56(self):
+        """
+        escape_keywords
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "filters": 'keyword:"OR"',
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","filters":"keyword:\\"OR\\""}"""
+        )
+
+    def test_search_single_index_57(self):
+        """
+        escape_single_quotes
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "filters": 'content:"It\'s a wonderful day"',
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","filters":"content:\\"It's a wonderful day\\""}"""
+        )
+
+    def test_search_single_index_58(self):
+        """
+        escape_double_quotes
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "filters": 'content:"She said "Hello World"',
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","filters":"content:\\"She said \\"Hello World\\""}"""
+        )
+
+    def test_search_single_index_59(self):
+        """
+        apply_filters
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "optionalFilters": [
+                    "category:Book",
+                    "author:John Doe",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","optionalFilters":["category:Book","author:John Doe"]}"""
+        )
+
+    def test_search_single_index_60(self):
+        """
+        apply_negative_filters
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "optionalFilters": [
+                    "category:Book",
+                    "author:-John Doe",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","optionalFilters":["category:Book","author:-John Doe"]}"""
+        )
+
+    def test_search_single_index_61(self):
+        """
+        apply_negative_filters_restaurants
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "optionalFilters": [
+                    "restaurant:-Bert's Inn",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","optionalFilters":["restaurant:-Bert's Inn"]}"""
+        )
+
+    def test_search_single_index_62(self):
+        """
+        apply_numeric_filters
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "numericFilters": [
+                    "price < 1000",
+                    [
+                        "inStock = 1",
+                        "deliveryDate < 1441755506",
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","numericFilters":["price < 1000",["inStock = 1","deliveryDate < 1441755506"]]}"""
+        )
+
+    def test_search_single_index_63(self):
+        """
+        apply_tag_filters
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "tagFilters": [
+                    "SciFi",
+                    [
+                        "Book",
+                        "Movie",
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","tagFilters":["SciFi",["Book","Movie"]]}"""
+        )
+
+    def test_search_single_index_64(self):
+        """
+        apply_filters
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "sumOrFiltersScores": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","sumOrFiltersScores":true}"""
+        )
+
+    def test_search_single_index_65(self):
+        """
+        facets_all
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "facets": [
+                    "*",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","facets":["*"]}""")
+
+    def test_search_single_index_66(self):
+        """
+        retrieve_only_some_facets
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "facets": [
+                    "category",
+                    "author",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","facets":["category","author"]}"""
+        )
+
+    def test_search_single_index_67(self):
+        """
+        override_default_max_values_per_facet
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "maxValuesPerFacet": 20,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","maxValuesPerFacet":20}""")
+
+    def test_search_single_index_68(self):
+        """
+        enable_faceting_after_distinct
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "facetingAfterDistinct": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","facetingAfterDistinct":true}"""
+        )
+
+    def test_search_single_index_69(self):
+        """
+        sort_facet_values_alphabetically
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "sortFacetValuesBy": "count",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","sortFacetValuesBy":"count"}"""
+        )
+
+    def test_search_single_index_70(self):
+        """
+        override_attributes_to_snippet
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "attributesToSnippet": [
+                    "title",
+                    "content:80",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","attributesToSnippet":["title","content:80"]}"""
+        )
+
+    def test_search_single_index_71(self):
+        """
+        override_default_highlight_pre_tag
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "highlightPreTag": "<strong>",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","highlightPreTag":"<strong>"}"""
+        )
+
+    def test_search_single_index_72(self):
+        """
+        override_default_highlight_post_tag
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "highlightPostTag": "</strong>",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","highlightPostTag":"</strong>"}"""
+        )
+
+    def test_search_single_index_73(self):
+        """
+        override_default_snippet_ellipsis_text
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "snippetEllipsisText": "",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","snippetEllipsisText":""}"""
+        )
+
+    def test_search_single_index_74(self):
+        """
+        enable_restrict_highlight_and_snippet_arrays
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "restrictHighlightAndSnippetArrays": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","restrictHighlightAndSnippetArrays":false}"""
+        )
+
+    def test_search_single_index_75(self):
+        """
+        access_page
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "page": 0,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","page":0}""")
+
+    def test_search_single_index_76(self):
+        """
+        override_default_hits_per_page
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "hitsPerPage": 10,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","hitsPerPage":10}""")
+
+    def test_search_single_index_77(self):
+        """
+        get_nth_hit
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "offset": 4,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","offset":4}""")
+
+    def test_search_single_index_78(self):
+        """
+        get_n_results
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "length": 4,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","length":4}""")
+
+    def test_search_single_index_79(self):
+        """
+        override_default_min_word_size_for_one_typo
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "minWordSizefor1Typo": 2,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","minWordSizefor1Typo":2}"""
+        )
+
+    def test_search_single_index_80(self):
+        """
+        override_default_min_word_size_for_two_typos
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "minWordSizefor2Typos": 2,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","minWordSizefor2Typos":2}"""
+        )
+
+    def test_search_single_index_81(self):
+        """
+        override_default_typo_tolerance_mode
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "typoTolerance": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","typoTolerance":false}""")
+
+    def test_search_single_index_82(self):
+        """
+        disable_typos_on_numeric_tokens_at_search_time
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "allowTyposOnNumericTokens": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","allowTyposOnNumericTokens":false}"""
+        )
+
+    def test_search_single_index_83(self):
+        """
+        search_around_a_position
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "aroundLatLng": "40.71, -74.01",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","aroundLatLng":"40.71, -74.01"}"""
+        )
+
+    def test_search_single_index_84(self):
+        """
+        search_around_server_ip
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "aroundLatLngViaIP": True,
+            },
+            request_options={
+                "headers": loads(
+                    """{"x-forwarded-for":"94.228.178.246 // should be replaced with the actual IP you would like to search around"}"""
+                ),
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert (
+            _req.headers.items()
+            >= {
+                "x-forwarded-for": "94.228.178.246 // should be replaced with the actual IP you would like to search around"
+            }.items()
+        )
+        assert loads(_req.data) == loads(
+            """{"query":"query","aroundLatLngViaIP":true}"""
+        )
+
+    def test_search_single_index_85(self):
+        """
+        set_around_radius
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "aroundRadius": 1000,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","aroundRadius":1000}""")
+
+    def test_search_single_index_86(self):
+        """
+        disable_automatic_radius
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "aroundRadius": "all",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","aroundRadius":"all"}""")
+
+    def test_search_single_index_87(self):
+        """
+        set_geo_search_precision
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "aroundPrecision": 100,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","aroundPrecision":100}""")
+
+    def test_search_single_index_88(self):
+        """
+        set_geo_search_precision_non_linear
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "aroundPrecision": [
+                    {
+                        "from": 0,
+                        "value": 25,
+                    },
+                    {
+                        "from": 2000,
+                        "value": 1000,
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","aroundPrecision":[{"from":0,"value":25},{"from":2000,"value":1000}]}"""
+        )
+
+    def test_search_single_index_89(self):
+        """
+        set_minimum_geo_search_radius
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "minimumAroundRadius": 1000,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","minimumAroundRadius":1000}"""
+        )
+
+    def test_search_single_index_90(self):
+        """
+        search_inside_rectangular_area
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "insideBoundingBox": [
+                    [
+                        46.650828100116044,
+                        7.123046875,
+                        45.17210966999772,
+                        1.009765625,
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","insideBoundingBox":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625]]}"""
+        )
+
+    def test_search_single_index_91(self):
+        """
+        search_inside_multiple_rectangular_areas
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "insideBoundingBox": [
+                    [
+                        46.650828100116044,
+                        7.123046875,
+                        45.17210966999772,
+                        1.009765625,
+                    ],
+                    [
+                        49.62625916704081,
+                        4.6181640625,
+                        47.715070300900194,
+                        0.482421875,
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","insideBoundingBox":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875]]}"""
+        )
+
+    def test_search_single_index_92(self):
+        """
+        search_inside_polygon_area
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "insidePolygon": [
+                    [
+                        46.650828100116044,
+                        7.123046875,
+                        45.17210966999772,
+                        1.009765625,
+                        49.62625916704081,
+                        4.6181640625,
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","insidePolygon":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625]]}"""
+        )
+
+    def test_search_single_index_93(self):
+        """
+        search_inside_multiple_polygon_areas
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "insidePolygon": [
+                    [
+                        46.650828100116044,
+                        7.123046875,
+                        45.17210966999772,
+                        1.009765625,
+                        49.62625916704081,
+                        4.6181640625,
+                    ],
+                    [
+                        49.62625916704081,
+                        4.6181640625,
+                        47.715070300900194,
+                        0.482421875,
+                        45.17210966999772,
+                        1.009765625,
+                        50.62626704081,
+                        4.6181640625,
+                    ],
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","insidePolygon":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875,45.17210966999772,1.009765625,50.62626704081,4.6181640625]]}"""
+        )
+
+    def test_search_single_index_94(self):
+        """
+        set_querylanguages_override
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "ignorePlurals": [
+                    "ca",
+                    "es",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","ignorePlurals":["ca","es"]}"""
+        )
+
+    def test_search_single_index_95(self):
+        """
+        set_querylanguages_override
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "removeStopWords": [
+                    "ca",
+                    "es",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","removeStopWords":["ca","es"]}"""
+        )
+
+    def test_search_single_index_96(self):
+        """
+        set_querylanguages_override
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "removeStopWords": [
+                    "ca",
+                    "es",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","removeStopWords":["ca","es"]}"""
+        )
+
+    def test_search_single_index_97(self):
+        """
+        set_querylanguages_with_japanese_query
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "queryLanguages": [
+                    "ja",
+                    "en",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","queryLanguages":["ja","en"]}"""
+        )
+
+    def test_search_single_index_98(self):
+        """
+        set_natural_languages
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "",
+                "naturalLanguages": [
+                    "fr",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"","naturalLanguages":["fr"]}""")
+
+    def test_search_single_index_99(self):
+        """
+        override_natural_languages_with_query
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "",
+                "naturalLanguages": [
+                    "fr",
+                ],
+                "removeWordsIfNoResults": "firstWords",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"","naturalLanguages":["fr"],"removeWordsIfNoResults":"firstWords"}"""
+        )
+
+    def test_search_single_index_100(self):
+        """
+        enable_decompound_query_search_time
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "decompoundQuery": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","decompoundQuery":true}""")
+
+    def test_search_single_index_101(self):
+        """
+        enable_rules_search_time
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "enableRules": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","enableRules":true}""")
+
+    def test_search_single_index_102(self):
+        """
+        set_rule_contexts
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "ruleContexts": [
+                    "front_end",
+                    "website2",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","ruleContexts":["front_end","website2"]}"""
+        )
+
+    def test_search_single_index_103(self):
+        """
+        enable_personalization
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "enablePersonalization": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","enablePersonalization":true}"""
+        )
+
+    def test_search_single_index_104(self):
+        """
+        enable_personalization_with_user_token
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "enablePersonalization": True,
+                "userToken": "123456",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","enablePersonalization":true,"userToken":"123456"}"""
+        )
+
+    def test_search_single_index_105(self):
+        """
+        personalization_impact
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "personalizationImpact": 20,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","personalizationImpact":20}"""
+        )
+
+    def test_search_single_index_106(self):
+        """
+        set_user_token
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "userToken": "123456",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","userToken":"123456"}""")
+
+    def test_search_single_index_107(self):
+        """
+        set_user_token_with_personalization
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "enablePersonalization": True,
+                "userToken": "123456",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","enablePersonalization":true,"userToken":"123456"}"""
+        )
+
+    def test_search_single_index_108(self):
+        """
+        override_default_query_type
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "queryType": "prefixAll",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","queryType":"prefixAll"}"""
+        )
+
+    def test_search_single_index_109(self):
+        """
+        override_default_remove_words_if_no_results
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "removeWordsIfNoResults": "lastWords",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","removeWordsIfNoResults":"lastWords"}"""
+        )
+
+    def test_search_single_index_110(self):
+        """
+        enable_advanced_syntax_search_time
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "advancedSyntax": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","advancedSyntax":true}""")
+
+    def test_search_single_index_111(self):
+        """
+        overide_default_optional_words
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "optionalWords": [
+                    "toyota",
+                    "2020 2021",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","optionalWords":["toyota","2020 2021"]}"""
+        )
+
+    def test_search_single_index_112(self):
+        """
+        disabling_exact_for_some_attributes_search_time
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "disableExactOnAttributes": [
+                    "description",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","disableExactOnAttributes":["description"]}"""
+        )
+
+    def test_search_single_index_113(self):
+        """
+        override_default_exact_single_word_query
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "exactOnSingleWordQuery": "none",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","exactOnSingleWordQuery":"none"}"""
+        )
+
+    def test_search_single_index_114(self):
+        """
+        override_default_aternative_as_exact
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "alternativesAsExact": [
+                    "multiWordsSynonym",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","alternativesAsExact":["multiWordsSynonym"]}"""
+        )
+
+    def test_search_single_index_115(self):
+        """
+        enable_advanced_syntax_exact_phrase
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "advancedSyntax": True,
+                "advancedSyntaxFeatures": [
+                    "exactPhrase",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"]}"""
+        )
+
+    def test_search_single_index_116(self):
+        """
+        enable_advanced_syntax_exclude_words
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "advancedSyntax": True,
+                "advancedSyntaxFeatures": [
+                    "excludeWords",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","advancedSyntax":true,"advancedSyntaxFeatures":["excludeWords"]}"""
+        )
+
+    def test_search_single_index_117(self):
+        """
+        override_distinct
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "distinct": 0,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","distinct":0}""")
+
+    def test_search_single_index_118(self):
+        """
+        get_ranking_info
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "getRankingInfo": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","getRankingInfo":true}""")
+
+    def test_search_single_index_119(self):
+        """
+        disable_click_analytics
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "clickAnalytics": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","clickAnalytics":false}""")
+
+    def test_search_single_index_120(self):
+        """
+        enable_click_analytics
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "clickAnalytics": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","clickAnalytics":true}""")
+
+    def test_search_single_index_121(self):
+        """
+        disable_analytics
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "analytics": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","analytics":false}""")
+
+    def test_search_single_index_122(self):
+        """
+        add_analytics_tags
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "analyticsTags": [
+                    "front_end",
+                    "website2",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","analyticsTags":["front_end","website2"]}"""
+        )
+
+    def test_search_single_index_123(self):
+        """
+        disable_synonyms
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "synonyms": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","synonyms":false}""")
+
+    def test_search_single_index_124(self):
+        """
+        override_replace_synonyms_in_highlights
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "replaceSynonymsInHighlight": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","replaceSynonymsInHighlight":true}"""
+        )
+
+    def test_search_single_index_125(self):
+        """
+        override_min_proximity
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "minProximity": 2,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","minProximity":2}""")
+
+    def test_search_single_index_126(self):
+        """
+        override_default_field
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "responseFields": [
+                    "hits",
+                    "facets",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","responseFields":["hits","facets"]}"""
+        )
+
+    def test_search_single_index_127(self):
+        """
+        override_percentile_computation
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "percentileComputation": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","percentileComputation":false}"""
+        )
+
+    def test_search_single_index_128(self):
+        """
+        set_ab_test
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "enableABTest": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query","enableABTest":false}""")
+
+    def test_search_single_index_129(self):
+        """
+        set_enable_re_ranking
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+                "enableReRanking": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"query":"query","enableReRanking":false}"""
+        )
+
+    def test_search_single_index_130(self):
+        """
+        with algolia user id
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="indexName",
+            search_params={
+                "query": "query",
+            },
+            request_options={
+                "headers": loads("""{"X-Algolia-User-ID":"user1234"}"""),
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"query"}""")
 
     def test_search_synonyms_(self):
         """
@@ -6086,7 +15756,997 @@ class TestSearchClientSync:
 
     def test_set_settings_(self):
         """
-        setSettingsAttributesForFaceting
+        minimal parameters
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="cts_e2e_settings",
+            index_settings={
+                "paginationLimitedTo": 10,
+            },
+            forward_to_replicas=True,
+        )
+
+        assert _req.path == "/1/indexes/cts_e2e_settings/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"paginationLimitedTo":10}""")
+
+    def test_set_settings_1(self):
+        """
+        boolean typoTolerance
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "typoTolerance": True,
+            },
+            forward_to_replicas=True,
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"typoTolerance":true}""")
+
+    def test_set_settings_2(self):
+        """
+        enum typoTolerance
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "typoTolerance": "min",
+            },
+            forward_to_replicas=True,
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"typoTolerance":"min"}""")
+
+    def test_set_settings_3(self):
+        """
+        ignorePlurals
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "ignorePlurals": True,
+            },
+            forward_to_replicas=True,
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"ignorePlurals":true}""")
+
+    def test_set_settings_4(self):
+        """
+        list of string ignorePlurals
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "ignorePlurals": [
+                    "fr",
+                ],
+            },
+            forward_to_replicas=True,
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"ignorePlurals":["fr"]}""")
+
+    def test_set_settings_5(self):
+        """
+        removeStopWords boolean
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "removeStopWords": True,
+            },
+            forward_to_replicas=True,
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"removeStopWords":true}""")
+
+    def test_set_settings_6(self):
+        """
+        removeStopWords list of string
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "removeStopWords": [
+                    "fr",
+                ],
+            },
+            forward_to_replicas=True,
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"removeStopWords":["fr"]}""")
+
+    def test_set_settings_7(self):
+        """
+        boolean distinct
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "distinct": True,
+            },
+            forward_to_replicas=True,
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"distinct":true}""")
+
+    def test_set_settings_8(self):
+        """
+        integer distinct
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "distinct": 1,
+            },
+            forward_to_replicas=True,
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"distinct":1}""")
+
+    def test_set_settings_9(self):
+        """
+        distinct company
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributeForDistinct": "company",
+                "distinct": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributeForDistinct":"company","distinct":true}"""
+        )
+
+    def test_set_settings_10(self):
+        """
+        distinct design
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributeForDistinct": "design",
+                "distinct": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributeForDistinct":"design","distinct":true}"""
+        )
+
+    def test_set_settings_11(self):
+        """
+        distinct true
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "distinct": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"distinct":true}""")
+
+    def test_set_settings_12(self):
+        """
+        distinct section
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributeForDistinct": "section",
+                "distinct": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributeForDistinct":"section","distinct":true}"""
+        )
+
+    def test_set_settings_13(self):
+        """
+        attributesForFaceting allergens
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "allergens",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"attributesForFaceting":["allergens"]}""")
+
+    def test_set_settings_14(self):
+        """
+        attributesForFaceting availableIn
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "color",
+                    "availableIn",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesForFaceting":["color","availableIn"]}"""
+        )
+
+    def test_set_settings_15(self):
+        """
+        api_attributes_for_faceting
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "genre",
+                    "author",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesForFaceting":["genre","author"]}"""
+        )
+
+    def test_set_settings_16(self):
+        """
+        api_attributes_for_faceting_searchable
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "genre",
+                    "searchable(author)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesForFaceting":["genre","searchable(author)"]}"""
+        )
+
+    def test_set_settings_17(self):
+        """
+        api_attributes_for_filter_only
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "filterOnly(genre)",
+                    "author",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesForFaceting":["filterOnly(genre)","author"]}"""
+        )
+
+    def test_set_settings_18(self):
+        """
+        attributesForFaceting categoryPageId
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "searchable(categoryPageId)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesForFaceting":["searchable(categoryPageId)"]}"""
+        )
+
+    def test_set_settings_19(self):
+        """
+        unretrievableAttributes
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "unretrievableAttributes": [
+                    "visible_by",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"unretrievableAttributes":["visible_by"]}"""
+        )
+
+    def test_set_settings_20(self):
+        """
+        attributesForFaceting user restricted data
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "filterOnly(visible_by)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesForFaceting":["filterOnly(visible_by)"]}"""
+        )
+
+    def test_set_settings_21(self):
+        """
+        attributesForFaceting optional filters
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "can_deliver_quickly",
+                    "restaurant",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesForFaceting":["can_deliver_quickly","restaurant"]}"""
+        )
+
+    def test_set_settings_22(self):
+        """
+        attributesForFaceting redirect index
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "query_terms",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesForFaceting":["query_terms"]}"""
+        )
+
+    def test_set_settings_23(self):
+        """
+        attributesForFaceting multiple consequences
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "director",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"attributesForFaceting":["director"]}""")
+
+    def test_set_settings_24(self):
+        """
+        attributesForFaceting in-depth optional filters
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "filterOnly(brand)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesForFaceting":["filterOnly(brand)"]}"""
+        )
+
+    def test_set_settings_25(self):
+        """
+        mode neuralSearch
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "mode": "neuralSearch",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"mode":"neuralSearch"}""")
+
+    def test_set_settings_26(self):
+        """
+        mode keywordSearch
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "mode": "keywordSearch",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"mode":"keywordSearch"}""")
+
+    def test_set_settings_27(self):
+        """
+        searchableAttributes same priority
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "title,comments",
+                    "ingredients",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["title,comments","ingredients"]}"""
+        )
+
+    def test_set_settings_28(self):
+        """
+        searchableAttributes higher priority
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "title",
+                    "ingredients",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["title","ingredients"]}"""
+        )
+
+    def test_set_settings_29(self):
+        """
+        customRanking retweets
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(retweets)",
+                    "desc(likes)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["desc(retweets)","desc(likes)"]}"""
+        )
+
+    def test_set_settings_30(self):
+        """
+        customRanking boosted
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(boosted)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"customRanking":["desc(boosted)"]}""")
+
+    def test_set_settings_31(self):
+        """
+        customRanking pageviews
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(pageviews)",
+                    "desc(comments)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["desc(pageviews)","desc(comments)"]}"""
+        )
+
+    def test_set_settings_32(self):
+        """
+        customRanking applying search parameters for a specific query
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(nb_airline_liaisons)",
+                ],
+                "attributesForFaceting": [
+                    "city, country",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["desc(nb_airline_liaisons)"],"attributesForFaceting":["city, country"]}"""
+        )
+
+    def test_set_settings_33(self):
+        """
+        customRanking rounded pageviews
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(rounded_pageviews)",
+                    "desc(comments)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["desc(rounded_pageviews)","desc(comments)"]}"""
+        )
+
+    def test_set_settings_34(self):
+        """
+        customRanking price
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(price)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"customRanking":["desc(price)"]}""")
+
+    def test_set_settings_35(self):
+        """
+        ranking exhaustive (price)
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "ranking": [
+                    "desc(price)",
+                    "typo",
+                    "geo",
+                    "words",
+                    "filters",
+                    "proximity",
+                    "attribute",
+                    "exact",
+                    "custom",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"ranking":["desc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}"""
+        )
+
+    def test_set_settings_36(self):
+        """
+        ranking exhaustive (is_popular)
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "ranking": [
+                    "desc(is_popular)",
+                    "typo",
+                    "geo",
+                    "words",
+                    "filters",
+                    "proximity",
+                    "attribute",
+                    "exact",
+                    "custom",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"ranking":["desc(is_popular)","typo","geo","words","filters","proximity","attribute","exact","custom"]}"""
+        )
+
+    def test_set_settings_37(self):
+        """
+        ranking standard replica
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "ranking": [
+                    "desc(post_date_timestamp)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"ranking":["desc(post_date_timestamp)"]}"""
+        )
+
+    def test_set_settings_38(self):
+        """
+        ranking virtual replica
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(post_date_timestamp)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["desc(post_date_timestamp)"]}"""
+        )
+
+    def test_set_settings_39(self):
+        """
+        customRanking and ranking sort alphabetically
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "asc(textual_attribute)",
+                ],
+                "ranking": [
+                    "custom",
+                    "typo",
+                    "geo",
+                    "words",
+                    "filters",
+                    "proximity",
+                    "attribute",
+                    "exact",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["asc(textual_attribute)"],"ranking":["custom","typo","geo","words","filters","proximity","attribute","exact"]}"""
+        )
+
+    def test_set_settings_40(self):
+        """
+        relevancyStrictness
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "asc(textual_attribute)",
+                ],
+                "relevancyStrictness": 0,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["asc(textual_attribute)"],"relevancyStrictness":0}"""
+        )
+
+    def test_set_settings_41(self):
+        """
+        create replica index
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "replicas": [
+                    "products_price_desc",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"replicas":["products_price_desc"]}""")
+
+    def test_set_settings_42(self):
+        """
+        create replica index articles
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "replicas": [
+                    "articles_date_desc",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"replicas":["articles_date_desc"]}""")
+
+    def test_set_settings_43(self):
+        """
+        create virtual replica index
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "replicas": [
+                    "virtual(products_price_desc)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"replicas":["virtual(products_price_desc)"]}"""
+        )
+
+    def test_set_settings_44(self):
+        """
+        unlink replica index
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "replicas": [
+                    "",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"replicas":[""]}""")
+
+    def test_set_settings_45(self):
+        """
+        forwardToReplicas
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "name",
+                    "description",
+                ],
+            },
+            forward_to_replicas=True,
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["name","description"]}"""
+        )
+
+    def test_set_settings_46(self):
+        """
+        maxValuesPerFacet
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "maxValuesPerFacet": 1000,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"maxValuesPerFacet":1000}""")
+
+    def test_set_settings_47(self):
+        """
+        maxFacetHits
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "maxFacetHits": 100,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"maxFacetHits":100}""")
+
+    def test_set_settings_48(self):
+        """
+        attributesForFaceting complex
         """
         _req = self._client.set_settings_with_http_info(
             index_name="<YOUR_INDEX_NAME>",
@@ -6107,175 +16767,130 @@ class TestSearchClientSync:
             """{"attributesForFaceting":["actor","filterOnly(category)","searchable(publisher)"]}"""
         )
 
-    def test_set_settings_1(self):
+    def test_set_settings_49(self):
         """
-        setSettings with minimal parameters
-        """
-        _req = self._client.set_settings_with_http_info(
-            index_name="cts_e2e_settings",
-            index_settings={
-                "paginationLimitedTo": 10,
-            },
-            forward_to_replicas=True,
-        )
-
-        assert _req.path == "/1/indexes/cts_e2e_settings/settings"
-        assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"paginationLimitedTo":10}""")
-
-    def test_set_settings_2(self):
-        """
-        setSettings allow boolean `typoTolerance`
+        ranking closest dates
         """
         _req = self._client.set_settings_with_http_info(
             index_name="theIndexName",
             index_settings={
-                "typoTolerance": True,
-            },
-            forward_to_replicas=True,
-        )
-
-        assert _req.path == "/1/indexes/theIndexName/settings"
-        assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"typoTolerance":true}""")
-
-    def test_set_settings_3(self):
-        """
-        setSettings allow enum `typoTolerance`
-        """
-        _req = self._client.set_settings_with_http_info(
-            index_name="theIndexName",
-            index_settings={
-                "typoTolerance": "min",
-            },
-            forward_to_replicas=True,
-        )
-
-        assert _req.path == "/1/indexes/theIndexName/settings"
-        assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"typoTolerance":"min"}""")
-
-    def test_set_settings_4(self):
-        """
-        setSettings allow boolean `ignorePlurals`
-        """
-        _req = self._client.set_settings_with_http_info(
-            index_name="theIndexName",
-            index_settings={
-                "ignorePlurals": True,
-            },
-            forward_to_replicas=True,
-        )
-
-        assert _req.path == "/1/indexes/theIndexName/settings"
-        assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"ignorePlurals":true}""")
-
-    def test_set_settings_5(self):
-        """
-        setSettings allow list of string `ignorePlurals`
-        """
-        _req = self._client.set_settings_with_http_info(
-            index_name="theIndexName",
-            index_settings={
-                "ignorePlurals": [
-                    "fr",
+                "ranking": [
+                    "asc(date_timestamp)",
+                    "typo",
+                    "geo",
+                    "words",
+                    "filters",
+                    "proximity",
+                    "attribute",
+                    "exact",
+                    "custom",
                 ],
             },
-            forward_to_replicas=True,
         )
 
         assert _req.path == "/1/indexes/theIndexName/settings"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"ignorePlurals":["fr"]}""")
-
-    def test_set_settings_6(self):
-        """
-        setSettings allow boolean `removeStopWords`
-        """
-        _req = self._client.set_settings_with_http_info(
-            index_name="theIndexName",
-            index_settings={
-                "removeStopWords": True,
-            },
-            forward_to_replicas=True,
+        assert loads(_req.data) == loads(
+            """{"ranking":["asc(date_timestamp)","typo","geo","words","filters","proximity","attribute","exact","custom"]}"""
         )
 
-        assert _req.path == "/1/indexes/theIndexName/settings"
-        assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"removeStopWords":true}""")
-
-    def test_set_settings_7(self):
+    def test_set_settings_50(self):
         """
-        setSettings allow list of string `removeStopWords`
+        searchableAttributes item variation
         """
         _req = self._client.set_settings_with_http_info(
             index_name="theIndexName",
             index_settings={
-                "removeStopWords": [
-                    "fr",
+                "searchableAttributes": [
+                    "design",
+                    "type",
+                    "color",
                 ],
             },
-            forward_to_replicas=True,
         )
 
         assert _req.path == "/1/indexes/theIndexName/settings"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"removeStopWords":["fr"]}""")
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["design","type","color"]}"""
+        )
 
-    def test_set_settings_8(self):
+    def test_set_settings_51(self):
         """
-        setSettings allow boolean `distinct`
+        searchableAttributes around location
         """
         _req = self._client.set_settings_with_http_info(
             index_name="theIndexName",
             index_settings={
-                "distinct": True,
+                "searchableAttributes": [
+                    "name",
+                    "country",
+                    "city",
+                    "iata_code",
+                ],
+                "customRanking": [
+                    "desc(links_count)",
+                ],
             },
-            forward_to_replicas=True,
         )
 
         assert _req.path == "/1/indexes/theIndexName/settings"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"distinct":true}""")
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["name","country","city","iata_code"],"customRanking":["desc(links_count)"]}"""
+        )
 
-    def test_set_settings_9(self):
+    def test_set_settings_52(self):
         """
-        setSettings allow integers for `distinct`
+        attributesToHighlight
         """
         _req = self._client.set_settings_with_http_info(
             index_name="theIndexName",
             index_settings={
-                "distinct": 1,
+                "attributesToHighlight": [
+                    "author",
+                    "title",
+                    "content",
+                ],
             },
-            forward_to_replicas=True,
         )
 
         assert _req.path == "/1/indexes/theIndexName/settings"
         assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"distinct":1}""")
+        assert loads(_req.data) == loads(
+            """{"attributesToHighlight":["author","title","content"]}"""
+        )
 
-    def test_set_settings_10(self):
+    def test_set_settings_53(self):
         """
-        setSettings allow all `indexSettings`
+        attributesToHighlightStar
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributesToHighlight": [
+                    "*",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"attributesToHighlight":["*"]}""")
+
+    def test_set_settings_54(self):
+        """
+        everything
         """
         _req = self._client.set_settings_with_http_info(
             index_name="theIndexName",
@@ -6423,6 +17038,1493 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["fr"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["fr"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}"""
+        )
+
+    def test_set_settings_55(self):
+        """
+        searchableAttributesWithCustomRankingsAndAttributesForFaceting
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "brand",
+                    "name",
+                    "categories",
+                    "unordered(description)",
+                ],
+                "customRanking": [
+                    "desc(popularity)",
+                ],
+                "attributesForFaceting": [
+                    "searchable(brand)",
+                    "type",
+                    "categories",
+                    "price",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["brand","name","categories","unordered(description)"],"customRanking":["desc(popularity)"],"attributesForFaceting":["searchable(brand)","type","categories","price"]}"""
+        )
+
+    def test_set_settings_56(self):
+        """
+        searchableAttributesOrdering
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "unordered(title)",
+                    "cast",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["unordered(title)","cast"]}"""
+        )
+
+    def test_set_settings_57(self):
+        """
+        searchableAttributesProductReferenceSuffixes
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "name",
+                    "product_reference",
+                    "product_reference_suffixes",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["name","product_reference","product_reference_suffixes"]}"""
+        )
+
+    def test_set_settings_58(self):
+        """
+        queryLanguageAndIgnorePlurals
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "queryLanguages": [
+                    "en",
+                ],
+                "ignorePlurals": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"queryLanguages":["en"],"ignorePlurals":true}"""
+        )
+
+    def test_set_settings_59(self):
+        """
+        searchableAttributesInMovies
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="movies",
+            index_settings={
+                "searchableAttributes": [
+                    "title_eng",
+                    "title_fr",
+                    "title_es",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/movies/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["title_eng","title_fr","title_es"]}"""
+        )
+
+    def test_set_settings_60(self):
+        """
+        disablePrefixOnAttributes
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "disablePrefixOnAttributes": [
+                    "serial_number",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"disablePrefixOnAttributes":["serial_number"]}"""
+        )
+
+    def test_set_settings_61(self):
+        """
+        disableTypoToleranceOnAttributes
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "disableTypoToleranceOnAttributes": [
+                    "serial_number",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"disableTypoToleranceOnAttributes":["serial_number"]}"""
+        )
+
+    def test_set_settings_62(self):
+        """
+        searchableAttributesSimpleExample
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "serial_number",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["serial_number"]}"""
+        )
+
+    def test_set_settings_63(self):
+        """
+        searchableAttributesSimpleExampleAlt
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "serial_number",
+                    "serial_number_suffixes",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["serial_number","serial_number_suffixes"]}"""
+        )
+
+    def test_set_settings_64(self):
+        """
+        set_searchable_attributes
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "searchableAttributes": [
+                    "title,alternative_title",
+                    "author",
+                    "unordered(text)",
+                    "emails.personal",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"searchableAttributes":["title,alternative_title","author","unordered(text)","emails.personal"]}"""
+        )
+
+    def test_set_settings_65(self):
+        """
+        set_searchable_attributes
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributesForFaceting": [
+                    "author",
+                    "filterOnly(isbn)",
+                    "searchable(edition)",
+                    "afterDistinct(category)",
+                    "afterDistinct(searchable(publisher))",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesForFaceting":["author","filterOnly(isbn)","searchable(edition)","afterDistinct(category)","afterDistinct(searchable(publisher))"]}"""
+        )
+
+    def test_set_settings_66(self):
+        """
+        unretrievable_attributes
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "unretrievableAttributes": [
+                    "total_number_of_sales",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"unretrievableAttributes":["total_number_of_sales"]}"""
+        )
+
+    def test_set_settings_67(self):
+        """
+        set_retrievable_attributes
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributesToRetrieve": [
+                    "author",
+                    "title",
+                    "content",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesToRetrieve":["author","title","content"]}"""
+        )
+
+    def test_set_settings_68(self):
+        """
+        set_all_attributes_as_retrievable
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributesToRetrieve": [
+                    "*",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"attributesToRetrieve":["*"]}""")
+
+    def test_set_settings_69(self):
+        """
+        specify_attributes_not_to_retrieve
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributesToRetrieve": [
+                    "*",
+                    "-SKU",
+                    "-internal_desc",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesToRetrieve":["*","-SKU","-internal_desc"]}"""
+        )
+
+    def test_set_settings_70(self):
+        """
+        neural_search
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "mode": "neuralSearch",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"mode":"neuralSearch"}""")
+
+    def test_set_settings_71(self):
+        """
+        keyword_search
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "mode": "keywordSearch",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"mode":"keywordSearch"}""")
+
+    def test_set_settings_72(self):
+        """
+        set_default_ranking
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "ranking": [
+                    "typo",
+                    "geo",
+                    "words",
+                    "filters",
+                    "attribute",
+                    "proximity",
+                    "exact",
+                    "custom",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"ranking":["typo","geo","words","filters","attribute","proximity","exact","custom"]}"""
+        )
+
+    def test_set_settings_73(self):
+        """
+        set_ranking_by_attribute_asc
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "ranking": [
+                    "asc(price)",
+                    "typo",
+                    "geo",
+                    "words",
+                    "filters",
+                    "proximity",
+                    "attribute",
+                    "exact",
+                    "custom",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"ranking":["asc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}"""
+        )
+
+    def test_set_settings_74(self):
+        """
+        set_ranking_by_attribute_desc
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "ranking": [
+                    "desc(price)",
+                    "typo",
+                    "geo",
+                    "words",
+                    "filters",
+                    "proximity",
+                    "attribute",
+                    "exact",
+                    "custom",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"ranking":["desc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}"""
+        )
+
+    def test_set_settings_75(self):
+        """
+        restrict_searchable_attributes
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customRanking": [
+                    "desc(popularity)",
+                    "asc(price)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customRanking":["desc(popularity)","asc(price)"]}"""
+        )
+
+    def test_set_settings_76(self):
+        """
+        set_default_relevancy
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "relevancyStrictness": 90,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"relevancyStrictness":90}""")
+
+    def test_set_settings_77(self):
+        """
+        set_replicas
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "replicas": [
+                    "name_of_replica_index1",
+                    "name_of_replica_index2",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"replicas":["name_of_replica_index1","name_of_replica_index2"]}"""
+        )
+
+    def test_set_settings_78(self):
+        """
+        set_default_max_values_per_facet
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "maxValuesPerFacet": 100,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"maxValuesPerFacet":100}""")
+
+    def test_set_settings_79(self):
+        """
+        set_default_sort_facet_values_by
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "sortFacetValuesBy": "alpha",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"sortFacetValuesBy":"alpha"}""")
+
+    def test_set_settings_80(self):
+        """
+        set_attributes_to_snippet
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributesToSnippet": [
+                    "content:80",
+                    "description",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesToSnippet":["content:80","description"]}"""
+        )
+
+    def test_set_settings_81(self):
+        """
+        set_all_attributes_to_snippet
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributesToSnippet": [
+                    "*:80",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"attributesToSnippet":["*:80"]}""")
+
+    def test_set_settings_82(self):
+        """
+        set_default_highlight_pre_tag
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "highlightPreTag": "<em>",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"highlightPreTag":"<em>"}""")
+
+    def test_set_settings_83(self):
+        """
+        set_default_highlight_post_tag
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "highlightPostTag": "</em>",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"highlightPostTag":"</em>"}""")
+
+    def test_set_settings_84(self):
+        """
+        set_default_snippet_ellipsis_text
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "snippetEllipsisText": "…",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"snippetEllipsisText":"…"}""")
+
+    def test_set_settings_85(self):
+        """
+        enable_restrict_highlight_and_snippet_arrays_by_default
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "restrictHighlightAndSnippetArrays": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"restrictHighlightAndSnippetArrays":true}"""
+        )
+
+    def test_set_settings_86(self):
+        """
+        set_default_hits_per_page
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "hitsPerPage": 20,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"hitsPerPage":20}""")
+
+    def test_set_settings_87(self):
+        """
+        set_pagination_limit
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "paginationLimitedTo": 1000,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"paginationLimitedTo":1000}""")
+
+    def test_set_settings_88(self):
+        """
+        set_default_min_word_size_for_one_typo
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "minWordSizefor1Typo": 4,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"minWordSizefor1Typo":4}""")
+
+    def test_set_settings_89(self):
+        """
+        set_default_min_word_size_for_two_typos
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "minWordSizefor2Typos": 4,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"minWordSizefor2Typos":4}""")
+
+    def test_set_settings_90(self):
+        """
+        set_default_typo_tolerance_mode
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "typoTolerance": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"typoTolerance":true}""")
+
+    def test_set_settings_91(self):
+        """
+        disable_typos_on_numeric_tokens_by_default
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "allowTyposOnNumericTokens": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"allowTyposOnNumericTokens":false}""")
+
+    def test_set_settings_92(self):
+        """
+        disable_typo_tolerance_for_words
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "disableTypoToleranceOnWords": [
+                    "wheel",
+                    "1X2BCD",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"disableTypoToleranceOnWords":["wheel","1X2BCD"]}"""
+        )
+
+    def test_set_settings_93(self):
+        """
+        set_separators_to_index
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "separatorsToIndex": "+#",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"separatorsToIndex":"+#"}""")
+
+    def test_set_settings_94(self):
+        """
+        set_languages_using_querylanguages
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "queryLanguages": [
+                    "es",
+                ],
+                "ignorePlurals": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"queryLanguages":["es"],"ignorePlurals":true}"""
+        )
+
+    def test_set_settings_95(self):
+        """
+        set_attributes_to_transliterate
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "indexLanguages": [
+                    "ja",
+                ],
+                "attributesToTransliterate": [
+                    "name",
+                    "description",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"indexLanguages":["ja"],"attributesToTransliterate":["name","description"]}"""
+        )
+
+    def test_set_settings_96(self):
+        """
+        set_languages_using_querylanguages
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "queryLanguages": [
+                    "es",
+                ],
+                "removeStopWords": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"queryLanguages":["es"],"removeStopWords":true}"""
+        )
+
+    def test_set_settings_97(self):
+        """
+        set_camel_case_attributes
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "camelCaseAttributes": [
+                    "description",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"camelCaseAttributes":["description"]}""")
+
+    def test_set_settings_98(self):
+        """
+        set_decompounded_attributes
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "decompoundedAttributes": {
+                    "de": [
+                        "name",
+                    ],
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"decompoundedAttributes":{"de":["name"]}}"""
+        )
+
+    def test_set_settings_99(self):
+        """
+        set_decompounded_multiple_attributes
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "decompoundedAttributes": {
+                    "de": [
+                        "name_de",
+                        "description_de",
+                    ],
+                    "fi": [
+                        "name_fi",
+                        "description_fi",
+                    ],
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"decompoundedAttributes":{"de":["name_de","description_de"],"fi":["name_fi","description_fi"]}}"""
+        )
+
+    def test_set_settings_100(self):
+        """
+        set_keep_diacritics_on_characters
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "keepDiacriticsOnCharacters": "øé",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"keepDiacriticsOnCharacters":"øé"}""")
+
+    def test_set_settings_101(self):
+        """
+        set_custom_normalization
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "customNormalization": {
+                    "default": {
+                        "ä": "ae",
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"customNormalization":{"default":{"ä":"ae"}}}"""
+        )
+
+    def test_set_settings_102(self):
+        """
+        set_languages_using_querylanguages
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "queryLanguages": [
+                    "es",
+                ],
+                "removeStopWords": True,
+                "ignorePlurals": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"queryLanguages":["es"],"removeStopWords":true,"ignorePlurals":true}"""
+        )
+
+    def test_set_settings_103(self):
+        """
+        set_indexlanguages
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "indexLanguages": [
+                    "ja",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"indexLanguages":["ja"]}""")
+
+    def test_set_settings_104(self):
+        """
+        enable_decompound_query_by_default
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "decompoundQuery": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"decompoundQuery":true}""")
+
+    def test_set_settings_105(self):
+        """
+        enable_rules_syntax_by_default
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "enableRules": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"enableRules":true}""")
+
+    def test_set_settings_106(self):
+        """
+        enable_personalization_settings
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "enablePersonalization": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"enablePersonalization":true}""")
+
+    def test_set_settings_107(self):
+        """
+        set_default_query_type
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "queryType": "prefixLast",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"queryType":"prefixLast"}""")
+
+    def test_set_settings_108(self):
+        """
+        set_default_remove_words_if_no_result
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "removeWordsIfNoResults": "none",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"removeWordsIfNoResults":"none"}""")
+
+    def test_set_settings_109(self):
+        """
+        enable_advanced_syntax_by_default
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "advancedSyntax": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"advancedSyntax":true}""")
+
+    def test_set_settings_110(self):
+        """
+        set_default_optional_words
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "optionalWords": [
+                    "blue",
+                    "iphone case",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"optionalWords":["blue","iphone case"]}""")
+
+    def test_set_settings_111(self):
+        """
+        disabling_prefix_search_for_some_attributes_by_default
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "disablePrefixOnAttributes": [
+                    "sku",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"disablePrefixOnAttributes":["sku"]}""")
+
+    def test_set_settings_112(self):
+        """
+        disabling_exact_for_some_attributes_by_default
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "disableExactOnAttributes": [
+                    "description",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"disableExactOnAttributes":["description"]}"""
+        )
+
+    def test_set_settings_113(self):
+        """
+        set_default_exact_single_word_query
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "exactOnSingleWordQuery": "attribute",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"exactOnSingleWordQuery":"attribute"}""")
+
+    def test_set_settings_114(self):
+        """
+        set_default_aternative_as_exact
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "alternativesAsExact": [
+                    "ignorePlurals",
+                    "singleWordSynonym",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"alternativesAsExact":["ignorePlurals","singleWordSynonym"]}"""
+        )
+
+    def test_set_settings_115(self):
+        """
+        enable_advanced_syntax_by_default
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "advancedSyntax": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"advancedSyntax":true}""")
+
+    def test_set_settings_116(self):
+        """
+        set_numeric_attributes_for_filtering
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "numericAttributesForFiltering": [
+                    "quantity",
+                    "popularity",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"numericAttributesForFiltering":["quantity","popularity"]}"""
+        )
+
+    def test_set_settings_117(self):
+        """
+        enable_compression_of_integer_array
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "allowCompressionOfIntegerArray": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"allowCompressionOfIntegerArray":true}""")
+
+    def test_set_settings_118(self):
+        """
+        set_attributes_for_distinct
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributeForDistinct": "url",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"attributeForDistinct":"url"}""")
+
+    def test_set_settings_119(self):
+        """
+        set_distinct
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "distinct": 1,
+                "attributeForDistinct": "url",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"distinct":1,"attributeForDistinct":"url"}"""
+        )
+
+    def test_set_settings_120(self):
+        """
+        set_replace_synonyms_in_highlights
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "replaceSynonymsInHighlight": False,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"replaceSynonymsInHighlight":false}""")
+
+    def test_set_settings_121(self):
+        """
+        set_min_proximity
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "minProximity": 1,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"minProximity":1}""")
+
+    def test_set_settings_122(self):
+        """
+        set_default_field
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "responseFields": [
+                    "hits",
+                    "hitsPerPage",
+                    "nbPages",
+                    "page",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"responseFields":["hits","hitsPerPage","nbPages","page"]}"""
+        )
+
+    def test_set_settings_123(self):
+        """
+        set_max_facet_hits
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "maxFacetHits": 10,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"maxFacetHits":10}""")
+
+    def test_set_settings_124(self):
+        """
+        set_attribute_criteria_computed_by_min_proximity
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributeCriteriaComputedByMinProximity": True,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributeCriteriaComputedByMinProximity":true}"""
+        )
+
+    def test_set_settings_125(self):
+        """
+        set_user_data
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "userData": {
+                    "extraData": "This is the custom data that you want to store in your index",
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"userData":{"extraData":"This is the custom data that you want to store in your index"}}"""
+        )
+
+    def test_set_settings_126(self):
+        """
+        set_rendering_content
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "renderingContent": {
+                    "facetOrdering": {
+                        "facets": {
+                            "order": [
+                                "size",
+                                "brand",
+                            ],
+                        },
+                        "values": {
+                            "brand": {
+                                "order": [
+                                    "uniqlo",
+                                ],
+                                "hide": [
+                                    "muji",
+                                ],
+                                "sortRemainingBy": "count",
+                            },
+                            "size": {
+                                "order": [
+                                    "S",
+                                    "M",
+                                    "L",
+                                ],
+                                "sortRemainingBy": "hidden",
+                            },
+                        },
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"renderingContent":{"facetOrdering":{"facets":{"order":["size","brand"]},"values":{"brand":{"order":["uniqlo"],"hide":["muji"],"sortRemainingBy":"count"},"size":{"order":["S","M","L"],"sortRemainingBy":"hidden"}}}}}"""
         )
 
     def test_update_api_key_(self):

@@ -1,0 +1,10 @@
+{{> snippets/import}}
+
+playlists = [] # Your records
+
+{{> snippets/init}}
+
+playlists.each do |playlist|
+  playlist_user_id = playlist['userID']
+  {{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}}
+end

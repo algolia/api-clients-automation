@@ -1,0 +1,14 @@
+{{> snippets/import}}
+
+const playlists: Record<string, any>[] = [/* Your records */];
+
+try {
+  {{> snippets/init}}
+
+  playlists.forEach(async (playlist) => {
+    const playlistUserID = playlist["userID"];
+    {{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}}
+  });
+} catch (e: any) {
+  console.error(e);
+}

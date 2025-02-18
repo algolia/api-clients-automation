@@ -1,0 +1,23 @@
+import json
+
+from algoliasearch.search.client import SearchClientSync
+
+
+if __name__ == "__main__":
+    try:
+        _client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+        with open("records.json", "r", encoding="utf-8") as f:
+            records = json.load(f)
+
+            chunk_size = 10000
+
+            for begin_index in range(0, len(records), chunk_size):
+                chunk = records[begin_index : begin_index + chunk_size]
+                _client.save_objects(
+                    index_name="<YOUR_INDEX_NAME>",
+                    objects=chunk,
+                )
+
+    except Exception as e:
+        print(f"Error: {e}")

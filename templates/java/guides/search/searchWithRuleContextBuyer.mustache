@@ -1,0 +1,25 @@
+package com.algolia;
+
+import java.util.List;
+
+{{> snippets/import}}
+
+public class searchWithRuleContextBuyer {
+
+  private static String getBuyerAccountId() {
+    return ""; // Implement your logic here
+  }
+
+  public static void main(String[] args) throws Exception {
+
+    try ({{> snippets/init}}) {
+      // get the buyer account information
+      String buyer = getBuyerAccountId();
+      SearchParams searchParams = new SearchParamsObject().setQuery("<YOUR_SEARCH_QUERY>").setRuleContexts(List.of(buyer));
+
+      {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+    } catch (Exception e) {
+      System.out.println("An error occurred: " + e.getMessage());
+    }
+  }
+}

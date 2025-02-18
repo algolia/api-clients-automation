@@ -1,0 +1,16 @@
+{{> snippets/import}}
+import type { SearchParams } from 'algoliasearch';
+
+try {
+  {{> snippets/init}}
+
+  const dateTimestamp = Date.now();
+  const searchParams: SearchParams = {
+    query: "<YOUR_SEARCH_QUERY>",
+    filters: `date_timestamp > ${dateTimestamp}`
+  };
+
+  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+} catch (e: any) {
+  console.error(e);
+}

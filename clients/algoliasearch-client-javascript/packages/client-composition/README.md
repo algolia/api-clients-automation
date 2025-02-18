@@ -41,11 +41,11 @@ All of our clients comes with type definition, and are available for both browse
 ### With a package manager
 
 ```bash
-yarn add @algolia/client-composition@0.0.1-alpha.9
+yarn add @algolia/client-composition@0.0.1-alpha.13
 # or
-npm install @algolia/client-composition@0.0.1-alpha.9
+npm install @algolia/client-composition@0.0.1-alpha.13
 # or
-pnpm add @algolia/client-composition@0.0.1-alpha.9
+pnpm add @algolia/client-composition@0.0.1-alpha.13
 ```
 
 ### Without a package manager
@@ -53,7 +53,7 @@ pnpm add @algolia/client-composition@0.0.1-alpha.9
 Add the following JavaScript snippet to the <head> of your website:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@algolia/client-composition@0.0.1-alpha.9/dist/builds/browser.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@algolia/client-composition@0.0.1-alpha.13/dist/builds/browser.umd.js"></script>
 ```
 
 ### Usage
@@ -66,7 +66,7 @@ import { compositionClient } from '@algolia/client-composition';
 const client = compositionClient('YOUR_APP_ID', 'YOUR_API_KEY');
 ```
 
-For full documentation, visit the **[Algolia JavaScript API Client](https://www.algolia.com/doc/libraries/javascript/v5/methods/composition/)**.
+For full documentation, visit the **[Algolia JavaScript API Client](https://www.algolia.com/doc/libraries/javascript/v5/methods/composition-full/)**.
 
 ## ❓ Troubleshooting
 

@@ -10,9 +10,7 @@ import com.fasterxml.jackson.databind.annotation.*;
 public enum RunOutcome {
   SUCCESS("success"),
 
-  FAILURE("failure"),
-
-  PROCESSING("processing");
+  FAILURE("failure");
 
   private final String value;
 

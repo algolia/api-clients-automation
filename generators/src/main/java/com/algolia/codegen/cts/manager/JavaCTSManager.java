@@ -1,7 +1,9 @@
 package com.algolia.codegen.cts.manager;
 
+import com.algolia.codegen.AlgoliaJavaGenerator;
 import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.*;
+import com.samskivert.mustache.Mustache.Lambda;
 import java.io.IOException;
 import java.util.*;
 import org.openapitools.codegen.SupportingFile;
@@ -46,5 +48,10 @@ public class JavaCTSManager implements CTSManager {
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
     bundle.put("packageVersion", getVersion());
     bundle.put("import", Helpers.camelize(this.client).toLowerCase());
+  }
+
+  @Override
+  public void addMustacheLambdas(Map<String, Lambda> lambdas) {
+    lambdas.put("javaEnum", (fragment, writer) -> writer.write(AlgoliaJavaGenerator.toEnum(fragment.execute())));
   }
 }

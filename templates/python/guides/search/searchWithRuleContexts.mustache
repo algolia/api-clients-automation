@@ -1,0 +1,22 @@
+{{> snippets/import}}
+from algoliasearch.search.models.search_params import SearchParams
+
+
+def _get_platform_tag() -> str:
+    # Implement your logic here
+    return ""
+
+if __name__ == "__main__":
+  try:
+    _{{> snippets/init}}
+
+    # get the buyer account information
+    platform_tag = _get_platform_tag()
+    search_params = SearchParams(
+      query="<YOUR_SEARCH_QUERY>",
+      rule_contexts=[platform_tag],
+    )
+
+    {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+  except Exception as e:
+    print(f"Error: {e}")

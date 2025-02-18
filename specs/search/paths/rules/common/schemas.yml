@@ -121,6 +121,7 @@ consequence:
         required:
           - objectID
     userData:
+      type: object
       description: |
         A JSON object with custom data that will be appended to the `userData` array in the response.
         This object isn't interpreted by the API and is limited to 1&nbsp;kB of minified JSON.

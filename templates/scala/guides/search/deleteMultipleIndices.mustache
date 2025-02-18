@@ -1,0 +1,36 @@
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+
+{{> snippets/import}}
+import algoliasearch.search.{MultipleBatchRequest, BatchParams, Action}
+
+def deleteMultipleIndices(): Future[Unit] = {
+  // You need an API key with `deleteIndex`
+  {{> snippets/init}}
+
+  {{#dynamicSnippet}}listIndicesSimple{{/dynamicSnippet}}.flatMap { indices =>
+    val (primaryIndices, replicaIndices) = indices.items.partition(_.primary.isEmpty)
+
+    val deletePrimary = if (primaryIndices.nonEmpty) {
+      val requests = primaryIndices.map(index => MultipleBatchRequest(Action.Delete, None, index.name))
+      {{#dynamicSnippet}}deleteMultipleIndicesPrimary{{/dynamicSnippet}}.map { _ =>
+        println("Deleted primary indices.")
+      }
+    } else Future.unit
+
+    val deleteReplica = if (replicaIndices.nonEmpty) {
+      val requests = replicaIndices.map(index => MultipleBatchRequest(Action.Delete, None, index.name))
+      {{#dynamicSnippet}}deleteMultipleIndicesReplica{{/dynamicSnippet}}.map { _ =>
+        println("Deleted replica indices.")
+      }
+    } else Future.unit
+
+    for {
+      _ <- deletePrimary
+      _ <- deleteReplica
+    } yield ()
+  }.recover {
+    case ex: Exception =>
+      println(s"An error occurred: ${ex.getMessage}")
+  }
+}

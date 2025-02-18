@@ -1,9 +1,8 @@
-import asyncio
 import json
 from algoliasearch.ingestion.client import IngestionClientSync
 
 
-async def main():
+if __name__ == "__main__":
     # use the region matching your applicationID
     _client = IngestionClientSync(
         "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
@@ -23,6 +22,3 @@ async def main():
         )
 
         print(resp)
-
-
-asyncio.run(main())

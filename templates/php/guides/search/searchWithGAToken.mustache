@@ -1,0 +1,30 @@
+<?php
+
+require __DIR__.'/../vendor/autoload.php';
+{{> snippets/import}}
+use Algolia\AlgoliaSearch\Model\Search\SearchParamsObject;
+
+$getGoogleAnalyticsUserIdFromBrowserCookie = function (string $cookieName): string {
+    // Implement your logic here
+    return '';
+};
+
+try {
+  {{> snippets/init}}
+
+  $userToken = $getGoogleAnalyticsUserIdFromBrowserCookie('_ga');
+  $searchParams = (new SearchParamsObject())
+      ->setQuery('<YOUR_SEARCH_QUERY>')
+      ->setUserToken($userToken);
+
+  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+
+  /** @var string|null $loggedInUser */
+  $loggedInUser = null;
+
+  $searchParams->setUserToken($loggedInUser ?? $userToken);
+
+  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+} catch (Exception $e) {
+  echo $e->getMessage() . PHP_EOL;
+}

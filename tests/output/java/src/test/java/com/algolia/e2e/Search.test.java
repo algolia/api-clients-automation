@@ -258,8 +258,8 @@ class SearchClientRequestsTestsE2E {
   }
 
   @Test
-  @DisplayName("setSettings with minimal parameters")
-  void setSettingsTest1() {
+  @DisplayName("minimal parameters")
+  void setSettingsTest() {
     UpdatedAtResponse res = client.setSettings("cts_e2e_settings", new IndexSettings().setPaginationLimitedTo(10), true);
   }
 }

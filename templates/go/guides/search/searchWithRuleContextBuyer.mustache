@@ -1,0 +1,34 @@
+package main
+
+import (
+  "encoding/json"
+  "fmt"
+  "net/http"
+)
+
+{{> snippets/import}}
+
+func getBuyerAccountId() (string, error) {
+  return "", nil // Implement your logic here
+}
+
+func searchWithRuleContextBuyer() {
+  {{> snippets/init}}
+
+  // get the buyer account information
+  buyer, err := getBuyerAccountId()
+  if err != nil {
+    panic(err)
+  }
+
+  searchParams := search.SearchParamsObjectAsSearchParams(
+    search.NewSearchParamsObject().
+      SetQuery("<YOUR_SEARCH_QUERY>").
+      SetRuleContexts([]string{buyer}),
+  )
+
+  _, err = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+  if err != nil {
+    panic(err)
+  }
+}

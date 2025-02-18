@@ -13,7 +13,7 @@ final class Widgets {
     this.banners,
   });
 
-  /// banners defined in the merchandising studio for the given search.
+  /// Banners defined in the Merchandising Studio for a given search.
   @JsonKey(name: r'banners')
   final List<Banner>? banners;
 

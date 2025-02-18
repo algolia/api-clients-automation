@@ -33,7 +33,7 @@
   */
 package algoliasearch.search
 
-/** url for a search banner image.
+/** URL for an image to show inside a banner.
   */
 case class BannerImageUrl(
     url: Option[String] = scala.None

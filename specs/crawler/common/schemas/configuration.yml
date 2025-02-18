@@ -8,17 +8,7 @@ Configuration:
   properties:
     actions:
       type: array
-      description: |
-        Instructions about how to process crawled URLs.
-
-        Each action defines:
-
-        - The targeted subset of URLs it processes.
-        - What information to extract from the web pages.
-        - The Algolia indices where the extracted records will be stored.
-
-        A single web page can match multiple actions.
-        In this case, the crawler produces one record for each matched action.
+      description: A list of actions.
       minItems: 1
       maxItems: 30
       items:
@@ -28,11 +18,7 @@ Configuration:
       description: |
         Algolia API key for indexing the records.
 
-        The API key must have the following access control list (ACL) permissions:
-        `search`, `browse`, `listIndexes`, `addObject`, `deleteObject`, `deleteIndex`, `settings`, `editSettings`.
-        The API key must not be the admin API key of the application.
-        The API key must have access to create the indices that the crawler will use.
-        For example, if `indexPrefix` is `crawler_`, the API key must have access to all `crawler_*` indices.
+        For more information, see the [`apiKey` documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/api-key/).
     appId:
       $ref: '../parameters.yml#/applicationID'
     exclusionPatterns:
@@ -46,9 +32,9 @@ Configuration:
       items:
         type: string
         description: |
-          Pattern for matching URLs to exclude from crawling.
+          URLs to exclude from crawling.
 
-          The pattern support globs and wildcard matching with [micromark](https://github.com/micromatch/micromatch).
+          Uses [micromatch](https://github.com/micromatch/micromatch) for negation, wildcards, and more.
     externalData:
       type: array
       description: |
@@ -66,8 +52,7 @@ Configuration:
       description: |
         URLs from where to start crawling.
 
-        These are the same as `startUrls`.
-        URLs you [crawl manually](#tag/actions/operation/testUrl) can be added to `extraUrls`.
+        For more information, see the [`extraUrls` documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/extra-urls/).
       items:
         type: string
     ignoreCanonicalTo:
@@ -76,19 +61,22 @@ Configuration:
       type: boolean
       description: |
         Whether to ignore the `nofollow` meta tag or link attribute.
-        If true, links with the `rel="nofollow"` attribute or links on pages with the `nofollow` robots meta tag will be crawled.
+
+        For more information, see the [`ignoreNoFollowTo` documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/ignore-no-follow-to/).
     ignoreNoIndex:
       type: boolean
       description: |
         Whether to ignore the `noindex` robots meta tag.
-        If true, pages with this meta tag will be crawled.
+        If `true` pages with this meta tag _will_ be crawled.
     ignoreQueryParams:
       type: array
       description: |
         Query parameters to ignore while crawling.
 
         All URLs with the matching query parameters will be treated as identical.
-        This prevents indexing duplicated URLs, that just differ by their query parameters.
+        This prevents indexing URLs that just differ by their query parameters.
+
+        You can use wildcard characters to pattern match.
       maxItems: 9999
       example:
         - ref
@@ -107,28 +95,24 @@ Configuration:
     initialIndexSettings:
       type: object
       description: |
-        Initial index settings, one settings object per index.
+        Crawler index settings.
 
-        This setting is only applied when the index is first created.
-        Settings are not re-applied.
-        This prevents overriding any settings changes after the index was created.
+        For more information, see the [`initialIndexSettings` documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/initial-index-settings/).
       additionalProperties:
         $ref: '../../../common/schemas/IndexSettings.yml#/indexSettings'
         x-additionalPropertiesName: indexName
     linkExtractor:
       title: linkExtractor
       type: object
-      description: Function for extracting URLs for links found on crawled pages.
+      description: |
+        Function for extracting URLs from links on crawled pages.
+
+        For more information, see the [`linkExtractor` documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/link-extractor/).
       properties:
         __type:
           $ref: './action.yml#/configurationRecordExtractorType'
         source:
           type: string
-          description: |
-            JavaScript function (as a string) for extracting URLs for links found on crawled pages.
-            By default, all URLs that comply with the `pathsToMatch`, `fileTypesToMatch`, and `exclusions` settings are added to the crawl.
-            The [Crawler dashboard](https://crawler.algolia.com/admin) has an editor with autocomplete and validation,
-            which makes editing the `linkExtractor` property easier.
           example: |
             ({ $, url, defaultExtractor }) => {
               if (/example.com\/doc\//.test(url.href)) {
@@ -225,41 +209,35 @@ ignoreCanonicalTo:
 
 renderJavaScript:
   description: |
-    Crawl JavaScript-rendered pages by rendering them with a headless browser.
+    Crawl JavaScript-rendered pages with a headless browser.
 
-    Rendering JavaScript-based pages is slower than crawling regular HTML pages.
+    For more information, see the [`renderJavaScript` documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/render-java-script/).
   oneOf:
     - type: boolean
-      description: Whether to render all pages with a headless browser.
+      description: Whether to render all pages.
     - type: array
-      description: URLs or patterns which to render with a headless browser.
+      description: URLs or URL patterns to render.
       items:
         type: string
-        description: |
-          URL or pattern for matching URLs which to render with a headless browser.
-
-          The pattern support globs and wildcard matching with [micromark](https://github.com/micromatch/micromatch).
+        description: URL or URL pattern to render.
         example: https://www.example.com
     - title: headlessBrowserConfig
       type: object
-      description: Configuration for rendering HTML with a headless browser.
+      description: Configuration for rendering HTML.
       properties:
         enabled:
           type: boolean
-          description: Whether to render matching URLs with a headless browser.
+          description: Whether to render matching URLs.
         patterns:
           type: array
-          description: |
-            URLs or patterns for matching URLs that should be rendered with a headless browser.
-
-            The pattern support globs and wildcard matching with [micromark](https://github.com/micromatch/micromatch).
+          description: URLs or URL patterns to render.
           items:
             type: string
         adBlock:
           type: boolean
           description: |
             Whether to turn on the built-in adblocker.
-            This blocks most ads and tracking scripts but can break some websites.
+            This blocks most ads and tracking scripts but can break some sites.
         waitTime:
           $ref: '#/waitTime'
       required:
@@ -285,6 +263,7 @@ requestOptions:
       $ref: '#/headers'
 
 waitTime:
+  type: object
   description: Timeout for the HTTP request.
   properties:
     min:
@@ -444,42 +423,32 @@ extraParameters:
 
 safetyChecks:
   type: object
-  description: Checks to ensure the crawl was successful.
+  description: |
+    Checks to ensure the crawl was successful.
+
+    For more information, see the [Safety checks](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/#safety-checks) documentation.
   properties:
     beforeIndexPublishing:
       $ref: '#/beforeIndexPublishing'
 
 beforeIndexPublishing:
   type: object
-  description: These checks are triggered after the crawl finishes but before the records are added to the Algolia index.
+  description: Checks triggered after the crawl finishes but before the records are added to the Algolia index.
   properties:
     maxLostRecordsPercentage:
       type: number
-      description: |
-        Maximum difference in percent between the numbers of records between crawls.
-
-        If the current crawl results in fewer than `1 - maxLostPercentage` records compared to the previous crawl,
-        the current crawling task is stopped with a `SafeReindexingError`.
-        The crawler will be blocked until you cancel the blocking task.
+      description: Maximum difference in percent between the numbers of records between crawls.
       minimum: 1
       maximum: 100
       default: 10
     maxFailedUrls:
       type: number
-      description: |
-        Stops the crawler if a specified number of pages fail to crawl.
-        If undefined, the crawler won't stop if it encounters such errors.
+      description: Stops the crawler if a specified number of pages fail to crawl.
 
 schedule:
   type: string
   description: |
-    Schedule for running the crawl, expressed in [Later.js](https://bunkat.github.io/later/) syntax.
-    If omitted, you must start crawls manually.
+    Schedule for running the crawl.
 
-    - The interval between two scheduled crawls must be at least 24 hours.
-    - Times are in UTC.
-    - Minutes must be explicit: `at 3:00 pm` not `at 3 pm`.
-    - Everyday is `every 1 day`.
-    - Midnight is `at 12:00 pm`.
-    - If you omit the time, a crawl might start any time after midnight UTC.
+    For more information, see the [`schedule` documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/schedule/).
   example: every weekday at 12:00 pm

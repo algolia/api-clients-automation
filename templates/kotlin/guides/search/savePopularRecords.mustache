@@ -1,0 +1,27 @@
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
+
+{{> snippets/import}}
+import com.algolia.client.model.search.*
+
+suspend fun savePopularRecords() {
+  {{> snippets/init}}
+
+  var records: List<JsonObject> = listOf()
+
+  client.browseObjects("YOUR_INDEX_NAME", BrowseParamsObject(), aggregator = { response ->
+      records = records + response.hits.map { hit ->
+          val props = hit.additionalProperties ?: mapOf()
+
+          val nbFollowers = props["nbFollowers"].toString().toInt()
+
+          buildJsonObject {
+              put("twitterHandle", JsonPrimitive(props["twitterHandle"].toString()))
+              put("nbFollowers", JsonPrimitive(nbFollowers))
+              put("isPopular", JsonPrimitive(nbFollowers > 1000000))
+          }
+      }
+  })
+  client.{{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}}
+}

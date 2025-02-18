@@ -4943,14 +4943,14 @@ components:
         url:
           type: string
     bannerImageUrl:
-      description: url for a search banner image.
+      description: URL for an image to show inside a banner.
       type: object
       additionalProperties: false
       properties:
         url:
           type: string
     bannerImage:
-      description: image of a search banner.
+      description: Image to show inside a banner.
       type: object
       additionalProperties: false
       properties:
@@ -4961,14 +4961,14 @@ components:
         title:
           type: string
     bannerLink:
-      description: link for a banner defined in merchandising studio.
+      description: Link for a banner defined in the Merchandising Studio.
       type: object
       additionalProperties: false
       properties:
         url:
           type: string
     banner:
-      description: a search banner with image and url.
+      description: Banner with image and link to redirect users.
       type: object
       additionalProperties: false
       properties:
@@ -4977,12 +4977,12 @@ components:
         link:
           $ref: '#/components/schemas/bannerLink'
     banners:
-      description: banners defined in the merchandising studio for the given search.
+      description: Banners defined in the Merchandising Studio for a given search.
       type: array
       items:
         $ref: '#/components/schemas/banner'
     widgets:
-      description: widgets returned from any rules that are applied to the current search.
+      description: Widgets returned from any rules that are applied to the current search.
       type: object
       additionalProperties: false
       properties:
@@ -5502,25 +5502,35 @@ components:
           items:
             type: string
           description: >
-            Properties to include in the API response of `search` and `browse`
+            Properties to include in the API response of search and browse
             requests.
 
 
             By default, all response properties are included.
 
-            To reduce the response size, you can select, which attributes should
+            To reduce the response size, you can select which properties should
             be included.
+
+
+            An empty list may lead to an empty API response (except properties
+            you can't exclude).
 
 
             You can't exclude these properties:
 
-            `message`, `warning`, `cursor`, `serverUsed`, `indexUsed`,
+            `message`, `warning`, `cursor`, `abTestVariantID`,
 
-            `abTestVariantID`, `parsedQuery`, or any property triggered by the
-            `getRankingInfo` parameter.
+            or any property added by setting `getRankingInfo` to true.
 
 
-            Don't exclude properties that you might need in your search UI.
+            Your search depends on the `hits` field. If you omit this field,
+            searches won't return any results.
+
+            Your UI might also depend on other properties, for example, for
+            pagination.
+
+            Before restricting the response size, check the impact on your
+            search experience.
           default:
             - '*'
           x-categories:
@@ -6378,20 +6388,17 @@ components:
       required:
         - requests
       example:
-        batch:
-          summary: Batch indexing request
-          value:
-            requests:
-              - action: addObject
-                body:
-                  name: Betty Jane McCamey
-                  company: Vita Foods Inc.
-                  email: betty@mccamey.com
-              - action: addObject
-                body:
-                  name: Gayla geimer
-                  company: Ortman McCain Co.
-                  email: gayla@geimer.com
+        requests:
+          - action: addObject
+            body:
+              name: Betty Jane McCamey
+              company: Vita Foods Inc.
+              email: betty@mccamey.com
+          - action: addObject
+            body:
+              name: Gayla geimer
+              company: Ortman McCain Co.
+              email: gayla@geimer.com
     objectIDs:
       type: array
       items:
@@ -7453,6 +7460,7 @@ components:
             required:
               - objectID
         userData:
+          type: object
           description: >
             A JSON object with custom data that will be appended to the
             `userData` array in the response.
@@ -7669,6 +7677,7 @@ components:
             type: boolean
         - type: 'null'
     standardEntries:
+      type: object
       description: >
         Key-value pairs of [supported language ISO
         codes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/)
@@ -7750,6 +7759,7 @@ components:
       description: Data size taken by all the users assigned to the cluster.
       example: 481
     source:
+      type: object
       description: Source.
       required:
         - source

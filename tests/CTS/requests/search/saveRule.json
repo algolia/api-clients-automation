@@ -178,5 +178,816 @@
         "forwardToReplicas": "true"
       }
     }
+  },
+  {
+    "testName": "b2b catalog",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "article-rule",
+      "rule": {
+        "objectID": "article-rule",
+        "conditions": [
+          {
+            "pattern": "article",
+            "anchoring": "startsWith"
+          }
+        ],
+        "consequence": {
+          "params": {
+            "query": {
+              "edits": [{
+                "type": "remove",
+                "delete": "article"
+              }]
+            },
+            "restrictSearchableAttributes": ["title", "book_id"]
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/article-rule",
+      "method": "PUT",
+      "body": {
+        "objectID": "article-rule",
+        "conditions": [
+          {
+            "pattern": "article",
+            "anchoring": "startsWith"
+          }
+        ],
+        "consequence": {
+          "params": {
+            "query": {
+              "edits": [{
+                "type": "remove",
+                "delete": "article"
+              }]
+            },
+            "restrictSearchableAttributes": ["title", "book_id"]
+          }
+        }
+      }
+    }
+  },
+  {
+    "testName": "merchandising and promoting",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "director-rule",
+      "rule": {
+        "objectID": "director-rule",
+        "conditions": [
+          {
+            "pattern": "{facet:director} director",
+            "anchoring": "contains"
+          }
+        ],
+        "consequence": {
+          "params": {
+            "restrictSearchableAttributes": ["title", "book_id"],
+            "automaticFacetFilters": [{
+              "facet":"director"
+            }],
+            "query": {
+              "edits": [{
+                "type": "remove",
+                "delete": "director"
+              }]
+            }
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/director-rule",
+      "method": "PUT",
+      "body": {
+        "objectID": "director-rule",
+        "conditions": [
+          {
+            "pattern": "{facet:director} director",
+            "anchoring": "contains"
+          }
+        ],
+        "consequence": {
+          "params": {
+            "restrictSearchableAttributes": ["title", "book_id"],
+            "automaticFacetFilters": [{
+              "facet":"director"
+            }],
+            "query": {
+              "edits": [{
+                "type": "remove",
+                "delete": "director"
+              }]
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "testName": "harry potter",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "harry-potter-rule",
+      "rule": {
+        "objectID": "harry-potter-rule",
+        "conditions": [
+          {
+            "pattern": "harry potter",
+            "anchoring": "contains"
+          }
+        ],
+        "consequence": {
+          "userData": {
+            "promo_content": "20% OFF on all Harry Potter books!"
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/harry-potter-rule",
+      "method": "PUT",
+      "body": {
+        "objectID": "harry-potter-rule",
+        "conditions": [
+          {
+            "pattern": "harry potter",
+            "anchoring": "contains"
+          }
+        ],
+        "consequence": {
+          "userData": {
+            "promo_content": "20% OFF on all Harry Potter books!"
+          }
+        }
+      }
+    }
+  },
+  {
+    "testName": "merchandising empty query",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "clearance-category-filter",
+      "rule": {
+        "objectID": "clearance-category-filter",
+        "conditions": [
+          {
+            "pattern": "",
+            "anchoring": "is",
+            "context": "landing"
+          }
+        ],
+        "consequence": {
+          "params": {
+            "optionalFilters": "clearance:true"
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/clearance-category-filter",
+      "method": "PUT",
+      "body": {
+        "objectID": "clearance-category-filter",
+        "conditions": [
+          {
+            "pattern": "",
+            "anchoring": "is",
+            "context": "landing"
+          }
+        ],
+        "consequence": {
+          "params": {
+            "optionalFilters": "clearance:true"
+          }
+        }
+      }
+    }
+  },
+  {
+    "testName": "redirect",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "redirect-help-rule",
+      "rule": {
+        "objectID": "redirect-help-rule",
+        "conditions": [
+          {
+            "pattern": "help",
+            "anchoring": "contains"
+          }
+        ],
+        "consequence": {
+          "userData": {
+            "redirect": "https://www.algolia.com/support"
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/redirect-help-rule",
+      "method": "PUT",
+      "body": {
+        "objectID": "redirect-help-rule",
+        "conditions": [
+          {
+            "pattern": "help",
+            "anchoring": "contains"
+          }
+        ],
+        "consequence": {
+          "userData": {
+            "redirect": "https://www.algolia.com/support"
+          }
+        }
+      }
+    }
+  },
+  {
+    "testName": "promote some results over others",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "tomato-fruit",
+      "rule": {
+        "objectID": "tomato-fruit",
+        "conditions": [{
+          "pattern": "tomato",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "params": {
+            "optionalFilters": "food_group:fruit"
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/tomato-fruit",
+      "method": "PUT",
+      "body": {
+        "objectID": "tomato-fruit",
+        "conditions": [{
+          "pattern": "tomato",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "params": {
+            "optionalFilters": "food_group:fruit"
+          }
+        }
+      }
+    }
+  },
+  {
+    "testName": "promote several hits",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "Promote-Apple-Newest",
+      "rule": {
+        "objectID": "Promote-Apple-Newest",
+        "conditions": [{
+          "pattern": "apple",
+          "anchoring": "is"
+        }],
+        "consequence": {
+          "promote": [
+            {
+              "objectIDs": ["iPhone-12345", "watch-123"],
+              "position": 0
+            }
+          ]
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/Promote-Apple-Newest",
+      "method": "PUT",
+      "body": {
+        "objectID": "Promote-Apple-Newest",
+        "conditions": [{
+          "pattern": "apple",
+          "anchoring": "is"
+        }],
+        "consequence": {
+          "promote": [
+            {
+              "objectIDs": ["iPhone-12345", "watch-123"],
+              "position": 0
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "testName": "promote newest release",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "Promote-iPhone-X",
+      "rule": {
+        "objectID": "Promote-iPhone-X",
+        "conditions": [{
+          "pattern": "iPhone",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "promote": [
+            {
+              "objectID": "iPhone-12345",
+              "position": 0
+            }
+          ]
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/Promote-iPhone-X",
+      "method": "PUT",
+      "body": {
+        "objectID": "Promote-iPhone-X",
+        "conditions": [{
+          "pattern": "iPhone",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "promote": [
+            {
+              "objectID": "iPhone-12345",
+              "position": 0
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "testName": "promote single item",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "promote-harry-potter-box-set",
+      "rule": {
+        "objectID": "promote-harry-potter-box-set",
+        "conditions": [{
+          "pattern": "Harry Potter",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "promote": [{
+            "objectID": "HP-12345",
+            "position": 0
+          }]
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/promote-harry-potter-box-set",
+      "method": "PUT",
+      "body": {
+        "objectID": "promote-harry-potter-box-set",
+        "conditions": [{
+          "pattern": "Harry Potter",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "promote": [
+            {
+              "objectID": "HP-12345",
+              "position": 0
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "testName": "limit search results",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "article-rule",
+      "rule": {
+        "objectID": "article-rule",
+        "conditions": [{
+          "pattern": "article",
+          "anchoring": "startsWith"
+        }],
+        "consequence": {
+          "params": {
+            "query": {
+              "edits": [{
+                "type": "remove",
+                "delete": "article"
+              }]
+            },
+            "restrictSearchableAttributes": ["title", "book_id"]
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/article-rule",
+      "method": "PUT",
+      "body": {
+        "objectID": "article-rule",
+        "conditions": [{
+          "pattern": "article",
+          "anchoring": "startsWith"
+        }],
+        "consequence": {
+          "params": {
+            "query": {
+              "edits": [{
+                "type": "remove",
+                "delete": "article"
+              }]
+            },
+            "restrictSearchableAttributes": ["title", "book_id"]
+          }
+        }
+      }
+    }
+  },
+  {
+    "testName": "query match",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "tagged-brand-rule",
+      "rule": {
+        "conditions": [{
+          "pattern": "brand: {facet:brand}",
+          "anchoring": "contains",
+          "alternatives": false
+        }],
+        "consequence": {
+          "params": {
+            "automaticFacetFilters": [{
+              "facet":"brand"
+            }],
+            "query": {
+              "remove": ["brand:", "{facet:brand}"]
+            }
+          }
+        },
+        "description": "filter on brand: {brand}",
+        "objectID": "tagged-brand-rule"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/tagged-brand-rule",
+      "method": "PUT",
+      "body": {
+        "conditions": [{
+          "pattern": "brand: {facet:brand}",
+          "anchoring": "contains",
+          "alternatives": false
+        }],
+        "consequence": {
+          "params": {
+            "automaticFacetFilters": [{
+              "facet":"brand"
+            }],
+            "query": {
+              "remove": ["brand:", "{facet:brand}"]
+            }
+          }
+        },
+        "description": "filter on brand: {brand}",
+        "objectID": "tagged-brand-rule"
+      }
+    }
+  },
+  {
+    "testName": "dynamic filtering",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "color-facets",
+      "rule": {
+        "objectID": "color-facets",
+        "conditions": [{
+          "pattern": "{facet:color}"
+        }],
+        "consequence": {
+          "params": {
+            "automaticFacetFilters": [{
+              "facet":"color"
+            }]
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/color-facets",
+      "method": "PUT",
+      "body": {
+        "objectID": "color-facets",
+        "conditions": [{
+          "pattern": "{facet:color}"
+        }],
+        "consequence": {
+          "params": {
+            "automaticFacetFilters": [{
+              "facet":"color"
+            }]
+          }
+        }
+      }
+    }
+  },
+  {
+    "testName": "hide hits",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "hide-12345",
+      "rule": {
+        "objectID": "hide-12345",
+        "conditions": [{
+          "pattern": "cheap",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "hide": [{
+            "objectID": "to-hide-12345"
+          }]
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/hide-12345",
+      "method": "PUT",
+      "body": {
+        "objectID": "hide-12345",
+        "conditions": [{
+          "pattern": "cheap",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "hide": [{
+            "objectID": "to-hide-12345"
+          }]
+        }
+      }
+    }
+  },
+  {
+    "testName": "one rule per facet",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "red-color",
+      "rule": {
+        "objectID": "red-color",
+        "conditions": [{
+          "pattern": "red",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "params": {
+            "query": {
+              "remove": ["red"]
+            },
+            "filters": "color:red"
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/red-color",
+      "method": "PUT",
+      "body": {
+        "objectID": "red-color",
+        "conditions": [{
+          "pattern": "red",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "params": {
+            "query": {
+              "remove": ["red"]
+            },
+            "filters": "color:red"
+          }
+        }
+      }
+    }
+  },
+  {
+    "testName": "numerical filters",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "cheap",
+      "rule": {
+        "objectID": "cheap",
+        "conditions": [{
+          "pattern": "cheap",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "params": {
+            "query": {
+              "remove": ["cheap"]
+            },
+            "filters": "price < 10"
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/cheap",
+      "method": "PUT",
+      "body": {
+        "objectID": "cheap",
+        "conditions": [{
+          "pattern": "cheap",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "params": {
+            "query": {
+              "remove": ["cheap"]
+            },
+            "filters": "price < 10"
+          }
+        }
+      }
+    }
+  },
+  {
+    "testName": "negative filters",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "gluten-free-rule",
+      "rule": {
+        "objectID": "gluten-free-rule",
+        "conditions": [{
+          "pattern": "gluten-free",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "params": {
+            "filters": "NOT allergens:gluten",
+            "query": {
+              "edits": [
+                {
+                  "type": "remove",
+                  "delete": "gluten-free"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/gluten-free-rule",
+      "method": "PUT",
+      "body": {
+        "objectID": "gluten-free-rule",
+        "conditions": [{
+          "pattern": "gluten-free",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "params": {
+            "filters": "NOT allergens:gluten",
+            "query": {
+              "edits": [
+                {
+                  "type": "remove",
+                  "delete": "gluten-free"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "testName": "positive filters",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "diet-rule",
+      "rule": {
+        "objectID": "diet-rule",
+        "conditions": [{
+          "pattern": "diet",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "params": {
+            "filters": "'low-carb' OR 'low-fat'",
+            "query": {
+              "edits": [
+                {
+                  "type": "remove",
+                  "delete": "diet"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/diet-rule",
+      "method": "PUT",
+      "body": {
+        "objectID": "diet-rule",
+        "conditions": [{
+          "pattern": "diet",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "params": {
+            "filters": "'low-carb' OR 'low-fat'",
+            "query": {
+              "edits": [
+                {
+                  "type": "remove",
+                  "delete": "diet"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "testName": "conditionless",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "diet-rule",
+      "rule": {
+        "objectID": "diet-rule",
+        "consequence": {
+          "params": {
+            "filters": "'low-carb' OR 'low-fat'",
+            "query": {
+              "edits": [
+                {
+                  "type": "remove",
+                  "delete": "diet"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/diet-rule",
+      "method": "PUT",
+      "body": {
+        "objectID": "diet-rule",
+        "consequence": {
+          "params": {
+            "filters": "'low-carb' OR 'low-fat'",
+            "query": {
+              "edits": [
+                {
+                  "type": "remove",
+                  "delete": "diet"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "testName": "contextual",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "a-rule-id",
+      "rule": {
+        "objectID": "a-rule-id",
+        "conditions": [{
+          "context": "mobile"
+        }],
+        "consequence": {
+          "params": {
+            "filters": "release_date >= 1577836800"
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/a-rule-id",
+      "method": "PUT",
+      "body": {
+        "objectID": "a-rule-id",
+        "conditions": [{
+          "context": "mobile"
+        }],
+        "consequence": {
+          "params": {
+            "filters": "release_date >= 1577836800"
+          }
+        }
+      }
+    }
   }
 ]

@@ -37,8 +37,7 @@ func TestSearchbenchmark0(t *testing.T) {
 
 			search.NewEmptySearchMethodParams().SetRequests(
 				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetIndexName("cts_e2e_benchmark_search_go").SetQuery("iphone 15 pro max 512gb").SetHitsPerPage(50))}),
-		))
+					search.NewEmptySearchForHits().SetIndexName("cts_e2e_benchmark_search_go").SetQuery("iphone 15 pro max 512gb").SetHitsPerPage(50))})))
 		require.NoError(t, err)
 	}
 }

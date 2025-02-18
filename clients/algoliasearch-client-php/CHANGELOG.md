@@ -1,3 +1,31 @@
+## [4.15.0](https://github.com/algolia/algoliasearch-client-php/compare/4.14.0...4.15.0)
+
+- [d2127cf74b](https://github.com/algolia/api-clients-automation/commit/d2127cf74b) feat(clients): more manual snippets for doc ([#4452](https://github.com/algolia/api-clients-automation/pull/4452)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [4.14.0](https://github.com/algolia/algoliasearch-client-php/compare/4.13.1...4.14.0)
+
+- [fd2353a092](https://github.com/algolia/api-clients-automation/commit/fd2353a092) feat(clients): add manual snippets for search doc ([#4388](https://github.com/algolia/api-clients-automation/pull/4388)) by [@Fluf22](https://github.com/Fluf22/)
+- [9745e6d6f2](https://github.com/algolia/api-clients-automation/commit/9745e6d6f2) feat(php): add `setMaxRetries` ([#4448](https://github.com/algolia/api-clients-automation/pull/4448)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.13.1](https://github.com/algolia/algoliasearch-client-php/compare/4.13.0...4.13.1)
+
+- [506b8a5636](https://github.com/algolia/api-clients-automation/commit/506b8a5636) fix(specs): responseFields description ([#4399](https://github.com/algolia/api-clients-automation/pull/4399)) by [@kai687](https://github.com/kai687/)
+- [09e657fa76](https://github.com/algolia/api-clients-automation/commit/09e657fa76) fix(specs): add a linter to assert that type is present ([#4393](https://github.com/algolia/api-clients-automation/pull/4393)) by [@millotp](https://github.com/millotp/)
+- [437c99303c](https://github.com/algolia/api-clients-automation/commit/437c99303c) fix(clients): mark php incompatible with 8.3.0 ([#4416](https://github.com/algolia/api-clients-automation/pull/4416)) by [@millotp](https://github.com/millotp/)
+
+## [4.13.0](https://github.com/algolia/algoliasearch-client-php/compare/4.12.0...4.13.0)
+
+- [5aa57630d6](https://github.com/algolia/api-clients-automation/commit/5aa57630d6) feat(specs): only use shortname in the source input ([#4287](https://github.com/algolia/api-clients-automation/pull/4287)) by [@millotp](https://github.com/millotp/)
+- [1e847f4caf](https://github.com/algolia/api-clients-automation/commit/1e847f4caf) fix(specs): move customRanking and keepDiacriticsOnCharacters to indexSettings ([#4324](https://github.com/algolia/api-clients-automation/pull/4324)) by [@millotp](https://github.com/millotp/)
+- [57d528a481](https://github.com/algolia/api-clients-automation/commit/57d528a481) feat(clients): endpoint level timeout part 2 ([#4318](https://github.com/algolia/api-clients-automation/pull/4318)) by [@Fluf22](https://github.com/Fluf22/)
+- [58cc5449f5](https://github.com/algolia/api-clients-automation/commit/58cc5449f5) fix(specs): optionalFilters additional explanation ([#4353](https://github.com/algolia/api-clients-automation/pull/4353)) by [@kai687](https://github.com/kai687/)
+- [700441942e](https://github.com/algolia/api-clients-automation/commit/700441942e) fix(specs): deprecate task v1 ([#4327](https://github.com/algolia/api-clients-automation/pull/4327)) by [@millotp](https://github.com/millotp/)
+- [3b129e01df](https://github.com/algolia/api-clients-automation/commit/3b129e01df) fix(specs): ingestion expected and received events type ([#4356](https://github.com/algolia/api-clients-automation/pull/4356)) by [@shortcuts](https://github.com/shortcuts/)
+- [22167b8e68](https://github.com/algolia/api-clients-automation/commit/22167b8e68) fix(specs): extend Analytics descriptions ([#4360](https://github.com/algolia/api-clients-automation/pull/4360)) by [@gazconroy](https://github.com/gazconroy/)
+- [5b14906c1e](https://github.com/algolia/api-clients-automation/commit/5b14906c1e) fix(specs): remove the processing outcome ([#4359](https://github.com/algolia/api-clients-automation/pull/4359)) by [@millotp](https://github.com/millotp/)
+- [952639f0fb](https://github.com/algolia/api-clients-automation/commit/952639f0fb) fix(specs): adjust style for banner descriptions ([#4362](https://github.com/algolia/api-clients-automation/pull/4362)) by [@kai687](https://github.com/kai687/)
+- [83f188d333](https://github.com/algolia/api-clients-automation/commit/83f188d333) feat(specs): rename composition to composition-full (private) and add composition (public) ([#4357](https://github.com/algolia/api-clients-automation/pull/4357)) by [@e-krebs](https://github.com/e-krebs/)
+
 ## [4.12.0](https://github.com/algolia/algoliasearch-client-php/compare/4.11.2...4.12.0)
 
 - [b569646304](https://github.com/algolia/api-clients-automation/commit/b569646304) fix(specs): drop singer from ingestion specs ([#4281](https://github.com/algolia/api-clients-automation/pull/4281)) by [@shortcuts](https://github.com/shortcuts/)

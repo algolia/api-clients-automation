@@ -220,5 +220,141 @@
         "clearExistingRules": "true"
       }
     }
+  },
+  {
+    "testName": "dynamic filtering",
+    "parameters": {
+      "indexName": "<YOUR_INDEX_NAME>",
+      "rules": [
+        {
+          "objectID": "toaster",
+          "conditions": [{
+            "pattern": "toaster",
+            "anchoring": "contains"
+          }],
+          "consequence": {
+            "params": {
+              "query": {
+                "remove": ["toaster"]
+              },
+              "filters": "product_type:toaster"
+            }
+          }
+        },
+        {
+          "objectID": "cheap",
+          "conditions": [{
+            "pattern": "cheap",
+            "anchoring": "contains"
+          }],
+          "consequence": {
+            "params": {
+              "query": {
+                "remove": ["cheap"]
+              },
+              "filters": "price < 15"
+            }
+          }
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch",
+      "method": "POST",
+      "body": [
+        {
+          "objectID": "toaster",
+          "conditions": [{
+            "pattern": "toaster",
+            "anchoring": "contains"
+          }],
+          "consequence": {
+            "params": {
+              "query": {
+                "remove": ["toaster"]
+              },
+              "filters": "product_type:toaster"
+            }
+          }
+        },
+        {
+          "objectID": "cheap",
+          "conditions": [{
+            "pattern": "cheap",
+            "anchoring": "contains"
+          }],
+          "consequence": {
+            "params": {
+              "query": {
+                "remove": ["cheap"] 
+              },
+              "filters": "price < 15"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "testName": "enhance search results",
+    "parameters": {
+      "indexName": "<YOUR_INDEX_NAME>",
+      "rules": [
+        {
+          "objectID": "country",
+          "conditions": [{
+            "pattern": "{facet:country}",
+            "anchoring": "contains"
+          }],
+          "consequence": {
+            "params": {
+              "aroundLatLngViaIP": false
+            }
+          }
+        },
+        {
+          "objectID": "city",
+          "conditions": [{
+            "pattern": "{facet:city}",
+            "anchoring": "contains"
+          }],
+          "consequence": {
+            "params": {
+              "aroundLatLngViaIP": false
+            }
+          }
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch",
+      "method": "POST",
+      "body": [
+        {
+          "objectID": "country",
+          "conditions": [{
+            "pattern": "{facet:country}",
+            "anchoring": "contains"
+          }],
+          "consequence": {
+            "params": {
+              "aroundLatLngViaIP": false
+            }
+          }
+        },
+        {
+          "objectID": "city",
+          "conditions": [{
+            "pattern": "{facet:city}",
+            "anchoring": "contains"
+          }],
+          "consequence": {
+            "params": {
+              "aroundLatLngViaIP": false
+            }
+          }
+        }
+      ]
+    }
   }
 ]

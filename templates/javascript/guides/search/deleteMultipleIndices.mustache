@@ -1,0 +1,36 @@
+{{> snippets/import}}
+import type { MultipleBatchRequest } from 'algoliasearch';
+
+try {
+  // You need an API key with `deleteIndex`
+  {{> snippets/init}}
+
+  // List all indices
+  const indices = {{#dynamicSnippet}}listIndicesSimple{{/dynamicSnippet}};
+
+  // Primary indices don't have a `primary` key
+  const primaryIndices = indices.items.filter(item => item.primary == null);
+  const replicaIndices = indices.items.filter(item => item.primary != null);
+
+  // Delete primary indices first
+  if (primaryIndices.length > 0) {
+      const requests: MultipleBatchRequest[] = primaryIndices.map(index => ({
+        action: 'delete',
+        indexName: index.name
+      }));
+      {{#dynamicSnippet}}deleteMultipleIndicesPrimary{{/dynamicSnippet}};
+      console.log("Deleted primary indices.");
+  }
+
+  // Now, delete replica indices
+  if (replicaIndices.length > 0) {
+      const requests: MultipleBatchRequest[] = replicaIndices.map(index => ({
+        action: 'delete',
+        indexName: index.name
+      }));
+      {{#dynamicSnippet}}deleteMultipleIndicesReplica{{/dynamicSnippet}};
+      console.log("Deleted replica indices.");
+  }
+} catch (e: any) {
+  console.error(e);
+}

@@ -252,8 +252,8 @@ class SearchTest extends TestCase
         $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
-    #[TestDox('setSettings with minimal parameters')]
-    public function testSetSettings1(): void
+    #[TestDox('minimal parameters')]
+    public function testSetSettings(): void
     {
         $client = $this->getClient();
         $resp = $client->setSettings(

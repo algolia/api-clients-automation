@@ -1,0 +1,15 @@
+{{> snippets/import}}
+
+String getBuyerAccountId() {
+  return ""; // Implement your logic here
+}
+
+void searchWithRuleContextBuyer() async {
+  {{> snippets/init}}
+
+  // get the buyer account information
+  final buyer = getBuyerAccountId();
+  final searchParams = SearchParamsObject(query: "<YOUR_SEARCH_QUERY>", ruleContexts: [buyer]);
+
+  await {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+}

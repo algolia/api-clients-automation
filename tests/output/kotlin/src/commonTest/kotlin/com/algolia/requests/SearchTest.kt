@@ -21,7 +21,26 @@ class SearchTest {
   // addApiKey
 
   @Test
-  fun `addApiKey`() = runTest {
+  fun `minimal`() = runTest {
+    client.runTest(
+      call = {
+        addApiKey(
+          apiKey = ApiKey(
+            acl = listOf(Acl.entries.first { it.value == "search" }, Acl.entries.first { it.value == "addObject" }),
+            description = "my new api key",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/keys".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"acl":["search","addObject"],"description":"my new api key"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `all1`() = runTest {
     client.runTest(
       call = {
         addApiKey(
@@ -91,21 +110,21 @@ class SearchTest {
   // assignUserId
 
   @Test
-  fun `assignUserId`() = runTest {
+  fun `simple`() = runTest {
     client.runTest(
       call = {
         assignUserId(
-          xAlgoliaUserID = "userID",
+          xAlgoliaUserID = "user42",
           assignUserIdParams = AssignUserIdParams(
-            cluster = "theCluster",
+            cluster = "d4242-eu",
           ),
         )
       },
       intercept = {
         assertEquals("/1/clusters/mapping".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertContainsAll("""{"x-algolia-user-id":"userID"}""", it.headers)
-        assertJsonBody("""{"cluster":"theCluster"}""", it.body)
+        assertContainsAll("""{"x-algolia-user-id":"user42"}""", it.headers)
+        assertJsonBody("""{"cluster":"d4242-eu"}""", it.body)
       },
     )
   }
@@ -1318,7 +1337,57 @@ class SearchTest {
   // getObjects
 
   @Test
-  fun `getObjects`() = runTest {
+  fun `by ID`() = runTest {
+    client.runTest(
+      call = {
+        getObjects(
+          getObjectsParams = GetObjectsParams(
+            requests = listOf(
+              GetObjectsRequest(
+                objectID = "uniqueID",
+                indexName = "theIndexName",
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/*/objects".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"requests":[{"objectID":"uniqueID","indexName":"theIndexName"}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `multiple IDs1`() = runTest {
+    client.runTest(
+      call = {
+        getObjects(
+          getObjectsParams = GetObjectsParams(
+            requests = listOf(
+              GetObjectsRequest(
+                objectID = "uniqueID1",
+                indexName = "theIndexName1",
+              ),
+              GetObjectsRequest(
+                objectID = "uniqueID2",
+                indexName = "theIndexName2",
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/*/objects".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"requests":[{"objectID":"uniqueID1","indexName":"theIndexName1"},{"objectID":"uniqueID2","indexName":"theIndexName2"}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `with attributesToRetrieve2`() = runTest {
     client.runTest(
       call = {
         getObjects(
@@ -1821,6 +1890,99 @@ class SearchTest {
     )
   }
 
+  @Test
+  fun `with visible_by filter5`() = runTest {
+    client.runTest(
+      call = {
+        partialUpdateObject(
+          indexName = "theIndexName",
+          objectID = "uniqueID",
+          attributesToUpdate = buildJsonObject {
+            put(
+              "visible_by",
+              JsonArray(
+                listOf(
+                  JsonPrimitive("Angela"),
+                  JsonPrimitive("group/Finance"),
+                  JsonPrimitive("group/Shareholders"),
+                ),
+              ),
+            )
+          },
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/uniqueID/partial".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"visible_by":["Angela","group/Finance","group/Shareholders"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `add men pant6`() = runTest {
+    client.runTest(
+      call = {
+        partialUpdateObject(
+          indexName = "theIndexName",
+          objectID = "productId",
+          attributesToUpdate = buildJsonObject {
+            put(
+              "categoryPageId",
+              buildJsonObject {
+                put(
+                  "_operation",
+                  JsonPrimitive("Add"),
+                )
+                put(
+                  "value",
+                  JsonPrimitive("men-clothing-pants"),
+                )
+              },
+            )
+          },
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/productId/partial".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"categoryPageId":{"_operation":"Add","value":"men-clothing-pants"}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `remove men pant7`() = runTest {
+    client.runTest(
+      call = {
+        partialUpdateObject(
+          indexName = "theIndexName",
+          objectID = "productId",
+          attributesToUpdate = buildJsonObject {
+            put(
+              "categoryPageId",
+              buildJsonObject {
+                put(
+                  "_operation",
+                  JsonPrimitive("Remove"),
+                )
+                put(
+                  "value",
+                  JsonPrimitive("men-clothing-pants"),
+                )
+              },
+            )
+          },
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/productId/partial".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"categoryPageId":{"_operation":"Remove","value":"men-clothing-pants"}}""", it.body)
+      },
+    )
+  }
+
   // removeUserId
 
   @Test
@@ -1890,12 +2052,20 @@ class SearchTest {
           indexName = "<YOUR_INDEX_NAME>",
           body = buildJsonObject {
             put(
-              "objectID",
-              JsonPrimitive("id"),
+              "name",
+              JsonPrimitive("Black T-shirt"),
             )
             put(
-              "test",
-              JsonPrimitive("val"),
+              "color",
+              JsonPrimitive("#000000||black"),
+            )
+            put(
+              "availableIn",
+              JsonPrimitive("https://source.unsplash.com/100x100/?paris||Paris"),
+            )
+            put(
+              "objectID",
+              JsonPrimitive("myID"),
             )
           },
         )
@@ -1903,7 +2073,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"objectID":"id","test":"val"}""", it.body)
+        assertJsonBody("""{"name":"Black T-shirt","color":"#000000||black","availableIn":"https://source.unsplash.com/100x100/?paris||Paris","objectID":"myID"}""", it.body)
       },
     )
   }
@@ -1984,7 +2154,10 @@ class SearchTest {
               ),
               filterPromotes = false,
               userData = buildJsonObject {
-                put("algolia", "aloglia")
+                put(
+                  "algolia",
+                  JsonPrimitive("aloglia"),
+                )
               },
               promote = listOf(
                 PromoteObjectID(
@@ -2014,6 +2187,683 @@ class SearchTest {
         assertEquals(HttpMethod.parse("PUT"), it.method)
         assertQueryParams("""{"forwardToReplicas":"true"}""", it.url.encodedParameters)
         assertJsonBody("""{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `b2b catalog2`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "article-rule",
+          rule = Rule(
+            objectID = "article-rule",
+            conditions = listOf(
+              Condition(
+                pattern = "article",
+                anchoring = Anchoring.entries.first { it.value == "startsWith" },
+              ),
+            ),
+            consequence = Consequence(
+              params = ConsequenceParams(
+                query = ConsequenceQueryObject(
+                  edits = listOf(
+                    Edit(
+                      type = EditType.entries.first { it.value == "remove" },
+                      delete = "article",
+                    ),
+                  ),
+                ),
+                restrictSearchableAttributes = listOf("title", "book_id"),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/article-rule".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"article-rule","conditions":[{"pattern":"article","anchoring":"startsWith"}],"consequence":{"params":{"query":{"edits":[{"type":"remove","delete":"article"}]},"restrictSearchableAttributes":["title","book_id"]}}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `merchandising and promoting3`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "director-rule",
+          rule = Rule(
+            objectID = "director-rule",
+            conditions = listOf(
+              Condition(
+                pattern = "{facet:director} director",
+                anchoring = Anchoring.entries.first { it.value == "contains" },
+              ),
+            ),
+            consequence = Consequence(
+              params = ConsequenceParams(
+                restrictSearchableAttributes = listOf("title", "book_id"),
+                automaticFacetFilters = AutomaticFacetFilters.ofListOfAutomaticFacetFilter(
+                  listOf(
+                    AutomaticFacetFilter(
+                      facet = "director",
+                    ),
+                  ),
+                ),
+                query = ConsequenceQueryObject(
+                  edits = listOf(
+                    Edit(
+                      type = EditType.entries.first { it.value == "remove" },
+                      delete = "director",
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/director-rule".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"director-rule","conditions":[{"pattern":"{facet:director} director","anchoring":"contains"}],"consequence":{"params":{"restrictSearchableAttributes":["title","book_id"],"automaticFacetFilters":[{"facet":"director"}],"query":{"edits":[{"type":"remove","delete":"director"}]}}}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `harry potter4`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "harry-potter-rule",
+          rule = Rule(
+            objectID = "harry-potter-rule",
+            conditions = listOf(
+              Condition(
+                pattern = "harry potter",
+                anchoring = Anchoring.entries.first { it.value == "contains" },
+              ),
+            ),
+            consequence = Consequence(
+              userData = buildJsonObject {
+                put(
+                  "promo_content",
+                  JsonPrimitive("20% OFF on all Harry Potter books!"),
+                )
+              },
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/harry-potter-rule".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"harry-potter-rule","conditions":[{"pattern":"harry potter","anchoring":"contains"}],"consequence":{"userData":{"promo_content":"20% OFF on all Harry Potter books!"}}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `merchandising empty query5`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "clearance-category-filter",
+          rule = Rule(
+            objectID = "clearance-category-filter",
+            conditions = listOf(
+              Condition(
+                pattern = "",
+                anchoring = Anchoring.entries.first { it.value == "is" },
+                context = "landing",
+              ),
+            ),
+            consequence = Consequence(
+              params = ConsequenceParams(
+                optionalFilters = OptionalFilters.of("clearance:true"),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/clearance-category-filter".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"clearance-category-filter","conditions":[{"pattern":"","anchoring":"is","context":"landing"}],"consequence":{"params":{"optionalFilters":"clearance:true"}}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `redirect6`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "redirect-help-rule",
+          rule = Rule(
+            objectID = "redirect-help-rule",
+            conditions = listOf(
+              Condition(
+                pattern = "help",
+                anchoring = Anchoring.entries.first { it.value == "contains" },
+              ),
+            ),
+            consequence = Consequence(
+              userData = buildJsonObject {
+                put(
+                  "redirect",
+                  JsonPrimitive("https://www.algolia.com/support"),
+                )
+              },
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/redirect-help-rule".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"redirect-help-rule","conditions":[{"pattern":"help","anchoring":"contains"}],"consequence":{"userData":{"redirect":"https://www.algolia.com/support"}}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `promote some results over others7`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "tomato-fruit",
+          rule = Rule(
+            objectID = "tomato-fruit",
+            conditions = listOf(
+              Condition(
+                pattern = "tomato",
+                anchoring = Anchoring.entries.first { it.value == "contains" },
+              ),
+            ),
+            consequence = Consequence(
+              params = ConsequenceParams(
+                optionalFilters = OptionalFilters.of("food_group:fruit"),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/tomato-fruit".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"tomato-fruit","conditions":[{"pattern":"tomato","anchoring":"contains"}],"consequence":{"params":{"optionalFilters":"food_group:fruit"}}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `promote several hits8`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "Promote-Apple-Newest",
+          rule = Rule(
+            objectID = "Promote-Apple-Newest",
+            conditions = listOf(
+              Condition(
+                pattern = "apple",
+                anchoring = Anchoring.entries.first { it.value == "is" },
+              ),
+            ),
+            consequence = Consequence(
+              promote = listOf(
+                PromoteObjectIDs(
+                  objectIDs = listOf("iPhone-12345", "watch-123"),
+                  position = 0,
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/Promote-Apple-Newest".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"Promote-Apple-Newest","conditions":[{"pattern":"apple","anchoring":"is"}],"consequence":{"promote":[{"objectIDs":["iPhone-12345","watch-123"],"position":0}]}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `promote newest release9`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "Promote-iPhone-X",
+          rule = Rule(
+            objectID = "Promote-iPhone-X",
+            conditions = listOf(
+              Condition(
+                pattern = "iPhone",
+                anchoring = Anchoring.entries.first { it.value == "contains" },
+              ),
+            ),
+            consequence = Consequence(
+              promote = listOf(
+                PromoteObjectID(
+                  objectID = "iPhone-12345",
+                  position = 0,
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/Promote-iPhone-X".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"Promote-iPhone-X","conditions":[{"pattern":"iPhone","anchoring":"contains"}],"consequence":{"promote":[{"objectID":"iPhone-12345","position":0}]}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `promote single item10`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "promote-harry-potter-box-set",
+          rule = Rule(
+            objectID = "promote-harry-potter-box-set",
+            conditions = listOf(
+              Condition(
+                pattern = "Harry Potter",
+                anchoring = Anchoring.entries.first { it.value == "contains" },
+              ),
+            ),
+            consequence = Consequence(
+              promote = listOf(
+                PromoteObjectID(
+                  objectID = "HP-12345",
+                  position = 0,
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/promote-harry-potter-box-set".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"promote-harry-potter-box-set","conditions":[{"pattern":"Harry Potter","anchoring":"contains"}],"consequence":{"promote":[{"objectID":"HP-12345","position":0}]}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `limit search results11`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "article-rule",
+          rule = Rule(
+            objectID = "article-rule",
+            conditions = listOf(
+              Condition(
+                pattern = "article",
+                anchoring = Anchoring.entries.first { it.value == "startsWith" },
+              ),
+            ),
+            consequence = Consequence(
+              params = ConsequenceParams(
+                query = ConsequenceQueryObject(
+                  edits = listOf(
+                    Edit(
+                      type = EditType.entries.first { it.value == "remove" },
+                      delete = "article",
+                    ),
+                  ),
+                ),
+                restrictSearchableAttributes = listOf("title", "book_id"),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/article-rule".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"article-rule","conditions":[{"pattern":"article","anchoring":"startsWith"}],"consequence":{"params":{"query":{"edits":[{"type":"remove","delete":"article"}]},"restrictSearchableAttributes":["title","book_id"]}}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `query match12`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "tagged-brand-rule",
+          rule = Rule(
+            conditions = listOf(
+              Condition(
+                pattern = "brand: {facet:brand}",
+                anchoring = Anchoring.entries.first { it.value == "contains" },
+                alternatives = false,
+              ),
+            ),
+            consequence = Consequence(
+              params = ConsequenceParams(
+                automaticFacetFilters = AutomaticFacetFilters.ofListOfAutomaticFacetFilter(
+                  listOf(
+                    AutomaticFacetFilter(
+                      facet = "brand",
+                    ),
+                  ),
+                ),
+                query = ConsequenceQueryObject(
+                  remove = listOf("brand:", "{facet:brand}"),
+                ),
+              ),
+            ),
+            description = "filter on brand: {brand}",
+            objectID = "tagged-brand-rule",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/tagged-brand-rule".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"conditions":[{"pattern":"brand: {facet:brand}","anchoring":"contains","alternatives":false}],"consequence":{"params":{"automaticFacetFilters":[{"facet":"brand"}],"query":{"remove":["brand:","{facet:brand}"]}}},"description":"filter on brand: {brand}","objectID":"tagged-brand-rule"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `dynamic filtering13`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "color-facets",
+          rule = Rule(
+            objectID = "color-facets",
+            conditions = listOf(
+              Condition(
+                pattern = "{facet:color}",
+              ),
+            ),
+            consequence = Consequence(
+              params = ConsequenceParams(
+                automaticFacetFilters = AutomaticFacetFilters.ofListOfAutomaticFacetFilter(
+                  listOf(
+                    AutomaticFacetFilter(
+                      facet = "color",
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/color-facets".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"color-facets","conditions":[{"pattern":"{facet:color}"}],"consequence":{"params":{"automaticFacetFilters":[{"facet":"color"}]}}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `hide hits14`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "hide-12345",
+          rule = Rule(
+            objectID = "hide-12345",
+            conditions = listOf(
+              Condition(
+                pattern = "cheap",
+                anchoring = Anchoring.entries.first { it.value == "contains" },
+              ),
+            ),
+            consequence = Consequence(
+              hide = listOf(
+                ConsequenceHide(
+                  objectID = "to-hide-12345",
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/hide-12345".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"hide-12345","conditions":[{"pattern":"cheap","anchoring":"contains"}],"consequence":{"hide":[{"objectID":"to-hide-12345"}]}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `one rule per facet15`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "red-color",
+          rule = Rule(
+            objectID = "red-color",
+            conditions = listOf(
+              Condition(
+                pattern = "red",
+                anchoring = Anchoring.entries.first { it.value == "contains" },
+              ),
+            ),
+            consequence = Consequence(
+              params = ConsequenceParams(
+                query = ConsequenceQueryObject(
+                  remove = listOf("red"),
+                ),
+                filters = "color:red",
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/red-color".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"red-color","conditions":[{"pattern":"red","anchoring":"contains"}],"consequence":{"params":{"query":{"remove":["red"]},"filters":"color:red"}}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `numerical filters16`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "cheap",
+          rule = Rule(
+            objectID = "cheap",
+            conditions = listOf(
+              Condition(
+                pattern = "cheap",
+                anchoring = Anchoring.entries.first { it.value == "contains" },
+              ),
+            ),
+            consequence = Consequence(
+              params = ConsequenceParams(
+                query = ConsequenceQueryObject(
+                  remove = listOf("cheap"),
+                ),
+                filters = "price < 10",
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/cheap".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"cheap","conditions":[{"pattern":"cheap","anchoring":"contains"}],"consequence":{"params":{"query":{"remove":["cheap"]},"filters":"price < 10"}}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `negative filters17`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "gluten-free-rule",
+          rule = Rule(
+            objectID = "gluten-free-rule",
+            conditions = listOf(
+              Condition(
+                pattern = "gluten-free",
+                anchoring = Anchoring.entries.first { it.value == "contains" },
+              ),
+            ),
+            consequence = Consequence(
+              params = ConsequenceParams(
+                filters = "NOT allergens:gluten",
+                query = ConsequenceQueryObject(
+                  edits = listOf(
+                    Edit(
+                      type = EditType.entries.first { it.value == "remove" },
+                      delete = "gluten-free",
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/gluten-free-rule".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"gluten-free-rule","conditions":[{"pattern":"gluten-free","anchoring":"contains"}],"consequence":{"params":{"filters":"NOT allergens:gluten","query":{"edits":[{"type":"remove","delete":"gluten-free"}]}}}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `positive filters18`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "diet-rule",
+          rule = Rule(
+            objectID = "diet-rule",
+            conditions = listOf(
+              Condition(
+                pattern = "diet",
+                anchoring = Anchoring.entries.first { it.value == "contains" },
+              ),
+            ),
+            consequence = Consequence(
+              params = ConsequenceParams(
+                filters = "'low-carb' OR 'low-fat'",
+                query = ConsequenceQueryObject(
+                  edits = listOf(
+                    Edit(
+                      type = EditType.entries.first { it.value == "remove" },
+                      delete = "diet",
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/diet-rule".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"diet-rule","conditions":[{"pattern":"diet","anchoring":"contains"}],"consequence":{"params":{"filters":"'low-carb' OR 'low-fat'","query":{"edits":[{"type":"remove","delete":"diet"}]}}}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `conditionless19`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "diet-rule",
+          rule = Rule(
+            objectID = "diet-rule",
+            consequence = Consequence(
+              params = ConsequenceParams(
+                filters = "'low-carb' OR 'low-fat'",
+                query = ConsequenceQueryObject(
+                  edits = listOf(
+                    Edit(
+                      type = EditType.entries.first { it.value == "remove" },
+                      delete = "diet",
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/diet-rule".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"diet-rule","consequence":{"params":{"filters":"'low-carb' OR 'low-fat'","query":{"edits":[{"type":"remove","delete":"diet"}]}}}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `contextual20`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "a-rule-id",
+          rule = Rule(
+            objectID = "a-rule-id",
+            conditions = listOf(
+              Condition(
+                context = "mobile",
+              ),
+            ),
+            consequence = Consequence(
+              params = ConsequenceParams(
+                filters = "release_date >= 1577836800",
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/a-rule-id".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"a-rule-id","conditions":[{"context":"mobile"}],"consequence":{"params":{"filters":"release_date >= 1577836800"}}}""", it.body)
       },
     )
   }
@@ -2112,7 +2962,10 @@ class SearchTest {
                 ),
                 filterPromotes = false,
                 userData = buildJsonObject {
-                  put("algolia", "aloglia")
+                  put(
+                    "algolia",
+                    JsonPrimitive("aloglia"),
+                  )
                 },
                 promote = listOf(
                   PromoteObjectID(
@@ -2144,6 +2997,104 @@ class SearchTest {
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertQueryParams("""{"forwardToReplicas":"true","clearExistingRules":"true"}""", it.url.encodedParameters)
         assertJsonBody("""[{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}]""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `dynamic filtering2`() = runTest {
+    client.runTest(
+      call = {
+        saveRules(
+          indexName = "<YOUR_INDEX_NAME>",
+          rules = listOf(
+            Rule(
+              objectID = "toaster",
+              conditions = listOf(
+                Condition(
+                  pattern = "toaster",
+                  anchoring = Anchoring.entries.first { it.value == "contains" },
+                ),
+              ),
+              consequence = Consequence(
+                params = ConsequenceParams(
+                  query = ConsequenceQueryObject(
+                    remove = listOf("toaster"),
+                  ),
+                  filters = "product_type:toaster",
+                ),
+              ),
+            ),
+            Rule(
+              objectID = "cheap",
+              conditions = listOf(
+                Condition(
+                  pattern = "cheap",
+                  anchoring = Anchoring.entries.first { it.value == "contains" },
+                ),
+              ),
+              consequence = Consequence(
+                params = ConsequenceParams(
+                  query = ConsequenceQueryObject(
+                    remove = listOf("cheap"),
+                  ),
+                  filters = "price < 15",
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""[{"objectID":"toaster","conditions":[{"pattern":"toaster","anchoring":"contains"}],"consequence":{"params":{"query":{"remove":["toaster"]},"filters":"product_type:toaster"}}},{"objectID":"cheap","conditions":[{"pattern":"cheap","anchoring":"contains"}],"consequence":{"params":{"query":{"remove":["cheap"]},"filters":"price < 15"}}}]""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `enhance search results3`() = runTest {
+    client.runTest(
+      call = {
+        saveRules(
+          indexName = "<YOUR_INDEX_NAME>",
+          rules = listOf(
+            Rule(
+              objectID = "country",
+              conditions = listOf(
+                Condition(
+                  pattern = "{facet:country}",
+                  anchoring = Anchoring.entries.first { it.value == "contains" },
+                ),
+              ),
+              consequence = Consequence(
+                params = ConsequenceParams(
+                  aroundLatLngViaIP = false,
+                ),
+              ),
+            ),
+            Rule(
+              objectID = "city",
+              conditions = listOf(
+                Condition(
+                  pattern = "{facet:city}",
+                  anchoring = Anchoring.entries.first { it.value == "contains" },
+                ),
+              ),
+              consequence = Consequence(
+                params = ConsequenceParams(
+                  aroundLatLngViaIP = false,
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""[{"objectID":"country","conditions":[{"pattern":"{facet:country}","anchoring":"contains"}],"consequence":{"params":{"aroundLatLngViaIP":false}}},{"objectID":"city","conditions":[{"pattern":"{facet:city}","anchoring":"contains"}],"consequence":{"params":{"aroundLatLngViaIP":false}}}]""", it.body)
       },
     )
   }
@@ -2806,6 +3757,26 @@ class SearchTest {
     )
   }
 
+  @Test
+  fun `facetName and facetQuery2`() = runTest {
+    client.runTest(
+      call = {
+        searchForFacetValues(
+          indexName = "indexName",
+          facetName = "author",
+          searchForFacetValuesRequest = SearchForFacetValuesRequest(
+            facetQuery = "stephen",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/facets/author/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"facetQuery":"stephen"}""", it.body)
+      },
+    )
+  }
+
   // searchRules
 
   @Test
@@ -2898,6 +3869,2546 @@ class SearchTest {
         assertEquals("/1/indexes/cts_e2e_browse/query".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody("""{"query":"batman mask of the phantasm","attributesToRetrieve":["*"],"attributesToSnippet":["*:20"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `query4`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "phone",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"phone"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `filters5`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            filters = "country:US AND price.gross < 2.0",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"filters":"country:US AND price.gross < 2.0"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `filters for stores6`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "ben",
+            filters = "categories:politics AND store:Gibert Joseph Saint-Michel",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"ben","filters":"categories:politics AND store:Gibert Joseph Saint-Michel"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `filters boolean7`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            filters = "is_available:true",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"filters":"is_available:true"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `distinct8`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            distinct = Distinct.of(true),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"distinct":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `filtersNumeric9`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            filters = "price < 10",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"filters":"price < 10"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `filtersTimestamp10`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            filters = "NOT date_timestamp:1514764800 TO 1546300799",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"filters":"NOT date_timestamp:1514764800 TO 1546300799"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `filtersSumOrFiltersScoresFalse11`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            filters = "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+            sumOrFiltersScores = false,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"filters":"(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)","sumOrFiltersScores":false}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `filtersSumOrFiltersScoresTrue12`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            filters = "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+            sumOrFiltersScores = true,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"filters":"(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)","sumOrFiltersScores":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `filtersStephenKing13`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            filters = "author:\"Stephen King\"",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"filters":"author:\"Stephen King\""}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `filtersNotTags14`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "harry",
+            filters = "_tags:non-fiction",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"harry","filters":"_tags:non-fiction"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `facetFiltersList15`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            facetFilters = FacetFilters.of(listOf(FacetFilters.of("publisher:Penguin"), FacetFilters.of(listOf(FacetFilters.of("author:Stephen King"), FacetFilters.of("genre:Horror"))))),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"facetFilters":["publisher:Penguin",["author:Stephen King","genre:Horror"]]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `facetFiltersBook16`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            facetFilters = FacetFilters.of(listOf(FacetFilters.of("category:Book"))),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","facetFilters":["category:Book"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `facetFiltersAND17`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            facetFilters = FacetFilters.of(listOf(FacetFilters.of("category:Book"), FacetFilters.of("author:John Doe"))),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","facetFilters":["category:Book","author:John Doe"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `facetFiltersOR18`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            facetFilters = FacetFilters.of(listOf(FacetFilters.of(listOf(FacetFilters.of("category:Book"), FacetFilters.of("author:John Doe"))))),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","facetFilters":[["category:Book","author:John Doe"]]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `facetFiltersCombined19`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            facetFilters = FacetFilters.of(listOf(FacetFilters.of("author:John Doe"), FacetFilters.of(listOf(FacetFilters.of("category:Book"), FacetFilters.of("category:Movie"))))),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","facetFilters":["author:John Doe",["category:Book","category:Movie"]]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `facetFiltersNeg20`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            facetFilters = FacetFilters.of("category:-Ebook"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"facetFilters":"category:-Ebook"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `filtersAndFacetFilters21`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            filters = "(author:\"Stephen King\" OR genre:\"Horror\")",
+            facetFilters = FacetFilters.of(listOf(FacetFilters.of("publisher:Penguin"))),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"filters":"(author:\"Stephen King\" OR genre:\"Horror\")","facetFilters":["publisher:Penguin"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `facet author genre22`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            facets = listOf("author", "genre"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"facets":["author","genre"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `facet wildcard23`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            facets = listOf("*"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"facets":["*"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `maxValuesPerFacet24`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            maxValuesPerFacet = 1000,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"maxValuesPerFacet":1000}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `aroundLatLng25`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            aroundLatLng = "40.71, -74.01",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"aroundLatLng":"40.71, -74.01"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `aroundLatLngViaIP26`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            aroundLatLngViaIP = true,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"aroundLatLngViaIP":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `aroundRadius27`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            aroundLatLng = "40.71, -74.01",
+            aroundRadius = AroundRadius.of(1000000),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"aroundLatLng":"40.71, -74.01","aroundRadius":1000000}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `insideBoundingBox28`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            insideBoundingBox = InsideBoundingBox.of(listOf(listOf(49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875))),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"insideBoundingBox":[[49.067996905313834,65.73828125,25.905859247243498,128.8046875]]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `insidePolygon29`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            insidePolygon = listOf(listOf(42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005, 31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545, -117.54828125)),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `insidePolygon30`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            insidePolygon = listOf(listOf(42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005, 31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545, -117.54828125)),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `optionalFilters31`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            optionalFilters = OptionalFilters.of(listOf(OptionalFilters.of("can_deliver_quickly:true"))),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"optionalFilters":["can_deliver_quickly:true"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `optionalFiltersMany32`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            optionalFilters = OptionalFilters.of(listOf(OptionalFilters.of("brand:Apple<score=3>"), OptionalFilters.of("brand:Samsung<score=2>"), OptionalFilters.of("brand:-Huawei"))),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"optionalFilters":["brand:Apple<score=3>","brand:Samsung<score=2>","brand:-Huawei"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `optionalFiltersSimple33`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            optionalFilters = OptionalFilters.of(listOf(OptionalFilters.of("brand:Apple<score=2>"), OptionalFilters.of("type:tablet"))),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"optionalFilters":["brand:Apple<score=2>","type:tablet"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `restrictSearchableAttributes34`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            restrictSearchableAttributes = listOf("title_fr"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"restrictSearchableAttributes":["title_fr"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `getRankingInfo35`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            getRankingInfo = true,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"getRankingInfo":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `clickAnalytics36`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            clickAnalytics = true,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"clickAnalytics":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `clickAnalyticsUserToken37`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            clickAnalytics = true,
+            userToken = "user-1",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"clickAnalytics":true,"userToken":"user-1"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `enablePersonalization38`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            enablePersonalization = true,
+            userToken = "user-1",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"enablePersonalization":true,"userToken":"user-1"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `userToken39`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            userToken = "user-1",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"userToken":"user-1"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `userToken123440`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            userToken = "user-1234",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","userToken":"user-1234"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `analyticsTag41`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            analyticsTags = listOf("YOUR_ANALYTICS_TAG"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"analyticsTags":["YOUR_ANALYTICS_TAG"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `facetFiltersUsers42`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            facetFilters = FacetFilters.of(listOf(FacetFilters.of("user:user42"), FacetFilters.of("user:public"))),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"facetFilters":["user:user42","user:public"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `buildTheQuery43`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            filters = "categoryPageId: Men's Clothing",
+            hitsPerPage = 50,
+            analyticsTags = listOf("mens-clothing"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"filters":"categoryPageId: Men's Clothing","hitsPerPage":50,"analyticsTags":["mens-clothing"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `attributesToHighlightOverride44`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            attributesToHighlight = listOf("title", "content"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","attributesToHighlight":["title","content"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `disableTypoToleranceOnAttributes45`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            disableTypoToleranceOnAttributes = listOf("serial_number"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","disableTypoToleranceOnAttributes":["serial_number"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `search_a_query46`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "shirt",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"shirt"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `search_everything47`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":""}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `api_filtering_range_example48`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "books",
+            filters = "price:10 TO 20",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"books","filters":"price:10 TO 20"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `search_a_query49`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "",
+            similarQuery = "Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen",
+            filters = "year:1991 TO 2001",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"","similarQuery":"Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen","filters":"year:1991 TO 2001"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `override_retrievable_attributes50`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            attributesToRetrieve = listOf("title", "content"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","attributesToRetrieve":["title","content"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `restrict_searchable_attributes51`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            restrictSearchableAttributes = listOf("title", "author"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","restrictSearchableAttributes":["title","author"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `override_default_relevancy52`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            relevancyStrictness = 70,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","relevancyStrictness":70}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `apply_filters53`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            filters = "(category:Book OR category:Ebook) AND _tags:published",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","filters":"(category:Book OR category:Ebook) AND _tags:published"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `apply_all_filters54`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            filters = "available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\"John Doe\"",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","filters":"available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\"John Doe\""}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `escape_spaces55`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            filters = "category:\"Books and Comics\"",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","filters":"category:\"Books and Comics\""}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `escape_keywords56`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            filters = "keyword:\"OR\"",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","filters":"keyword:\"OR\""}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `escape_single_quotes57`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            filters = "content:\"It's a wonderful day\"",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","filters":"content:\"It's a wonderful day\""}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `escape_double_quotes58`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            filters = "content:\"She said \"Hello World\"",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","filters":"content:\"She said \"Hello World\""}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `apply_filters59`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            optionalFilters = OptionalFilters.of(listOf(OptionalFilters.of("category:Book"), OptionalFilters.of("author:John Doe"))),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","optionalFilters":["category:Book","author:John Doe"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `apply_negative_filters60`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            optionalFilters = OptionalFilters.of(listOf(OptionalFilters.of("category:Book"), OptionalFilters.of("author:-John Doe"))),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","optionalFilters":["category:Book","author:-John Doe"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `apply_negative_filters_restaurants61`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            optionalFilters = OptionalFilters.of(listOf(OptionalFilters.of("restaurant:-Bert's Inn"))),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","optionalFilters":["restaurant:-Bert's Inn"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `apply_numeric_filters62`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            numericFilters = NumericFilters.of(listOf(NumericFilters.of("price < 1000"), NumericFilters.of(listOf(NumericFilters.of("inStock = 1"), NumericFilters.of("deliveryDate < 1441755506"))))),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","numericFilters":["price < 1000",["inStock = 1","deliveryDate < 1441755506"]]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `apply_tag_filters63`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            tagFilters = TagFilters.of(listOf(TagFilters.of("SciFi"), TagFilters.of(listOf(TagFilters.of("Book"), TagFilters.of("Movie"))))),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","tagFilters":["SciFi",["Book","Movie"]]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `apply_filters64`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            sumOrFiltersScores = true,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","sumOrFiltersScores":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `facets_all65`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            facets = listOf("*"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","facets":["*"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `retrieve_only_some_facets66`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            facets = listOf("category", "author"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","facets":["category","author"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `override_default_max_values_per_facet67`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            maxValuesPerFacet = 20,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","maxValuesPerFacet":20}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `enable_faceting_after_distinct68`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            facetingAfterDistinct = true,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","facetingAfterDistinct":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `sort_facet_values_alphabetically69`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            sortFacetValuesBy = "count",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","sortFacetValuesBy":"count"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `override_attributes_to_snippet70`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            attributesToSnippet = listOf("title", "content:80"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","attributesToSnippet":["title","content:80"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `override_default_highlight_pre_tag71`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            highlightPreTag = "<strong>",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","highlightPreTag":"<strong>"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `override_default_highlight_post_tag72`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            highlightPostTag = "</strong>",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","highlightPostTag":"</strong>"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `override_default_snippet_ellipsis_text73`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            snippetEllipsisText = "",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","snippetEllipsisText":""}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `enable_restrict_highlight_and_snippet_arrays74`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            restrictHighlightAndSnippetArrays = false,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","restrictHighlightAndSnippetArrays":false}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `access_page75`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            page = 0,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","page":0}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `override_default_hits_per_page76`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            hitsPerPage = 10,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","hitsPerPage":10}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `get_nth_hit77`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            offset = 4,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","offset":4}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `get_n_results78`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            length = 4,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","length":4}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `override_default_min_word_size_for_one_typo79`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            minWordSizefor1Typo = 2,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","minWordSizefor1Typo":2}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `override_default_min_word_size_for_two_typos80`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            minWordSizefor2Typos = 2,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","minWordSizefor2Typos":2}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `override_default_typo_tolerance_mode81`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            typoTolerance = TypoTolerance.of(false),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","typoTolerance":false}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `disable_typos_on_numeric_tokens_at_search_time82`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            allowTyposOnNumericTokens = false,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","allowTyposOnNumericTokens":false}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `search_around_a_position83`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            aroundLatLng = "40.71, -74.01",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","aroundLatLng":"40.71, -74.01"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `search_around_server_ip84`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            aroundLatLngViaIP = true,
+          ),
+          requestOptions = RequestOptions(
+            headers = buildMap {
+              put("x-forwarded-for", "94.228.178.246 // should be replaced with the actual IP you would like to search around")
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertContainsAll("""{"x-forwarded-for":"94.228.178.246 // should be replaced with the actual IP you would like to search around"}""", it.headers)
+        assertJsonBody("""{"query":"query","aroundLatLngViaIP":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_around_radius85`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            aroundRadius = AroundRadius.of(1000),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","aroundRadius":1000}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `disable_automatic_radius86`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            aroundRadius = AroundRadiusAll.entries.first { it.value == "all" },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","aroundRadius":"all"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_geo_search_precision87`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            aroundPrecision = AroundPrecision.of(100),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","aroundPrecision":100}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_geo_search_precision_non_linear88`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            aroundPrecision = AroundPrecision.of(
+              listOf(
+                Range(
+                  from = 0,
+                  value = 25,
+                ),
+                Range(
+                  from = 2000,
+                  value = 1000,
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","aroundPrecision":[{"from":0,"value":25},{"from":2000,"value":1000}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_minimum_geo_search_radius89`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            minimumAroundRadius = 1000,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","minimumAroundRadius":1000}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `search_inside_rectangular_area90`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            insideBoundingBox = InsideBoundingBox.of(listOf(listOf(46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625))),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","insideBoundingBox":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625]]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `search_inside_multiple_rectangular_areas91`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            insideBoundingBox = InsideBoundingBox.of(listOf(listOf(46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625), listOf(49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875))),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","insideBoundingBox":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875]]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `search_inside_polygon_area92`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            insidePolygon = listOf(listOf(46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625, 49.62625916704081, 4.6181640625)),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","insidePolygon":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625]]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `search_inside_multiple_polygon_areas93`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            insidePolygon = listOf(listOf(46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625, 49.62625916704081, 4.6181640625), listOf(49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875, 45.17210966999772, 1.009765625, 50.62626704081, 4.6181640625)),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","insidePolygon":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875,45.17210966999772,1.009765625,50.62626704081,4.6181640625]]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_querylanguages_override94`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            ignorePlurals = IgnorePlurals.of(listOf(SupportedLanguage.entries.first { it.value == "ca" }, SupportedLanguage.entries.first { it.value == "es" })),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","ignorePlurals":["ca","es"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_querylanguages_override95`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            removeStopWords = RemoveStopWords.of(listOf(SupportedLanguage.entries.first { it.value == "ca" }, SupportedLanguage.entries.first { it.value == "es" })),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","removeStopWords":["ca","es"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_querylanguages_override96`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            removeStopWords = RemoveStopWords.of(listOf(SupportedLanguage.entries.first { it.value == "ca" }, SupportedLanguage.entries.first { it.value == "es" })),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","removeStopWords":["ca","es"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_querylanguages_with_japanese_query97`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            queryLanguages = listOf(SupportedLanguage.entries.first { it.value == "ja" }, SupportedLanguage.entries.first { it.value == "en" }),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","queryLanguages":["ja","en"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_natural_languages98`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "",
+            naturalLanguages = listOf(SupportedLanguage.entries.first { it.value == "fr" }),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"","naturalLanguages":["fr"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `override_natural_languages_with_query99`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "",
+            naturalLanguages = listOf(SupportedLanguage.entries.first { it.value == "fr" }),
+            removeWordsIfNoResults = RemoveWordsIfNoResults.entries.first { it.value == "firstWords" },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"","naturalLanguages":["fr"],"removeWordsIfNoResults":"firstWords"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `enable_decompound_query_search_time100`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            decompoundQuery = true,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","decompoundQuery":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `enable_rules_search_time101`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            enableRules = true,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","enableRules":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_rule_contexts102`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            ruleContexts = listOf("front_end", "website2"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","ruleContexts":["front_end","website2"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `enable_personalization103`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            enablePersonalization = true,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","enablePersonalization":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `enable_personalization_with_user_token104`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            enablePersonalization = true,
+            userToken = "123456",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","enablePersonalization":true,"userToken":"123456"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `personalization_impact105`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            personalizationImpact = 20,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","personalizationImpact":20}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_user_token106`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            userToken = "123456",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","userToken":"123456"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_user_token_with_personalization107`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            enablePersonalization = true,
+            userToken = "123456",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","enablePersonalization":true,"userToken":"123456"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `override_default_query_type108`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            queryType = QueryType.entries.first { it.value == "prefixAll" },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","queryType":"prefixAll"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `override_default_remove_words_if_no_results109`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            removeWordsIfNoResults = RemoveWordsIfNoResults.entries.first { it.value == "lastWords" },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","removeWordsIfNoResults":"lastWords"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `enable_advanced_syntax_search_time110`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            advancedSyntax = true,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","advancedSyntax":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `overide_default_optional_words111`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            optionalWords = OptionalWords.of(listOf("toyota", "2020 2021")),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","optionalWords":["toyota","2020 2021"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `disabling_exact_for_some_attributes_search_time112`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            disableExactOnAttributes = listOf("description"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","disableExactOnAttributes":["description"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `override_default_exact_single_word_query113`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            exactOnSingleWordQuery = ExactOnSingleWordQuery.entries.first { it.value == "none" },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","exactOnSingleWordQuery":"none"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `override_default_aternative_as_exact114`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            alternativesAsExact = listOf(AlternativesAsExact.entries.first { it.value == "multiWordsSynonym" }),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","alternativesAsExact":["multiWordsSynonym"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `enable_advanced_syntax_exact_phrase115`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            advancedSyntax = true,
+            advancedSyntaxFeatures = listOf(AdvancedSyntaxFeatures.entries.first { it.value == "exactPhrase" }),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `enable_advanced_syntax_exclude_words116`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            advancedSyntax = true,
+            advancedSyntaxFeatures = listOf(AdvancedSyntaxFeatures.entries.first { it.value == "excludeWords" }),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","advancedSyntax":true,"advancedSyntaxFeatures":["excludeWords"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `override_distinct117`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            distinct = Distinct.of(0),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","distinct":0}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `get_ranking_info118`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            getRankingInfo = true,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","getRankingInfo":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `disable_click_analytics119`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            clickAnalytics = false,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","clickAnalytics":false}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `enable_click_analytics120`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            clickAnalytics = true,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","clickAnalytics":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `disable_analytics121`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            analytics = false,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","analytics":false}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `add_analytics_tags122`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            analyticsTags = listOf("front_end", "website2"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","analyticsTags":["front_end","website2"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `disable_synonyms123`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            synonyms = false,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","synonyms":false}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `override_replace_synonyms_in_highlights124`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            replaceSynonymsInHighlight = true,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","replaceSynonymsInHighlight":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `override_min_proximity125`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            minProximity = 2,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","minProximity":2}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `override_default_field126`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            responseFields = listOf("hits", "facets"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","responseFields":["hits","facets"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `override_percentile_computation127`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            percentileComputation = false,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","percentileComputation":false}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_ab_test128`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            enableABTest = false,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","enableABTest":false}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_enable_re_ranking129`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+            enableReRanking = false,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query","enableReRanking":false}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `with algolia user id130`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "indexName",
+          searchParams = SearchParamsObject(
+            query = "query",
+          ),
+          requestOptions = RequestOptions(
+            headers = buildMap {
+              put("X-Algolia-User-ID", "user1234")
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"query"}""", it.body)
       },
     )
   }
@@ -3012,26 +6523,7 @@ class SearchTest {
   // setSettings
 
   @Test
-  fun `setSettingsAttributesForFaceting`() = runTest {
-    client.runTest(
-      call = {
-        setSettings(
-          indexName = "<YOUR_INDEX_NAME>",
-          indexSettings = IndexSettings(
-            attributesForFaceting = listOf("actor", "filterOnly(category)", "searchable(publisher)"),
-          ),
-        )
-      },
-      intercept = {
-        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings".toPathSegments(), it.url.pathSegments)
-        assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertJsonBody("""{"attributesForFaceting":["actor","filterOnly(category)","searchable(publisher)"]}""", it.body)
-      },
-    )
-  }
-
-  @Test
-  fun `setSettings with minimal parameters1`() = runTest {
+  fun `minimal parameters`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -3052,7 +6544,7 @@ class SearchTest {
   }
 
   @Test
-  fun `setSettings allow boolean 'typoTolerance'2`() = runTest {
+  fun `boolean typoTolerance1`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -3073,7 +6565,7 @@ class SearchTest {
   }
 
   @Test
-  fun `setSettings allow enum 'typoTolerance'3`() = runTest {
+  fun `enum typoTolerance2`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -3094,7 +6586,7 @@ class SearchTest {
   }
 
   @Test
-  fun `setSettings allow boolean 'ignorePlurals'4`() = runTest {
+  fun `ignorePlurals3`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -3115,7 +6607,7 @@ class SearchTest {
   }
 
   @Test
-  fun `setSettings allow list of string 'ignorePlurals'5`() = runTest {
+  fun `list of string ignorePlurals4`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -3136,7 +6628,7 @@ class SearchTest {
   }
 
   @Test
-  fun `setSettings allow boolean 'removeStopWords'6`() = runTest {
+  fun `removeStopWords boolean5`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -3157,7 +6649,7 @@ class SearchTest {
   }
 
   @Test
-  fun `setSettings allow list of string 'removeStopWords'7`() = runTest {
+  fun `removeStopWords list of string6`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -3178,7 +6670,7 @@ class SearchTest {
   }
 
   @Test
-  fun `setSettings allow boolean 'distinct'8`() = runTest {
+  fun `boolean distinct7`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -3199,7 +6691,7 @@ class SearchTest {
   }
 
   @Test
-  fun `setSettings allow integers for 'distinct'9`() = runTest {
+  fun `integer distinct8`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -3220,7 +6712,871 @@ class SearchTest {
   }
 
   @Test
-  fun `setSettings allow all 'indexSettings'10`() = runTest {
+  fun `distinct company9`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            attributeForDistinct = "company",
+            distinct = Distinct.of(true),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributeForDistinct":"company","distinct":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `distinct design10`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            attributeForDistinct = "design",
+            distinct = Distinct.of(true),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributeForDistinct":"design","distinct":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `distinct true11`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            distinct = Distinct.of(true),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"distinct":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `distinct section12`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            attributeForDistinct = "section",
+            distinct = Distinct.of(true),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributeForDistinct":"section","distinct":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `attributesForFaceting allergens13`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "<YOUR_INDEX_NAME>",
+          indexSettings = IndexSettings(
+            attributesForFaceting = listOf("allergens"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesForFaceting":["allergens"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `attributesForFaceting availableIn14`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "<YOUR_INDEX_NAME>",
+          indexSettings = IndexSettings(
+            attributesForFaceting = listOf("color", "availableIn"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesForFaceting":["color","availableIn"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `api_attributes_for_faceting15`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "<YOUR_INDEX_NAME>",
+          indexSettings = IndexSettings(
+            attributesForFaceting = listOf("genre", "author"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesForFaceting":["genre","author"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `api_attributes_for_faceting_searchable16`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "<YOUR_INDEX_NAME>",
+          indexSettings = IndexSettings(
+            attributesForFaceting = listOf("genre", "searchable(author)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesForFaceting":["genre","searchable(author)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `api_attributes_for_filter_only17`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "<YOUR_INDEX_NAME>",
+          indexSettings = IndexSettings(
+            attributesForFaceting = listOf("filterOnly(genre)", "author"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesForFaceting":["filterOnly(genre)","author"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `attributesForFaceting categoryPageId18`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "<YOUR_INDEX_NAME>",
+          indexSettings = IndexSettings(
+            attributesForFaceting = listOf("searchable(categoryPageId)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesForFaceting":["searchable(categoryPageId)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `unretrievableAttributes19`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "<YOUR_INDEX_NAME>",
+          indexSettings = IndexSettings(
+            unretrievableAttributes = listOf("visible_by"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"unretrievableAttributes":["visible_by"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `attributesForFaceting user restricted data20`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "<YOUR_INDEX_NAME>",
+          indexSettings = IndexSettings(
+            attributesForFaceting = listOf("filterOnly(visible_by)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesForFaceting":["filterOnly(visible_by)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `attributesForFaceting optional filters21`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "<YOUR_INDEX_NAME>",
+          indexSettings = IndexSettings(
+            attributesForFaceting = listOf("can_deliver_quickly", "restaurant"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesForFaceting":["can_deliver_quickly","restaurant"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `attributesForFaceting redirect index22`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "<YOUR_INDEX_NAME>",
+          indexSettings = IndexSettings(
+            attributesForFaceting = listOf("query_terms"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesForFaceting":["query_terms"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `attributesForFaceting multiple consequences23`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "<YOUR_INDEX_NAME>",
+          indexSettings = IndexSettings(
+            attributesForFaceting = listOf("director"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesForFaceting":["director"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `attributesForFaceting in-depth optional filters24`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "<YOUR_INDEX_NAME>",
+          indexSettings = IndexSettings(
+            attributesForFaceting = listOf("filterOnly(brand)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesForFaceting":["filterOnly(brand)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `mode neuralSearch25`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            mode = Mode.entries.first { it.value == "neuralSearch" },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"mode":"neuralSearch"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `mode keywordSearch26`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            mode = Mode.entries.first { it.value == "keywordSearch" },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"mode":"keywordSearch"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `searchableAttributes same priority27`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            searchableAttributes = listOf("title,comments", "ingredients"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"searchableAttributes":["title,comments","ingredients"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `searchableAttributes higher priority28`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            searchableAttributes = listOf("title", "ingredients"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"searchableAttributes":["title","ingredients"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `customRanking retweets29`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            customRanking = listOf("desc(retweets)", "desc(likes)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"customRanking":["desc(retweets)","desc(likes)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `customRanking boosted30`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            customRanking = listOf("desc(boosted)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"customRanking":["desc(boosted)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `customRanking pageviews31`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            customRanking = listOf("desc(pageviews)", "desc(comments)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"customRanking":["desc(pageviews)","desc(comments)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `customRanking applying search parameters for a specific query32`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            customRanking = listOf("desc(nb_airline_liaisons)"),
+            attributesForFaceting = listOf("city, country"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"customRanking":["desc(nb_airline_liaisons)"],"attributesForFaceting":["city, country"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `customRanking rounded pageviews33`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            customRanking = listOf("desc(rounded_pageviews)", "desc(comments)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"customRanking":["desc(rounded_pageviews)","desc(comments)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `customRanking price34`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            customRanking = listOf("desc(price)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"customRanking":["desc(price)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `ranking exhaustive (price)35`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            ranking = listOf("desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"ranking":["desc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `ranking exhaustive (is_popular)36`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            ranking = listOf("desc(is_popular)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"ranking":["desc(is_popular)","typo","geo","words","filters","proximity","attribute","exact","custom"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `ranking standard replica37`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            ranking = listOf("desc(post_date_timestamp)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"ranking":["desc(post_date_timestamp)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `ranking virtual replica38`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            customRanking = listOf("desc(post_date_timestamp)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"customRanking":["desc(post_date_timestamp)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `customRanking and ranking sort alphabetically39`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            customRanking = listOf("asc(textual_attribute)"),
+            ranking = listOf("custom", "typo", "geo", "words", "filters", "proximity", "attribute", "exact"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"customRanking":["asc(textual_attribute)"],"ranking":["custom","typo","geo","words","filters","proximity","attribute","exact"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `relevancyStrictness40`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            customRanking = listOf("asc(textual_attribute)"),
+            relevancyStrictness = 0,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"customRanking":["asc(textual_attribute)"],"relevancyStrictness":0}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `create replica index41`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            replicas = listOf("products_price_desc"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"replicas":["products_price_desc"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `create replica index articles42`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            replicas = listOf("articles_date_desc"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"replicas":["articles_date_desc"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `create virtual replica index43`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            replicas = listOf("virtual(products_price_desc)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"replicas":["virtual(products_price_desc)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `unlink replica index44`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            replicas = listOf(""),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"replicas":[""]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `forwardToReplicas45`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            searchableAttributes = listOf("name", "description"),
+          ),
+          forwardToReplicas = true,
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertQueryParams("""{"forwardToReplicas":"true"}""", it.url.encodedParameters)
+        assertJsonBody("""{"searchableAttributes":["name","description"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `maxValuesPerFacet46`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            maxValuesPerFacet = 1000,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"maxValuesPerFacet":1000}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `maxFacetHits47`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            maxFacetHits = 100,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"maxFacetHits":100}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `attributesForFaceting complex48`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "<YOUR_INDEX_NAME>",
+          indexSettings = IndexSettings(
+            attributesForFaceting = listOf("actor", "filterOnly(category)", "searchable(publisher)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesForFaceting":["actor","filterOnly(category)","searchable(publisher)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `ranking closest dates49`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            ranking = listOf("asc(date_timestamp)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"ranking":["asc(date_timestamp)","typo","geo","words","filters","proximity","attribute","exact","custom"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `searchableAttributes item variation50`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            searchableAttributes = listOf("design", "type", "color"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"searchableAttributes":["design","type","color"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `searchableAttributes around location51`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            searchableAttributes = listOf("name", "country", "city", "iata_code"),
+            customRanking = listOf("desc(links_count)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"searchableAttributes":["name","country","city","iata_code"],"customRanking":["desc(links_count)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `attributesToHighlight52`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            attributesToHighlight = listOf("author", "title", "content"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesToHighlight":["author","title","content"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `attributesToHighlightStar53`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            attributesToHighlight = listOf("*"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesToHighlight":["*"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `everything54`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -3318,6 +7674,1433 @@ class SearchTest {
         assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
         assertJsonBody("""{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["fr"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["fr"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `searchableAttributesWithCustomRankingsAndAttributesForFaceting55`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            searchableAttributes = listOf("brand", "name", "categories", "unordered(description)"),
+            customRanking = listOf("desc(popularity)"),
+            attributesForFaceting = listOf("searchable(brand)", "type", "categories", "price"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"searchableAttributes":["brand","name","categories","unordered(description)"],"customRanking":["desc(popularity)"],"attributesForFaceting":["searchable(brand)","type","categories","price"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `searchableAttributesOrdering56`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            searchableAttributes = listOf("unordered(title)", "cast"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"searchableAttributes":["unordered(title)","cast"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `searchableAttributesProductReferenceSuffixes57`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            searchableAttributes = listOf("name", "product_reference", "product_reference_suffixes"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"searchableAttributes":["name","product_reference","product_reference_suffixes"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `queryLanguageAndIgnorePlurals58`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            queryLanguages = listOf(SupportedLanguage.entries.first { it.value == "en" }),
+            ignorePlurals = IgnorePlurals.of(true),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"queryLanguages":["en"],"ignorePlurals":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `searchableAttributesInMovies59`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "movies",
+          indexSettings = IndexSettings(
+            searchableAttributes = listOf("title_eng", "title_fr", "title_es"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/movies/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"searchableAttributes":["title_eng","title_fr","title_es"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `disablePrefixOnAttributes60`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            disablePrefixOnAttributes = listOf("serial_number"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"disablePrefixOnAttributes":["serial_number"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `disableTypoToleranceOnAttributes61`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            disableTypoToleranceOnAttributes = listOf("serial_number"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"disableTypoToleranceOnAttributes":["serial_number"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `searchableAttributesSimpleExample62`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            searchableAttributes = listOf("serial_number"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"searchableAttributes":["serial_number"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `searchableAttributesSimpleExampleAlt63`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            searchableAttributes = listOf("serial_number", "serial_number_suffixes"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"searchableAttributes":["serial_number","serial_number_suffixes"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_searchable_attributes64`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            searchableAttributes = listOf("title,alternative_title", "author", "unordered(text)", "emails.personal"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"searchableAttributes":["title,alternative_title","author","unordered(text)","emails.personal"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_searchable_attributes65`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            attributesForFaceting = listOf("author", "filterOnly(isbn)", "searchable(edition)", "afterDistinct(category)", "afterDistinct(searchable(publisher))"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesForFaceting":["author","filterOnly(isbn)","searchable(edition)","afterDistinct(category)","afterDistinct(searchable(publisher))"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `unretrievable_attributes66`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            unretrievableAttributes = listOf("total_number_of_sales"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"unretrievableAttributes":["total_number_of_sales"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_retrievable_attributes67`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            attributesToRetrieve = listOf("author", "title", "content"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesToRetrieve":["author","title","content"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_all_attributes_as_retrievable68`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            attributesToRetrieve = listOf("*"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesToRetrieve":["*"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `specify_attributes_not_to_retrieve69`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            attributesToRetrieve = listOf("*", "-SKU", "-internal_desc"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesToRetrieve":["*","-SKU","-internal_desc"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `neural_search70`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            mode = Mode.entries.first { it.value == "neuralSearch" },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"mode":"neuralSearch"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `keyword_search71`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            mode = Mode.entries.first { it.value == "keywordSearch" },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"mode":"keywordSearch"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_default_ranking72`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            ranking = listOf("typo", "geo", "words", "filters", "attribute", "proximity", "exact", "custom"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"ranking":["typo","geo","words","filters","attribute","proximity","exact","custom"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_ranking_by_attribute_asc73`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            ranking = listOf("asc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"ranking":["asc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_ranking_by_attribute_desc74`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            ranking = listOf("desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"ranking":["desc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `restrict_searchable_attributes75`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            customRanking = listOf("desc(popularity)", "asc(price)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"customRanking":["desc(popularity)","asc(price)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_default_relevancy76`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            relevancyStrictness = 90,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"relevancyStrictness":90}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_replicas77`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            replicas = listOf("name_of_replica_index1", "name_of_replica_index2"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"replicas":["name_of_replica_index1","name_of_replica_index2"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_default_max_values_per_facet78`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            maxValuesPerFacet = 100,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"maxValuesPerFacet":100}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_default_sort_facet_values_by79`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            sortFacetValuesBy = "alpha",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"sortFacetValuesBy":"alpha"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_attributes_to_snippet80`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            attributesToSnippet = listOf("content:80", "description"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesToSnippet":["content:80","description"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_all_attributes_to_snippet81`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            attributesToSnippet = listOf("*:80"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesToSnippet":["*:80"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_default_highlight_pre_tag82`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            highlightPreTag = "<em>",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"highlightPreTag":"<em>"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_default_highlight_post_tag83`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            highlightPostTag = "</em>",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"highlightPostTag":"</em>"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_default_snippet_ellipsis_text84`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            snippetEllipsisText = "…",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"snippetEllipsisText":"…"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `enable_restrict_highlight_and_snippet_arrays_by_default85`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            restrictHighlightAndSnippetArrays = true,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"restrictHighlightAndSnippetArrays":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_default_hits_per_page86`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            hitsPerPage = 20,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"hitsPerPage":20}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_pagination_limit87`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            paginationLimitedTo = 1000,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"paginationLimitedTo":1000}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_default_min_word_size_for_one_typo88`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            minWordSizefor1Typo = 4,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"minWordSizefor1Typo":4}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_default_min_word_size_for_two_typos89`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            minWordSizefor2Typos = 4,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"minWordSizefor2Typos":4}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_default_typo_tolerance_mode90`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            typoTolerance = TypoTolerance.of(true),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"typoTolerance":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `disable_typos_on_numeric_tokens_by_default91`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            allowTyposOnNumericTokens = false,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"allowTyposOnNumericTokens":false}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `disable_typo_tolerance_for_words92`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            disableTypoToleranceOnWords = listOf("wheel", "1X2BCD"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"disableTypoToleranceOnWords":["wheel","1X2BCD"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_separators_to_index93`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            separatorsToIndex = "+#",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"separatorsToIndex":"+#"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_languages_using_querylanguages94`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            queryLanguages = listOf(SupportedLanguage.entries.first { it.value == "es" }),
+            ignorePlurals = IgnorePlurals.of(true),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"queryLanguages":["es"],"ignorePlurals":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_attributes_to_transliterate95`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            indexLanguages = listOf(SupportedLanguage.entries.first { it.value == "ja" }),
+            attributesToTransliterate = listOf("name", "description"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"indexLanguages":["ja"],"attributesToTransliterate":["name","description"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_languages_using_querylanguages96`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            queryLanguages = listOf(SupportedLanguage.entries.first { it.value == "es" }),
+            removeStopWords = RemoveStopWords.of(true),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"queryLanguages":["es"],"removeStopWords":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_camel_case_attributes97`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            camelCaseAttributes = listOf("description"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"camelCaseAttributes":["description"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_decompounded_attributes98`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            decompoundedAttributes = buildJsonObject {
+              put(
+                "de",
+                JsonArray(
+                  listOf(
+                    JsonPrimitive("name"),
+                  ),
+                ),
+              )
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"decompoundedAttributes":{"de":["name"]}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_decompounded_multiple_attributes99`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            decompoundedAttributes = buildJsonObject {
+              put(
+                "de",
+                JsonArray(
+                  listOf(
+                    JsonPrimitive("name_de"),
+                    JsonPrimitive("description_de"),
+                  ),
+                ),
+              )
+              put(
+                "fi",
+                JsonArray(
+                  listOf(
+                    JsonPrimitive("name_fi"),
+                    JsonPrimitive("description_fi"),
+                  ),
+                ),
+              )
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"decompoundedAttributes":{"de":["name_de","description_de"],"fi":["name_fi","description_fi"]}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_keep_diacritics_on_characters100`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            keepDiacriticsOnCharacters = "øé",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"keepDiacriticsOnCharacters":"øé"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_custom_normalization101`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            customNormalization = mapOf("default" to mapOf("ä" to "ae")),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"customNormalization":{"default":{"ä":"ae"}}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_languages_using_querylanguages102`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            queryLanguages = listOf(SupportedLanguage.entries.first { it.value == "es" }),
+            removeStopWords = RemoveStopWords.of(true),
+            ignorePlurals = IgnorePlurals.of(true),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"queryLanguages":["es"],"removeStopWords":true,"ignorePlurals":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_indexlanguages103`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            indexLanguages = listOf(SupportedLanguage.entries.first { it.value == "ja" }),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"indexLanguages":["ja"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `enable_decompound_query_by_default104`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            decompoundQuery = true,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"decompoundQuery":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `enable_rules_syntax_by_default105`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            enableRules = true,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"enableRules":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `enable_personalization_settings106`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            enablePersonalization = true,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"enablePersonalization":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_default_query_type107`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            queryType = QueryType.entries.first { it.value == "prefixLast" },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"queryType":"prefixLast"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_default_remove_words_if_no_result108`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            removeWordsIfNoResults = RemoveWordsIfNoResults.entries.first { it.value == "none" },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"removeWordsIfNoResults":"none"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `enable_advanced_syntax_by_default109`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            advancedSyntax = true,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"advancedSyntax":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_default_optional_words110`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            optionalWords = OptionalWords.of(listOf("blue", "iphone case")),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"optionalWords":["blue","iphone case"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `disabling_prefix_search_for_some_attributes_by_default111`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            disablePrefixOnAttributes = listOf("sku"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"disablePrefixOnAttributes":["sku"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `disabling_exact_for_some_attributes_by_default112`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            disableExactOnAttributes = listOf("description"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"disableExactOnAttributes":["description"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_default_exact_single_word_query113`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            exactOnSingleWordQuery = ExactOnSingleWordQuery.entries.first { it.value == "attribute" },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"exactOnSingleWordQuery":"attribute"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_default_aternative_as_exact114`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            alternativesAsExact = listOf(AlternativesAsExact.entries.first { it.value == "ignorePlurals" }, AlternativesAsExact.entries.first { it.value == "singleWordSynonym" }),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"alternativesAsExact":["ignorePlurals","singleWordSynonym"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `enable_advanced_syntax_by_default115`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            advancedSyntax = true,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"advancedSyntax":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_numeric_attributes_for_filtering116`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            numericAttributesForFiltering = listOf("quantity", "popularity"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"numericAttributesForFiltering":["quantity","popularity"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `enable_compression_of_integer_array117`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            allowCompressionOfIntegerArray = true,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"allowCompressionOfIntegerArray":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_attributes_for_distinct118`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            attributeForDistinct = "url",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributeForDistinct":"url"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_distinct119`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            distinct = Distinct.of(1),
+            attributeForDistinct = "url",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"distinct":1,"attributeForDistinct":"url"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_replace_synonyms_in_highlights120`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            replaceSynonymsInHighlight = false,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"replaceSynonymsInHighlight":false}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_min_proximity121`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            minProximity = 1,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"minProximity":1}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_default_field122`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            responseFields = listOf("hits", "hitsPerPage", "nbPages", "page"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"responseFields":["hits","hitsPerPage","nbPages","page"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_max_facet_hits123`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            maxFacetHits = 10,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"maxFacetHits":10}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_attribute_criteria_computed_by_min_proximity124`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            attributeCriteriaComputedByMinProximity = true,
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributeCriteriaComputedByMinProximity":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_user_data125`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            userData = buildJsonObject {
+              put(
+                "extraData",
+                JsonPrimitive("This is the custom data that you want to store in your index"),
+              )
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"userData":{"extraData":"This is the custom data that you want to store in your index"}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `set_rendering_content126`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "theIndexName",
+          indexSettings = IndexSettings(
+            renderingContent = RenderingContent(
+              facetOrdering = FacetOrdering(
+                facets = Facets(
+                  order = listOf("size", "brand"),
+                ),
+                values = mapOf(
+                  "brand" to Value(
+                    order = listOf("uniqlo"),
+                    hide = listOf("muji"),
+                    sortRemainingBy = SortRemainingBy.entries.first { it.value == "count" },
+                  ),
+                  "size" to Value(
+                    order = listOf("S", "M", "L"),
+                    sortRemainingBy = SortRemainingBy.entries.first { it.value == "hidden" },
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"renderingContent":{"facetOrdering":{"facets":{"order":["size","brand"]},"values":{"brand":{"order":["uniqlo"],"hide":["muji"],"sortRemainingBy":"count"},"size":{"order":["S","M","L"],"sortRemainingBy":"hidden"}}}}}""", it.body)
       },
     )
   }

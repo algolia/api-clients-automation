@@ -1,0 +1,26 @@
+package com.algolia;
+
+import java.util.List;
+
+{{> snippets/import}}
+
+public class searchWithOptionalFilters {
+
+  private static final List<String> labels = List.of(/* Your labels */);
+
+  private static OptionalFilters reduceLabelsToFilters(List<String> labels) {
+    return OptionalFilters.of(""); // Implement your logic here
+  }
+
+  public static void main(String[] args) throws Exception {
+
+    try ({{> snippets/init}}) {
+      OptionalFilters optionalFilters = reduceLabelsToFilters(labels);
+      SearchParams searchParams = new SearchParamsObject().setQuery("<YOUR_SEARCH_QUERY>").setOptionalFilters(optionalFilters);
+
+      {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+    } catch (Exception e) {
+      System.out.println("An error occurred: " + e.getMessage());
+    }
+  }
+}

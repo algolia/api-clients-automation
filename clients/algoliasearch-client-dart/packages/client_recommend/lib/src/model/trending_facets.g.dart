@@ -12,7 +12,7 @@ TrendingFacets _$TrendingFacetsFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = TrendingFacets(
-          facetName: $checkedConvert('facetName', (v) => v),
+          facetName: $checkedConvert('facetName', (v) => v as String),
           model: $checkedConvert(
               'model', (v) => $enumDecode(_$TrendingFacetsModelEnumMap, v)),
           fallbackParameters: $checkedConvert(
@@ -27,7 +27,7 @@ TrendingFacets _$TrendingFacetsFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$TrendingFacetsToJson(TrendingFacets instance) =>
     <String, dynamic>{
-      if (instance.facetName case final value?) 'facetName': value,
+      'facetName': instance.facetName,
       'model': instance.model.toJson(),
       if (instance.fallbackParameters?.toJson() case final value?)
         'fallbackParameters': value,

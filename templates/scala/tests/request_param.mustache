@@ -1,1 +1,1 @@
-{{^hasAdditionalProperties}}{{#lambda.scalaIdentifier}}{{&key}}{{/lambda.scalaIdentifier}} = {{> tests/param_optional}}{{/hasAdditionalProperties}}{{#hasAdditionalProperties}}{{> tests/param_value}}{{/hasAdditionalProperties}}
+{{^hasAdditionalProperties}}{{#lambda.identifier}}{{key}}{{/lambda.identifier}} = {{> tests/param_optional}}{{/hasAdditionalProperties}}{{#hasAdditionalProperties}}{{> tests/param_value}}{{/hasAdditionalProperties}}

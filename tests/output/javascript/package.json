@@ -7,13 +7,14 @@
   },
   "dependencies": {
     "@algolia/client-composition": "link:../../../clients/algoliasearch-client-javascript/packages/client-composition",
+    "@algolia/composition": "link:../../../clients/algoliasearch-client-javascript/packages/composition",
     "@algolia/requester-testing": "link:../../../clients/algoliasearch-client-javascript/packages/requester-testing",
     "algoliasearch": "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
   },
   "devDependencies": {
-    "@types/node": "22.10.5",
+    "@types/node": "22.13.1",
     "dotenv": "16.4.7",
     "typescript": "5.7.3",
-    "vitest": "2.1.8"
+    "vitest": "3.0.5"
   }
 }

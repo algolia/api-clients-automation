@@ -107,6 +107,11 @@ public class TestsClient extends TestsGenerator {
             } else if (step.type.equals("method")) {
               ope = operations.get(step.method);
               if (ope == null) {
+                // some clients don't have custom methods
+                if (step.method.startsWith("custom") && client.equals("composition")) {
+                  continue skipTest;
+                }
+
                 throw new CTSException("Cannot find operation for method: " + step.method, test.testName);
               }
               stepOut.put("stepTemplate", "tests/client/method.mustache");
@@ -201,6 +206,8 @@ public class TestsClient extends TestsGenerator {
                 }
               }
               stepOut.put("match", paramsType.enhanceParameter(step.expected.match));
+            } else if (!step.type.equals("createClient")) {
+              stepOut.put("useEchoRequester", false);
             }
             steps.add(stepOut);
           }

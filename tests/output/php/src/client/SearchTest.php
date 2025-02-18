@@ -178,7 +178,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.12.0\).*/',
+                '/^Algolia for PHP \(4.15.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
@@ -203,7 +203,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    #[TestDox('generate secured api key basic')]
+    #[TestDox('api key basic')]
     public function test0generateSecuredApiKey(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
@@ -222,7 +222,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    #[TestDox('generate secured api key with searchParams')]
+    #[TestDox('with searchParams')]
     public function test1generateSecuredApiKey(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
@@ -254,6 +254,42 @@ class SearchTest extends TestCase implements HttpClientInterface
         $this->assertEquals(
             'MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw',
             $res
+        );
+    }
+
+    #[TestDox('with filters')]
+    public function test2generateSecuredApiKey(): void
+    {
+        $client = $this->createClient(self::APP_ID, self::API_KEY);
+
+        $res = $client->generateSecuredApiKey(
+            '2640659426d5107b6e47d75db9cbaef8',
+            ['filters' => 'user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)',
+            ],
+        );
+    }
+
+    #[TestDox('with visible_by filter')]
+    public function test3generateSecuredApiKey(): void
+    {
+        $client = $this->createClient(self::APP_ID, self::API_KEY);
+
+        $res = $client->generateSecuredApiKey(
+            '2640659426d5107b6e47d75db9cbaef8',
+            ['filters' => 'visible_by:group/Finance',
+            ],
+        );
+    }
+
+    #[TestDox('with userID')]
+    public function test4generateSecuredApiKey(): void
+    {
+        $client = $this->createClient(self::APP_ID, self::API_KEY);
+
+        $res = $client->generateSecuredApiKey(
+            '2640659426d5107b6e47d75db9cbaef8',
+            ['userToken' => 'user42',
+            ],
         );
     }
 
@@ -593,6 +629,66 @@ class SearchTest extends TestCase implements HttpClientInterface
         } catch (\Exception $e) {
             $this->assertEquals($e->getMessage(), 'Invalid Application-ID or API key');
         }
+    }
+
+    #[TestDox('saveObjectsPlaylist')]
+    public function test2saveObjects(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6686']));
+
+        $res = $client->saveObjects(
+            'playlists',
+            [
+                ['objectID' => '1',
+                    'visibility' => 'public',
+                    'name' => 'Hot 100 Billboard Charts',
+                    'playlistId' => 'd3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f',
+                    'createdAt' => '1500240452',
+                ],
+            ],
+        );
+    }
+
+    #[TestDox('saveObjectsPublicUser')]
+    public function test3saveObjects(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6686']));
+
+        $res = $client->saveObjects(
+            'playlists',
+            [
+                ['objectID' => '1',
+                    'visibility' => 'public',
+                    'name' => 'Hot 100 Billboard Charts',
+                    'playlistId' => 'd3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f',
+                    'createdAt' => '1500240452',
+                ],
+            ],
+            false,
+            1000,
+            [
+                'headers' => [
+                    'X-Algolia-User-ID' => '*',
+                ],
+            ]
+        );
+    }
+
+    #[TestDox('with algolia user id')]
+    public function test0searchSingleIndex(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6686']));
+
+        $res = $client->searchSingleIndex(
+            'playlists',
+            ['query' => 'foo',
+            ],
+            [
+                'headers' => [
+                    'X-Algolia-User-ID' => 'user1234',
+                ],
+            ]
+        );
     }
 
     #[TestDox('switch API key')]

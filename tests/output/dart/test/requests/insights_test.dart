@@ -108,23 +108,22 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.customGet(
-        path: "test/all",
-        parameters: {
-          'query': "to be overriden",
-        },
-        requestOptions: RequestOptions(
-          headers: {
-            'x-header-1': 'spaces are left alone',
+          path: "test/all",
+          parameters: {
+            'query': "to be overriden",
           },
-          urlParameters: {
-            'query': "parameters with space",
-            'and an array': [
-              "array",
-              "with spaces",
-            ],
-          },
-        ),
-      ),
+          requestOptions: RequestOptions(
+            headers: {
+              'x-header-1': "spaces are left alone",
+            },
+            urlParameters: {
+              'query': "parameters with space",
+              'and an array': [
+                "array",
+                "with spaces",
+              ],
+            },
+          )),
       intercept: (request) {
         expectPath(request.path, '/test/all');
         expect(request.method, 'get');
@@ -197,19 +196,18 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.customPost(
-        path: "test/requestOptions",
-        parameters: {
-          'query': "parameters",
-        },
-        body: {
-          'facet': "filters",
-        },
-        requestOptions: RequestOptions(
-          urlParameters: {
-            'query': "myQueryParameter",
+          path: "test/requestOptions",
+          parameters: {
+            'query': "parameters",
           },
-        ),
-      ),
+          body: {
+            'facet': "filters",
+          },
+          requestOptions: RequestOptions(
+            urlParameters: {
+              'query': "myQueryParameter",
+            },
+          )),
       intercept: (request) {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
@@ -231,19 +229,18 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.customPost(
-        path: "test/requestOptions",
-        parameters: {
-          'query': "parameters",
-        },
-        body: {
-          'facet': "filters",
-        },
-        requestOptions: RequestOptions(
-          urlParameters: {
-            'query2': "myQueryParameter",
+          path: "test/requestOptions",
+          parameters: {
+            'query': "parameters",
           },
-        ),
-      ),
+          body: {
+            'facet': "filters",
+          },
+          requestOptions: RequestOptions(
+            urlParameters: {
+              'query2': "myQueryParameter",
+            },
+          )),
       intercept: (request) {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
@@ -265,19 +262,18 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.customPost(
-        path: "test/requestOptions",
-        parameters: {
-          'query': "parameters",
-        },
-        body: {
-          'facet': "filters",
-        },
-        requestOptions: RequestOptions(
-          headers: {
-            'x-algolia-api-key': 'ALGOLIA_API_KEY',
+          path: "test/requestOptions",
+          parameters: {
+            'query': "parameters",
           },
-        ),
-      ),
+          body: {
+            'facet': "filters",
+          },
+          requestOptions: RequestOptions(
+            headers: {
+              'x-algolia-api-key': "ALGOLIA_API_KEY",
+            },
+          )),
       intercept: (request) {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
@@ -300,19 +296,18 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.customPost(
-        path: "test/requestOptions",
-        parameters: {
-          'query': "parameters",
-        },
-        body: {
-          'facet': "filters",
-        },
-        requestOptions: RequestOptions(
-          headers: {
-            'x-algolia-api-key': 'ALGOLIA_API_KEY',
+          path: "test/requestOptions",
+          parameters: {
+            'query': "parameters",
           },
-        ),
-      ),
+          body: {
+            'facet': "filters",
+          },
+          requestOptions: RequestOptions(
+            headers: {
+              'x-algolia-api-key': "ALGOLIA_API_KEY",
+            },
+          )),
       intercept: (request) {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
@@ -335,19 +330,18 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.customPost(
-        path: "test/requestOptions",
-        parameters: {
-          'query': "parameters",
-        },
-        body: {
-          'facet': "filters",
-        },
-        requestOptions: RequestOptions(
-          urlParameters: {
-            'isItWorking': true,
+          path: "test/requestOptions",
+          parameters: {
+            'query': "parameters",
           },
-        ),
-      ),
+          body: {
+            'facet': "filters",
+          },
+          requestOptions: RequestOptions(
+            urlParameters: {
+              'isItWorking': true,
+            },
+          )),
       intercept: (request) {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
@@ -369,19 +363,18 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.customPost(
-        path: "test/requestOptions",
-        parameters: {
-          'query': "parameters",
-        },
-        body: {
-          'facet': "filters",
-        },
-        requestOptions: RequestOptions(
-          urlParameters: {
-            'myParam': 2,
+          path: "test/requestOptions",
+          parameters: {
+            'query': "parameters",
           },
-        ),
-      ),
+          body: {
+            'facet': "filters",
+          },
+          requestOptions: RequestOptions(
+            urlParameters: {
+              'myParam': 2,
+            },
+          )),
       intercept: (request) {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
@@ -403,22 +396,21 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.customPost(
-        path: "test/requestOptions",
-        parameters: {
-          'query': "parameters",
-        },
-        body: {
-          'facet': "filters",
-        },
-        requestOptions: RequestOptions(
-          urlParameters: {
-            'myParam': [
-              "b and c",
-              "d",
-            ],
+          path: "test/requestOptions",
+          parameters: {
+            'query': "parameters",
           },
-        ),
-      ),
+          body: {
+            'facet': "filters",
+          },
+          requestOptions: RequestOptions(
+            urlParameters: {
+              'myParam': [
+                "b and c",
+                "d",
+              ],
+            },
+          )),
       intercept: (request) {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
@@ -440,23 +432,22 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.customPost(
-        path: "test/requestOptions",
-        parameters: {
-          'query': "parameters",
-        },
-        body: {
-          'facet': "filters",
-        },
-        requestOptions: RequestOptions(
-          urlParameters: {
-            'myParam': [
-              true,
-              true,
-              false,
-            ],
+          path: "test/requestOptions",
+          parameters: {
+            'query': "parameters",
           },
-        ),
-      ),
+          body: {
+            'facet': "filters",
+          },
+          requestOptions: RequestOptions(
+            urlParameters: {
+              'myParam': [
+                true,
+                true,
+                false,
+              ],
+            },
+          )),
       intercept: (request) {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
@@ -478,22 +469,21 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.customPost(
-        path: "test/requestOptions",
-        parameters: {
-          'query': "parameters",
-        },
-        body: {
-          'facet': "filters",
-        },
-        requestOptions: RequestOptions(
-          urlParameters: {
-            'myParam': [
-              1,
-              2,
-            ],
+          path: "test/requestOptions",
+          parameters: {
+            'query': "parameters",
           },
-        ),
-      ),
+          body: {
+            'facet': "filters",
+          },
+          requestOptions: RequestOptions(
+            urlParameters: {
+              'myParam': [
+                1,
+                2,
+              ],
+            },
+          )),
       intercept: (request) {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
@@ -635,7 +625,7 @@ void main() {
               index: "products",
               userToken: "user-123456",
               authenticatedUserToken: "user-123456",
-              timestamp: 1736899200000,
+              timestamp: 1739750400000,
               objectIDs: [
                 "9780545139700",
                 "9780439784542",
@@ -648,7 +638,7 @@ void main() {
               index: "products",
               userToken: "user-123456",
               authenticatedUserToken: "user-123456",
-              timestamp: 1736899200000,
+              timestamp: 1739750400000,
               objectIDs: [
                 "9780545139700",
                 "9780439784542",
@@ -661,7 +651,7 @@ void main() {
         expectPath(request.path, '/1/events');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1736899200000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1736899200000,"objectIDs":["9780545139700","9780439784542"]}]}""");
+            """{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1739750400000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1739750400000,"objectIDs":["9780545139700","9780439784542"]}]}""");
       },
     ),
   );

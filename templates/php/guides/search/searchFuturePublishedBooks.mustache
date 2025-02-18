@@ -1,0 +1,18 @@
+<?php
+
+require __DIR__.'/../vendor/autoload.php';
+{{> snippets/import}}
+use Algolia\AlgoliaSearch\Model\Search\SearchParamsObject;
+
+try {
+  {{> snippets/init}}
+
+  $dateTimestamp = time();
+  $searchParams = (new SearchParamsObject())
+      ->setQuery('<YOUR_SEARCH_QUERY>')
+      ->setFilters("date_timestamp > " . $dateTimestamp);
+
+  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+} catch (Exception $e) {
+  echo $e->getMessage() . PHP_EOL;
+}

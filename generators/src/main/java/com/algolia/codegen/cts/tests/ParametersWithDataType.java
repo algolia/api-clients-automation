@@ -145,7 +145,7 @@ public class ParametersWithDataType {
     }
 
     testOutput.put("key", paramName);
-    testOutput.put("useAnonymousKey", !paramName.matches("(.*)_[0-9]$") && depth != 0);
+    testOutput.put("useAnonymousKey", !paramName.matches("(.*)_[0-9]+$") && depth != 0);
     testOutput.put("parent", parent);
     testOutput.put("isRoot", "".equals(parent));
     testOutput.put("objectName", getObjectNameForLanguage(baseType));
@@ -161,6 +161,7 @@ public class ParametersWithDataType {
     } else if (param instanceof String && ((String) param).startsWith("$var: ")) {
       // bypass for verbatim variables used in the guides, we don't need to do any validation
       testOutput.put("isVerbatim", true);
+      testOutput.put("isString", false);
       testOutput.put("value", ((String) param).substring(6));
     } else if (spec.getIsArray()) {
       handleArray(paramName, param, testOutput, spec, depth);
@@ -180,7 +181,12 @@ public class ParametersWithDataType {
     }
 
     // for snippets, we want pretty index names, unless they are already pretty
-    if (prettyIndexName && paramName.equals("indexName") && !((String) testOutput.get("value")).startsWith("<")) {
+    if (
+      prettyIndexName &&
+      paramName.equals("indexName") &&
+      !((String) testOutput.get("value")).startsWith("<") &&
+      !((Boolean) testOutput.getOrDefault("isVerbatim", false))
+    ) {
       testOutput.put("value", "<YOUR_INDEX_NAME>");
     }
 
@@ -191,7 +197,7 @@ public class ParametersWithDataType {
   private Map<String, Object> traverseParamsWithoutSpec(String paramName, Object param, String parent, int depth) throws CTSException {
     Map<String, Object> testOutput = createDefaultOutput();
     testOutput.put("key", paramName);
-    testOutput.put("useAnonymousKey", !paramName.matches("(.*)_[0-9]$") && depth != 0);
+    testOutput.put("useAnonymousKey", !paramName.matches("(.*)_[0-9]+$") && depth != 0);
     testOutput.put("parent", parent);
     testOutput.put("isRoot", "".equals(parent));
     // try to infer the type
@@ -207,6 +213,7 @@ public class ParametersWithDataType {
     } else if (param instanceof String && ((String) param).startsWith("$var: ")) {
       // bypass for verbatim variables used in the guides, we don't need to do any validation
       testOutput.put("isVerbatim", true);
+      testOutput.put("isString", false);
       testOutput.put("value", ((String) param).substring(6));
     } else if (param instanceof List) {
       handleArray(paramName, param, testOutput, null, depth);
@@ -326,7 +333,7 @@ public class ParametersWithDataType {
       } else {
         while (current.getItems() != null) {
           current = current.getItems();
-          typeName += "Of" + getTypeName(current);
+          typeName += "Of" + Helpers.capitalize(getTypeName(current));
           isList = true;
         }
       }
@@ -492,11 +499,16 @@ public class ParametersWithDataType {
   }
 
   private String getTypeName(IJsonSchemaValidationProperties param) {
+    String typeName = param.getDataType();
     if (param instanceof CodegenModel parameter) {
-      return parameter.classname;
+      typeName = parameter.classname;
     }
 
-    return param.getDataType();
+    if (language.equals("scala") && typeName.equals("List")) {
+      typeName = "Seq";
+    }
+
+    return typeName;
   }
 
   private boolean isString(IJsonSchemaValidationProperties param) {
@@ -537,6 +549,8 @@ public class ParametersWithDataType {
             return "Array";
           case "Object":
             return "map[string]any";
+          case "range":
+            return "ModelRange"; // range is a reserved keyword
         }
         break;
       case "swift":
@@ -592,6 +606,8 @@ public class ParametersWithDataType {
           spec.setIsArray(true);
           // This is just to find the correct path in `handlePrimitive`, but it's not always the
           // real type
+          // FIXME: this set voluntarily the type to string, which will fail
+          // We need to infer the real type
           CodegenProperty baseItems = new CodegenProperty();
           baseItems.dataType = "String";
           spec.setItems(baseItems);
@@ -699,6 +715,10 @@ public class ParametersWithDataType {
     // If there is a number, try to use it as other number type, in the order
     // Integer, Long, Float, Double
     if (hasFloat && (paramType.equals("Integer") || paramType.equals("Long") || paramType.equals("Double"))) {
+      return maybeMatch;
+    }
+
+    if (model == null || model.interfaceModels == null) {
       return maybeMatch;
     }
 

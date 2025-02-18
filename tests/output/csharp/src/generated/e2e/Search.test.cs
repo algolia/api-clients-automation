@@ -9,6 +9,7 @@ using dotenv.net;
 using Quibble.Xunit;
 using Xunit;
 using Action = Algolia.Search.Models.Search.Action;
+using Range = Algolia.Search.Models.Search.Range;
 
 namespace Algolia.Search.e2e;
 
@@ -409,8 +410,8 @@ public class SearchClientRequestTestsE2E
     }
   }
 
-  [Fact(DisplayName = "setSettings with minimal parameters")]
-  public async Task SetSettingsTest1()
+  [Fact(DisplayName = "minimal parameters")]
+  public async Task SetSettingsTest()
   {
     try
     {

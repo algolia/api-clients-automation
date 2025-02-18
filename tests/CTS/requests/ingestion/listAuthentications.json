@@ -16,9 +16,7 @@
         "basic",
         "algolia"
       ],
-      "platform": [
-        "none"
-      ],
+      "platform": ["none"],
       "sort": "createdAt",
       "order": "asc"
     },

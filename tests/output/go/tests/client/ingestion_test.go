@@ -53,8 +53,7 @@ func TestIngestionapi0(t *testing.T) {
 	client, err = ingestion.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	res, err = client.CustomGet(client.NewApiCustomGetRequest(
-		"1/html-error",
-	))
+		"1/html-error"))
 	require.EqualError(t, err, "API error [429] Too Many Requests")
 }
 
@@ -66,8 +65,7 @@ func TestIngestionapi1(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo
 	res, err = client.CustomGet(client.NewApiCustomGetRequest(
-		"1/test",
-	))
+		"1/test"))
 	require.NoError(t, err)
 	require.Equal(t, int64(25000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(25000), echo.Timeout.Milliseconds())
@@ -81,8 +79,7 @@ func TestIngestionapi2(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"1/test",
-	))
+		"1/test"))
 	require.NoError(t, err)
 	require.Equal(t, int64(25000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(25000), echo.Timeout.Milliseconds())
@@ -97,8 +94,7 @@ func TestIngestionapi3(t *testing.T) {
 	_ = echo
 	res, err = client.ValidateSourceBeforeUpdate(client.NewApiValidateSourceBeforeUpdateRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-		ingestion.NewEmptySourceUpdate().SetName("newName"),
-	))
+		ingestion.NewEmptySourceUpdate().SetName("newName")))
 	require.NoError(t, err)
 	require.Equal(t, int64(180000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(180000), echo.Timeout.Milliseconds())
@@ -113,11 +109,7 @@ func TestIngestionapi4(t *testing.T) {
 	_ = echo
 	res, err = client.ValidateSourceBeforeUpdate(client.NewApiValidateSourceBeforeUpdateRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-		ingestion.NewEmptySourceUpdate().SetName("newName"),
-	),
-
-		ingestion.WithWriteTimeout(3456*time.Millisecond),
-	)
+		ingestion.NewEmptySourceUpdate().SetName("newName")), ingestion.WithWriteTimeout(3456*time.Millisecond))
 	require.NoError(t, err)
 	require.Equal(t, int64(180000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(3456), echo.Timeout.Milliseconds())
@@ -131,8 +123,7 @@ func TestIngestioncommonApi0(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"1/test",
-	))
+		"1/test"))
 	require.NoError(t, err)
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Ingestion (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
@@ -145,10 +136,9 @@ func TestIngestioncommonApi1(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"1/test",
-	))
+		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.11.0\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.12.3\).*`), echo.Header.Get("User-Agent"))
 }
 
 // uses the correct region
@@ -172,8 +162,7 @@ func TestIngestionparameters0(t *testing.T) {
 	client, err = ingestion.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	res, err = client.GetSource(client.NewApiGetSourceRequest(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-	))
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
 	require.NoError(t, err)
 	require.Equal(t, "data.us.algolia.com", echo.Host)
 }
@@ -222,8 +211,7 @@ func TestIngestionsetClientApiKey0(t *testing.T) {
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(
-			"check-api-key/1",
-		))
+			"check-api-key/1"))
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
@@ -231,14 +219,12 @@ func TestIngestionsetClientApiKey0(t *testing.T) {
 	}
 	{
 		err = client.SetClientApiKey(
-			"updated-api-key",
-		)
+			"updated-api-key")
 		require.NoError(t, err)
 	}
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(
-			"check-api-key/2",
-		))
+			"check-api-key/2"))
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)

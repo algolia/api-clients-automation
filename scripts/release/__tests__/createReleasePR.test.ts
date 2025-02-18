@@ -30,10 +30,9 @@ const buildTestCommit = (
 
 // Mock `getOctokit` to bypass the API call and credential requirements
 vi.mock('../../common.ts', async (importOriginal) => {
-  // eslint-disable-next-line
-  const mod = await importOriginal<typeof import('../../common.ts')>();
   return {
-    ...mod,
+    // eslint-disable-next-line
+    ...(await importOriginal<typeof import('../../common.ts')>()),
     getOctokit: vi.fn().mockReturnValue({
       pulls: {
         get: (): any => ({
@@ -49,21 +48,19 @@ vi.mock('../../common.ts', async (importOriginal) => {
 });
 
 vi.mock('../../ci/utils.ts', async (importOriginal) => {
-  // eslint-disable-next-line
-  const mod = await importOriginal<typeof import('../../ci/utils.ts')>();
   return {
-    ...mod,
+    // eslint-disable-next-line
+    ...(await importOriginal<typeof import('../../ci/utils.ts')>()),
     getNbGitDiff: vi.fn().mockResolvedValue(1),
   };
 });
 
 vi.mock('../common.ts', async (importOriginal) => {
-  // eslint-disable-next-line
-  const mod = await importOriginal<typeof import('../common.ts')>();
   const getFileChangesMockFn = vi.fn();
 
   return {
-    ...mod,
+    // eslint-disable-next-line
+    ...(await importOriginal<typeof import('../common.ts')>()),
     getLastReleasedTag: vi.fn().mockResolvedValue('foobar'),
     getFileChanges: getFileChangesMockFn,
     getFileChangesMock: getFileChangesMockFn,
@@ -71,10 +68,9 @@ vi.mock('../common.ts', async (importOriginal) => {
 });
 
 vi.mock('../../config.ts', async (importOriginal) => {
-  // eslint-disable-next-line
-  const mod = await importOriginal<typeof import('../../config.ts')>();
   return {
-    ...mod,
+    // eslint-disable-next-line
+    ...(await importOriginal<typeof import('../../config.ts')>()),
     getPackageVersionDefault: vi.fn().mockReturnValue('0.1.2'),
   };
 });
