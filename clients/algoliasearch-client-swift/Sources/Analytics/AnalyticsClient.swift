@@ -922,7 +922,7 @@ open class AnalyticsClient {
         return body
     }
 
-    // Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown. 
+    // Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.
     // By default, the analyzed period includes the last eight days including the current day.  The rate is the number
     // of
     // purchase conversion events divided by the number of tracked searches. A search is tracked if it returns a query

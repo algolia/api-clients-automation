@@ -103,7 +103,7 @@ public struct BaseRecommendIndexSettings: Codable, JSONEncodable {
     /// matches.  - `singleWordSynonym`.   Single-word synonyms, such as \"NY\" = \"NYC\", are considered exact matches.
     ///  - `multiWordsSynonym`.   Multi-word synonyms, such as \"NY\" = \"New York\", are considered exact matches.
     public var alternativesAsExact: [RecommendAlternativesAsExact]?
-    /// Advanced search syntax features you want to support.  - `exactPhrase`.   Phrases in quotes must match exactly.  
+    // Advanced search syntax features you want to support.  - `exactPhrase`.   Phrases in quotes must match exactly.
     /// For example, `sparkly blue \"iPhone case\"` only returns records with the exact string \"iPhone case\".  -
     /// `excludeWords`.   Query words prefixed with a `-` must not occur in a record.   For example, `search -engine`
     /// matches records that contain \"search\" but not \"engine\".  This setting only has an effect if `advancedSyntax`
@@ -123,7 +123,7 @@ public struct BaseRecommendIndexSettings: Codable, JSONEncodable {
     /// Properties to include in the API response of search and browse requests.  By default, all response properties
     /// are included. To reduce the response size, you can select which properties should be included.  An empty list
     /// may lead to an empty API response (except properties you can't exclude).  You can't exclude these properties:
-    /// `message`, `warning`, `cursor`, `abTestVariantID`, or any property added by setting `getRankingInfo` to true. 
+    /// `message`, `warning`, `cursor`, `abTestVariantID`, or any property added by setting `getRankingInfo` to true.
     /// Your search depends on the `hits` field. If you omit this field, searches won't return any results. Your UI
     /// might also depend on other properties, for example, for pagination. Before restricting the response size, check
     /// the impact on your search experience.
@@ -142,7 +142,7 @@ public struct BaseRecommendIndexSettings: Codable, JSONEncodable {
     /// attribute is determined by the order in the `searchableAttributes` setting.
     public var attributeCriteriaComputedByMinProximity: Bool?
     public var renderingContent: RecommendRenderingContent?
-    /// Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/). 
+    // Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/).
     /// This setting only has an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
     public var enableReRanking: Bool?
     public var reRankingApplyFilter: RecommendReRankingApplyFilter?
