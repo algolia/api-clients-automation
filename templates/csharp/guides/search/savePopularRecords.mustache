@@ -7,29 +7,29 @@ using System.Collections.Generic;
 
 {{> snippets/import}}
 
-class SavePopularRecords {
+class SavePopularRecords
+{
+
+  class Record
+  {
+    public int NbFollowers { get; set; }
+    public required string TwitterHandle { get; set; }
+    public bool IsPopular { get; set; }
+  }
 
   async Task Main(string[] args)
   {
 
     {{> snippets/init}}
-    var records = new List<Dictionary<string, object>>();
 
-    var hits = await client.BrowseObjectsAsync<Hit>("<YOUR_INDEX_NAME>", new BrowseParamsObject());
+    var hits = await client.BrowseObjectsAsync<Record>("<YOUR_INDEX_NAME>", new BrowseParamsObject());
 
-    foreach (var hit in hits)
-    {
-      var props = hit.AdditionalProperties ?? new Dictionary<string, object>();
-      var nbFollowers = props["nbFollowers"] as int? ?? 0;
-      records.Add(
-        new Dictionary<string, object>
-        {
-          ["twitterHandle"] = props["twitterHandle"],
-          ["nbFollowers"] = nbFollowers,
-          ["isPopular"] = nbFollowers >= 1_000_000
-        }
-        );
-    }
+    var records = hits.Select(hit => new Record
+      {
+        TwitterHandle = hit.TwitterHandle,
+        NbFollowers = hit.NbFollowers,
+        IsPopular = hit.NbFollowers >= 1_000_000
+      }).ToList();
 
     {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}};
   }
