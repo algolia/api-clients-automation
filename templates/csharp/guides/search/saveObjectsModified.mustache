@@ -12,31 +12,27 @@ class SaveObjectsModified {
   async Task Main(string[] args)
   {
 
-    try {
-      {{> snippets/init}}
+    {{> snippets/init}}
 
-      var jsonContent = await File.ReadAllTextAsync("products.json");
-      var products = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(jsonContent);
+    var jsonContent = await File.ReadAllTextAsync("products.json");
+    var products = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(jsonContent);
 
-      var records = products?.Select(product =>
+    var records = products?.Select(product =>
+    {
+      var reference = product.GetValueOrDefault("product_reference", "") as string;
+      var suffixes = new List<string>();
+
+      for (var i = reference!.Length; i > 1; i--)
       {
-        var reference = product.GetValueOrDefault("product_reference", "") as string;
-        var suffixes = new List<string>();
+        suffixes.Add(reference[i..]);
+      }
 
-        for (var i = reference!.Length; i > 1; i--)
-        {
-          suffixes.Add(reference[i..]);
-        }
+      return new Dictionary<string, object>(product)
+      {
+        ["suffixes"] = suffixes
+      };
+    }).ToList();
 
-        return new Dictionary<string, object>(product)
-        {
-          ["suffixes"] = suffixes
-        };
-      }).ToList();
-
-      {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}};
-    } catch (Exception e) {
-      Console.WriteLine(e.Message);
-    }
+    {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}};
   }
 }

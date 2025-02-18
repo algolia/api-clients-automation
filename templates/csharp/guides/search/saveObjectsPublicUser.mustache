@@ -14,11 +14,7 @@ class SaveObjectsPublicUser {
   async Task Main(string[] args)
   {
 
-    try {
-      {{> snippets/init}}
-      {{#dynamicSnippet}}saveObjectsPlaylistsWithUserIDPublic{{/dynamicSnippet}};
-    } catch (Exception e) {
-      Console.WriteLine(e.Message);
-    }
+    {{> snippets/init}}
+    {{#dynamicSnippet}}saveObjectsPlaylistsWithUserIDPublic{{/dynamicSnippet}};
   }
 }

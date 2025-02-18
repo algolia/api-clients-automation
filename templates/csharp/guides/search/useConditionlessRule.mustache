@@ -12,22 +12,18 @@ class UseConditionlessRule {
   async Task Main(string[] args)
   {
 
-    try {
-      {{> snippets/init}}
+    {{> snippets/init}}
 
-      var objectID = "a-rule-id";
+    var objectID = "a-rule-id";
 
-      var rule = new Rule
-      {
-        ObjectID = objectID,
-        Consequence = new Consequence(/* Set relevant consequence */),
-        // Set validity (optional)
-        Validity = [new TimeRange { From = 1688774400L, Until = 1738972800L }]
-      };
+    var rule = new Rule
+    {
+      ObjectID = objectID,
+      Consequence = new Consequence(/* Set relevant consequence */),
+      // Set validity (optional)
+      Validity = [new TimeRange { From = 1688774400L, Until = 1738972800L }]
+    };
 
-      {{#dynamicSnippet}}saveRule{{/dynamicSnippet}};
-    } catch (Exception e) {
-      Console.WriteLine(e.Message);
-    }
+    {{#dynamicSnippet}}saveRule{{/dynamicSnippet}};
   }
 }

@@ -19,18 +19,14 @@ class SearchWithOptionalFilters {
   async Task Main(string[] args)
   {
 
-    try {
-      {{> snippets/init}}
-      var optionalFilters = ReduceLabelsToFilters(labels);
-      var searchParams = new SearchParams(new SearchParamsObject
-      {
-        Query = "<YOUR_SEARCH_QUERY>",
-        OptionalFilters = optionalFilters
-      });
+    {{> snippets/init}}
+    var optionalFilters = ReduceLabelsToFilters(labels);
+    var searchParams = new SearchParams(new SearchParamsObject
+    {
+      Query = "<YOUR_SEARCH_QUERY>",
+      OptionalFilters = optionalFilters
+    });
 
-      {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
-    } catch (Exception e) {
-      Console.WriteLine(e.Message);
-    }
+    {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
   }
 }

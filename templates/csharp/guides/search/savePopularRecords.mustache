@@ -12,29 +12,25 @@ class SavePopularRecords {
   async Task Main(string[] args)
   {
 
-    try {
-      {{> snippets/init}}
-      var records = new List<Dictionary<string, object>>();
+    {{> snippets/init}}
+    var records = new List<Dictionary<string, object>>();
 
-      var hits = await client.BrowseObjectsAsync<Hit>("<YOUR_INDEX_NAME>", new BrowseParamsObject());
+    var hits = await client.BrowseObjectsAsync<Hit>("<YOUR_INDEX_NAME>", new BrowseParamsObject());
 
-      foreach (var hit in hits)
-      {
-        var props = hit.AdditionalProperties ?? new Dictionary<string, object>();
-        var nbFollowers = props["nbFollowers"] as int? ?? 0;
-        records.Add(
-          new Dictionary<string, object>
-          {
-            ["twitterHandle"] = props["twitterHandle"],
-            ["nbFollowers"] = nbFollowers,
-            ["isPopular"] = nbFollowers >= 1_000_000
-          }
-          );
-      }
-
-      {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}};
-    } catch (Exception e) {
-      Console.WriteLine(e.Message);
+    foreach (var hit in hits)
+    {
+      var props = hit.AdditionalProperties ?? new Dictionary<string, object>();
+      var nbFollowers = props["nbFollowers"] as int? ?? 0;
+      records.Add(
+        new Dictionary<string, object>
+        {
+          ["twitterHandle"] = props["twitterHandle"],
+          ["nbFollowers"] = nbFollowers,
+          ["isPopular"] = nbFollowers >= 1_000_000
+        }
+        );
     }
+
+    {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}};
   }
 }

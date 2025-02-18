@@ -12,20 +12,20 @@ class SaveObjectsChunks {
   async Task Main(string[] args)
   {
 
-    try {
-      {{> snippets/init}}
-      var jsonContent = await File.ReadAllTextAsync("actors.json");
-      var records = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(jsonContent);
+    {{> snippets/init}}
+    var jsonContent = await File.ReadAllTextAsync("actors.json");
+    var records = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(jsonContent);
 
-      const int chunkSize = 10000;
+    const int chunkSize = 10000;
 
-      for (var beginIndex = 0; beginIndex < records?.Count; beginIndex += chunkSize)
-      {
+    for (var beginIndex = 0; beginIndex < records?.Count; beginIndex += chunkSize)
+    {
+      try {
         var chunk = records.Slice(beginIndex, Math.Min(beginIndex + chunkSize, records.Count));
         {{#dynamicSnippet}}saveObjectsChunks{{/dynamicSnippet}};
+      } catch (Exception e) {
+        Console.WriteLine(e.Message);
       }
-    } catch (Exception e) {
-      Console.WriteLine(e.Message);
     }
   }
 }
