@@ -2649,6 +2649,34 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('saveRule always active rule')]
+    public function testSaveRule21(): void
+    {
+        $client = $this->getClient();
+        $client->saveRule(
+            'indexName',
+            'a-rule-id',
+            ['objectID' => 'a-rule-id',
+                'consequence' => ['params' => ['aroundRadius' => 1000,
+                ],
+                ],
+                'validity' => [
+                    ['from' => 1577836800,
+                        'until' => 1577836800,
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/rules/a-rule-id',
+                'method' => 'PUT',
+                'body' => json_decode('{"objectID":"a-rule-id","consequence":{"params":{"aroundRadius":1000}},"validity":[{"from":1577836800,"until":1577836800}]}'),
+            ],
+        ]);
+    }
+
     #[TestDox('saveRules with minimal parameters')]
     public function testSaveRules(): void
     {
@@ -6607,6 +6635,30 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'path' => '/1/indexes/indexName/query',
                 'method' => 'POST',
                 'body' => json_decode('{"query":"query"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('mcm with algolia user id')]
+    public function testSearchSingleIndex131(): void
+    {
+        $client = $this->getClient();
+        $client->searchSingleIndex(
+            'playlists',
+            ['query' => 'peace',
+            ],
+            [
+                'headers' => [
+                    'X-Algolia-User-ID' => 'user42',
+                ],
+            ]
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/playlists/query',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"peace"}'),
             ],
         ]);
     }

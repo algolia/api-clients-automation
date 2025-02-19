@@ -1997,6 +1997,32 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
+  # saveRule always active rule
+  def test_save_rule21
+    req = @client.save_rule_with_http_info(
+      "indexName",
+      "a-rule-id",
+      Algolia::Search::Rule.new(
+        algolia_object_id: "a-rule-id",
+        consequence: Algolia::Search::Consequence.new(
+          params: Algolia::Search::ConsequenceParams.new(around_radius: 1000)
+        ),
+        validity: [Algolia::Search::TimeRange.new(from: 1577836800, _until: 1577836800)]
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/indexes/indexName/rules/a-rule-id", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"a-rule-id\",\"consequence\":{\"params\":{\"aroundRadius\":1000}},\"validity\":[{\"from\":1577836800,\"until\":1577836800}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # saveRules with minimal parameters
   def test_save_rules
     req = @client.save_rules_with_http_info(
@@ -4929,6 +4955,21 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"query\":\"query\"}"), JSON.parse(req.body))
+  end
+
+  # mcm with algolia user id
+  def test_search_single_index131
+    req = @client.search_single_index_with_http_info(
+      "playlists",
+      Algolia::Search::SearchParamsObject.new(query: "peace"),
+      {:header_params => {"X-Algolia-User-ID" => "user42"}}
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/playlists/query", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"query\":\"peace\"}"), JSON.parse(req.body))
   end
 
   # searchSynonyms with minimal parameters

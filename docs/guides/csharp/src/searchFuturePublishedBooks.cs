@@ -12,23 +12,16 @@ class SearchFuturePublishedBooks
 {
   async Task Main(string[] args)
   {
-    try
-    {
-      var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
-      var dateTimestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-      var searchParams = new SearchParams(
-        new SearchParamsObject
-        {
-          Query = "<YOUR_SEARCH_QUERY>",
-          Filters = $"date_timestamp > {dateTimestamp}",
-        }
-      );
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+    var dateTimestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+    var searchParams = new SearchParams(
+      new SearchParamsObject
+      {
+        Query = "<YOUR_SEARCH_QUERY>",
+        Filters = $"date_timestamp > {dateTimestamp}",
+      }
+    );
 
-      await client.SearchSingleIndexAsync<Hit>("<YOUR_INDEX_NAME>", searchParams);
-    }
-    catch (Exception e)
-    {
-      Console.WriteLine(e.Message);
-    }
+    await client.SearchSingleIndexAsync<Hit>("<YOUR_INDEX_NAME>", searchParams);
   }
 }

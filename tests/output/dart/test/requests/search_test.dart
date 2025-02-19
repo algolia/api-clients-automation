@@ -3222,6 +3222,42 @@ void main() {
     ),
   );
 
+  // saveRule
+  test(
+    'saveRule always active rule',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRule(
+        indexName: "indexName",
+        objectID: "a-rule-id",
+        rule: Rule(
+          objectID: "a-rule-id",
+          consequence: Consequence(
+            params: ConsequenceParams(
+              aroundRadius: 1000,
+            ),
+          ),
+          validity: [
+            TimeRange(
+              from: 1577836800,
+              until: 1577836800,
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/rules/a-rule-id');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"a-rule-id","consequence":{"params":{"aroundRadius":1000}},"validity":[{"from":1577836800,"until":1577836800}]}""");
+      },
+    ),
+  );
+
   // saveRules
   test(
     'saveRules with minimal parameters',
@@ -7875,6 +7911,33 @@ void main() {
         expectPath(request.path, '/1/indexes/indexName/query');
         expect(request.method, 'post');
         expectBody(request.body, """{"query":"query"}""");
+      },
+    ),
+  );
+
+  // searchSingleIndex
+  test(
+    'mcm with algolia user id',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchSingleIndex(
+          indexName: "playlists",
+          searchParams: SearchParamsObject(
+            query: "peace",
+          ),
+          requestOptions: RequestOptions(
+            headers: {
+              'X-Algolia-User-ID': "user42",
+            },
+          )),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/playlists/query');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"query":"peace"}""");
       },
     ),
   );

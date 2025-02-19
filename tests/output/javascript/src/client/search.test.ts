@@ -234,6 +234,28 @@ describe('generateSecuredApiKey', () => {
       });
     }
   }, 15000);
+
+  test('mcm with filters', async () => {
+    const client = createClient();
+
+    {
+      const result = client.generateSecuredApiKey({
+        parentApiKey: 'YourSearchOnlyApiKey',
+        restrictions: { filters: 'user:user42 AND user:public' },
+      });
+    }
+  }, 15000);
+
+  test('mcm with user token', async () => {
+    const client = createClient();
+
+    {
+      const result = client.generateSecuredApiKey({
+        parentApiKey: 'YourSearchOnlyApiKey',
+        restrictions: { userToken: 'user42' },
+      });
+    }
+  }, 15000);
 });
 
 describe('indexExists', () => {

@@ -9,29 +9,25 @@ $getGoogleAnalyticsUserIdFromBrowserCookie = function (string $cookieName): stri
     return '';
 };
 
-try {
-    $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+$client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
-    $userToken = $getGoogleAnalyticsUserIdFromBrowserCookie('_ga');
-    $searchParams = (new SearchParamsObject())
-        ->setQuery('<YOUR_SEARCH_QUERY>')
-        ->setUserToken($userToken)
-    ;
+$userToken = $getGoogleAnalyticsUserIdFromBrowserCookie('_ga');
+$searchParams = (new SearchParamsObject())
+    ->setQuery('<YOUR_SEARCH_QUERY>')
+    ->setUserToken($userToken)
+;
 
-    $client->searchSingleIndex(
-        '<YOUR_INDEX_NAME>',
-        $searchParams,
-    );
+$client->searchSingleIndex(
+    '<YOUR_INDEX_NAME>',
+    $searchParams,
+);
 
-    /** @var null|string $loggedInUser */
-    $loggedInUser = null;
+/** @var null|string $loggedInUser */
+$loggedInUser = null;
 
-    $searchParams->setUserToken($loggedInUser ?? $userToken);
+$searchParams->setUserToken($loggedInUser ?? $userToken);
 
-    $client->searchSingleIndex(
-        '<YOUR_INDEX_NAME>',
-        $searchParams,
-    );
-} catch (Exception $e) {
-    echo $e->getMessage().PHP_EOL;
-}
+$client->searchSingleIndex(
+    '<YOUR_INDEX_NAME>',
+    $searchParams,
+);

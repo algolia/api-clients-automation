@@ -1827,6 +1827,21 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"objectID":"a-rule-id","conditions":[{"context":"mobile"}],"consequence":{"params":{"filters":"release_date >= 1577836800"}}}`)
 	})
+	t.Run("saveRule always active rule", func(t *testing.T) {
+		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
+			"indexName", "a-rule-id",
+			search.NewEmptyRule().SetObjectID("a-rule-id").SetConsequence(
+				search.NewEmptyConsequence().SetParams(
+					search.NewEmptyConsequenceParams().SetAroundRadius(search.Int32AsAroundRadius(1000)))).SetValidity(
+				[]search.TimeRange{*search.NewEmptyTimeRange().SetFrom(1577836800).SetUntil(1577836800)})))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/rules/a-rule-id", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"objectID":"a-rule-id","consequence":{"params":{"aroundRadius":1000}},"validity":[{"from":1577836800,"until":1577836800}]}`)
+	})
 }
 
 func TestSearch_SaveRules(t *testing.T) {
@@ -4004,6 +4019,18 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"query":"query"}`)
+	})
+	t.Run("mcm with algolia user id", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"playlists").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("peace"))), search.WithHeaderParam("X-Algolia-User-ID", "user42"))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/playlists/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"query":"peace"}`)
 	})
 }
 

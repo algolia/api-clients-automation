@@ -306,6 +306,32 @@ class TestSearchClient:
             },
         )
 
+    async def test_generate_secured_api_key_5(self):
+        """
+        mcm with filters
+        """
+        _client = self.create_client()
+
+        _req = await _client.generate_secured_api_key(
+            parent_api_key="YourSearchOnlyApiKey",
+            restrictions={
+                "filters": "user:user42 AND user:public",
+            },
+        )
+
+    async def test_generate_secured_api_key_6(self):
+        """
+        mcm with user token
+        """
+        _client = self.create_client()
+
+        _req = await _client.generate_secured_api_key(
+            parent_api_key="YourSearchOnlyApiKey",
+            restrictions={
+                "userToken": "user42",
+            },
+        )
+
     async def test_index_exists_0(self):
         """
         indexExists
@@ -1372,6 +1398,32 @@ class TestSearchClientSync:
 
         _req = _client.generate_secured_api_key(
             parent_api_key="2640659426d5107b6e47d75db9cbaef8",
+            restrictions={
+                "userToken": "user42",
+            },
+        )
+
+    def test_generate_secured_api_key_5(self):
+        """
+        mcm with filters
+        """
+        _client = self.create_client()
+
+        _req = _client.generate_secured_api_key(
+            parent_api_key="YourSearchOnlyApiKey",
+            restrictions={
+                "filters": "user:user42 AND user:public",
+            },
+        )
+
+    def test_generate_secured_api_key_6(self):
+        """
+        mcm with user token
+        """
+        _client = self.create_client()
+
+        _req = _client.generate_secured_api_key(
+            parent_api_key="YourSearchOnlyApiKey",
             restrictions={
                 "userToken": "user42",
             },

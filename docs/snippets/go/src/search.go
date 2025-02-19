@@ -1598,6 +1598,64 @@ func SnippetForGenerateSecuredApiKeyOfSearch4() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForGenerateSecuredApiKeyOfSearch5() {
+	/*
+	   Snippet for the generateSecuredApiKey method.
+
+	   mcm with filters
+	*/
+
+	// >SEPARATOR generateSecuredApiKey mcm with filters
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GenerateSecuredApiKey(
+		"YourSearchOnlyApiKey",
+		search.NewEmptySecuredApiKeyRestrictions().SetFilters("user:user42 AND user:public"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGenerateSecuredApiKeyOfSearch6() {
+	/*
+	   Snippet for the generateSecuredApiKey method.
+
+	   mcm with user token
+	*/
+
+	// >SEPARATOR generateSecuredApiKey mcm with user token
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GenerateSecuredApiKey(
+		"YourSearchOnlyApiKey",
+		search.NewEmptySecuredApiKeyRestrictions().SetUserToken("user42"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetApiKeyOfSearch() {
 	/*
 	   Snippet for the getApiKey method.
@@ -3817,6 +3875,38 @@ func SnippetForSaveRuleOfSearch20() {
 			[]search.Condition{*search.NewEmptyCondition().SetContext("mobile")}).SetConsequence(
 			search.NewEmptyConsequence().SetParams(
 				search.NewEmptyConsequenceParams().SetFilters("release_date >= 1577836800")))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveRuleOfSearch21() {
+	/*
+	   Snippet for the saveRule method.
+
+	   saveRule always active rule
+	*/
+
+	// >SEPARATOR saveRule saveRule always active rule
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
+		"<YOUR_INDEX_NAME>", "a-rule-id",
+		search.NewEmptyRule().SetObjectID("a-rule-id").SetConsequence(
+			search.NewEmptyConsequence().SetParams(
+				search.NewEmptyConsequenceParams().SetAroundRadius(search.Int32AsAroundRadius(1000)))).SetValidity(
+			[]search.TimeRange{*search.NewEmptyTimeRange().SetFrom(1577836800).SetUntil(1577836800)})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -8621,6 +8711,35 @@ func SnippetForSearchSingleIndexOfSearch130() {
 	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
 		search.NewEmptySearchParamsObject().SetQuery("query"))), search.WithHeaderParam("X-Algolia-User-ID", "user1234"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchSingleIndexOfSearch131() {
+	/*
+	   Snippet for the searchSingleIndex method.
+
+	   mcm with algolia user id
+	*/
+
+	// >SEPARATOR searchSingleIndex mcm with algolia user id
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetQuery("peace"))), search.WithHeaderParam("X-Algolia-User-ID", "user42"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

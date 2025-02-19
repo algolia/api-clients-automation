@@ -1286,6 +1286,52 @@ def snippet_for_generate_secured_api_key4
   # SEPARATOR<
 end
 
+# Snippet for the generateSecuredApiKey method.
+#
+# mcm with filters
+def snippet_for_generate_secured_api_key5
+  # >SEPARATOR generateSecuredApiKey mcm with filters
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.generate_secured_api_key(
+    "YourSearchOnlyApiKey",
+    Algolia::Search::SecuredApiKeyRestrictions.new(filters: "user:user42 AND user:public")
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the generateSecuredApiKey method.
+#
+# mcm with user token
+def snippet_for_generate_secured_api_key6
+  # >SEPARATOR generateSecuredApiKey mcm with user token
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.generate_secured_api_key(
+    "YourSearchOnlyApiKey",
+    Algolia::Search::SecuredApiKeyRestrictions.new(user_token: "user42")
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the getApiKey method.
 #
 # getApiKey
@@ -3172,6 +3218,34 @@ def snippet_for_save_rule20
       consequence: Algolia::Search::Consequence.new(
         params: Algolia::Search::ConsequenceParams.new(filters: "release_date >= 1577836800")
       )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRule method.
+#
+# saveRule always active rule
+def snippet_for_save_rule21
+  # >SEPARATOR saveRule saveRule always active rule
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rule(
+    "<YOUR_INDEX_NAME>",
+    "a-rule-id",
+    Algolia::Search::Rule.new(
+      algolia_object_id: "a-rule-id",
+      consequence: Algolia::Search::Consequence.new(params: Algolia::Search::ConsequenceParams.new(around_radius: 1000)),
+      validity: [Algolia::Search::TimeRange.new(from: 1577836800, _until: 1577836800)]
     )
   )
 
@@ -7248,6 +7322,30 @@ def snippet_for_search_single_index130
     "<YOUR_INDEX_NAME>",
     Algolia::Search::SearchParamsObject.new(query: "query"),
     {:header_params => {"X-Algolia-User-ID" => "user1234"}}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchSingleIndex method.
+#
+# mcm with algolia user id
+def snippet_for_search_single_index131
+  # >SEPARATOR searchSingleIndex mcm with algolia user id
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_single_index(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchParamsObject.new(query: "peace"),
+    {:header_params => {"X-Algolia-User-ID" => "user42"}}
   )
 
   # >LOG

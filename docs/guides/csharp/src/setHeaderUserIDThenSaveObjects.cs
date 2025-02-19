@@ -14,10 +14,10 @@ class SetHeaderUserIDThenSaveObjects
 
   async Task Main(string[] args)
   {
-    try
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+    foreach (var playlist in playlists)
     {
-      var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
-      foreach (var playlist in playlists)
+      try
       {
         var playlistUserID = playlist.GetValueOrDefault("userID", "") as string;
         await client.SaveObjectsAsync(
@@ -28,10 +28,10 @@ class SetHeaderUserIDThenSaveObjects
           new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", playlistUserID).Build()
         );
       }
-    }
-    catch (Exception e)
-    {
-      Console.WriteLine(e.Message);
+      catch (Exception e)
+      {
+        Console.WriteLine(e.Message);
+      }
     }
   }
 }

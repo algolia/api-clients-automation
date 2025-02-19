@@ -12,23 +12,16 @@ class SearchWithLogicalOr
 {
   async Task Main(string[] args)
   {
-    try
-    {
-      var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
-      var query = "the query";
+    var query = "the query";
 
-      var optionalWords = new OptionalWords(["the", "query"]);
+    var optionalWords = new OptionalWords(["the", "query"]);
 
-      var searchParams = new SearchParams(
-        new SearchParamsObject { Query = query, OptionalWords = optionalWords }
-      );
+    var searchParams = new SearchParams(
+      new SearchParamsObject { Query = query, OptionalWords = optionalWords }
+    );
 
-      await client.SearchSingleIndexAsync<Hit>("<YOUR_INDEX_NAME>", searchParams);
-    }
-    catch (Exception e)
-    {
-      Console.WriteLine(e.Message);
-    }
+    await client.SearchSingleIndexAsync<Hit>("<YOUR_INDEX_NAME>", searchParams);
   }
 }

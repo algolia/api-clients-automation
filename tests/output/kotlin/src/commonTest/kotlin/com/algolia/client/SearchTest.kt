@@ -303,6 +303,40 @@ class SearchTest {
   }
 
   @Test
+  fun `mcm with filters`() = runTest {
+    val client = SearchClient(appId = "appId", apiKey = "apiKey")
+    client.runTest(
+      call = {
+        generateSecuredApiKey(
+          parentApiKey = "YourSearchOnlyApiKey",
+          restrictions = SecuredApiKeyRestrictions(
+            filters = "user:user42 AND user:public",
+          ),
+        )
+      },
+      intercept = {
+      },
+    )
+  }
+
+  @Test
+  fun `mcm with user token`() = runTest {
+    val client = SearchClient(appId = "appId", apiKey = "apiKey")
+    client.runTest(
+      call = {
+        generateSecuredApiKey(
+          parentApiKey = "YourSearchOnlyApiKey",
+          restrictions = SecuredApiKeyRestrictions(
+            userToken = "user42",
+          ),
+        )
+      },
+      intercept = {
+      },
+    )
+  }
+
+  @Test
   fun `indexExists`() = runTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6681))))
     client.runTest(

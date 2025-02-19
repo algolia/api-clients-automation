@@ -2725,6 +2725,36 @@ public class SearchClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "saveRule always active rule")]
+  public async Task SaveRuleTest21()
+  {
+    await client.SaveRuleAsync(
+      "indexName",
+      "a-rule-id",
+      new Rule
+      {
+        ObjectID = "a-rule-id",
+        Consequence = new Consequence
+        {
+          Params = new ConsequenceParams { AroundRadius = new AroundRadius(1000) },
+        },
+        Validity = new List<TimeRange>
+        {
+          new TimeRange { From = 1577836800L, Until = 1577836800L },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/rules/a-rule-id", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"objectID\":\"a-rule-id\",\"consequence\":{\"params\":{\"aroundRadius\":1000}},\"validity\":[{\"from\":1577836800,\"until\":1577836800}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "saveRules with minimal parameters")]
   public async Task SaveRulesTest()
   {
@@ -6851,6 +6881,21 @@ public class SearchClientRequestTests
     Assert.Equal("/1/indexes/indexName/query", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"query\":\"query\"}", req.Body, new JsonDiffConfig(false));
+  }
+
+  [Fact(DisplayName = "mcm with algolia user id")]
+  public async Task SearchSingleIndexTest131()
+  {
+    await client.SearchSingleIndexAsync<Hit>(
+      "playlists",
+      new SearchParams(new SearchParamsObject { Query = "peace" }),
+      new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "user42").Build()
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/playlists/query", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{\"query\":\"peace\"}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "searchSynonyms with minimal parameters")]
