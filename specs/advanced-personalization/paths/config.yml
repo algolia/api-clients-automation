@@ -96,5 +96,7 @@ put:
       $ref: '../common/responses/BadRequest.yml'
     '401':
       $ref: '../common/responses/Unauthorized.yml'
+    '402':
+      $ref: '../common/responses/FeatureNotEnabled.yml'
     '500':
       $ref: '../common/responses/InternalServerError.yml'
