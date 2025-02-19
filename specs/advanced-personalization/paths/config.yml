@@ -67,9 +67,9 @@ put:
               $ref: '../common/schemas/Configuration.yml#/personalizationReRanking'
             profileType:
               $ref: '../common/schemas/Configuration.yml#/profileType'
-            realtime:
-              $ref: '../common/schemas/Configuration.yml#/realtime'
-          required: [indices, personalizationReRanking, profileType, realtime]
+            features:
+              $ref: '../common/schemas/Features.yml#/features'
+          required: [indices, personalizationReRanking, profileType, features]
   responses:
     '200':
       description: OK

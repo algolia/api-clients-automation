@@ -75,7 +75,3 @@ status:
     lastUpdatedAt:
       type: string
 
-realtime:
-  type: string
-  enum: [enabled, disabled]
-  description: Whether the realtime personalization feature is enabled.
