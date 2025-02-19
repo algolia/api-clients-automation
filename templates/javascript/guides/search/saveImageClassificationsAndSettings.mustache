@@ -1,6 +1,6 @@
 {{> snippets/import}}
 
-interface Image {
+interface Image extends Record<string, unknown> {
   imageURL: string;
   objectID: string;
   objects: Record<string, unknown>[];
