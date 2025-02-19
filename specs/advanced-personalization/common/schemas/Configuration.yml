@@ -74,3 +74,8 @@ status:
         $ref: '../enums.yml#/errorCodes'
     lastUpdatedAt:
       type: string
+
+realtime:
+  type: string
+  enum: [enabled, disabled]
+  description: Whether the realtime personalization feature is enabled.
