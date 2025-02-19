@@ -1,0 +1,47 @@
+{{> snippets/import}}
+
+def get_image_labels(image_url, object_id, score_limit)
+  # Implement your image classification logic here
+  {"objectID" => "", "imageURL" => "", "objects" => []}
+end
+
+{{> snippets/init}}
+
+records = []
+
+client.browse_objects(
+  '<YOUR_INDEX_NAME>',
+) do |resp|
+  resp.hits.each do |hit|
+    image_url = hit['imageURL']
+    records << get_image_labels(image_url, hit['objectID'], 0.5)
+  end
+end
+
+{{#dynamicSnippet}}partialUpdatesRecords{{/dynamicSnippet}}
+
+facets = []
+attributes = []
+
+records.each do |record|
+  record["objects"].each do |obj|
+    obj.each do |key, values|
+      if values.is_a?(Array)
+        facets.push(
+          "searchable(objects.#{key}.label)",
+          "searchable(objects.#{key}.score)"
+        )
+        attributes << "objects.#{key}.label)"
+      end
+    end
+  end
+end
+
+current_settings = {{#dynamicSnippet}}getSettings{{/dynamicSnippet}}
+
+settings = Algolia::Search::IndexSettings.new(
+  searchable_attributes: (current_settings.searchable_attributes || []) + attributes,
+  attributes_for_faceting: (current_settings.attributes_for_faceting || []) + facets
+)
+
+{{#dynamicSnippet}}setSettings{{/dynamicSnippet}}
