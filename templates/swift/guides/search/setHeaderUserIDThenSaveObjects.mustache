@@ -9,14 +9,14 @@ import Core
 func setHeaderUserIDThenSaveObjects() async throws {
   let playlists: [[String: AnyCodable]] = [/* Your records */]
 
-  do {
-    {{> snippets/init}}
+  {{> snippets/init}}
 
-    for playlist in playlists {
+  for playlist in playlists {
+    do {
       let playlistUserID = playlist["userID"]?.value as! String
       {{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}}
+    } catch {
+      print(error)
     }
-  } catch {
-    print(error)
   }
 }

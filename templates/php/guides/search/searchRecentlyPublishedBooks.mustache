@@ -4,15 +4,11 @@ require __DIR__.'/../vendor/autoload.php';
 {{> snippets/import}}
 use Algolia\AlgoliaSearch\Model\Search\SearchParamsObject;
 
-try {
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  $dateTimestamp = strtotime('-1 years');
-  $searchParams = (new SearchParamsObject())
-      ->setQuery('<YOUR_SEARCH_QUERY>')
-      ->setFilters("date_timestamp > " . $dateTimestamp);
+$dateTimestamp = strtotime('-1 years');
+$searchParams = (new SearchParamsObject())
+    ->setQuery('<YOUR_SEARCH_QUERY>')
+    ->setFilters("date_timestamp > " . $dateTimestamp);
 
-  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
-} catch (Exception $e) {
-  echo $e->getMessage() . PHP_EOL;
-}
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};

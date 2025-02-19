@@ -9,16 +9,12 @@ $getBuyerAccountId = function (): string {
     return '';
 };
 
-try {
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  // get the buyer account information
-  $buyer = $getBuyerAccountId();
-  $searchParams = (new SearchParamsObject())
-      ->setQuery('<YOUR_SEARCH_QUERY>')
-      ->setRuleContexts([$buyer]);
+// get the buyer account information
+$buyer = $getBuyerAccountId();
+$searchParams = (new SearchParamsObject())
+    ->setQuery('<YOUR_SEARCH_QUERY>')
+    ->setRuleContexts([$buyer]);
 
-  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
-} catch (Exception $e) {
-  echo $e->getMessage() . PHP_EOL;
-}
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};

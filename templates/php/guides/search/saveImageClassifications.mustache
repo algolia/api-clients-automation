@@ -1,0 +1,21 @@
+<?php
+
+{{> snippets/import}}
+use Algolia\AlgoliaSearch\Model\Search\IndexSettings;
+
+$getImageLabels = function ($imageURL, $objectID, $scoreLimit) {
+    // Implement your image classification logic here
+    return ["objectID" => "", "imageURL" => "", "objects" => []];
+};
+
+{{> snippets/init}}
+
+$records = [];
+
+$hits = $client->browseObjects('<YOUR_INDEX_NAME>');
+foreach ($hits as $hit) {
+    $imageURL = $hit['imageURL'];
+    $records[] = $getImageLabels($imageURL, $hit['objectID'], 0.5);
+}
+
+{{#dynamicSnippet}}partialUpdatesRecords{{/dynamicSnippet}};

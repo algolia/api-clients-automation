@@ -3,34 +3,34 @@
 require __DIR__.'/../vendor/autoload.php';
 {{> snippets/import}}
 
-try {
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . "actors.json";
+$path = dirname(__FILE__) . DIRECTORY_SEPARATOR . "actors.json";
 
-  if (!file_exists($path)) {
-      throw new Exception("File not found: $path");
-  }
+if (!file_exists($path)) {
+    throw new Exception("File not found: $path");
+}
 
-  $data = file_get_contents($path);
+$data = file_get_contents($path);
 
-  if ($data === false) {
-      throw new Exception("Failed to read file: $path");
-  }
+if ($data === false) {
+    throw new Exception("Failed to read file: $path");
+}
 
-  $records = json_decode($data, true);
+$records = json_decode($data, true);
 
-  if (json_last_error() !== JSON_ERROR_NONE) {
-      throw new Exception("JSON decode error: " . json_last_error_msg());
-  }
+if (json_last_error() !== JSON_ERROR_NONE) {
+    throw new Exception("JSON decode error: " . json_last_error_msg());
+}
 
-  $chunkSize = 10000;
+$chunkSize = 10000;
 
-  for ($beginIndex = 0; $beginIndex < count($records); $beginIndex += $chunkSize) {
-      $chunk = array_slice($records, $beginIndex, $chunkSize);
+for ($beginIndex = 0; $beginIndex < count($records); $beginIndex += $chunkSize) {
+  $chunk = array_slice($records, $beginIndex, $chunkSize);
 
+  try {
       {{#dynamicSnippet}}saveObjectsChunks{{/dynamicSnippet}};
+  } catch (Exception $e) {
+    echo 'Error: ' . $e->getMessage() . "\n";
   }
-} catch (Exception $e) {
-  echo 'Error: ' . $e->getMessage() . "\n";
 }

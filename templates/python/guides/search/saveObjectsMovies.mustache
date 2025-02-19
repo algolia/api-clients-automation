@@ -2,13 +2,12 @@ import requests
 {{> snippets/import}}
 
 
-if __name__ == "__main__":
-    # Fetch sample dataset
-    url = "https://dashboard.algolia.com/api/1/sample_datasets?type=movie"
-    movies = requests.get(url).json()
+# Fetch sample dataset
+url = "https://dashboard.algolia.com/api/1/sample_datasets?type=movie"
+movies = requests.get(url).json()
 
-    # Connect and authenticate with your Algolia app
-    _{{> snippets/init}}
+# Connect and authenticate with your Algolia app
+_{{> snippets/init}}
 
-    # Save records in Algolia index
-    {{#dynamicSnippet}}saveObjectsMovies{{/dynamicSnippet}}
+# Save records in Algolia index
+{{#dynamicSnippet}}saveObjectsMovies{{/dynamicSnippet}}
