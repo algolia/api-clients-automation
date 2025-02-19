@@ -9,10 +9,10 @@ import Search
 func setHeaderUserIDThenSaveObjects() async throws {
     let playlists: [[String: AnyCodable]] = [ /* Your records */ ]
 
-    do {
-        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+    let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
-        for playlist in playlists {
+    for playlist in playlists {
+        do {
             let playlistUserID = playlist["userID"]?.value as! String
             try await client.saveObjects(
                 indexName: "<YOUR_INDEX_NAME>",
@@ -23,8 +23,8 @@ func setHeaderUserIDThenSaveObjects() async throws {
                     headers: ["X-Algolia-User-ID": playlistUserID]
                 )
             )
+        } catch {
+            print(error)
         }
-    } catch {
-        print(error)
     }
 }

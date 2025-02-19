@@ -4,22 +4,18 @@ require __DIR__ . '/../vendor/autoload.php';
 {{> snippets/import}}
 use Algolia\AlgoliaSearch\Model\Search\SearchParamsObject;
 
-try {
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  /*
-  '94.228.178.246' should be replaced with your user's IP address.
-  Depending on your stack there are multiple ways to get this information.
-  */
-  $ip = '94.228.178.246';
-  $query = 'query';
+/*
+'94.228.178.246' should be replaced with your user's IP address.
+Depending on your stack there are multiple ways to get this information.
+*/
+$ip = '94.228.178.246';
+$query = 'query';
 
-  $searchParams = (new SearchParamsObject())
-    ->setQuery($query)
-    ->setAnalytics(true);
+$searchParams = (new SearchParamsObject())
+  ->setQuery($query)
+  ->setAnalytics(true);
 
-  {{#dynamicSnippet}}searchWithSearchParamsAndForwardedHeader{{/dynamicSnippet}};
-} catch (Exception $e) {
-  echo $e->getMessage() . PHP_EOL;
-}
+{{#dynamicSnippet}}searchWithSearchParamsAndForwardedHeader{{/dynamicSnippet}};
 

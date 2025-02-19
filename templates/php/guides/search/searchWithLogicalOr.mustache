@@ -5,20 +5,16 @@ require __DIR__ . '/../vendor/autoload.php';
 use Algolia\AlgoliaSearch\Model\Search\OptionalWords;
 use Algolia\AlgoliaSearch\Model\Search\SearchParamsObject;
 
-try {
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  $query = 'the query';
+$query = 'the query';
 
-  $optionalWords = new OptionalWords();
-  $optionalWords[] = $query;
+$optionalWords = new OptionalWords();
+$optionalWords[] = $query;
 
-  $searchParams = (new SearchParamsObject())
-    ->setQuery($query)
-    ->setOptionalWords($optionalWords);
+$searchParams = (new SearchParamsObject())
+  ->setQuery($query)
+  ->setOptionalWords($optionalWords);
 
-  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
-} catch (Exception $e) {
-  echo $e->getMessage() . PHP_EOL;
-}
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
 

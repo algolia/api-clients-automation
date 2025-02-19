@@ -236,7 +236,7 @@ func TestSearchcommonApi1(t *testing.T) {
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.12.2\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.12.3\).*`), echo.Header.Get("User-Agent"))
 }
 
 // call deleteObjects without error
@@ -345,6 +345,36 @@ func TestSearchgenerateSecuredApiKey4(t *testing.T) {
 	{
 		res, err = client.GenerateSecuredApiKey(
 			"2640659426d5107b6e47d75db9cbaef8",
+			search.NewEmptySecuredApiKeyRestrictions().SetUserToken("user42"))
+		require.NoError(t, err)
+	}
+}
+
+// mcm with filters
+func TestSearchgenerateSecuredApiKey5(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	client, echo := createSearchClient(t)
+	_ = echo
+	{
+		res, err = client.GenerateSecuredApiKey(
+			"YourSearchOnlyApiKey",
+			search.NewEmptySecuredApiKeyRestrictions().SetFilters("user:user42 AND user:public"))
+		require.NoError(t, err)
+	}
+}
+
+// mcm with user token
+func TestSearchgenerateSecuredApiKey6(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	client, echo := createSearchClient(t)
+	_ = echo
+	{
+		res, err = client.GenerateSecuredApiKey(
+			"YourSearchOnlyApiKey",
 			search.NewEmptySecuredApiKeyRestrictions().SetUserToken("user42"))
 		require.NoError(t, err)
 	}

@@ -1,0 +1,44 @@
+<?php
+
+{{> snippets/import}}
+use Algolia\AlgoliaSearch\Model\Search\IndexSettings;
+
+$getImageLabels = function ($imageURL, $objectID, $scoreLimit) {
+    // Implement your image classification logic here
+    return ["objectID" => "", "imageURL" => "", "objects" => []];
+};
+
+{{> snippets/init}}
+
+$records = [];
+
+$hits = $client->browseObjects('<YOUR_INDEX_NAME>');
+foreach ($hits as $hit) {
+    $imageURL = $hit['imageURL'];
+    $records[] = $getImageLabels($imageURL, $hit['objectID'], 0.5);
+}
+
+{{#dynamicSnippet}}partialUpdatesRecords{{/dynamicSnippet}};
+
+$facets = [];
+$attributes = [];
+
+foreach ($records as $record) {
+    foreach ($record["objects"] as $obj) {
+        foreach ($obj as $key => $values) {
+            if (is_array($values)) {
+                $facets[] = "searchable(objects.$key.label)";
+                $facets[] = "searchable(objects.$key.score)";
+                $attributes[] = "objects.$key.label)";
+            }
+        }
+    }
+}
+
+$currentSettings = {{#dynamicSnippet}}getSettings{{/dynamicSnippet}};
+
+$settings = (new IndexSettings())
+    ->setSearchableAttributes(array_merge($currentSettings->searchableAttributes ?? [], $attributes))
+    ->setAttributesForFaceting(array_merge($currentSettings->attributesForFaceting ?? [], $facets));
+
+{{#dynamicSnippet}}setSettings{{/dynamicSnippet}};

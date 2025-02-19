@@ -14,10 +14,8 @@ $getIndexingApiKeyFor = function ($user) {
     return ''; // Implement your own logic here
 };
 
-try {
-    $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
-
-    foreach ($playlists as $playlist) {
+foreach ($playlists as $playlist) {
+    try {
         // Fetch from your own data storage and with your own code
         // the associated application ID and API key for this user
         $appID = $getAppIDFor($playlist['user']);
@@ -38,7 +36,7 @@ try {
             '<YOUR_INDEX_NAME>',
             $playlists,
         );
+    } catch (Exception $e) {
+        echo $e->getMessage().PHP_EOL;
     }
-} catch (Exception $e) {
-    echo $e->getMessage().PHP_EOL;
 }

@@ -5,10 +5,10 @@ use Algolia\AlgoliaSearch\Api\SearchClient;
 
 $playlists = [/* Your records */];
 
-try {
-    $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+$client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
-    foreach ($playlists as $playlist) {
+foreach ($playlists as $playlist) {
+    try {
         $playlistUserID = $playlist['userID'];
         $client->saveObjects(
             '<YOUR_INDEX_NAME>',
@@ -21,7 +21,7 @@ try {
                 ],
             ]
         );
+    } catch (Exception $e) {
+        echo $e->getMessage().PHP_EOL;
     }
-} catch (Exception $e) {
-    echo $e->getMessage().PHP_EOL;
 }

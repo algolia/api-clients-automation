@@ -2867,6 +2867,43 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("saveRule always active rule21") {
+    val (client, echo) = testClient()
+    val future = client.saveRule(
+      indexName = "indexName",
+      objectID = "a-rule-id",
+      rule = Rule(
+        objectID = "a-rule-id",
+        consequence = Consequence(
+          params = Some(
+            ConsequenceParams(
+              aroundRadius = Some(AroundRadius(1000))
+            )
+          )
+        ),
+        validity = Some(
+          Seq(
+            TimeRange(
+              from = 1577836800L,
+              until = 1577836800L
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/indexName/rules/a-rule-id")
+    assert(res.method == "PUT")
+    val expectedBody = parse(
+      """{"objectID":"a-rule-id","consequence":{"params":{"aroundRadius":1000}},"validity":[{"from":1577836800,"until":1577836800}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("saveRules with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.saveRules(
@@ -6916,6 +6953,33 @@ class SearchTest extends AnyFunSuite {
     assert(res.path == "/1/indexes/indexName/query")
     assert(res.method == "POST")
     val expectedBody = parse("""{"query":"query"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("mcm with algolia user id131") {
+    val (client, echo) = testClient()
+    val future = client.searchSingleIndex(
+      indexName = "playlists",
+      searchParams = Some(
+        SearchParamsObject(
+          query = Some("peace")
+        )
+      ),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withHeader("X-Algolia-User-ID", "user42")
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/playlists/query")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"query":"peace"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }

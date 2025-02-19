@@ -230,7 +230,7 @@ class SearchClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.12.1\\).*";
+      String regexp = "^Algolia for Java \\(4.12.2\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
@@ -348,6 +348,29 @@ class SearchClientClientTests {
 
     assertDoesNotThrow(() -> {
       String res = client.generateSecuredApiKey("2640659426d5107b6e47d75db9cbaef8", new SecuredApiKeyRestrictions().setUserToken("user42"));
+    });
+  }
+
+  @Test
+  @DisplayName("mcm with filters")
+  void generateSecuredApiKeyTest5() {
+    SearchClient client = createClient();
+
+    assertDoesNotThrow(() -> {
+      String res = client.generateSecuredApiKey(
+        "YourSearchOnlyApiKey",
+        new SecuredApiKeyRestrictions().setFilters("user:user42 AND user:public")
+      );
+    });
+  }
+
+  @Test
+  @DisplayName("mcm with user token")
+  void generateSecuredApiKeyTest6() {
+    SearchClient client = createClient();
+
+    assertDoesNotThrow(() -> {
+      String res = client.generateSecuredApiKey("YourSearchOnlyApiKey", new SecuredApiKeyRestrictions().setUserToken("user42"));
     });
   }
 

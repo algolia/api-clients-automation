@@ -16,18 +16,14 @@ class SearchWithRuleContexts {
   async Task Main(string[] args)
   {
 
-    try {
-      {{> snippets/init}}
-      var platformTag = GetPlatformTag();
-      var searchParams = new SearchParams(new SearchParamsObject
-      {
-        Query = "<YOUR_SEARCH_QUERY>",
-        RuleContexts = [platformTag]
-      });
+    {{> snippets/init}}
+    var platformTag = GetPlatformTag();
+    var searchParams = new SearchParams(new SearchParamsObject
+    {
+      Query = "<YOUR_SEARCH_QUERY>",
+      RuleContexts = [platformTag]
+    });
 
-      {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
-    } catch (Exception e) {
-      Console.WriteLine(e.Message);
-    }
+    {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
   }
 }

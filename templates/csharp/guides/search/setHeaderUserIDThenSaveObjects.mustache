@@ -14,14 +14,14 @@ class SetHeaderUserIDThenSaveObjects {
   async Task Main(string[] args)
   {
 
-    try {
-      {{> snippets/init}}
-      foreach (var playlist in playlists) {
+    {{> snippets/init}}
+    foreach (var playlist in playlists) {
+      try {
         var playlistUserID = playlist.GetValueOrDefault("userID", "") as string;
         {{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}};
+      } catch (Exception e) {
+        Console.WriteLine(e.Message);
       }
-    } catch (Exception e) {
-      Console.WriteLine(e.Message);
     }
   }
 }

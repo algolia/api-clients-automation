@@ -1156,6 +1156,48 @@ export function snippetForGenerateSecuredApiKey4(): void {
   // SEPARATOR<
 }
 
+// Snippet for the generateSecuredApiKey method.
+//
+// mcm with filters
+export function snippetForGenerateSecuredApiKey5(): void {
+  // >SEPARATOR generateSecuredApiKey mcm with filters
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = client.generateSecuredApiKey({
+    parentApiKey: 'YourSearchOnlyApiKey',
+    restrictions: { filters: 'user:user42 AND user:public' },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the generateSecuredApiKey method.
+//
+// mcm with user token
+export function snippetForGenerateSecuredApiKey6(): void {
+  // >SEPARATOR generateSecuredApiKey mcm with user token
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = client.generateSecuredApiKey({
+    parentApiKey: 'YourSearchOnlyApiKey',
+    restrictions: { userToken: 'user42' },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the getApiKey method.
 //
 // getApiKey
@@ -2857,6 +2899,32 @@ export async function snippetForSaveRule20(): Promise<void> {
       objectID: 'a-rule-id',
       conditions: [{ context: 'mobile' }],
       consequence: { params: { filters: 'release_date >= 1577836800' } },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// saveRule always active rule
+export async function snippetForSaveRule21(): Promise<void> {
+  // >SEPARATOR saveRule saveRule always active rule
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRule({
+    indexName: 'indexName',
+    objectID: 'a-rule-id',
+    rule: {
+      objectID: 'a-rule-id',
+      consequence: { params: { aroundRadius: 1000 } },
+      validity: [{ from: 1577836800, until: 1577836800 }],
     },
   });
 
@@ -6427,6 +6495,29 @@ export async function snippetForSearchSingleIndex130(): Promise<void> {
     { indexName: 'indexName', searchParams: { query: 'query' } },
     {
       headers: { 'X-Algolia-User-ID': 'user1234' },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// mcm with algolia user id
+export async function snippetForSearchSingleIndex131(): Promise<void> {
+  // >SEPARATOR searchSingleIndex mcm with algolia user id
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.searchSingleIndex(
+    { indexName: 'playlists', searchParams: { query: 'peace' } },
+    {
+      headers: { 'X-Algolia-User-ID': 'user42' },
     },
   );
 

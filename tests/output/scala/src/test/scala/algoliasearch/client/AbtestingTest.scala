@@ -64,7 +64,7 @@ class AbtestingTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.13.2\).*""".r
+    val regexp = """^Algolia for Scala \(2.13.3\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }

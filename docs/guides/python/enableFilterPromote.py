@@ -4,19 +4,18 @@ from algoliasearch.search.models.consequence import Consequence
 from algoliasearch.search.models.rule import Rule
 
 
-if __name__ == "__main__":
-    condition = Condition(
-        anchoring=Anchoring.IS,
-        pattern="{facet:brand}",
-    )
+condition = Condition(
+    anchoring=Anchoring.IS,
+    pattern="{facet:brand}",
+)
 
-    consequence = Consequence(
-        filter_promotes=True,
-    )
+consequence = Consequence(
+    filter_promotes=True,
+)
 
-    rule = Rule(
-        enabled=True,
-        object_id="rule_with_filterPromotes",
-        conditions=[condition],
-        consequence=consequence,
-    )
+rule = Rule(
+    enabled=True,
+    object_id="rule_with_filterPromotes",
+    conditions=[condition],
+    consequence=consequence,
+)

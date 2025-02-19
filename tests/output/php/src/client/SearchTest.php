@@ -178,7 +178,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.14.0\).*/',
+                '/^Algolia for PHP \(4.15.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
@@ -288,6 +288,30 @@ class SearchTest extends TestCase implements HttpClientInterface
 
         $res = $client->generateSecuredApiKey(
             '2640659426d5107b6e47d75db9cbaef8',
+            ['userToken' => 'user42',
+            ],
+        );
+    }
+
+    #[TestDox('mcm with filters')]
+    public function test5generateSecuredApiKey(): void
+    {
+        $client = $this->createClient(self::APP_ID, self::API_KEY);
+
+        $res = $client->generateSecuredApiKey(
+            'YourSearchOnlyApiKey',
+            ['filters' => 'user:user42 AND user:public',
+            ],
+        );
+    }
+
+    #[TestDox('mcm with user token')]
+    public function test6generateSecuredApiKey(): void
+    {
+        $client = $this->createClient(self::APP_ID, self::API_KEY);
+
+        $res = $client->generateSecuredApiKey(
+            'YourSearchOnlyApiKey',
             ['userToken' => 'user42',
             ],
         );

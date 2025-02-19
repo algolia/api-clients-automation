@@ -182,7 +182,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.12.1\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.12.2\).*/))
   end
 
   # call deleteObjects without error
@@ -296,6 +296,34 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
     req = client.generate_secured_api_key(
       "2640659426d5107b6e47d75db9cbaef8",
+      Algolia::Search::SecuredApiKeyRestrictions.new(user_token: "user42")
+    )
+  end
+
+  # mcm with filters
+  def test_generate_secured_api_key5
+    client = Algolia::SearchClient.create(
+      "APP_ID",
+      "API_KEY",
+
+      {requester: Algolia::Transport::EchoRequester.new}
+    )
+    req = client.generate_secured_api_key(
+      "YourSearchOnlyApiKey",
+      Algolia::Search::SecuredApiKeyRestrictions.new(filters: "user:user42 AND user:public")
+    )
+  end
+
+  # mcm with user token
+  def test_generate_secured_api_key6
+    client = Algolia::SearchClient.create(
+      "APP_ID",
+      "API_KEY",
+
+      {requester: Algolia::Transport::EchoRequester.new}
+    )
+    req = client.generate_secured_api_key(
+      "YourSearchOnlyApiKey",
       Algolia::Search::SecuredApiKeyRestrictions.new(user_token: "user42")
     )
   end

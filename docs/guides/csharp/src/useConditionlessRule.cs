@@ -12,27 +12,20 @@ class UseConditionlessRule
 {
   async Task Main(string[] args)
   {
-    try
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    var objectID = "a-rule-id";
+
+    var rule = new Rule
     {
-      var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+      ObjectID = objectID,
+      Consequence =
+        new Consequence( /* Set relevant consequence */
+        ),
+      // Set validity (optional)
+      Validity = [new TimeRange { From = 1688774400L, Until = 1738972800L }],
+    };
 
-      var objectID = "a-rule-id";
-
-      var rule = new Rule
-      {
-        ObjectID = objectID,
-        Consequence =
-          new Consequence( /* Set relevant consequence */
-          ),
-        // Set validity (optional)
-        Validity = [new TimeRange { From = 1688774400L, Until = 1738972800L }],
-      };
-
-      await client.SaveRuleAsync("<YOUR_INDEX_NAME>", objectID, rule);
-    }
-    catch (Exception e)
-    {
-      Console.WriteLine(e.Message);
-    }
+    await client.SaveRuleAsync("<YOUR_INDEX_NAME>", objectID, rule);
   }
 }

@@ -329,6 +329,34 @@ final class SearchClientClientTests: XCTestCase {
         }
     }
 
+    /// mcm with filters
+    func testGenerateSecuredApiKeyTest5() async throws {
+        let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        do {
+            let response = try client.generateSecuredApiKey(
+                parentApiKey: "YourSearchOnlyApiKey",
+                restrictions: SecuredApiKeyRestrictions(filters: "user:user42 AND user:public")
+            )
+        }
+    }
+
+    /// mcm with user token
+    func testGenerateSecuredApiKeyTest6() async throws {
+        let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        do {
+            let response = try client.generateSecuredApiKey(
+                parentApiKey: "YourSearchOnlyApiKey",
+                restrictions: SecuredApiKeyRestrictions(userToken: "user42")
+            )
+        }
+    }
+
     /// indexExists
     func testIndexExistsTest0() async throws {
         let configuration = try SearchClientConfiguration(

@@ -2812,5 +2812,26 @@
         "query": "query"
       }
     }
+  },
+  {
+    "testName": "mcm with algolia user id",
+    "parameters": {
+      "indexName": "playlists",
+      "searchParams": {
+        "query": "peace"
+      }
+    },
+    "requestOptions": {
+      "headers": {
+        "X-Algolia-User-ID": "user42"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/playlists/query",
+      "method": "POST",
+      "body": {
+        "query": "peace"
+      }
+    }
   }
 ]

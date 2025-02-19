@@ -172,7 +172,7 @@ class SearchTest {
         )
       },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.15.0\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.15.1\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
       },
@@ -292,6 +292,40 @@ class SearchTest {
       call = {
         generateSecuredApiKey(
           parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+          restrictions = SecuredApiKeyRestrictions(
+            userToken = "user42",
+          ),
+        )
+      },
+      intercept = {
+      },
+    )
+  }
+
+  @Test
+  fun `mcm with filters`() = runTest {
+    val client = SearchClient(appId = "appId", apiKey = "apiKey")
+    client.runTest(
+      call = {
+        generateSecuredApiKey(
+          parentApiKey = "YourSearchOnlyApiKey",
+          restrictions = SecuredApiKeyRestrictions(
+            filters = "user:user42 AND user:public",
+          ),
+        )
+      },
+      intercept = {
+      },
+    )
+  }
+
+  @Test
+  fun `mcm with user token`() = runTest {
+    val client = SearchClient(appId = "appId", apiKey = "apiKey")
+    client.runTest(
+      call = {
+        generateSecuredApiKey(
+          parentApiKey = "YourSearchOnlyApiKey",
           restrictions = SecuredApiKeyRestrictions(
             userToken = "user42",
           ),

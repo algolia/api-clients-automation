@@ -1757,6 +1757,27 @@ describe('saveRule', () => {
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('saveRule always active rule', async () => {
+    const req = (await client.saveRule({
+      indexName: 'indexName',
+      objectID: 'a-rule-id',
+      rule: {
+        objectID: 'a-rule-id',
+        consequence: { params: { aroundRadius: 1000 } },
+        validity: [{ from: 1577836800, until: 1577836800 }],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/rules/a-rule-id');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'a-rule-id',
+      consequence: { params: { aroundRadius: 1000 } },
+      validity: [{ from: 1577836800, until: 1577836800 }],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('saveRules', () => {
@@ -4273,6 +4294,20 @@ describe('searchSingleIndex', () => {
     expect(req.path).toEqual('/1/indexes/indexName/query');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ query: 'query' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('mcm with algolia user id', async () => {
+    const req = (await client.searchSingleIndex(
+      { indexName: 'playlists', searchParams: { query: 'peace' } },
+      {
+        headers: { 'X-Algolia-User-ID': 'user42' },
+      },
+    )) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/playlists/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'peace' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });

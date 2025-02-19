@@ -12,24 +12,23 @@ def _get_indexing_api_key_for(_user):
     return ""
 
 
-if __name__ == "__main__":
-    playlists = []  # Your records
+playlists = []  # Your records
 
+for playlist in playlists:
+    app_id = _get_app_id_for(playlist["user"])
+    api_key = _get_indexing_api_key_for(playlist["user"])
+
+    _client = SearchClientSync(app_id, api_key)
+    settings = IndexSettings(attributes_for_faceting=["filterOnly(user)"])
     try:
-        for playlist in playlists:
-            app_id = _get_app_id_for(playlist["user"])
-            api_key = _get_indexing_api_key_for(playlist["user"])
+        _client.set_settings(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings=settings,
+        )
 
-            _client = SearchClientSync(app_id, api_key)
-            settings = IndexSettings(attributes_for_faceting=["filterOnly(user)"])
-            _client.set_settings(
-                index_name="<YOUR_INDEX_NAME>",
-                index_settings=settings,
-            )
-
-            _client.save_objects(
-                index_name="<YOUR_INDEX_NAME>",
-                objects=playlists,
-            )
+        _client.save_objects(
+            index_name="<YOUR_INDEX_NAME>",
+            objects=playlists,
+        )
     except Exception as e:
         print(f"Error: {e}")

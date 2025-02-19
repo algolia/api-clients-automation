@@ -129,7 +129,7 @@ describe('commonApi', () => {
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.20.2\).*/);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.20.3\).*/);
   }, 15000);
 });
 
@@ -230,6 +230,28 @@ describe('generateSecuredApiKey', () => {
     {
       const result = client.generateSecuredApiKey({
         parentApiKey: '2640659426d5107b6e47d75db9cbaef8',
+        restrictions: { userToken: 'user42' },
+      });
+    }
+  }, 15000);
+
+  test('mcm with filters', async () => {
+    const client = createClient();
+
+    {
+      const result = client.generateSecuredApiKey({
+        parentApiKey: 'YourSearchOnlyApiKey',
+        restrictions: { filters: 'user:user42 AND user:public' },
+      });
+    }
+  }, 15000);
+
+  test('mcm with user token', async () => {
+    const client = createClient();
+
+    {
+      const result = client.generateSecuredApiKey({
+        parentApiKey: 'YourSearchOnlyApiKey',
         restrictions: { userToken: 'user42' },
       });
     }

@@ -228,7 +228,7 @@ public class SearchClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.13.2\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.13.3\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }
@@ -358,6 +358,30 @@ public class SearchClientTests
     {
       var res = client.GenerateSecuredApiKey(
         "2640659426d5107b6e47d75db9cbaef8",
+        new SecuredApiKeyRestrictions { UserToken = "user42" }
+      );
+    }
+  }
+
+  [Fact(DisplayName = "mcm with filters")]
+  public async Task GenerateSecuredApiKeyTest5()
+  {
+    var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
+    {
+      var res = client.GenerateSecuredApiKey(
+        "YourSearchOnlyApiKey",
+        new SecuredApiKeyRestrictions { Filters = "user:user42 AND user:public" }
+      );
+    }
+  }
+
+  [Fact(DisplayName = "mcm with user token")]
+  public async Task GenerateSecuredApiKeyTest6()
+  {
+    var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
+    {
+      var res = client.GenerateSecuredApiKey(
+        "YourSearchOnlyApiKey",
         new SecuredApiKeyRestrictions { UserToken = "user42" }
       );
     }

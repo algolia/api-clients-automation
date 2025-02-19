@@ -14,10 +14,8 @@ $getIndexingApiKeyFor = function ($user) {
   return ""; // Implement your own logic here
 };
 
-try {
-  {{> snippets/init}}
-
-  foreach ($playlists as $playlist) {
+foreach ($playlists as $playlist) {
+  try {
     // Fetch from your own data storage and with your own code
     // the associated application ID and API key for this user
     $appID = $getAppIDFor($playlist['user']);
@@ -32,7 +30,7 @@ try {
     {{#dynamicSnippet}}setSettings{{/dynamicSnippet}};
 
     {{#dynamicSnippet}}saveObjectsPlaylists{{/dynamicSnippet}};
+  } catch (Exception $e) {
+    echo $e->getMessage() . PHP_EOL;
   }
-} catch (Exception $e) {
-  echo $e->getMessage() . PHP_EOL;
 }

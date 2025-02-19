@@ -13,20 +13,16 @@ let reduceLabelsToFilters = { (_: [String]) in
 }
 
 func searchWithOptionalFilters() async throws {
-    do {
-        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+    let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
-        let optionalFilters = reduceLabelsToFilters(labels)
-        let searchParams = SearchSearchParams.searchSearchParamsObject(
-            SearchSearchParamsObject(query: "<YOUR_SEARCH_QUERY>", optionalFilters: optionalFilters)
-        )
+    let optionalFilters = reduceLabelsToFilters(labels)
+    let searchParams = SearchSearchParams.searchSearchParamsObject(
+        SearchSearchParamsObject(query: "<YOUR_SEARCH_QUERY>", optionalFilters: optionalFilters)
+    )
 
-        let response: SearchResponse<Hit> = try await client.searchSingleIndex(
-            indexName: "<YOUR_INDEX_NAME>",
-            searchParams: searchParams
-        )
-        print(response)
-    } catch {
-        print(error)
-    }
+    let response: SearchResponse<Hit> = try await client.searchSingleIndex(
+        indexName: "<YOUR_INDEX_NAME>",
+        searchParams: searchParams
+    )
+    print(response)
 }

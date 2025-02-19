@@ -2567,6 +2567,37 @@ class TestSearchClient:
             """{"objectID":"a-rule-id","conditions":[{"context":"mobile"}],"consequence":{"params":{"filters":"release_date >= 1577836800"}}}"""
         )
 
+    async def test_save_rule_21(self):
+        """
+        saveRule always active rule
+        """
+        _req = await self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="a-rule-id",
+            rule={
+                "objectID": "a-rule-id",
+                "consequence": {
+                    "params": {
+                        "aroundRadius": 1000,
+                    },
+                },
+                "validity": [
+                    {
+                        "from": 1577836800,
+                        "until": 1577836800,
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/a-rule-id"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"a-rule-id","consequence":{"params":{"aroundRadius":1000}},"validity":[{"from":1577836800,"until":1577836800}]}"""
+        )
+
     async def test_save_rules_(self):
         """
         saveRules with minimal parameters
@@ -6369,6 +6400,26 @@ class TestSearchClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query"}""")
+
+    async def test_search_single_index_131(self):
+        """
+        mcm with algolia user id
+        """
+        _req = await self._client.search_single_index_with_http_info(
+            index_name="playlists",
+            search_params={
+                "query": "peace",
+            },
+            request_options={
+                "headers": loads("""{"X-Algolia-User-ID":"user42"}"""),
+            },
+        )
+
+        assert _req.path == "/1/indexes/playlists/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"peace"}""")
 
     async def test_search_synonyms_(self):
         """
@@ -11840,6 +11891,37 @@ class TestSearchClientSync:
             """{"objectID":"a-rule-id","conditions":[{"context":"mobile"}],"consequence":{"params":{"filters":"release_date >= 1577836800"}}}"""
         )
 
+    def test_save_rule_21(self):
+        """
+        saveRule always active rule
+        """
+        _req = self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="a-rule-id",
+            rule={
+                "objectID": "a-rule-id",
+                "consequence": {
+                    "params": {
+                        "aroundRadius": 1000,
+                    },
+                },
+                "validity": [
+                    {
+                        "from": 1577836800,
+                        "until": 1577836800,
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/a-rule-id"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"a-rule-id","consequence":{"params":{"aroundRadius":1000}},"validity":[{"from":1577836800,"until":1577836800}]}"""
+        )
+
     def test_save_rules_(self):
         """
         saveRules with minimal parameters
@@ -15642,6 +15724,26 @@ class TestSearchClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query"}""")
+
+    def test_search_single_index_131(self):
+        """
+        mcm with algolia user id
+        """
+        _req = self._client.search_single_index_with_http_info(
+            index_name="playlists",
+            search_params={
+                "query": "peace",
+            },
+            request_options={
+                "headers": loads("""{"X-Algolia-User-ID":"user42"}"""),
+            },
+        )
+
+        assert _req.path == "/1/indexes/playlists/query"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"peace"}""")
 
     def test_search_synonyms_(self):
         """

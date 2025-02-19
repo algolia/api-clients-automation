@@ -11,19 +11,15 @@ $reduceLabelsToFilters = function (array $labels): OptionalFilters {
     return new OptionalFilters();
 };
 
-try {
-    $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+$client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
-    $optionalFilters = $reduceLabelsToFilters($labels);
-    $searchParams = (new SearchParamsObject())
-        ->setQuery('<YOUR_SEARCH_QUERY>')
-        ->setOptionalFilters($optionalFilters)
-    ;
+$optionalFilters = $reduceLabelsToFilters($labels);
+$searchParams = (new SearchParamsObject())
+    ->setQuery('<YOUR_SEARCH_QUERY>')
+    ->setOptionalFilters($optionalFilters)
+;
 
-    $client->searchSingleIndex(
-        '<YOUR_INDEX_NAME>',
-        $searchParams,
-    );
-} catch (Exception $e) {
-    echo $e->getMessage().PHP_EOL;
-}
+$client->searchSingleIndex(
+    '<YOUR_INDEX_NAME>',
+    $searchParams,
+);

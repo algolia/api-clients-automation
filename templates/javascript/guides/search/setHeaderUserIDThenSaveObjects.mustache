@@ -2,13 +2,13 @@
 
 const playlists: Record<string, any>[] = [/* Your records */];
 
-try {
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  playlists.forEach(async (playlist) => {
+playlists.forEach(async (playlist) => {
+  try {
     const playlistUserID = playlist["userID"];
     {{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}}
-  });
-} catch (e: any) {
-  console.error(e);
-}
+  } catch (e: any) {
+    console.error(e);
+  }
+});

@@ -1260,6 +1260,46 @@ public class SnippetSearchClient
   }
 
   /// <summary>
+  /// Snippet for the GenerateSecuredApiKey method.
+  ///
+  /// mcm with filters
+  /// </summary>
+  public async Task SnippetForSearchClientGenerateSecuredApiKey5()
+  {
+    // >SEPARATOR generateSecuredApiKey mcm with filters
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = client.GenerateSecuredApiKey(
+      "YourSearchOnlyApiKey",
+      new SecuredApiKeyRestrictions { Filters = "user:user42 AND user:public" }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GenerateSecuredApiKey method.
+  ///
+  /// mcm with user token
+  /// </summary>
+  public async Task SnippetForSearchClientGenerateSecuredApiKey6()
+  {
+    // >SEPARATOR generateSecuredApiKey mcm with user token
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = client.GenerateSecuredApiKey(
+      "YourSearchOnlyApiKey",
+      new SecuredApiKeyRestrictions { UserToken = "user42" }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the GetApiKey method.
   ///
   /// getApiKey
@@ -3285,6 +3325,38 @@ public class SnippetSearchClient
         Consequence = new Consequence
         {
           Params = new ConsequenceParams { Filters = "release_date >= 1577836800" },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SaveRule method.
+  ///
+  /// saveRule always active rule
+  /// </summary>
+  public async Task SnippetForSearchClientSaveRule21()
+  {
+    // >SEPARATOR saveRule saveRule always active rule
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SaveRuleAsync(
+      "<YOUR_INDEX_NAME>",
+      "a-rule-id",
+      new Rule
+      {
+        ObjectID = "a-rule-id",
+        Consequence = new Consequence
+        {
+          Params = new ConsequenceParams { AroundRadius = new AroundRadius(1000) },
+        },
+        Validity = new List<TimeRange>
+        {
+          new TimeRange { From = 1577836800L, Until = 1577836800L },
         },
       }
     );
@@ -7716,6 +7788,27 @@ public class SnippetSearchClient
       "<YOUR_INDEX_NAME>",
       new SearchParams(new SearchParamsObject { Query = "query" }),
       new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "user1234").Build()
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// mcm with algolia user id
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex131()
+  {
+    // >SEPARATOR searchSingleIndex mcm with algolia user id
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "peace" }),
+      new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "user42").Build()
     );
     // >LOG
     // SEPARATOR<

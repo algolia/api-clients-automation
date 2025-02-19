@@ -7,16 +7,12 @@ const reduceLabelsToFilters = (_labels: string[]): OptionalFilters => {
   return []; // Implement your logic here
 }
 
-try {
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  const optionalFilters = reduceLabelsToFilters(labels)
-  const searchParams: SearchParams = {
-    query: "<YOUR_SEARCH_QUERY>",
-    optionalFilters: optionalFilters
-  };
+const optionalFilters = reduceLabelsToFilters(labels)
+const searchParams: SearchParams = {
+  query: "<YOUR_SEARCH_QUERY>",
+  optionalFilters: optionalFilters
+};
 
-  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
-} catch (e: any) {
-  console.error(e);
-}
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}

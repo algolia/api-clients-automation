@@ -1,36 +1,32 @@
 import type { MultipleBatchRequest } from 'algoliasearch';
 import { algoliasearch } from 'algoliasearch';
 
-try {
-  // You need an API key with `deleteIndex`
-  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+// You need an API key with `deleteIndex`
+const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
-  // List all indices
-  const indices = await client.listIndices();
+// List all indices
+const indices = await client.listIndices();
 
-  // Primary indices don't have a `primary` key
-  const primaryIndices = indices.items.filter((item) => item.primary == null);
-  const replicaIndices = indices.items.filter((item) => item.primary != null);
+// Primary indices don't have a `primary` key
+const primaryIndices = indices.items.filter((item) => item.primary == null);
+const replicaIndices = indices.items.filter((item) => item.primary != null);
 
-  // Delete primary indices first
-  if (primaryIndices.length > 0) {
-    const requests: MultipleBatchRequest[] = primaryIndices.map((index) => ({
-      action: 'delete',
-      indexName: index.name,
-    }));
-    await client.multipleBatch({ requests: requests });
-    console.log('Deleted primary indices.');
-  }
+// Delete primary indices first
+if (primaryIndices.length > 0) {
+  const requests: MultipleBatchRequest[] = primaryIndices.map((index) => ({
+    action: 'delete',
+    indexName: index.name,
+  }));
+  await client.multipleBatch({ requests: requests });
+  console.log('Deleted primary indices.');
+}
 
-  // Now, delete replica indices
-  if (replicaIndices.length > 0) {
-    const requests: MultipleBatchRequest[] = replicaIndices.map((index) => ({
-      action: 'delete',
-      indexName: index.name,
-    }));
-    await client.multipleBatch({ requests: requests });
-    console.log('Deleted replica indices.');
-  }
-} catch (e: any) {
-  console.error(e);
+// Now, delete replica indices
+if (replicaIndices.length > 0) {
+  const requests: MultipleBatchRequest[] = replicaIndices.map((index) => ({
+    action: 'delete',
+    indexName: index.name,
+  }));
+  await client.multipleBatch({ requests: requests });
+  console.log('Deleted replica indices.');
 }

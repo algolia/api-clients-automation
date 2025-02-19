@@ -1,12 +1,8 @@
 {{> snippets/import}}
 
 
-if __name__ == "__main__":
-  playlists = [] # Your records
+playlists = [] # Your records
 
-  try:
-    _{{> snippets/init}}
+_{{> snippets/init}}
 
-    {{#dynamicSnippet}}saveObjectsPlaylistsWithUserIDPublic{{/dynamicSnippet}}
-  except Exception as e:
-    print(f"Error: {e}")
+{{#dynamicSnippet}}saveObjectsPlaylistsWithUserIDPublic{{/dynamicSnippet}}
