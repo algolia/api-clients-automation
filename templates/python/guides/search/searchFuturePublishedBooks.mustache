@@ -3,13 +3,12 @@ import time
 {{> snippets/import}}
 
 
-if __name__ == "__main__":
-  _{{> snippets/init}}
+_{{> snippets/init}}
 
-  date_timestamp = time.time()  # Get current timestamp
-  search_params = {
-      "query": "<YOUR_SEARCH_QUERY>",
-      "filters": f"date_timestamp > {date_timestamp}"
-  }
+date_timestamp = time.time()  # Get current timestamp
+search_params = {
+    "query": "<YOUR_SEARCH_QUERY>",
+    "filters": f"date_timestamp > {date_timestamp}"
+}
 
-  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}

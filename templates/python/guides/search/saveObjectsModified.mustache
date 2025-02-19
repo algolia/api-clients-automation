@@ -3,24 +3,23 @@ import json
 {{> snippets/import}}
 
 
-if __name__ == "__main__":
-  with open("products.json", "r", encoding="utf-8") as f:
-    products = json.load(f)
+with open("products.json", "r", encoding="utf-8") as f:
+  products = json.load(f)
 
-    _{{> snippets/init}}
+  _{{> snippets/init}}
 
-    records = []
+  records = []
 
-    for product in products:
-      reference = product["product_reference"]
+  for product in products:
+    reference = product["product_reference"]
 
-      suffixes = []
-      while len(reference) > 1:
-          reference = reference[1:]
-          suffixes.append(reference)
+    suffixes = []
+    while len(reference) > 1:
+        reference = reference[1:]
+        suffixes.append(reference)
 
-      product["product_reference_suffixes"] = suffixes
-      records.append(product)
+    product["product_reference_suffixes"] = suffixes
+    records.append(product)
 
-    {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}}
+  {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}}
 

@@ -2,14 +2,13 @@ import json
 {{> snippets/import}}
 
 
-if __name__ == '__main__':
-    # use the region matching your applicationID
-    _{{> snippets/init}}
+# use the region matching your applicationID
+_{{> snippets/init}}
 
-    with open("records.json") as f:
-        records = json.load(f)
+with open("records.json") as f:
+    records = json.load(f)
 
-        # setting `watch` to `true` will make the call synchronous
-        resp = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
+    # setting `watch` to `true` will make the call synchronous
+    resp = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
 
-        print(resp)
+    print(resp)

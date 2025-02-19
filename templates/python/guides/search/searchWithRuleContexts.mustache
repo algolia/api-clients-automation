@@ -6,14 +6,13 @@ def _get_platform_tag() -> str:
     # Implement your logic here
     return ""
 
-if __name__ == "__main__":
-  _{{> snippets/init}}
+_{{> snippets/init}}
 
-  # get the buyer account information
-  platform_tag = _get_platform_tag()
-  search_params = SearchParams(
-    query="<YOUR_SEARCH_QUERY>",
-    rule_contexts=[platform_tag],
-  )
+# get the buyer account information
+platform_tag = _get_platform_tag()
+search_params = SearchParams(
+  query="<YOUR_SEARCH_QUERY>",
+  rule_contexts=[platform_tag],
+)
 
-  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}

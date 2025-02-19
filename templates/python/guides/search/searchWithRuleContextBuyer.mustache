@@ -6,14 +6,13 @@ def _get_buyer_account_id() -> str:
     # Implement your logic here
     return ""
 
-if __name__ == "__main__":
-  _{{> snippets/init}}
+_{{> snippets/init}}
 
-  # get the buyer account information
-  buyer = _get_buyer_account_id()
-  search_params = SearchParams(
-    query="<YOUR_SEARCH_QUERY>",
-    rule_contexts=[buyer],
-  )
+# get the buyer account information
+buyer = _get_buyer_account_id()
+search_params = SearchParams(
+  query="<YOUR_SEARCH_QUERY>",
+  rule_contexts=[buyer],
+)
 
-  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}

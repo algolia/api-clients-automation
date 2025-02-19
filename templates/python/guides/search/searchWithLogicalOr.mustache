@@ -2,14 +2,13 @@
 from algoliasearch.search.models.search_params import SearchParams
 
 
-if __name__ == "__main__":
-  _{{> snippets/init}}
+_{{> snippets/init}}
 
-  query = "the query"
-  optional_words = ["the", "query"]
-  search_params = SearchParams(
-    query=query,
-    optional_words=optional_words,
-  )
+query = "the query"
+optional_words = ["the", "query"]
+search_params = SearchParams(
+  query=query,
+  optional_words=optional_words,
+)
 
-  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
