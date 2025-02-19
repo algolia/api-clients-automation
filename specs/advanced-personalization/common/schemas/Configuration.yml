@@ -74,4 +74,3 @@ status:
         $ref: '../enums.yml#/errorCodes'
     lastUpdatedAt:
       type: string
-
