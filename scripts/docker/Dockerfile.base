@@ -28,7 +28,7 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | b
 ARG JAVA_VERSION
 RUN curl -s "https://get.sdkman.io" | bash
 RUN source "/root/.sdkman/bin/sdkman-init.sh" \
-  && sdk install java ${JAVA_VERSION}-tem \
+  && sdk install java ${JAVA_VERSION}-zulu \
   && sdk install sbt
 
 # Java formatter
