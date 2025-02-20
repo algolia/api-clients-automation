@@ -300,6 +300,34 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
   end
 
+  # mcm with filters
+  def test_generate_secured_api_key5
+    client = Algolia::SearchClient.create(
+      "APP_ID",
+      "API_KEY",
+
+      {requester: Algolia::Transport::EchoRequester.new}
+    )
+    req = client.generate_secured_api_key(
+      "YourSearchOnlyApiKey",
+      Algolia::Search::SecuredApiKeyRestrictions.new(filters: "user:user42 AND user:public")
+    )
+  end
+
+  # mcm with user token
+  def test_generate_secured_api_key6
+    client = Algolia::SearchClient.create(
+      "APP_ID",
+      "API_KEY",
+
+      {requester: Algolia::Transport::EchoRequester.new}
+    )
+    req = client.generate_secured_api_key(
+      "YourSearchOnlyApiKey",
+      Algolia::Search::SecuredApiKeyRestrictions.new(user_token: "user42")
+    )
+  end
+
   # indexExists
   def test_index_exists0
     client = Algolia::SearchClient.create_with_config(

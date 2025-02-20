@@ -1,17 +1,17 @@
 {{> snippets/import}}
 
-try {
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  // @ts-ignore
-  const { default: records } = await import('./actors.json');
+// @ts-ignore
+const { default: records } = await import('./actors.json');
 
-  const chunkSize = 10000
+const chunkSize = 10000
 
-  for (let beginIndex = 0; beginIndex < records.length; beginIndex += chunkSize) {
+for (let beginIndex = 0; beginIndex < records.length; beginIndex += chunkSize) {
+  try {
     const chunk = records.slice(beginIndex, beginIndex + chunkSize);
     {{#dynamicSnippet}}saveObjectsChunks{{/dynamicSnippet}}
+  } catch (e: any) {
+    console.error(e);
   }
-} catch (e: any) {
-  console.error(e);
 }

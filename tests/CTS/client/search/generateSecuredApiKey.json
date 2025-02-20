@@ -102,5 +102,35 @@
         }
       }
     ]
+  },
+  {
+    "testName": "mcm with filters",
+    "steps": [
+      {
+        "type": "method",
+        "method": "generateSecuredApiKey",
+        "parameters": {
+          "parentApiKey": "YourSearchOnlyApiKey",
+          "restrictions": {
+            "filters": "user:user42 AND user:public"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "mcm with user token",
+    "steps": [
+      {
+        "type": "method",
+        "method": "generateSecuredApiKey",
+        "parameters": {
+          "parentApiKey": "YourSearchOnlyApiKey",
+          "restrictions": {
+            "userToken": "user42"
+          }
+        }
+      }
+    ]
   }
 ]

@@ -12,23 +12,19 @@ class SearchWithLogicalOr {
   async Task Main(string[] args)
   {
 
-    try {
-      {{> snippets/init}}
+    {{> snippets/init}}
 
-      var query = "the query";
+    var query = "the query";
 
-      var optionalWords = new OptionalWords(["the", "query"]);
+    var optionalWords = new OptionalWords(["the", "query"]);
 
-      var searchParams = new SearchParams(new SearchParamsObject
-      {
-        Query = query,
-        OptionalWords = optionalWords
-      });
+    var searchParams = new SearchParams(new SearchParamsObject
+    {
+      Query = query,
+      OptionalWords = optionalWords
+    });
 
-      {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
-    } catch (Exception e) {
-      Console.WriteLine(e.Message);
-    }
+    {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
   }
 }
 

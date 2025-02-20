@@ -1004,6 +1004,40 @@ final class SearchClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the generateSecuredApiKey method.
+    ///
+    /// mcm with filters
+    func snippetForGenerateSecuredApiKey5() async throws {
+        // >SEPARATOR generateSecuredApiKey mcm with filters
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try client.generateSecuredApiKey(
+            parentApiKey: "YourSearchOnlyApiKey",
+            restrictions: SecuredApiKeyRestrictions(filters: "user:user42 AND user:public")
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the generateSecuredApiKey method.
+    ///
+    /// mcm with user token
+    func snippetForGenerateSecuredApiKey6() async throws {
+        // >SEPARATOR generateSecuredApiKey mcm with user token
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try client.generateSecuredApiKey(
+            parentApiKey: "YourSearchOnlyApiKey",
+            restrictions: SecuredApiKeyRestrictions(userToken: "user42")
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
     /// Snippet for the getApiKey method.
     ///
     /// getApiKey
@@ -2484,6 +2518,31 @@ final class SearchClientSnippet {
                 objectID: "a-rule-id",
                 conditions: [SearchCondition(context: "mobile")],
                 consequence: SearchConsequence(params: SearchConsequenceParams(filters: "release_date >= 1577836800"))
+            )
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the saveRule method.
+    ///
+    /// saveRule always active rule
+    func snippetForSaveRule21() async throws {
+        // >SEPARATOR saveRule saveRule always active rule
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.saveRule(
+            indexName: "<YOUR_INDEX_NAME>",
+            objectID: "a-rule-id",
+            rule: Rule(
+                objectID: "a-rule-id",
+                consequence: SearchConsequence(params: SearchConsequenceParams(
+                    aroundRadius: SearchAroundRadius
+                        .int(1000)
+                )),
+                validity: [SearchTimeRange(from: Int64(1_577_836_800), until: Int64(1_577_836_800))]
             )
         )
         // >LOG
@@ -5948,6 +6007,26 @@ final class SearchClientSnippet {
             searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(query: "query")),
             requestOptions: RequestOptions(
                 headers: ["X-Algolia-User-ID": "user1234"]
+            )
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the searchSingleIndex method.
+    ///
+    /// mcm with algolia user id
+    func snippetForSearchSingleIndex131() async throws {
+        // >SEPARATOR searchSingleIndex mcm with algolia user id
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response: SearchResponse<Hit> = try await client.searchSingleIndex(
+            indexName: "<YOUR_INDEX_NAME>",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(query: "peace")),
+            requestOptions: RequestOptions(
+                headers: ["X-Algolia-User-ID": "user42"]
             )
         )
         // >LOG

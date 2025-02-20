@@ -26,7 +26,7 @@ def savePopularRecords(): Future[Unit] = {
         records = records ++ response.hits.map { hit =>
           val props = hit.additionalProperties.getOrElse(List()).toMap
 
-          val nbFollowers = props("nbFollowers").toString.toInt
+          var nbFollowers = props("nbFollowers").toString.toInt
 
           Record(
             twitterHandle = props("twitterHandle").toString,

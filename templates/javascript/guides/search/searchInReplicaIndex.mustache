@@ -1,18 +1,14 @@
 {{> snippets/import}}
 
-try {
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  const query = 'query';
+const query = 'query';
 
-  // 1. Change the sort dynamically based on the UI events
-  const sortByPrice = false;
+// 1. Change the sort dynamically based on the UI events
+const sortByPrice = false;
 
-  // 2. Get the index name based on sortByPrice
-  const indexName = sortByPrice ? 'products_price_desc' : 'products';
+// 2. Get the index name based on sortByPrice
+const indexName = sortByPrice ? 'products_price_desc' : 'products';
 
-  // 3. Search on dynamic index name (primary or replica)
-  {{#dynamicSnippet}}searchWithIndexNameVar{{/dynamicSnippet}};
-} catch (e: any) {
-  console.error(e.message);
-}
+// 3. Search on dynamic index name (primary or replica)
+{{#dynamicSnippet}}searchWithIndexNameVar{{/dynamicSnippet}};

@@ -10,37 +10,30 @@ using Algolia.Search.Models.Search;
 
 class SavePopularRecords
 {
+  class Record
+  {
+    public int NbFollowers { get; set; }
+    public required string TwitterHandle { get; set; }
+    public bool IsPopular { get; set; }
+  }
+
   async Task Main(string[] args)
   {
-    try
-    {
-      var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
-      var records = new List<Dictionary<string, object>>();
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
-      var hits = await client.BrowseObjectsAsync<Hit>(
-        "<YOUR_INDEX_NAME>",
-        new BrowseParamsObject()
-      );
+    var hits = await client.BrowseObjectsAsync<Record>(
+      "<YOUR_INDEX_NAME>",
+      new BrowseParamsObject()
+    );
 
-      foreach (var hit in hits)
+    var records = hits.Select(hit => new Record
       {
-        var props = hit.AdditionalProperties ?? new Dictionary<string, object>();
-        var nbFollowers = props["nbFollowers"] as int? ?? 0;
-        records.Add(
-          new Dictionary<string, object>
-          {
-            ["twitterHandle"] = props["twitterHandle"],
-            ["nbFollowers"] = nbFollowers,
-            ["isPopular"] = nbFollowers >= 1_000_000,
-          }
-        );
-      }
+        TwitterHandle = hit.TwitterHandle,
+        NbFollowers = hit.NbFollowers,
+        IsPopular = hit.NbFollowers >= 1_000_000,
+      })
+      .ToList();
 
-      await client.SaveObjectsAsync("<YOUR_INDEX_NAME>", records);
-    }
-    catch (Exception e)
-    {
-      Console.WriteLine(e.Message);
-    }
+    await client.SaveObjectsAsync("<YOUR_INDEX_NAME>", records);
   }
 }

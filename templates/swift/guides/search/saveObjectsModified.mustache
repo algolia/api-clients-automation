@@ -7,29 +7,25 @@ import Core
 {{> snippets/import}}
 
 func saveObjectsModified() async throws {
-  do {
-    {{> snippets/init}}
+  {{> snippets/init}}
 
-    let path = URL(string: #file)!.deletingLastPathComponent()
-              .appendingPathComponent("products.json")
-    let data = try Data(contentsOf: URL(fileURLWithPath: path.absoluteString))
-    let products = try JSONDecoder().decode([[String: AnyCodable]].self, from: data)
+  let path = URL(string: #file)!.deletingLastPathComponent()
+            .appendingPathComponent("products.json")
+  let data = try Data(contentsOf: URL(fileURLWithPath: path.absoluteString))
+  let products = try JSONDecoder().decode([[String: AnyCodable]].self, from: data)
 
-    let records = products.map { (product) -> [String: AnyCodable] in
-        var reference = product["product_reference"]?.value as! String
-        var suffixes: [String] = []
+  let records = products.map { (product) -> [String: AnyCodable] in
+      var reference = product["product_reference"]?.value as! String
+      var suffixes: [String] = []
 
-        while reference.count > 1 {
-            reference = String(reference.dropFirst())
-            suffixes.append(reference)
-        }
-        var record: [String: AnyCodable] = product
-        record["product_reference_suffixes"] = AnyCodable(suffixes)
-        return record
-    }
-
-    {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}}
-  } catch {
-    print(error)
+      while reference.count > 1 {
+          reference = String(reference.dropFirst())
+          suffixes.append(reference)
+      }
+      var record: [String: AnyCodable] = product
+      record["product_reference_suffixes"] = AnyCodable(suffixes)
+      return record
   }
+
+  {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}}
 }

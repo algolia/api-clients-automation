@@ -9,22 +9,18 @@ $getGoogleAnalyticsUserIdFromBrowserCookie = function (string $cookieName): stri
     return '';
 };
 
-try {
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  $userToken = $getGoogleAnalyticsUserIdFromBrowserCookie('_ga');
-  $searchParams = (new SearchParamsObject())
-      ->setQuery('<YOUR_SEARCH_QUERY>')
-      ->setUserToken($userToken);
+$userToken = $getGoogleAnalyticsUserIdFromBrowserCookie('_ga');
+$searchParams = (new SearchParamsObject())
+    ->setQuery('<YOUR_SEARCH_QUERY>')
+    ->setUserToken($userToken);
 
-  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
 
-  /** @var string|null $loggedInUser */
-  $loggedInUser = null;
+/** @var string|null $loggedInUser */
+$loggedInUser = null;
 
-  $searchParams->setUserToken($loggedInUser ?? $userToken);
+$searchParams->setUserToken($loggedInUser ?? $userToken);
 
-  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
-} catch (Exception $e) {
-  echo $e->getMessage() . PHP_EOL;
-}
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};

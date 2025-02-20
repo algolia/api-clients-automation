@@ -13,35 +13,31 @@ class DeleteMultipleIndices {
   {
 
     // You need an API key with `deleteIndex`
-    try {
-      {{> snippets/init}}
+    {{> snippets/init}}
 
-      // List all indices
-      var indices = {{#dynamicSnippet}}listIndicesSimple{{/dynamicSnippet}};
+    // List all indices
+    var indices = {{#dynamicSnippet}}listIndicesSimple{{/dynamicSnippet}};
 
-      // Primary indices don't have a `primary` key
-      var primaryIndices = indices.Items.Where(item => item.Primary == null).ToList();
-      var replicaIndices = indices.Items.Where(item => item.Primary != null).ToList();
+    // Primary indices don't have a `primary` key
+    var primaryIndices = indices.Items.Where(item => item.Primary == null).ToList();
+    var replicaIndices = indices.Items.Where(item => item.Primary != null).ToList();
 
-      // Delete primary indices first
-      if (primaryIndices.Count > 0)
-      {
-          var requests = primaryIndices
-            .Select(index => new MultipleBatchRequest(Search.Models.Search.Action.Delete, index.Name)).ToList();
-          {{#dynamicSnippet}}deleteMultipleIndicesPrimary{{/dynamicSnippet}};
-          Console.WriteLine("Deleted primary indices.");
-      }
+    // Delete primary indices first
+    if (primaryIndices.Count > 0)
+    {
+        var requests = primaryIndices
+          .Select(index => new MultipleBatchRequest(Search.Models.Search.Action.Delete, index.Name)).ToList();
+        {{#dynamicSnippet}}deleteMultipleIndicesPrimary{{/dynamicSnippet}};
+        Console.WriteLine("Deleted primary indices.");
+    }
 
-      // Now, delete replica indices
-      if (replicaIndices.Count > 0)
-      {
-          var requests = replicaIndices
-            .Select(index => new MultipleBatchRequest(Search.Models.Search.Action.Delete, index.Name)).ToList();
-          {{#dynamicSnippet}}deleteMultipleIndicesReplica{{/dynamicSnippet}};
-          Console.WriteLine("Deleted replica indices.");
-      }
-    } catch (Exception e) {
-          Console.WriteLine(e.Message);
+    // Now, delete replica indices
+    if (replicaIndices.Count > 0)
+    {
+        var requests = replicaIndices
+          .Select(index => new MultipleBatchRequest(Search.Models.Search.Action.Delete, index.Name)).ToList();
+        {{#dynamicSnippet}}deleteMultipleIndicesReplica{{/dynamicSnippet}};
+        Console.WriteLine("Deleted replica indices.");
     }
   }
 }

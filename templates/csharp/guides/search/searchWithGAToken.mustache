@@ -16,25 +16,21 @@ class SearchWithGAToken {
   async Task Main(string[] args)
   {
 
-    try {
-      {{> snippets/init}}
-      var userToken = GetGoogleAnalyticsUserIdFromBrowserCookie("_ga");
-      var searchParams = new SearchParams(
-        new SearchParamsObject
-        {
-          Query = "<YOUR_SEARCH_QUERY>",
-          UserToken = userToken
-        }
-      );
+    {{> snippets/init}}
+    var userToken = GetGoogleAnalyticsUserIdFromBrowserCookie("_ga");
+    var searchParams = new SearchParams(
+      new SearchParamsObject
+      {
+        Query = "<YOUR_SEARCH_QUERY>",
+        UserToken = userToken
+      }
+    );
 
-      {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+    {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
 
-      string? loggedInUser = null;
-      searchParams.AsSearchParamsObject().UserToken = loggedInUser ?? userToken;
+    string? loggedInUser = null;
+    searchParams.AsSearchParamsObject().UserToken = loggedInUser ?? userToken;
 
-      {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
-    } catch (Exception e) {
-      Console.WriteLine(e.Message);
-    }
+    {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
   }
 }

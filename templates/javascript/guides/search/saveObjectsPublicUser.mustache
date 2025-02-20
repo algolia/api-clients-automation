@@ -2,10 +2,6 @@
 
 const playlists: Record<string, any>[] = [] // Your records
 
-try {
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  {{#dynamicSnippet}}saveObjectsPlaylistsWithUserIDPublic{{/dynamicSnippet}}
-} catch (e: any) {
-  console.error(e);
-}
+{{#dynamicSnippet}}saveObjectsPlaylistsWithUserIDPublic{{/dynamicSnippet}}

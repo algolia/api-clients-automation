@@ -350,6 +350,36 @@ func TestSearchgenerateSecuredApiKey4(t *testing.T) {
 	}
 }
 
+// mcm with filters
+func TestSearchgenerateSecuredApiKey5(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	client, echo := createSearchClient(t)
+	_ = echo
+	{
+		res, err = client.GenerateSecuredApiKey(
+			"YourSearchOnlyApiKey",
+			search.NewEmptySecuredApiKeyRestrictions().SetFilters("user:user42 AND user:public"))
+		require.NoError(t, err)
+	}
+}
+
+// mcm with user token
+func TestSearchgenerateSecuredApiKey6(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	client, echo := createSearchClient(t)
+	_ = echo
+	{
+		res, err = client.GenerateSecuredApiKey(
+			"YourSearchOnlyApiKey",
+			search.NewEmptySecuredApiKeyRestrictions().SetUserToken("user42"))
+		require.NoError(t, err)
+	}
+}
+
 // indexExists
 func TestSearchindexExists0(t *testing.T) {
 	var err error

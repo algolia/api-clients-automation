@@ -4,10 +4,10 @@ const playlists: Record<string, any>[] = [
   /* Your records */
 ];
 
-try {
-  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
-  playlists.forEach(async (playlist) => {
+playlists.forEach(async (playlist) => {
+  try {
     const playlistUserID = playlist['userID'];
     await client.saveObjects(
       { indexName: 'indexName', objects: playlists, waitForTasks: false, batchSize: 1000 },
@@ -15,7 +15,7 @@ try {
         headers: { 'X-Algolia-User-ID': playlistUserID },
       },
     );
-  });
-} catch (e: any) {
-  console.error(e);
-}
+  } catch (e: any) {
+    console.error(e);
+  }
+});

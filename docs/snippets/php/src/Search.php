@@ -1498,6 +1498,54 @@ class SnippetSearchClient
     }
 
     /**
+     * Snippet for the GenerateSecuredApiKey method.
+     *
+     * mcm with filters
+     */
+    public function snippetForGenerateSecuredApiKey5(): void
+    {
+        // >SEPARATOR generateSecuredApiKey mcm with filters
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->generateSecuredApiKey(
+            'YourSearchOnlyApiKey',
+            ['filters' => 'user:user42 AND user:public',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GenerateSecuredApiKey method.
+     *
+     * mcm with user token
+     */
+    public function snippetForGenerateSecuredApiKey6(): void
+    {
+        // >SEPARATOR generateSecuredApiKey mcm with user token
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->generateSecuredApiKey(
+            'YourSearchOnlyApiKey',
+            ['userToken' => 'user42',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetApiKey method.
      *
      * getApiKey
@@ -3713,6 +3761,39 @@ class SnippetSearchClient
                 ],
                 'consequence' => ['params' => ['filters' => 'release_date >= 1577836800',
                 ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRule method.
+     *
+     * saveRule always active rule
+     */
+    public function snippetForSaveRule21(): void
+    {
+        // >SEPARATOR saveRule saveRule always active rule
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRule(
+            '<YOUR_INDEX_NAME>',
+            'a-rule-id',
+            ['objectID' => 'a-rule-id',
+                'consequence' => ['params' => ['aroundRadius' => 1000,
+                ],
+                ],
+                'validity' => [
+                    ['from' => 1577836800,
+                        'until' => 1577836800,
+                    ],
                 ],
             ],
         );
@@ -8465,6 +8546,35 @@ class SnippetSearchClient
             [
                 'headers' => [
                     'X-Algolia-User-ID' => 'user1234',
+                ],
+            ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * mcm with algolia user id
+     */
+    public function snippetForSearchSingleIndex131(): void
+    {
+        // >SEPARATOR searchSingleIndex mcm with algolia user id
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['query' => 'peace',
+            ],
+            [
+                'headers' => [
+                    'X-Algolia-User-ID' => 'user42',
                 ],
             ]
         );

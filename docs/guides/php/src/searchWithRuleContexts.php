@@ -9,20 +9,16 @@ $getPlatformTag = function (): string {
     return '';
 };
 
-try {
-    $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+$client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
-    // get the buyer account information
-    $platformTag = $getPlatformTag();
-    $searchParams = (new SearchParamsObject())
-        ->setQuery('<YOUR_SEARCH_QUERY>')
-        ->setRuleContexts([$platformTag])
-    ;
+// get the buyer account information
+$platformTag = $getPlatformTag();
+$searchParams = (new SearchParamsObject())
+    ->setQuery('<YOUR_SEARCH_QUERY>')
+    ->setRuleContexts([$platformTag])
+;
 
-    $client->searchSingleIndex(
-        '<YOUR_INDEX_NAME>',
-        $searchParams,
-    );
-} catch (Exception $e) {
-    echo $e->getMessage().PHP_EOL;
-}
+$client->searchSingleIndex(
+    '<YOUR_INDEX_NAME>',
+    $searchParams,
+);

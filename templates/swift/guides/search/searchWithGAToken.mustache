@@ -11,23 +11,20 @@ let getGoogleAnalyticsUserIdFromBrowserCookie = {(_: String) in
 }
 
 func searchWithGAToken() async throws {
-  do {
-    {{> snippets/init}}
+  {{> snippets/init}}
 
-    let userToken = getGoogleAnalyticsUserIdFromBrowserCookie("_ga");
-    var searchParams = SearchSearchParams.searchSearchParamsObject(
-      SearchSearchParamsObject(query: "<YOUR_SEARCH_QUERY>", userToken: userToken)
-    )
+  let userToken = getGoogleAnalyticsUserIdFromBrowserCookie("_ga");
+  var searchParams = SearchSearchParams.searchSearchParamsObject(
+    SearchSearchParamsObject(query: "<YOUR_SEARCH_QUERY>", userToken: userToken)
+  )
 
-    let _: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+  let _: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
 
-    let loggedInUser: String? = "..."
-    searchParams = SearchSearchParams.searchSearchParamsObject(
-        SearchSearchParamsObject(query: "<YOUR_SEARCH_QUERY>", userToken: loggedInUser ?? userToken)
-    )
+  let loggedInUser: String? = "..."
+  searchParams = SearchSearchParams.searchSearchParamsObject(
+      SearchSearchParamsObject(query: "<YOUR_SEARCH_QUERY>", userToken: loggedInUser ?? userToken)
+  )
 
-    let _: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
-  } catch {
-    print(error)
-  }
+  let response: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+  print(response)
 }

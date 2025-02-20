@@ -1537,6 +1537,56 @@ def snippet_for_generate_secured_api_key4():
     # SEPARATOR<
 
 
+def snippet_for_generate_secured_api_key5():
+    """
+    Snippet for the generateSecuredApiKey method.
+
+    mcm with filters
+    """
+    # >SEPARATOR generateSecuredApiKey mcm with filters
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.generate_secured_api_key(
+        parent_api_key="YourSearchOnlyApiKey",
+        restrictions={
+            "filters": "user:user42 AND user:public",
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_generate_secured_api_key6():
+    """
+    Snippet for the generateSecuredApiKey method.
+
+    mcm with user token
+    """
+    # >SEPARATOR generateSecuredApiKey mcm with user token
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.generate_secured_api_key(
+        parent_api_key="YourSearchOnlyApiKey",
+        restrictions={
+            "userToken": "user42",
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_get_api_key():
     """
     Snippet for the getApiKey method.
@@ -3879,6 +3929,43 @@ def snippet_for_save_rule20():
                     "filters": "release_date >= 1577836800",
                 },
             },
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_save_rule21():
+    """
+    Snippet for the saveRule method.
+
+    saveRule always active rule
+    """
+    # >SEPARATOR saveRule saveRule always active rule
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.save_rule(
+        index_name="<YOUR_INDEX_NAME>",
+        object_id="a-rule-id",
+        rule={
+            "objectID": "a-rule-id",
+            "consequence": {
+                "params": {
+                    "aroundRadius": 1000,
+                },
+            },
+            "validity": [
+                {
+                    "from": 1577836800,
+                    "until": 1577836800,
+                },
+            ],
         },
     )
 
@@ -8716,6 +8803,34 @@ def snippet_for_search_single_index130():
         },
         request_options={
             "headers": loads("""{"X-Algolia-User-ID":"user1234"}"""),
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_search_single_index131():
+    """
+    Snippet for the searchSingleIndex method.
+
+    mcm with algolia user id
+    """
+    # >SEPARATOR searchSingleIndex mcm with algolia user id
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.search_single_index(
+        index_name="<YOUR_INDEX_NAME>",
+        search_params={
+            "query": "peace",
+        },
+        request_options={
+            "headers": loads("""{"X-Algolia-User-ID":"user42"}"""),
         },
     )
 
