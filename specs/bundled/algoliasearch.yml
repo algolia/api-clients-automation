@@ -4608,7 +4608,7 @@ components:
         maxRecommendations:
           type: integer
           minimum: 1
-          maximum: 1000
+          maximum: 30
           default: 30
           description: >
             Maximum number of recommendations to retrieve.
