@@ -352,6 +352,29 @@ class SearchClientClientTests {
   }
 
   @Test
+  @DisplayName("mcm with filters")
+  void generateSecuredApiKeyTest5() {
+    SearchClient client = createClient();
+
+    assertDoesNotThrow(() -> {
+      String res = client.generateSecuredApiKey(
+        "YourSearchOnlyApiKey",
+        new SecuredApiKeyRestrictions().setFilters("user:user42 AND user:public")
+      );
+    });
+  }
+
+  @Test
+  @DisplayName("mcm with user token")
+  void generateSecuredApiKeyTest6() {
+    SearchClient client = createClient();
+
+    assertDoesNotThrow(() -> {
+      String res = client.generateSecuredApiKey("YourSearchOnlyApiKey", new SecuredApiKeyRestrictions().setUserToken("user42"));
+    });
+  }
+
+  @Test
   @DisplayName("indexExists")
   void indexExistsTest0() {
     SearchClient client = new SearchClient(

@@ -3,21 +3,17 @@
 require __DIR__.'/../vendor/autoload.php';
 {{> snippets/import}}
 
-try {
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  $results = $client->browseObjects('<YOUR_INDEX_NAME>');
+$results = $client->browseObjects('<YOUR_INDEX_NAME>');
 
-  $records = [];
-  foreach ($results as $hit) {
-    $records[] = [
-        'twitterHandle' => $hit['twitterHandle'],
-        'nbFollowers' => $hit['nbFollowers'],
-        'isPopular' => $hit['nbFollowers'] > 1000000,
-    ];
-  }
-
-  {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}};
-} catch (Exception $e) {
-  echo $e->getMessage() . PHP_EOL;
+$records = [];
+foreach ($results as $hit) {
+  $records[] = [
+      'twitterHandle' => $hit['twitterHandle'],
+      'nbFollowers' => $hit['nbFollowers'],
+      'isPopular' => $hit['nbFollowers'] > 1000000,
+  ];
 }
+
+{{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}};

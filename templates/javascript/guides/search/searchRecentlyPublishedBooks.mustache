@@ -1,16 +1,12 @@
 {{> snippets/import}}
 import type { SearchParams } from 'algoliasearch';
 
-try {
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  const d = new Date();
-  const searchParams: SearchParams = {
-    query: "<YOUR_SEARCH_QUERY>",
-    filters: `date_timestamp > ${Math.floor(d.setDate(d.getDate() - 365) / 1000)}`
-  };
+const d = new Date();
+const searchParams: SearchParams = {
+  query: "<YOUR_SEARCH_QUERY>",
+  filters: `date_timestamp > ${Math.floor(d.setDate(d.getDate() - 365) / 1000)}`
+};
 
-  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
-} catch (e: any) {
-  console.error(e);
-}
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}

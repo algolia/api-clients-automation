@@ -3,19 +3,16 @@ import json
 {{> snippets/import}}
 
 
-if __name__ == "__main__":
-  try:
-    _{{> snippets/init}}
+with open("records.json", "r", encoding="utf-8") as f:
+  records = json.load(f)
 
-    with open("records.json", "r", encoding="utf-8") as f:
-      records = json.load(f)
+  _{{> snippets/init}}
 
-      chunk_size = 10000
+  chunk_size = 10000
 
-      for begin_index in range(0, len(records), chunk_size):
-        chunk = records[begin_index:begin_index + chunk_size]
-        {{#dynamicSnippet}}saveObjectsChunks{{/dynamicSnippet}}
-
-  except Exception as e:
-    print(f"Error: {e}")
-
+  for begin_index in range(0, len(records), chunk_size):
+    try:
+      chunk = records[begin_index:begin_index + chunk_size]
+      {{#dynamicSnippet}}saveObjectsChunks{{/dynamicSnippet}}
+    except Exception as e:
+      print(f"Error: {e}")

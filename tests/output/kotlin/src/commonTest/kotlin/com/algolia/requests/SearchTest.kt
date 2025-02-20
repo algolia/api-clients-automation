@@ -2868,6 +2868,37 @@ class SearchTest {
     )
   }
 
+  @Test
+  fun `saveRule always active rule21`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "a-rule-id",
+          rule = Rule(
+            objectID = "a-rule-id",
+            consequence = Consequence(
+              params = ConsequenceParams(
+                aroundRadius = AroundRadius.of(1000),
+              ),
+            ),
+            validity = listOf(
+              TimeRange(
+                from = 1577836800L,
+                until = 1577836800L,
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/a-rule-id".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"a-rule-id","consequence":{"params":{"aroundRadius":1000}},"validity":[{"from":1577836800,"until":1577836800}]}""", it.body)
+      },
+    )
+  }
+
   // saveRules
 
   @Test
@@ -6409,6 +6440,30 @@ class SearchTest {
         assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody("""{"query":"query"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `mcm with algolia user id131`() = runTest {
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "playlists",
+          searchParams = SearchParamsObject(
+            query = "peace",
+          ),
+          requestOptions = RequestOptions(
+            headers = buildMap {
+              put("X-Algolia-User-ID", "user42")
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/playlists/query".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"peace"}""", it.body)
       },
     )
   }

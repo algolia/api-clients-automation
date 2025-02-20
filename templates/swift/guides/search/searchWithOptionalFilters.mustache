@@ -13,17 +13,13 @@ let reduceLabelsToFilters = {(_: [String]) in
 }
 
 func searchWithOptionalFilters() async throws {
-  do {
-    {{> snippets/init}}
+  {{> snippets/init}}
 
-    let optionalFilters = reduceLabelsToFilters(labels)
-    let searchParams = SearchSearchParams.searchSearchParamsObject(
-      SearchSearchParamsObject(query: "<YOUR_SEARCH_QUERY>", optionalFilters: optionalFilters)
-    )
+  let optionalFilters = reduceLabelsToFilters(labels)
+  let searchParams = SearchSearchParams.searchSearchParamsObject(
+    SearchSearchParamsObject(query: "<YOUR_SEARCH_QUERY>", optionalFilters: optionalFilters)
+  )
 
-    let response: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
-    print(response)
-  } catch {
-    print(error)
-  }
+  let response: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+  print(response)
 }

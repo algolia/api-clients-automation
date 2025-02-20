@@ -1153,6 +1153,34 @@ class SnippetSearchClient {
     // SEPARATOR<
   }
 
+  // Snippet for the generateSecuredApiKey method.
+  //
+  // mcm with filters
+  void snippetForGenerateSecuredApiKey5() throws Exception {
+    // >SEPARATOR generateSecuredApiKey mcm with filters
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.generateSecuredApiKey("YourSearchOnlyApiKey", new SecuredApiKeyRestrictions().setFilters("user:user42 AND user:public"));
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the generateSecuredApiKey method.
+  //
+  // mcm with user token
+  void snippetForGenerateSecuredApiKey6() throws Exception {
+    // >SEPARATOR generateSecuredApiKey mcm with user token
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.generateSecuredApiKey("YourSearchOnlyApiKey", new SecuredApiKeyRestrictions().setUserToken("user42"));
+    // >LOG
+    // SEPARATOR<
+  }
+
   // Snippet for the getApiKey method.
   //
   // getApiKey
@@ -2821,6 +2849,27 @@ class SnippetSearchClient {
         .setObjectID("a-rule-id")
         .setConditions(Arrays.asList(new Condition().setContext("mobile")))
         .setConsequence(new Consequence().setParams(new ConsequenceParams().setFilters("release_date >= 1577836800")))
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the saveRule method.
+  //
+  // saveRule always active rule
+  void snippetForSaveRule21() throws Exception {
+    // >SEPARATOR saveRule saveRule always active rule
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.saveRule(
+      "<YOUR_INDEX_NAME>",
+      "a-rule-id",
+      new Rule()
+        .setObjectID("a-rule-id")
+        .setConsequence(new Consequence().setParams(new ConsequenceParams().setAroundRadius(AroundRadius.of(1000))))
+        .setValidity(Arrays.asList(new TimeRange().setFrom(1577836800L).setUntil(1577836800L)))
     );
     // >LOG
     // SEPARATOR<
@@ -5937,6 +5986,25 @@ class SnippetSearchClient {
       new SearchParamsObject().setQuery("query"),
       Hit.class,
       new RequestOptions().addExtraHeader("X-Algolia-User-ID", "user1234")
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the searchSingleIndex method.
+  //
+  // mcm with algolia user id
+  void snippetForSearchSingleIndex131() throws Exception {
+    // >SEPARATOR searchSingleIndex mcm with algolia user id
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("peace"),
+      Hit.class,
+      new RequestOptions().addExtraHeader("X-Algolia-User-ID", "user42")
     );
     // >LOG
     // SEPARATOR<

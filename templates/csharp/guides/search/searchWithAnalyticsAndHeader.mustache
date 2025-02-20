@@ -12,22 +12,18 @@ class SearchWithAnalyticsAndHeader {
   async Task Main(string[] args)
   {
 
-    try {
-      {{> snippets/init}}
+    {{> snippets/init}}
 
-      /*
-      '94.228.178.246' should be replaced with your user's IP address.
-      Depending on your stack there are multiple ways to get this information.
-      */
-      var ip = "94.228.178.246";
-      var query = "query";
+    /*
+    '94.228.178.246' should be replaced with your user's IP address.
+    Depending on your stack there are multiple ways to get this information.
+    */
+    var ip = "94.228.178.246";
+    var query = "query";
 
-      var searchParams = new SearchParams(new SearchParamsObject { Query = query, Analytics = true });
+    var searchParams = new SearchParams(new SearchParamsObject { Query = query, Analytics = true });
 
-      {{#dynamicSnippet}}searchWithSearchParamsAndForwardedHeader{{/dynamicSnippet}};
-    } catch (Exception e) {
-      Console.WriteLine(e.Message);
-    }
+    {{#dynamicSnippet}}searchWithSearchParamsAndForwardedHeader{{/dynamicSnippet}};
   }
 }
 

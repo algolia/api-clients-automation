@@ -21,19 +21,12 @@ class SearchWithOptionalFilters
 
   async Task Main(string[] args)
   {
-    try
-    {
-      var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
-      var optionalFilters = ReduceLabelsToFilters(labels);
-      var searchParams = new SearchParams(
-        new SearchParamsObject { Query = "<YOUR_SEARCH_QUERY>", OptionalFilters = optionalFilters }
-      );
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+    var optionalFilters = ReduceLabelsToFilters(labels);
+    var searchParams = new SearchParams(
+      new SearchParamsObject { Query = "<YOUR_SEARCH_QUERY>", OptionalFilters = optionalFilters }
+    );
 
-      await client.SearchSingleIndexAsync<Hit>("<YOUR_INDEX_NAME>", searchParams);
-    }
-    catch (Exception e)
-    {
-      Console.WriteLine(e.Message);
-    }
+    await client.SearchSingleIndexAsync<Hit>("<YOUR_INDEX_NAME>", searchParams);
   }
 }

@@ -293,6 +293,30 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('mcm with filters')]
+    public function test5generateSecuredApiKey(): void
+    {
+        $client = $this->createClient(self::APP_ID, self::API_KEY);
+
+        $res = $client->generateSecuredApiKey(
+            'YourSearchOnlyApiKey',
+            ['filters' => 'user:user42 AND user:public',
+            ],
+        );
+    }
+
+    #[TestDox('mcm with user token')]
+    public function test6generateSecuredApiKey(): void
+    {
+        $client = $this->createClient(self::APP_ID, self::API_KEY);
+
+        $res = $client->generateSecuredApiKey(
+            'YourSearchOnlyApiKey',
+            ['userToken' => 'user42',
+            ],
+        );
+    }
+
     #[TestDox('indexExists')]
     public function test0indexExists(): void
     {

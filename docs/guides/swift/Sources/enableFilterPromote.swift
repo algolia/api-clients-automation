@@ -17,4 +17,5 @@ func enableFilterPromote() async throws {
     )
 
     let rule = Rule(objectID: "rule_with_filterPromotes", conditions: [condition], consequence: consequence)
+    print(rule)
 }

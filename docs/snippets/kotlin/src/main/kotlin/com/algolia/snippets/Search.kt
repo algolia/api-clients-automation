@@ -1358,6 +1358,48 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGenerateSecuredApiKey5() {
+    // >SEPARATOR generateSecuredApiKey mcm with filters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.generateSecuredApiKey(
+      parentApiKey = "YourSearchOnlyApiKey",
+      restrictions = SecuredApiKeyRestrictions(
+        filters = "user:user42 AND user:public",
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForGenerateSecuredApiKey6() {
+    // >SEPARATOR generateSecuredApiKey mcm with user token
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.generateSecuredApiKey(
+      parentApiKey = "YourSearchOnlyApiKey",
+      restrictions = SecuredApiKeyRestrictions(
+        userToken = "user42",
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetApiKey() {
     // >SEPARATOR getApiKey default
     // Initialize the client
@@ -3597,6 +3639,39 @@ class SnippetSearchClient {
         consequence = Consequence(
           params = ConsequenceParams(
             filters = "release_date >= 1577836800",
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRule21() {
+    // >SEPARATOR saveRule saveRule always active rule
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "a-rule-id",
+      rule = Rule(
+        objectID = "a-rule-id",
+        consequence = Consequence(
+          params = ConsequenceParams(
+            aroundRadius = AroundRadius.of(1000),
+          ),
+        ),
+        validity = listOf(
+          TimeRange(
+            from = 1577836800L,
+            until = 1577836800L,
           ),
         ),
       ),
@@ -7440,6 +7515,32 @@ class SnippetSearchClient {
       requestOptions = RequestOptions(
         headers = buildMap {
           put("X-Algolia-User-ID", "user1234")
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchSingleIndex131() {
+    // >SEPARATOR searchSingleIndex mcm with algolia user id
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.searchSingleIndex(
+      indexName = "<YOUR_INDEX_NAME>",
+      searchParams = SearchParamsObject(
+        query = "peace",
+      ),
+      requestOptions = RequestOptions(
+        headers = buildMap {
+          put("X-Algolia-User-ID", "user42")
         },
       ),
     )

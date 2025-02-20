@@ -5,10 +5,6 @@ require __DIR__.'/../vendor/autoload.php';
 
 $playlists = [ /* Your records */ ];
 
-try {
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  {{#dynamicSnippet}}saveObjectsPlaylistsWithUserIDPublic{{/dynamicSnippet}};
-} catch (Exception $e) {
-  echo $e->getMessage() . PHP_EOL;
-}
+{{#dynamicSnippet}}saveObjectsPlaylistsWithUserIDPublic{{/dynamicSnippet}};

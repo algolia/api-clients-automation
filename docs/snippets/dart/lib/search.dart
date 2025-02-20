@@ -1295,6 +1295,46 @@ void snippetForgenerateSecuredApiKey4() async {
   // SEPARATOR<
 }
 
+// Snippet for the generateSecuredApiKey method.
+//
+// mcm with filters
+void snippetForgenerateSecuredApiKey5() async {
+  // >SEPARATOR generateSecuredApiKey mcm with filters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = client.generateSecuredApiKey(
+    parentApiKey: "YourSearchOnlyApiKey",
+    restrictions: SecuredApiKeyRestrictions(
+      filters: "user:user42 AND user:public",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the generateSecuredApiKey method.
+//
+// mcm with user token
+void snippetForgenerateSecuredApiKey6() async {
+  // >SEPARATOR generateSecuredApiKey mcm with user token
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = client.generateSecuredApiKey(
+    parentApiKey: "YourSearchOnlyApiKey",
+    restrictions: SecuredApiKeyRestrictions(
+      userToken: "user42",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the getApiKey method.
 //
 // getApiKey
@@ -3267,6 +3307,38 @@ void snippetForsaveRule20() async {
           filters: "release_date >= 1577836800",
         ),
       ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// saveRule always active rule
+void snippetForsaveRule21() async {
+  // >SEPARATOR saveRule saveRule always active rule
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "a-rule-id",
+    rule: Rule(
+      objectID: "a-rule-id",
+      consequence: Consequence(
+        params: ConsequenceParams(
+          aroundRadius: 1000,
+        ),
+      ),
+      validity: [
+        TimeRange(
+          from: 1577836800,
+          until: 1577836800,
+        ),
+      ],
     ),
   );
   // >LOG
@@ -7316,6 +7388,31 @@ void snippetForsearchSingleIndex130() async {
     requestOptions: RequestOptions(
       headers: {
         'X-Algolia-User-ID': 'user1234',
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// mcm with algolia user id
+void snippetForsearchSingleIndex131() async {
+  // >SEPARATOR searchSingleIndex mcm with algolia user id
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "peace",
+    ),
+    requestOptions: RequestOptions(
+      headers: {
+        'X-Algolia-User-ID': 'user42',
       },
     ),
   );

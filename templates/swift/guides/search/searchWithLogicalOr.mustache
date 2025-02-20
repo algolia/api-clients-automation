@@ -7,18 +7,15 @@ import Core
 {{> snippets/import}}
 
 func searchWithLogicalOr() async throws {
-  do {
-      {{> snippets/init}}
-      let query = "the query"
-      let optionalWords = ["the", "query"];
-      let searchParams = SearchSearchParams.searchSearchParamsObject(
-          SearchSearchParamsObject(
-            query: query,
-            optionalWords: .arrayOfString(optionalWords)
-          )
+  {{> snippets/init}}
+  let query = "the query"
+  let optionalWords = ["the", "query"];
+  let searchParams = SearchSearchParams.searchSearchParamsObject(
+      SearchSearchParamsObject(
+        query: query,
+        optionalWords: .arrayOfString(optionalWords)
       )
-      let _: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
-  } catch {
-    print(error)
-  }
+  )
+  let response: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+  print(response)
 }

@@ -363,6 +363,30 @@ public class SearchClientTests
     }
   }
 
+  [Fact(DisplayName = "mcm with filters")]
+  public async Task GenerateSecuredApiKeyTest5()
+  {
+    var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
+    {
+      var res = client.GenerateSecuredApiKey(
+        "YourSearchOnlyApiKey",
+        new SecuredApiKeyRestrictions { Filters = "user:user42 AND user:public" }
+      );
+    }
+  }
+
+  [Fact(DisplayName = "mcm with user token")]
+  public async Task GenerateSecuredApiKeyTest6()
+  {
+    var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
+    {
+      var res = client.GenerateSecuredApiKey(
+        "YourSearchOnlyApiKey",
+        new SecuredApiKeyRestrictions { UserToken = "user42" }
+      );
+    }
+  }
+
   [Fact(DisplayName = "indexExists")]
   public async Task IndexExistsTest0()
   {

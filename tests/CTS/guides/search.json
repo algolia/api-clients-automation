@@ -6,6 +6,14 @@
       "objects": "$var: movies"
     }
   },
+  "partialUpdatesRecords": {
+    "method": "partialUpdateObjects",
+    "parameters": {
+      "indexName": "products",
+      "objects": "$var: records",
+      "createIfNotExists": true
+    }
+  },
   "saveObjectsChunks": {
     "method": "saveObjects",
     "parameters": {
@@ -119,6 +127,12 @@
       "headers": {
         "X-Algolia-User-ID": "$var: playlistUserID"
       }
+    }
+  },
+  "getSettings": {
+    "method": "getSettings",
+    "parameters": {
+      "indexName": "indexName"
     }
   },
   "setSettings": {

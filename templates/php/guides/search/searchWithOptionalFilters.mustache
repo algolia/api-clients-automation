@@ -11,15 +11,11 @@ $reduceLabelsToFilters = function (array $labels): OptionalFilters {
     return new OptionalFilters();
 };
 
-try {
-  {{> snippets/init}}
+{{> snippets/init}}
 
-  $optionalFilters = $reduceLabelsToFilters($labels);
-  $searchParams = (new SearchParamsObject())
-      ->setQuery('<YOUR_SEARCH_QUERY>')
-      ->setOptionalFilters($optionalFilters);
+$optionalFilters = $reduceLabelsToFilters($labels);
+$searchParams = (new SearchParamsObject())
+    ->setQuery('<YOUR_SEARCH_QUERY>')
+    ->setOptionalFilters($optionalFilters);
 
-  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
-} catch (Exception $e) {
-  echo $e->getMessage() . PHP_EOL;
-}
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
