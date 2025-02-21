@@ -5,11 +5,58 @@ import algoliasearch.config.RequestOptions
 import algoliasearch.exception.AlgoliaApiException
 import algoliasearch.extension.internal.Iterable.createIterable
 import algoliasearch.extension.internal.RetryUntil.{DEFAULT_DELAY, retryUntil}
+import algoliasearch.internal.util.{escape, paramToString}
 import algoliasearch.search._
+import org.json4s.{DefaultFormats, Extraction, Formats}
 
+import java.nio.charset.StandardCharsets
+import java.util.Base64
+import javax.crypto.Mac
+import javax.crypto.spec.SecretKeySpec
+import scala.concurrent.duration.Duration
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.{Failure, Success, Try}
+import scala.util.matching.Regex
 
 package object extension {
+
+  implicit class SecuredApiKeyRestrictionsExtension(val restrictions: SecuredApiKeyRestrictions) {
+
+    /** Converts the restrictions to a URL-encoded string. Only includes fields that are defined (Some).
+      */
+    def toUrlEncoded: String = {
+      implicit val formats: Formats = DefaultFormats
+
+      val jValue = Extraction.decompose(restrictions.searchParams)
+      var baseParams = jValue.extract[Map[String, Any]]
+
+      if (restrictions.filters.isDefined) {
+        baseParams += ("filters" -> restrictions.filters.get)
+      }
+
+      if (restrictions.validUntil.isDefined) {
+        baseParams += ("validUntil" -> restrictions.validUntil.get.toInt)
+      }
+
+      if (restrictions.restrictIndices.isDefined) {
+        baseParams += ("restrictIndices" -> restrictions.restrictIndices.get)
+      }
+
+      if (restrictions.restrictSources.isDefined) {
+        baseParams += ("restrictSources" -> restrictions.restrictSources.get)
+      }
+
+      if (restrictions.userToken.isDefined) {
+        baseParams += ("userToken" -> restrictions.userToken.get)
+      }
+
+      val params = baseParams.toList
+        .sortBy(_._1)
+        .map { case (k, v) => s"${escape(k)}=${escape(paramToString(v))}" }
+
+      params.mkString("&")
+    }
+  }
 
   implicit class SearchClientExtensions(val client: SearchClient) {
 
@@ -59,7 +106,7 @@ package object extension {
       * @param requestOptions
       *   additional request configuration.
       */
-    def waitTask(
+    def waitForTask(
         indexName: String,
         taskID: Long,
         delay: Long => Long = DEFAULT_DELAY,
@@ -74,6 +121,17 @@ package object extension {
       )
     }
 
+    @deprecated("Use `waitForTask` instead", "2.13.4")
+    def waitTask(
+        indexName: String,
+        taskID: Long,
+        delay: Long => Long = DEFAULT_DELAY,
+        maxRetries: Int = 50,
+        requestOptions: Option[RequestOptions] = None
+    )(implicit ec: ExecutionContext): Future[TaskStatus] = {
+      waitForTask(indexName, taskID, delay, maxRetries, requestOptions)
+    }
+
     /** Wait for an application-level taskID to complete before executing the next line of code.
       *
       * @param taskID
@@ -83,7 +141,7 @@ package object extension {
       * @param requestOptions
       *   additional request configuration.
       */
-    def waitAppTask(
+    def waitForAppTask(
         taskID: Long,
         delay: Long => Long = DEFAULT_DELAY,
         maxRetries: Int = 50,
@@ -95,6 +153,16 @@ package object extension {
         maxRetries = maxRetries,
         delay = delay
       )
+    }
+
+    @deprecated("Use `waitForAppTask` instead", "2.13.4")
+    def waitAppTask(
+        taskID: Long,
+        delay: Long => Long = DEFAULT_DELAY,
+        maxRetries: Int = 50,
+        requestOptions: Option[RequestOptions] = None
+    )(implicit ec: ExecutionContext): Future[TaskStatus] = {
+      waitForAppTask(taskID, delay, maxRetries, requestOptions)
     }
 
     /** Wait on an API key update operation.
@@ -237,7 +305,7 @@ package object extension {
       if (waitForTasks) {
         responses.foreach { tasks =>
           tasks.foreach { task =>
-            client.waitTask(indexName, task.taskID, requestOptions = requestOptions)
+            client.waitForTask(indexName, task.taskID, requestOptions = requestOptions)
           }
         }
       }
@@ -390,7 +458,7 @@ package object extension {
             requestOptions = requestOptions
           )
 
-          _ <- client.waitTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
+          _ <- client.waitForTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
 
           copy <- client.operationIndex(
             indexName = indexName,
@@ -401,14 +469,14 @@ package object extension {
             ),
             requestOptions = requestOptions
           )
-          _ <- client.waitTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
+          _ <- client.waitForTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
 
           move <- client.operationIndex(
             indexName = tmpIndexName,
             operationIndexParams = OperationIndexParams(operation = OperationType.Move, destination = indexName),
             requestOptions = requestOptions
           )
-          _ <- client.waitTask(indexName = tmpIndexName, taskID = move.taskID, requestOptions = requestOptions)
+          _ <- client.waitForTask(indexName = tmpIndexName, taskID = move.taskID, requestOptions = requestOptions)
         } yield ReplaceAllObjectsResponse(
           copyOperationResponse = copy,
           batchResponses = batchResponses,
@@ -561,6 +629,57 @@ package object extension {
         validate = validate.getOrElse((response: SearchSynonymsResponse) => response.hits.length < hitsPerPage),
         aggregator = Some(aggregator)
       )
+    }
+
+    // HMAC utility
+    private def hmac256(data: String, key: String): String = {
+      val algorithm = "HmacSHA256"
+      val secretKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), algorithm)
+      val mac = Mac.getInstance(algorithm)
+      mac.init(secretKey)
+      val hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8))
+      java.util.Base64.getEncoder.encodeToString(hash)
+    }
+
+    /** Generate a secured API key
+      * @param parentApiKey
+      *   The parent API key
+      * @param restrictions
+      *   The restrictions
+      * @return
+      *   The generated secured API key
+      */
+    def generateSecuredApiKey(
+        parentApiKey: String,
+        restrictions: SecuredApiKeyRestrictions = SecuredApiKeyRestrictions()
+    ): String = {
+      val queryParams = restrictions.toUrlEncoded
+      val hash = hmac256(queryParams, parentApiKey)
+      val combined = s"$hash$queryParams"
+      Base64.getEncoder.encodeToString(
+        combined.getBytes(StandardCharsets.UTF_8)
+      )
+    }
+
+    /** Get the remaining validity of a secured API key in seconds
+      * @param securedApiKey
+      *   The secured API key
+      * @return
+      *   The remaining validity of the secured API key in seconds
+      */
+    def getSecuredApiKeyRemainingValidity(securedApiKey: String): Option[Duration] = {
+      val decoded = new String(Base64.getDecoder.decode(securedApiKey), StandardCharsets.UTF_8)
+      val validUntilPattern: Regex = "validUntil=(\\d+)".r.unanchored
+
+      decoded match {
+        case validUntilPattern(validUntil) => {
+          Try(Duration(validUntil + " seconds")) match {
+            case Success(d) => Some(d)
+            case Failure(e) => None
+          }
+        }
+        case _ => None
+      }
     }
   }
 }
