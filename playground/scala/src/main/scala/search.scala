@@ -1,13 +1,12 @@
 import algoliasearch.api.SearchClient
 import algoliasearch.config.{ClientOptions, Logging}
-import algoliasearch.search.*
+import algoliasearch.search.{SearchForHits, SearchMethodParams, SearchResponse}
 import io.github.cdimascio.dotenv.Dotenv
 import org.json4s.jvalue2extractable
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
 
-@main
 def main(): Unit = {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
   implicit val formats: org.json4s.Formats = org.json4s.DefaultFormats
