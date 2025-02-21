@@ -144,12 +144,20 @@ public class ParametersWithDataType {
       isCodegenModel = spec instanceof CodegenModel;
     }
 
+    boolean hasDefaultValue = false;
+    if (spec instanceof CodegenParameter parameter) {
+      hasDefaultValue = parameter.defaultValue != null && !parameter.defaultValue.equals("null");
+    } else if (spec instanceof CodegenProperty property) {
+      hasDefaultValue = property.defaultValue != null && !property.defaultValue.equals("null");
+    }
+
     testOutput.put("key", paramName);
     testOutput.put("useAnonymousKey", !paramName.matches("(.*)_[0-9]+$") && depth != 0);
     testOutput.put("parent", parent);
     testOutput.put("isRoot", "".equals(parent));
     testOutput.put("objectName", getObjectNameForLanguage(baseType));
     testOutput.put("isParentFreeFormObject", isParentFreeFormObject);
+    testOutput.put("hasDefaultValue", hasDefaultValue);
 
     if (isRequired != null) {
       testOutput.put("required", isRequired);
