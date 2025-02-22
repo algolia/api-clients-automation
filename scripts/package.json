@@ -22,7 +22,7 @@
     "@actions/core": "1.11.1",
     "@actions/exec": "1.1.1",
     "@actions/io": "1.1.3",
-    "@har-sdk/oas": "2.10.0",
+    "@har-sdk/oas": "2.10.1",
     "@octokit/rest": "21.1.1",
     "@types/express": "5.0.0",
     "@types/folder-hash": "4.0.4",
