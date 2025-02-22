@@ -8,6 +8,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -142,11 +143,48 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
   }
 
   @Override
+  protected void postProcessEnumVars(List<Map<String, Object>> enumVars) {
+    Collections.reverse(enumVars);
+    enumVars.forEach(v -> {
+      String name = (String) v.get("name");
+      long count = enumVars.stream().filter(v1 -> ((String) v1.get("name")).equalsIgnoreCase(name)).count();
+      if (count > 1L) {
+        String uniqueEnumName = this.getUniqueEnumName(name, enumVars);
+        Object var10001 = v.get("name");
+        this.logger.warning("Changing duplicate enumeration name from " + var10001 + " to " + uniqueEnumName);
+        v.put("name", uniqueEnumName);
+      }
+    });
+    Collections.reverse(enumVars);
+  }
+
+  private String getUniqueEnumName(String name, List<Map<String, Object>> enumVars) {
+    long count = enumVars.stream().filter(v -> ((String) v.get("name")).equalsIgnoreCase(name)).count();
+    return count > 1L ? this.getUniqueEnumName(name + "Alt", enumVars) : name;
+  }
+
+  @Override
+  public String toEnumVarName(String value, String datatype) {
+    if (value.isEmpty()) {
+      return "Empty";
+    } else {
+      var var = lowerCamelCase(value);
+      return this.reservedWords.contains(var) ? this.escapeReservedWord(var) : var;
+    }
+  }
+
+  @Override
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
     GenericPropagator.propagateGenericsToModels(models, true);
     OneOf.updateModelsOneOf(models, modelPackage);
     OneOf.addOneOfMetadata(models);
+
+    // Scala doesn't support sensitive casing for enums
+    for (var model : models.values()) {
+      this.postProcessModelsEnum(model);
+    }
+
     return models;
   }
 
