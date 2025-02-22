@@ -8,6 +8,7 @@ import algoliasearch.extension.internal.RetryUntil.{DEFAULT_DELAY, retryUntil}
 import algoliasearch.internal.util.{escape, paramToString}
 import algoliasearch.search._
 import org.json4s.{DefaultFormats, Extraction, Formats}
+import org.json4s.jvalue2extractable
 
 import java.nio.charset.StandardCharsets
 import java.util.Base64
