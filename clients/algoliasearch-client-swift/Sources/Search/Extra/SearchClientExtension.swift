@@ -456,7 +456,7 @@ public extension SearchClient {
 
         if waitForTasks {
             for batchResponse in responses {
-                try await self.waitForTask(indexName: indexName, taskID: batchResponse.taskID)
+              try await self.waitForTask(indexName: indexName, taskID: batchResponse.taskID, requestOptions: requestOptions)
             }
         }
 
