@@ -88,6 +88,7 @@
             "php": "Invalid Application-ID or API key",
             "python": "Invalid Application-ID or API key",
             "ruby": "403: Invalid Application-ID or API key",
+            "scala": "{\\\"message\\\":\\\"Invalid Application-ID or API key\\\",\\\"status\\\":403}",
             "swift": "HTTP error: Status code: 403 Message: Invalid Application-ID or API key"
           }
         }

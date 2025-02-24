@@ -4,13 +4,13 @@ package {{modelPackage}}
 import org.json4s._
 
 object JsonSupport {
-  private def enumSerializers: Seq[Serializer[_]] = Seq[Serializer[_]](){{#models}}{{#model}}{{#isEnum}} :+ 
+  private def enumSerializers: Seq[Serializer[?]] = Seq[Serializer[?]](){{#models}}{{#model}}{{#isEnum}} :+
     new {{classname}}Serializer(){{/isEnum}}{{/model}}{{/models}}
 
-  private def oneOfsSerializers: Seq[Serializer[_]] = Seq[Serializer[_]](){{#models}}{{#model}}{{#vendorExtensions.x-is-one-of}}:+ 
+  private def oneOfsSerializers: Seq[Serializer[?]] = Seq[Serializer[?]](){{#models}}{{#model}}{{#vendorExtensions.x-is-one-of}}:+
     {{classname}}Serializer{{/vendorExtensions.x-is-one-of}}{{/model}}{{/models}}
 
-  private def classMapSerializers: Seq[Serializer[_]] = Seq[Serializer[_]](){{#models}}{{#model}}{{#additionalProperties.isAnyType}}:+ 
+  private def classMapSerializers: Seq[Serializer[?]] = Seq[Serializer[?]](){{#models}}{{#model}}{{#additionalProperties.isAnyType}}:+
     new {{classname}}Serializer(){{/additionalProperties.isAnyType}}{{/model}}{{/models}}    
 
   implicit val format: Formats = DefaultFormats ++ enumSerializers ++ oneOfsSerializers ++ classMapSerializers
