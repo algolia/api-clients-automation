@@ -444,8 +444,8 @@ package object extension {
       val tmpIndexName = s"${indexName}_tmp_${scala.util.Random.nextInt(100)}"
 
       try {
-        client
-          .operationIndex(
+        for {
+          copy <- client.operationIndex(
             indexName = indexName,
             operationIndexParams = OperationIndexParams(
               operation = OperationType.Copy,
@@ -454,59 +454,40 @@ package object extension {
             ),
             requestOptions = requestOptions
           )
-          .flatMap { copy =>
-            chunkedBatch(
-              indexName = tmpIndexName,
-              objects = objects,
-              action = Action.AddObject,
-              waitForTasks = true,
-              batchSize = batchSize,
-              requestOptions = requestOptions
-            ).flatMap { batchResponses =>
-              client
-                .waitForTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
-                .flatMap { _ =>
-                  client
-                    .operationIndex(
-                      indexName = indexName,
-                      operationIndexParams = OperationIndexParams(
-                        operation = OperationType.Copy,
-                        destination = tmpIndexName,
-                        scope = scopes
-                      ),
-                      requestOptions = requestOptions
-                    )
-                    .flatMap { copy =>
-                      client
-                        .waitForTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
-                        .flatMap { _ =>
-                          client
-                            .operationIndex(
-                              indexName = tmpIndexName,
-                              operationIndexParams =
-                                OperationIndexParams(operation = OperationType.Move, destination = indexName),
-                              requestOptions = requestOptions
-                            )
-                            .flatMap { move =>
-                              client
-                                .waitForTask(
-                                  indexName = tmpIndexName,
-                                  taskID = move.taskID,
-                                  requestOptions = requestOptions
-                                )
-                                .map { _ =>
-                                  ReplaceAllObjectsResponse(
-                                    copyOperationResponse = copy,
-                                    batchResponses = batchResponses,
-                                    moveOperationResponse = move
-                                  )
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-          }
+
+          batchResponses <- chunkedBatch(
+            indexName = tmpIndexName,
+            objects = objects,
+            action = Action.AddObject,
+            waitForTasks = true,
+            batchSize = batchSize,
+            requestOptions = requestOptions
+          )
+
+          _ <- client.waitTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
+
+          copy <- client.operationIndex(
+            indexName = indexName,
+            operationIndexParams = OperationIndexParams(
+              operation = OperationType.Copy,
+              destination = tmpIndexName,
+              scope = scopes
+            ),
+            requestOptions = requestOptions
+          )
+          _ <- client.waitTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
+
+          move <- client.operationIndex(
+            indexName = tmpIndexName,
+            operationIndexParams = OperationIndexParams(operation = OperationType.Move, destination = indexName),
+            requestOptions = requestOptions
+          )
+          _ <- client.waitTask(indexName = tmpIndexName, taskID = move.taskID, requestOptions = requestOptions)
+        } yield ReplaceAllObjectsResponse(
+          copyOperationResponse = copy,
+          batchResponses = batchResponses,
+          moveOperationResponse = move
+        )
       } catch {
         case e: Throwable => {
           client.deleteIndex(tmpIndexName)
