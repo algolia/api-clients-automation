@@ -35,7 +35,8 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
 
   /**
    * Custom mapping for field names This a workaround; a better solution would be to use json4s'
-   * FieldSerializer for all fields with special cases.
+   * FieldSerializer for all fields with special cases. TODO FIXME: find a proper way to handle
+   * props that begin with an underscore
    */
   static final Map<String, String> NAME_MAPPING = Map.of(
     "_operation",
@@ -43,7 +44,15 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     "client_id",
     "client_id",
     "client_secret",
-    "client_secret"
+    "client_secret",
+    "_highlightResult",
+    "_highlightResult",
+    "_snippetResult",
+    "_snippetResult",
+    "_rankingInfo",
+    "_rankingInfo",
+    "_distinctSeqID",
+    "_distinctSeqID"
   );
 
   @Override

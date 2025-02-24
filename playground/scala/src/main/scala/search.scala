@@ -1,23 +1,21 @@
 import algoliasearch.api.SearchClient
 import algoliasearch.config.{ClientOptions, Logging}
-import algoliasearch.search.{SearchForHits, SearchMethodParams, SearchResponse}
+import algoliasearch.search.{JsonSupport, SearchForHits, SearchMethodParams, SearchResponse}
 import io.github.cdimascio.dotenv.Dotenv
-import org.json4s.jvalue2extractable
+import org.json4s.{Extraction, Formats, jvalue2extractable}
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
 
-class Main {
-  case class Actor(name: String)
+object search {
+  private case class Contact(firstname: String, lastname: String, company: String, followers: Long, objectID: String)
   def main(args: Array[String]): Unit = {
     implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-      implicit val formats: org.json4s.Formats = org.json4s.DefaultFormats
+    implicit val formats: Formats = JsonSupport.format
 
       val dotenv = Dotenv.configure.directory("../").load
       val appId = dotenv.get("ALGOLIA_APPLICATION_ID")
       val apiKey = dotenv.get("ALGOLIA_ADMIN_KEY")
-      val indexName = dotenv.get("SEARCH_INDEX")
-      val query = dotenv.get("SEARCH_QUERY")
 
       val client = SearchClient(
         appId = appId,
@@ -32,8 +30,8 @@ class Main {
       val params = SearchMethodParams(
         requests = Seq(
           SearchForHits(
-            indexName = indexName,
-            query = Some(query)
+            indexName = "contacts",
+            query = Some("Jimmie")
           )
         )
       )
@@ -41,9 +39,8 @@ class Main {
       val value = Await.result(res, Duration(100, "sec"))
       val response = value.results.head.asInstanceOf[SearchResponse]
       for (hit <- response.hits) {
-        //val actor = hit.extract[Actor]
-        //println(actor)
+        val contact = jvalue2extractable(Extraction.decompose(hit)).extract[Contact]
+        println(contact)
       }
   }
 }
-
