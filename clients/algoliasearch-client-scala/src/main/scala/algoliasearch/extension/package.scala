@@ -73,12 +73,12 @@ package object extension {
       *   The maximum number of retries. 50 by default. (optional)
       * @param requestOptions
       *   Additional request configuration.
-      * @return Option[GetApiKeyResponse]
-      *   The response of the operation.
-      *     - for `add` operation, either Some(GetApiKeyResponse) if the key is created or None if the key is not created.
-      *     - for `update` operation, Some(GetApiKeyResponse) with the updated key
-      *     - for `delete` operation, either None if the key is deleted or Some(GetApiKeyResponse) if the key is not deleted.
-      *
+      * @return
+      *   Option[GetApiKeyResponse] The response of the operation.
+      *   - for `add` operation, either Some(GetApiKeyResponse) if the key is created or None if the key is not created.
+      *   - for `update` operation, Some(GetApiKeyResponse) with the updated key
+      *   - for `delete` operation, either None if the key is deleted or Some(GetApiKeyResponse) if the key is not
+      *     deleted.
       */
     def waitForApiKey(
         operation: ApiKeyOperation,
@@ -294,30 +294,29 @@ package object extension {
         batchSize: Int = 1000,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
-      var futures = Seq.empty[Future[BatchResponse]]
-      objects.grouped(batchSize).foreach { chunk =>
-        val requests = chunk.map { record =>
-          BatchRequest(action = action, body = record)
+      val batches = objects.grouped(batchSize).toSeq
+
+      val futureResponses = batches
+        .foldLeft(Future.successful(Vector.empty[BatchResponse])) { (acc, batch) =>
+          acc.flatMap(rs =>
+            client
+              .batch(
+                indexName,
+                BatchWriteParams(batch.map(obj => BatchRequest(action, obj))),
+                requestOptions = requestOptions
+              )
+              .map(rs :+ _)
+          )
         }
-        val future = client.batch(
-          indexName = indexName,
-          batchWriteParams = BatchWriteParams(requests),
-          requestOptions = requestOptions
+        .map(_.toSeq)
+
+      if (waitForTasks)
+        futureResponses.flatMap(rs =>
+          Future
+            .sequence(rs.map(r => client.waitForTask(indexName, r.taskID, requestOptions = requestOptions)))
+            .map(_ => rs)
         )
-        futures = futures :+ future
-      }
-
-      val responses = Future.sequence(futures)
-
-      if (waitForTasks) {
-        responses.foreach { tasks =>
-          tasks.foreach { task =>
-            client.waitForTask(indexName, task.taskID, requestOptions = requestOptions)
-          }
-        }
-      }
-
-      responses
+      else futureResponses
     }
 
     /** Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used under the hood,
@@ -445,8 +444,8 @@ package object extension {
       val tmpIndexName = s"${indexName}_tmp_${scala.util.Random.nextInt(100)}"
 
       try {
-        for {
-          copy <- client.operationIndex(
+        client
+          .operationIndex(
             indexName = indexName,
             operationIndexParams = OperationIndexParams(
               operation = OperationType.Copy,
@@ -455,40 +454,59 @@ package object extension {
             ),
             requestOptions = requestOptions
           )
-
-          batchResponses <- chunkedBatch(
-            indexName = tmpIndexName,
-            objects = objects,
-            action = Action.AddObject,
-            waitForTasks = true,
-            batchSize = batchSize,
-            requestOptions = requestOptions
-          )
-
-          _ <- client.waitForTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
-
-          copy <- client.operationIndex(
-            indexName = indexName,
-            operationIndexParams = OperationIndexParams(
-              operation = OperationType.Copy,
-              destination = tmpIndexName,
-              scope = scopes
-            ),
-            requestOptions = requestOptions
-          )
-          _ <- client.waitForTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
-
-          move <- client.operationIndex(
-            indexName = tmpIndexName,
-            operationIndexParams = OperationIndexParams(operation = OperationType.Move, destination = indexName),
-            requestOptions = requestOptions
-          )
-          _ <- client.waitForTask(indexName = tmpIndexName, taskID = move.taskID, requestOptions = requestOptions)
-        } yield ReplaceAllObjectsResponse(
-          copyOperationResponse = copy,
-          batchResponses = batchResponses,
-          moveOperationResponse = move
-        )
+          .flatMap { copy =>
+            chunkedBatch(
+              indexName = tmpIndexName,
+              objects = objects,
+              action = Action.AddObject,
+              waitForTasks = true,
+              batchSize = batchSize,
+              requestOptions = requestOptions
+            ).flatMap { batchResponses =>
+              client
+                .waitForTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
+                .flatMap { _ =>
+                  client
+                    .operationIndex(
+                      indexName = indexName,
+                      operationIndexParams = OperationIndexParams(
+                        operation = OperationType.Copy,
+                        destination = tmpIndexName,
+                        scope = scopes
+                      ),
+                      requestOptions = requestOptions
+                    )
+                    .flatMap { copy =>
+                      client
+                        .waitForTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
+                        .flatMap { _ =>
+                          client
+                            .operationIndex(
+                              indexName = tmpIndexName,
+                              operationIndexParams =
+                                OperationIndexParams(operation = OperationType.Move, destination = indexName),
+                              requestOptions = requestOptions
+                            )
+                            .flatMap { move =>
+                              client
+                                .waitForTask(
+                                  indexName = tmpIndexName,
+                                  taskID = move.taskID,
+                                  requestOptions = requestOptions
+                                )
+                                .map { _ =>
+                                  ReplaceAllObjectsResponse(
+                                    copyOperationResponse = copy,
+                                    batchResponses = batchResponses,
+                                    moveOperationResponse = move
+                                  )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+          }
       } catch {
         case e: Throwable => {
           client.deleteIndex(tmpIndexName)
@@ -507,7 +525,7 @@ package object extension {
     def indexExists(indexName: String)(implicit ec: ExecutionContext): Future[Boolean] = {
       client.getSettings(indexName).map(_ => true).recover {
         case apiError: AlgoliaApiException if apiError.httpErrorCode == 404 => false
-        case e => throw e
+        case e                                                              => throw e
       }
     }
 
