@@ -7,7 +7,7 @@ import org.json4s.{Extraction, Formats, jvalue2extractable}
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
 
-object search {
+object Search {
   private case class Contact(firstname: String, lastname: String, company: String, followers: Long, objectID: String)
   def main(args: Array[String]): Unit = {
     implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
