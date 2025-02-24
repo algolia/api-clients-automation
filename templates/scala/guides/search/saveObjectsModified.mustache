@@ -11,7 +11,7 @@ import org.json4s.jvalue2extractable
 {{> snippets/import}}
 
 def saveObjectsModified(): Future[Unit] = {
-  implicit val formats: org.json4s.Formats = org.json4s.DefaultFormats
+  implicit val formats: org.json4s.Formats = JsonSupport.format
 
   {{> snippets/init}}
 

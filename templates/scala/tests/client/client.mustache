@@ -21,7 +21,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class {{clientPrefix}}Test extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   def testClient(appId: String = "appId", apiKey: String = "apiKey"{{#hasRegionalHost}}, region: String = {{#fallbackToAliasHost}}null{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}"{{defaultRegion}}"{{/fallbackToAliasHost}}{{/hasRegionalHost}}): ({{client}}, EchoInterceptor) = {
     val echo = EchoInterceptor()
@@ -75,10 +75,18 @@ class {{clientPrefix}}Test extends AnyFunSuite {
     {{/testHost}}
     {{#testResponse}}
     {{^match.isPrimitive}}
-    assert(write(res) == "{{#lambda.escapeQuotes}}{{{match.value}}}{{/lambda.escapeQuotes}}")
+    assert(parse(write(res)) == parse("{{#lambda.escapeQuotes}}{{{match.value}}}{{/lambda.escapeQuotes}}"))
     {{/match.isPrimitive}}
     {{#match.isPrimitive}}
+    {{#isHelper}}{{#match.isNull}}
+    assert(res.isEmpty)
+    {{/match.isNull}}
+    {{^match.isNull}}
     assert(res == {{#match}}{{> tests/param_value}}{{/match}})
+    {{/match.isNull}}{{/isHelper}}
+    {{^isHelper}}
+    assert(res == {{#match}}{{> tests/param_value}}{{/match}})
+    {{/isHelper}}
     {{/match.isPrimitive}}
     {{/testResponse}}
     {{#shouldScope}}
