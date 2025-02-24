@@ -55,7 +55,7 @@ class {{classname}}Serializer extends Serializer[{{classname}}] {
           case (name, _) if fields.contains(name) => true
           case _                                  => false
         }
-        additionalProperties.values match {
+        additionalProperties match {
           case JObject(fieldsList) => obj copy (additionalProperties = Some(fieldsList))
           case _                   => obj
         }
