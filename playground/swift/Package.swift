@@ -24,7 +24,8 @@ var executableTargets: [Target] = []
                 .product(
                     name: name,
                     package: "algoliasearch-client-swift"
-                )
+                ),
+                .product(name: "DotEnv", package: "DotEnv")
             ],
             path: "Sources/\(name)"
         )
@@ -38,6 +39,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../clients/algoliasearch-client-swift"),
+        .package(url: "https://github.com/swiftpackages/DotEnv.git", from: "3.0.0"),
     ],
     targets: executableTargets
 )
