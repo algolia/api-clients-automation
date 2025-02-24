@@ -7,8 +7,7 @@ import algoliasearch.extension.internal.Iterable.createIterable
 import algoliasearch.extension.internal.RetryUntil.{DEFAULT_DELAY, retryUntil}
 import algoliasearch.internal.util.{escape, paramToString}
 import algoliasearch.search._
-import org.json4s.{DefaultFormats, Extraction, Formats}
-import org.json4s.jvalue2extractable
+import org.json4s.{Extraction, Formats, jvalue2extractable}
 
 import java.nio.charset.StandardCharsets
 import java.util.Base64
@@ -16,8 +15,8 @@ import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 import scala.concurrent.duration.Duration
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.{Failure, Success, Try}
 import scala.util.matching.Regex
+import scala.util.{Failure, Success, Try}
 
 package object extension {
 
@@ -443,58 +442,57 @@ package object extension {
     )(implicit ec: ExecutionContext): Future[ReplaceAllObjectsResponse] = {
       val tmpIndexName = s"${indexName}_tmp_${scala.util.Random.nextInt(100)}"
 
-      try {
-        for {
-          copy <- client.operationIndex(
-            indexName = indexName,
-            operationIndexParams = OperationIndexParams(
-              operation = OperationType.Copy,
-              destination = tmpIndexName,
-              scope = scopes
-            ),
-            requestOptions = requestOptions
-          )
-
-          batchResponses <- chunkedBatch(
-            indexName = tmpIndexName,
-            objects = objects,
-            action = Action.AddObject,
-            waitForTasks = true,
-            batchSize = batchSize,
-            requestOptions = requestOptions
-          )
-
-          _ <- client.waitTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
-
-          copy <- client.operationIndex(
-            indexName = indexName,
-            operationIndexParams = OperationIndexParams(
-              operation = OperationType.Copy,
-              destination = tmpIndexName,
-              scope = scopes
-            ),
-            requestOptions = requestOptions
-          )
-          _ <- client.waitTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
-
-          move <- client.operationIndex(
-            indexName = tmpIndexName,
-            operationIndexParams = OperationIndexParams(operation = OperationType.Move, destination = indexName),
-            requestOptions = requestOptions
-          )
-          _ <- client.waitTask(indexName = tmpIndexName, taskID = move.taskID, requestOptions = requestOptions)
-        } yield ReplaceAllObjectsResponse(
-          copyOperationResponse = copy,
-          batchResponses = batchResponses,
-          moveOperationResponse = move
+      val steps = for {
+        copy <- client.operationIndex(
+          indexName = indexName,
+          operationIndexParams = OperationIndexParams(
+            operation = OperationType.Copy,
+            destination = tmpIndexName,
+            scope = scopes
+          ),
+          requestOptions = requestOptions
         )
-      } catch {
-        case e: Throwable => {
+
+        batchResponses <- chunkedBatch(
+          indexName = tmpIndexName,
+          objects = objects,
+          action = Action.AddObject,
+          waitForTasks = true,
+          batchSize = batchSize,
+          requestOptions = requestOptions
+        )
+
+        _ <- client.waitForTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
+
+        copy <- client.operationIndex(
+          indexName = indexName,
+          operationIndexParams = OperationIndexParams(
+            operation = OperationType.Copy,
+            destination = tmpIndexName,
+            scope = scopes
+          ),
+          requestOptions = requestOptions
+        )
+        _ <- client.waitForTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
+
+        move <- client.operationIndex(
+          indexName = tmpIndexName,
+          operationIndexParams = OperationIndexParams(operation = OperationType.Move, destination = indexName),
+          requestOptions = requestOptions
+        )
+        _ <- client.waitForTask(indexName = tmpIndexName, taskID = move.taskID, requestOptions = requestOptions)
+      } yield ReplaceAllObjectsResponse(
+        copyOperationResponse = copy,
+        batchResponses = batchResponses,
+        moveOperationResponse = move
+      )
+
+      steps.recover({
+        case e: Throwable =>
           client.deleteIndex(tmpIndexName)
 
           throw e
-        }
-      }
+      })
     }
 
     /** Check if an index exists.
