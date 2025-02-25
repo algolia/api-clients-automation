@@ -8,9 +8,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,22 +36,21 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
    * FieldSerializer for all fields with special cases. TODO FIXME: find a proper way to handle
    * props that begin with an underscore
    */
-  static final Map<String, String> NAME_MAPPING = Map.of(
-    "_operation",
-    "_operation",
-    "client_id",
-    "client_id",
-    "client_secret",
-    "client_secret",
-    "_highlightResult",
-    "_highlightResult",
-    "_snippetResult",
-    "_snippetResult",
-    "_rankingInfo",
-    "_rankingInfo",
-    "_distinctSeqID",
-    "_distinctSeqID"
-  );
+  static final Map<String, String> NAME_MAPPING = new HashMap<>() {
+    {
+      put("_operation", "_operation");
+      put("client_id", "client_id");
+      put("client_secret", "client_secret");
+      put("_highlightResult", "_highlightResult");
+      put("_snippetResult", "_snippetResult");
+      put("_rankingInfo", "_rankingInfo");
+      put("_distinctSeqID", "_distinctSeqID");
+      put("_score", "_score");
+      put("_automaticInsights", "_automaticInsights");
+      put("__type", "__type");
+      put("_metadata", "_metadata");
+    }
+  };
 
   @Override
   public String getName() {
