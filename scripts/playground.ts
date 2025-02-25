@@ -51,6 +51,9 @@ export async function playground({ language, client }: { language: AllLanguage; 
         language,
       });
       break;
+    case 'swift':
+      await run(`swift run ${client}-playground`, { cwd: 'playground/swift', language });
+      break;
     default:
   }
 }
