@@ -32,23 +32,22 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
   }
 
   /**
-   * Custom mapping for field names This a workaround; a better solution would be to use json4s'
-   * FieldSerializer for all fields with special cases. TODO FIXME: find a proper way to handle
-   * props that begin with an underscore
+   * TODO FIXME: custom mapping for field names with an underscore. This a workaround; a better
+   * solution would be to use json4s' FieldSerializer for all fields with special cases.
    */
   static final Map<String, String> NAME_MAPPING = new HashMap<>() {
     {
-      put("_operation", "_operation");
-      put("client_id", "client_id");
-      put("client_secret", "client_secret");
-      put("_highlightResult", "_highlightResult");
-      put("_snippetResult", "_snippetResult");
-      put("_rankingInfo", "_rankingInfo");
-      put("_distinctSeqID", "_distinctSeqID");
-      put("_score", "_score");
-      put("_automaticInsights", "_automaticInsights");
-      put("__type", "__type");
-      put("_metadata", "_metadata");
+      //      put("_operation", "_operation");
+      //      put("client_id", "client_id");
+      //      put("client_secret", "client_secret");
+      //      put("_highlightResult", "_highlightResult");
+      //      put("_snippetResult", "_snippetResult");
+      //      put("_rankingInfo", "_rankingInfo");
+      //      put("_distinctSeqID", "_distinctSeqID");
+      //      put("_score", "_score");
+      //      put("_automaticInsights", "_automaticInsights");
+      //      put("__type", "__type");
+      //      put("_metadata", "_metadata");
     }
   };
 
@@ -186,8 +185,23 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     OneOf.updateModelsOneOf(models, modelPackage);
     OneOf.addOneOfMetadata(models);
 
-    // Scala doesn't support sensitive casing for enums
+    // Add unescapedName for properties where Scala name differs from original
     for (var model : models.values()) {
+      for (var modelMap : model.getModels()) {
+        var codegenModel = modelMap.getModel();
+        if (codegenModel.vars != null) {
+          var hasUnescapedProperty = false;
+          for (var property : codegenModel.vars) {
+            if (!property.name.equals(property.baseName)) {
+              property.vendorExtensions.put("x-unescaped-name", property.baseName);
+              hasUnescapedProperty = true;
+            }
+          }
+
+          codegenModel.vendorExtensions.put("x-has-unescaped-property", hasUnescapedProperty);
+        }
+      }
+      // Scala doesn't support sensitive casing for enums
       this.postProcessModelsEnum(model);
     }
 
