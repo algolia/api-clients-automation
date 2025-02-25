@@ -149,11 +149,11 @@ export async function runCts(
     const skip = (lang: Language): number => (languages.includes(lang) ? 1 : 0);
 
     assertValidTimeouts(languages.length);
-    assertChunkWrapperValid(languages.length - skip('dart') - skip('scala'));
-    assertValidReplaceAllObjects(languages.length - skip('dart') - skip('scala'));
-    assertValidReplaceAllObjectsFailed(languages.length - skip('dart') - skip('scala'));
-    assertValidReplaceAllObjectsScopes(languages.length - skip('dart') - skip('scala'));
-    assertValidWaitForApiKey(languages.length - skip('dart') - skip('scala'));
+    assertChunkWrapperValid(languages.length - skip('dart'));
+    assertValidReplaceAllObjects(languages.length - skip('dart'));
+    assertValidReplaceAllObjectsFailed(languages.length - skip('dart'));
+    assertValidReplaceAllObjectsScopes(languages.length - skip('dart'));
+    assertValidWaitForApiKey(languages.length - skip('dart'));
   }
   if (withBenchmarkServer) {
     printBenchmarkReport();

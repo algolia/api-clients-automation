@@ -8,8 +8,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,17 +32,24 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
   }
 
   /**
-   * Custom mapping for field names This a workaround; a better solution would be to use json4s'
-   * FieldSerializer for all fields with special cases.
+   * TODO FIXME: custom mapping for field names with an underscore. This a workaround; a better
+   * solution would be to use json4s' FieldSerializer for all fields with special cases.
    */
-  static final Map<String, String> NAME_MAPPING = Map.of(
-    "_operation",
-    "_operation",
-    "client_id",
-    "client_id",
-    "client_secret",
-    "client_secret"
-  );
+  static final Map<String, String> NAME_MAPPING = new HashMap<>() {
+    {
+      //      put("_operation", "_operation");
+      //      put("client_id", "client_id");
+      //      put("client_secret", "client_secret");
+      //      put("_highlightResult", "_highlightResult");
+      //      put("_snippetResult", "_snippetResult");
+      //      put("_rankingInfo", "_rankingInfo");
+      //      put("_distinctSeqID", "_distinctSeqID");
+      //      put("_score", "_score");
+      //      put("_automaticInsights", "_automaticInsights");
+      //      put("__type", "__type");
+      //      put("_metadata", "_metadata");
+    }
+  };
 
   @Override
   public String getName() {
@@ -142,11 +148,63 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
   }
 
   @Override
+  protected void postProcessEnumVars(List<Map<String, Object>> enumVars) {
+    Collections.reverse(enumVars);
+    enumVars.forEach(v -> {
+      String name = (String) v.get("name");
+      long count = enumVars.stream().filter(v1 -> ((String) v1.get("name")).equalsIgnoreCase(name)).count();
+      if (count > 1L) {
+        String uniqueEnumName = this.getUniqueEnumName(name, enumVars);
+        Object var10001 = v.get("name");
+        this.logger.warning("Changing duplicate enumeration name from " + var10001 + " to " + uniqueEnumName);
+        v.put("name", uniqueEnumName);
+      }
+    });
+    Collections.reverse(enumVars);
+  }
+
+  private String getUniqueEnumName(String name, List<Map<String, Object>> enumVars) {
+    long count = enumVars.stream().filter(v -> ((String) v.get("name")).equalsIgnoreCase(name)).count();
+    return count > 1L ? this.getUniqueEnumName(name + "Alt", enumVars) : name;
+  }
+
+  @Override
+  public String toEnumVarName(String value, String datatype) {
+    if (value.isEmpty()) {
+      return "Empty";
+    } else {
+      var var = lowerCamelCase(value);
+      return this.reservedWords.contains(var) ? this.escapeReservedWord(var) : var;
+    }
+  }
+
+  @Override
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
     GenericPropagator.propagateGenericsToModels(models, true);
     OneOf.updateModelsOneOf(models, modelPackage);
     OneOf.addOneOfMetadata(models);
+
+    // Add unescapedName for properties where Scala name differs from original
+    for (var model : models.values()) {
+      for (var modelMap : model.getModels()) {
+        var codegenModel = modelMap.getModel();
+        if (codegenModel.vars != null) {
+          var hasUnescapedProperty = false;
+          for (var property : codegenModel.vars) {
+            if (!property.name.equals(property.baseName)) {
+              property.vendorExtensions.put("x-unescaped-name", property.baseName);
+              hasUnescapedProperty = true;
+            }
+          }
+
+          codegenModel.vendorExtensions.put("x-has-unescaped-property", hasUnescapedProperty);
+        }
+      }
+      // Scala doesn't support sensitive casing for enums
+      this.postProcessModelsEnum(model);
+    }
+
     return models;
   }
 

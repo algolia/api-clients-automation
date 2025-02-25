@@ -89,6 +89,7 @@
             "php": "Invalid API key",
             "python": "Invalid API key",
             "ruby": "403: Invalid API key",
+            "scala": "{\\\"message\\\":\\\"Invalid API key\\\"}",
             "swift": "HTTP error: Status code: 403 Message: Invalid API key"
           }
         }
