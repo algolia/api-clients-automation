@@ -7,13 +7,7 @@ import {{import}}
 
 {{#models}}
 {{#model}}
-{{#vendorExtensions.x-has-child-generic}}
-import org.json4s.JObject
-{{/vendorExtensions.x-has-child-generic}}
-{{#additionalProperties}}
-import org.json4s.MonadicJValue.jvalueToMonadic
-import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, TypeInfo}
-{{/additionalProperties}}
+import org.json4s._
 
 {{^isEnum}}
 {{#vendorExtensions.x-is-one-of}}
@@ -32,46 +26,24 @@ import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, Typ
 */
 case class {{classname}}(
   {{#vars}}
-  {{{name}}}: {{^required}}Option[{{/required}}{{#required}}{{#isNullable}}Option[{{/isNullable}}{{/required}}{{> generic_type}}{{^required}}] = scala.None{{/required}}{{#required}}{{#isNullable}}] = scala.None{{/isNullable}}{{/required}},
+  {{{name}}} {{#vendorExtensions.x-unescaped-name}}/* {{{.}}} */{{/vendorExtensions.x-unescaped-name}}: {{^required}}Option[{{/required}}{{#required}}{{#isNullable}}Option[{{/isNullable}}{{/required}}{{> generic_type}}{{^required}}] = scala.None{{/required}}{{#required}}{{#isNullable}}] = scala.None{{/isNullable}}{{/required}},
   {{/vars}}
   {{#additionalProperties}}
   additionalProperties: Option[List[JField]] = None
   {{/additionalProperties}}
 ){{#vendorExtensions.x-one-of-element}}{{#vendorExtensions.x-one-of-element-parents}} {{#-first}}extends{{/-first}}{{^-first}}with{{/-first}} {{parent_classname}}Trait {{/vendorExtensions.x-one-of-element-parents}}{{/vendorExtensions.x-one-of-element}}
+
+{{#vendorExtensions.x-has-unescaped-property}}{{#additionalProperties.isAnyType}}
+{{> serializer }}
+{{/additionalProperties.isAnyType}}{{/vendorExtensions.x-has-unescaped-property}}
+{{#vendorExtensions.x-has-unescaped-property}}{{^additionalProperties.isAnyType}}
+{{> serializer }}
+{{/additionalProperties.isAnyType}}{{/vendorExtensions.x-has-unescaped-property}}
+{{#additionalProperties.isAnyType}}{{^vendorExtensions.x-has-unescaped-property}}
+{{> serializer }}
+{{/vendorExtensions.x-has-unescaped-property}}{{/additionalProperties.isAnyType}}
+
 {{/vendorExtensions.x-is-one-of}}
-{{#additionalProperties.isAnyType}}
-
-class {{classname}}Serializer extends Serializer[{{classname}}] {
-  
-  override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), {{classname}}] = {
-    case (TypeInfo(clazz, _), json) if clazz == classOf[{{classname}}] => json match {
-      case jobject: JObject =>
-        val formats = format - this
-        val mf = manifest[{{classname}}]
-        val obj = Extraction.extract[{{classname}}](jobject)(formats, mf)
-
-        val fields = Set({{#vars}}"{{{name}}}"{{^-last}}, {{/-last}}{{/vars}})
-        val additionalProperties = jobject removeField {
-          case (name, _) if fields.contains(name) => true
-          case _                                  => false
-        }
-        additionalProperties match {
-          case JObject(fieldsList) => obj copy (additionalProperties = Some(fieldsList))
-          case _                   => obj
-        }
-      case _ => throw new IllegalArgumentException(s"Can't deserialize $json as {{classname}}")  
-    }
-  }
-
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: {{classname}} =>
-    val formats = format - this // remove current serializer from formats to avoid stackoverflow
-    value.additionalProperties match {
-      case Some(fields) => Extraction.decompose(value.copy(additionalProperties = None))(formats) merge JObject(fields)
-      case None         => Extraction.decompose(value)(formats)
-    }
-  }
-}
-{{/additionalProperties.isAnyType}}
 {{/isEnum}}
 
 {{#isEnum}}

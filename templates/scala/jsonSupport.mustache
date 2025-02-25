@@ -10,8 +10,10 @@ object JsonSupport {
   private def oneOfsSerializers: Seq[Serializer[?]] = Seq[Serializer[?]](){{#models}}{{#model}}{{#vendorExtensions.x-is-one-of}}:+
     {{classname}}Serializer{{/vendorExtensions.x-is-one-of}}{{/model}}{{/models}}
 
-  private def classMapSerializers: Seq[Serializer[?]] = Seq[Serializer[?]](){{#models}}{{#model}}{{#additionalProperties.isAnyType}}:+
-    new {{classname}}Serializer(){{/additionalProperties.isAnyType}}{{/model}}{{/models}}    
+  private def classMapSerializers: Seq[Serializer[?]] = Seq[Serializer[?]](){{#models}}{{#model}}{{^isEnum}}{{^vendorExtensions.x-is-one-of}}{{#vendorExtensions.x-has-unescaped-property}}{{#additionalProperties.isAnyType}}:+
+   new {{classname}}Serializer(){{/additionalProperties.isAnyType}}{{/vendorExtensions.x-has-unescaped-property}}{{#vendorExtensions.x-has-unescaped-property}}{{^additionalProperties.isAnyType}}:+
+   new {{classname}}Serializer(){{/additionalProperties.isAnyType}}{{/vendorExtensions.x-has-unescaped-property}}{{#additionalProperties.isAnyType}}{{^vendorExtensions.x-has-unescaped-property}}:+
+   new {{classname}}Serializer(){{/vendorExtensions.x-has-unescaped-property}}{{/additionalProperties.isAnyType}}{{/vendorExtensions.x-is-one-of}}{{/isEnum}}{{/model}}{{/models}}
 
   implicit val format: Formats = DefaultFormats ++ enumSerializers ++ oneOfsSerializers ++ classMapSerializers
   implicit val serialization: org.json4s.Serialization = org.json4s.native.Serialization
