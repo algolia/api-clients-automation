@@ -487,11 +487,10 @@ package object extension {
         moveOperationResponse = move
       )
 
-      steps.recover({
-        case e: Throwable =>
-          client.deleteIndex(tmpIndexName)
+      steps.recover({ case e: Throwable =>
+        client.deleteIndex(tmpIndexName)
 
-          throw e
+        throw e
       })
     }
 
