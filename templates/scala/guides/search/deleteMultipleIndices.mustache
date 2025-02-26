@@ -2,7 +2,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 {{> snippets/import}}
-import algoliasearch.search.{MultipleBatchRequest, BatchParams, Action}
+import algoliasearch.search.{Action, BatchParams, MultipleBatchRequest}
 
 def deleteMultipleIndices(): Future[Unit] = {
   // You need an API key with `deleteIndex`
