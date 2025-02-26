@@ -192,7 +192,7 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
         if (codegenModel.vars != null) {
           var hasUnescapedProperty = false;
           for (var property : codegenModel.vars) {
-            if (!property.name.equals(property.baseName)) {
+            if (!property.name.equals(property.baseName) && !this.isReservedWord(property.baseName)) {
               property.vendorExtensions.put("x-unescaped-name", property.baseName);
               hasUnescapedProperty = true;
             }
