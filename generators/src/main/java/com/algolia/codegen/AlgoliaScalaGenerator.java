@@ -27,29 +27,8 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
 
   /** Convert a text to a valid scala identifier. */
   public static String formatIdentifier(String text) {
-    if (NAME_MAPPING.containsKey(text)) return NAME_MAPPING.get(text);
     return INSTANCE.formatIdentifier(text, false);
   }
-
-  /**
-   * TODO FIXME: custom mapping for field names with an underscore. This a workaround; a better
-   * solution would be to use json4s' FieldSerializer for all fields with special cases.
-   */
-  static final Map<String, String> NAME_MAPPING = new HashMap<>() {
-    {
-      //      put("_operation", "_operation");
-      //      put("client_id", "client_id");
-      //      put("client_secret", "client_secret");
-      //      put("_highlightResult", "_highlightResult");
-      //      put("_snippetResult", "_snippetResult");
-      //      put("_rankingInfo", "_rankingInfo");
-      //      put("_distinctSeqID", "_distinctSeqID");
-      //      put("_score", "_score");
-      //      put("_automaticInsights", "_automaticInsights");
-      //      put("__type", "__type");
-      //      put("_metadata", "_metadata");
-    }
-  };
 
   @Override
   public String getName() {
@@ -85,8 +64,6 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
 
     additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
     typeMapping.put("AnyType", "Any");
-
-    nameMapping.putAll(NAME_MAPPING);
 
     try {
       additionalProperties.put("packageVersion", Helpers.getClientConfigField("scala", "packageVersion"));

@@ -148,7 +148,7 @@ object {{classname}}Serializer extends Serializer[{{classname}}] {
       case {{classname}}.{{{datatypeWithEnum}}}Value(value) => JString(value)
       {{/isString}}
       {{#isModel}}
-      case value: {{{datatypeWithEnum}}} => Extraction.decompose(value)(format - this)
+      case value => Extraction.decompose(value)(format - this)
       {{/isModel}}
       {{#isEnumRef}}
       case value: {{{datatypeWithEnum}}} => JString(value.toString)
