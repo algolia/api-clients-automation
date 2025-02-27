@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
 
-class {{clientPrefix}}Test extends AnyFunSuite {
+class {{clientPrefix}}BenchmarkTest extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
   implicit val formats: Formats = JsonSupport.format
 
@@ -41,7 +41,7 @@ class {{clientPrefix}}Test extends AnyFunSuite {
     )
   }
 
-  {{#blocksClient}}
+  {{#blocksBenchmark}}
   {{> tests/client/tests}}
-  {{/blocksClient}}
+  {{/blocksBenchmark}}
 }

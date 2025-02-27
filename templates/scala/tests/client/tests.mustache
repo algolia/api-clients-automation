@@ -1,0 +1,59 @@
+{{#tests}}
+
+  test("{{{testName}}}") {
+    {{#autoCreateClient}}
+    val (client, echo) = testClient()
+    {{/autoCreateClient}}
+
+    {{#steps}}
+    {{#times}}
+    for (i <- 1 to {{times}}) {
+    {{/times}}
+    {{#isError}}
+    assertError("{{{expectedError}}}") {
+      {{#dynamicTemplate}}{{/dynamicTemplate}}
+    }
+    {{/isError}}
+    {{^isError}}
+    {{#shouldScope}}
+    {
+    {{/shouldScope}}
+    {{#dynamicTemplate}}{{/dynamicTemplate}}
+    {{#testUserAgent}}
+    val regexp = """{{{match.value}}}""".r
+    val header = echo.lastResponse.get.headers("user-agent")
+    assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
+    {{/testUserAgent}}
+    {{#testTimeouts}}
+    assert(echo.lastResponse.get.connectTimeout == {{{matchConnectTimeout}}})
+    assert(echo.lastResponse.get.responseTimeout == {{{matchResponseTimeout}}})
+    {{/testTimeouts}}
+    {{#testHost}}
+    assert(echo.lastResponse.get.host == "{{{match.value}}}")
+    {{/testHost}}
+    {{#testResponse}}
+    {{^match.isPrimitive}}
+    assert(parse(write(res)) == parse("{{#lambda.escapeQuotes}}{{{match.value}}}{{/lambda.escapeQuotes}}"))
+    {{/match.isPrimitive}}
+    {{#match.isPrimitive}}
+    {{#isHelper}}{{#match.isNull}}
+    assert(res.isEmpty)
+    {{/match.isNull}}
+    {{^match.isNull}}
+    assert(res == {{#match}}{{> tests/param_value}}{{/match}})
+    {{/match.isNull}}{{/isHelper}}
+    {{^isHelper}}
+    assert(res == {{#match}}{{> tests/param_value}}{{/match}})
+    {{/isHelper}}
+    {{/match.isPrimitive}}
+    {{/testResponse}}
+    {{#shouldScope}}
+    }
+    {{/shouldScope}}
+    {{#times}}
+    }
+    {{/times}}
+    {{/isError}}
+    {{/steps}}
+  }
+{{/tests}}
