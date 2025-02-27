@@ -65,9 +65,9 @@ security:
   - BasicAuth: []
 tags:
   - name: actions
-    x-displayName: Actions
+    x-displayName: State
     description: |
-      Actions change the state of crawlers, such as pausing and unpausing schedules or testing the crawler with specific URLs.
+      Change the state of crawlers, such as pausing crawl schedules or testing the crawler with specific URLs.
   - name: config
     x-displayName: Configuration
     description: |
@@ -78,7 +78,7 @@ tags:
       It's easiest to make configuration changes on the [Crawler page](https://dashboard.algolia.com/crawler) in the Algolia dashboard.
       The editor has autocomplete and built-in validation so you can try your configuration changes before committing them.
   - name: crawlers
-    x-displayName: Crawler
+    x-displayName: Manage
     description: |
       A crawler is an object with a name and a [configuration](#tag/config).
       Use these endpoints to create, rename, and delete crawlers.

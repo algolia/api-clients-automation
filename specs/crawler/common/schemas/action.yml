@@ -21,9 +21,9 @@ Action:
     discoveryPatterns:
       type: array
       description: |
-        Indicates additional pages that the crawler should visit.
+        Indicates _intermediary_ pages that the crawler should visit.
 
-        For more information, see the [`discoveryPatterns` documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/discovery-patterns/).
+        For more information, see the [`discoveryPatterns` documentation](https://www.algolia.com/doc/tools/crawler/apis/discoverypatterns/).
       items:
         $ref: '#/urlPattern'
     fileTypesToMatch:
@@ -71,7 +71,7 @@ Action:
         Function for extracting information from a crawled page and transforming it into Algolia records for indexing.
         The Crawler has an [editor](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/#the-editor) with autocomplete and validation to help you update the `recordExtractor` property.
 
-        For details, consult the [`recordExtractor` documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/actions/#parameter-param-recordextractor).
+        For details, consult the [`recordExtractor` documentation](https://www.algolia.com/doc/tools/crawler/apis/recordextractor/).
       properties:
         __type:
           $ref: '#/configurationRecordExtractorType'
@@ -140,7 +140,7 @@ hostnameAliases:
     Key-value pairs to replace matching hostnames found in a sitemap,
     on a page, in canonical links, or redirects.
 
-    For more information, see the [`hostnameAliases` documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/hostname-aliases/).
+    For more information, see the [`hostnameAliases` documentation](https://www.algolia.com/doc/tools/crawler/apis/hostnamealiases/).
   additionalProperties:
     type: string
     description: Hostname that should be added in the records.
@@ -174,7 +174,7 @@ cache:
   description: |
     Whether the crawler should cache crawled pages.
 
-    For more information, see the [`cache` documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/cache/).
+    For more information, see the [`cache` documentation](https://www.algolia.com/doc/tools/crawler/apis/cache/).
   properties:
     enabled:
       type: boolean
