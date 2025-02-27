@@ -1,11 +1,15 @@
 package com.algolia.codegen;
 
+import static org.openapitools.codegen.utils.ModelUtils.getSchema;
+import static org.openapitools.codegen.utils.ModelUtils.getSimpleRef;
+
 import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.*;
 import com.google.common.collect.ImmutableMap;
 import com.samskivert.mustache.Mustache.Lambda;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
+import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
 import java.util.*;
@@ -17,9 +21,46 @@ import org.openapitools.codegen.languages.ScalaSttpClientCodegen;
 import org.openapitools.codegen.model.ModelMap;
 import org.openapitools.codegen.model.ModelsMap;
 import org.openapitools.codegen.model.OperationsMap;
+import org.openapitools.codegen.utils.ModelUtils;
 
 public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
 
+  private static class NamedSchema {
+
+    private String name;
+    private Schema schema;
+    private boolean required;
+    private boolean schemaIsFromAdditionalProperties;
+
+    private NamedSchema(String name, Schema s, boolean required, boolean schemaIsFromAdditionalProperties) {
+      this.name = name;
+      this.schema = s;
+      this.required = required;
+      this.schemaIsFromAdditionalProperties = schemaIsFromAdditionalProperties;
+    }
+
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      } else if (o != null && this.getClass() == o.getClass()) {
+        NamedSchema that = (NamedSchema) o;
+        return (
+          Objects.equals(this.required, that.required) &&
+          Objects.equals(this.name, that.name) &&
+          Objects.equals(this.schema, that.schema) &&
+          Objects.equals(this.schemaIsFromAdditionalProperties, that.schemaIsFromAdditionalProperties)
+        );
+      } else {
+        return false;
+      }
+    }
+
+    public int hashCode() {
+      return Objects.hash(new Object[] { this.name, this.schema, this.required, this.schemaIsFromAdditionalProperties });
+    }
+  }
+
+  Map<NamedSchema, CodegenProperty> schemaCodegenPropertyCache = new HashMap();
   final Logger logger = Logger.getLogger(AlgoliaScalaGenerator.class.getName());
 
   // This is used for the CTS generation
@@ -99,6 +140,45 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
   public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
     CodegenOperation ope = super.fromOperation(path, httpMethod, operation, servers);
     return Helpers.specifyCustomRequest(ope);
+  }
+
+  private CodegenProperty innerFromProperty(
+    String name,
+    Schema p,
+    boolean required,
+    boolean schemaIsFromAdditionalProperties,
+    CodegenProperty property
+  ) {
+    if (p == null) {
+      this.logger.severe("Undefined property/schema for `" + name + "`. Default to type:string.");
+      return null;
+    } else {
+      this.logger.severe("debugging fromProperty for " + name + ": " + p);
+      NamedSchema ns = new NamedSchema(name, p, required, schemaIsFromAdditionalProperties);
+      CodegenProperty cpc = (CodegenProperty) this.schemaCodegenPropertyCache.get(ns);
+      if (cpc != null) {
+        this.logger.info("Cached fromProperty for " + name + " : " + p.getName() + " required=" + required);
+        return cpc;
+      } else {
+        Schema refToPropertiesSchema = ModelUtils.getSchemaFromRefToSchemaWithProperties(this.openAPI, p.get$ref());
+        if (refToPropertiesSchema == null && p.get$ref() != null) {
+          Schema ref = getSchema(openAPI, getSimpleRef(p.get$ref()));
+
+          property.setTypeProperties(ref, this.openAPI);
+
+          this.schemaCodegenPropertyCache.put(ns, property);
+          return property;
+        } else {
+          return property;
+        }
+      }
+    }
+  }
+
+  @Override
+  public CodegenProperty fromProperty(String name, Schema p, boolean required, boolean schemaIsFromAdditionalProperties) {
+    CodegenProperty property = super.fromProperty(name, p, required, schemaIsFromAdditionalProperties);
+    return innerFromProperty(name, p, required, schemaIsFromAdditionalProperties, property);
   }
 
   @Override

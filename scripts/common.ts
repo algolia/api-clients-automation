@@ -269,6 +269,7 @@ export function isVerbose(): boolean {
 
 export async function callGenerator(gen: Generator): Promise<void> {
   await run(
+    // `JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=\*:5009" yarn openapi-generator-cli --custom-generator=generators/build/libs/algolia-java-openapi-generator-1.0.0.jar generate --generator-key ${gen.key}`,
     `yarn openapi-generator-cli --custom-generator=generators/build/libs/algolia-java-openapi-generator-1.0.0.jar generate --generator-key ${gen.key}`,
     { language: 'java' },
   );

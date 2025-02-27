@@ -7,10 +7,30 @@ import {{import}}
 
 {{#models}}
 {{#model}}
+
+{{#vendorExtensions.x-has-unescaped-property}}{{#additionalProperties.isAnyType}}{{^vendorExtensions.x-is-one-of}}
 import org.json4s._
+{{/vendorExtensions.x-is-one-of}}{{/additionalProperties.isAnyType}}{{/vendorExtensions.x-has-unescaped-property}}
+{{#vendorExtensions.x-has-unescaped-property}}{{^additionalProperties.isAnyType}}{{^vendorExtensions.x-is-one-of}}
+import org.json4s._
+{{/vendorExtensions.x-is-one-of}}{{/additionalProperties.isAnyType}}{{/vendorExtensions.x-has-unescaped-property}}
+{{#additionalProperties.isAnyType}}{{^vendorExtensions.x-has-unescaped-property}}{{^vendorExtensions.x-is-one-of}}
+import org.json4s._
+{{/vendorExtensions.x-is-one-of}}{{/vendorExtensions.x-has-unescaped-property}}{{/additionalProperties.isAnyType}}
+{{^additionalProperties.isAnyType}}{{^vendorExtensions.x-has-unescaped-property}}
+{{#vendorExtensions.x-has-child-generic}}
+import org.json4s.JObject
+{{/vendorExtensions.x-has-child-generic}}
+{{#additionalProperties}}
+import org.json4s.MonadicJValue.jvalueToMonadic
+import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, TypeInfo}
+{{/additionalProperties}}
+{{/vendorExtensions.x-has-unescaped-property}}{{/additionalProperties.isAnyType}}
 
 {{^isEnum}}
 {{#vendorExtensions.x-is-one-of}}
+import org.json4s._
+
 {{> oneof_trait}}
 {{/vendorExtensions.x-is-one-of}}
 {{^vendorExtensions.x-is-one-of}}
