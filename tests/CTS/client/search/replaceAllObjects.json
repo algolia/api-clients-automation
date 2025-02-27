@@ -216,7 +216,7 @@
             "php": "Record is too big",
             "python": "Record is too big",
             "ruby": "400: Record is too big",
-            "scala": "{\\\"message\\\":\\\"Record is too big\\\",\\\"status\\\":400}",
+            "scala": "Record is too big",
             "swift": "HTTP error: Status code: 400 Message: Record is too big"
           }
         }

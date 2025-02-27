@@ -7,7 +7,8 @@ import algoliasearch.extension.internal.Iterable.createIterable
 import algoliasearch.extension.internal.RetryUntil.{DEFAULT_DELAY, retryUntil}
 import algoliasearch.internal.util.{escape, paramToString}
 import algoliasearch.search._
-import org.json4s.{Extraction, Formats, jvalue2extractable}
+import org.json4s.native.Serialization.read
+import org.json4s.{DefaultFormats, Extraction, Formats, jvalue2extractable}
 
 import java.nio.charset.StandardCharsets
 import java.util.Base64
@@ -659,11 +660,11 @@ package object extension {
       )
     }
 
-    /** Get the remaining validity of a secured API key in seconds
+    /** Get the remaining validity duration of a secured API key
       * @param securedApiKey
       *   The secured API key
       * @return
-      *   The remaining validity of the secured API key in seconds
+      *   The remaining validity duration of the secured API key
       */
     def getSecuredApiKeyRemainingValidity(securedApiKey: String): Option[Duration] = {
       val decoded = new String(Base64.getDecoder.decode(securedApiKey), StandardCharsets.UTF_8)
