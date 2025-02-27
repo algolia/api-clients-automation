@@ -119,14 +119,14 @@ object {{classname}}Serializer extends Serializer[{{classname}}] {
         {{/isModel}}
         {{#isMap}}
         {{#isContainer}}
-        case value: JObject => {{classname}}.apply(Extraction.extract[{{{datatypeWithEnum}}}](value))
+        case value: JObject => {{{classname}}}.apply(Extraction.extract[{{{datatypeWithEnum}}}](value))
         {{/isContainer}}
         {{/isMap}}
         {{#isEnumRef}}
         case value: JString => Extraction.extract[{{{datatypeWithEnum}}}](value)
         {{/isEnumRef}}
         {{#isArray}}
-        case JArray(value) if value.forall(_.isInstanceOf[{{#isModel}}JObject{{/isModel}}{{#isBoolean}}JBool{{/isBoolean}}{{#isString}}JString{{/isString}}{{#isNumber}}JNumber{{/isNumber}}{{#isArray}}JArray{{/isArray}}]) => {{{classname}}}.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}(value.map(_.extract))
+        case value: JArray => {{{classname}}}.apply(Extraction.extract[{{{datatypeWithEnum}}}](value))
         {{/isArray}}
         {{^isEnumRef}}
         {{#isInteger}}
@@ -181,10 +181,14 @@ object {{classname}}Serializer extends Serializer[{{classname}}] {
       case value: {{{datatypeWithEnum}}} => Extraction.decompose(value)(format - this)
       {{/isContainer}}
       {{/isMap}}
+      {{#isMap}}
+      {{#isContainer}}
+      case {{classname}}.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}(value) => JObject(value.map(kv => JField(kv._1, Extraction.decompose(kv._2)(format))).toList)
+      {{/isContainer}}
+      {{/isMap}}
       {{#isEnumRef}}
       case value: {{{datatypeWithEnum}}} => JString(value.toString)
       {{/isEnumRef}}
-      /* {{{.}}} */
       {{/composedSchemas.oneOf}}
     }
   }
