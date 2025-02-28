@@ -23,24 +23,6 @@ class {{clientPrefix}}Test extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
   implicit val formats: Formats = JsonSupport.format
 
-  def testClient(appId: String = "appId", apiKey: String = "apiKey"{{#hasRegionalHost}}, region: String = {{#fallbackToAliasHost}}null{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}"{{defaultRegion}}"{{/fallbackToAliasHost}}{{/hasRegionalHost}}): ({{client}}, EchoInterceptor) = {
-    val echo = EchoInterceptor()
-    (
-      {{client}}(
-        appId = appId,
-        apiKey = apiKey,
-        {{#hasRegionalHost}}
-        region = {{#fallbackToAliasHost}}Option(region){{/fallbackToAliasHost}}{{^fallbackToAliasHost}}region{{/fallbackToAliasHost}},
-        {{/hasRegionalHost}}
-        clientOptions = ClientOptions
-          .builder()
-          .withRequesterConfig(requester => requester.withInterceptor(echo))
-          .build()
-      ),
-      echo
-    )
-  }
-
   {{#blocksBenchmark}}
   {{> tests/client/tests}}
   {{/blocksBenchmark}}
