@@ -1,5 +1,5 @@
 // {{generationBanner}}
-package algoliasearch.client
+package algoliasearch.benchmark
 
 import algoliasearch.api.{{client}}
 import algoliasearch.config.*
@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
 
-class {{clientPrefix}}BenchmarkTest extends AnyFunSuite {
+class {{clientPrefix}}Test extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
   implicit val formats: Formats = JsonSupport.format
 
