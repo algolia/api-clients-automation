@@ -17,7 +17,7 @@ package object algoliasearch {
   }
 
   @targetName("assertErrorFuture")
-  def assertError(message: String)(call: => Future[_])(implicit ec: ExecutionContextExecutor): Unit = {
+  def assertError(message: String)(call: => Future[?])(implicit ec: ExecutionContextExecutor): Unit = {
     Await.ready(call, Duration.Inf).value.get match {
       case Failure(exception) =>
         assert(

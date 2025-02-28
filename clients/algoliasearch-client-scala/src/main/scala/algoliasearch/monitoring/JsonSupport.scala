@@ -21,7 +21,7 @@ package algoliasearch.monitoring
 import org.json4s._
 
 object JsonSupport {
-  private def enumSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
+  private def enumSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
     new MetricSerializer() :+
     new ModelTypeSerializer() :+
     new PeriodSerializer() :+
@@ -29,10 +29,12 @@ object JsonSupport {
     new ServerStatusSerializer() :+
     new StatusSerializer()
 
-  private def oneOfsSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]()
+  private def oneOfsSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]()
 
-  private def classMapSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
-    new ErrorBaseSerializer()
+  private def classMapSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
+    new ErrorBaseSerializer() :+
+    new MetricsSerializer() :+
+    new ServerSerializer()
 
   implicit val format: Formats = DefaultFormats ++ enumSerializers ++ oneOfsSerializers ++ classMapSerializers
   implicit val serialization: org.json4s.Serialization = org.json4s.native.Serialization

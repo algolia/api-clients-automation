@@ -51,6 +51,10 @@ export async function playground({ language, client }: { language: AllLanguage; 
         language,
       });
       break;
+    case 'scala':
+      // Scala needs a whitespace in the shell command to know which class it must execute
+      await run(`sbt \\"runMain ${createClientName(client, 'scala')}\\"`, { cwd: 'playground/scala', language });
+      break;
     case 'swift':
       await run(`swift run ${client}-playground`, { cwd: 'playground/swift', language });
       break;

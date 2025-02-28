@@ -45,11 +45,13 @@ sealed trait TagFilters
 object TagFilters {
 
   case class SeqOfTagFilters(value: Seq[TagFilters]) extends TagFilters
+
   case class StringValue(value: String) extends TagFilters
 
   def apply(value: Seq[TagFilters]): TagFilters = {
     TagFilters.SeqOfTagFilters(value)
   }
+
   def apply(value: String): TagFilters = {
     TagFilters.StringValue(value)
   }
@@ -61,9 +63,9 @@ object TagFiltersSerializer extends Serializer[TagFilters] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[TagFilters] =>
       json match {
-        case JArray(value) if value.forall(_.isInstanceOf[JArray]) => TagFilters.SeqOfTagFilters(value.map(_.extract))
-        case JString(value)                                        => TagFilters.StringValue(value)
-        case _ => throw new MappingException("Can't convert " + json + " to TagFilters")
+        case value: JArray  => TagFilters.apply(Extraction.extract[Seq[TagFilters]](value))
+        case JString(value) => TagFilters.StringValue(value)
+        case _              => throw new MappingException("Can't convert " + json + " to TagFilters")
       }
   }
 

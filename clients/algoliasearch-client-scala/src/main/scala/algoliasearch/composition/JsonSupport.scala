@@ -36,13 +36,13 @@ package algoliasearch.composition
 import org.json4s._
 
 object JsonSupport {
-  private def enumSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
+  private def enumSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
     new AroundRadiusAllSerializer() :+
     new MatchLevelSerializer() :+
     new SortRemainingBySerializer() :+
     new SupportedLanguageSerializer()
 
-  private def oneOfsSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
+  private def oneOfsSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
     AroundPrecisionSerializer :+
     AroundRadiusSerializer :+
     FacetFiltersSerializer :+
@@ -52,7 +52,7 @@ object JsonSupport {
     OptionalFiltersSerializer :+
     SnippetResultSerializer
 
-  private def classMapSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
+  private def classMapSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
     new BaseSearchResponseSerializer() :+
     new CompositionBaseSearchResponseSerializer() :+
     new CompositionRunSearchResponseSerializer() :+
@@ -61,7 +61,8 @@ object JsonSupport {
     new HitSerializer() :+
     new ResultsCompositionsResponseSerializer() :+
     new ResultsInjectedItemInfoResponseSerializer() :+
-    new SearchHitsSerializer()
+    new SearchHitsSerializer() :+
+    new SearchResultsItemSerializer()
 
   implicit val format: Formats = DefaultFormats ++ enumSerializers ++ oneOfsSerializers ++ classMapSerializers
   implicit val serialization: org.json4s.Serialization = org.json4s.native.Serialization

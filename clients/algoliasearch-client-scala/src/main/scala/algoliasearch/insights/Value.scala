@@ -36,11 +36,13 @@ sealed trait Value
 object Value {
 
   case class DoubleValue(value: Double) extends Value
+
   case class StringValue(value: String) extends Value
 
   def apply(value: Double): Value = {
     Value.DoubleValue(value)
   }
+
   def apply(value: String): Value = {
     Value.StringValue(value)
   }

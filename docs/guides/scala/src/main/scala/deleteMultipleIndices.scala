@@ -5,7 +5,7 @@ import algoliasearch.api.SearchClient
 import algoliasearch.config.*
 import algoliasearch.extension.SearchClientExtensions
 
-import algoliasearch.search.{MultipleBatchRequest, BatchParams, Action}
+import algoliasearch.search.{Action, BatchParams, MultipleBatchRequest}
 
 def deleteMultipleIndices(): Future[Unit] = {
   // You need an API key with `deleteIndex`

@@ -1534,8 +1534,8 @@ paths:
                 name = "authName",
                 input = AuthOAuth(
                   url = "http://test.oauth",
-                  client_id = "myID",
-                  client_secret = "mySecret"
+                  clientId = "myID",
+                  clientSecret = "mySecret"
                 )
               )
             )

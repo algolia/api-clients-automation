@@ -16,7 +16,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class SnippetIngestionClient {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   /** Snippet for the createAuthentication method.
     *
@@ -38,8 +38,8 @@ class SnippetIngestionClient {
         name = "authName",
         input = AuthOAuth(
           url = "http://test.oauth",
-          client_id = "myID",
-          client_secret = "mySecret"
+          clientId = "myID",
+          clientSecret = "mySecret"
         )
       )
     )
@@ -2041,8 +2041,8 @@ class SnippetIngestionClient {
               name = "authName",
               input = AuthOAuth(
                 url = "http://test.oauth",
-                client_id = "myID",
-                client_secret = "mySecret"
+                clientId = "myID",
+                clientSecret = "mySecret"
               )
             )
           )
@@ -2110,8 +2110,8 @@ class SnippetIngestionClient {
               name = "authName",
               input = AuthOAuth(
                 url = "http://test.oauth",
-                client_id = "myID",
-                client_secret = "mySecret"
+                clientId = "myID",
+                clientSecret = "mySecret"
               )
             )
           )

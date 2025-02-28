@@ -17,7 +17,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class SnippetSearchClient {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   /** Snippet for the addApiKey method.
     *

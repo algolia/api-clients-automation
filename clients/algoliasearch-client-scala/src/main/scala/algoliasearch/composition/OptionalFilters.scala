@@ -48,11 +48,13 @@ sealed trait OptionalFilters
 object OptionalFilters {
 
   case class SeqOfOptionalFilters(value: Seq[OptionalFilters]) extends OptionalFilters
+
   case class StringValue(value: String) extends OptionalFilters
 
   def apply(value: Seq[OptionalFilters]): OptionalFilters = {
     OptionalFilters.SeqOfOptionalFilters(value)
   }
+
   def apply(value: String): OptionalFilters = {
     OptionalFilters.StringValue(value)
   }
@@ -64,8 +66,7 @@ object OptionalFiltersSerializer extends Serializer[OptionalFilters] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[OptionalFilters] =>
       json match {
-        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
-          OptionalFilters.SeqOfOptionalFilters(value.map(_.extract))
+        case value: JArray  => OptionalFilters.apply(Extraction.extract[Seq[OptionalFilters]](value))
         case JString(value) => OptionalFilters.StringValue(value)
         case _              => throw new MappingException("Can't convert " + json + " to OptionalFilters")
       }

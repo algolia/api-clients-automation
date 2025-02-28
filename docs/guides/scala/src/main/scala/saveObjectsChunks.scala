@@ -12,10 +12,11 @@ import algoliasearch.api.SearchClient
 import algoliasearch.config.*
 import algoliasearch.extension.SearchClientExtensions
 
+import algoliasearch.search.JsonSupport
 import algoliasearch.config.RequestOptions
 
 def saveObjectsChunks(): Future[Unit] = {
-  implicit val formats: org.json4s.Formats = org.json4s.DefaultFormats
+  implicit val formats: org.json4s.Formats = JsonSupport.format
 
   val path = "/tmp/records.json"
   val result = Using(Source.fromFile(path))(_.mkString).getOrElse {

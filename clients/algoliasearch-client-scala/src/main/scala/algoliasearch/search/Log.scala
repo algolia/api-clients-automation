@@ -35,6 +35,8 @@ package algoliasearch.search
 
 import java.net.URI
 
+import org.json4s._
+
 /** Log
   *
   * @param timestamp
@@ -71,17 +73,56 @@ import java.net.URI
 case class Log(
     timestamp: String,
     method: String,
-    answerCode: String,
-    queryBody: String,
+    answerCode /* answer_code */: String,
+    queryBody /* query_body */: String,
     answer: String,
     url: URI,
     ip: String,
-    queryHeaders: String,
+    queryHeaders /* query_headers */: String,
     sha1: String,
-    nbApiCalls: Option[String] = scala.None,
-    processingTimeMs: String,
+    nbApiCalls /* nb_api_calls */: Option[String] = scala.None,
+    processingTimeMs /* processing_time_ms */: String,
     index: Option[String] = scala.None,
-    queryParams: Option[String] = scala.None,
-    queryNbHits: Option[String] = scala.None,
-    innerQueries: Option[Seq[LogQuery]] = scala.None
+    queryParams /* query_params */: Option[String] = scala.None,
+    queryNbHits /* query_nb_hits */: Option[String] = scala.None,
+    innerQueries /* inner_queries */: Option[Seq[LogQuery]] = scala.None
 )
+
+class LogSerializer extends Serializer[Log] {
+
+  private val renamedFields = Map[String, String](
+    "answer_code" -> "answerCode",
+    "query_body" -> "queryBody",
+    "query_headers" -> "queryHeaders",
+    "nb_api_calls" -> "nbApiCalls",
+    "processing_time_ms" -> "processingTimeMs",
+    "query_params" -> "queryParams",
+    "query_nb_hits" -> "queryNbHits",
+    "inner_queries" -> "innerQueries"
+  )
+  override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), Log] = {
+    case (TypeInfo(clazz, _), json) if clazz == classOf[Log] =>
+      json match {
+        case jobject: JObject =>
+          // Rename fields from JSON to Scala
+          val renamedObject = JObject(
+            jobject.obj.map { field =>
+              renamedFields.get(field._1).map(JField(_, field._2)).getOrElse(field)
+            }
+          )
+          val formats = format - this
+          val mf = manifest[Log]
+          Extraction.extract[Log](renamedObject)(formats, mf)
+
+        case _ => throw new IllegalArgumentException(s"Can't deserialize $json as Log")
+      }
+  }
+
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: Log =>
+    val formats = format - this // remove current serializer from formats to avoid stackoverflow
+    val baseObj = Extraction.decompose(value)(formats)
+    baseObj transformField {
+      case JField(name, value) if renamedFields.exists(_._2 == name) => (renamedFields.find(_._2 == name).get._1, value)
+    }
+  }
+}
