@@ -38,11 +38,13 @@ sealed trait OptionalWords
 object OptionalWords {
 
   case class StringValue(value: String) extends OptionalWords
+
   case class SeqOfString(value: Seq[String]) extends OptionalWords
 
   def apply(value: String): OptionalWords = {
     OptionalWords.StringValue(value)
   }
+
   def apply(value: Seq[String]): OptionalWords = {
     OptionalWords.SeqOfString(value)
   }
@@ -54,9 +56,9 @@ object OptionalWordsSerializer extends Serializer[OptionalWords] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[OptionalWords] =>
       json match {
-        case JString(value)                                        => OptionalWords.StringValue(value)
-        case JArray(value) if value.forall(_.isInstanceOf[JArray]) => OptionalWords.SeqOfString(value.map(_.extract))
-        case _ => throw new MappingException("Can't convert " + json + " to OptionalWords")
+        case JString(value) => OptionalWords.StringValue(value)
+        case value: JArray  => OptionalWords.apply(Extraction.extract[Seq[String]](value))
+        case _              => throw new MappingException("Can't convert " + json + " to OptionalWords")
       }
   }
 

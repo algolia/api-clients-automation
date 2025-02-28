@@ -18,7 +18,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class QuerySuggestionsTest extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   def testClient(
       appId: String = "appId",
@@ -116,16 +116,14 @@ class QuerySuggestionsTest extends AnyFunSuite {
         ),
         Duration.Inf
       )
-      assert(write(res) == "{\"headerAPIKeyValue\":\"test-api-key\"}")
+      assert(parse(write(res)) == parse("{\"headerAPIKeyValue\":\"test-api-key\"}"))
     }
-
     {
 
       client.setClientApiKey(
         apiKey = "updated-api-key"
       )
     }
-
     {
       var res = Await.result(
         client.customGet[JObject](
@@ -133,7 +131,8 @@ class QuerySuggestionsTest extends AnyFunSuite {
         ),
         Duration.Inf
       )
-      assert(write(res) == "{\"headerAPIKeyValue\":\"updated-api-key\"}")
+      assert(parse(write(res)) == parse("{\"headerAPIKeyValue\":\"updated-api-key\"}"))
     }
   }
+
 }

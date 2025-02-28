@@ -1669,7 +1669,7 @@
       "default": "import algoliasearch.api.IngestionClient\nimport algoliasearch.config.*"
     },
     "createAuthentication": {
-      "createAuthenticationOAuth": "val response = client.createAuthentication(\n  authenticationCreate = AuthenticationCreate(\n    `type` = AuthenticationType.withName(\"oauth\"),\n    name = \"authName\",\n    input = AuthOAuth(\n      url = \"http://test.oauth\",\n      client_id = \"myID\",\n      client_secret = \"mySecret\"\n    )\n  )\n)",
+      "createAuthenticationOAuth": "val response = client.createAuthentication(\n  authenticationCreate = AuthenticationCreate(\n    `type` = AuthenticationType.withName(\"oauth\"),\n    name = \"authName\",\n    input = AuthOAuth(\n      url = \"http://test.oauth\",\n      clientId = \"myID\",\n      clientSecret = \"mySecret\"\n    )\n  )\n)",
       "createAuthenticationAlgolia": "val response = client.createAuthentication(\n  authenticationCreate = AuthenticationCreate(\n    `type` = AuthenticationType.withName(\"algolia\"),\n    name = \"authName\",\n    input = AuthAlgolia(\n      appID = \"ALGOLIA_APPLICATION_ID\",\n      apiKey = \"ALGOLIA_API_KEY\"\n    )\n  )\n)"
     },
     "createDestination": {
@@ -1835,11 +1835,11 @@
     },
     "tryTransformation": {
       "tryTransformation": "val response = client.tryTransformation(\n  transformationTry = TransformationTry(\n    code = \"foo\",\n    sampleRecord = JObject(List(JField(\"bar\", JString(\"baz\"))))\n  )\n)",
-      "with authentications": "val response = client.tryTransformation(\n  transformationTry = TransformationTry(\n    code = \"foo\",\n    sampleRecord = JObject(List(JField(\"bar\", JString(\"baz\")))),\n    authentications = Some(\n      Seq(\n        AuthenticationCreate(\n          `type` = AuthenticationType.withName(\"oauth\"),\n          name = \"authName\",\n          input = AuthOAuth(\n            url = \"http://test.oauth\",\n            client_id = \"myID\",\n            client_secret = \"mySecret\"\n          )\n        )\n      )\n    )\n  )\n)"
+      "with authentications": "val response = client.tryTransformation(\n  transformationTry = TransformationTry(\n    code = \"foo\",\n    sampleRecord = JObject(List(JField(\"bar\", JString(\"baz\")))),\n    authentications = Some(\n      Seq(\n        AuthenticationCreate(\n          `type` = AuthenticationType.withName(\"oauth\"),\n          name = \"authName\",\n          input = AuthOAuth(\n            url = \"http://test.oauth\",\n            clientId = \"myID\",\n            clientSecret = \"mySecret\"\n          )\n        )\n      )\n    )\n  )\n)"
     },
     "tryTransformationBeforeUpdate": {
       "tryTransformationBeforeUpdate": "val response = client.tryTransformationBeforeUpdate(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  transformationTry = TransformationTry(\n    code = \"foo\",\n    sampleRecord = JObject(List(JField(\"bar\", JString(\"baz\"))))\n  )\n)",
-      "existing with authentications": "val response = client.tryTransformationBeforeUpdate(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  transformationTry = TransformationTry(\n    code = \"foo\",\n    sampleRecord = JObject(List(JField(\"bar\", JString(\"baz\")))),\n    authentications = Some(\n      Seq(\n        AuthenticationCreate(\n          `type` = AuthenticationType.withName(\"oauth\"),\n          name = \"authName\",\n          input = AuthOAuth(\n            url = \"http://test.oauth\",\n            client_id = \"myID\",\n            client_secret = \"mySecret\"\n          )\n        )\n      )\n    )\n  )\n)"
+      "existing with authentications": "val response = client.tryTransformationBeforeUpdate(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  transformationTry = TransformationTry(\n    code = \"foo\",\n    sampleRecord = JObject(List(JField(\"bar\", JString(\"baz\")))),\n    authentications = Some(\n      Seq(\n        AuthenticationCreate(\n          `type` = AuthenticationType.withName(\"oauth\"),\n          name = \"authName\",\n          input = AuthOAuth(\n            url = \"http://test.oauth\",\n            clientId = \"myID\",\n            clientSecret = \"mySecret\"\n          )\n        )\n      )\n    )\n  )\n)"
     },
     "updateAuthentication": {
       "default": "val response = client.updateAuthentication(\n  authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  authenticationUpdate = AuthenticationUpdate(\n    name = Some(\"newName\")\n  )\n)"

@@ -29,6 +29,8 @@
   */
 package algoliasearch.recommend
 
+import org.json4s._
+
 /** Trending facet hit.
   *
   * @param score
@@ -41,7 +43,39 @@ package algoliasearch.recommend
   *   filter will be returned.
   */
 case class TrendingFacetHit(
-    score: Option[Double] = scala.None,
+    score /* _score */: Option[Double] = scala.None,
     facetName: String,
     facetValue: String
 ) extends RecommendationsHitTrait
+
+class TrendingFacetHitSerializer extends Serializer[TrendingFacetHit] {
+
+  private val renamedFields = Map[String, String](
+    "_score" -> "score"
+  )
+  override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), TrendingFacetHit] = {
+    case (TypeInfo(clazz, _), json) if clazz == classOf[TrendingFacetHit] =>
+      json match {
+        case jobject: JObject =>
+          // Rename fields from JSON to Scala
+          val renamedObject = JObject(
+            jobject.obj.map { field =>
+              renamedFields.get(field._1).map(JField(_, field._2)).getOrElse(field)
+            }
+          )
+          val formats = format - this
+          val mf = manifest[TrendingFacetHit]
+          Extraction.extract[TrendingFacetHit](renamedObject)(formats, mf)
+
+        case _ => throw new IllegalArgumentException(s"Can't deserialize $json as TrendingFacetHit")
+      }
+  }
+
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: TrendingFacetHit =>
+    val formats = format - this // remove current serializer from formats to avoid stackoverflow
+    val baseObj = Extraction.decompose(value)(formats)
+    baseObj transformField {
+      case JField(name, value) if renamedFields.exists(_._2 == name) => (renamedFields.find(_._2 == name).get._1, value)
+    }
+  }
+}

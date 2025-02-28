@@ -18,6 +18,8 @@
   */
 package algoliasearch.monitoring
 
+import org.json4s._
+
 /** Metrics
   *
   * @param cpuUsage
@@ -33,9 +35,45 @@ package algoliasearch.monitoring
   *   Average build time of the indices in seconds.
   */
 case class Metrics(
-    cpuUsage: Option[Map[String, Seq[ProbesMetric]]] = scala.None,
-    ramIndexingUsage: Option[Map[String, Seq[ProbesMetric]]] = scala.None,
-    ramSearchUsage: Option[Map[String, Seq[ProbesMetric]]] = scala.None,
-    ssdUsage: Option[Map[String, Seq[ProbesMetric]]] = scala.None,
-    avgBuildTime: Option[Map[String, Seq[ProbesMetric]]] = scala.None
+    cpuUsage /* cpu_usage */: Option[Map[String, Seq[ProbesMetric]]] = scala.None,
+    ramIndexingUsage /* ram_indexing_usage */: Option[Map[String, Seq[ProbesMetric]]] = scala.None,
+    ramSearchUsage /* ram_search_usage */: Option[Map[String, Seq[ProbesMetric]]] = scala.None,
+    ssdUsage /* ssd_usage */: Option[Map[String, Seq[ProbesMetric]]] = scala.None,
+    avgBuildTime /* avg_build_time */: Option[Map[String, Seq[ProbesMetric]]] = scala.None
 )
+
+class MetricsSerializer extends Serializer[Metrics] {
+
+  private val renamedFields = Map[String, String](
+    "cpu_usage" -> "cpuUsage",
+    "ram_indexing_usage" -> "ramIndexingUsage",
+    "ram_search_usage" -> "ramSearchUsage",
+    "ssd_usage" -> "ssdUsage",
+    "avg_build_time" -> "avgBuildTime"
+  )
+  override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), Metrics] = {
+    case (TypeInfo(clazz, _), json) if clazz == classOf[Metrics] =>
+      json match {
+        case jobject: JObject =>
+          // Rename fields from JSON to Scala
+          val renamedObject = JObject(
+            jobject.obj.map { field =>
+              renamedFields.get(field._1).map(JField(_, field._2)).getOrElse(field)
+            }
+          )
+          val formats = format - this
+          val mf = manifest[Metrics]
+          Extraction.extract[Metrics](renamedObject)(formats, mf)
+
+        case _ => throw new IllegalArgumentException(s"Can't deserialize $json as Metrics")
+      }
+  }
+
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: Metrics =>
+    val formats = format - this // remove current serializer from formats to avoid stackoverflow
+    val baseObj = Extraction.decompose(value)(formats)
+    baseObj transformField {
+      case JField(name, value) if renamedFields.exists(_._2 == name) => (renamedFields.find(_._2 == name).get._1, value)
+    }
+  }
+}

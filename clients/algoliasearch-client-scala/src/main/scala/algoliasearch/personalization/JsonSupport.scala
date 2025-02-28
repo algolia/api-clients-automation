@@ -22,12 +22,12 @@ package algoliasearch.personalization
 import org.json4s._
 
 object JsonSupport {
-  private def enumSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
+  private def enumSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
     new EventTypeSerializer()
 
-  private def oneOfsSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]()
+  private def oneOfsSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]()
 
-  private def classMapSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
+  private def classMapSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
     new ErrorBaseSerializer()
 
   implicit val format: Formats = DefaultFormats ++ enumSerializers ++ oneOfsSerializers ++ classMapSerializers

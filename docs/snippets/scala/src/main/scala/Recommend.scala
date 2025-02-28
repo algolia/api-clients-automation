@@ -16,7 +16,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class SnippetRecommendClient {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   /** Snippet for the batchRecommendRules method.
     *

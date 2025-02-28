@@ -32,7 +32,7 @@ package algoliasearch.recommend
 import org.json4s._
 
 object JsonSupport {
-  private def enumSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
+  private def enumSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
     new AdvancedSyntaxFeaturesSerializer() :+
     new AlternativesAsExactSerializer() :+
     new AroundRadiusAllSerializer() :+
@@ -52,7 +52,7 @@ object JsonSupport {
     new TrendingItemsModelSerializer() :+
     new TypoToleranceEnumSerializer()
 
-  private def oneOfsSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
+  private def oneOfsSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
     AroundPrecisionSerializer :+
     AroundRadiusSerializer :+
     DistinctSerializer :+
@@ -71,10 +71,13 @@ object JsonSupport {
     TagFiltersSerializer :+
     TypoToleranceSerializer
 
-  private def classMapSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
+  private def classMapSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
     new BaseSearchResponseSerializer() :+
     new ErrorBaseSerializer() :+
-    new RecommendHitSerializer()
+    new RecommendHitSerializer() :+
+    new RecommendRuleSerializer() :+
+    new RecommendationsResultsSerializer() :+
+    new TrendingFacetHitSerializer()
 
   implicit val format: Formats = DefaultFormats ++ enumSerializers ++ oneOfsSerializers ++ classMapSerializers
   implicit val serialization: org.json4s.Serialization = org.json4s.native.Serialization

@@ -18,7 +18,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class MonitoringTest extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   def testClient(appId: String = "appId", apiKey: String = "apiKey"): (MonitoringClient, EchoInterceptor) = {
     val echo = EchoInterceptor()
@@ -67,7 +67,6 @@ class MonitoringTest extends AnyFunSuite {
   test("use the correct host") {
 
     val (client, echo) = testClient(appId = "my-app-id", apiKey = "my-api-key")
-
     Await.ready(
       client.customDelete[JObject](
         path = "test"
@@ -104,16 +103,14 @@ class MonitoringTest extends AnyFunSuite {
         ),
         Duration.Inf
       )
-      assert(write(res) == "{\"headerAPIKeyValue\":\"test-api-key\"}")
+      assert(parse(write(res)) == parse("{\"headerAPIKeyValue\":\"test-api-key\"}"))
     }
-
     {
 
       client.setClientApiKey(
         apiKey = "updated-api-key"
       )
     }
-
     {
       var res = Await.result(
         client.customGet[JObject](
@@ -121,7 +118,8 @@ class MonitoringTest extends AnyFunSuite {
         ),
         Duration.Inf
       )
-      assert(write(res) == "{\"headerAPIKeyValue\":\"updated-api-key\"}")
+      assert(parse(write(res)) == parse("{\"headerAPIKeyValue\":\"updated-api-key\"}"))
     }
   }
+
 }

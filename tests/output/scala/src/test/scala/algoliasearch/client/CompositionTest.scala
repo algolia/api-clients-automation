@@ -18,7 +18,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class CompositionTest extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   def testClient(appId: String = "appId", apiKey: String = "apiKey"): (CompositionClient, EchoInterceptor) = {
     val echo = EchoInterceptor()
@@ -38,7 +38,6 @@ class CompositionTest extends AnyFunSuite {
   test("calls api with correct read host") {
 
     val (client, echo) = testClient(appId = "test-app-id", apiKey = "test-api-key")
-
     Await.ready(
       client.search(
         compositionID = "test-composition-id",
@@ -53,7 +52,6 @@ class CompositionTest extends AnyFunSuite {
   test("calls api with correct write host") {
 
     val (client, echo) = testClient(appId = "test-app-id", apiKey = "test-api-key")
-
     Await.ready(
       client.search(
         compositionID = "test-composition-id",
@@ -64,4 +62,5 @@ class CompositionTest extends AnyFunSuite {
     )
     assert(echo.lastResponse.get.host == "test-app-id-dsn.algolia.net")
   }
+
 }

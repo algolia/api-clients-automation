@@ -48,11 +48,13 @@ trait IgnorePluralsTrait extends IgnorePlurals
 object IgnorePlurals {
 
   case class SeqOfSupportedLanguage(value: Seq[SupportedLanguage]) extends IgnorePlurals
+
   case class BooleanValue(value: Boolean) extends IgnorePlurals
 
   def apply(value: Seq[SupportedLanguage]): IgnorePlurals = {
     IgnorePlurals.SeqOfSupportedLanguage(value)
   }
+
   def apply(value: Boolean): IgnorePlurals = {
     IgnorePlurals.BooleanValue(value)
   }
@@ -64,8 +66,7 @@ object IgnorePluralsSerializer extends Serializer[IgnorePlurals] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[IgnorePlurals] =>
       json match {
-        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
-          IgnorePlurals.SeqOfSupportedLanguage(value.map(_.extract))
+        case value: JArray  => IgnorePlurals.apply(Extraction.extract[Seq[SupportedLanguage]](value))
         case value: JString => Extraction.extract[BooleanString](value)
         case JBool(value)   => IgnorePlurals.BooleanValue(value)
         case _              => throw new MappingException("Can't convert " + json + " to IgnorePlurals")

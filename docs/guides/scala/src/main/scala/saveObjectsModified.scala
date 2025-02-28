@@ -12,8 +12,10 @@ import algoliasearch.api.SearchClient
 import algoliasearch.config.*
 import algoliasearch.extension.SearchClientExtensions
 
+import algoliasearch.search.JsonSupport
+
 def saveObjectsModified(): Future[Unit] = {
-  implicit val formats: org.json4s.Formats = org.json4s.DefaultFormats
+  implicit val formats: org.json4s.Formats = JsonSupport.format
 
   val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 

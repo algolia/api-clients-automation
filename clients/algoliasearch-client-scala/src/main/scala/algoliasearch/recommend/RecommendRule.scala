@@ -29,6 +29,8 @@
   */
 package algoliasearch.recommend
 
+import org.json4s._
+
 /** Recommend rule.
   *
   * @param objectID
@@ -41,7 +43,7 @@ package algoliasearch.recommend
   *   Time periods when the rule is active.
   */
 case class RecommendRule(
-    metadata: Option[RuleMetadata] = scala.None,
+    metadata /* _metadata */: Option[RuleMetadata] = scala.None,
     objectID: Option[String] = scala.None,
     condition: Option[Condition] = scala.None,
     consequence: Option[Consequence] = scala.None,
@@ -49,3 +51,35 @@ case class RecommendRule(
     enabled: Option[Boolean] = scala.None,
     validity: Option[Seq[TimeRange]] = scala.None
 )
+
+class RecommendRuleSerializer extends Serializer[RecommendRule] {
+
+  private val renamedFields = Map[String, String](
+    "_metadata" -> "metadata"
+  )
+  override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), RecommendRule] = {
+    case (TypeInfo(clazz, _), json) if clazz == classOf[RecommendRule] =>
+      json match {
+        case jobject: JObject =>
+          // Rename fields from JSON to Scala
+          val renamedObject = JObject(
+            jobject.obj.map { field =>
+              renamedFields.get(field._1).map(JField(_, field._2)).getOrElse(field)
+            }
+          )
+          val formats = format - this
+          val mf = manifest[RecommendRule]
+          Extraction.extract[RecommendRule](renamedObject)(formats, mf)
+
+        case _ => throw new IllegalArgumentException(s"Can't deserialize $json as RecommendRule")
+      }
+  }
+
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: RecommendRule =>
+    val formats = format - this // remove current serializer from formats to avoid stackoverflow
+    val baseObj = Extraction.decompose(value)(formats)
+    baseObj transformField {
+      case JField(name, value) if renamedFields.exists(_._2 == name) => (renamedFields.find(_._2 == name).get._1, value)
+    }
+  }
+}

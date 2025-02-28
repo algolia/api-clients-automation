@@ -39,11 +39,13 @@ sealed trait ReRankingApplyFilter
 object ReRankingApplyFilter {
 
   case class SeqOfReRankingApplyFilter(value: Seq[ReRankingApplyFilter]) extends ReRankingApplyFilter
+
   case class StringValue(value: String) extends ReRankingApplyFilter
 
   def apply(value: Seq[ReRankingApplyFilter]): ReRankingApplyFilter = {
     ReRankingApplyFilter.SeqOfReRankingApplyFilter(value)
   }
+
   def apply(value: String): ReRankingApplyFilter = {
     ReRankingApplyFilter.StringValue(value)
   }
@@ -55,8 +57,7 @@ object ReRankingApplyFilterSerializer extends Serializer[ReRankingApplyFilter] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[ReRankingApplyFilter] =>
       json match {
-        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
-          ReRankingApplyFilter.SeqOfReRankingApplyFilter(value.map(_.extract))
+        case value: JArray  => ReRankingApplyFilter.apply(Extraction.extract[Seq[ReRankingApplyFilter]](value))
         case JString(value) => ReRankingApplyFilter.StringValue(value)
         case _              => throw new MappingException("Can't convert " + json + " to ReRankingApplyFilter")
       }

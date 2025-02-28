@@ -33,8 +33,7 @@
   */
 package algoliasearch.composition
 
-import org.json4s.MonadicJValue.jvalueToMonadic
-import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, TypeInfo}
+import org.json4s._
 
 /** BaseSearchResponse
   *
@@ -99,7 +98,7 @@ case class BaseSearchResponse(
     exhaustiveNbHits: Option[Boolean] = scala.None,
     exhaustiveTypo: Option[Boolean] = scala.None,
     facets: Option[Map[String, Map[String, Int]]] = scala.None,
-    facetsStats: Option[Map[String, FacetStats]] = scala.None,
+    facetsStats /* facets_stats */: Option[Map[String, FacetStats]] = scala.None,
     index: Option[String] = scala.None,
     indexUsed: Option[String] = scala.None,
     message: Option[String] = scala.None,
@@ -114,19 +113,29 @@ case class BaseSearchResponse(
     serverUsed: Option[String] = scala.None,
     userData: Option[Any] = scala.None,
     queryID: Option[String] = scala.None,
-    automaticInsights: Option[Boolean] = scala.None,
+    automaticInsights /* _automaticInsights */: Option[Boolean] = scala.None,
     additionalProperties: Option[List[JField]] = None
 )
 
 class BaseSearchResponseSerializer extends Serializer[BaseSearchResponse] {
 
+  private val renamedFields = Map[String, String](
+    "facets_stats" -> "facetsStats",
+    "_automaticInsights" -> "automaticInsights"
+  )
   override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), BaseSearchResponse] = {
     case (TypeInfo(clazz, _), json) if clazz == classOf[BaseSearchResponse] =>
       json match {
         case jobject: JObject =>
+          // Rename fields from JSON to Scala
+          val renamedObject = JObject(
+            jobject.obj.map { field =>
+              renamedFields.get(field._1).map(JField(_, field._2)).getOrElse(field)
+            }
+          )
           val formats = format - this
           val mf = manifest[BaseSearchResponse]
-          val obj = Extraction.extract[BaseSearchResponse](jobject)(formats, mf)
+          val obj = Extraction.extract[BaseSearchResponse](renamedObject)(formats, mf)
 
           val fields = Set(
             "abTestID",
@@ -139,7 +148,7 @@ class BaseSearchResponseSerializer extends Serializer[BaseSearchResponse] {
             "exhaustiveNbHits",
             "exhaustiveTypo",
             "facets",
-            "facetsStats",
+            "facets_stats",
             "index",
             "indexUsed",
             "message",
@@ -154,13 +163,13 @@ class BaseSearchResponseSerializer extends Serializer[BaseSearchResponse] {
             "serverUsed",
             "userData",
             "queryID",
-            "automaticInsights"
+            "_automaticInsights"
           )
           val additionalProperties = jobject removeField {
             case (name, _) if fields.contains(name) => true
             case _                                  => false
           }
-          additionalProperties.values match {
+          additionalProperties match {
             case JObject(fieldsList) => obj copy (additionalProperties = Some(fieldsList))
             case _                   => obj
           }
@@ -170,9 +179,13 @@ class BaseSearchResponseSerializer extends Serializer[BaseSearchResponse] {
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: BaseSearchResponse =>
     val formats = format - this // remove current serializer from formats to avoid stackoverflow
+    val baseObj = Extraction.decompose(value.copy(additionalProperties = None))(formats)
+    val renamedObj = baseObj transformField {
+      case JField(name, value) if renamedFields.exists(_._2 == name) => (renamedFields.find(_._2 == name).get._1, value)
+    }
     value.additionalProperties match {
-      case Some(fields) => Extraction.decompose(value.copy(additionalProperties = None))(formats) merge JObject(fields)
-      case None         => Extraction.decompose(value)(formats)
+      case Some(fields) => renamedObj merge JObject(fields)
+      case None         => renamedObj
     }
   }
 }
