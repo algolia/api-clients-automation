@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   notification:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 1
     if: ${{ !github.event.pull_request.head.repo.fork && github.event.number }}
     permissions:
@@ -38,7 +38,7 @@ jobs:
             _Please do not push any generated code to this pull request._
 
   setup:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
       CACHE_VERSION: 1.13 # bump this to run all clients on the CI.
@@ -121,13 +121,10 @@ jobs:
       RUN_GEN_JAVASCRIPT: ${{ steps.gen-matrix.outputs.RUN_GEN_JAVASCRIPT }}
 
       SWIFT_DATA: ${{ steps.gen-matrix.outputs.SWIFT_DATA }}
-      RUN_MACOS_SWIFT_CTS: ${{ steps.gen-matrix.outputs.RUN_MACOS_SWIFT_CTS }}
-
       KOTLIN_DATA: ${{ steps.gen-matrix.outputs.KOTLIN_DATA }}
-      RUN_MACOS_KOTLIN_BUILD: ${{ steps.gen-matrix.outputs.RUN_MACOS_KOTLIN_BUILD }}
 
   scripts:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     needs: setup
     if: ${{ needs.setup.outputs.RUN_SCRIPTS == 'true' }}
@@ -152,7 +149,7 @@ jobs:
         run: yarn workspace eslint-plugin-automation-custom test
 
   specs:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     needs: setup
     steps:
@@ -175,7 +172,7 @@ jobs:
 
   client_gen_javascript:
     timeout-minutes: 15
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs:
       - setup
       - specs
@@ -302,7 +299,7 @@ jobs:
 
   client_gen:
     timeout-minutes: 20 # swift CTS is excruciatingly slow
-    runs-on: ubuntu-22.04
+    runs-on: ${{ matrix.client.language == 'swift' && 'macos-14' || 'ubuntu-24.04' }}
     needs:
       - setup
       - specs
@@ -381,13 +378,12 @@ jobs:
         run: yarn cli cts generate ${{ matrix.client.language }} ${{ matrix.client.toRun }} --language-version ${{ matrix.client.version }}
 
       - name: Run unit CTS
-        if: ${{ matrix.client.language != 'swift' || startsWith(github.head_ref, 'chore/prepare-release-') }}
         run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --no-e2e
 
       - name: Run e2e CTS
         id: cts-e2e
         continue-on-error: true
-        if: ${{ !github.event.pull_request.head.repo.fork && !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-e2e]') && (matrix.client.language != 'swift' || startsWith(github.head_ref, 'chore/prepare-release-')) }}
+        if: ${{ !github.event.pull_request.head.repo.fork && !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-e2e]') }}
         run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --no-client --no-requests
 
       - name: Retry e2e CTS
@@ -424,7 +420,7 @@ jobs:
 
   kotlin_build_macos:
     timeout-minutes: 15
-    runs-on: macos-latest
+    runs-on: macos-14
     needs:
       - setup
       - specs
@@ -432,7 +428,7 @@ jobs:
     if: |
       always() &&
       needs.setup.outputs.RUN_GEN == 'true' &&
-      needs.setup.outputs.RUN_MACOS_KOTLIN_BUILD == 'true' &&
+      needs.setup.outputs.KOTLIN_DATA != '' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     outputs:
@@ -468,9 +464,9 @@ jobs:
         id: setoutput
         run: echo "success=true" >> "$GITHUB_OUTPUT"
 
-  swift_cts_macos:
-    timeout-minutes: 20
-    runs-on: macos-latest
+  swift_build_linux:
+    timeout-minutes: 10
+    runs-on: ubuntu-22.04
     needs:
       - setup
       - specs
@@ -478,7 +474,7 @@ jobs:
     if: |
       always() &&
       needs.setup.outputs.RUN_GEN == 'true' &&
-      needs.setup.outputs.RUN_MACOS_SWIFT_CTS == 'true' &&
+      needs.setup.outputs.SWIFT_DATA != '' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     env:
@@ -487,7 +483,7 @@ jobs:
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
     outputs:
       success: ${{ steps.setoutput.outputs.success }}
-    name: client swift${{ format('@{0}', fromJSON(needs.setup.outputs.SWIFT_DATA).version) }} macos
+    name: client swift${{ format('@{0}', fromJSON(needs.setup.outputs.SWIFT_DATA).version) }} linux
     steps:
       - uses: actions/checkout@v4
         if: ${{ env.ALGOLIA_APPLICATION_ID != '' }}
@@ -507,25 +503,15 @@ jobs:
       - name: Generate clients
         run: yarn cli generate swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
 
-      - name: Generate tests
-        run: yarn cli cts generate swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
-
-      - name: Run tests on macOS
-        id: run-test
-        if: ${{ env.ALGOLIA_APPLICATION_ID != '' }}
-        continue-on-error: true
-        run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }} -v ${{ !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-e2e]') && '--no-e2e' || '' }}
-
-      - name: Retry tests
-        if: ${{ steps.run-test.outcome == 'failure' }}
-        run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }} -v ${{ !contains(format('{0} {1}', github.event.pull_request.title, github.event.head_commit.message), '[skip-e2e]') && '--no-e2e' || '' }}
+      - name: Build clients
+        run: yarn cli build clients swift
 
       - name: Set output
         id: setoutput
         run: echo "success=true" >> "$GITHUB_OUTPUT"
 
   codegen:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     needs:
       - setup
@@ -660,22 +646,22 @@ jobs:
         run: echo "success=true" >> "$GITHUB_OUTPUT"
 
   check_green:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     needs:
       - codegen
-      - swift_cts_macos
+      - swift_build_linux
       - kotlin_build_macos
     if: always()
     steps:
       - run: |
-          if [[ ("${{ needs.codegen.outputs.success }}" != "true") || ("${{ needs.swift_cts_macos.result }}" != "skipped" && "${{ needs.swift_cts_macos.outputs.success }}" != "true") || ("${{ needs.kotlin_build_macos.result }}" != "skipped" && "${{ needs.kotlin_build_macos.outputs.success }}" != "true")]]; then
+          if [[ ("${{ needs.codegen.outputs.success }}" != "true") || ("${{ needs.swift_build_linux.result }}" != "skipped" && "${{ needs.swift_build_linux.outputs.success }}" != "true") || ("${{ needs.kotlin_build_macos.result }}" != "skipped" && "${{ needs.kotlin_build_macos.outputs.success }}" != "true")]]; then
             echo "a needed step failed"
             exit 1
           fi
 
   push_and_release:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     needs:
       - codegen

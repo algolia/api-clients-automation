@@ -120,7 +120,6 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         continue;
       case 'kotlin':
         setOutput('KOTLIN_DATA', JSON.stringify(languageMatrix));
-        setOutput('RUN_MACOS_KOTLIN_BUILD', true);
         break;
       case 'php':
         if (languageMatrix.version) {
@@ -138,7 +137,6 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         languageMatrix.testsToDelete = `${testsOutputBase}/client ${testsOutputBase}/requests ${testsOutputBase}/e2e`;
         languageMatrix.testsToStore = `${languageMatrix.testsToStore} ${testsRootFolder}/Package.swift`;
         setOutput('SWIFT_DATA', JSON.stringify(languageMatrix));
-        setOutput('RUN_MACOS_SWIFT_CTS', true);
         break;
       default:
         break;
