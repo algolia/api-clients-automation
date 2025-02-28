@@ -359,16 +359,14 @@ paths:
 
             // Call the API
 
-            val response = client.customGet[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customGet[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -600,16 +598,14 @@ paths:
 
             // Call the API
 
-            val response = client.customPost[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPost[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -841,16 +837,14 @@ paths:
 
             // Call the API
 
-            val response = client.customPut[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPut[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1078,16 +1072,14 @@ paths:
 
             // Call the API
 
-            val response = client.customDelete[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customDelete[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1425,25 +1417,23 @@ paths:
 
             // Call the API
 
-            val response = client.getRecommendations(
-              getRecommendationsParams = GetRecommendationsParams(
-                requests = Seq(
-                  RelatedQuery(
-                    indexName = "<YOUR_INDEX_NAME>",
-                    objectID = "objectID",
-                    model = RelatedModel.withName("related-products"),
-                    threshold = 42.1
+            val response = Await.result(
+              client.getRecommendations(
+                getRecommendationsParams = GetRecommendationsParams(
+                  requests = Seq(
+                    RelatedQuery(
+                      indexName = "<YOUR_INDEX_NAME>",
+                      objectID = "objectID",
+                      model = RelatedModel.withName("related-products"),
+                      threshold = 42.1
+                    )
                   )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1714,18 +1704,16 @@ paths:
 
             // Call the API
 
-            val response = client.getRecommendRule(
-              indexName = "<YOUR_INDEX_NAME>",
-              model = RecommendModels.withName("related-products"),
-              objectID = "objectID"
+            val response = Await.result(
+              client.getRecommendRule(
+                indexName = "<YOUR_INDEX_NAME>",
+                model = RecommendModels.withName("related-products"),
+                objectID = "objectID"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2025,18 +2013,16 @@ paths:
 
             // Call the API
 
-            val response = client.getRecommendStatus(
-              indexName = "<YOUR_INDEX_NAME>",
-              model = RecommendModels.withName("related-products"),
-              taskID = 12345L
+            val response = Await.result(
+              client.getRecommendStatus(
+                indexName = "<YOUR_INDEX_NAME>",
+                model = RecommendModels.withName("related-products"),
+                taskID = 12345L
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2355,17 +2341,15 @@ paths:
 
             // Call the API
 
-            val response = client.searchRecommendRules(
-              indexName = "<YOUR_INDEX_NAME>",
-              model = RecommendModels.withName("related-products")
+            val response = Await.result(
+              client.searchRecommendRules(
+                indexName = "<YOUR_INDEX_NAME>",
+                model = RecommendModels.withName("related-products")
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2636,17 +2620,15 @@ paths:
 
             // Call the API
 
-            val response = client.batchRecommendRules(
-              indexName = "<YOUR_INDEX_NAME>",
-              model = RecommendModels.withName("related-products")
+            val response = Await.result(
+              client.batchRecommendRules(
+                indexName = "<YOUR_INDEX_NAME>",
+                model = RecommendModels.withName("related-products")
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >

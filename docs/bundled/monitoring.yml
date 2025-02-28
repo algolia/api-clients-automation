@@ -282,16 +282,14 @@ paths:
 
             // Call the API
 
-            val response = client.customGet[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customGet[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -511,16 +509,14 @@ paths:
 
             // Call the API
 
-            val response = client.customPost[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPost[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -740,16 +736,14 @@ paths:
 
             // Call the API
 
-            val response = client.customPut[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPut[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -965,16 +959,14 @@ paths:
 
             // Call the API
 
-            val response = client.customDelete[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customDelete[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1173,16 +1165,13 @@ paths:
 
             // Call the API
 
-            val response = client.getStatus(
-
+            val response = Await.result(
+              client.getStatus(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1399,16 +1388,14 @@ paths:
 
             // Call the API
 
-            val response = client.getClusterStatus(
-              clusters = "c1-de"
+            val response = Await.result(
+              client.getClusterStatus(
+                clusters = "c1-de"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1607,16 +1594,13 @@ paths:
 
             // Call the API
 
-            val response = client.getIncidents(
-
+            val response = Await.result(
+              client.getIncidents(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1833,16 +1817,14 @@ paths:
 
             // Call the API
 
-            val response = client.getClusterIncidents(
-              clusters = "c1-de"
+            val response = Await.result(
+              client.getClusterIncidents(
+                clusters = "c1-de"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2053,16 +2035,13 @@ paths:
 
             // Call the API
 
-            val response = client.getServers(
-
+            val response = Await.result(
+              client.getServers(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2276,16 +2255,14 @@ paths:
 
             // Call the API
 
-            val response = client.getLatency(
-              clusters = "c1-de"
+            val response = Await.result(
+              client.getLatency(
+                clusters = "c1-de"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2494,16 +2471,14 @@ paths:
 
             // Call the API
 
-            val response = client.getIndexingTime(
-              clusters = "c1-de"
+            val response = Await.result(
+              client.getIndexingTime(
+                clusters = "c1-de"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2712,16 +2687,14 @@ paths:
 
             // Call the API
 
-            val response = client.getReachability(
-              clusters = "c1-de"
+            val response = Await.result(
+              client.getReachability(
+                clusters = "c1-de"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2944,17 +2917,15 @@ paths:
 
             // Call the API
 
-            val response = client.getMetrics(
-              metric = Metric.withName("avg_build_time"),
-              period = Period.withName("minute")
+            val response = Await.result(
+              client.getMetrics(
+                metric = Metric.withName("avg_build_time"),
+                period = Period.withName("minute")
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
