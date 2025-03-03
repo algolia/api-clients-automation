@@ -46,7 +46,7 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.17.4"
     "@types/node": "npm:22.13.8"
     jsdom: "npm:26.0.0"
-    publint: "npm:0.3.5"
+    publint: "npm:0.3.7"
     ts-node: "npm:10.9.2"
     tsup: "npm:8.4.0"
     typescript: "npm:5.7.3"
@@ -64,7 +64,7 @@ __metadata:
     "@algolia/requester-node-http": "npm:5.20.3"
     "@arethetypeswrong/cli": "npm:0.17.4"
     "@types/node": "npm:22.13.8"
-    publint: "npm:0.3.5"
+    publint: "npm:0.3.7"
     rollup: "npm:4.34.9"
     tsup: "npm:8.4.0"
     typescript: "npm:5.7.3"
@@ -149,7 +149,7 @@ __metadata:
     "@algolia/requester-node-http": "npm:5.20.3"
     "@arethetypeswrong/cli": "npm:0.17.4"
     "@types/node": "npm:22.13.8"
-    publint: "npm:0.3.5"
+    publint: "npm:0.3.7"
     rollup: "npm:4.34.9"
     tsup: "npm:8.4.0"
     typescript: "npm:5.7.3"
@@ -181,7 +181,7 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.17.4"
     "@types/node": "npm:22.13.8"
     jsdom: "npm:26.0.0"
-    publint: "npm:0.3.5"
+    publint: "npm:0.3.7"
     ts-node: "npm:10.9.2"
     tsup: "npm:8.4.0"
     typescript: "npm:5.7.3"
@@ -231,7 +231,7 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.17.4"
     "@types/node": "npm:22.13.8"
     jsdom: "npm:26.0.0"
-    publint: "npm:0.3.5"
+    publint: "npm:0.3.7"
     tsup: "npm:8.4.0"
     typescript: "npm:5.7.3"
     vitest: "npm:3.0.7"
@@ -248,7 +248,7 @@ __metadata:
     "@types/node": "npm:22.13.8"
     cross-fetch: "npm:4.1.0"
     nock: "npm:14.0.1"
-    publint: "npm:0.3.5"
+    publint: "npm:0.3.7"
     tsup: "npm:8.4.0"
     typescript: "npm:5.7.3"
     vitest: "npm:3.0.7"
@@ -263,7 +263,7 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.17.4"
     "@types/node": "npm:22.13.8"
     nock: "npm:14.0.1"
-    publint: "npm:0.3.5"
+    publint: "npm:0.3.7"
     tsup: "npm:8.4.0"
     typescript: "npm:5.7.3"
     vitest: "npm:3.0.7"
@@ -280,7 +280,7 @@ __metadata:
     "@algolia/requester-node-http": "npm:5.20.3"
     "@arethetypeswrong/cli": "npm:0.17.4"
     "@types/node": "npm:22.13.8"
-    publint: "npm:0.3.5"
+    publint: "npm:0.3.7"
     tsup: "npm:8.4.0"
     typescript: "npm:5.7.3"
   languageName: unknown
@@ -7159,6 +7159,20 @@ __metadata:
   bin:
     publint: src/cli.js
   checksum: 10/71b366e9c33a3be570519c370a44fbfc63c9000d21555e02470d2a2f871b24a8428b9c66bcd8992fcda90afbde267787f7b9fa9f79bbfd846cef20730c067266
+  languageName: node
+  linkType: hard
+
+"publint@npm:0.3.7":
+  version: 0.3.7
+  resolution: "publint@npm:0.3.7"
+  dependencies:
+    "@publint/pack": "npm:^0.1.1"
+    package-manager-detector: "npm:^0.2.9"
+    picocolors: "npm:^1.1.1"
+    sade: "npm:^1.8.1"
+  bin:
+    publint: src/cli.js
+  checksum: 10/35c2f796a9c2de8a5c4f6b0cb1f853ae79cd1730c12cfa55855724725cee3b9ec5be1092ecdba9ce561e4d287144dee3864a8cb1d19e9b6d9c9e1e0ba51bef8e
   languageName: node
   linkType: hard
 
