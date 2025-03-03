@@ -338,13 +338,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customGet[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customGet[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -580,13 +580,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customPost[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPost[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -822,13 +822,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customPut[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPut[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1060,13 +1060,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customDelete[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customDelete[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1862,27 +1862,27 @@ paths:
             )
 
             // Call the API
-            val response = client.pushEvents(
-              insightsEvents = InsightsEvents(
-                events = Seq(
-                  ClickedObjectIDsAfterSearch(
-                    eventType = ClickEvent.withName("click"),
-                    eventName = "Product Clicked",
-                    index = "products",
-                    userToken = "user-123456",
-                    authenticatedUserToken = Some("user-123456"),
-                    timestamp = Some(1641290601962L),
-                    objectIDs = Seq("9780545139700", "9780439784542"),
-                    queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
-                    positions = Seq(7, 6)
+            val response = Await.result(
+              client.pushEvents(
+                insightsEvents = InsightsEvents(
+                  events = Seq(
+                    ClickedObjectIDsAfterSearch(
+                      eventType = ClickEvent.withName("click"),
+                      eventName = "Product Clicked",
+                      index = "products",
+                      userToken = "user-123456",
+                      authenticatedUserToken = Some("user-123456"),
+                      timestamp = Some(1641290601962L),
+                      objectIDs = Seq("9780545139700", "9780439784542"),
+                      queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
+                      positions = Seq(7, 6)
+                    )
                   )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2128,10 +2128,12 @@ paths:
             )
 
             // Call the API
-            client.deleteUserToken(
-              userToken = "test-user-1"
+            Await.result(
+              client.deleteUserToken(
+                userToken = "test-user-1"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
         - lang: swift
           label: Swift

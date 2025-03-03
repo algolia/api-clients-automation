@@ -28,13 +28,13 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customDelete[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customDelete[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -48,14 +48,14 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customDelete[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters"))
+    val response = Await.result(
+      client.customDelete[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters"))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -69,13 +69,13 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customGet[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -89,14 +89,14 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customGet[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters with space"))
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters with space"))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -110,22 +110,22 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customGet[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "to be overriden")),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("query", "parameters with space")
-          .withQueryParameter("and an array", Seq("array", "with spaces"))
-          .withHeader("x-header-1", "spaces are left alone")
-          .build()
-      )
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "to be overriden")),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query", "parameters with space")
+            .withQueryParameter("and an array", Seq("array", "with spaces"))
+            .withHeader("x-header-1", "spaces are left alone")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -139,13 +139,13 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -159,15 +159,15 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("body", JString("parameters")))))
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("body", JString("parameters")))))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -181,21 +181,21 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("query", "myQueryParameter")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query", "myQueryParameter")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -209,21 +209,21 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("query2", "myQueryParameter")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query2", "myQueryParameter")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -237,21 +237,21 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -265,21 +265,21 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -293,21 +293,21 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("isItWorking", true)
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("isItWorking", true)
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -321,21 +321,21 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", 2)
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", 2)
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -349,21 +349,21 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", Seq("b and c", "d"))
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq("b and c", "d"))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -377,21 +377,21 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", Seq(true, true, false))
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq(true, true, false))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -405,21 +405,21 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", Seq(1, 2))
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq(1, 2))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -433,13 +433,13 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPut[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customPut[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -453,15 +453,15 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPut[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("body", JString("parameters")))))
+    val response = Await.result(
+      client.customPut[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("body", JString("parameters")))))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -475,13 +475,13 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getClusterIncidents(
-      clusters = "c1-de"
+    val response = Await.result(
+      client.getClusterIncidents(
+        clusters = "c1-de"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -495,13 +495,13 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getClusterStatus(
-      clusters = "c1-de"
+    val response = Await.result(
+      client.getClusterStatus(
+        clusters = "c1-de"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -515,12 +515,12 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getIncidents(
+    val response = Await.result(
+      client.getIncidents(
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -534,13 +534,13 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getIndexingTime(
-      clusters = "c1-de"
+    val response = Await.result(
+      client.getIndexingTime(
+        clusters = "c1-de"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -554,13 +554,13 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getLatency(
-      clusters = "c1-de"
+    val response = Await.result(
+      client.getLatency(
+        clusters = "c1-de"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -574,14 +574,14 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getMetrics(
-      metric = Metric.withName("avg_build_time"),
-      period = Period.withName("minute")
+    val response = Await.result(
+      client.getMetrics(
+        metric = Metric.withName("avg_build_time"),
+        period = Period.withName("minute")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -595,13 +595,13 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getReachability(
-      clusters = "c1-de"
+    val response = Await.result(
+      client.getReachability(
+        clusters = "c1-de"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -615,12 +615,12 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getServers(
+    val response = Await.result(
+      client.getServers(
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -634,12 +634,28 @@ class SnippetMonitoringClient {
     val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getStatus(
+    val response = Await.result(
+      client.getStatus(
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the setClientApiKey method.
+    *
+    * switch API key
+    */
+  def snippetForMonitoringClientSetClientApiKey(): Unit = {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    client.setClientApiKey(
+      apiKey = "updated-api-key"
+    ) // >LOG
     // SEPARATOR<
   }
 

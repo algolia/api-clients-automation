@@ -487,16 +487,14 @@ paths:
 
             // Call the API
 
-            val response = client.customGet[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customGet[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -731,16 +729,14 @@ paths:
 
             // Call the API
 
-            val response = client.customPost[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPost[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -975,16 +971,14 @@ paths:
 
             // Call the API
 
-            val response = client.customPut[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPut[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1215,16 +1209,14 @@ paths:
 
             // Call the API
 
-            val response = client.customDelete[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customDelete[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1475,16 +1467,14 @@ paths:
 
             // Call the API
 
-            val response = client.searchSingleIndex(
-              indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.searchSingleIndex(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1829,24 +1819,22 @@ paths:
 
             // Call the API
 
-            val response = client.search(
-              searchMethodParams = SearchMethodParams(
-                requests = Seq(
-                  SearchForHits(
-                    indexName = "<YOUR_INDEX_NAME>",
-                    query = Some("<YOUR_QUERY>"),
-                    hitsPerPage = Some(50)
+            val response = Await.result(
+              client.search(
+                searchMethodParams = SearchMethodParams(
+                  requests = Seq(
+                    SearchForHits(
+                      indexName = "<YOUR_INDEX_NAME>",
+                      query = Some("<YOUR_QUERY>"),
+                      hitsPerPage = Some(50)
+                    )
                   )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2135,17 +2123,15 @@ paths:
 
             // Call the API
 
-            val response = client.searchForFacetValues(
-              indexName = "<YOUR_INDEX_NAME>",
-              facetName = "facetName"
+            val response = Await.result(
+              client.searchForFacetValues(
+                indexName = "<YOUR_INDEX_NAME>",
+                facetName = "facetName"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2434,16 +2420,14 @@ paths:
 
             // Call the API
 
-            val response = client.browse(
-              indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.browse(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2803,24 +2787,22 @@ paths:
 
             // Call the API
 
-            val response = client.saveObject(
-              indexName = "<YOUR_INDEX_NAME>",
-              body = JObject(
-                List(
-                  JField("name", JString("Black T-shirt")),
-                  JField("color", JString("#000000||black")),
-                  JField("availableIn", JString("https://source.unsplash.com/100x100/?paris||Paris")),
-                  JField("objectID", JString("myID"))
+            val response = Await.result(
+              client.saveObject(
+                indexName = "<YOUR_INDEX_NAME>",
+                body = JObject(
+                  List(
+                    JField("name", JString("Black T-shirt")),
+                    JField("color", JString("#000000||black")),
+                    JField("availableIn", JString("https://source.unsplash.com/100x100/?paris||Paris")),
+                    JField("objectID", JString("myID"))
+                  )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3086,16 +3068,14 @@ paths:
 
             // Call the API
 
-            val response = client.deleteIndex(
-              indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.deleteIndex(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3396,18 +3376,16 @@ paths:
 
             // Call the API
 
-            val response = client.getObject(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "uniqueID",
-              attributesToRetrieve = Some(Seq("attr1", "attr2"))
+            val response = Await.result(
+              client.getObject(
+                indexName = "<YOUR_INDEX_NAME>",
+                objectID = "uniqueID",
+                attributesToRetrieve = Some(Seq("attr1", "attr2"))
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3760,19 +3738,17 @@ paths:
 
             // Call the API
 
-            val response = client.deleteBy(
-              indexName = "<YOUR_INDEX_NAME>",
-              deleteByParams = DeleteByParams(
-                filters = Some("brand:brandName")
-              )
+            val response = Await.result(
+              client.deleteBy(
+                indexName = "<YOUR_INDEX_NAME>",
+                deleteByParams = DeleteByParams(
+                  filters = Some("brand:brandName")
+                )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4021,16 +3997,14 @@ paths:
 
             // Call the API
 
-            val response = client.clearObjects(
-              indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.clearObjects(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4378,18 +4352,16 @@ paths:
 
             // Call the API
 
-            val response = client.partialUpdateObject(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "uniqueID",
-              attributesToUpdate = JObject(List(JField("attributeId", JString("new value"))))
+            val response = Await.result(
+              client.partialUpdateObject(
+                indexName = "<YOUR_INDEX_NAME>",
+                objectID = "uniqueID",
+                attributesToUpdate = JObject(List(JField("attributeId", JString("new value"))))
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4789,28 +4761,26 @@ paths:
 
             // Call the API
 
-            val response = client.batch(
-              indexName = "<YOUR_INDEX_NAME>",
-              batchWriteParams = BatchWriteParams(
-                requests = Seq(
-                  BatchRequest(
-                    action = Action.withName("addObject"),
-                    body = JObject(List(JField("key", JString("bar")), JField("foo", JString("1"))))
-                  ),
-                  BatchRequest(
-                    action = Action.withName("addObject"),
-                    body = JObject(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+            val response = Await.result(
+              client.batch(
+                indexName = "<YOUR_INDEX_NAME>",
+                batchWriteParams = BatchWriteParams(
+                  requests = Seq(
+                    BatchRequest(
+                      action = Action.withName("addObject"),
+                      body = JObject(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+                    ),
+                    BatchRequest(
+                      action = Action.withName("addObject"),
+                      body = JObject(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+                    )
                   )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5210,24 +5180,22 @@ paths:
 
             // Call the API
 
-            val response = client.multipleBatch(
-              batchParams = BatchParams(
-                requests = Seq(
-                  MultipleBatchRequest(
-                    action = Action.withName("addObject"),
-                    body = Some(JObject(List(JField("key", JString("value"))))),
-                    indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.multipleBatch(
+                batchParams = BatchParams(
+                  requests = Seq(
+                    MultipleBatchRequest(
+                      action = Action.withName("addObject"),
+                      body = Some(JObject(List(JField("key", JString("value"))))),
+                      indexName = "<YOUR_INDEX_NAME>"
+                    )
                   )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5583,23 +5551,21 @@ paths:
 
             // Call the API
 
-            val response = client.getObjects(
-              getObjectsParams = GetObjectsParams(
-                requests = Seq(
-                  GetObjectsRequest(
-                    objectID = "uniqueID",
-                    indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.getObjects(
+                getObjectsParams = GetObjectsParams(
+                  requests = Seq(
+                    GetObjectsRequest(
+                      objectID = "uniqueID",
+                      indexName = "<YOUR_INDEX_NAME>"
+                    )
                   )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5846,16 +5812,14 @@ paths:
 
             // Call the API
 
-            val response = client.getSettings(
-              indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.getSettings(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -6138,20 +6102,18 @@ paths:
 
             // Call the API
 
-            val response = client.setSettings(
-              indexName = "<YOUR_INDEX_NAME>",
-              indexSettings = IndexSettings(
-                paginationLimitedTo = Some(10)
+            val response = Await.result(
+              client.setSettings(
+                indexName = "<YOUR_INDEX_NAME>",
+                indexSettings = IndexSettings(
+                  paginationLimitedTo = Some(10)
+                ),
+                forwardToReplicas = Some(true)
               ),
-              forwardToReplicas = Some(true)
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -6406,17 +6368,15 @@ paths:
 
             // Call the API
 
-            val response = client.getSynonym(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "id1"
+            val response = Await.result(
+              client.getSynonym(
+                indexName = "<YOUR_INDEX_NAME>",
+                objectID = "id1"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -6885,31 +6845,29 @@ paths:
 
             // Call the API
 
-            val response = client.saveSynonyms(
-              indexName = "<YOUR_INDEX_NAME>",
-              synonymHit = Seq(
-                SynonymHit(
-                  objectID = "id1",
-                  `type` = SynonymType.withName("synonym"),
-                  synonyms = Some(Seq("car", "vehicule", "auto"))
+            val response = Await.result(
+              client.saveSynonyms(
+                indexName = "<YOUR_INDEX_NAME>",
+                synonymHit = Seq(
+                  SynonymHit(
+                    objectID = "id1",
+                    `type` = SynonymType.withName("synonym"),
+                    synonyms = Some(Seq("car", "vehicule", "auto"))
+                  ),
+                  SynonymHit(
+                    objectID = "id2",
+                    `type` = SynonymType.withName("onewaysynonym"),
+                    input = Some("iphone"),
+                    synonyms = Some(Seq("ephone", "aphone", "yphone"))
+                  )
                 ),
-                SynonymHit(
-                  objectID = "id2",
-                  `type` = SynonymType.withName("onewaysynonym"),
-                  input = Some("iphone"),
-                  synonyms = Some(Seq("ephone", "aphone", "yphone"))
-                )
+                forwardToReplicas = Some(true),
+                replaceExistingSynonyms = Some(true)
               ),
-              forwardToReplicas = Some(true),
-              replaceExistingSynonyms = Some(true)
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -7164,16 +7122,14 @@ paths:
 
             // Call the API
 
-            val response = client.clearSynonyms(
-              indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.clearSynonyms(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -7437,16 +7393,14 @@ paths:
 
             // Call the API
 
-            val response = client.searchSynonyms(
-              indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.searchSynonyms(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -7692,16 +7646,13 @@ paths:
 
             // Call the API
 
-            val response = client.listApiKeys(
-
+            val response = Await.result(
+              client.listApiKeys(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -7978,19 +7929,17 @@ paths:
 
             // Call the API
 
-            val response = client.addApiKey(
-              apiKey = ApiKey(
-                acl = Seq(Acl.withName("search"), Acl.withName("addObject")),
-                description = Some("my new api key")
-              )
+            val response = Await.result(
+              client.addApiKey(
+                apiKey = ApiKey(
+                  acl = Seq(Acl.withName("search"), Acl.withName("addObject")),
+                  description = Some("my new api key")
+                )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -8242,16 +8191,14 @@ paths:
 
             // Call the API
 
-            val response = client.getApiKey(
-              key = "myTestApiKey"
+            val response = Await.result(
+              client.getApiKey(
+                key = "myTestApiKey"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -8572,16 +8519,14 @@ paths:
 
             // Call the API
 
-            val response = client.restoreApiKey(
-              key = "ALGOLIA_API_KEY"
+            val response = Await.result(
+              client.restoreApiKey(
+                key = "ALGOLIA_API_KEY"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -8826,17 +8771,15 @@ paths:
 
             // Call the API
 
-            val response = client.getRule(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "qr-1725004648916"
+            val response = Await.result(
+              client.getRule(
+                indexName = "<YOUR_INDEX_NAME>",
+                objectID = "qr-1725004648916"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -9360,56 +9303,54 @@ paths:
 
             // Call the API
 
-            val response = client.saveRules(
-              indexName = "<YOUR_INDEX_NAME>",
-              rules = Seq(
-                Rule(
-                  objectID = "a-rule-id",
-                  conditions = Some(
-                    Seq(
-                      Condition(
-                        pattern = Some("smartphone"),
-                        anchoring = Some(Anchoring.withName("contains"))
+            val response = Await.result(
+              client.saveRules(
+                indexName = "<YOUR_INDEX_NAME>",
+                rules = Seq(
+                  Rule(
+                    objectID = "a-rule-id",
+                    conditions = Some(
+                      Seq(
+                        Condition(
+                          pattern = Some("smartphone"),
+                          anchoring = Some(Anchoring.withName("contains"))
+                        )
+                      )
+                    ),
+                    consequence = Consequence(
+                      params = Some(
+                        ConsequenceParams(
+                          filters = Some("brand:apple")
+                        )
                       )
                     )
                   ),
-                  consequence = Consequence(
-                    params = Some(
-                      ConsequenceParams(
-                        filters = Some("brand:apple")
+                  Rule(
+                    objectID = "a-second-rule-id",
+                    conditions = Some(
+                      Seq(
+                        Condition(
+                          pattern = Some("apple"),
+                          anchoring = Some(Anchoring.withName("contains"))
+                        )
+                      )
+                    ),
+                    consequence = Consequence(
+                      params = Some(
+                        ConsequenceParams(
+                          filters = Some("brand:samsung")
+                        )
                       )
                     )
                   )
                 ),
-                Rule(
-                  objectID = "a-second-rule-id",
-                  conditions = Some(
-                    Seq(
-                      Condition(
-                        pattern = Some("apple"),
-                        anchoring = Some(Anchoring.withName("contains"))
-                      )
-                    )
-                  ),
-                  consequence = Consequence(
-                    params = Some(
-                      ConsequenceParams(
-                        filters = Some("brand:samsung")
-                      )
-                    )
-                  )
-                )
+                forwardToReplicas = Some(false),
+                clearExistingRules = Some(true)
               ),
-              forwardToReplicas = Some(false),
-              clearExistingRules = Some(true)
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -9666,16 +9607,14 @@ paths:
 
             // Call the API
 
-            val response = client.clearRules(
-              indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.clearRules(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -9989,21 +9928,19 @@ paths:
 
             // Call the API
 
-            val response = client.searchRules(
-              indexName = "<YOUR_INDEX_NAME>",
-              searchRulesParams = Some(
-                SearchRulesParams(
-                  query = Some("zorro")
+            val response = Await.result(
+              client.searchRules(
+                indexName = "<YOUR_INDEX_NAME>",
+                searchRulesParams = Some(
+                  SearchRulesParams(
+                    query = Some("zorro")
+                  )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -10444,32 +10381,30 @@ paths:
 
             // Call the API
 
-            val response = client.batchDictionaryEntries(
-              dictionaryName = DictionaryType.withName("plurals"),
-              batchDictionaryEntriesParams = BatchDictionaryEntriesParams(
-                clearExistingDictionaryEntries = Some(true),
-                requests = Seq(
-                  BatchDictionaryEntriesRequest(
-                    action = DictionaryAction.withName("addEntry"),
-                    body = DictionaryEntry(
-                      objectID = "1",
-                      language = Some(SupportedLanguage.withName("en")),
-                      word = Some("fancy"),
-                      words = Some(Seq("believe", "algolia")),
-                      decomposition = Some(Seq("trust", "algolia")),
-                      state = Some(DictionaryEntryState.withName("enabled"))
+            val response = Await.result(
+              client.batchDictionaryEntries(
+                dictionaryName = DictionaryType.withName("plurals"),
+                batchDictionaryEntriesParams = BatchDictionaryEntriesParams(
+                  clearExistingDictionaryEntries = Some(true),
+                  requests = Seq(
+                    BatchDictionaryEntriesRequest(
+                      action = DictionaryAction.withName("addEntry"),
+                      body = DictionaryEntry(
+                        objectID = "1",
+                        language = Some(SupportedLanguage.withName("en")),
+                        word = Some("fancy"),
+                        words = Some(Seq("believe", "algolia")),
+                        decomposition = Some(Seq("trust", "algolia")),
+                        state = Some(DictionaryEntryState.withName("enabled"))
+                      )
                     )
                   )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -10765,19 +10700,17 @@ paths:
 
             // Call the API
 
-            val response = client.searchDictionaryEntries(
-              dictionaryName = DictionaryType.withName("stopwords"),
-              searchDictionaryEntriesParams = SearchDictionaryEntriesParams(
-                query = "about"
-              )
+            val response = Await.result(
+              client.searchDictionaryEntries(
+                dictionaryName = DictionaryType.withName("stopwords"),
+                searchDictionaryEntriesParams = SearchDictionaryEntriesParams(
+                  query = "about"
+                )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -11012,16 +10945,13 @@ paths:
 
             // Call the API
 
-            val response = client.getDictionarySettings(
-
+            val response = Await.result(
+              client.getDictionarySettings(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -11334,20 +11264,18 @@ paths:
 
             // Call the API
 
-            val response = client.setDictionarySettings(
-              dictionarySettingsParams = DictionarySettingsParams(
-                disableStandardEntries = StandardEntries(
-                  plurals = Some(Map("fr" -> false, "en" -> false, "ru" -> true))
+            val response = Await.result(
+              client.setDictionarySettings(
+                dictionarySettingsParams = DictionarySettingsParams(
+                  disableStandardEntries = StandardEntries(
+                    plurals = Some(Map("fr" -> false, "en" -> false, "ru" -> true))
+                  )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -11594,16 +11522,13 @@ paths:
 
             // Call the API
 
-            val response = client.getDictionaryLanguages(
-
+            val response = Await.result(
+              client.getDictionaryLanguages(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -11878,19 +11803,17 @@ paths:
 
             // Call the API
 
-            val response = client.assignUserId(
-              xAlgoliaUserID = "user42",
-              assignUserIdParams = AssignUserIdParams(
-                cluster = "d4242-eu"
-              )
+            val response = Await.result(
+              client.assignUserId(
+                xAlgoliaUserID = "user42",
+                assignUserIdParams = AssignUserIdParams(
+                  cluster = "d4242-eu"
+                )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -12147,16 +12070,13 @@ paths:
 
             // Call the API
 
-            val response = client.listUserIds(
-
+            val response = Await.result(
+              client.listUserIds(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -12466,20 +12386,18 @@ paths:
 
             // Call the API
 
-            val response = client.batchAssignUserIds(
-              xAlgoliaUserID = "userID",
-              batchAssignUserIdsParams = BatchAssignUserIdsParams(
-                cluster = "theCluster",
-                users = Seq("user1", "user2")
-              )
+            val response = Await.result(
+              client.batchAssignUserIds(
+                xAlgoliaUserID = "userID",
+                batchAssignUserIdsParams = BatchAssignUserIdsParams(
+                  cluster = "theCluster",
+                  users = Seq("user1", "user2")
+                )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -12742,16 +12660,13 @@ paths:
 
             // Call the API
 
-            val response = client.getTopUserIds(
-
+            val response = Await.result(
+              client.getTopUserIds(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -12999,16 +12914,14 @@ paths:
 
             // Call the API
 
-            val response = client.getUserId(
-              userID = "uniqueID"
+            val response = Await.result(
+              client.getUserId(
+                userID = "uniqueID"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -13276,16 +13189,13 @@ paths:
 
             // Call the API
 
-            val response = client.listClusters(
-
+            val response = Await.result(
+              client.listClusters(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -13654,21 +13564,19 @@ paths:
 
             // Call the API
 
-            val response = client.searchUserIds(
-              searchUserIdsParams = SearchUserIdsParams(
-                query = "test",
-                clusterName = Some("theClusterName"),
-                page = Some(5),
-                hitsPerPage = Some(10)
-              )
+            val response = Await.result(
+              client.searchUserIds(
+                searchUserIdsParams = SearchUserIdsParams(
+                  query = "test",
+                  clusterName = Some("theClusterName"),
+                  page = Some(5),
+                  hitsPerPage = Some(10)
+                )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -13938,16 +13846,13 @@ paths:
 
             // Call the API
 
-            val response = client.hasPendingMappings(
-
+            val response = Await.result(
+              client.hasPendingMappings(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -14178,16 +14083,13 @@ paths:
 
             // Call the API
 
-            val response = client.getSources(
-
+            val response = Await.result(
+              client.getSources(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -14469,21 +14371,19 @@ paths:
 
             // Call the API
 
-            val response = client.replaceSources(
-              source = Seq(
-                Source(
-                  source = "theSource",
-                  description = Some("theDescription")
+            val response = Await.result(
+              client.replaceSources(
+                source = Seq(
+                  Source(
+                    source = "theSource",
+                    description = Some("theDescription")
+                  )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -14747,19 +14647,17 @@ paths:
 
             // Call the API
 
-            val response = client.appendSource(
-              source = Source(
-                source = "theSource",
-                description = Some("theDescription")
-              )
+            val response = Await.result(
+              client.appendSource(
+                source = Source(
+                  source = "theSource",
+                  description = Some("theDescription")
+                )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -15019,16 +14917,14 @@ paths:
 
             // Call the API
 
-            val response = client.deleteSource(
-              source = "theSource"
+            val response = Await.result(
+              client.deleteSource(
+                source = "theSource"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -15433,16 +15329,13 @@ paths:
 
             // Call the API
 
-            val response = client.getLogs(
-
+            val response = Await.result(
+              client.getLogs(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -15689,16 +15582,14 @@ paths:
 
             // Call the API
 
-            val response = client.getAppTask(
-              taskID = 123L
+            val response = Await.result(
+              client.getAppTask(
+                taskID = 123L
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -15957,17 +15848,15 @@ paths:
 
             // Call the API
 
-            val response = client.getTask(
-              indexName = "<YOUR_INDEX_NAME>",
-              taskID = 123L
+            val response = Await.result(
+              client.getTask(
+                indexName = "<YOUR_INDEX_NAME>",
+                taskID = 123L
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -16335,21 +16224,19 @@ paths:
 
             // Call the API
 
-            val response = client.operationIndex(
-              indexName = "<SOURCE_INDEX_NAME>",
-              operationIndexParams = OperationIndexParams(
-                operation = OperationType.withName("move"),
-                destination = "<DESTINATION_INDEX_NAME>",
-                scope = Some(Seq(ScopeType.withName("rules"), ScopeType.withName("settings")))
-              )
+            val response = Await.result(
+              client.operationIndex(
+                indexName = "<SOURCE_INDEX_NAME>",
+                operationIndexParams = OperationIndexParams(
+                  operation = OperationType.withName("move"),
+                  destination = "<DESTINATION_INDEX_NAME>",
+                  scope = Some(Seq(ScopeType.withName("rules"), ScopeType.withName("settings")))
+                )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -16598,16 +16485,13 @@ paths:
 
             // Call the API
 
-            val response = client.listIndices(
-
+            val response = Await.result(
+              client.listIndices(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
