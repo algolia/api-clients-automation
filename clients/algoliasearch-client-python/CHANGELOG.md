@@ -1,3 +1,8 @@
+## [4.13.3](https://github.com/algolia/algoliasearch-client-python/compare/4.13.2...4.13.3)
+
+- [5dd667ba1a](https://github.com/algolia/api-clients-automation/commit/5dd667ba1a) chore(guides): some missing snippets + guides ([#4477](https://github.com/algolia/api-clients-automation/pull/4477)) by [@Fluf22](https://github.com/Fluf22/)
+- [92bd911848](https://github.com/algolia/api-clients-automation/commit/92bd911848) chore(scripts): point jira issues to another epic ([#4505](https://github.com/algolia/api-clients-automation/pull/4505)) by [@millotp](https://github.com/millotp/)
+
 ## [4.13.2](https://github.com/algolia/algoliasearch-client-python/compare/4.13.1...4.13.2)
 
 - [c0e70d9864](https://github.com/algolia/api-clients-automation/commit/c0e70d9864) chore(deps): dependencies 2025-02-10 ([#4432](https://github.com/algolia/api-clients-automation/pull/4432)) by [@algolia-bot](https://github.com/algolia-bot/)

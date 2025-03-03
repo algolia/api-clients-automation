@@ -1,3 +1,7 @@
+## [3.12.3](https://github.com/algolia/algoliasearch-client-ruby/compare/3.12.2...3.12.3)
+
+- [92bd911848](https://github.com/algolia/api-clients-automation/commit/92bd911848) chore(scripts): point jira issues to another epic ([#4505](https://github.com/algolia/api-clients-automation/pull/4505)) by [@millotp](https://github.com/millotp/)
+
 ## [3.12.2](https://github.com/algolia/algoliasearch-client-ruby/compare/3.12.1...3.12.2)
 
 - [ecd6bc4fed](https://github.com/algolia/api-clients-automation/commit/ecd6bc4fed) chore(deps): dependencies 2025-02-17 ([#4459](https://github.com/algolia/api-clients-automation/pull/4459)) by [@algolia-bot](https://github.com/algolia-bot/)

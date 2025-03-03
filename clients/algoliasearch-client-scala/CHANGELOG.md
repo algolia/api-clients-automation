@@ -1,3 +1,8 @@
+## [2.14.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.13.3...2.14.0)
+
+- [92bd911848](https://github.com/algolia/api-clients-automation/commit/92bd911848) chore(scripts): point jira issues to another epic ([#4505](https://github.com/algolia/api-clients-automation/pull/4505)) by [@millotp](https://github.com/millotp/)
+- [043fb81ce6](https://github.com/algolia/api-clients-automation/commit/043fb81ce6) feat(scala): missing helpers ([#4486](https://github.com/algolia/api-clients-automation/pull/4486)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [2.13.3](https://github.com/algolia/algoliasearch-client-scala/compare/2.13.2...2.13.3)
 
 - [dafa519689](https://github.com/algolia/api-clients-automation/commit/dafa519689) chore: more composition API update for docs ([#4453](https://github.com/algolia/api-clients-automation/pull/4453)) by [@e-krebs](https://github.com/e-krebs/)
