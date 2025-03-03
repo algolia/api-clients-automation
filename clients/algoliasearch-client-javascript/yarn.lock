@@ -65,7 +65,7 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.17.4"
     "@types/node": "npm:22.13.1"
     publint: "npm:0.3.5"
-    rollup: "npm:4.34.6"
+    rollup: "npm:4.34.9"
     tsup: "npm:8.4.0"
     typescript: "npm:5.7.3"
   languageName: unknown
@@ -150,7 +150,7 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.17.4"
     "@types/node": "npm:22.13.1"
     publint: "npm:0.3.5"
-    rollup: "npm:4.34.6"
+    rollup: "npm:4.34.9"
     tsup: "npm:8.4.0"
     typescript: "npm:5.7.3"
   languageName: unknown
@@ -2421,7 +2421,7 @@ __metadata:
     bundlewatch: "npm:0.4.0"
     execa: "npm:9.5.2"
     lerna: "npm:8.2.0"
-    rollup: "npm:4.34.6"
+    rollup: "npm:4.34.9"
     typescript: "npm:5.7.3"
   languageName: unknown
   linkType: soft
@@ -7390,7 +7390,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^4.34.8":
+"rollup@npm:4.34.9, rollup@npm:^4.34.8":
   version: 4.34.9
   resolution: "rollup@npm:4.34.9"
   dependencies:
