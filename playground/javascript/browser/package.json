@@ -29,5 +29,5 @@
     "typescript-eslint": "8.24.0",
     "vite": "6.1.0"
   },
-  "packageManager": "yarn@4.6.0"
+  "packageManager": "yarn@4.7.0"
 }
