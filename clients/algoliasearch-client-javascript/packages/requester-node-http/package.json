@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.17.4",
-    "@types/node": "22.13.1",
+    "@types/node": "22.13.8",
     "nock": "14.0.1",
     "publint": "0.3.5",
     "tsup": "8.4.0",
