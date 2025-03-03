@@ -5,9 +5,9 @@ __metadata:
   version: 8
   cacheKey: 10
 
-"@actions/artifact@npm:2.2.1":
-  version: 2.2.1
-  resolution: "@actions/artifact@npm:2.2.1"
+"@actions/artifact@npm:2.2.2":
+  version: 2.2.2
+  resolution: "@actions/artifact@npm:2.2.2"
   dependencies:
     "@actions/core": "npm:^1.10.0"
     "@actions/github": "npm:^5.1.1"
@@ -20,9 +20,8 @@ __metadata:
     "@protobuf-ts/plugin": "npm:^2.2.3-alpha.1"
     archiver: "npm:^7.0.1"
     jwt-decode: "npm:^3.1.2"
-    twirp-ts: "npm:^2.5.0"
     unzip-stream: "npm:^0.3.1"
-  checksum: 10/1bd1d330bfd4f4a8d77a98e622aba2d185e3ff2d9f618aebb5748763d94f06907475891dc155b8a6c43b03f8e613e206cc9d69897e3d99c4c845be9bbb02677c
+  checksum: 10/ac06e8fb8f48c14435c96f3b2b6b6b9419673c2a91225262a2766ee701976a6c86d586d465021e943bab6abf316db92876dd168d8e88df3c1c96a45620cffe05
   languageName: node
   linkType: hard
 
@@ -1590,7 +1589,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@protobuf-ts/plugin-framework@npm:^2.0.7, @protobuf-ts/plugin-framework@npm:^2.9.4":
+"@protobuf-ts/plugin-framework@npm:^2.9.4":
   version: 2.9.4
   resolution: "@protobuf-ts/plugin-framework@npm:2.9.4"
   dependencies:
@@ -3034,16 +3033,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"camel-case@npm:^4.1.2":
-  version: 4.1.2
-  resolution: "camel-case@npm:4.1.2"
-  dependencies:
-    pascal-case: "npm:^3.1.2"
-    tslib: "npm:^2.0.3"
-  checksum: 10/bcbd25cd253b3cbc69be3f535750137dbf2beb70f093bdc575f73f800acc8443d34fd52ab8f0a2413c34f1e8203139ffc88428d8863e4dfe530cfb257a379ad6
-  languageName: node
-  linkType: hard
-
 "camelize@npm:^1.0.0":
   version: 1.0.1
   resolution: "camelize@npm:1.0.1"
@@ -3347,13 +3336,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^6.1.0":
-  version: 6.2.1
-  resolution: "commander@npm:6.2.1"
-  checksum: 10/25b88c2efd0380c84f7844b39cf18510da7bfc5013692d68cdc65f764a1c34e6c8a36ea6d72b6620e3710a930cf8fab2695bdec2bf7107a0f4fa30a3ef3b7d0e
-  languageName: node
-  linkType: hard
-
 "compare-versions@npm:4.1.4":
   version: 4.1.4
   resolution: "compare-versions@npm:4.1.4"
@@ -3650,18 +3632,6 @@ __metadata:
     "@types/trusted-types":
       optional: true
   checksum: 10/98570c53385518a2f9b617f796926338856acfdd3369c88b5905bddf96bd7d391bf8a5433127155e0046e6faa2bfb767185fcd571b865dfabe624c099e2537f5
-  languageName: node
-  linkType: hard
-
-"dot-object@npm:^2.1.4":
-  version: 2.1.5
-  resolution: "dot-object@npm:2.1.5"
-  dependencies:
-    commander: "npm:^6.1.0"
-    glob: "npm:^7.1.6"
-  bin:
-    dot-object: bin/dot-object
-  checksum: 10/db2414eff38269b6283ea7641f1455d3fdaa4675fe63a4f3595b736cd63e53f3ce4bddfa89e2c10173be5f7383097867e97ad8a8ae41e5e9bad74368ced089f4
   languageName: node
   linkType: hard
 
@@ -5848,15 +5818,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lower-case@npm:^2.0.2":
-  version: 2.0.2
-  resolution: "lower-case@npm:2.0.2"
-  dependencies:
-    tslib: "npm:^2.0.3"
-  checksum: 10/83a0a5f159ad7614bee8bf976b96275f3954335a84fad2696927f609ddae902802c4f3312d86668722e668bef41400254807e1d3a7f2e8c3eede79691aa1f010
-  languageName: node
-  linkType: hard
-
 "lru-cache@npm:^10.0.1, lru-cache@npm:^10.2.0":
   version: 10.4.3
   resolution: "lru-cache@npm:10.4.3"
@@ -6296,16 +6257,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"no-case@npm:^3.0.4":
-  version: 3.0.4
-  resolution: "no-case@npm:3.0.4"
-  dependencies:
-    lower-case: "npm:^2.0.2"
-    tslib: "npm:^2.0.3"
-  checksum: 10/0b2ebc113dfcf737d48dde49cfebf3ad2d82a8c3188e7100c6f375e30eafbef9e9124aadc3becef237b042fd5eb0aad2fd78669c20972d045bbe7fea8ba0be5c
-  languageName: node
-  linkType: hard
-
 "node-fetch-h2@npm:^2.3.0":
   version: 2.3.0
   resolution: "node-fetch-h2@npm:2.3.0"
@@ -6705,16 +6656,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pascal-case@npm:^3.1.2":
-  version: 3.1.2
-  resolution: "pascal-case@npm:3.1.2"
-  dependencies:
-    no-case: "npm:^3.0.4"
-    tslib: "npm:^2.0.3"
-  checksum: 10/ba98bfd595fc91ef3d30f4243b1aee2f6ec41c53b4546bfa3039487c367abaa182471dcfc830a1f9e1a0df00c14a370514fa2b3a1aacc68b15a460c31116873e
-  languageName: node
-  linkType: hard
-
 "path-browserify@npm:^1.0.1":
   version: 1.0.1
   resolution: "path-browserify@npm:1.0.1"
@@ -6771,13 +6712,6 @@ __metadata:
   version: 3.3.0
   resolution: "path-to-regexp@npm:3.3.0"
   checksum: 10/8d256383af8db66233ee9027cfcbf8f5a68155efbb4f55e784279d3ab206dcaee554ddb72ff0dae97dd2882af9f7fa802634bb7cffa2e796927977e31b829259
-  languageName: node
-  linkType: hard
-
-"path-to-regexp@npm:^6.2.0":
-  version: 6.3.0
-  resolution: "path-to-regexp@npm:6.3.0"
-  checksum: 10/6822f686f01556d99538b350722ef761541ec0ce95ca40ce4c29e20a5b492fe8361961f57993c71b2418de12e604478dcf7c430de34b2c31a688363a7a944d9c
   languageName: node
   linkType: hard
 
@@ -6932,15 +6866,6 @@ __metadata:
   bin:
     prettier: bin/prettier.cjs
   checksum: 10/fc26c74bd317282f2a49ffe3ac0ffa79adbe6b2d7a1cdcadd96acf7fec77d3fa45b15f3728c1a2f281f4beccb35d97207187452a581d4919d18b460d0c37e480
-  languageName: node
-  linkType: hard
-
-"prettier@npm:^2.5.1":
-  version: 2.8.8
-  resolution: "prettier@npm:2.8.8"
-  bin:
-    prettier: bin-prettier.js
-  checksum: 10/00cdb6ab0281f98306cd1847425c24cbaaa48a5ff03633945ab4c701901b8e96ad558eb0777364ffc312f437af9b5a07d0f45346266e8245beaf6247b9c62b24
   languageName: node
   linkType: hard
 
@@ -7559,7 +7484,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "scripts@workspace:scripts"
   dependencies:
-    "@actions/artifact": "npm:2.2.1"
+    "@actions/artifact": "npm:2.2.2"
     "@actions/core": "npm:1.11.1"
     "@actions/exec": "npm:1.1.1"
     "@actions/io": "npm:1.1.3"
@@ -8343,16 +8268,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-poet@npm:^4.5.0":
-  version: 4.15.0
-  resolution: "ts-poet@npm:4.15.0"
-  dependencies:
-    lodash: "npm:^4.17.15"
-    prettier: "npm:^2.5.1"
-  checksum: 10/3772a7117b402dcda2a4eb55ef639687b48e82ae37681da45c7321ada226bf7b433afc7a1669dcfda7a5196e62fbbd229b235d485cb7a0f71477862dbfe5d8c1
-  languageName: node
-  linkType: hard
-
 "tslib@npm:2.6.2":
   version: 2.6.2
   resolution: "tslib@npm:2.6.2"
@@ -8360,7 +8275,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:2.8.1, tslib@npm:^2.0.1, tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.2.0, tslib@npm:^2.3.1, tslib@npm:^2.6.2":
+"tslib@npm:2.8.1, tslib@npm:^2.0.1, tslib@npm:^2.1.0, tslib@npm:^2.2.0, tslib@npm:^2.3.1, tslib@npm:^2.6.2":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: 10/3e2e043d5c2316461cb54e5c7fe02c30ef6dccb3384717ca22ae5c6b5bc95232a6241df19c622d9c73b809bea33b187f6dbc73030963e29950c2141bc32a79f7
@@ -8378,30 +8293,6 @@ __metadata:
   version: 0.0.6
   resolution: "tunnel@npm:0.0.6"
   checksum: 10/cf1ffed5e67159b901a924dbf94c989f20b2b3b65649cfbbe4b6abb35955ce2cf7433b23498bdb2c5530ab185b82190fce531597b3b4a649f06a907fc8702405
-  languageName: node
-  linkType: hard
-
-"twirp-ts@npm:^2.5.0":
-  version: 2.5.0
-  resolution: "twirp-ts@npm:2.5.0"
-  dependencies:
-    "@protobuf-ts/plugin-framework": "npm:^2.0.7"
-    camel-case: "npm:^4.1.2"
-    dot-object: "npm:^2.1.4"
-    path-to-regexp: "npm:^6.2.0"
-    ts-poet: "npm:^4.5.0"
-    yaml: "npm:^1.10.2"
-  peerDependencies:
-    "@protobuf-ts/plugin": ^2.5.0
-    ts-proto: ^1.81.3
-  peerDependenciesMeta:
-    "@protobuf-ts/plugin":
-      optional: true
-    ts-proto:
-      optional: true
-  bin:
-    protoc-gen-twirp_ts: protoc-gen-twirp_ts
-  checksum: 10/6d3b0a70c5767d26f3d471b241e5cb1a219d8a8d62c0e9a4f9f0c5cd1473331739e2f674f7cd5d4c3d110e2bce2df8589133bbe61dc5b5660b2c994b31130050
   languageName: node
   linkType: hard
 
@@ -8982,7 +8873,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yaml@npm:^1.10.0, yaml@npm:^1.10.2":
+"yaml@npm:^1.10.0":
   version: 1.10.2
   resolution: "yaml@npm:1.10.2"
   checksum: 10/e088b37b4d4885b70b50c9fa1b7e54bd2e27f5c87205f9deaffd1fb293ab263d9c964feadb9817a7b129a5bf30a06582cb08750f810568ecc14f3cdbabb79cb3
