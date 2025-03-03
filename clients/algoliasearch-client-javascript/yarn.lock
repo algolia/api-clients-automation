@@ -43,7 +43,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/client-common@workspace:packages/client-common"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.17.3"
+    "@arethetypeswrong/cli": "npm:0.17.4"
     "@types/node": "npm:22.13.1"
     jsdom: "npm:26.0.0"
     publint: "npm:0.3.5"
@@ -62,7 +62,7 @@ __metadata:
     "@algolia/requester-browser-xhr": "npm:5.20.3"
     "@algolia/requester-fetch": "npm:5.20.3"
     "@algolia/requester-node-http": "npm:5.20.3"
-    "@arethetypeswrong/cli": "npm:0.17.3"
+    "@arethetypeswrong/cli": "npm:0.17.4"
     "@types/node": "npm:22.13.1"
     publint: "npm:0.3.5"
     rollup: "npm:4.34.6"
@@ -147,7 +147,7 @@ __metadata:
     "@algolia/requester-browser-xhr": "npm:5.20.3"
     "@algolia/requester-fetch": "npm:5.20.3"
     "@algolia/requester-node-http": "npm:5.20.3"
-    "@arethetypeswrong/cli": "npm:0.17.3"
+    "@arethetypeswrong/cli": "npm:0.17.4"
     "@types/node": "npm:22.13.1"
     publint: "npm:0.3.5"
     rollup: "npm:4.34.6"
@@ -178,7 +178,7 @@ __metadata:
   resolution: "@algolia/logger-console@workspace:packages/logger-console"
   dependencies:
     "@algolia/client-common": "npm:5.20.3"
-    "@arethetypeswrong/cli": "npm:0.17.3"
+    "@arethetypeswrong/cli": "npm:0.17.4"
     "@types/node": "npm:22.13.1"
     jsdom: "npm:26.0.0"
     publint: "npm:0.3.5"
@@ -228,7 +228,7 @@ __metadata:
   resolution: "@algolia/requester-browser-xhr@workspace:packages/requester-browser-xhr"
   dependencies:
     "@algolia/client-common": "npm:5.20.3"
-    "@arethetypeswrong/cli": "npm:0.17.3"
+    "@arethetypeswrong/cli": "npm:0.17.4"
     "@types/node": "npm:22.13.1"
     jsdom: "npm:26.0.0"
     publint: "npm:0.3.5"
@@ -244,7 +244,7 @@ __metadata:
   resolution: "@algolia/requester-fetch@workspace:packages/requester-fetch"
   dependencies:
     "@algolia/client-common": "npm:5.20.3"
-    "@arethetypeswrong/cli": "npm:0.17.3"
+    "@arethetypeswrong/cli": "npm:0.17.4"
     "@types/node": "npm:22.13.1"
     cross-fetch: "npm:4.1.0"
     nock: "npm:14.0.1"
@@ -260,7 +260,7 @@ __metadata:
   resolution: "@algolia/requester-node-http@workspace:packages/requester-node-http"
   dependencies:
     "@algolia/client-common": "npm:5.20.3"
-    "@arethetypeswrong/cli": "npm:0.17.3"
+    "@arethetypeswrong/cli": "npm:0.17.4"
     "@types/node": "npm:22.13.1"
     nock: "npm:14.0.1"
     publint: "npm:0.3.5"
@@ -278,7 +278,7 @@ __metadata:
     "@algolia/requester-browser-xhr": "npm:5.20.3"
     "@algolia/requester-fetch": "npm:5.20.3"
     "@algolia/requester-node-http": "npm:5.20.3"
-    "@arethetypeswrong/cli": "npm:0.17.3"
+    "@arethetypeswrong/cli": "npm:0.17.4"
     "@types/node": "npm:22.13.1"
     publint: "npm:0.3.5"
     tsup: "npm:8.3.6"
@@ -310,6 +310,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@arethetypeswrong/cli@npm:0.17.4":
+  version: 0.17.4
+  resolution: "@arethetypeswrong/cli@npm:0.17.4"
+  dependencies:
+    "@arethetypeswrong/core": "npm:0.17.4"
+    chalk: "npm:^4.1.2"
+    cli-table3: "npm:^0.6.3"
+    commander: "npm:^10.0.1"
+    marked: "npm:^9.1.2"
+    marked-terminal: "npm:^7.1.0"
+    semver: "npm:^7.5.4"
+  bin:
+    attw: dist/index.js
+  checksum: 10/5309b7f0a35d8d9118f0bc658448112bfcc76e36a5bf1f237acc492cab56446902b3bdbb2f7b37506521edc722ac2a3c4e16227c8e4eece7c837573122f6c4bb
+  languageName: node
+  linkType: hard
+
 "@arethetypeswrong/core@npm:0.17.3":
   version: 0.17.3
   resolution: "@arethetypeswrong/core@npm:0.17.3"
@@ -322,6 +339,22 @@ __metadata:
     typescript: "npm:5.6.1-rc"
     validate-npm-package-name: "npm:^5.0.0"
   checksum: 10/88dd840629356f555f00210c2df57f35701f46bc3d814cf7253c41adc0e33beb8af8cfdf04b12457cd1220b28fcc0e9cf2289846dbf4d2868101a1ce592879c8
+  languageName: node
+  linkType: hard
+
+"@arethetypeswrong/core@npm:0.17.4":
+  version: 0.17.4
+  resolution: "@arethetypeswrong/core@npm:0.17.4"
+  dependencies:
+    "@andrewbranch/untar.js": "npm:^1.0.3"
+    "@loaderkit/resolve": "npm:^1.0.2"
+    cjs-module-lexer: "npm:^1.2.3"
+    fflate: "npm:^0.8.2"
+    lru-cache: "npm:^10.4.3"
+    semver: "npm:^7.5.4"
+    typescript: "npm:5.6.1-rc"
+    validate-npm-package-name: "npm:^5.0.0"
+  checksum: 10/0aa5d8c21de977fdca3b79d25b07e9346b4b8f45ea95146c2b08961c8e0842326fb8879e9e1f001fadf132d9bede78a13df7974ca15cfb0a2e08000369b75c43
   languageName: node
   linkType: hard
 
@@ -353,6 +386,13 @@ __metadata:
   version: 7.25.9
   resolution: "@babel/helper-validator-identifier@npm:7.25.9"
   checksum: 10/3f9b649be0c2fd457fa1957b694b4e69532a668866b8a0d81eabfa34ba16dbf3107b39e0e7144c55c3c652bf773ec816af8df4a61273a2bb4eb3145ca9cf478e
+  languageName: node
+  linkType: hard
+
+"@braidai/lang@npm:^1.0.0":
+  version: 1.1.0
+  resolution: "@braidai/lang@npm:1.1.0"
+  checksum: 10/e6fde83701da73aefadf2a7a5d1906348203ae6a913764f72895d0f98093da2a58ac4b9a71d0058c38869f9ce630e362168b8a6708da051a9b92f80ca7b0b686
   languageName: node
   linkType: hard
 
@@ -816,6 +856,15 @@ __metadata:
     yargs: "npm:17.7.2"
     yargs-parser: "npm:21.1.1"
   checksum: 10/4f65c297eb32bf7cfdf68f6ea75e88e798334850db39c1cc634f7e1045a7f8dad804fbffaded5291a4675750a4718b2e40d025953122a30e7b3b14a084354f24
+  languageName: node
+  linkType: hard
+
+"@loaderkit/resolve@npm:^1.0.2":
+  version: 1.0.3
+  resolution: "@loaderkit/resolve@npm:1.0.3"
+  dependencies:
+    "@braidai/lang": "npm:^1.0.0"
+  checksum: 10/58a79d1b3420781f2eaf17a7036a0f87c951ad100fe5437c85b8c655e11c72a489b8d1057551854c21f73668a2054ef3b578473cd7b4218e4766ea775c1e7834
   languageName: node
   linkType: hard
 
