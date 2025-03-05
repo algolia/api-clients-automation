@@ -276,7 +276,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -518,7 +518,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -760,7 +760,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -996,7 +996,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -15038,30 +15038,22 @@ paths:
                           maxLength: 1000
                           description: Response body.
                           example: >
-                            'n{\n \"results\": [\n  {\n   \"hits\": [\n   
-                            {\n     \"name\": \"Amazon - Fire TV Stick\",\n    
-                            \"description\": \"Amazon Fire TV Stick connects to
+                            'n{\n "results": [\n  {\n   "hits": [\n    {\n    
+                            "name": "Amazon - Fire TV Stick",\n    
+                            "description": "Amazon Fire TV Stick connects to
                             your TV's HDMI port. Just grab and go to enjoy
                             Netflix, Prime Instant Video, Hulu Plus,
-                            YouTube.com, music, and much more.\",\n    
-                            \"brand\": \"Amazon\",\n     \"categories\":
-                            [\n      \"TV & Home Theater\",\n      \"Streaming
-                            Media Players\"\n     ],\n    
-                            \"hierarchicalCategories\": {\n      \"lvl0\": \"TV
-                            & Home Theater\",\n      \"lvl1\": \"TV & Home
-                            Theater > Streaming Media Players\"\n     },\n    
-                            \"type\": \"Streaming media plyr\",\n     \"price\":
-                            39.99,\n     \"price_range\": \"1 - 50\",\n    
-                            \"image\":
-                            \"https:\/\/cdn-demo.algolia.com\/bestbuy\/9999119_sb.jpg\",\n    
-                            \"url\":
-                            \"http:\/\/www.bestbuy.com\/site\/amazon-fire-tv-stick\/9999119.p?id=1219460752591&skuId=9999119&cmp=RMX&ky=1uWSHMdQqBeVJB9cXgEke60s5EjfS6M1W\",\n    
-                            \"free_shipping\": false,\n     \"popularity\":
-                            9843,\n     \"rating\": 4,\n     \"objectID\":
-                            \"9999119\"\n'
+                            YouTube.com, music, and much more.",\n     "brand":
+                            "Amazon",\n     "categories": [\n      "TV & Home
+                            Theater",\n      "Streaming Media Players"\n    
+                            ],\n     "hierarchicalCategories": {\n      "lvl0":
+                            "TV & Home Theater",\n      "lvl1": "TV & Home
+                            Theater > Streaming Media Players"\n     },\n    
+                            "type": "Streaming media player",\n     "price":
+                            39.99,\n     "price_range": "1 }\n   ]\n  }\n ]\n}'
                         url:
                           type: string
-                          format: uri
+                          format: uri-reference
                           description: URL of the API endpoint.
                           example: /1/indexes
                         ip:
@@ -17470,6 +17462,13 @@ components:
       example:
         - blue
         - iphone case
+      description: >-
+        List of [optional
+        words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
+      default: []
+      x-categories:
+        - Query strategy
+    optionalWords:
       description: >
         Words that should be considered optional when found in the query.
 
@@ -17507,10 +17506,6 @@ components:
 
         For more information, see [Optional
         words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
-      default: []
-      x-categories:
-        - Query strategy
-    optionalWords:
       oneOf:
         - type: string
         - type: 'null'

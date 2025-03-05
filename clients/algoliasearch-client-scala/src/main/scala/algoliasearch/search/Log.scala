@@ -33,8 +33,6 @@
   */
 package algoliasearch.search
 
-import java.net.URI
-
 import org.json4s._
 
 /** Log
@@ -76,7 +74,7 @@ case class Log(
     answerCode /* answer_code */: String,
     queryBody /* query_body */: String,
     answer: String,
-    url: URI,
+    url: String,
     ip: String,
     queryHeaders /* query_headers */: String,
     sha1: String,
