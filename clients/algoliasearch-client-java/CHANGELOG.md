@@ -1,3 +1,10 @@
+## [4.12.3](https://github.com/algolia/algoliasearch-client-java/compare/4.12.2...4.12.3)
+
+- [4f68190e10](https://github.com/algolia/api-clients-automation/commit/4f68190e10) fix(specs): update Recommend maxRecommendations to 30 max [RECO-2361] ([#4483](https://github.com/algolia/api-clients-automation/pull/4483)) by [@raed667](https://github.com/raed667/)
+- [92bd911848](https://github.com/algolia/api-clients-automation/commit/92bd911848) chore(scripts): point jira issues to another epic ([#4505](https://github.com/algolia/api-clients-automation/pull/4505)) by [@millotp](https://github.com/millotp/)
+- [b8918494d0](https://github.com/algolia/api-clients-automation/commit/b8918494d0) chore(deps): dependencies 2025-03-03 ([#4511](https://github.com/algolia/api-clients-automation/pull/4511)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [97d2722bc9](https://github.com/algolia/api-clients-automation/commit/97d2722bc9) fix(specs): Increase optionalWords visibility in docs ([#4559](https://github.com/algolia/api-clients-automation/pull/4559)) by [@gazconroy](https://github.com/gazconroy/)
+
 ## [4.12.2](https://github.com/algolia/algoliasearch-client-java/compare/4.12.1...4.12.2)
 
 - [095bb02ce2](https://github.com/algolia/api-clients-automation/commit/095bb02ce2) fix(java): saveObjects always passing waitForTasks as false ([#4460](https://github.com/algolia/api-clients-automation/pull/4460)) by [@Giglium](https://github.com/Giglium/)
