@@ -2,7 +2,7 @@ import fsp from 'fs/promises';
 
 import { setOutput } from '@actions/core';
 
-import { CLIENTS, createClientName, exists, GENERATORS, LANGUAGES, toAbsolutePath } from '../../common.ts';
+import { createClientName, exists, GENERATORS, LANGUAGES, toAbsolutePath } from '../../common.ts';
 import { getClientsConfigField, getLanguageFolder, getTestExtension, getTestOutputFolder } from '../../config.ts';
 
 import type { ClientMatrix, CreateMatrix, ToRunMatrix } from './types.ts';
@@ -19,8 +19,6 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
 
   // iterate over every generators to see what changed
   for (const { language, client, output } of Object.values(GENERATORS)) {
-    const bundledSpec = client === 'algoliasearch' ? 'search' : client;
-
     if (!commonDependenciesChanged) {
       const key = `${language.toUpperCase()}_CLIENT_CHANGED`;
       const languageDependencies = {
@@ -35,7 +33,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       const dependenciesChanged = await isBaseChanged(baseBranch, {
         ...languageDependencies,
         output: [output],
-        specs: [`specs/${bundledSpec}`],
+        specs: ['specs'],
       });
 
       // No changes found, we don't put this job in the matrix
@@ -62,13 +60,12 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
 
   // Now that we've built a map of what changed, we can create the matrix for the CI
   for (const language of LANGUAGES) {
-    if (!matrix[language] || matrix[language].toRun.length === 0) {
+    if (!matrix[language]) {
       continue;
     }
 
     const testsRootFolder = `tests/output/${language}`;
     const testsOutputBase = `${testsRootFolder}/${getTestOutputFolder(language)}`;
-    const toRun = matrix[language].toRun.join(' ');
     const versionFile = toAbsolutePath(
       language === 'javascript'
         ? '.nvmrc'
@@ -82,7 +79,6 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
     const languageMatrix = {
       language,
       path: matrix[language].path,
-      toRun,
       testsRootFolder,
       // We delete tests to ensure the CI only run tests against what changed.
       testsToDelete: `${testsOutputBase}/client ${testsOutputBase}/requests ${testsOutputBase}/e2e ${testsOutputBase}/benchmark`,
@@ -163,13 +159,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
 }
 
 function createSpecMatrix(): void {
-  setOutput(
-    'MATRIX',
-    JSON.stringify({
-      bundledPath: 'specs/bundled',
-      toRun: CLIENTS.join(' '),
-    }),
-  );
+  setOutput('MATRIX', JSON.stringify({ bundledPath: 'specs/bundled' }));
 }
 
 /**

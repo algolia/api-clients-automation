@@ -16,10 +16,6 @@ export type ClientMatrix = {
      */
     path: string;
     /**
-     * The list of clients to run in the CI.
-     */
-    toRun: string;
-    /**
      * The client language.
      */
     language: string;
