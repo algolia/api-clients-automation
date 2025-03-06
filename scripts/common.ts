@@ -10,7 +10,7 @@ import clientsConfig from '../config/clients.config.json' with { type: 'json' };
 import releaseConfig from '../config/release.config.json' with { type: 'json' };
 
 import { Cache } from './cache.ts';
-import { getClientsConfigField, getDockerImage } from './config.ts';
+import { getDockerImage } from './config.ts';
 import { generateOpenapitools } from './pre-gen/index.ts';
 import { getGitAuthor } from './release/common.ts';
 import { buildSpecs } from './specs/index.ts';
@@ -295,15 +295,6 @@ export async function setupAndGen(
   await buildCustomGenerators();
 
   for (const gen of generators) {
-    if (mode === 'guides') {
-      await run(
-        `rm -rf ${path.join('docs', mode, gen.language, getClientsConfigField(gen.language, ['snippets', 'outputFolder']))}`,
-        {
-          language: gen.language,
-        },
-      );
-    }
-
     const spinner = createSpinner(`generating ${mode} for ${gen.key}`);
     await fn(gen);
     spinner.succeed();
