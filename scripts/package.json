@@ -48,6 +48,6 @@
     "semver": "7.7.1",
     "spinnies": "0.5.1",
     "typescript": "5.7.3",
-    "vitest": "3.0.7"
+    "vitest": "3.0.8"
   }
 }
