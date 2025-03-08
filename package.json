@@ -39,7 +39,7 @@
     "eslint-plugin-yml": "1.17.0",
     "husky": "9.1.7",
     "lint-staged": "15.4.3",
-    "oxlint": "0.15.12",
+    "oxlint": "0.15.13",
     "prettier": "3.5.3",
     "prettier-plugin-java": "2.6.7",
     "prettier-plugin-organize-imports": "4.1.0",
