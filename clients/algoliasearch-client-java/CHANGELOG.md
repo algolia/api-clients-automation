@@ -1,3 +1,8 @@
+## [4.13.0](https://github.com/algolia/algoliasearch-client-java/compare/4.12.3...4.13.0)
+
+- [63a50acb3](https://github.com/algolia/api-clients-automation/commit/63a50acb3) docs(java): fix typo on README ([#4564](https://github.com/algolia/api-clients-automation/pull/4564)) by [@Giglium](https://github.com/Giglium/)
+- [ab623194e](https://github.com/algolia/api-clients-automation/commit/ab623194e) feat(specs): add `subscriptionAction` to ingestion specs ([#4587](https://github.com/algolia/api-clients-automation/pull/4587)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [4.12.3](https://github.com/algolia/algoliasearch-client-java/compare/4.12.2...4.12.3)
 
 - [4f68190e10](https://github.com/algolia/api-clients-automation/commit/4f68190e10) fix(specs): update Recommend maxRecommendations to 30 max [RECO-2361] ([#4483](https://github.com/algolia/api-clients-automation/pull/4483)) by [@raed667](https://github.com/raed667/)
