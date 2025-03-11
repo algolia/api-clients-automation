@@ -67,8 +67,6 @@ TaskV1:
       $ref: '#/failureThreshold'
     action:
       $ref: '#/ActionType'
-    subscriptionAction:
-      $ref: '#/ActionType'
     cursor:
       $ref: './common.yml#/cursor'
     notifications:
@@ -141,8 +139,6 @@ TaskCreateV1:
     trigger:
       $ref: '#/TaskCreateTrigger'
     action:
-      $ref: '#/ActionType'
-    subscriptionAction:
       $ref: '#/ActionType'
     enabled:
       type: boolean
