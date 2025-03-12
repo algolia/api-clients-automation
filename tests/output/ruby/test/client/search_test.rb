@@ -182,7 +182,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.12.0\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.13.0\).*/))
   end
 
   # call deleteObjects without error
@@ -296,6 +296,34 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
     req = client.generate_secured_api_key(
       "2640659426d5107b6e47d75db9cbaef8",
+      Algolia::Search::SecuredApiKeyRestrictions.new(user_token: "user42")
+    )
+  end
+
+  # mcm with filters
+  def test_generate_secured_api_key5
+    client = Algolia::SearchClient.create(
+      "APP_ID",
+      "API_KEY",
+
+      {requester: Algolia::Transport::EchoRequester.new}
+    )
+    req = client.generate_secured_api_key(
+      "YourSearchOnlyApiKey",
+      Algolia::Search::SecuredApiKeyRestrictions.new(filters: "user:user42 AND user:public")
+    )
+  end
+
+  # mcm with user token
+  def test_generate_secured_api_key6
+    client = Algolia::SearchClient.create(
+      "APP_ID",
+      "API_KEY",
+
+      {requester: Algolia::Transport::EchoRequester.new}
+    )
+    req = client.generate_secured_api_key(
+      "YourSearchOnlyApiKey",
       Algolia::Search::SecuredApiKeyRestrictions.new(user_token: "user42")
     )
   end
@@ -776,7 +804,33 @@ class TestClientSearchClient < Test::Unit::TestCase
           createdAt: "1500240452"
         }
       ],
-      {:header_params => JSON.parse("{\"X-Algolia-User-ID\":\"*\"}", :symbolize_names => true)}
+      false,
+      1000,
+      {:header_params => {"X-Algolia-User-ID" => "*"}}
+    )
+  end
+
+  # with algolia user id
+  def test_search_single_index0
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6686,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    req = client.search_single_index(
+      "playlists",
+      Algolia::Search::SearchParamsObject.new(query: "foo"),
+      {:header_params => {"X-Algolia-User-ID" => "user1234"}}
     )
   end
 

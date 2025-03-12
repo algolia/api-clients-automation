@@ -1,22 +1,29 @@
 Action:
   type: object
-  description: Instructions about how to process crawled URLs.
+  description: |
+    How to process crawled URLs.
+
+    Each action defines:
+
+    - The targeted subset of URLs it processes.
+    - What information to extract from the web pages.
+    - The Algolia indices where the extracted records will be stored.
+
+    If a single web page matches several actions,
+    one record is generated for each action.
   properties:
     autoGenerateObjectIDs:
       type: boolean
-      description: |
-        Whether to generate `objectID` properties for each extracted record.
-
-        If false, you must manually add `objectID` properties to the extracted records.
+      description: Whether to generate an `objectID` for records that don't have one.
       default: true
     cache:
       $ref: '#/cache'
     discoveryPatterns:
       type: array
       description: |
-        Patterns for additional pages to visit to find links without extracting records.
+        Indicates _intermediary_ pages that the crawler should visit.
 
-        The crawler looks for matching pages and crawls them for links, but doesn't extract records from the (intermediate) pages themselves.
+        For more information, see the [`discoveryPatterns` documentation](https://www.algolia.com/doc/tools/crawler/apis/discoverypatterns/).
       items:
         $ref: '#/urlPattern'
     fileTypesToMatch:
@@ -24,15 +31,7 @@ Action:
       description: |
         File types for crawling non-HTML documents.
 
-        Non-HTML documents are first converted to HTML by an [Apache Tika](https://tika.apache.org/) server.
-
-        Crawling non-HTML documents has the following limitations:
-
-        - It's slower than crawling HTML documents.
-        - PDFs must include the used fonts.
-        - The produced HTML pages might not be semantic. This makes achieving good relevance more difficult.
-        - Natural language detection isn't supported.
-        - Extracted metadata might vary between files produced by different programs and versions.
+        For more information, see [Extract data from non-HTML documents](https://www.algolia.com/doc/tools/crawler/extracting-data/non-html-documents/).
       maxItems: 100
       items:
         $ref: '#/fileTypes'
@@ -47,8 +46,8 @@ Action:
       type: string
       maxLength: 256
       description: |
-        Index name where to store the extracted records from this action.
-        The name is combined with the prefix you specified in the `indexPrefix` option.
+        Reference to the index used to store the action's extracted records.
+        `indexName` is combined with the prefix you specified in `indexPrefix`.
       example: algolia_website
     name:
       type: string
@@ -57,7 +56,10 @@ Action:
       $ref: '#/pathAliases'
     pathsToMatch:
       type: array
-      description: Patterns for URLs to which this action should apply.
+      description: |
+        URLs to which this action should apply.
+
+        Uses [micromatch](https://github.com/micromatch/micromatch) for negation, wildcards, and more.
       minItems: 1
       maxItems: 100
       items:
@@ -65,16 +67,18 @@ Action:
     recordExtractor:
       title: recordExtractor
       type: object
-      description: Function for extracting information from a crawled page and transforming it into Algolia records for indexing.
+      description: |
+        Function for extracting information from a crawled page and transforming it into Algolia records for indexing.
+        The Crawler has an [editor](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/#the-editor) with autocomplete and validation to help you update the `recordExtractor` property.
+
+        For details, consult the [`recordExtractor` documentation](https://www.algolia.com/doc/tools/crawler/apis/recordextractor/).
       properties:
         __type:
           $ref: '#/configurationRecordExtractorType'
         source:
           type: string
           description: |
-            JavaScript function (as a string) for extracting information from a crawled page and transforming it into Algolia records for indexing.
-            The [Crawler dashboard](https://crawler.algolia.com/admin) has an editor with autocomplete and validation,
-            which makes editing the `recordExtractor` property easier.
+            A JavaScript function (as a string) that returns one or more Algolia records for each crawled page.
     selectorsToMatch:
       type: array
       description: |
@@ -107,13 +111,8 @@ fileTypes:
   type: string
   description: |
     Supported file type for indexing non-HTML documents.
-    A single type can match multiple file formats:
-
-    - `doc`: `.doc`, `.docx`
-    - `ppt`: `.ppt`, `.pptx`
-    - `xls`: `.xls`, `.xlsx`
-
-    The `email` type supports crawling Microsoft Outlook mail message (`.msg`) documents.
+    
+    For more information, see [Extract data from non-HTML documents](https://www.algolia.com/doc/tools/crawler/extracting-data/non-html-documents/).
   enum:
     - doc
     - email
@@ -129,7 +128,8 @@ urlPattern:
   type: string
   description: |
     Pattern for matching URLs.
-    Wildcards and negations are supported via the [micromatch](https://github.com/micromatch/micromatch) library.
+
+    Uses [micromatch](https://github.com/micromatch/micromatch) for negation, wildcards, and more.
   example: https://www.algolia.com/**
 
 hostnameAliases:
@@ -137,11 +137,10 @@ hostnameAliases:
   example:
     'dev.example.com': 'example.com'
   description: |
-    Key-value pairs to replace matching hostnames found in a sitemap, on a page, in canonical links, or redirects.
+    Key-value pairs to replace matching hostnames found in a sitemap,
+    on a page, in canonical links, or redirects.
 
-    The crawler continues from the _transformed_ URLs.
-    The mapping doesn't transform URLs listed in the `startUrls`, `siteMaps`, `pathsToMatch`, and other settings.
-    The mapping also doesn't replace hostnames found in extracted text.
+    For more information, see the [`hostnameAliases` documentation](https://www.algolia.com/doc/tools/crawler/apis/hostnamealiases/).
   additionalProperties:
     type: string
     description: Hostname that should be added in the records.
@@ -154,10 +153,13 @@ pathAliases:
       '/foo': '/bar'
   description: |
     Key-value pairs to replace matching paths with new values.
+    
+    It doesn't replace:
+      
+    - URLs in the `startUrls`, `sitemaps`, `pathsToMatch`, and other settings.
+    - Paths found in extracted text.
 
     The crawl continues from the _transformed_ URLs.
-    The mapping doesn't transform URLs listed in the `startUrls`, `siteMaps`, `pathsToMatch`, and other settings.
-    The mapping also doesn't replace paths found in extracted text.
   additionalProperties:
     type: object
     description: Hostname for which matching paths should be replaced.
@@ -172,17 +174,7 @@ cache:
   description: |
     Whether the crawler should cache crawled pages.
 
-    With caching, the crawler only crawls changed pages.
-    To detect changed pages, the crawler makes [HTTP conditional requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests) to your pages.
-    The crawler uses the `ETag` and `Last-Modified` response headers returned by your web server during the previous crawl.
-    The crawler sends this information in the `If-None-Match` and `If-Modified-Since` request headers.
-
-    If your web server responds with `304 Not Modified` to the conditional request, the crawler reuses the records from the previous crawl.
-
-    Caching is ignored in these cases:
-
-    - If your crawler configuration changed between two crawls.
-    - If `externalData` changed between two crawls.
+    For more information, see the [`cache` documentation](https://www.algolia.com/doc/tools/crawler/apis/cache/).
   properties:
     enabled:
       type: boolean

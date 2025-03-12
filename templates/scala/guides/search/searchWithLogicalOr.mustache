@@ -1,0 +1,21 @@
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+
+{{> snippets/import}}
+import algoliasearch.search.{OptionalWords, SearchParamsObject}
+
+def searchWithLogicalOr(): Future[Unit] = {
+    {{> snippets/init}}
+    val query = "the query"
+    val optionalWords = Seq("the", "query")
+    val searchParams = SearchParamsObject(
+      query = Some(query),
+      optionalWords = Some(OptionalWords.SeqOfString(optionalWords)),
+    )
+    {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}.map { response =>
+      println(response)
+    }.recover {
+      case ex: Exception =>
+        println(s"An error occurred: ${ex.getMessage}")
+    }
+}

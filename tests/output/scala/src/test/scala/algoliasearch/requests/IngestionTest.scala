@@ -15,7 +15,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class IngestionTest extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   def testClient(): (IngestionClient, EchoInterceptor) = {
     val echo = EchoInterceptor()
@@ -41,8 +41,8 @@ class IngestionTest extends AnyFunSuite {
         name = "authName",
         input = AuthOAuth(
           url = "http://test.oauth",
-          client_id = "myID",
-          client_secret = "mySecret"
+          clientId = "myID",
+          clientSecret = "mySecret"
         )
       )
     )
@@ -1570,8 +1570,8 @@ class IngestionTest extends AnyFunSuite {
               name = "authName",
               input = AuthOAuth(
                 url = "http://test.oauth",
-                client_id = "myID",
-                client_secret = "mySecret"
+                clientId = "myID",
+                clientSecret = "mySecret"
               )
             )
           )
@@ -1625,8 +1625,8 @@ class IngestionTest extends AnyFunSuite {
               name = "authName",
               input = AuthOAuth(
                 url = "http://test.oauth",
-                client_id = "myID",
-                client_secret = "mySecret"
+                clientId = "myID",
+                clientSecret = "mySecret"
               )
             )
           )

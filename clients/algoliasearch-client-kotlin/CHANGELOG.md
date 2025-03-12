@@ -1,3 +1,28 @@
+## [3.16.0](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.15.2...3.16.0)
+
+- [ab623194e](https://github.com/algolia/api-clients-automation/commit/ab623194e) feat(specs): add `subscriptionAction` to ingestion specs ([#4587](https://github.com/algolia/api-clients-automation/pull/4587)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [3.15.2](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.15.1...3.15.2)
+
+- [92bd911848](https://github.com/algolia/api-clients-automation/commit/92bd911848) chore(scripts): point jira issues to another epic ([#4505](https://github.com/algolia/api-clients-automation/pull/4505)) by [@millotp](https://github.com/millotp/)
+- [b8918494d0](https://github.com/algolia/api-clients-automation/commit/b8918494d0) chore(deps): dependencies 2025-03-03 ([#4511](https://github.com/algolia/api-clients-automation/pull/4511)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [97d2722bc9](https://github.com/algolia/api-clients-automation/commit/97d2722bc9) fix(specs): Increase optionalWords visibility in docs ([#4559](https://github.com/algolia/api-clients-automation/pull/4559)) by [@gazconroy](https://github.com/gazconroy/)
+
+## [3.15.1](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.15.0...3.15.1)
+
+- [ecd6bc4fed](https://github.com/algolia/api-clients-automation/commit/ecd6bc4fed) chore(deps): dependencies 2025-02-17 ([#4459](https://github.com/algolia/api-clients-automation/pull/4459)) by [@algolia-bot](https://github.com/algolia-bot/)
+
+## [3.15.0](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.14.1...3.15.0)
+
+- [fd2353a092](https://github.com/algolia/api-clients-automation/commit/fd2353a092) feat(clients): add manual snippets for search doc ([#4388](https://github.com/algolia/api-clients-automation/pull/4388)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [3.14.1](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.14.0...3.14.1)
+
+- [506b8a5636](https://github.com/algolia/api-clients-automation/commit/506b8a5636) fix(specs): responseFields description ([#4399](https://github.com/algolia/api-clients-automation/pull/4399)) by [@kai687](https://github.com/kai687/)
+- [09e657fa76](https://github.com/algolia/api-clients-automation/commit/09e657fa76) fix(specs): add a linter to assert that type is present ([#4393](https://github.com/algolia/api-clients-automation/pull/4393)) by [@millotp](https://github.com/millotp/)
+- [27ad6df2ab](https://github.com/algolia/api-clients-automation/commit/27ad6df2ab) chore(deps): dependencies 2025-01-27 ([#4395](https://github.com/algolia/api-clients-automation/pull/4395)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [9ac6165a0f](https://github.com/algolia/api-clients-automation/commit/9ac6165a0f) chore(deps): dependencies 2025-02-03 ([#4419](https://github.com/algolia/api-clients-automation/pull/4419)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [3.14.0](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.13.0...3.14.0)
 
 - [5aa57630d6](https://github.com/algolia/api-clients-automation/commit/5aa57630d6) feat(specs): only use shortname in the source input ([#4287](https://github.com/algolia/api-clients-automation/pull/4287)) by [@millotp](https://github.com/millotp/)

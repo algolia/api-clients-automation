@@ -1,0 +1,30 @@
+package com.algolia;
+
+import java.util.List;
+
+{{> snippets/import}}
+
+public class searchWithAnalyticsAndHeader {
+
+public static void main(String[] args) throws Exception {
+
+    try ({{> snippets/init}}) {
+
+      /*
+      '94.228.178.246' should be replaced with your user's IP address.
+      Depending on your stack there are multiple ways to get this information.
+      */
+      String ip = "94.228.178.246";
+      String query = "query";
+
+      SearchParams searchParams = new SearchParamsObject()
+        .setQuery(query)
+        .setAnalytics(true);
+
+      {{#dynamicSnippet}}searchWithSearchParamsAndForwardedHeader{{/dynamicSnippet}};
+    } catch (Exception e) {
+      System.out.println("An error occurred: " + e.getMessage());
+    }
+  }
+}
+

@@ -1,0 +1,36 @@
+namespace Algolia;
+
+using System;
+using System.Text.Json;
+using System.Net.Http;
+using System.Collections.Generic;
+
+{{> snippets/import}}
+
+class SavePopularRecords
+{
+
+  class Record
+  {
+    public int NbFollowers { get; set; }
+    public required string TwitterHandle { get; set; }
+    public bool IsPopular { get; set; }
+  }
+
+  async Task Main(string[] args)
+  {
+
+    {{> snippets/init}}
+
+    var hits = await client.BrowseObjectsAsync<Record>("<YOUR_INDEX_NAME>", new BrowseParamsObject());
+
+    var records = hits.Select(hit => new Record
+      {
+        TwitterHandle = hit.TwitterHandle,
+        NbFollowers = hit.NbFollowers,
+        IsPopular = hit.NbFollowers >= 1_000_000
+      }).ToList();
+
+    {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}};
+  }
+}

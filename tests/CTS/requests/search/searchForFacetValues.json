@@ -62,14 +62,14 @@
       "indexName": "indexName",
       "facetName": "author",
       "searchForFacetValuesRequest": {
-        "facetQuery": "stephen king"
+        "facetQuery": "stephen"
       }
     },
     "request": {
       "path": "/1/indexes/indexName/facets/author/query",
       "method": "POST",
       "body": {
-        "facetQuery": "stephen king"
+        "facetQuery": "stephen"
       }
     }
   }

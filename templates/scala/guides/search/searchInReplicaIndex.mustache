@@ -1,0 +1,25 @@
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.{Await, Future}
+import scala.concurrent.duration.Duration
+
+{{> snippets/import}}
+import algoliasearch.search.SearchParamsObject
+
+def searchInReplicaIndex(): Future[Unit] = {
+  {{> snippets/init}}
+
+  // 1. Change the sort dynamically based on the UI events
+  val sortByPrice = false
+
+  // 2. Get the index name based on sortByPrice
+  val indexName = if sortByPrice then "products_price_desc" else "products"
+
+  // 3. Search on dynamic index name (primary or replica)
+  {{#dynamicSnippet}}searchWithIndexNameVar{{/dynamicSnippet}}
+      .map { response =>
+    println(response)
+  }.recover {
+    case ex: Exception =>
+      println(s"An error occurred: ${ex.getMessage}")
+  }
+}

@@ -1,0 +1,25 @@
+{{> snippets/import}}
+
+
+def _get_google_analytics_user_id_from_browser_cookie(cookie_name: str) -> str:
+    # Implement your logic here
+    return ""
+
+try:
+  _{{> snippets/init}}
+
+  user_token = _get_google_analytics_user_id_from_browser_cookie("_ga")
+  search_params = {
+    "query": "<YOUR_SEARCH_QUERY>",
+    "userToken": user_token,
+  }
+
+  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+
+  logged_in_user = None
+
+  search_params["user_token"] = logged_in_user or user_token
+
+  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+except Exception as e:
+  print(f"Error: {e}")

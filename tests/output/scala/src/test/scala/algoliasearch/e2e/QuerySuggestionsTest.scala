@@ -8,8 +8,6 @@ import org.json4s.*
 import org.json4s.native.JsonParser.*
 import org.scalatest.funsuite.AnyFunSuite
 import io.github.cdimascio.dotenv.Dotenv
-import org.skyscreamer.jsonassert.JSONCompare.compareJSON
-import org.skyscreamer.jsonassert.JSONCompareMode
 import org.json4s.native.Serialization
 import org.json4s.native.Serialization.write
 
@@ -17,9 +15,9 @@ import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
 
-class QuerySuggestionsTestE2E extends AnyFunSuite {
+class QuerySuggestionsTest extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   def testClient(): QuerySuggestionsClient = {
     val region = "us"
@@ -46,11 +44,22 @@ class QuerySuggestionsTestE2E extends AnyFunSuite {
     )
 
     val response = Await.result(future, Duration.Inf)
-    compareJSON(
-      """{"appID":"T8JK9S7I7X","allowSpecialCharacters":true,"enablePersonalization":false,"exclude":["^cocaines$"],"indexName":"cts_e2e_browse_query_suggestions","languages":[],"sourceIndices":[{"facets":[{"amount":1,"attribute":"title"}],"generate":[["year"]],"indexName":"cts_e2e_browse","minHits":5,"minLetters":4,"replicas":false}]}""",
-      write(response),
-      JSONCompareMode.LENIENT
+    val expected = parse(
+      """{"appID":"T8JK9S7I7X","allowSpecialCharacters":true,"enablePersonalization":false,"exclude":["^cocaines$"],"indexName":"cts_e2e_browse_query_suggestions","languages":[],"sourceIndices":[{"facets":[{"amount":1,"attribute":"title"}],"generate":[["year"]],"indexName":"cts_e2e_browse","minHits":5,"minLetters":4,"replicas":false}]}"""
     )
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
   }
 
 }

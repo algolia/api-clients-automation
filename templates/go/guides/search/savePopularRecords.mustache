@@ -1,0 +1,41 @@
+package main
+
+import (
+  "encoding/json"
+  "fmt"
+  "net/http"
+)
+
+{{> snippets/import}}
+
+func savePopularRecords() {
+  {{> snippets/init}}
+
+  records := []map[string]any{ { /* Your records */ } }
+
+  err = client.BrowseObjects("<YOUR_INDEX_NAME>", search.BrowseParamsObject{}, search.WithAggregator(func(res any, err error) {
+		if err != nil {
+			panic(err)
+		}
+
+		browseRes, ok := res.(search.BrowseResponse)
+    if !ok {
+      panic("Invalid response")
+    }
+
+		for _, hit := range browseRes.Hits {
+			record := hit.AdditionalProperties
+      record["isPopular"] = record["nbFollowers"].(int) >= 1_000_000
+
+			records = append(records, record)
+		}
+	}))
+  if err != nil {
+    panic(err)
+  }
+
+  _, err = {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}}
+  if err != nil {
+    panic(err)
+  }
+}

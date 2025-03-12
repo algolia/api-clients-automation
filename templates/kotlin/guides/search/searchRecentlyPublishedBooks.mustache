@@ -1,0 +1,17 @@
+import java.time.Instant
+import java.time.temporal.ChronoUnit
+
+{{> snippets/import}}
+import com.algolia.client.model.search.*
+
+suspend fun searchRecentlyPublishedBooks() {
+  {{> snippets/init}}
+
+  val dateTimestamp = Instant.now().minus(365, ChronoUnit.DAYS).epochSecond
+  val searchParams = SearchParamsObject(
+    query = "<YOUR_SEARCH_QUERY>",
+    filters = "date_timestamp > $dateTimestamp"
+  )
+
+  client.{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+}

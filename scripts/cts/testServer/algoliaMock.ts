@@ -17,6 +17,26 @@ function addRoutes(app: Express): void {
       status: 'published',
     });
   });
+  app.post('/1/indexes/:indexName/query', (req, res) => {
+    res.json({
+      hits: [],
+      page: 0,
+      nbHits: 0,
+      nbPages: 0,
+      hitsPerPage: 20,
+      exhaustiveNbHits: true,
+      exhaustiveTypo: true,
+      exhaustive: {
+        nbHits: true,
+        typo: true,
+      },
+      query: '',
+      params: '',
+      index: 'playlists',
+      renderingContent: {},
+      processingTimeMS: 0,
+    });
+  });
 }
 
 export function algoliaMockServer(): Promise<Server> {

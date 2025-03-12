@@ -176,7 +176,7 @@ class TestSearchClient:
         _req = await _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.13.0\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.14.0\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     async def test_delete_objects_0(self):
@@ -301,6 +301,32 @@ class TestSearchClient:
 
         _req = await _client.generate_secured_api_key(
             parent_api_key="2640659426d5107b6e47d75db9cbaef8",
+            restrictions={
+                "userToken": "user42",
+            },
+        )
+
+    async def test_generate_secured_api_key_5(self):
+        """
+        mcm with filters
+        """
+        _client = self.create_client()
+
+        _req = await _client.generate_secured_api_key(
+            parent_api_key="YourSearchOnlyApiKey",
+            restrictions={
+                "filters": "user:user42 AND user:public",
+            },
+        )
+
+    async def test_generate_secured_api_key_6(self):
+        """
+        mcm with user token
+        """
+        _client = self.create_client()
+
+        _req = await _client.generate_secured_api_key(
+            parent_api_key="YourSearchOnlyApiKey",
             restrictions={
                 "userToken": "user42",
             },
@@ -838,8 +864,38 @@ class TestSearchClient:
                     "createdAt": "1500240452",
                 },
             ],
+            wait_for_tasks=False,
+            batch_size=1000,
             request_options={
                 "headers": loads("""{"X-Algolia-User-ID":"*"}"""),
+            },
+        )
+
+    async def test_search_single_index_0(self):
+        """
+        with algolia user id
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.search_single_index(
+            index_name="playlists",
+            search_params={
+                "query": "foo",
+            },
+            request_options={
+                "headers": loads("""{"X-Algolia-User-ID":"user1234"}"""),
             },
         )
 
@@ -1217,7 +1273,7 @@ class TestSearchClientSync:
         _req = _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.13.0\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.14.0\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     def test_delete_objects_0(self):
@@ -1342,6 +1398,32 @@ class TestSearchClientSync:
 
         _req = _client.generate_secured_api_key(
             parent_api_key="2640659426d5107b6e47d75db9cbaef8",
+            restrictions={
+                "userToken": "user42",
+            },
+        )
+
+    def test_generate_secured_api_key_5(self):
+        """
+        mcm with filters
+        """
+        _client = self.create_client()
+
+        _req = _client.generate_secured_api_key(
+            parent_api_key="YourSearchOnlyApiKey",
+            restrictions={
+                "filters": "user:user42 AND user:public",
+            },
+        )
+
+    def test_generate_secured_api_key_6(self):
+        """
+        mcm with user token
+        """
+        _client = self.create_client()
+
+        _req = _client.generate_secured_api_key(
+            parent_api_key="YourSearchOnlyApiKey",
             restrictions={
                 "userToken": "user42",
             },
@@ -1879,8 +1961,38 @@ class TestSearchClientSync:
                     "createdAt": "1500240452",
                 },
             ],
+            wait_for_tasks=False,
+            batch_size=1000,
             request_options={
                 "headers": loads("""{"X-Algolia-User-ID":"*"}"""),
+            },
+        )
+
+    def test_search_single_index_0(self):
+        """
+        with algolia user id
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.search_single_index(
+            index_name="playlists",
+            search_params={
+                "query": "foo",
+            },
+            request_options={
+                "headers": loads("""{"X-Algolia-User-ID":"user1234"}"""),
             },
         )
 

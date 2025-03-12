@@ -1,0 +1,20 @@
+<?php
+
+require __DIR__.'/../vendor/autoload.php';
+{{> snippets/import}}
+use Algolia\AlgoliaSearch\Model\Search\SearchParamsObject;
+
+$getPlatformTag = function (): string {
+    // Implement your logic here
+    return '';
+};
+
+{{> snippets/init}}
+
+// get the buyer account information
+$platformTag = $getPlatformTag();
+$searchParams = (new SearchParamsObject())
+    ->setQuery('<YOUR_SEARCH_QUERY>')
+    ->setRuleContexts([$platformTag]);
+
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};

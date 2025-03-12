@@ -1,0 +1,47 @@
+package main
+
+import (
+  "os"
+  "encoding/json"
+  "fmt"
+  "net/http"
+)
+
+{{> snippets/import}}
+
+func saveObjectsModified() {
+  {{> snippets/init}}
+
+  content, err := os.ReadFile("products.json")
+  if err != nil {
+    panic(err)
+  }
+
+  var products []map[string]any
+
+  err = json.Unmarshal(content, &products)
+  if err != nil {
+    panic(err)
+  }
+
+  records := make([]map[string]any, len(products))
+
+  for _, product := range products {
+    reference := product["product_reference"].(string)
+    suffixes := make([]string, len(reference)-1)
+
+    for i := len(reference); i > 1; i-- {
+      suffixes = append(suffixes, reference[i:])
+    }
+
+    record := product
+    record["product_reference_suffixes"] = suffixes
+
+    records = append(records, record)
+  }
+
+  _, err = {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}}
+  if err != nil {
+    panic(err)
+  }
+}

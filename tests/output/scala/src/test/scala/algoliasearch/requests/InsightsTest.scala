@@ -15,7 +15,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class InsightsTest extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   def testClient(): (InsightsClient, EchoInterceptor) = {
     val echo = EchoInterceptor()
@@ -575,7 +575,7 @@ class InsightsTest extends AnyFunSuite {
             index = "products",
             userToken = "user-123456",
             authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1738195200000L),
+            timestamp = Some(1741564800000L),
             objectIDs = Seq("9780545139700", "9780439784542"),
             queryID = "43b15df305339e827f0ac0bdc5ebcaa7"
           ),
@@ -585,7 +585,7 @@ class InsightsTest extends AnyFunSuite {
             index = "products",
             userToken = "user-123456",
             authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1738195200000L),
+            timestamp = Some(1741564800000L),
             objectIDs = Seq("9780545139700", "9780439784542")
           )
         )
@@ -598,7 +598,7 @@ class InsightsTest extends AnyFunSuite {
     assert(res.path == "/1/events")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1738195200000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1738195200000,"objectIDs":["9780545139700","9780439784542"]}]}"""
+      """{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1741564800000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1741564800000,"objectIDs":["9780545139700","9780439784542"]}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)

@@ -1,3 +1,5 @@
+namespace Algolia;
+
 using System;
 using System.Text.Json;
 using System.Net.Http;
@@ -7,7 +9,7 @@ using System.Collections.Generic;
 
 class SaveObjectsMovies
 {
-    public static async Task Main(string[] args)
+    async Task Main(string[] args)
     {
         // read json file from url
         var url = "https://dashboard.algolia.com/api/1/sample_datasets?type=movie";

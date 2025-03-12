@@ -6,15 +6,13 @@ sealed trait {{classname}}{{#vendorExtensions}}{{#x-one-of-element}}{{#x-one-of-
 * {{#description}}{{{.}}}{{/description}}{{^description}}{{classname}} enumeration{{/description}}
 */
 object {{classname}} {
-    {{#allowableValues}}
-    {{#values}}
-    case object {{#fnEnumEntry}}{{.}}{{/fnEnumEntry}} extends {{classname}} {
-        override def toString = "{{{.}}}"
+    {{#allowableValues.enumVars}}
+    case object {{#fnEnumEntry}}{{{name}}}{{/fnEnumEntry}} extends {{classname}} {
+        override def toString = {{{value}}}
     }
-    {{/values}}
-    {{/allowableValues}}
+    {{/allowableValues.enumVars}}
     {{#allowableValues}}
-    val values: Seq[{{classname}}]  = Seq({{#values}}{{#fnEnumEntry}}{{.}}{{/fnEnumEntry}}{{^-last}},{{/-last}}{{/values}})
+    val values: Seq[{{classname}}]  = Seq({{#enumVars}}{{#fnEnumEntry}}{{{name}}}{{/fnEnumEntry}}{{^-last}},{{/-last}}{{/enumVars}})
     {{/allowableValues}}
 
     def withName(name: String): {{classname}} = {{classname}}.values

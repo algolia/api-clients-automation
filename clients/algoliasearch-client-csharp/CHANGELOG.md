@@ -1,3 +1,27 @@
+## [7.14.0](https://github.com/algolia/algoliasearch-client-csharp/compare/7.13.4...7.14.0)
+
+- [ab623194e](https://github.com/algolia/api-clients-automation/commit/ab623194e) feat(specs): add `subscriptionAction` to ingestion specs ([#4587](https://github.com/algolia/api-clients-automation/pull/4587)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [7.13.4](https://github.com/algolia/algoliasearch-client-csharp/compare/7.13.3...7.13.4)
+
+- [b7fe926c16](https://github.com/algolia/api-clients-automation/commit/b7fe926c16) fix(csharp): remove specific minor version for System deps ([#4479](https://github.com/algolia/api-clients-automation/pull/4479)) by [@morganleroi](https://github.com/morganleroi/)
+- [92bd911848](https://github.com/algolia/api-clients-automation/commit/92bd911848) chore(scripts): point jira issues to another epic ([#4505](https://github.com/algolia/api-clients-automation/pull/4505)) by [@millotp](https://github.com/millotp/)
+- [97d2722bc9](https://github.com/algolia/api-clients-automation/commit/97d2722bc9) fix(specs): Increase optionalWords visibility in docs ([#4559](https://github.com/algolia/api-clients-automation/pull/4559)) by [@gazconroy](https://github.com/gazconroy/)
+
+## [7.13.3](https://github.com/algolia/algoliasearch-client-csharp/compare/7.13.2...7.13.3)
+
+- [dafa519689](https://github.com/algolia/api-clients-automation/commit/dafa519689) chore: more composition API update for docs ([#4453](https://github.com/algolia/api-clients-automation/pull/4453)) by [@e-krebs](https://github.com/e-krebs/)
+- [ecd6bc4fed](https://github.com/algolia/api-clients-automation/commit/ecd6bc4fed) chore(deps): dependencies 2025-02-17 ([#4459](https://github.com/algolia/api-clients-automation/pull/4459)) by [@algolia-bot](https://github.com/algolia-bot/)
+
+## [7.13.2](https://github.com/algolia/algoliasearch-client-csharp/compare/7.13.1...7.13.2)
+
+- [5e18968d10](https://github.com/algolia/api-clients-automation/commit/5e18968d10) chore(specs): update composition specs for the doc website ([#4450](https://github.com/algolia/api-clients-automation/pull/4450)) by [@e-krebs](https://github.com/e-krebs/)
+
+## [7.13.1](https://github.com/algolia/algoliasearch-client-csharp/compare/7.13.0...7.13.1)
+
+- [506b8a5636](https://github.com/algolia/api-clients-automation/commit/506b8a5636) fix(specs): responseFields description ([#4399](https://github.com/algolia/api-clients-automation/pull/4399)) by [@kai687](https://github.com/kai687/)
+- [09e657fa76](https://github.com/algolia/api-clients-automation/commit/09e657fa76) fix(specs): add a linter to assert that type is present ([#4393](https://github.com/algolia/api-clients-automation/pull/4393)) by [@millotp](https://github.com/millotp/)
+
 ## [7.13.0](https://github.com/algolia/algoliasearch-client-csharp/compare/7.12.0...7.13.0)
 
 - [5aa57630d6](https://github.com/algolia/api-clients-automation/commit/5aa57630d6) feat(specs): only use shortname in the source input ([#4287](https://github.com/algolia/api-clients-automation/pull/4287)) by [@millotp](https://github.com/millotp/)

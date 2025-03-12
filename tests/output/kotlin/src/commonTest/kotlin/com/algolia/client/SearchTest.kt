@@ -172,7 +172,7 @@ class SearchTest {
         )
       },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.14.0\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.16.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
       },
@@ -292,6 +292,40 @@ class SearchTest {
       call = {
         generateSecuredApiKey(
           parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+          restrictions = SecuredApiKeyRestrictions(
+            userToken = "user42",
+          ),
+        )
+      },
+      intercept = {
+      },
+    )
+  }
+
+  @Test
+  fun `mcm with filters`() = runTest {
+    val client = SearchClient(appId = "appId", apiKey = "apiKey")
+    client.runTest(
+      call = {
+        generateSecuredApiKey(
+          parentApiKey = "YourSearchOnlyApiKey",
+          restrictions = SecuredApiKeyRestrictions(
+            filters = "user:user42 AND user:public",
+          ),
+        )
+      },
+      intercept = {
+      },
+    )
+  }
+
+  @Test
+  fun `mcm with user token`() = runTest {
+    val client = SearchClient(appId = "appId", apiKey = "apiKey")
+    client.runTest(
+      call = {
+        generateSecuredApiKey(
+          parentApiKey = "YourSearchOnlyApiKey",
           restrictions = SecuredApiKeyRestrictions(
             userToken = "user42",
           ),
@@ -815,9 +849,33 @@ class SearchTest {
               )
             },
           ),
+          waitForTasks = false,
+          batchSize = 1000,
           requestOptions = RequestOptions(
             headers = buildMap {
               put("X-Algolia-User-ID", "*")
+            },
+          ),
+        )
+      },
+      intercept = {
+      },
+    )
+  }
+
+  @Test
+  fun `with algolia user id`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6686))))
+    client.runTest(
+      call = {
+        searchSingleIndex(
+          indexName = "playlists",
+          searchParams = SearchParamsObject(
+            query = "foo",
+          ),
+          requestOptions = RequestOptions(
+            headers = buildMap {
+              put("X-Algolia-User-ID", "user1234")
             },
           ),
         )

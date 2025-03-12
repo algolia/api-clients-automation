@@ -27,7 +27,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class AbtestingClient
 {
-    public const VERSION = '4.13.0';
+    public const VERSION = '4.16.0';
 
     /**
      * @var ApiWrapperInterface
@@ -121,10 +121,10 @@ class AbtestingClient
      * Required API Key ACLs:
      *  - editSettings
      *
-     * @param array $addABTestsRequest addABTestsRequest (required)
-     *                                 - $addABTestsRequest['name'] => (string) A/B test name. (required)
-     *                                 - $addABTestsRequest['variants'] => (array) A/B test variants. (required)
-     *                                 - $addABTestsRequest['endAt'] => (string) End date and time of the A/B test, in RFC 3339 format. (required)
+     * @param AddABTestsRequest|array $addABTestsRequest addABTestsRequest (required)
+     *                                                   - $addABTestsRequest['name'] => (string) A/B test name. (required)
+     *                                                   - $addABTestsRequest['variants'] => (array) A/B test variants. (required)
+     *                                                   - $addABTestsRequest['endAt'] => (string) End date and time of the A/B test, in RFC 3339 format. (required)
      *
      * @see AddABTestsRequest
      *
@@ -150,7 +150,7 @@ class AbtestingClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -189,7 +189,7 @@ class AbtestingClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -228,7 +228,7 @@ class AbtestingClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -268,7 +268,7 @@ class AbtestingClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -350,9 +350,9 @@ class AbtestingClient
      * Required API Key ACLs:
      *  - analytics
      *
-     * @param array $estimateABTestRequest estimateABTestRequest (required)
-     *                                     - $estimateABTestRequest['configuration'] => (array)  (required)
-     *                                     - $estimateABTestRequest['variants'] => (array) A/B test variants. (required)
+     * @param array|EstimateABTestRequest $estimateABTestRequest estimateABTestRequest (required)
+     *                                                           - $estimateABTestRequest['configuration'] => (array)  (required)
+     *                                                           - $estimateABTestRequest['variants'] => (array) A/B test variants. (required)
      *
      * @see EstimateABTestRequest
      *
@@ -460,11 +460,11 @@ class AbtestingClient
      * Required API Key ACLs:
      *  - editSettings
      *
-     * @param array $scheduleABTestsRequest scheduleABTestsRequest (required)
-     *                                      - $scheduleABTestsRequest['name'] => (string) A/B test name. (required)
-     *                                      - $scheduleABTestsRequest['variants'] => (array) A/B test variants. (required)
-     *                                      - $scheduleABTestsRequest['scheduledAt'] => (string) Date and time when the A/B test is scheduled to start, in RFC 3339 format. (required)
-     *                                      - $scheduleABTestsRequest['endAt'] => (string) End date and time of the A/B test, in RFC 3339 format. (required)
+     * @param array|ScheduleABTestsRequest $scheduleABTestsRequest scheduleABTestsRequest (required)
+     *                                                             - $scheduleABTestsRequest['name'] => (string) A/B test name. (required)
+     *                                                             - $scheduleABTestsRequest['variants'] => (array) A/B test variants. (required)
+     *                                                             - $scheduleABTestsRequest['scheduledAt'] => (string) Date and time when the A/B test is scheduled to start, in RFC 3339 format. (required)
+     *                                                             - $scheduleABTestsRequest['endAt'] => (string) End date and time of the A/B test, in RFC 3339 format. (required)
      *
      * @see ScheduleABTestsRequest
      *

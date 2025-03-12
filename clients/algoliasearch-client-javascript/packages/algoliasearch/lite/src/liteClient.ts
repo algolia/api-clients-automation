@@ -24,7 +24,7 @@ import type {
 import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
 import type { SearchResponse } from '../model/searchResponse';
 
-export const apiClientVersion = '5.20.0';
+export const apiClientVersion = '5.21.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -171,7 +171,7 @@ export function createLiteClient({
       }>;
     },
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      * @param customPost - The customPost object.
      * @param customPost.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPost.parameters - Query parameters to apply to the current query.

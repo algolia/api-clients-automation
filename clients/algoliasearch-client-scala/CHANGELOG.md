@@ -1,3 +1,27 @@
+## [2.15.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.14.0...2.15.0)
+
+- [ab623194e](https://github.com/algolia/api-clients-automation/commit/ab623194e) feat(specs): add `subscriptionAction` to ingestion specs ([#4587](https://github.com/algolia/api-clients-automation/pull/4587)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [2.14.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.13.3...2.14.0)
+
+- [92bd911848](https://github.com/algolia/api-clients-automation/commit/92bd911848) chore(scripts): point jira issues to another epic ([#4505](https://github.com/algolia/api-clients-automation/pull/4505)) by [@millotp](https://github.com/millotp/)
+- [043fb81ce6](https://github.com/algolia/api-clients-automation/commit/043fb81ce6) feat(scala): missing helpers ([#4486](https://github.com/algolia/api-clients-automation/pull/4486)) by [@Fluf22](https://github.com/Fluf22/)
+- [b8918494d0](https://github.com/algolia/api-clients-automation/commit/b8918494d0) chore(deps): dependencies 2025-03-03 ([#4511](https://github.com/algolia/api-clients-automation/pull/4511)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [97d2722bc9](https://github.com/algolia/api-clients-automation/commit/97d2722bc9) fix(specs): Increase optionalWords visibility in docs ([#4559](https://github.com/algolia/api-clients-automation/pull/4559)) by [@gazconroy](https://github.com/gazconroy/)
+
+## [2.13.3](https://github.com/algolia/algoliasearch-client-scala/compare/2.13.2...2.13.3)
+
+- [dafa519689](https://github.com/algolia/api-clients-automation/commit/dafa519689) chore: more composition API update for docs ([#4453](https://github.com/algolia/api-clients-automation/pull/4453)) by [@e-krebs](https://github.com/e-krebs/)
+
+## [2.13.2](https://github.com/algolia/algoliasearch-client-scala/compare/2.13.1...2.13.2)
+
+- [5e18968d10](https://github.com/algolia/api-clients-automation/commit/5e18968d10) chore(specs): update composition specs for the doc website ([#4450](https://github.com/algolia/api-clients-automation/pull/4450)) by [@e-krebs](https://github.com/e-krebs/)
+
+## [2.13.1](https://github.com/algolia/algoliasearch-client-scala/compare/2.13.0...2.13.1)
+
+- [506b8a5636](https://github.com/algolia/api-clients-automation/commit/506b8a5636) fix(specs): responseFields description ([#4399](https://github.com/algolia/api-clients-automation/pull/4399)) by [@kai687](https://github.com/kai687/)
+- [09e657fa76](https://github.com/algolia/api-clients-automation/commit/09e657fa76) fix(specs): add a linter to assert that type is present ([#4393](https://github.com/algolia/api-clients-automation/pull/4393)) by [@millotp](https://github.com/millotp/)
+
 ## [2.13.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.12.0...2.13.0)
 
 - [5aa57630d6](https://github.com/algolia/api-clients-automation/commit/5aa57630d6) feat(specs): only use shortname in the source input ([#4287](https://github.com/algolia/api-clients-automation/pull/4287)) by [@millotp](https://github.com/millotp/)

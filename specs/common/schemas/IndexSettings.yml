@@ -1218,18 +1218,6 @@ booleanString:
     - 'false'
 
 optionalWords:
-  oneOf:
-    - type: string
-    - type: 'null'
-    - $ref: '#/optionalWordsArray'
-
-optionalWordsArray:
-  type: array
-  items:
-    type: string
-  example:
-    - blue
-    - iphone case
   description: |
     Words that should be considered optional when found in the query.
 
@@ -1248,6 +1236,19 @@ optionalWordsArray:
       For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.
 
     For more information, see [Optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
+  oneOf:
+    - type: string
+    - type: 'null'
+    - $ref: '#/optionalWordsArray'
+
+optionalWordsArray:
+  type: array
+  items:
+    type: string
+  example:
+    - blue
+    - iphone case
+  description: List of [optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
   default: []
   x-categories:
     - Query strategy

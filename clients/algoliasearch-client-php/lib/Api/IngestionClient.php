@@ -69,7 +69,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class IngestionClient
 {
-    public const VERSION = '4.13.0';
+    public const VERSION = '4.16.0';
 
     /**
      * @var ApiWrapperInterface
@@ -165,11 +165,11 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
-     * @param array $authenticationCreate (required)
-     *                                    - $authenticationCreate['type'] => (array)  (required)
-     *                                    - $authenticationCreate['name'] => (string) Descriptive name for the resource. (required)
-     *                                    - $authenticationCreate['platform'] => (array)
-     *                                    - $authenticationCreate['input'] => (array)  (required)
+     * @param array|AuthenticationCreate $authenticationCreate (required)
+     *                                                         - $authenticationCreate['type'] => (array)  (required)
+     *                                                         - $authenticationCreate['name'] => (string) Descriptive name for the resource. (required)
+     *                                                         - $authenticationCreate['platform'] => (array)
+     *                                                         - $authenticationCreate['input'] => (array)  (required)
      *
      * @see AuthenticationCreate
      *
@@ -202,12 +202,12 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
-     * @param array $destinationCreate (required)
-     *                                 - $destinationCreate['type'] => (array)  (required)
-     *                                 - $destinationCreate['name'] => (string) Descriptive name for the resource. (required)
-     *                                 - $destinationCreate['input'] => (array)  (required)
-     *                                 - $destinationCreate['authenticationID'] => (string) Universally unique identifier (UUID) of an authentication resource.
-     *                                 - $destinationCreate['transformationIDs'] => (array)
+     * @param array|DestinationCreate $destinationCreate (required)
+     *                                                   - $destinationCreate['type'] => (array)  (required)
+     *                                                   - $destinationCreate['name'] => (string) Descriptive name for the resource. (required)
+     *                                                   - $destinationCreate['input'] => (array)  (required)
+     *                                                   - $destinationCreate['authenticationID'] => (string) Universally unique identifier (UUID) of an authentication resource.
+     *                                                   - $destinationCreate['transformationIDs'] => (array)
      *
      * @see DestinationCreate
      *
@@ -240,11 +240,11 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
-     * @param array $sourceCreate (required)
-     *                            - $sourceCreate['type'] => (array)  (required)
-     *                            - $sourceCreate['name'] => (string) Descriptive name of the source. (required)
-     *                            - $sourceCreate['input'] => (array)
-     *                            - $sourceCreate['authenticationID'] => (string) Universally unique identifier (UUID) of an authentication resource.
+     * @param array|SourceCreate $sourceCreate (required)
+     *                                         - $sourceCreate['type'] => (array)  (required)
+     *                                         - $sourceCreate['name'] => (string) Descriptive name of the source. (required)
+     *                                         - $sourceCreate['input'] => (array)
+     *                                         - $sourceCreate['authenticationID'] => (string) Universally unique identifier (UUID) of an authentication resource.
      *
      * @see SourceCreate
      *
@@ -272,17 +272,18 @@ class IngestionClient
     /**
      * Creates a new task.
      *
-     * @param array $taskCreate Request body for creating a task. (required)
-     *                          - $taskCreate['sourceID'] => (string) Universally uniqud identifier (UUID) of a source. (required)
-     *                          - $taskCreate['destinationID'] => (string) Universally unique identifier (UUID) of a destination resource. (required)
-     *                          - $taskCreate['action'] => (array)  (required)
-     *                          - $taskCreate['cron'] => (string) Cron expression for the task's schedule.
-     *                          - $taskCreate['enabled'] => (bool) Whether the task is enabled.
-     *                          - $taskCreate['failureThreshold'] => (int) Maximum accepted percentage of failures for a task run to finish successfully.
-     *                          - $taskCreate['input'] => (array)
-     *                          - $taskCreate['cursor'] => (string) Date of the last cursor in RFC 3339 format.
-     *                          - $taskCreate['notifications'] => (array)
-     *                          - $taskCreate['policies'] => (array)
+     * @param array|TaskCreate $taskCreate Request body for creating a task. (required)
+     *                                     - $taskCreate['sourceID'] => (string) Universally uniqud identifier (UUID) of a source. (required)
+     *                                     - $taskCreate['destinationID'] => (string) Universally unique identifier (UUID) of a destination resource. (required)
+     *                                     - $taskCreate['action'] => (array)  (required)
+     *                                     - $taskCreate['subscriptionAction'] => (array)
+     *                                     - $taskCreate['cron'] => (string) Cron expression for the task's schedule.
+     *                                     - $taskCreate['enabled'] => (bool) Whether the task is enabled.
+     *                                     - $taskCreate['failureThreshold'] => (int) Maximum accepted percentage of failures for a task run to finish successfully.
+     *                                     - $taskCreate['input'] => (array)
+     *                                     - $taskCreate['cursor'] => (string) Date of the last cursor in RFC 3339 format.
+     *                                     - $taskCreate['notifications'] => (array)
+     *                                     - $taskCreate['policies'] => (array)
      *
      * @see TaskCreate
      *
@@ -310,15 +311,15 @@ class IngestionClient
     /**
      * Creates a new task using the v1 endpoint, please use `createTask` instead.
      *
-     * @param array $taskCreate Request body for creating a task. (required)
-     *                          - $taskCreate['sourceID'] => (string) Universally uniqud identifier (UUID) of a source. (required)
-     *                          - $taskCreate['destinationID'] => (string) Universally unique identifier (UUID) of a destination resource. (required)
-     *                          - $taskCreate['trigger'] => (array)  (required)
-     *                          - $taskCreate['action'] => (array)  (required)
-     *                          - $taskCreate['enabled'] => (bool) Whether the task is enabled.
-     *                          - $taskCreate['failureThreshold'] => (int) Maximum accepted percentage of failures for a task run to finish successfully.
-     *                          - $taskCreate['input'] => (array)
-     *                          - $taskCreate['cursor'] => (string) Date of the last cursor in RFC 3339 format.
+     * @param array|TaskCreateV1 $taskCreate Request body for creating a task. (required)
+     *                                       - $taskCreate['sourceID'] => (string) Universally uniqud identifier (UUID) of a source. (required)
+     *                                       - $taskCreate['destinationID'] => (string) Universally unique identifier (UUID) of a destination resource. (required)
+     *                                       - $taskCreate['trigger'] => (array)  (required)
+     *                                       - $taskCreate['action'] => (array)  (required)
+     *                                       - $taskCreate['enabled'] => (bool) Whether the task is enabled.
+     *                                       - $taskCreate['failureThreshold'] => (int) Maximum accepted percentage of failures for a task run to finish successfully.
+     *                                       - $taskCreate['input'] => (array)
+     *                                       - $taskCreate['cursor'] => (string) Date of the last cursor in RFC 3339 format.
      *
      * @see TaskCreateV1
      *
@@ -348,11 +349,11 @@ class IngestionClient
     /**
      * Creates a new transformation.
      *
-     * @param array $transformationCreate Request body for creating a transformation. (required)
-     *                                    - $transformationCreate['code'] => (string) The source code of the transformation. (required)
-     *                                    - $transformationCreate['name'] => (string) The uniquely identified name of your transformation. (required)
-     *                                    - $transformationCreate['description'] => (string) A descriptive name for your transformation of what it does.
-     *                                    - $transformationCreate['authenticationIDs'] => (array) The authentications associated with the current transformation.
+     * @param array|TransformationCreate $transformationCreate Request body for creating a transformation. (required)
+     *                                                         - $transformationCreate['code'] => (string) The source code of the transformation. (required)
+     *                                                         - $transformationCreate['name'] => (string) The uniquely identified name of your transformation. (required)
+     *                                                         - $transformationCreate['description'] => (string) A descriptive name for your transformation of what it does.
+     *                                                         - $transformationCreate['authenticationIDs'] => (array) The authentications associated with the current transformation.
      *
      * @see TransformationCreate
      *
@@ -378,7 +379,7 @@ class IngestionClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -417,7 +418,7 @@ class IngestionClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -456,7 +457,7 @@ class IngestionClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -496,7 +497,7 @@ class IngestionClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -1797,10 +1798,10 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
-     * @param string $taskID          Unique identifier of a task. (required)
-     * @param array  $pushTaskPayload Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
-     *                                - $pushTaskPayload['action'] => (array)  (required)
-     *                                - $pushTaskPayload['records'] => (array)  (required)
+     * @param string                $taskID          Unique identifier of a task. (required)
+     * @param array|PushTaskPayload $pushTaskPayload Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
+     *                                               - $pushTaskPayload['action'] => (array)  (required)
+     *                                               - $pushTaskPayload['records'] => (array)  (required)
      *
      * @see PushTaskPayload
      *
@@ -1863,12 +1864,12 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
-     * @param string $sourceID         Unique identifier of a source. (required)
-     * @param array  $runSourcePayload (optional)
-     *                                 - $runSourcePayload['indexToInclude'] => (array) List of index names to include in reidexing/update.
-     *                                 - $runSourcePayload['indexToExclude'] => (array) List of index names to exclude in reidexing/update.
-     *                                 - $runSourcePayload['entityIDs'] => (array) List of entityID to update.
-     *                                 - $runSourcePayload['entityType'] => (array)
+     * @param string                 $sourceID         Unique identifier of a source. (required)
+     * @param array|RunSourcePayload $runSourcePayload (optional)
+     *                                                 - $runSourcePayload['indexToInclude'] => (array) List of index names to include in reidexing/update.
+     *                                                 - $runSourcePayload['indexToExclude'] => (array) List of index names to exclude in reidexing/update.
+     *                                                 - $runSourcePayload['entityIDs'] => (array) List of entityID to update.
+     *                                                 - $runSourcePayload['entityType'] => (array)
      *
      * @see RunSourcePayload
      *
@@ -1990,8 +1991,8 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
-     * @param array $authenticationSearch authenticationSearch (required)
-     *                                    - $authenticationSearch['authenticationIDs'] => (array)  (required)
+     * @param array|AuthenticationSearch $authenticationSearch authenticationSearch (required)
+     *                                                         - $authenticationSearch['authenticationIDs'] => (array)  (required)
      *
      * @see AuthenticationSearch
      *
@@ -2024,8 +2025,8 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
-     * @param array $destinationSearch destinationSearch (required)
-     *                                 - $destinationSearch['destinationIDs'] => (array)  (required)
+     * @param array|DestinationSearch $destinationSearch destinationSearch (required)
+     *                                                   - $destinationSearch['destinationIDs'] => (array)  (required)
      *
      * @see DestinationSearch
      *
@@ -2058,8 +2059,8 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
-     * @param array $sourceSearch sourceSearch (required)
-     *                            - $sourceSearch['sourceIDs'] => (array)  (required)
+     * @param array|SourceSearch $sourceSearch sourceSearch (required)
+     *                                         - $sourceSearch['sourceIDs'] => (array)  (required)
      *
      * @see SourceSearch
      *
@@ -2092,8 +2093,8 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
-     * @param array $taskSearch taskSearch (required)
-     *                          - $taskSearch['taskIDs'] => (array)  (required)
+     * @param array|TaskSearch $taskSearch taskSearch (required)
+     *                                     - $taskSearch['taskIDs'] => (array)  (required)
      *
      * @see TaskSearch
      *
@@ -2126,8 +2127,8 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
-     * @param array $taskSearch taskSearch (required)
-     *                          - $taskSearch['taskIDs'] => (array)  (required)
+     * @param array|TaskSearch $taskSearch taskSearch (required)
+     *                                     - $taskSearch['taskIDs'] => (array)  (required)
      *
      * @see TaskSearch
      *
@@ -2162,8 +2163,8 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
-     * @param array $transformationSearch transformationSearch (required)
-     *                                    - $transformationSearch['transformationIDs'] => (array)  (required)
+     * @param array|TransformationSearch $transformationSearch transformationSearch (required)
+     *                                                         - $transformationSearch['transformationIDs'] => (array)  (required)
      *
      * @see TransformationSearch
      *
@@ -2245,10 +2246,10 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
-     * @param array $transformationTry transformationTry (required)
-     *                                 - $transformationTry['code'] => (string) The source code of the transformation. (required)
-     *                                 - $transformationTry['sampleRecord'] => (array) The record to apply the given code to. (required)
-     *                                 - $transformationTry['authentications'] => (array)
+     * @param array|TransformationTry $transformationTry transformationTry (required)
+     *                                                   - $transformationTry['code'] => (string) The source code of the transformation. (required)
+     *                                                   - $transformationTry['sampleRecord'] => (array) The record to apply the given code to. (required)
+     *                                                   - $transformationTry['authentications'] => (array)
      *
      * @see TransformationTry
      *
@@ -2281,11 +2282,11 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
-     * @param string $transformationID  Unique identifier of a transformation. (required)
-     * @param array  $transformationTry transformationTry (required)
-     *                                  - $transformationTry['code'] => (string) The source code of the transformation. (required)
-     *                                  - $transformationTry['sampleRecord'] => (array) The record to apply the given code to. (required)
-     *                                  - $transformationTry['authentications'] => (array)
+     * @param string                  $transformationID  Unique identifier of a transformation. (required)
+     * @param array|TransformationTry $transformationTry transformationTry (required)
+     *                                                   - $transformationTry['code'] => (string) The source code of the transformation. (required)
+     *                                                   - $transformationTry['sampleRecord'] => (array) The record to apply the given code to. (required)
+     *                                                   - $transformationTry['authentications'] => (array)
      *
      * @see TransformationTry
      *
@@ -2333,12 +2334,12 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
-     * @param string $authenticationID     Unique identifier of an authentication resource. (required)
-     * @param array  $authenticationUpdate authenticationUpdate (required)
-     *                                     - $authenticationUpdate['type'] => (array)
-     *                                     - $authenticationUpdate['name'] => (string) Descriptive name for the resource.
-     *                                     - $authenticationUpdate['platform'] => (array)
-     *                                     - $authenticationUpdate['input'] => (array)
+     * @param string                     $authenticationID     Unique identifier of an authentication resource. (required)
+     * @param array|AuthenticationUpdate $authenticationUpdate authenticationUpdate (required)
+     *                                                         - $authenticationUpdate['type'] => (array)
+     *                                                         - $authenticationUpdate['name'] => (string) Descriptive name for the resource.
+     *                                                         - $authenticationUpdate['platform'] => (array)
+     *                                                         - $authenticationUpdate['input'] => (array)
      *
      * @see AuthenticationUpdate
      *
@@ -2386,13 +2387,13 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
-     * @param string $destinationID     Unique identifier of a destination. (required)
-     * @param array  $destinationUpdate destinationUpdate (required)
-     *                                  - $destinationUpdate['type'] => (array)
-     *                                  - $destinationUpdate['name'] => (string) Descriptive name for the resource.
-     *                                  - $destinationUpdate['input'] => (array)
-     *                                  - $destinationUpdate['authenticationID'] => (string) Universally unique identifier (UUID) of an authentication resource.
-     *                                  - $destinationUpdate['transformationIDs'] => (array)
+     * @param string                  $destinationID     Unique identifier of a destination. (required)
+     * @param array|DestinationUpdate $destinationUpdate destinationUpdate (required)
+     *                                                   - $destinationUpdate['type'] => (array)
+     *                                                   - $destinationUpdate['name'] => (string) Descriptive name for the resource.
+     *                                                   - $destinationUpdate['input'] => (array)
+     *                                                   - $destinationUpdate['authenticationID'] => (string) Universally unique identifier (UUID) of an authentication resource.
+     *                                                   - $destinationUpdate['transformationIDs'] => (array)
      *
      * @see DestinationUpdate
      *
@@ -2440,11 +2441,11 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
-     * @param string $sourceID     Unique identifier of a source. (required)
-     * @param array  $sourceUpdate sourceUpdate (required)
-     *                             - $sourceUpdate['name'] => (string) Descriptive name of the source.
-     *                             - $sourceUpdate['input'] => (array)
-     *                             - $sourceUpdate['authenticationID'] => (string) Universally unique identifier (UUID) of an authentication resource.
+     * @param string             $sourceID     Unique identifier of a source. (required)
+     * @param array|SourceUpdate $sourceUpdate sourceUpdate (required)
+     *                                         - $sourceUpdate['name'] => (string) Descriptive name of the source.
+     *                                         - $sourceUpdate['input'] => (array)
+     *                                         - $sourceUpdate['authenticationID'] => (string) Universally unique identifier (UUID) of an authentication resource.
      *
      * @see SourceUpdate
      *
@@ -2487,15 +2488,16 @@ class IngestionClient
     /**
      * Updates a task by its ID.
      *
-     * @param string $taskID     Unique identifier of a task. (required)
-     * @param array  $taskUpdate taskUpdate (required)
-     *                           - $taskUpdate['destinationID'] => (string) Universally unique identifier (UUID) of a destination resource.
-     *                           - $taskUpdate['cron'] => (string) Cron expression for the task's schedule.
-     *                           - $taskUpdate['input'] => (array)
-     *                           - $taskUpdate['enabled'] => (bool) Whether the task is enabled.
-     *                           - $taskUpdate['failureThreshold'] => (int) Maximum accepted percentage of failures for a task run to finish successfully.
-     *                           - $taskUpdate['notifications'] => (array)
-     *                           - $taskUpdate['policies'] => (array)
+     * @param string           $taskID     Unique identifier of a task. (required)
+     * @param array|TaskUpdate $taskUpdate taskUpdate (required)
+     *                                     - $taskUpdate['destinationID'] => (string) Universally unique identifier (UUID) of a destination resource.
+     *                                     - $taskUpdate['cron'] => (string) Cron expression for the task's schedule.
+     *                                     - $taskUpdate['input'] => (array)
+     *                                     - $taskUpdate['enabled'] => (bool) Whether the task is enabled.
+     *                                     - $taskUpdate['subscriptionAction'] => (array)
+     *                                     - $taskUpdate['failureThreshold'] => (int) Maximum accepted percentage of failures for a task run to finish successfully.
+     *                                     - $taskUpdate['notifications'] => (array)
+     *                                     - $taskUpdate['policies'] => (array)
      *
      * @see TaskUpdate
      *
@@ -2538,13 +2540,13 @@ class IngestionClient
     /**
      * Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
      *
-     * @param string $taskID     Unique identifier of a task. (required)
-     * @param array  $taskUpdate taskUpdate (required)
-     *                           - $taskUpdate['destinationID'] => (string) Universally unique identifier (UUID) of a destination resource.
-     *                           - $taskUpdate['trigger'] => (array)
-     *                           - $taskUpdate['input'] => (array)
-     *                           - $taskUpdate['enabled'] => (bool) Whether the task is enabled.
-     *                           - $taskUpdate['failureThreshold'] => (int) Maximum accepted percentage of failures for a task run to finish successfully.
+     * @param string             $taskID     Unique identifier of a task. (required)
+     * @param array|TaskUpdateV1 $taskUpdate taskUpdate (required)
+     *                                       - $taskUpdate['destinationID'] => (string) Universally unique identifier (UUID) of a destination resource.
+     *                                       - $taskUpdate['trigger'] => (array)
+     *                                       - $taskUpdate['input'] => (array)
+     *                                       - $taskUpdate['enabled'] => (bool) Whether the task is enabled.
+     *                                       - $taskUpdate['failureThreshold'] => (int) Maximum accepted percentage of failures for a task run to finish successfully.
      *
      * @see TaskUpdateV1
      *
@@ -2589,12 +2591,12 @@ class IngestionClient
     /**
      * Updates a transformation by its ID.
      *
-     * @param string $transformationID     Unique identifier of a transformation. (required)
-     * @param array  $transformationCreate transformationCreate (required)
-     *                                     - $transformationCreate['code'] => (string) The source code of the transformation. (required)
-     *                                     - $transformationCreate['name'] => (string) The uniquely identified name of your transformation. (required)
-     *                                     - $transformationCreate['description'] => (string) A descriptive name for your transformation of what it does.
-     *                                     - $transformationCreate['authenticationIDs'] => (array) The authentications associated with the current transformation.
+     * @param string                     $transformationID     Unique identifier of a transformation. (required)
+     * @param array|TransformationCreate $transformationCreate transformationCreate (required)
+     *                                                         - $transformationCreate['code'] => (string) The source code of the transformation. (required)
+     *                                                         - $transformationCreate['name'] => (string) The uniquely identified name of your transformation. (required)
+     *                                                         - $transformationCreate['description'] => (string) A descriptive name for your transformation of what it does.
+     *                                                         - $transformationCreate['authenticationIDs'] => (array) The authentications associated with the current transformation.
      *
      * @see TransformationCreate
      *
@@ -2642,11 +2644,11 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
-     * @param array $sourceCreate (optional)
-     *                            - $sourceCreate['type'] => (array)  (required)
-     *                            - $sourceCreate['name'] => (string) Descriptive name of the source. (required)
-     *                            - $sourceCreate['input'] => (array)
-     *                            - $sourceCreate['authenticationID'] => (string) Universally unique identifier (UUID) of an authentication resource.
+     * @param array|SourceCreate $sourceCreate (optional)
+     *                                         - $sourceCreate['type'] => (array)  (required)
+     *                                         - $sourceCreate['name'] => (string) Descriptive name of the source. (required)
+     *                                         - $sourceCreate['input'] => (array)
+     *                                         - $sourceCreate['authenticationID'] => (string) Universally unique identifier (UUID) of an authentication resource.
      *
      * @see SourceCreate
      *
@@ -2682,11 +2684,11 @@ class IngestionClient
      *  - deleteIndex
      *  - editSettings
      *
-     * @param string $sourceID     Unique identifier of a source. (required)
-     * @param array  $sourceUpdate sourceUpdate (required)
-     *                             - $sourceUpdate['name'] => (string) Descriptive name of the source.
-     *                             - $sourceUpdate['input'] => (array)
-     *                             - $sourceUpdate['authenticationID'] => (string) Universally unique identifier (UUID) of an authentication resource.
+     * @param string             $sourceID     Unique identifier of a source. (required)
+     * @param array|SourceUpdate $sourceUpdate sourceUpdate (required)
+     *                                         - $sourceUpdate['name'] => (string) Descriptive name of the source.
+     *                                         - $sourceUpdate['input'] => (array)
+     *                                         - $sourceUpdate['authenticationID'] => (string) Universally unique identifier (UUID) of an authentication resource.
      *
      * @see SourceUpdate
      *

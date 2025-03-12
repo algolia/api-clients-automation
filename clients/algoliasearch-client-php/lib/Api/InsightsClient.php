@@ -21,7 +21,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class InsightsClient
 {
-    public const VERSION = '4.13.0';
+    public const VERSION = '4.16.0';
 
     /**
      * @var ApiWrapperInterface
@@ -110,7 +110,7 @@ class InsightsClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -149,7 +149,7 @@ class InsightsClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -188,7 +188,7 @@ class InsightsClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -228,7 +228,7 @@ class InsightsClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -302,8 +302,8 @@ class InsightsClient
     /**
      * Sends a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
      *
-     * @param array $insightsEvents insightsEvents (required)
-     *                              - $insightsEvents['events'] => (array) Click and conversion events.  **All** events must be valid, otherwise the API returns an error. (required)
+     * @param array|InsightsEvents $insightsEvents insightsEvents (required)
+     *                                             - $insightsEvents['events'] => (array) Click and conversion events.  **All** events must be valid, otherwise the API returns an error. (required)
      *
      * @see InsightsEvents
      *

@@ -1,0 +1,15 @@
+{{> snippets/import}}
+
+void searchInReplicaIndex() async {
+  {{> snippets/init}}
+
+  // 1. Change the sort dynamically based on the UI events
+  final sortByPrice = false;
+
+  // 2. Get the index name based on sortByPrice
+  // ignore: dead_code
+  final indexName = sortByPrice ? "products_price_desc" : "products";
+
+  // 3. Search on dynamic index name (primary or replica)
+  await {{#dynamicSnippet}}searchWithIndexNameVar{{/dynamicSnippet}};
+}

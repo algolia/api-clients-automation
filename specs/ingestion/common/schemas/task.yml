@@ -24,6 +24,8 @@ Task:
       $ref: '#/failureThreshold'
     action:
       $ref: '#/ActionType'
+    subscriptionAction:
+      $ref: '#/ActionType'
     cursor:
       $ref: './common.yml#/cursor'
     notifications:
@@ -101,6 +103,8 @@ TaskCreate:
     destinationID:
       $ref: './common.yml#/destinationID'
     action:
+      $ref: '#/ActionType'
+    subscriptionAction:
       $ref: '#/ActionType'
     cron:
       $ref: '#/Cron'
@@ -185,6 +189,8 @@ TaskUpdate:
     enabled:
       type: boolean
       description: Whether the task is enabled.
+    subscriptionAction:
+      $ref: '#/ActionType'
     failureThreshold:
       $ref: '#/failureThreshold'
     notifications:

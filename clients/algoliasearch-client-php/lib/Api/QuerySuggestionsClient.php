@@ -25,7 +25,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class QuerySuggestionsClient
 {
-    public const VERSION = '4.13.0';
+    public const VERSION = '4.16.0';
 
     /**
      * @var ApiWrapperInterface
@@ -119,7 +119,7 @@ class QuerySuggestionsClient
      * Required API Key ACLs:
      *  - editSettings
      *
-     * @param array $configurationWithIndex configurationWithIndex (required)
+     * @param array|ConfigurationWithIndex $configurationWithIndex configurationWithIndex (required)
      *
      * @see ConfigurationWithIndex
      *
@@ -145,7 +145,7 @@ class QuerySuggestionsClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -184,7 +184,7 @@ class QuerySuggestionsClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -223,7 +223,7 @@ class QuerySuggestionsClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -263,7 +263,7 @@ class QuerySuggestionsClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -476,13 +476,13 @@ class QuerySuggestionsClient
      * Required API Key ACLs:
      *  - editSettings
      *
-     * @param string $indexName     Query Suggestions index name. (required)
-     * @param array  $configuration configuration (required)
-     *                              - $configuration['sourceIndices'] => (array) Algolia indices from which to get the popular searches for query suggestions. (required)
-     *                              - $configuration['languages'] => (array)
-     *                              - $configuration['exclude'] => (array)
-     *                              - $configuration['enablePersonalization'] => (bool) Whether to turn on personalized query suggestions.
-     *                              - $configuration['allowSpecialCharacters'] => (bool) Whether to include suggestions with special characters.
+     * @param string              $indexName     Query Suggestions index name. (required)
+     * @param array|Configuration $configuration configuration (required)
+     *                                           - $configuration['sourceIndices'] => (array) Algolia indices from which to get the popular searches for query suggestions. (required)
+     *                                           - $configuration['languages'] => (array)
+     *                                           - $configuration['exclude'] => (array)
+     *                                           - $configuration['enablePersonalization'] => (bool) Whether to turn on personalized query suggestions.
+     *                                           - $configuration['allowSpecialCharacters'] => (bool) Whether to include suggestions with special characters.
      *
      * @see Configuration
      *

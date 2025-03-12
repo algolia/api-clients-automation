@@ -19,13 +19,14 @@ BaseResponse:
       description: Whether this crawler is active.
     reindexing:
       type: boolean
-      description: Whether this crawler is currently completely reindexing your content.
+      description: Whether this crawler is completely reindexing your content.
     blocked:
       type: boolean
       description: |
         Whether this crawler is currently blocked.
 
-        If true, you need to unblock this crawler in the [Crawler dashboard](https://crawler.algolia.com/admin/) or by [cancelling the blocking task](#tag/tasks/operation/cancelBlockingAction).
+        If `true`, you can unblock it from the [Crawler page](https://dashboard.algolia.com/crawler) in the Algolia dashboard
+        or by [cancelling the blocking task](#tag/tasks/operation/cancelBlockingAction).
     blockingError:
       type: string
       description: Reason why the crawler is blocked.

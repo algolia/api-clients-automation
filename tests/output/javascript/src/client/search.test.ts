@@ -129,7 +129,7 @@ describe('commonApi', () => {
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.20.0\).*/);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.21.0\).*/);
   }, 15000);
 });
 
@@ -230,6 +230,28 @@ describe('generateSecuredApiKey', () => {
     {
       const result = client.generateSecuredApiKey({
         parentApiKey: '2640659426d5107b6e47d75db9cbaef8',
+        restrictions: { userToken: 'user42' },
+      });
+    }
+  }, 15000);
+
+  test('mcm with filters', async () => {
+    const client = createClient();
+
+    {
+      const result = client.generateSecuredApiKey({
+        parentApiKey: 'YourSearchOnlyApiKey',
+        restrictions: { filters: 'user:user42 AND user:public' },
+      });
+    }
+  }, 15000);
+
+  test('mcm with user token', async () => {
+    const client = createClient();
+
+    {
+      const result = client.generateSecuredApiKey({
+        parentApiKey: 'YourSearchOnlyApiKey',
         restrictions: { userToken: 'user42' },
       });
     }
@@ -639,12 +661,36 @@ describe('saveObjects', () => {
               createdAt: '1500240452',
             },
           ],
+          waitForTasks: false,
+          batchSize: 1000,
         },
         {
           headers: { 'X-Algolia-User-ID': '*' },
         },
       );
     }
+  }, 15000);
+});
+
+describe('searchSingleIndex', () => {
+  test('with algolia user id', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6686,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.searchSingleIndex(
+      { indexName: 'playlists', searchParams: { query: 'foo' } },
+      {
+        headers: { 'X-Algolia-User-ID': 'user1234' },
+      },
+    );
   }, 15000);
 });
 

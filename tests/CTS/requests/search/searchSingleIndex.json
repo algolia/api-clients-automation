@@ -159,6 +159,40 @@
     }
   },
   {
+    "testName": "filters for stores",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "ben",
+        "filters": "categories:politics AND store:Gibert Joseph Saint-Michel"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "ben",
+        "filters": "categories:politics AND store:Gibert Joseph Saint-Michel"
+      }
+    }
+  },
+  {
+    "testName": "filters boolean",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "filters": "is_available:true"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "filters": "is_available:true"
+      }
+    }
+  },
+  {
     "testName": "distinct",
     "parameters": {
       "indexName": "indexName",
@@ -263,14 +297,16 @@
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
-        "filters": "NOT _tags:non-fiction"
+        "query": "harry",
+        "filters": "_tags:non-fiction"
       }
     },
     "request": {
       "path": "/1/indexes/indexName/query",
       "method": "POST",
       "body": {
-        "filters": "NOT _tags:non-fiction"
+        "query": "harry",
+        "filters": "_tags:non-fiction"
       }
     }
   },
@@ -304,7 +340,6 @@
   },
   {
     "testName": "facetFiltersBook",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -327,7 +362,6 @@
   },
   {
     "testName": "facetFiltersAND",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -352,7 +386,6 @@
   },
   {
     "testName": "facetFiltersOR",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -381,7 +414,6 @@
   },
   {
     "testName": "facetFiltersCombined",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -850,7 +882,6 @@
   },
   {
     "testName": "userToken1234",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -935,7 +966,6 @@
   },
   {
     "testName": "attributesToHighlightOverride",
-    "isSnippet": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -1268,6 +1298,28 @@
         "optionalFilters": [
           "category:Book",
           "author:-John Doe"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "apply_negative_filters_restaurants",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "optionalFilters": [
+          "restaurant:-Bert's Inn"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "optionalFilters": [
+          "restaurant:-Bert's Inn"
         ]
       }
     }
@@ -2737,6 +2789,48 @@
       "body": {
         "query": "query",
         "enableReRanking": false
+      }
+    }
+  },
+  {
+    "testName": "with algolia user id",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query"
+      }
+    },
+    "requestOptions": {
+      "headers": {
+        "X-Algolia-User-ID": "user1234"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query"
+      }
+    }
+  },
+  {
+    "testName": "mcm with algolia user id",
+    "parameters": {
+      "indexName": "playlists",
+      "searchParams": {
+        "query": "peace"
+      }
+    },
+    "requestOptions": {
+      "headers": {
+        "X-Algolia-User-ID": "user42"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/playlists/query",
+      "method": "POST",
+      "body": {
+        "query": "peace"
       }
     }
   }

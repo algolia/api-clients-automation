@@ -6,6 +6,9 @@ import algoliasearch.config.*
 import algoliasearch.{EchoInterceptor, assertError}
 import algoliasearch.{{import}}.*
 import algoliasearch.exception.*
+{{#isSearchClient}}
+import algoliasearch.extension.SearchClientExtensions
+{{/isSearchClient}}
 import org.json4s.*
 import org.json4s.native.JsonParser.*
 import org.json4s.native.Serialization
@@ -18,7 +21,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class {{clientPrefix}}Test extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   def testClient(appId: String = "appId", apiKey: String = "apiKey"{{#hasRegionalHost}}, region: String = {{#fallbackToAliasHost}}null{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}"{{defaultRegion}}"{{/fallbackToAliasHost}}{{/hasRegionalHost}}): ({{client}}, EchoInterceptor) = {
     val echo = EchoInterceptor()
@@ -39,53 +42,6 @@ class {{clientPrefix}}Test extends AnyFunSuite {
   }
 
   {{#blocksClient}}
-  {{#tests}}
-  {{^isHelper}} {{! Helper tests are not supported yet}}
-
-  test("{{{testName}}}") {
-    {{#autoCreateClient}}
-    val (client, echo) = testClient()
-    {{/autoCreateClient}}
-
-    {{#steps}}
-
-    {{#isError}}
-    assertError("{{{expectedError}}}") {
-      {{#dynamicTemplate}}{{/dynamicTemplate}}
-    }
-    {{/isError}}
-    {{^isError}}
-    {{#shouldScope}}
-    {
-    {{/shouldScope}}
-    {{#dynamicTemplate}}{{/dynamicTemplate}}
-    {{#testUserAgent}}
-    val regexp = """{{{match.value}}}""".r
-    val header = echo.lastResponse.get.headers("user-agent")
-    assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
-    {{/testUserAgent}}
-    {{#testTimeouts}}
-    assert(echo.lastResponse.get.connectTimeout == {{{matchConnectTimeout}}})
-    assert(echo.lastResponse.get.responseTimeout == {{{matchResponseTimeout}}})
-    {{/testTimeouts}}
-    {{#testHost}}
-    assert(echo.lastResponse.get.host == "{{{match.value}}}")
-    {{/testHost}}
-    {{#testResponse}}
-    {{^match.isPrimitive}}
-    assert(write(res) == "{{#lambda.escapeQuotes}}{{{match.value}}}{{/lambda.escapeQuotes}}")
-    {{/match.isPrimitive}}
-    {{#match.isPrimitive}}
-    assert(res == {{#match}}{{> tests/param_value}}{{/match}})
-    {{/match.isPrimitive}}
-    {{/testResponse}}
-    {{#shouldScope}}
-    }
-    {{/shouldScope}}
-    {{/isError}}
-    {{/steps}}
-  }
-  {{/isHelper}}
-  {{/tests}}
+  {{> tests/client/tests}}
   {{/blocksClient}}
 }

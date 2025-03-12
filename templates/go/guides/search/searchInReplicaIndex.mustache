@@ -1,0 +1,28 @@
+package main
+
+import (
+  "encoding/json"
+  "fmt"
+  "net/http"
+)
+
+{{> snippets/import}}
+
+func searchInReplicaIndex() {
+  {{> snippets/init}}
+
+  // 1. Change the sort dynamically based on the UI events
+  sortByPrice := false
+
+  // 2. Get the index name based on sortByPrice
+  indexName := "products"
+  if sortByPrice {
+    indexName = "products_price_desc"
+  }
+
+  // 3. Search on dynamic index name (primary or replica)
+  _, err = {{#dynamicSnippet}}searchWithIndexNameVar{{/dynamicSnippet}}
+  if err != nil {
+    panic(err)
+  }
+}

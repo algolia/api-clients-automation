@@ -1,0 +1,16 @@
+{{> snippets/import}}
+
+final playlists = [/* Your records */];
+
+void saveObjectsPublicUser() async {
+  {{> snippets/init}}
+
+  final batchParams = BatchWriteParams(
+    requests: playlists
+        .map((record) => BatchRequest(
+          action: Action.addObject,
+          body: record,
+        ))
+    .toList());
+  await {{#dynamicSnippet}}batchChunksWithUserIDPublic{{/dynamicSnippet}};
+}

@@ -17,31 +17,54 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class SnippetSearchClient {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   /** Snippet for the addApiKey method.
     *
-    * addApiKey
+    * minimal
     */
   def snippetForSearchClientAddApiKey(): Unit = {
-    // >SEPARATOR addApiKey default
+    // >SEPARATOR addApiKey minimal
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.addApiKey(
-      apiKey = ApiKey(
-        acl = Seq(Acl.withName("search"), Acl.withName("addObject")),
-        description = Some("my new api key"),
-        validity = Some(300),
-        maxQueriesPerIPPerHour = Some(100),
-        maxHitsPerQuery = Some(20)
-      )
+    val response = Await.result(
+      client.addApiKey(
+        apiKey = ApiKey(
+          acl = Seq(Acl.withName("search"), Acl.withName("addObject")),
+          description = Some("my new api key")
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the addApiKey method.
+    *
+    * all
+    */
+  def snippetForSearchClientAddApiKey1(): Unit = {
+    // >SEPARATOR addApiKey all
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.addApiKey(
+        apiKey = ApiKey(
+          acl = Seq(Acl.withName("search"), Acl.withName("addObject")),
+          description = Some("my new api key"),
+          validity = Some(300),
+          maxQueriesPerIPPerHour = Some(100),
+          maxHitsPerQuery = Some(20)
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 
@@ -55,15 +78,15 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.addOrUpdateObject(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "uniqueID",
-      body = JObject(List(JField("key", JString("value"))))
+    val response = Await.result(
+      client.addOrUpdateObject(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "uniqueID",
+        body = JObject(List(JField("key", JString("value"))))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -77,16 +100,16 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.appendSource(
-      source = Source(
-        source = "theSource",
-        description = Some("theDescription")
-      )
+    val response = Await.result(
+      client.appendSource(
+        source = Source(
+          source = "theSource",
+          description = Some("theDescription")
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -100,16 +123,16 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.assignUserId(
-      xAlgoliaUserID = "user42",
-      assignUserIdParams = AssignUserIdParams(
-        cluster = "d4242-eu"
-      )
+    val response = Await.result(
+      client.assignUserId(
+        xAlgoliaUserID = "user42",
+        assignUserIdParams = AssignUserIdParams(
+          cluster = "d4242-eu"
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -123,16 +146,16 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.assignUserId(
-      xAlgoliaUserID = "user id with spaces",
-      assignUserIdParams = AssignUserIdParams(
-        cluster = "cluster with spaces"
-      )
+    val response = Await.result(
+      client.assignUserId(
+        xAlgoliaUserID = "user id with spaces",
+        assignUserIdParams = AssignUserIdParams(
+          cluster = "cluster with spaces"
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -146,25 +169,25 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.batch(
-      indexName = "<YOUR_INDEX_NAME>",
-      batchWriteParams = BatchWriteParams(
-        requests = Seq(
-          BatchRequest(
-            action = Action.withName("addObject"),
-            body = JObject(List(JField("key", JString("bar")), JField("foo", JString("1"))))
-          ),
-          BatchRequest(
-            action = Action.withName("addObject"),
-            body = JObject(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+    val response = Await.result(
+      client.batch(
+        indexName = "<YOUR_INDEX_NAME>",
+        batchWriteParams = BatchWriteParams(
+          requests = Seq(
+            BatchRequest(
+              action = Action.withName("addObject"),
+              body = JObject(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+            ),
+            BatchRequest(
+              action = Action.withName("addObject"),
+              body = JObject(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -178,21 +201,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.batch(
-      indexName = "<YOUR_INDEX_NAME>",
-      batchWriteParams = BatchWriteParams(
-        requests = Seq(
-          BatchRequest(
-            action = Action.withName("clear"),
-            body = JObject(List(JField("key", JString("value"))))
+    val response = Await.result(
+      client.batch(
+        indexName = "<YOUR_INDEX_NAME>",
+        batchWriteParams = BatchWriteParams(
+          requests = Seq(
+            BatchRequest(
+              action = Action.withName("clear"),
+              body = JObject(List(JField("key", JString("value"))))
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -206,21 +229,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.batch(
-      indexName = "<YOUR_INDEX_NAME>",
-      batchWriteParams = BatchWriteParams(
-        requests = Seq(
-          BatchRequest(
-            action = Action.withName("delete"),
-            body = JObject(List(JField("key", JString("value"))))
+    val response = Await.result(
+      client.batch(
+        indexName = "<YOUR_INDEX_NAME>",
+        batchWriteParams = BatchWriteParams(
+          requests = Seq(
+            BatchRequest(
+              action = Action.withName("delete"),
+              body = JObject(List(JField("key", JString("value"))))
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -234,21 +257,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.batch(
-      indexName = "<YOUR_INDEX_NAME>",
-      batchWriteParams = BatchWriteParams(
-        requests = Seq(
-          BatchRequest(
-            action = Action.withName("deleteObject"),
-            body = JObject(List(JField("key", JString("value"))))
+    val response = Await.result(
+      client.batch(
+        indexName = "<YOUR_INDEX_NAME>",
+        batchWriteParams = BatchWriteParams(
+          requests = Seq(
+            BatchRequest(
+              action = Action.withName("deleteObject"),
+              body = JObject(List(JField("key", JString("value"))))
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -262,21 +285,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.batch(
-      indexName = "<YOUR_INDEX_NAME>",
-      batchWriteParams = BatchWriteParams(
-        requests = Seq(
-          BatchRequest(
-            action = Action.withName("partialUpdateObject"),
-            body = JObject(List(JField("key", JString("value"))))
+    val response = Await.result(
+      client.batch(
+        indexName = "<YOUR_INDEX_NAME>",
+        batchWriteParams = BatchWriteParams(
+          requests = Seq(
+            BatchRequest(
+              action = Action.withName("partialUpdateObject"),
+              body = JObject(List(JField("key", JString("value"))))
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -290,21 +313,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.batch(
-      indexName = "<YOUR_INDEX_NAME>",
-      batchWriteParams = BatchWriteParams(
-        requests = Seq(
-          BatchRequest(
-            action = Action.withName("partialUpdateObjectNoCreate"),
-            body = JObject(List(JField("key", JString("value"))))
+    val response = Await.result(
+      client.batch(
+        indexName = "<YOUR_INDEX_NAME>",
+        batchWriteParams = BatchWriteParams(
+          requests = Seq(
+            BatchRequest(
+              action = Action.withName("partialUpdateObjectNoCreate"),
+              body = JObject(List(JField("key", JString("value"))))
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -318,21 +341,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.batch(
-      indexName = "<YOUR_INDEX_NAME>",
-      batchWriteParams = BatchWriteParams(
-        requests = Seq(
-          BatchRequest(
-            action = Action.withName("updateObject"),
-            body = JObject(List(JField("key", JString("value"))))
+    val response = Await.result(
+      client.batch(
+        indexName = "<YOUR_INDEX_NAME>",
+        batchWriteParams = BatchWriteParams(
+          requests = Seq(
+            BatchRequest(
+              action = Action.withName("updateObject"),
+              body = JObject(List(JField("key", JString("value"))))
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -346,17 +369,17 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.batchAssignUserIds(
-      xAlgoliaUserID = "userID",
-      batchAssignUserIdsParams = BatchAssignUserIdsParams(
-        cluster = "theCluster",
-        users = Seq("user1", "user2")
-      )
+    val response = Await.result(
+      client.batchAssignUserIds(
+        xAlgoliaUserID = "userID",
+        batchAssignUserIdsParams = BatchAssignUserIdsParams(
+          cluster = "theCluster",
+          users = Seq("user1", "user2")
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -370,29 +393,29 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.batchDictionaryEntries(
-      dictionaryName = DictionaryType.withName("plurals"),
-      batchDictionaryEntriesParams = BatchDictionaryEntriesParams(
-        clearExistingDictionaryEntries = Some(true),
-        requests = Seq(
-          BatchDictionaryEntriesRequest(
-            action = DictionaryAction.withName("addEntry"),
-            body = DictionaryEntry(
-              objectID = "1",
-              language = Some(SupportedLanguage.withName("en")),
-              word = Some("fancy"),
-              words = Some(Seq("believe", "algolia")),
-              decomposition = Some(Seq("trust", "algolia")),
-              state = Some(DictionaryEntryState.withName("enabled"))
+    val response = Await.result(
+      client.batchDictionaryEntries(
+        dictionaryName = DictionaryType.withName("plurals"),
+        batchDictionaryEntriesParams = BatchDictionaryEntriesParams(
+          clearExistingDictionaryEntries = Some(true),
+          requests = Seq(
+            BatchDictionaryEntriesRequest(
+              action = DictionaryAction.withName("addEntry"),
+              body = DictionaryEntry(
+                objectID = "1",
+                language = Some(SupportedLanguage.withName("en")),
+                word = Some("fancy"),
+                words = Some(Seq("believe", "algolia")),
+                decomposition = Some(Seq("trust", "algolia")),
+                state = Some(DictionaryEntryState.withName("enabled"))
+              )
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -406,24 +429,24 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.batchDictionaryEntries(
-      dictionaryName = DictionaryType.withName("plurals"),
-      batchDictionaryEntriesParams = BatchDictionaryEntriesParams(
-        clearExistingDictionaryEntries = Some(true),
-        requests = Seq(
-          BatchDictionaryEntriesRequest(
-            action = DictionaryAction.withName("deleteEntry"),
-            body = DictionaryEntry(
-              objectID = "1"
+    val response = Await.result(
+      client.batchDictionaryEntries(
+        dictionaryName = DictionaryType.withName("plurals"),
+        batchDictionaryEntriesParams = BatchDictionaryEntriesParams(
+          clearExistingDictionaryEntries = Some(true),
+          requests = Seq(
+            BatchDictionaryEntriesRequest(
+              action = DictionaryAction.withName("deleteEntry"),
+              body = DictionaryEntry(
+                objectID = "1"
+              )
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -437,25 +460,25 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.batchDictionaryEntries(
-      dictionaryName = DictionaryType.withName("stopwords"),
-      batchDictionaryEntriesParams = BatchDictionaryEntriesParams(
-        requests = Seq(
-          BatchDictionaryEntriesRequest(
-            action = DictionaryAction.withName("addEntry"),
-            body = DictionaryEntry(
-              objectID = "1",
-              language = Some(SupportedLanguage.withName("en")),
-              additionalProperties = Some(List(JField("additional", JString("try me"))))
+    val response = Await.result(
+      client.batchDictionaryEntries(
+        dictionaryName = DictionaryType.withName("stopwords"),
+        batchDictionaryEntriesParams = BatchDictionaryEntriesParams(
+          requests = Seq(
+            BatchDictionaryEntriesRequest(
+              action = DictionaryAction.withName("addEntry"),
+              body = DictionaryEntry(
+                objectID = "1",
+                language = Some(SupportedLanguage.withName("en")),
+                additionalProperties = Some(List(JField("additional", JString("try me"))))
+              )
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -469,13 +492,13 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.browse(
-      indexName = "<YOUR_INDEX_NAME>"
+    val response = Await.result(
+      client.browse(
+        indexName = "<YOUR_INDEX_NAME>"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -489,19 +512,19 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.browse(
-      indexName = "<YOUR_INDEX_NAME>",
-      browseParams = Some(
-        BrowseParamsObject(
-          query = Some("myQuery"),
-          facetFilters = Some(FacetFilters(Seq(FacetFilters("tags:algolia"))))
+    val response = Await.result(
+      client.browse(
+        indexName = "<YOUR_INDEX_NAME>",
+        browseParams = Some(
+          BrowseParamsObject(
+            query = Some("myQuery"),
+            facetFilters = Some(FacetFilters(Seq(FacetFilters("tags:algolia"))))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -515,18 +538,18 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.browse(
-      indexName = "<YOUR_INDEX_NAME>",
-      browseParams = Some(
-        BrowseParamsObject(
-          cursor = Some("test")
+    val response = Await.result(
+      client.browse(
+        indexName = "<YOUR_INDEX_NAME>",
+        browseParams = Some(
+          BrowseParamsObject(
+            cursor = Some("test")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -540,13 +563,13 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.clearObjects(
-      indexName = "<YOUR_INDEX_NAME>"
+    val response = Await.result(
+      client.clearObjects(
+        indexName = "<YOUR_INDEX_NAME>"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -560,13 +583,13 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.clearRules(
-      indexName = "<YOUR_INDEX_NAME>"
+    val response = Await.result(
+      client.clearRules(
+        indexName = "<YOUR_INDEX_NAME>"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -580,13 +603,13 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.clearSynonyms(
-      indexName = "<YOUR_INDEX_NAME>"
+    val response = Await.result(
+      client.clearSynonyms(
+        indexName = "<YOUR_INDEX_NAME>"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -600,13 +623,13 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customDelete[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customDelete[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -620,14 +643,14 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customDelete[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters"))
+    val response = Await.result(
+      client.customDelete[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters"))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -641,13 +664,13 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customGet[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -661,14 +684,14 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customGet[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters with space"))
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters with space"))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -682,22 +705,22 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customGet[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "to be overriden")),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("query", "parameters with space")
-          .withQueryParameter("and an array", Seq("array", "with spaces"))
-          .withHeader("x-header-1", "spaces are left alone")
-          .build()
-      )
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "to be overriden")),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query", "parameters with space")
+            .withQueryParameter("and an array", Seq("array", "with spaces"))
+            .withHeader("x-header-1", "spaces are left alone")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -711,13 +734,13 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -731,15 +754,15 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("body", JString("parameters")))))
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("body", JString("parameters")))))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -753,21 +776,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("query", "myQueryParameter")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query", "myQueryParameter")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -781,21 +804,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("query2", "myQueryParameter")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query2", "myQueryParameter")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -809,21 +832,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -837,21 +860,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -865,21 +888,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("isItWorking", true)
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("isItWorking", true)
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -893,21 +916,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", 2)
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", 2)
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -921,21 +944,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", Seq("b and c", "d"))
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq("b and c", "d"))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -949,21 +972,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", Seq(true, true, false))
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq(true, true, false))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -977,21 +1000,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", Seq(1, 2))
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq(1, 2))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1005,13 +1028,13 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPut[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customPut[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1025,15 +1048,15 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPut[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("body", JString("parameters")))))
+    val response = Await.result(
+      client.customPut[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("body", JString("parameters")))))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1047,13 +1070,13 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.deleteApiKey(
-      key = "myTestApiKey"
+    val response = Await.result(
+      client.deleteApiKey(
+        key = "myTestApiKey"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1067,16 +1090,16 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.deleteBy(
-      indexName = "<YOUR_INDEX_NAME>",
-      deleteByParams = DeleteByParams(
-        filters = Some("brand:brandName")
-      )
+    val response = Await.result(
+      client.deleteBy(
+        indexName = "<YOUR_INDEX_NAME>",
+        deleteByParams = DeleteByParams(
+          filters = Some("brand:brandName")
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1090,13 +1113,13 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.deleteIndex(
-      indexName = "<YOUR_INDEX_NAME>"
+    val response = Await.result(
+      client.deleteIndex(
+        indexName = "<YOUR_INDEX_NAME>"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1110,14 +1133,35 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.deleteObject(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "uniqueID"
+    val response = Await.result(
+      client.deleteObject(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "uniqueID"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the deleteObjects method.
+    *
+    * call deleteObjects without error
+    */
+  def snippetForSearchClientDeleteObjects(): Unit = {
+    // >SEPARATOR deleteObjects default
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.deleteObjects(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectIDs = Seq("1", "2")
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1131,14 +1175,14 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.deleteRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "id1"
+    val response = Await.result(
+      client.deleteRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "id1"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1152,14 +1196,14 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.deleteRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "test/with/slash"
+    val response = Await.result(
+      client.deleteRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "test/with/slash"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1173,13 +1217,13 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.deleteSource(
-      source = "theSource"
+    val response = Await.result(
+      client.deleteSource(
+        source = "theSource"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1193,14 +1237,162 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.deleteSynonym(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "id1"
+    val response = Await.result(
+      client.deleteSynonym(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "id1"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the generateSecuredApiKey method.
+    *
+    * api key basic
+    */
+  def snippetForSearchClientGenerateSecuredApiKey(): Unit = {
+    // >SEPARATOR generateSecuredApiKey api key basic
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = client.generateSecuredApiKey(
+      parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+      restrictions = SecuredApiKeyRestrictions(
+        validUntil = Some(2524604400L),
+        restrictIndices = Some(Seq("Movies"))
+      )
+    ) // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the generateSecuredApiKey method.
+    *
+    * with searchParams
+    */
+  def snippetForSearchClientGenerateSecuredApiKey1(): Unit = {
+    // >SEPARATOR generateSecuredApiKey with searchParams
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = client.generateSecuredApiKey(
+      parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+      restrictions = SecuredApiKeyRestrictions(
+        validUntil = Some(2524604400L),
+        restrictIndices = Some(Seq("Movies", "cts_e2e_settings")),
+        restrictSources = Some("192.168.1.0/24"),
+        filters = Some("category:Book OR category:Ebook AND _tags:published"),
+        userToken = Some("user123"),
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("batman"),
+            typoTolerance = Some(TypoToleranceEnum.withName("strict")),
+            aroundRadius = Some(AroundRadiusAll.withName("all")),
+            mode = Some(Mode.withName("neuralSearch")),
+            hitsPerPage = Some(10),
+            optionalWords = Some(OptionalWords(Seq("one", "two")))
+          )
+        )
+      )
+    ) // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the generateSecuredApiKey method.
+    *
+    * with filters
+    */
+  def snippetForSearchClientGenerateSecuredApiKey2(): Unit = {
+    // >SEPARATOR generateSecuredApiKey with filters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = client.generateSecuredApiKey(
+      parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+      restrictions = SecuredApiKeyRestrictions(
+        filters = Some("user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)")
+      )
+    ) // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the generateSecuredApiKey method.
+    *
+    * with visible_by filter
+    */
+  def snippetForSearchClientGenerateSecuredApiKey3(): Unit = {
+    // >SEPARATOR generateSecuredApiKey with visible_by filter
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = client.generateSecuredApiKey(
+      parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+      restrictions = SecuredApiKeyRestrictions(
+        filters = Some("visible_by:group/Finance")
+      )
+    ) // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the generateSecuredApiKey method.
+    *
+    * with userID
+    */
+  def snippetForSearchClientGenerateSecuredApiKey4(): Unit = {
+    // >SEPARATOR generateSecuredApiKey with userID
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = client.generateSecuredApiKey(
+      parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+      restrictions = SecuredApiKeyRestrictions(
+        userToken = Some("user42")
+      )
+    ) // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the generateSecuredApiKey method.
+    *
+    * mcm with filters
+    */
+  def snippetForSearchClientGenerateSecuredApiKey5(): Unit = {
+    // >SEPARATOR generateSecuredApiKey mcm with filters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = client.generateSecuredApiKey(
+      parentApiKey = "YourSearchOnlyApiKey",
+      restrictions = SecuredApiKeyRestrictions(
+        filters = Some("user:user42 AND user:public")
+      )
+    ) // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the generateSecuredApiKey method.
+    *
+    * mcm with user token
+    */
+  def snippetForSearchClientGenerateSecuredApiKey6(): Unit = {
+    // >SEPARATOR generateSecuredApiKey mcm with user token
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = client.generateSecuredApiKey(
+      parentApiKey = "YourSearchOnlyApiKey",
+      restrictions = SecuredApiKeyRestrictions(
+        userToken = Some("user42")
+      )
+    ) // >LOG
     // SEPARATOR<
   }
 
@@ -1214,13 +1406,13 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getApiKey(
-      key = "myTestApiKey"
+    val response = Await.result(
+      client.getApiKey(
+        key = "myTestApiKey"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1234,13 +1426,13 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getAppTask(
-      taskID = 123L
+    val response = Await.result(
+      client.getAppTask(
+        taskID = 123L
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1254,12 +1446,12 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getDictionaryLanguages(
+    val response = Await.result(
+      client.getDictionaryLanguages(
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1273,12 +1465,12 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getDictionarySettings(
+    val response = Await.result(
+      client.getDictionarySettings(
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1292,12 +1484,12 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getLogs(
+    val response = Await.result(
+      client.getLogs(
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1311,16 +1503,16 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getLogs(
-      offset = Some(5),
-      length = Some(10),
-      indexName = Some("<YOUR_INDEX_NAME>"),
-      `type` = Some(LogType.withName("all"))
+    val response = Await.result(
+      client.getLogs(
+        offset = Some(5),
+        length = Some(10),
+        indexName = Some("<YOUR_INDEX_NAME>"),
+        `type` = Some(LogType.withName("all"))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1334,15 +1526,15 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getObject(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "uniqueID",
-      attributesToRetrieve = Some(Seq("attr1", "attr2"))
+    val response = Await.result(
+      client.getObject(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "uniqueID",
+        attributesToRetrieve = Some(Seq("attr1", "attr2"))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1356,42 +1548,100 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getObject(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "Batman and Robin"
+    val response = Await.result(
+      client.getObject(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "Batman and Robin"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
   /** Snippet for the getObjects method.
     *
-    * getObjects
+    * by ID
     */
   def snippetForSearchClientGetObjects(): Unit = {
-    // >SEPARATOR getObjects default
+    // >SEPARATOR getObjects by ID
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getObjects(
-      getObjectsParams = GetObjectsParams(
-        requests = Seq(
-          GetObjectsRequest(
-            attributesToRetrieve = Some(Seq("attr1", "attr2")),
-            objectID = "uniqueID",
-            indexName = "<YOUR_INDEX_NAME>"
+    val response = Await.result(
+      client.getObjects(
+        getObjectsParams = GetObjectsParams(
+          requests = Seq(
+            GetObjectsRequest(
+              objectID = "uniqueID",
+              indexName = "<YOUR_INDEX_NAME>"
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the getObjects method.
+    *
+    * multiple IDs
+    */
+  def snippetForSearchClientGetObjects1(): Unit = {
+    // >SEPARATOR getObjects multiple IDs
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.getObjects(
+        getObjectsParams = GetObjectsParams(
+          requests = Seq(
+            GetObjectsRequest(
+              objectID = "uniqueID1",
+              indexName = "<YOUR_INDEX_NAME>"
+            ),
+            GetObjectsRequest(
+              objectID = "uniqueID2",
+              indexName = "<YOUR_INDEX_NAME>"
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the getObjects method.
+    *
+    * with attributesToRetrieve
+    */
+  def snippetForSearchClientGetObjects2(): Unit = {
+    // >SEPARATOR getObjects with attributesToRetrieve
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.getObjects(
+        getObjectsParams = GetObjectsParams(
+          requests = Seq(
+            GetObjectsRequest(
+              attributesToRetrieve = Some(Seq("attr1", "attr2")),
+              objectID = "uniqueID",
+              indexName = "<YOUR_INDEX_NAME>"
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1405,14 +1655,14 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "qr-1725004648916"
+    val response = Await.result(
+      client.getRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "qr-1725004648916"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1426,13 +1676,13 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getSettings(
-      indexName = "<YOUR_INDEX_NAME>"
+    val response = Await.result(
+      client.getSettings(
+        indexName = "<YOUR_INDEX_NAME>"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1446,12 +1696,12 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getSources(
+    val response = Await.result(
+      client.getSources(
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1465,14 +1715,14 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getSynonym(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "id1"
+    val response = Await.result(
+      client.getSynonym(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "id1"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1486,14 +1736,14 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getTask(
-      indexName = "<YOUR_INDEX_NAME>",
-      taskID = 123L
+    val response = Await.result(
+      client.getTask(
+        indexName = "<YOUR_INDEX_NAME>",
+        taskID = 123L
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1507,12 +1757,12 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getTopUserIds(
+    val response = Await.result(
+      client.getTopUserIds(
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1526,13 +1776,13 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getUserId(
-      userID = "uniqueID"
+    val response = Await.result(
+      client.getUserId(
+        userID = "uniqueID"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1546,12 +1796,12 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.hasPendingMappings(
+    val response = Await.result(
+      client.hasPendingMappings(
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1565,13 +1815,73 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.hasPendingMappings(
-      getClusters = Some(true)
+    val response = Await.result(
+      client.hasPendingMappings(
+        getClusters = Some(true)
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the indexExists method.
+    *
+    * indexExists
+    */
+  def snippetForSearchClientIndexExists(): Unit = {
+    // >SEPARATOR indexExists indexExists
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.indexExists(
+        indexName = "<YOUR_INDEX_NAME>"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the indexExists method.
+    *
+    * indexNotExists
+    */
+  def snippetForSearchClientIndexExists1(): Unit = {
+    // >SEPARATOR indexExists indexNotExists
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.indexExists(
+        indexName = "<YOUR_INDEX_NAME>"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the indexExists method.
+    *
+    * indexExistsWithError
+    */
+  def snippetForSearchClientIndexExists2(): Unit = {
+    // >SEPARATOR indexExists indexExistsWithError
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.indexExists(
+        indexName = "<YOUR_INDEX_NAME>"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1585,12 +1895,12 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.listApiKeys(
+    val response = Await.result(
+      client.listApiKeys(
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1604,12 +1914,12 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.listClusters(
+    val response = Await.result(
+      client.listClusters(
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1623,12 +1933,12 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.listIndices(
+    val response = Await.result(
+      client.listIndices(
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1642,14 +1952,14 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.listIndices(
-      page = Some(8),
-      hitsPerPage = Some(3)
+    val response = Await.result(
+      client.listIndices(
+        page = Some(8),
+        hitsPerPage = Some(3)
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1663,12 +1973,12 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.listUserIds(
+    val response = Await.result(
+      client.listUserIds(
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1682,14 +1992,14 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.listUserIds(
-      page = Some(8),
-      hitsPerPage = Some(100)
+    val response = Await.result(
+      client.listUserIds(
+        page = Some(8),
+        hitsPerPage = Some(100)
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1703,21 +2013,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.multipleBatch(
-      batchParams = BatchParams(
-        requests = Seq(
-          MultipleBatchRequest(
-            action = Action.withName("addObject"),
-            body = Some(JObject(List(JField("key", JString("value"))))),
-            indexName = "<YOUR_INDEX_NAME>"
+    val response = Await.result(
+      client.multipleBatch(
+        batchParams = BatchParams(
+          requests = Seq(
+            MultipleBatchRequest(
+              action = Action.withName("addObject"),
+              body = Some(JObject(List(JField("key", JString("value"))))),
+              indexName = "<YOUR_INDEX_NAME>"
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1731,18 +2041,18 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.operationIndex(
-      indexName = "<SOURCE_INDEX_NAME>",
-      operationIndexParams = OperationIndexParams(
-        operation = OperationType.withName("move"),
-        destination = "<DESTINATION_INDEX_NAME>",
-        scope = Some(Seq(ScopeType.withName("rules"), ScopeType.withName("settings")))
-      )
+    val response = Await.result(
+      client.operationIndex(
+        indexName = "<SOURCE_INDEX_NAME>",
+        operationIndexParams = OperationIndexParams(
+          operation = OperationType.withName("move"),
+          destination = "<DESTINATION_INDEX_NAME>",
+          scope = Some(Seq(ScopeType.withName("rules"), ScopeType.withName("settings")))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1756,17 +2066,17 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.operationIndex(
-      indexName = "<SOURCE_INDEX_NAME>",
-      operationIndexParams = OperationIndexParams(
-        operation = OperationType.withName("copy"),
-        destination = "<DESTINATION_INDEX_NAME>"
-      )
+    val response = Await.result(
+      client.operationIndex(
+        indexName = "<SOURCE_INDEX_NAME>",
+        operationIndexParams = OperationIndexParams(
+          operation = OperationType.withName("copy"),
+          destination = "<DESTINATION_INDEX_NAME>"
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1780,17 +2090,17 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.operationIndex(
-      indexName = "<SOURCE_INDEX_NAME>",
-      operationIndexParams = OperationIndexParams(
-        operation = OperationType.withName("move"),
-        destination = "<DESTINATION_INDEX_NAME>"
-      )
+    val response = Await.result(
+      client.operationIndex(
+        indexName = "<SOURCE_INDEX_NAME>",
+        operationIndexParams = OperationIndexParams(
+          operation = OperationType.withName("move"),
+          destination = "<DESTINATION_INDEX_NAME>"
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1804,15 +2114,15 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.partialUpdateObject(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "uniqueID",
-      attributesToUpdate = JObject(List(JField("attributeId", JString("new value"))))
+    val response = Await.result(
+      client.partialUpdateObject(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "uniqueID",
+        attributesToUpdate = JObject(List(JField("attributeId", JString("new value"))))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1826,15 +2136,15 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.partialUpdateObject(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "uniqueID",
-      attributesToUpdate = JObject(List(JField("attributeId", JInt(1))))
+    val response = Await.result(
+      client.partialUpdateObject(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "uniqueID",
+        attributesToUpdate = JObject(List(JField("attributeId", JInt(1))))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1848,15 +2158,15 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.partialUpdateObject(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "uniqueID",
-      attributesToUpdate = JObject(List(JField("attributeId", JBool(true))))
+    val response = Await.result(
+      client.partialUpdateObject(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "uniqueID",
+        attributesToUpdate = JObject(List(JField("attributeId", JBool(true))))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1870,16 +2180,16 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.partialUpdateObject(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "uniqueID",
-      attributesToUpdate =
-        JObject(List(JField("attributeId", JArray(List(JString("one"), JString("two"), JString("three"))))))
+    val response = Await.result(
+      client.partialUpdateObject(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "uniqueID",
+        attributesToUpdate =
+          JObject(List(JField("attributeId", JArray(List(JString("one"), JString("two"), JString("three"))))))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1893,15 +2203,15 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.partialUpdateObject(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "uniqueID",
-      attributesToUpdate = JObject(List(JField("attributeId", JObject(List(JField("nested", JString("value")))))))
+    val response = Await.result(
+      client.partialUpdateObject(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "uniqueID",
+        attributesToUpdate = JObject(List(JField("attributeId", JObject(List(JField("nested", JString("value")))))))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1915,19 +2225,130 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.partialUpdateObject(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "uniqueID",
-      attributesToUpdate = JObject(
-        List(
-          JField("visible_by", JArray(List(JString("Angela"), JString("group/Finance"), JString("group/Shareholders"))))
+    val response = Await.result(
+      client.partialUpdateObject(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "uniqueID",
+        attributesToUpdate = JObject(
+          List(
+            JField(
+              "visible_by",
+              JArray(List(JString("Angela"), JString("group/Finance"), JString("group/Shareholders")))
+            )
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the partialUpdateObject method.
+    *
+    * add men pant
+    */
+  def snippetForSearchClientPartialUpdateObject6(): Unit = {
+    // >SEPARATOR partialUpdateObject add men pant
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.partialUpdateObject(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "productId",
+        attributesToUpdate = JObject(
+          List(
+            JField(
+              "categoryPageId",
+              JObject(List(JField("_operation", JString("Add")), JField("value", JString("men-clothing-pants"))))
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the partialUpdateObject method.
+    *
+    * remove men pant
+    */
+  def snippetForSearchClientPartialUpdateObject7(): Unit = {
+    // >SEPARATOR partialUpdateObject remove men pant
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.partialUpdateObject(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "productId",
+        attributesToUpdate = JObject(
+          List(
+            JField(
+              "categoryPageId",
+              JObject(List(JField("_operation", JString("Remove")), JField("value", JString("men-clothing-pants"))))
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the partialUpdateObjects method.
+    *
+    * call partialUpdateObjects with createIfNotExists=true
+    */
+  def snippetForSearchClientPartialUpdateObjects(): Unit = {
+    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=true
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.partialUpdateObjects(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects = Seq(
+          JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+          JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit"))))
+        ),
+        createIfNotExists = true
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the partialUpdateObjects method.
+    *
+    * call partialUpdateObjects with createIfNotExists=false
+    */
+  def snippetForSearchClientPartialUpdateObjects1(): Unit = {
+    // >SEPARATOR partialUpdateObjects call partialUpdateObjects with createIfNotExists=false
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.partialUpdateObjects(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects = Seq(
+          JObject(List(JField("objectID", JString("3")), JField("name", JString("Cyril")))),
+          JObject(List(JField("objectID", JString("4")), JField("name", JString("David"))))
+        ),
+        createIfNotExists = false
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1941,13 +2362,96 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.removeUserId(
-      userID = "uniqueID"
+    val response = Await.result(
+      client.removeUserId(
+        userID = "uniqueID"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the replaceAllObjects method.
+    *
+    * call replaceAllObjects without error
+    */
+  def snippetForSearchClientReplaceAllObjects(): Unit = {
+    // >SEPARATOR replaceAllObjects call replaceAllObjects without error
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.replaceAllObjects(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects = Seq(
+          JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+          JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit")))),
+          JObject(List(JField("objectID", JString("3")), JField("name", JString("Cyril")))),
+          JObject(List(JField("objectID", JString("4")), JField("name", JString("David")))),
+          JObject(List(JField("objectID", JString("5")), JField("name", JString("Eva")))),
+          JObject(List(JField("objectID", JString("6")), JField("name", JString("Fiona")))),
+          JObject(List(JField("objectID", JString("7")), JField("name", JString("Gael")))),
+          JObject(List(JField("objectID", JString("8")), JField("name", JString("Hugo")))),
+          JObject(List(JField("objectID", JString("9")), JField("name", JString("Igor")))),
+          JObject(List(JField("objectID", JString("10")), JField("name", JString("Julia"))))
+        ),
+        batchSize = 3
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the replaceAllObjects method.
+    *
+    * call replaceAllObjects with partial scopes
+    */
+  def snippetForSearchClientReplaceAllObjects1(): Unit = {
+    // >SEPARATOR replaceAllObjects call replaceAllObjects with partial scopes
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.replaceAllObjects(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects = Seq(
+          JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+          JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit"))))
+        ),
+        batchSize = 77,
+        scopes = Some(Seq(ScopeType.withName("settings"), ScopeType.withName("synonyms")))
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the replaceAllObjects method.
+    *
+    * replaceAllObjects should cleanup on failure
+    */
+  def snippetForSearchClientReplaceAllObjects2(): Unit = {
+    // >SEPARATOR replaceAllObjects replaceAllObjects should cleanup on failure
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.replaceAllObjects(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects = Seq(
+          JObject(List(JField("objectID", JString("fine")), JField("body", JString("small obj")))),
+          JObject(List(JField("objectID", JString("toolarge")), JField("body", JString("something bigger than 10KB"))))
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 
@@ -1961,18 +2465,18 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.replaceSources(
-      source = Seq(
-        Source(
-          source = "theSource",
-          description = Some("theDescription")
+    val response = Await.result(
+      client.replaceSources(
+        source = Seq(
+          Source(
+            source = "theSource",
+            description = Some("theDescription")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1986,13 +2490,13 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.restoreApiKey(
-      key = "ALGOLIA_API_KEY"
+    val response = Await.result(
+      client.restoreApiKey(
+        key = "ALGOLIA_API_KEY"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -2006,14 +2510,139 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.saveObject(
-      indexName = "<YOUR_INDEX_NAME>",
-      body = JObject(List(JField("objectID", JString("id")), JField("test", JString("val"))))
+    val response = Await.result(
+      client.saveObject(
+        indexName = "<YOUR_INDEX_NAME>",
+        body = JObject(
+          List(
+            JField("name", JString("Black T-shirt")),
+            JField("color", JString("#000000||black")),
+            JField("availableIn", JString("https://source.unsplash.com/100x100/?paris||Paris")),
+            JField("objectID", JString("myID"))
+          )
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveObjects method.
+    *
+    * call saveObjects without error
+    */
+  def snippetForSearchClientSaveObjects(): Unit = {
+    // >SEPARATOR saveObjects call saveObjects without error
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveObjects(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects = Seq(
+          JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+          JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit"))))
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveObjects method.
+    *
+    * saveObjects should report errors
+    */
+  def snippetForSearchClientSaveObjects1(): Unit = {
+    // >SEPARATOR saveObjects saveObjects should report errors
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveObjects(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects = Seq(
+          JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+          JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit"))))
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveObjects method.
+    *
+    * saveObjectsPlaylist
+    */
+  def snippetForSearchClientSaveObjects2(): Unit = {
+    // >SEPARATOR saveObjects saveObjectsPlaylist
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveObjects(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects = Seq(
+          JObject(
+            List(
+              JField("objectID", JString("1")),
+              JField("visibility", JString("public")),
+              JField("name", JString("Hot 100 Billboard Charts")),
+              JField("playlistId", JString("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f")),
+              JField("createdAt", JString("1500240452"))
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveObjects method.
+    *
+    * saveObjectsPublicUser
+    */
+  def snippetForSearchClientSaveObjects3(): Unit = {
+    // >SEPARATOR saveObjects saveObjectsPublicUser
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveObjects(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects = Seq(
+          JObject(
+            List(
+              JField("objectID", JString("1")),
+              JField("visibility", JString("public")),
+              JField("name", JString("Hot 100 Billboard Charts")),
+              JField("playlistId", JString("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f")),
+              JField("createdAt", JString("1500240452"))
+            )
+          )
+        ),
+        waitForTasks = false,
+        batchSize = 1000,
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("X-Algolia-User-ID", "*")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 
@@ -2027,32 +2656,32 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.saveRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "id1",
-      rule = Rule(
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
         objectID = "id1",
-        conditions = Some(
-          Seq(
-            Condition(
-              pattern = Some("apple"),
-              anchoring = Some(Anchoring.withName("contains"))
+        rule = Rule(
+          objectID = "id1",
+          conditions = Some(
+            Seq(
+              Condition(
+                pattern = Some("apple"),
+                anchoring = Some(Anchoring.withName("contains"))
+              )
             )
-          )
-        ),
-        consequence = Consequence(
-          params = Some(
-            ConsequenceParams(
-              filters = Some("brand:xiaomi")
+          ),
+          consequence = Consequence(
+            params = Some(
+              ConsequenceParams(
+                filters = Some("brand:xiaomi")
+              )
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -2066,973 +2695,11 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.saveRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "id1",
-      rule = Rule(
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
         objectID = "id1",
-        conditions = Some(
-          Seq(
-            Condition(
-              pattern = Some("apple"),
-              anchoring = Some(Anchoring.withName("contains")),
-              alternatives = Some(false),
-              context = Some("search")
-            )
-          )
-        ),
-        consequence = Consequence(
-          params = Some(
-            ConsequenceParams(
-              filters = Some("brand:apple"),
-              query = Some(
-                ConsequenceQueryObject(
-                  remove = Some(Seq("algolia")),
-                  edits = Some(
-                    Seq(
-                      Edit(
-                        `type` = Some(EditType.withName("remove")),
-                        delete = Some("abc"),
-                        insert = Some("cde")
-                      ),
-                      Edit(
-                        `type` = Some(EditType.withName("replace")),
-                        delete = Some("abc"),
-                        insert = Some("cde")
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          ),
-          hide = Some(
-            Seq(
-              ConsequenceHide(
-                objectID = "321"
-              )
-            )
-          ),
-          filterPromotes = Some(false),
-          userData = Some(JObject(List(JField("algolia", JString("aloglia"))))),
-          promote = Some(
-            Seq(
-              PromoteObjectID(
-                objectID = "abc",
-                position = 3
-              ),
-              PromoteObjectIDs(
-                objectIDs = Seq("abc", "def"),
-                position = 1
-              )
-            )
-          )
-        ),
-        description = Some("test"),
-        enabled = Some(true),
-        validity = Some(
-          Seq(
-            TimeRange(
-              from = 1656670273L,
-              until = 1656670277L
-            )
-          )
-        )
-      ),
-      forwardToReplicas = Some(true)
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the saveRule method.
-    *
-    * b2b catalog
-    */
-  def snippetForSearchClientSaveRule2(): Unit = {
-    // >SEPARATOR saveRule b2b catalog
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.saveRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "article-rule",
-      rule = Rule(
-        objectID = "article-rule",
-        conditions = Some(
-          Seq(
-            Condition(
-              pattern = Some("article"),
-              anchoring = Some(Anchoring.withName("startsWith"))
-            )
-          )
-        ),
-        consequence = Consequence(
-          params = Some(
-            ConsequenceParams(
-              query = Some(
-                ConsequenceQueryObject(
-                  edits = Some(
-                    Seq(
-                      Edit(
-                        `type` = Some(EditType.withName("remove")),
-                        delete = Some("article")
-                      )
-                    )
-                  )
-                )
-              ),
-              restrictSearchableAttributes = Some(Seq("title", "book_id"))
-            )
-          )
-        )
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the saveRule method.
-    *
-    * merchandising and promoting
-    */
-  def snippetForSearchClientSaveRule3(): Unit = {
-    // >SEPARATOR saveRule merchandising and promoting
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.saveRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "director-rule",
-      rule = Rule(
-        objectID = "director-rule",
-        conditions = Some(
-          Seq(
-            Condition(
-              pattern = Some("{facet:director} director"),
-              anchoring = Some(Anchoring.withName("contains"))
-            )
-          )
-        ),
-        consequence = Consequence(
-          params = Some(
-            ConsequenceParams(
-              restrictSearchableAttributes = Some(Seq("title", "book_id")),
-              automaticFacetFilters = Some(
-                AutomaticFacetFilters(
-                  Seq(
-                    AutomaticFacetFilter(
-                      facet = "director"
-                    )
-                  )
-                )
-              ),
-              query = Some(
-                ConsequenceQueryObject(
-                  edits = Some(
-                    Seq(
-                      Edit(
-                        `type` = Some(EditType.withName("remove")),
-                        delete = Some("director")
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the saveRule method.
-    *
-    * harry potter
-    */
-  def snippetForSearchClientSaveRule4(): Unit = {
-    // >SEPARATOR saveRule harry potter
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.saveRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "harry-potter-rule",
-      rule = Rule(
-        objectID = "harry-potter-rule",
-        conditions = Some(
-          Seq(
-            Condition(
-              pattern = Some("harry potter"),
-              anchoring = Some(Anchoring.withName("contains"))
-            )
-          )
-        ),
-        consequence = Consequence(
-          userData = Some(JObject(List(JField("promo_content", JString("20% OFF on all Harry Potter books!")))))
-        )
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the saveRule method.
-    *
-    * merchandising empty query
-    */
-  def snippetForSearchClientSaveRule5(): Unit = {
-    // >SEPARATOR saveRule merchandising empty query
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.saveRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "clearance-category-filter",
-      rule = Rule(
-        objectID = "clearance-category-filter",
-        conditions = Some(
-          Seq(
-            Condition(
-              pattern = Some(""),
-              anchoring = Some(Anchoring.withName("is")),
-              context = Some("landing")
-            )
-          )
-        ),
-        consequence = Consequence(
-          params = Some(
-            ConsequenceParams(
-              optionalFilters = Some(OptionalFilters("clearance:true"))
-            )
-          )
-        )
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the saveRule method.
-    *
-    * redirect
-    */
-  def snippetForSearchClientSaveRule6(): Unit = {
-    // >SEPARATOR saveRule redirect
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.saveRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "redirect-help-rule",
-      rule = Rule(
-        objectID = "redirect-help-rule",
-        conditions = Some(
-          Seq(
-            Condition(
-              pattern = Some("help"),
-              anchoring = Some(Anchoring.withName("contains"))
-            )
-          )
-        ),
-        consequence = Consequence(
-          userData = Some(JObject(List(JField("redirect", JString("https://www.algolia.com/support")))))
-        )
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the saveRule method.
-    *
-    * promote some results over others
-    */
-  def snippetForSearchClientSaveRule7(): Unit = {
-    // >SEPARATOR saveRule promote some results over others
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.saveRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "tomato-fruit",
-      rule = Rule(
-        objectID = "tomato-fruit",
-        conditions = Some(
-          Seq(
-            Condition(
-              pattern = Some("tomato"),
-              anchoring = Some(Anchoring.withName("contains"))
-            )
-          )
-        ),
-        consequence = Consequence(
-          params = Some(
-            ConsequenceParams(
-              optionalFilters = Some(OptionalFilters("food_group:fruit"))
-            )
-          )
-        )
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the saveRule method.
-    *
-    * promote several hits
-    */
-  def snippetForSearchClientSaveRule8(): Unit = {
-    // >SEPARATOR saveRule promote several hits
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.saveRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "Promote-Apple-Newest",
-      rule = Rule(
-        objectID = "Promote-Apple-Newest",
-        conditions = Some(
-          Seq(
-            Condition(
-              pattern = Some("apple"),
-              anchoring = Some(Anchoring.withName("is"))
-            )
-          )
-        ),
-        consequence = Consequence(
-          promote = Some(
-            Seq(
-              PromoteObjectIDs(
-                objectIDs = Seq("iPhone-12345", "watch-123"),
-                position = 0
-              )
-            )
-          )
-        )
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the saveRule method.
-    *
-    * promote newest release
-    */
-  def snippetForSearchClientSaveRule9(): Unit = {
-    // >SEPARATOR saveRule promote newest release
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.saveRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "Promote-iPhone-X",
-      rule = Rule(
-        objectID = "Promote-iPhone-X",
-        conditions = Some(
-          Seq(
-            Condition(
-              pattern = Some("iPhone"),
-              anchoring = Some(Anchoring.withName("contains"))
-            )
-          )
-        ),
-        consequence = Consequence(
-          promote = Some(
-            Seq(
-              PromoteObjectID(
-                objectID = "iPhone-12345",
-                position = 0
-              )
-            )
-          )
-        )
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the saveRule method.
-    *
-    * promote single item
-    */
-  def snippetForSearchClientSaveRule10(): Unit = {
-    // >SEPARATOR saveRule promote single item
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.saveRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "promote-harry-potter-box-set",
-      rule = Rule(
-        objectID = "promote-harry-potter-box-set",
-        conditions = Some(
-          Seq(
-            Condition(
-              pattern = Some("Harry Potter"),
-              anchoring = Some(Anchoring.withName("contains"))
-            )
-          )
-        ),
-        consequence = Consequence(
-          promote = Some(
-            Seq(
-              PromoteObjectID(
-                objectID = "HP-12345",
-                position = 0
-              )
-            )
-          )
-        )
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the saveRule method.
-    *
-    * limit search results
-    */
-  def snippetForSearchClientSaveRule11(): Unit = {
-    // >SEPARATOR saveRule limit search results
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.saveRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "article-rule",
-      rule = Rule(
-        objectID = "article-rule",
-        conditions = Some(
-          Seq(
-            Condition(
-              pattern = Some("article"),
-              anchoring = Some(Anchoring.withName("startsWith"))
-            )
-          )
-        ),
-        consequence = Consequence(
-          params = Some(
-            ConsequenceParams(
-              query = Some(
-                ConsequenceQueryObject(
-                  edits = Some(
-                    Seq(
-                      Edit(
-                        `type` = Some(EditType.withName("remove")),
-                        delete = Some("article")
-                      )
-                    )
-                  )
-                )
-              ),
-              restrictSearchableAttributes = Some(Seq("title", "book_id"))
-            )
-          )
-        )
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the saveRule method.
-    *
-    * query match
-    */
-  def snippetForSearchClientSaveRule12(): Unit = {
-    // >SEPARATOR saveRule query match
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.saveRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "tagged-brand-rule",
-      rule = Rule(
-        conditions = Some(
-          Seq(
-            Condition(
-              pattern = Some("brand: {facet:brand}"),
-              anchoring = Some(Anchoring.withName("contains")),
-              alternatives = Some(false)
-            )
-          )
-        ),
-        consequence = Consequence(
-          params = Some(
-            ConsequenceParams(
-              automaticFacetFilters = Some(
-                AutomaticFacetFilters(
-                  Seq(
-                    AutomaticFacetFilter(
-                      facet = "brand"
-                    )
-                  )
-                )
-              ),
-              query = Some(
-                ConsequenceQueryObject(
-                  remove = Some(Seq("brand:", "{facet:brand}"))
-                )
-              )
-            )
-          )
-        ),
-        description = Some("filter on brand: {brand}"),
-        objectID = "tagged-brand-rule"
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the saveRule method.
-    *
-    * dynamic filtering
-    */
-  def snippetForSearchClientSaveRule13(): Unit = {
-    // >SEPARATOR saveRule dynamic filtering
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.saveRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "color-facets",
-      rule = Rule(
-        objectID = "color-facets",
-        conditions = Some(
-          Seq(
-            Condition(
-              pattern = Some("{facet:color}")
-            )
-          )
-        ),
-        consequence = Consequence(
-          params = Some(
-            ConsequenceParams(
-              automaticFacetFilters = Some(
-                AutomaticFacetFilters(
-                  Seq(
-                    AutomaticFacetFilter(
-                      facet = "color"
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the saveRule method.
-    *
-    * hide hits
-    */
-  def snippetForSearchClientSaveRule14(): Unit = {
-    // >SEPARATOR saveRule hide hits
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.saveRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "hide-12345",
-      rule = Rule(
-        objectID = "hide-12345",
-        conditions = Some(
-          Seq(
-            Condition(
-              pattern = Some("cheap"),
-              anchoring = Some(Anchoring.withName("contains"))
-            )
-          )
-        ),
-        consequence = Consequence(
-          hide = Some(
-            Seq(
-              ConsequenceHide(
-                objectID = "to-hide-12345"
-              )
-            )
-          )
-        )
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the saveRule method.
-    *
-    * one rule per facet
-    */
-  def snippetForSearchClientSaveRule15(): Unit = {
-    // >SEPARATOR saveRule one rule per facet
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.saveRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "red-color",
-      rule = Rule(
-        objectID = "red-color",
-        conditions = Some(
-          Seq(
-            Condition(
-              pattern = Some("red"),
-              anchoring = Some(Anchoring.withName("contains"))
-            )
-          )
-        ),
-        consequence = Consequence(
-          params = Some(
-            ConsequenceParams(
-              query = Some(
-                ConsequenceQueryObject(
-                  remove = Some(Seq("red"))
-                )
-              ),
-              filters = Some("color:red")
-            )
-          )
-        )
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the saveRule method.
-    *
-    * numerical filters
-    */
-  def snippetForSearchClientSaveRule16(): Unit = {
-    // >SEPARATOR saveRule numerical filters
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.saveRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "cheap",
-      rule = Rule(
-        objectID = "cheap",
-        conditions = Some(
-          Seq(
-            Condition(
-              pattern = Some("cheap"),
-              anchoring = Some(Anchoring.withName("contains"))
-            )
-          )
-        ),
-        consequence = Consequence(
-          params = Some(
-            ConsequenceParams(
-              query = Some(
-                ConsequenceQueryObject(
-                  remove = Some(Seq("cheap"))
-                )
-              ),
-              filters = Some("price < 10")
-            )
-          )
-        )
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the saveRule method.
-    *
-    * negative filters
-    */
-  def snippetForSearchClientSaveRule17(): Unit = {
-    // >SEPARATOR saveRule negative filters
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.saveRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "gluten-free-rule",
-      rule = Rule(
-        objectID = "gluten-free-rule",
-        conditions = Some(
-          Seq(
-            Condition(
-              pattern = Some("gluten-free"),
-              anchoring = Some(Anchoring.withName("contains"))
-            )
-          )
-        ),
-        consequence = Consequence(
-          params = Some(
-            ConsequenceParams(
-              filters = Some("NOT allergens:gluten"),
-              query = Some(
-                ConsequenceQueryObject(
-                  edits = Some(
-                    Seq(
-                      Edit(
-                        `type` = Some(EditType.withName("remove")),
-                        delete = Some("gluten-free")
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the saveRule method.
-    *
-    * positive filters
-    */
-  def snippetForSearchClientSaveRule18(): Unit = {
-    // >SEPARATOR saveRule positive filters
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.saveRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "diet-rule",
-      rule = Rule(
-        objectID = "diet-rule",
-        conditions = Some(
-          Seq(
-            Condition(
-              pattern = Some("diet"),
-              anchoring = Some(Anchoring.withName("contains"))
-            )
-          )
-        ),
-        consequence = Consequence(
-          params = Some(
-            ConsequenceParams(
-              filters = Some("'low-carb' OR 'low-fat'"),
-              query = Some(
-                ConsequenceQueryObject(
-                  edits = Some(
-                    Seq(
-                      Edit(
-                        `type` = Some(EditType.withName("remove")),
-                        delete = Some("diet")
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the saveRule method.
-    *
-    * conditionless
-    */
-  def snippetForSearchClientSaveRule19(): Unit = {
-    // >SEPARATOR saveRule conditionless
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.saveRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "diet-rule",
-      rule = Rule(
-        objectID = "diet-rule",
-        consequence = Consequence(
-          params = Some(
-            ConsequenceParams(
-              filters = Some("'low-carb' OR 'low-fat'"),
-              query = Some(
-                ConsequenceQueryObject(
-                  edits = Some(
-                    Seq(
-                      Edit(
-                        `type` = Some(EditType.withName("remove")),
-                        delete = Some("diet")
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the saveRules method.
-    *
-    * saveRules with minimal parameters
-    */
-  def snippetForSearchClientSaveRules(): Unit = {
-    // >SEPARATOR saveRules saveRules with minimal parameters
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.saveRules(
-      indexName = "<YOUR_INDEX_NAME>",
-      rules = Seq(
-        Rule(
-          objectID = "a-rule-id",
-          conditions = Some(
-            Seq(
-              Condition(
-                pattern = Some("smartphone"),
-                anchoring = Some(Anchoring.withName("contains"))
-              )
-            )
-          ),
-          consequence = Consequence(
-            params = Some(
-              ConsequenceParams(
-                filters = Some("brand:apple")
-              )
-            )
-          )
-        ),
-        Rule(
-          objectID = "a-second-rule-id",
-          conditions = Some(
-            Seq(
-              Condition(
-                pattern = Some("apple"),
-                anchoring = Some(Anchoring.withName("contains"))
-              )
-            )
-          ),
-          consequence = Consequence(
-            params = Some(
-              ConsequenceParams(
-                filters = Some("brand:samsung")
-              )
-            )
-          )
-        )
-      ),
-      forwardToReplicas = Some(false),
-      clearExistingRules = Some(true)
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the saveRules method.
-    *
-    * saveRules with all parameters
-    */
-  def snippetForSearchClientSaveRules1(): Unit = {
-    // >SEPARATOR saveRules saveRules with all parameters
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.saveRules(
-      indexName = "<YOUR_INDEX_NAME>",
-      rules = Seq(
-        Rule(
+        rule = Rule(
           objectID = "id1",
           conditions = Some(
             Seq(
@@ -3101,37 +2768,613 @@ class SnippetSearchClient {
               )
             )
           )
-        )
+        ),
+        forwardToReplicas = Some(true)
       ),
-      forwardToReplicas = Some(true),
-      clearExistingRules = Some(true)
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
-  /** Snippet for the saveRules method.
+  /** Snippet for the saveRule method.
     *
-    * dynamic filtering
+    * b2b catalog
     */
-  def snippetForSearchClientSaveRules2(): Unit = {
-    // >SEPARATOR saveRules dynamic filtering
+  def snippetForSearchClientSaveRule2(): Unit = {
+    // >SEPARATOR saveRule b2b catalog
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.saveRules(
-      indexName = "<YOUR_INDEX_NAME>",
-      rules = Seq(
-        Rule(
-          objectID = "toaster",
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "article-rule",
+        rule = Rule(
+          objectID = "article-rule",
           conditions = Some(
             Seq(
               Condition(
-                pattern = Some("toaster"),
+                pattern = Some("article"),
+                anchoring = Some(Anchoring.withName("startsWith"))
+              )
+            )
+          ),
+          consequence = Consequence(
+            params = Some(
+              ConsequenceParams(
+                query = Some(
+                  ConsequenceQueryObject(
+                    edits = Some(
+                      Seq(
+                        Edit(
+                          `type` = Some(EditType.withName("remove")),
+                          delete = Some("article")
+                        )
+                      )
+                    )
+                  )
+                ),
+                restrictSearchableAttributes = Some(Seq("title", "book_id"))
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRule method.
+    *
+    * merchandising and promoting
+    */
+  def snippetForSearchClientSaveRule3(): Unit = {
+    // >SEPARATOR saveRule merchandising and promoting
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "director-rule",
+        rule = Rule(
+          objectID = "director-rule",
+          conditions = Some(
+            Seq(
+              Condition(
+                pattern = Some("{facet:director} director"),
+                anchoring = Some(Anchoring.withName("contains"))
+              )
+            )
+          ),
+          consequence = Consequence(
+            params = Some(
+              ConsequenceParams(
+                restrictSearchableAttributes = Some(Seq("title", "book_id")),
+                automaticFacetFilters = Some(
+                  AutomaticFacetFilters(
+                    Seq(
+                      AutomaticFacetFilter(
+                        facet = "director"
+                      )
+                    )
+                  )
+                ),
+                query = Some(
+                  ConsequenceQueryObject(
+                    edits = Some(
+                      Seq(
+                        Edit(
+                          `type` = Some(EditType.withName("remove")),
+                          delete = Some("director")
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRule method.
+    *
+    * harry potter
+    */
+  def snippetForSearchClientSaveRule4(): Unit = {
+    // >SEPARATOR saveRule harry potter
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "harry-potter-rule",
+        rule = Rule(
+          objectID = "harry-potter-rule",
+          conditions = Some(
+            Seq(
+              Condition(
+                pattern = Some("harry potter"),
+                anchoring = Some(Anchoring.withName("contains"))
+              )
+            )
+          ),
+          consequence = Consequence(
+            userData = Some(JObject(List(JField("promo_content", JString("20% OFF on all Harry Potter books!")))))
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRule method.
+    *
+    * merchandising empty query
+    */
+  def snippetForSearchClientSaveRule5(): Unit = {
+    // >SEPARATOR saveRule merchandising empty query
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "clearance-category-filter",
+        rule = Rule(
+          objectID = "clearance-category-filter",
+          conditions = Some(
+            Seq(
+              Condition(
+                pattern = Some(""),
+                anchoring = Some(Anchoring.withName("is")),
+                context = Some("landing")
+              )
+            )
+          ),
+          consequence = Consequence(
+            params = Some(
+              ConsequenceParams(
+                optionalFilters = Some(OptionalFilters("clearance:true"))
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRule method.
+    *
+    * redirect
+    */
+  def snippetForSearchClientSaveRule6(): Unit = {
+    // >SEPARATOR saveRule redirect
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "redirect-help-rule",
+        rule = Rule(
+          objectID = "redirect-help-rule",
+          conditions = Some(
+            Seq(
+              Condition(
+                pattern = Some("help"),
+                anchoring = Some(Anchoring.withName("contains"))
+              )
+            )
+          ),
+          consequence = Consequence(
+            userData = Some(JObject(List(JField("redirect", JString("https://www.algolia.com/support")))))
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRule method.
+    *
+    * promote some results over others
+    */
+  def snippetForSearchClientSaveRule7(): Unit = {
+    // >SEPARATOR saveRule promote some results over others
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "tomato-fruit",
+        rule = Rule(
+          objectID = "tomato-fruit",
+          conditions = Some(
+            Seq(
+              Condition(
+                pattern = Some("tomato"),
+                anchoring = Some(Anchoring.withName("contains"))
+              )
+            )
+          ),
+          consequence = Consequence(
+            params = Some(
+              ConsequenceParams(
+                optionalFilters = Some(OptionalFilters("food_group:fruit"))
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRule method.
+    *
+    * promote several hits
+    */
+  def snippetForSearchClientSaveRule8(): Unit = {
+    // >SEPARATOR saveRule promote several hits
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "Promote-Apple-Newest",
+        rule = Rule(
+          objectID = "Promote-Apple-Newest",
+          conditions = Some(
+            Seq(
+              Condition(
+                pattern = Some("apple"),
+                anchoring = Some(Anchoring.withName("is"))
+              )
+            )
+          ),
+          consequence = Consequence(
+            promote = Some(
+              Seq(
+                PromoteObjectIDs(
+                  objectIDs = Seq("iPhone-12345", "watch-123"),
+                  position = 0
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRule method.
+    *
+    * promote newest release
+    */
+  def snippetForSearchClientSaveRule9(): Unit = {
+    // >SEPARATOR saveRule promote newest release
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "Promote-iPhone-X",
+        rule = Rule(
+          objectID = "Promote-iPhone-X",
+          conditions = Some(
+            Seq(
+              Condition(
+                pattern = Some("iPhone"),
+                anchoring = Some(Anchoring.withName("contains"))
+              )
+            )
+          ),
+          consequence = Consequence(
+            promote = Some(
+              Seq(
+                PromoteObjectID(
+                  objectID = "iPhone-12345",
+                  position = 0
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRule method.
+    *
+    * promote single item
+    */
+  def snippetForSearchClientSaveRule10(): Unit = {
+    // >SEPARATOR saveRule promote single item
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "promote-harry-potter-box-set",
+        rule = Rule(
+          objectID = "promote-harry-potter-box-set",
+          conditions = Some(
+            Seq(
+              Condition(
+                pattern = Some("Harry Potter"),
+                anchoring = Some(Anchoring.withName("contains"))
+              )
+            )
+          ),
+          consequence = Consequence(
+            promote = Some(
+              Seq(
+                PromoteObjectID(
+                  objectID = "HP-12345",
+                  position = 0
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRule method.
+    *
+    * limit search results
+    */
+  def snippetForSearchClientSaveRule11(): Unit = {
+    // >SEPARATOR saveRule limit search results
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "article-rule",
+        rule = Rule(
+          objectID = "article-rule",
+          conditions = Some(
+            Seq(
+              Condition(
+                pattern = Some("article"),
+                anchoring = Some(Anchoring.withName("startsWith"))
+              )
+            )
+          ),
+          consequence = Consequence(
+            params = Some(
+              ConsequenceParams(
+                query = Some(
+                  ConsequenceQueryObject(
+                    edits = Some(
+                      Seq(
+                        Edit(
+                          `type` = Some(EditType.withName("remove")),
+                          delete = Some("article")
+                        )
+                      )
+                    )
+                  )
+                ),
+                restrictSearchableAttributes = Some(Seq("title", "book_id"))
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRule method.
+    *
+    * query match
+    */
+  def snippetForSearchClientSaveRule12(): Unit = {
+    // >SEPARATOR saveRule query match
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "tagged-brand-rule",
+        rule = Rule(
+          conditions = Some(
+            Seq(
+              Condition(
+                pattern = Some("brand: {facet:brand}"),
+                anchoring = Some(Anchoring.withName("contains")),
+                alternatives = Some(false)
+              )
+            )
+          ),
+          consequence = Consequence(
+            params = Some(
+              ConsequenceParams(
+                automaticFacetFilters = Some(
+                  AutomaticFacetFilters(
+                    Seq(
+                      AutomaticFacetFilter(
+                        facet = "brand"
+                      )
+                    )
+                  )
+                ),
+                query = Some(
+                  ConsequenceQueryObject(
+                    remove = Some(Seq("brand:", "{facet:brand}"))
+                  )
+                )
+              )
+            )
+          ),
+          description = Some("filter on brand: {brand}"),
+          objectID = "tagged-brand-rule"
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRule method.
+    *
+    * dynamic filtering
+    */
+  def snippetForSearchClientSaveRule13(): Unit = {
+    // >SEPARATOR saveRule dynamic filtering
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "color-facets",
+        rule = Rule(
+          objectID = "color-facets",
+          conditions = Some(
+            Seq(
+              Condition(
+                pattern = Some("{facet:color}")
+              )
+            )
+          ),
+          consequence = Consequence(
+            params = Some(
+              ConsequenceParams(
+                automaticFacetFilters = Some(
+                  AutomaticFacetFilters(
+                    Seq(
+                      AutomaticFacetFilter(
+                        facet = "color"
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRule method.
+    *
+    * hide hits
+    */
+  def snippetForSearchClientSaveRule14(): Unit = {
+    // >SEPARATOR saveRule hide hits
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "hide-12345",
+        rule = Rule(
+          objectID = "hide-12345",
+          conditions = Some(
+            Seq(
+              Condition(
+                pattern = Some("cheap"),
+                anchoring = Some(Anchoring.withName("contains"))
+              )
+            )
+          ),
+          consequence = Consequence(
+            hide = Some(
+              Seq(
+                ConsequenceHide(
+                  objectID = "to-hide-12345"
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRule method.
+    *
+    * one rule per facet
+    */
+  def snippetForSearchClientSaveRule15(): Unit = {
+    // >SEPARATOR saveRule one rule per facet
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "red-color",
+        rule = Rule(
+          objectID = "red-color",
+          conditions = Some(
+            Seq(
+              Condition(
+                pattern = Some("red"),
                 anchoring = Some(Anchoring.withName("contains"))
               )
             )
@@ -3141,15 +3384,36 @@ class SnippetSearchClient {
               ConsequenceParams(
                 query = Some(
                   ConsequenceQueryObject(
-                    remove = Some(Seq("toaster"))
+                    remove = Some(Seq("red"))
                   )
                 ),
-                filters = Some("product_type:toaster")
+                filters = Some("color:red")
               )
             )
           )
-        ),
-        Rule(
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRule method.
+    *
+    * numerical filters
+    */
+  def snippetForSearchClientSaveRule16(): Unit = {
+    // >SEPARATOR saveRule numerical filters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "cheap",
+        rule = Rule(
           objectID = "cheap",
           conditions = Some(
             Seq(
@@ -3167,17 +3431,459 @@ class SnippetSearchClient {
                     remove = Some(Seq("cheap"))
                   )
                 ),
-                filters = Some("price < 15")
+                filters = Some("price < 10")
               )
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRule method.
+    *
+    * negative filters
+    */
+  def snippetForSearchClientSaveRule17(): Unit = {
+    // >SEPARATOR saveRule negative filters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "gluten-free-rule",
+        rule = Rule(
+          objectID = "gluten-free-rule",
+          conditions = Some(
+            Seq(
+              Condition(
+                pattern = Some("gluten-free"),
+                anchoring = Some(Anchoring.withName("contains"))
+              )
+            )
+          ),
+          consequence = Consequence(
+            params = Some(
+              ConsequenceParams(
+                filters = Some("NOT allergens:gluten"),
+                query = Some(
+                  ConsequenceQueryObject(
+                    edits = Some(
+                      Seq(
+                        Edit(
+                          `type` = Some(EditType.withName("remove")),
+                          delete = Some("gluten-free")
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRule method.
+    *
+    * positive filters
+    */
+  def snippetForSearchClientSaveRule18(): Unit = {
+    // >SEPARATOR saveRule positive filters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "diet-rule",
+        rule = Rule(
+          objectID = "diet-rule",
+          conditions = Some(
+            Seq(
+              Condition(
+                pattern = Some("diet"),
+                anchoring = Some(Anchoring.withName("contains"))
+              )
+            )
+          ),
+          consequence = Consequence(
+            params = Some(
+              ConsequenceParams(
+                filters = Some("'low-carb' OR 'low-fat'"),
+                query = Some(
+                  ConsequenceQueryObject(
+                    edits = Some(
+                      Seq(
+                        Edit(
+                          `type` = Some(EditType.withName("remove")),
+                          delete = Some("diet")
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRule method.
+    *
+    * conditionless
+    */
+  def snippetForSearchClientSaveRule19(): Unit = {
+    // >SEPARATOR saveRule conditionless
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "diet-rule",
+        rule = Rule(
+          objectID = "diet-rule",
+          consequence = Consequence(
+            params = Some(
+              ConsequenceParams(
+                filters = Some("'low-carb' OR 'low-fat'"),
+                query = Some(
+                  ConsequenceQueryObject(
+                    edits = Some(
+                      Seq(
+                        Edit(
+                          `type` = Some(EditType.withName("remove")),
+                          delete = Some("diet")
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRule method.
+    *
+    * contextual
+    */
+  def snippetForSearchClientSaveRule20(): Unit = {
+    // >SEPARATOR saveRule contextual
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "a-rule-id",
+        rule = Rule(
+          objectID = "a-rule-id",
+          conditions = Some(
+            Seq(
+              Condition(
+                context = Some("mobile")
+              )
+            )
+          ),
+          consequence = Consequence(
+            params = Some(
+              ConsequenceParams(
+                filters = Some("release_date >= 1577836800")
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRule method.
+    *
+    * saveRule always active rule
+    */
+  def snippetForSearchClientSaveRule21(): Unit = {
+    // >SEPARATOR saveRule saveRule always active rule
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "a-rule-id",
+        rule = Rule(
+          objectID = "a-rule-id",
+          consequence = Consequence(
+            params = Some(
+              ConsequenceParams(
+                aroundRadius = Some(AroundRadius(1000))
+              )
+            )
+          ),
+          validity = Some(
+            Seq(
+              TimeRange(
+                from = 1577836800L,
+                until = 1577836800L
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRules method.
+    *
+    * saveRules with minimal parameters
+    */
+  def snippetForSearchClientSaveRules(): Unit = {
+    // >SEPARATOR saveRules saveRules with minimal parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRules(
+        indexName = "<YOUR_INDEX_NAME>",
+        rules = Seq(
+          Rule(
+            objectID = "a-rule-id",
+            conditions = Some(
+              Seq(
+                Condition(
+                  pattern = Some("smartphone"),
+                  anchoring = Some(Anchoring.withName("contains"))
+                )
+              )
+            ),
+            consequence = Consequence(
+              params = Some(
+                ConsequenceParams(
+                  filters = Some("brand:apple")
+                )
+              )
+            )
+          ),
+          Rule(
+            objectID = "a-second-rule-id",
+            conditions = Some(
+              Seq(
+                Condition(
+                  pattern = Some("apple"),
+                  anchoring = Some(Anchoring.withName("contains"))
+                )
+              )
+            ),
+            consequence = Consequence(
+              params = Some(
+                ConsequenceParams(
+                  filters = Some("brand:samsung")
+                )
+              )
+            )
+          )
+        ),
+        forwardToReplicas = Some(false),
+        clearExistingRules = Some(true)
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRules method.
+    *
+    * saveRules with all parameters
+    */
+  def snippetForSearchClientSaveRules1(): Unit = {
+    // >SEPARATOR saveRules saveRules with all parameters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRules(
+        indexName = "<YOUR_INDEX_NAME>",
+        rules = Seq(
+          Rule(
+            objectID = "id1",
+            conditions = Some(
+              Seq(
+                Condition(
+                  pattern = Some("apple"),
+                  anchoring = Some(Anchoring.withName("contains")),
+                  alternatives = Some(false),
+                  context = Some("search")
+                )
+              )
+            ),
+            consequence = Consequence(
+              params = Some(
+                ConsequenceParams(
+                  filters = Some("brand:apple"),
+                  query = Some(
+                    ConsequenceQueryObject(
+                      remove = Some(Seq("algolia")),
+                      edits = Some(
+                        Seq(
+                          Edit(
+                            `type` = Some(EditType.withName("remove")),
+                            delete = Some("abc"),
+                            insert = Some("cde")
+                          ),
+                          Edit(
+                            `type` = Some(EditType.withName("replace")),
+                            delete = Some("abc"),
+                            insert = Some("cde")
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              ),
+              hide = Some(
+                Seq(
+                  ConsequenceHide(
+                    objectID = "321"
+                  )
+                )
+              ),
+              filterPromotes = Some(false),
+              userData = Some(JObject(List(JField("algolia", JString("aloglia"))))),
+              promote = Some(
+                Seq(
+                  PromoteObjectID(
+                    objectID = "abc",
+                    position = 3
+                  ),
+                  PromoteObjectIDs(
+                    objectIDs = Seq("abc", "def"),
+                    position = 1
+                  )
+                )
+              )
+            ),
+            description = Some("test"),
+            enabled = Some(true),
+            validity = Some(
+              Seq(
+                TimeRange(
+                  from = 1656670273L,
+                  until = 1656670277L
+                )
+              )
+            )
+          )
+        ),
+        forwardToReplicas = Some(true),
+        clearExistingRules = Some(true)
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRules method.
+    *
+    * dynamic filtering
+    */
+  def snippetForSearchClientSaveRules2(): Unit = {
+    // >SEPARATOR saveRules dynamic filtering
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRules(
+        indexName = "<YOUR_INDEX_NAME>",
+        rules = Seq(
+          Rule(
+            objectID = "toaster",
+            conditions = Some(
+              Seq(
+                Condition(
+                  pattern = Some("toaster"),
+                  anchoring = Some(Anchoring.withName("contains"))
+                )
+              )
+            ),
+            consequence = Consequence(
+              params = Some(
+                ConsequenceParams(
+                  query = Some(
+                    ConsequenceQueryObject(
+                      remove = Some(Seq("toaster"))
+                    )
+                  ),
+                  filters = Some("product_type:toaster")
+                )
+              )
+            )
+          ),
+          Rule(
+            objectID = "cheap",
+            conditions = Some(
+              Seq(
+                Condition(
+                  pattern = Some("cheap"),
+                  anchoring = Some(Anchoring.withName("contains"))
+                )
+              )
+            ),
+            consequence = Consequence(
+              params = Some(
+                ConsequenceParams(
+                  query = Some(
+                    ConsequenceQueryObject(
+                      remove = Some(Seq("cheap"))
+                    )
+                  ),
+                  filters = Some("price < 15")
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 
@@ -3191,51 +3897,51 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.saveRules(
-      indexName = "<YOUR_INDEX_NAME>",
-      rules = Seq(
-        Rule(
-          objectID = "country",
-          conditions = Some(
-            Seq(
-              Condition(
-                pattern = Some("{facet:country}"),
-                anchoring = Some(Anchoring.withName("contains"))
+    val response = Await.result(
+      client.saveRules(
+        indexName = "<YOUR_INDEX_NAME>",
+        rules = Seq(
+          Rule(
+            objectID = "country",
+            conditions = Some(
+              Seq(
+                Condition(
+                  pattern = Some("{facet:country}"),
+                  anchoring = Some(Anchoring.withName("contains"))
+                )
+              )
+            ),
+            consequence = Consequence(
+              params = Some(
+                ConsequenceParams(
+                  aroundLatLngViaIP = Some(false)
+                )
               )
             )
           ),
-          consequence = Consequence(
-            params = Some(
-              ConsequenceParams(
-                aroundLatLngViaIP = Some(false)
+          Rule(
+            objectID = "city",
+            conditions = Some(
+              Seq(
+                Condition(
+                  pattern = Some("{facet:city}"),
+                  anchoring = Some(Anchoring.withName("contains"))
+                )
               )
-            )
-          )
-        ),
-        Rule(
-          objectID = "city",
-          conditions = Some(
-            Seq(
-              Condition(
-                pattern = Some("{facet:city}"),
-                anchoring = Some(Anchoring.withName("contains"))
-              )
-            )
-          ),
-          consequence = Consequence(
-            params = Some(
-              ConsequenceParams(
-                aroundLatLngViaIP = Some(false)
+            ),
+            consequence = Consequence(
+              params = Some(
+                ConsequenceParams(
+                  aroundLatLngViaIP = Some(false)
+                )
               )
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -3249,20 +3955,20 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.saveSynonym(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "id1",
-      synonymHit = SynonymHit(
+    val response = Await.result(
+      client.saveSynonym(
+        indexName = "<YOUR_INDEX_NAME>",
         objectID = "id1",
-        `type` = SynonymType.withName("synonym"),
-        synonyms = Some(Seq("car", "vehicule", "auto"))
+        synonymHit = SynonymHit(
+          objectID = "id1",
+          `type` = SynonymType.withName("synonym"),
+          synonyms = Some(Seq("car", "vehicule", "auto"))
+        ),
+        forwardToReplicas = Some(true)
       ),
-      forwardToReplicas = Some(true)
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -3276,28 +3982,28 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.saveSynonyms(
-      indexName = "<YOUR_INDEX_NAME>",
-      synonymHit = Seq(
-        SynonymHit(
-          objectID = "id1",
-          `type` = SynonymType.withName("synonym"),
-          synonyms = Some(Seq("car", "vehicule", "auto"))
+    val response = Await.result(
+      client.saveSynonyms(
+        indexName = "<YOUR_INDEX_NAME>",
+        synonymHit = Seq(
+          SynonymHit(
+            objectID = "id1",
+            `type` = SynonymType.withName("synonym"),
+            synonyms = Some(Seq("car", "vehicule", "auto"))
+          ),
+          SynonymHit(
+            objectID = "id2",
+            `type` = SynonymType.withName("onewaysynonym"),
+            input = Some("iphone"),
+            synonyms = Some(Seq("ephone", "aphone", "yphone"))
+          )
         ),
-        SynonymHit(
-          objectID = "id2",
-          `type` = SynonymType.withName("onewaysynonym"),
-          input = Some("iphone"),
-          synonyms = Some(Seq("ephone", "aphone", "yphone"))
-        )
+        forwardToReplicas = Some(true),
+        replaceExistingSynonyms = Some(true)
       ),
-      forwardToReplicas = Some(true),
-      replaceExistingSynonyms = Some(true)
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -3311,21 +4017,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.search(
-      searchMethodParams = SearchMethodParams(
-        requests = Seq(
-          SearchForHits(
-            indexName = "<YOUR_INDEX_NAME>",
-            query = Some("<YOUR_QUERY>"),
-            hitsPerPage = Some(50)
+    val response = Await.result(
+      client.search(
+        searchMethodParams = SearchMethodParams(
+          requests = Seq(
+            SearchForHits(
+              indexName = "<YOUR_INDEX_NAME>",
+              query = Some("<YOUR_QUERY>"),
+              hitsPerPage = Some(50)
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -3339,21 +4045,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.search(
-      searchMethodParams = SearchMethodParams(
-        requests = Seq(
-          SearchForHits(
-            indexName = "<YOUR_INDEX_NAME>",
-            query = Some("<YOUR_QUERY>"),
-            filters = Some("actor:Scarlett Johansson")
+    val response = Await.result(
+      client.search(
+        searchMethodParams = SearchMethodParams(
+          requests = Seq(
+            SearchForHits(
+              indexName = "<YOUR_INDEX_NAME>",
+              query = Some("<YOUR_QUERY>"),
+              filters = Some("actor:Scarlett Johansson")
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -3367,21 +4073,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.search(
-      searchMethodParams = SearchMethodParams(
-        requests = Seq(
-          SearchForHits(
-            indexName = "<YOUR_INDEX_NAME>",
-            query = Some("<YOUR_QUERY>"),
-            filters = Some("actor:Tom Cruise OR actor:Scarlett Johansson")
+    val response = Await.result(
+      client.search(
+        searchMethodParams = SearchMethodParams(
+          requests = Seq(
+            SearchForHits(
+              indexName = "<YOUR_INDEX_NAME>",
+              query = Some("<YOUR_QUERY>"),
+              filters = Some("actor:Tom Cruise OR actor:Scarlett Johansson")
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -3395,21 +4101,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.search(
-      searchMethodParams = SearchMethodParams(
-        requests = Seq(
-          SearchForHits(
-            indexName = "<YOUR_INDEX_NAME>",
-            query = Some("<YOUR_QUERY>"),
-            filters = Some("NOT actor:Nicolas Cage")
+    val response = Await.result(
+      client.search(
+        searchMethodParams = SearchMethodParams(
+          requests = Seq(
+            SearchForHits(
+              indexName = "<YOUR_INDEX_NAME>",
+              query = Some("<YOUR_QUERY>"),
+              filters = Some("NOT actor:Nicolas Cage")
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -3423,19 +4129,19 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.search(
-      searchMethodParams = SearchMethodParams(
-        requests = Seq(
-          SearchForHits(
-            indexName = "<YOUR_INDEX_NAME>"
+    val response = Await.result(
+      client.search(
+        searchMethodParams = SearchMethodParams(
+          requests = Seq(
+            SearchForHits(
+              indexName = "<YOUR_INDEX_NAME>"
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -3449,23 +4155,23 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.search(
-      searchMethodParams = SearchMethodParams(
-        requests = Seq(
-          SearchForHits(
-            indexName = "<YOUR_INDEX_NAME>",
-            query = Some("vim"),
-            attributesToSnippet = Some(Seq("*:20")),
-            attributesToHighlight = Some(Seq("*")),
-            attributesToRetrieve = Some(Seq("*"))
+    val response = Await.result(
+      client.search(
+        searchMethodParams = SearchMethodParams(
+          requests = Seq(
+            SearchForHits(
+              indexName = "<YOUR_INDEX_NAME>",
+              query = Some("vim"),
+              attributesToSnippet = Some(Seq("*:20")),
+              attributesToHighlight = Some(Seq("*")),
+              attributesToRetrieve = Some(Seq("*"))
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -3479,21 +4185,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.search(
-      searchMethodParams = SearchMethodParams(
-        requests = Seq(
-          SearchForHits(
-            indexName = "<YOUR_INDEX_NAME>",
-            query = Some("<YOUR_QUERY>"),
-            facets = Some(Seq("author", "genre"))
+    val response = Await.result(
+      client.search(
+        searchMethodParams = SearchMethodParams(
+          requests = Seq(
+            SearchForHits(
+              indexName = "<YOUR_INDEX_NAME>",
+              query = Some("<YOUR_QUERY>"),
+              facets = Some(Seq("author", "genre"))
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -3507,21 +4213,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.search(
-      searchMethodParams = SearchMethodParams(
-        requests = Seq(
-          SearchForHits(
-            indexName = "<YOUR_INDEX_NAME>",
-            query = Some("<YOUR_QUERY>"),
-            facets = Some(Seq("*"))
+    val response = Await.result(
+      client.search(
+        searchMethodParams = SearchMethodParams(
+          requests = Seq(
+            SearchForHits(
+              indexName = "<YOUR_INDEX_NAME>",
+              query = Some("<YOUR_QUERY>"),
+              facets = Some(Seq("*"))
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -3535,22 +4241,22 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.search(
-      searchMethodParams = SearchMethodParams(
-        requests = Seq(
-          SearchForFacets(
-            indexName = "<YOUR_INDEX_NAME>",
-            `type` = SearchTypeFacet.withName("facet"),
-            facet = "editor"
-          )
-        ),
-        strategy = Some(SearchStrategy.withName("stopIfEnoughMatches"))
-      )
+    val response = Await.result(
+      client.search(
+        searchMethodParams = SearchMethodParams(
+          requests = Seq(
+            SearchForFacets(
+              indexName = "<YOUR_INDEX_NAME>",
+              `type` = SearchTypeFacet.withName("facet"),
+              facet = "editor"
+            )
+          ),
+          strategy = Some(SearchStrategy.withName("stopIfEnoughMatches"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -3564,22 +4270,22 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.search(
-      searchMethodParams = SearchMethodParams(
-        requests = Seq(
-          SearchForHits(
-            indexName = "<YOUR_INDEX_NAME>",
-            query = Some("myQuery"),
-            hitsPerPage = Some(50),
-            `type` = Some(SearchTypeDefault.withName("default"))
+    val response = Await.result(
+      client.search(
+        searchMethodParams = SearchMethodParams(
+          requests = Seq(
+            SearchForHits(
+              indexName = "<YOUR_INDEX_NAME>",
+              query = Some("myQuery"),
+              hitsPerPage = Some(50),
+              `type` = Some(SearchTypeDefault.withName("default"))
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -3593,25 +4299,25 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.search(
-      searchMethodParams = SearchMethodParams(
-        requests = Seq(
-          SearchForFacets(
-            indexName = "<YOUR_INDEX_NAME>",
-            `type` = SearchTypeFacet.withName("facet"),
-            facet = "theFacet",
-            facetQuery = Some("theFacetQuery"),
-            query = Some("theQuery"),
-            maxFacetHits = Some(50)
-          )
-        ),
-        strategy = Some(SearchStrategy.withName("stopIfEnoughMatches"))
-      )
+    val response = Await.result(
+      client.search(
+        searchMethodParams = SearchMethodParams(
+          requests = Seq(
+            SearchForFacets(
+              indexName = "<YOUR_INDEX_NAME>",
+              `type` = SearchTypeFacet.withName("facet"),
+              facet = "theFacet",
+              facetQuery = Some("theFacetQuery"),
+              query = Some("theQuery"),
+              maxFacetHits = Some(50)
+            )
+          ),
+          strategy = Some(SearchStrategy.withName("stopIfEnoughMatches"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -3625,29 +4331,29 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.search(
-      searchMethodParams = SearchMethodParams(
-        requests = Seq(
-          SearchForHits(
-            indexName = "<YOUR_INDEX_NAME>"
+    val response = Await.result(
+      client.search(
+        searchMethodParams = SearchMethodParams(
+          requests = Seq(
+            SearchForHits(
+              indexName = "<YOUR_INDEX_NAME>"
+            ),
+            SearchForFacets(
+              indexName = "<YOUR_INDEX_NAME>",
+              `type` = SearchTypeFacet.withName("facet"),
+              facet = "theFacet"
+            ),
+            SearchForHits(
+              indexName = "<YOUR_INDEX_NAME>",
+              `type` = Some(SearchTypeDefault.withName("default"))
+            )
           ),
-          SearchForFacets(
-            indexName = "<YOUR_INDEX_NAME>",
-            `type` = SearchTypeFacet.withName("facet"),
-            facet = "theFacet"
-          ),
-          SearchForHits(
-            indexName = "<YOUR_INDEX_NAME>",
-            `type` = Some(SearchTypeDefault.withName("default"))
-          )
-        ),
-        strategy = Some(SearchStrategy.withName("stopIfEnoughMatches"))
-      )
+          strategy = Some(SearchStrategy.withName("stopIfEnoughMatches"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -3661,31 +4367,31 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.search(
-      searchMethodParams = SearchMethodParams(
-        requests = Seq(
-          SearchForFacets(
-            indexName = "<YOUR_INDEX_NAME>",
-            `type` = SearchTypeFacet.withName("facet"),
-            facet = "theFacet",
-            facetQuery = Some("theFacetQuery"),
-            query = Some("theQuery"),
-            maxFacetHits = Some(50)
+    val response = Await.result(
+      client.search(
+        searchMethodParams = SearchMethodParams(
+          requests = Seq(
+            SearchForFacets(
+              indexName = "<YOUR_INDEX_NAME>",
+              `type` = SearchTypeFacet.withName("facet"),
+              facet = "theFacet",
+              facetQuery = Some("theFacetQuery"),
+              query = Some("theQuery"),
+              maxFacetHits = Some(50)
+            ),
+            SearchForHits(
+              indexName = "<YOUR_INDEX_NAME>",
+              query = Some("myQuery"),
+              hitsPerPage = Some(50),
+              `type` = Some(SearchTypeDefault.withName("default"))
+            )
           ),
-          SearchForHits(
-            indexName = "<YOUR_INDEX_NAME>",
-            query = Some("myQuery"),
-            hitsPerPage = Some(50),
-            `type` = Some(SearchTypeDefault.withName("default"))
-          )
-        ),
-        strategy = Some(SearchStrategy.withName("stopIfEnoughMatches"))
-      )
+          strategy = Some(SearchStrategy.withName("stopIfEnoughMatches"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -3699,57 +4405,57 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.search(
-      searchMethodParams = SearchMethodParams(
-        requests = Seq(
-          SearchForHits(
-            indexName = "<YOUR_INDEX_NAME>",
-            facetFilters = Some(FacetFilters("mySearch:filters")),
-            reRankingApplyFilter = Some(ReRankingApplyFilter("mySearch:filters")),
-            tagFilters = Some(TagFilters("mySearch:filters")),
-            numericFilters = Some(NumericFilters("mySearch:filters")),
-            optionalFilters = Some(OptionalFilters("mySearch:filters"))
-          ),
-          SearchForHits(
-            indexName = "<YOUR_INDEX_NAME>",
-            facetFilters = Some(
-              FacetFilters(
-                Seq(
-                  FacetFilters("mySearch:filters"),
-                  FacetFilters(
-                    Seq(FacetFilters("mySearch:filters"), FacetFilters(Seq(FacetFilters("mySearch:filters"))))
+    val response = Await.result(
+      client.search(
+        searchMethodParams = SearchMethodParams(
+          requests = Seq(
+            SearchForHits(
+              indexName = "<YOUR_INDEX_NAME>",
+              facetFilters = Some(FacetFilters("mySearch:filters")),
+              reRankingApplyFilter = Some(ReRankingApplyFilter("mySearch:filters")),
+              tagFilters = Some(TagFilters("mySearch:filters")),
+              numericFilters = Some(NumericFilters("mySearch:filters")),
+              optionalFilters = Some(OptionalFilters("mySearch:filters"))
+            ),
+            SearchForHits(
+              indexName = "<YOUR_INDEX_NAME>",
+              facetFilters = Some(
+                FacetFilters(
+                  Seq(
+                    FacetFilters("mySearch:filters"),
+                    FacetFilters(
+                      Seq(FacetFilters("mySearch:filters"), FacetFilters(Seq(FacetFilters("mySearch:filters"))))
+                    )
                   )
                 )
-              )
-            ),
-            reRankingApplyFilter = Some(
-              ReRankingApplyFilter(
-                Seq(
-                  ReRankingApplyFilter("mySearch:filters"),
-                  ReRankingApplyFilter(Seq(ReRankingApplyFilter("mySearch:filters")))
+              ),
+              reRankingApplyFilter = Some(
+                ReRankingApplyFilter(
+                  Seq(
+                    ReRankingApplyFilter("mySearch:filters"),
+                    ReRankingApplyFilter(Seq(ReRankingApplyFilter("mySearch:filters")))
+                  )
                 )
-              )
-            ),
-            tagFilters =
-              Some(TagFilters(Seq(TagFilters("mySearch:filters"), TagFilters(Seq(TagFilters("mySearch:filters")))))),
-            numericFilters = Some(
-              NumericFilters(
-                Seq(NumericFilters("mySearch:filters"), NumericFilters(Seq(NumericFilters("mySearch:filters"))))
-              )
-            ),
-            optionalFilters = Some(
-              OptionalFilters(
-                Seq(OptionalFilters("mySearch:filters"), OptionalFilters(Seq(OptionalFilters("mySearch:filters"))))
+              ),
+              tagFilters =
+                Some(TagFilters(Seq(TagFilters("mySearch:filters"), TagFilters(Seq(TagFilters("mySearch:filters")))))),
+              numericFilters = Some(
+                NumericFilters(
+                  Seq(NumericFilters("mySearch:filters"), NumericFilters(Seq(NumericFilters("mySearch:filters"))))
+                )
+              ),
+              optionalFilters = Some(
+                OptionalFilters(
+                  Seq(OptionalFilters("mySearch:filters"), OptionalFilters(Seq(OptionalFilters("mySearch:filters"))))
+                )
               )
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -3763,44 +4469,44 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.search(
-      searchMethodParams = SearchMethodParams(
-        requests = Seq(
-          SearchForHits(
-            indexName = "<YOUR_INDEX_NAME>",
-            filters = Some("editor:'visual studio' OR editor:neovim")
-          ),
-          SearchForHits(
-            indexName = "<YOUR_INDEX_NAME>",
-            facetFilters =
-              Some(FacetFilters(Seq(FacetFilters("editor:'visual studio'"), FacetFilters("editor:neovim"))))
-          ),
-          SearchForHits(
-            indexName = "<YOUR_INDEX_NAME>",
-            facetFilters = Some(
-              FacetFilters(
-                Seq(FacetFilters("editor:'visual studio'"), FacetFilters(Seq(FacetFilters("editor:neovim"))))
+    val response = Await.result(
+      client.search(
+        searchMethodParams = SearchMethodParams(
+          requests = Seq(
+            SearchForHits(
+              indexName = "<YOUR_INDEX_NAME>",
+              filters = Some("editor:'visual studio' OR editor:neovim")
+            ),
+            SearchForHits(
+              indexName = "<YOUR_INDEX_NAME>",
+              facetFilters =
+                Some(FacetFilters(Seq(FacetFilters("editor:'visual studio'"), FacetFilters("editor:neovim"))))
+            ),
+            SearchForHits(
+              indexName = "<YOUR_INDEX_NAME>",
+              facetFilters = Some(
+                FacetFilters(
+                  Seq(FacetFilters("editor:'visual studio'"), FacetFilters(Seq(FacetFilters("editor:neovim"))))
+                )
               )
-            )
-          ),
-          SearchForHits(
-            indexName = "<YOUR_INDEX_NAME>",
-            facetFilters = Some(
-              FacetFilters(
-                Seq(
-                  FacetFilters("editor:'visual studio'"),
-                  FacetFilters(Seq(FacetFilters("editor:neovim"), FacetFilters(Seq(FacetFilters("editor:goland")))))
+            ),
+            SearchForHits(
+              indexName = "<YOUR_INDEX_NAME>",
+              facetFilters = Some(
+                FacetFilters(
+                  Seq(
+                    FacetFilters("editor:'visual studio'"),
+                    FacetFilters(Seq(FacetFilters("editor:neovim"), FacetFilters(Seq(FacetFilters("editor:goland")))))
+                  )
                 )
               )
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -3814,117 +4520,118 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.search(
-      searchMethodParams = SearchMethodParams(
-        requests = Seq(
-          SearchForHits(
-            advancedSyntax = Some(true),
-            advancedSyntaxFeatures = Some(Seq(AdvancedSyntaxFeatures.withName("exactPhrase"))),
-            allowTyposOnNumericTokens = Some(true),
-            alternativesAsExact = Some(Seq(AlternativesAsExact.withName("multiWordsSynonym"))),
-            analytics = Some(true),
-            analyticsTags = Some(Seq("")),
-            aroundLatLng = Some(""),
-            aroundLatLngViaIP = Some(true),
-            aroundPrecision = Some(AroundPrecision(0)),
-            aroundRadius = Some(AroundRadiusAll.withName("all")),
-            attributeCriteriaComputedByMinProximity = Some(true),
-            attributesToHighlight = Some(Seq("")),
-            attributesToRetrieve = Some(Seq("")),
-            attributesToSnippet = Some(Seq("")),
-            clickAnalytics = Some(true),
-            decompoundQuery = Some(true),
-            disableExactOnAttributes = Some(Seq("")),
-            disableTypoToleranceOnAttributes = Some(Seq("")),
-            distinct = Some(Distinct(0)),
-            enableABTest = Some(true),
-            enablePersonalization = Some(true),
-            enableReRanking = Some(true),
-            enableRules = Some(true),
-            exactOnSingleWordQuery = Some(ExactOnSingleWordQuery.withName("attribute")),
-            facetFilters = Some(FacetFilters(Seq(FacetFilters("")))),
-            facetingAfterDistinct = Some(true),
-            facets = Some(Seq("")),
-            filters = Some(""),
-            getRankingInfo = Some(true),
-            highlightPostTag = Some(""),
-            highlightPreTag = Some(""),
-            hitsPerPage = Some(1),
-            ignorePlurals = Some(IgnorePlurals(false)),
-            indexName = "<YOUR_INDEX_NAME>",
-            insideBoundingBox =
-              Some(InsideBoundingBox(Seq(Seq(47.3165, 4.9665, 47.3424, 5.0201), Seq(40.9234, 2.1185, 38.643, 1.9916)))),
-            insidePolygon = Some(
-              Seq(
-                Seq(47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9),
-                Seq(40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104)
-              )
-            ),
-            length = Some(1),
-            maxValuesPerFacet = Some(0),
-            minProximity = Some(1),
-            minWordSizefor1Typo = Some(0),
-            minWordSizefor2Typos = Some(0),
-            minimumAroundRadius = Some(1),
-            naturalLanguages = Some(Seq(SupportedLanguage.withName("fr"))),
-            numericFilters = Some(NumericFilters(Seq(NumericFilters("")))),
-            offset = Some(0),
-            optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("")))),
-            optionalWords = Some(OptionalWords(Seq(""))),
-            page = Some(0),
-            percentileComputation = Some(true),
-            personalizationImpact = Some(0),
-            query = Some(""),
-            queryLanguages = Some(Seq(SupportedLanguage.withName("fr"))),
-            queryType = Some(QueryType.withName("prefixAll")),
-            ranking = Some(Seq("")),
-            reRankingApplyFilter = Some(ReRankingApplyFilter(Seq(ReRankingApplyFilter("")))),
-            relevancyStrictness = Some(0),
-            removeStopWords = Some(RemoveStopWords(true)),
-            removeWordsIfNoResults = Some(RemoveWordsIfNoResults.withName("allOptional")),
-            renderingContent = Some(
-              RenderingContent(
-                facetOrdering = Some(
-                  FacetOrdering(
-                    facets = Some(
-                      Facets(
-                        order = Some(Seq("a", "b"))
-                      )
-                    ),
-                    values = Some(
-                      Map(
-                        "a" -> Value(
-                          order = Some(Seq("b")),
-                          sortRemainingBy = Some(SortRemainingBy.withName("count"))
+    val response = Await.result(
+      client.search(
+        searchMethodParams = SearchMethodParams(
+          requests = Seq(
+            SearchForHits(
+              advancedSyntax = Some(true),
+              advancedSyntaxFeatures = Some(Seq(AdvancedSyntaxFeatures.withName("exactPhrase"))),
+              allowTyposOnNumericTokens = Some(true),
+              alternativesAsExact = Some(Seq(AlternativesAsExact.withName("multiWordsSynonym"))),
+              analytics = Some(true),
+              analyticsTags = Some(Seq("")),
+              aroundLatLng = Some(""),
+              aroundLatLngViaIP = Some(true),
+              aroundPrecision = Some(AroundPrecision(0)),
+              aroundRadius = Some(AroundRadiusAll.withName("all")),
+              attributeCriteriaComputedByMinProximity = Some(true),
+              attributesToHighlight = Some(Seq("")),
+              attributesToRetrieve = Some(Seq("")),
+              attributesToSnippet = Some(Seq("")),
+              clickAnalytics = Some(true),
+              decompoundQuery = Some(true),
+              disableExactOnAttributes = Some(Seq("")),
+              disableTypoToleranceOnAttributes = Some(Seq("")),
+              distinct = Some(Distinct(0)),
+              enableABTest = Some(true),
+              enablePersonalization = Some(true),
+              enableReRanking = Some(true),
+              enableRules = Some(true),
+              exactOnSingleWordQuery = Some(ExactOnSingleWordQuery.withName("attribute")),
+              facetFilters = Some(FacetFilters(Seq(FacetFilters("")))),
+              facetingAfterDistinct = Some(true),
+              facets = Some(Seq("")),
+              filters = Some(""),
+              getRankingInfo = Some(true),
+              highlightPostTag = Some(""),
+              highlightPreTag = Some(""),
+              hitsPerPage = Some(1),
+              ignorePlurals = Some(IgnorePlurals(false)),
+              indexName = "<YOUR_INDEX_NAME>",
+              insideBoundingBox = Some(
+                InsideBoundingBox(Seq(Seq(47.3165, 4.9665, 47.3424, 5.0201), Seq(40.9234, 2.1185, 38.643, 1.9916)))
+              ),
+              insidePolygon = Some(
+                Seq(
+                  Seq(47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9),
+                  Seq(40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104)
+                )
+              ),
+              length = Some(1),
+              maxValuesPerFacet = Some(0),
+              minProximity = Some(1),
+              minWordSizefor1Typo = Some(0),
+              minWordSizefor2Typos = Some(0),
+              minimumAroundRadius = Some(1),
+              naturalLanguages = Some(Seq(SupportedLanguage.withName("fr"))),
+              numericFilters = Some(NumericFilters(Seq(NumericFilters("")))),
+              offset = Some(0),
+              optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("")))),
+              optionalWords = Some(OptionalWords(Seq(""))),
+              page = Some(0),
+              percentileComputation = Some(true),
+              personalizationImpact = Some(0),
+              query = Some(""),
+              queryLanguages = Some(Seq(SupportedLanguage.withName("fr"))),
+              queryType = Some(QueryType.withName("prefixAll")),
+              ranking = Some(Seq("")),
+              reRankingApplyFilter = Some(ReRankingApplyFilter(Seq(ReRankingApplyFilter("")))),
+              relevancyStrictness = Some(0),
+              removeStopWords = Some(RemoveStopWords(true)),
+              removeWordsIfNoResults = Some(RemoveWordsIfNoResults.withName("allOptional")),
+              renderingContent = Some(
+                RenderingContent(
+                  facetOrdering = Some(
+                    FacetOrdering(
+                      facets = Some(
+                        Facets(
+                          order = Some(Seq("a", "b"))
+                        )
+                      ),
+                      values = Some(
+                        Map(
+                          "a" -> Value(
+                            order = Some(Seq("b")),
+                            sortRemainingBy = Some(SortRemainingBy.withName("count"))
+                          )
                         )
                       )
                     )
                   )
                 )
-              )
-            ),
-            replaceSynonymsInHighlight = Some(true),
-            responseFields = Some(Seq("")),
-            restrictHighlightAndSnippetArrays = Some(true),
-            restrictSearchableAttributes = Some(Seq("")),
-            ruleContexts = Some(Seq("")),
-            similarQuery = Some(""),
-            snippetEllipsisText = Some(""),
-            sortFacetValuesBy = Some(""),
-            sumOrFiltersScores = Some(true),
-            synonyms = Some(true),
-            tagFilters = Some(TagFilters(Seq(TagFilters("")))),
-            `type` = Some(SearchTypeDefault.withName("default")),
-            typoTolerance = Some(TypoToleranceEnum.withName("min")),
-            userToken = Some("")
+              ),
+              replaceSynonymsInHighlight = Some(true),
+              responseFields = Some(Seq("")),
+              restrictHighlightAndSnippetArrays = Some(true),
+              restrictSearchableAttributes = Some(Seq("")),
+              ruleContexts = Some(Seq("")),
+              similarQuery = Some(""),
+              snippetEllipsisText = Some(""),
+              sortFacetValuesBy = Some(""),
+              sumOrFiltersScores = Some(true),
+              synonyms = Some(true),
+              tagFilters = Some(TagFilters(Seq(TagFilters("")))),
+              `type` = Some(SearchTypeDefault.withName("default")),
+              typoTolerance = Some(TypoToleranceEnum.withName("min")),
+              userToken = Some("")
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -3938,16 +4645,16 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchDictionaryEntries(
-      dictionaryName = DictionaryType.withName("stopwords"),
-      searchDictionaryEntriesParams = SearchDictionaryEntriesParams(
-        query = "about"
-      )
+    val response = Await.result(
+      client.searchDictionaryEntries(
+        dictionaryName = DictionaryType.withName("stopwords"),
+        searchDictionaryEntriesParams = SearchDictionaryEntriesParams(
+          query = "about"
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -3961,19 +4668,19 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchDictionaryEntries(
-      dictionaryName = DictionaryType.withName("compounds"),
-      searchDictionaryEntriesParams = SearchDictionaryEntriesParams(
-        query = "foo",
-        page = Some(4),
-        hitsPerPage = Some(2),
-        language = Some(SupportedLanguage.withName("fr"))
-      )
+    val response = Await.result(
+      client.searchDictionaryEntries(
+        dictionaryName = DictionaryType.withName("compounds"),
+        searchDictionaryEntriesParams = SearchDictionaryEntriesParams(
+          query = "foo",
+          page = Some(4),
+          hitsPerPage = Some(2),
+          language = Some(SupportedLanguage.withName("fr"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -3987,14 +4694,14 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchForFacetValues(
-      indexName = "<YOUR_INDEX_NAME>",
-      facetName = "facetName"
+    val response = Await.result(
+      client.searchForFacetValues(
+        indexName = "<YOUR_INDEX_NAME>",
+        facetName = "facetName"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4008,21 +4715,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchForFacetValues(
-      indexName = "<YOUR_INDEX_NAME>",
-      facetName = "facetName",
-      searchForFacetValuesRequest = Some(
-        SearchForFacetValuesRequest(
-          params = Some("query=foo&facetFilters=['bar']"),
-          facetQuery = Some("foo"),
-          maxFacetHits = Some(42)
+    val response = Await.result(
+      client.searchForFacetValues(
+        indexName = "<YOUR_INDEX_NAME>",
+        facetName = "facetName",
+        searchForFacetValuesRequest = Some(
+          SearchForFacetValuesRequest(
+            params = Some("query=foo&facetFilters=['bar']"),
+            facetQuery = Some("foo"),
+            maxFacetHits = Some(42)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4036,19 +4743,19 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchForFacetValues(
-      indexName = "<YOUR_INDEX_NAME>",
-      facetName = "author",
-      searchForFacetValuesRequest = Some(
-        SearchForFacetValuesRequest(
-          facetQuery = Some("stephen king")
+    val response = Await.result(
+      client.searchForFacetValues(
+        indexName = "<YOUR_INDEX_NAME>",
+        facetName = "author",
+        searchForFacetValuesRequest = Some(
+          SearchForFacetValuesRequest(
+            facetQuery = Some("stephen")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4062,18 +4769,18 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchRules(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchRulesParams = Some(
-        SearchRulesParams(
-          query = Some("zorro")
+    val response = Await.result(
+      client.searchRules(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchRulesParams = Some(
+          SearchRulesParams(
+            query = Some("zorro")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4087,13 +4794,13 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>"
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4107,13 +4814,13 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>"
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4127,19 +4834,19 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("myQuery"),
-          facetFilters = Some(FacetFilters(Seq(FacetFilters("tags:algolia"))))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("myQuery"),
+            facetFilters = Some(FacetFilters(Seq(FacetFilters("tags:algolia"))))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4153,20 +4860,20 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("batman mask of the phantasm"),
-          attributesToRetrieve = Some(Seq("*")),
-          attributesToSnippet = Some(Seq("*:20"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("batman mask of the phantasm"),
+            attributesToRetrieve = Some(Seq("*")),
+            attributesToSnippet = Some(Seq("*:20"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4180,18 +4887,18 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("phone")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("phone")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4205,18 +4912,69 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          filters = Some("country:US AND price.gross < 2.0")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            filters = Some("country:US AND price.gross < 2.0")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the searchSingleIndex method.
+    *
+    * filters for stores
+    */
+  def snippetForSearchClientSearchSingleIndex6(): Unit = {
+    // >SEPARATOR searchSingleIndex filters for stores
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("ben"),
+            filters = Some("categories:politics AND store:Gibert Joseph Saint-Michel")
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the searchSingleIndex method.
+    *
+    * filters boolean
+    */
+  def snippetForSearchClientSearchSingleIndex7(): Unit = {
+    // >SEPARATOR searchSingleIndex filters boolean
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            filters = Some("is_available:true")
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 
@@ -4224,24 +4982,24 @@ class SnippetSearchClient {
     *
     * distinct
     */
-  def snippetForSearchClientSearchSingleIndex6(): Unit = {
+  def snippetForSearchClientSearchSingleIndex8(): Unit = {
     // >SEPARATOR searchSingleIndex distinct
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          distinct = Some(Distinct(true))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            distinct = Some(Distinct(true))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4249,24 +5007,24 @@ class SnippetSearchClient {
     *
     * filtersNumeric
     */
-  def snippetForSearchClientSearchSingleIndex7(): Unit = {
+  def snippetForSearchClientSearchSingleIndex9(): Unit = {
     // >SEPARATOR searchSingleIndex filtersNumeric
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          filters = Some("price < 10")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            filters = Some("price < 10")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4274,24 +5032,24 @@ class SnippetSearchClient {
     *
     * filtersTimestamp
     */
-  def snippetForSearchClientSearchSingleIndex8(): Unit = {
+  def snippetForSearchClientSearchSingleIndex10(): Unit = {
     // >SEPARATOR searchSingleIndex filtersTimestamp
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          filters = Some("NOT date_timestamp:1514764800 TO 1546300799")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            filters = Some("NOT date_timestamp:1514764800 TO 1546300799")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4299,25 +5057,25 @@ class SnippetSearchClient {
     *
     * filtersSumOrFiltersScoresFalse
     */
-  def snippetForSearchClientSearchSingleIndex9(): Unit = {
+  def snippetForSearchClientSearchSingleIndex11(): Unit = {
     // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresFalse
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          filters = Some("(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)"),
-          sumOrFiltersScores = Some(false)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            filters = Some("(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)"),
+            sumOrFiltersScores = Some(false)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4325,25 +5083,25 @@ class SnippetSearchClient {
     *
     * filtersSumOrFiltersScoresTrue
     */
-  def snippetForSearchClientSearchSingleIndex10(): Unit = {
+  def snippetForSearchClientSearchSingleIndex12(): Unit = {
     // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresTrue
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          filters = Some("(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)"),
-          sumOrFiltersScores = Some(true)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            filters = Some("(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)"),
+            sumOrFiltersScores = Some(true)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4351,24 +5109,24 @@ class SnippetSearchClient {
     *
     * filtersStephenKing
     */
-  def snippetForSearchClientSearchSingleIndex11(): Unit = {
+  def snippetForSearchClientSearchSingleIndex13(): Unit = {
     // >SEPARATOR searchSingleIndex filtersStephenKing
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          filters = Some("author:\"Stephen King\"")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            filters = Some("author:\"Stephen King\"")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4376,24 +5134,25 @@ class SnippetSearchClient {
     *
     * filtersNotTags
     */
-  def snippetForSearchClientSearchSingleIndex12(): Unit = {
+  def snippetForSearchClientSearchSingleIndex14(): Unit = {
     // >SEPARATOR searchSingleIndex filtersNotTags
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          filters = Some("NOT _tags:non-fiction")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("harry"),
+            filters = Some("_tags:non-fiction")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4401,31 +5160,31 @@ class SnippetSearchClient {
     *
     * facetFiltersList
     */
-  def snippetForSearchClientSearchSingleIndex13(): Unit = {
+  def snippetForSearchClientSearchSingleIndex15(): Unit = {
     // >SEPARATOR searchSingleIndex facetFiltersList
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          facetFilters = Some(
-            FacetFilters(
-              Seq(
-                FacetFilters("publisher:Penguin"),
-                FacetFilters(Seq(FacetFilters("author:Stephen King"), FacetFilters("genre:Horror")))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            facetFilters = Some(
+              FacetFilters(
+                Seq(
+                  FacetFilters("publisher:Penguin"),
+                  FacetFilters(Seq(FacetFilters("author:Stephen King"), FacetFilters("genre:Horror")))
+                )
               )
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4433,25 +5192,25 @@ class SnippetSearchClient {
     *
     * facetFiltersBook
     */
-  def snippetForSearchClientSearchSingleIndex14(): Unit = {
+  def snippetForSearchClientSearchSingleIndex16(): Unit = {
     // >SEPARATOR searchSingleIndex facetFiltersBook
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          facetFilters = Some(FacetFilters(Seq(FacetFilters("category:Book"))))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            facetFilters = Some(FacetFilters(Seq(FacetFilters("category:Book"))))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4459,25 +5218,25 @@ class SnippetSearchClient {
     *
     * facetFiltersAND
     */
-  def snippetForSearchClientSearchSingleIndex15(): Unit = {
+  def snippetForSearchClientSearchSingleIndex17(): Unit = {
     // >SEPARATOR searchSingleIndex facetFiltersAND
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          facetFilters = Some(FacetFilters(Seq(FacetFilters("category:Book"), FacetFilters("author:John Doe"))))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            facetFilters = Some(FacetFilters(Seq(FacetFilters("category:Book"), FacetFilters("author:John Doe"))))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4485,26 +5244,26 @@ class SnippetSearchClient {
     *
     * facetFiltersOR
     */
-  def snippetForSearchClientSearchSingleIndex16(): Unit = {
+  def snippetForSearchClientSearchSingleIndex18(): Unit = {
     // >SEPARATOR searchSingleIndex facetFiltersOR
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          facetFilters =
-            Some(FacetFilters(Seq(FacetFilters(Seq(FacetFilters("category:Book"), FacetFilters("author:John Doe"))))))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            facetFilters =
+              Some(FacetFilters(Seq(FacetFilters(Seq(FacetFilters("category:Book"), FacetFilters("author:John Doe"))))))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4512,32 +5271,32 @@ class SnippetSearchClient {
     *
     * facetFiltersCombined
     */
-  def snippetForSearchClientSearchSingleIndex17(): Unit = {
+  def snippetForSearchClientSearchSingleIndex19(): Unit = {
     // >SEPARATOR searchSingleIndex facetFiltersCombined
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          facetFilters = Some(
-            FacetFilters(
-              Seq(
-                FacetFilters("author:John Doe"),
-                FacetFilters(Seq(FacetFilters("category:Book"), FacetFilters("category:Movie")))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            facetFilters = Some(
+              FacetFilters(
+                Seq(
+                  FacetFilters("author:John Doe"),
+                  FacetFilters(Seq(FacetFilters("category:Book"), FacetFilters("category:Movie")))
+                )
               )
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4545,24 +5304,24 @@ class SnippetSearchClient {
     *
     * facetFiltersNeg
     */
-  def snippetForSearchClientSearchSingleIndex18(): Unit = {
+  def snippetForSearchClientSearchSingleIndex20(): Unit = {
     // >SEPARATOR searchSingleIndex facetFiltersNeg
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          facetFilters = Some(FacetFilters("category:-Ebook"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            facetFilters = Some(FacetFilters("category:-Ebook"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4570,25 +5329,25 @@ class SnippetSearchClient {
     *
     * filtersAndFacetFilters
     */
-  def snippetForSearchClientSearchSingleIndex19(): Unit = {
+  def snippetForSearchClientSearchSingleIndex21(): Unit = {
     // >SEPARATOR searchSingleIndex filtersAndFacetFilters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          filters = Some("(author:\"Stephen King\" OR genre:\"Horror\")"),
-          facetFilters = Some(FacetFilters(Seq(FacetFilters("publisher:Penguin"))))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            filters = Some("(author:\"Stephen King\" OR genre:\"Horror\")"),
+            facetFilters = Some(FacetFilters(Seq(FacetFilters("publisher:Penguin"))))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4596,24 +5355,24 @@ class SnippetSearchClient {
     *
     * facet author genre
     */
-  def snippetForSearchClientSearchSingleIndex20(): Unit = {
+  def snippetForSearchClientSearchSingleIndex22(): Unit = {
     // >SEPARATOR searchSingleIndex facet author genre
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          facets = Some(Seq("author", "genre"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            facets = Some(Seq("author", "genre"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4621,24 +5380,24 @@ class SnippetSearchClient {
     *
     * facet wildcard
     */
-  def snippetForSearchClientSearchSingleIndex21(): Unit = {
+  def snippetForSearchClientSearchSingleIndex23(): Unit = {
     // >SEPARATOR searchSingleIndex facet wildcard
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          facets = Some(Seq("*"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            facets = Some(Seq("*"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4646,24 +5405,24 @@ class SnippetSearchClient {
     *
     * maxValuesPerFacet
     */
-  def snippetForSearchClientSearchSingleIndex22(): Unit = {
+  def snippetForSearchClientSearchSingleIndex24(): Unit = {
     // >SEPARATOR searchSingleIndex maxValuesPerFacet
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          maxValuesPerFacet = Some(1000)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            maxValuesPerFacet = Some(1000)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4671,24 +5430,24 @@ class SnippetSearchClient {
     *
     * aroundLatLng
     */
-  def snippetForSearchClientSearchSingleIndex23(): Unit = {
+  def snippetForSearchClientSearchSingleIndex25(): Unit = {
     // >SEPARATOR searchSingleIndex aroundLatLng
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          aroundLatLng = Some("40.71, -74.01")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            aroundLatLng = Some("40.71, -74.01")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4696,24 +5455,24 @@ class SnippetSearchClient {
     *
     * aroundLatLngViaIP
     */
-  def snippetForSearchClientSearchSingleIndex24(): Unit = {
+  def snippetForSearchClientSearchSingleIndex26(): Unit = {
     // >SEPARATOR searchSingleIndex aroundLatLngViaIP
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          aroundLatLngViaIP = Some(true)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            aroundLatLngViaIP = Some(true)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4721,25 +5480,25 @@ class SnippetSearchClient {
     *
     * aroundRadius
     */
-  def snippetForSearchClientSearchSingleIndex25(): Unit = {
+  def snippetForSearchClientSearchSingleIndex27(): Unit = {
     // >SEPARATOR searchSingleIndex aroundRadius
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          aroundLatLng = Some("40.71, -74.01"),
-          aroundRadius = Some(AroundRadius(1000000))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            aroundLatLng = Some("40.71, -74.01"),
+            aroundRadius = Some(AroundRadius(1000000))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4747,25 +5506,25 @@ class SnippetSearchClient {
     *
     * insideBoundingBox
     */
-  def snippetForSearchClientSearchSingleIndex26(): Unit = {
+  def snippetForSearchClientSearchSingleIndex28(): Unit = {
     // >SEPARATOR searchSingleIndex insideBoundingBox
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          insideBoundingBox =
-            Some(InsideBoundingBox(Seq(Seq(49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875))))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            insideBoundingBox =
+              Some(InsideBoundingBox(Seq(Seq(49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875))))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4773,30 +5532,30 @@ class SnippetSearchClient {
     *
     * insidePolygon
     */
-  def snippetForSearchClientSearchSingleIndex27(): Unit = {
+  def snippetForSearchClientSearchSingleIndex29(): Unit = {
     // >SEPARATOR searchSingleIndex insidePolygon
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          insidePolygon = Some(
-            Seq(
-              Seq(42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005,
-                31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545,
-                -117.54828125)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            insidePolygon = Some(
+              Seq(
+                Seq(42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005,
+                  31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545,
+                  -117.54828125)
+              )
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4804,30 +5563,30 @@ class SnippetSearchClient {
     *
     * insidePolygon
     */
-  def snippetForSearchClientSearchSingleIndex28(): Unit = {
+  def snippetForSearchClientSearchSingleIndex30(): Unit = {
     // >SEPARATOR searchSingleIndex insidePolygon
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          insidePolygon = Some(
-            Seq(
-              Seq(42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005,
-                31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545,
-                -117.54828125)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            insidePolygon = Some(
+              Seq(
+                Seq(42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005,
+                  31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545,
+                  -117.54828125)
+              )
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4835,24 +5594,24 @@ class SnippetSearchClient {
     *
     * optionalFilters
     */
-  def snippetForSearchClientSearchSingleIndex29(): Unit = {
+  def snippetForSearchClientSearchSingleIndex31(): Unit = {
     // >SEPARATOR searchSingleIndex optionalFilters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("can_deliver_quickly:true"))))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("can_deliver_quickly:true"))))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4860,32 +5619,32 @@ class SnippetSearchClient {
     *
     * optionalFiltersMany
     */
-  def snippetForSearchClientSearchSingleIndex30(): Unit = {
+  def snippetForSearchClientSearchSingleIndex32(): Unit = {
     // >SEPARATOR searchSingleIndex optionalFiltersMany
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          optionalFilters = Some(
-            OptionalFilters(
-              Seq(
-                OptionalFilters("brand:Apple<score=3>"),
-                OptionalFilters("brand:Samsung<score=2>"),
-                OptionalFilters("brand:-Huawei")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            optionalFilters = Some(
+              OptionalFilters(
+                Seq(
+                  OptionalFilters("brand:Apple<score=3>"),
+                  OptionalFilters("brand:Samsung<score=2>"),
+                  OptionalFilters("brand:-Huawei")
+                )
               )
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4893,25 +5652,25 @@ class SnippetSearchClient {
     *
     * optionalFiltersSimple
     */
-  def snippetForSearchClientSearchSingleIndex31(): Unit = {
+  def snippetForSearchClientSearchSingleIndex33(): Unit = {
     // >SEPARATOR searchSingleIndex optionalFiltersSimple
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          optionalFilters =
-            Some(OptionalFilters(Seq(OptionalFilters("brand:Apple<score=2>"), OptionalFilters("type:tablet"))))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            optionalFilters =
+              Some(OptionalFilters(Seq(OptionalFilters("brand:Apple<score=2>"), OptionalFilters("type:tablet"))))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4919,24 +5678,24 @@ class SnippetSearchClient {
     *
     * restrictSearchableAttributes
     */
-  def snippetForSearchClientSearchSingleIndex32(): Unit = {
+  def snippetForSearchClientSearchSingleIndex34(): Unit = {
     // >SEPARATOR searchSingleIndex restrictSearchableAttributes
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          restrictSearchableAttributes = Some(Seq("title_fr"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            restrictSearchableAttributes = Some(Seq("title_fr"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4944,24 +5703,24 @@ class SnippetSearchClient {
     *
     * getRankingInfo
     */
-  def snippetForSearchClientSearchSingleIndex33(): Unit = {
+  def snippetForSearchClientSearchSingleIndex35(): Unit = {
     // >SEPARATOR searchSingleIndex getRankingInfo
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          getRankingInfo = Some(true)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            getRankingInfo = Some(true)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4969,24 +5728,24 @@ class SnippetSearchClient {
     *
     * clickAnalytics
     */
-  def snippetForSearchClientSearchSingleIndex34(): Unit = {
+  def snippetForSearchClientSearchSingleIndex36(): Unit = {
     // >SEPARATOR searchSingleIndex clickAnalytics
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          clickAnalytics = Some(true)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            clickAnalytics = Some(true)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -4994,25 +5753,25 @@ class SnippetSearchClient {
     *
     * clickAnalyticsUserToken
     */
-  def snippetForSearchClientSearchSingleIndex35(): Unit = {
+  def snippetForSearchClientSearchSingleIndex37(): Unit = {
     // >SEPARATOR searchSingleIndex clickAnalyticsUserToken
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          clickAnalytics = Some(true),
-          userToken = Some("user-1")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            clickAnalytics = Some(true),
+            userToken = Some("user-1")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5020,25 +5779,25 @@ class SnippetSearchClient {
     *
     * enablePersonalization
     */
-  def snippetForSearchClientSearchSingleIndex36(): Unit = {
+  def snippetForSearchClientSearchSingleIndex38(): Unit = {
     // >SEPARATOR searchSingleIndex enablePersonalization
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          enablePersonalization = Some(true),
-          userToken = Some("user-1")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            enablePersonalization = Some(true),
+            userToken = Some("user-1")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5046,24 +5805,24 @@ class SnippetSearchClient {
     *
     * userToken
     */
-  def snippetForSearchClientSearchSingleIndex37(): Unit = {
+  def snippetForSearchClientSearchSingleIndex39(): Unit = {
     // >SEPARATOR searchSingleIndex userToken
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          userToken = Some("user-1")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            userToken = Some("user-1")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5071,25 +5830,25 @@ class SnippetSearchClient {
     *
     * userToken1234
     */
-  def snippetForSearchClientSearchSingleIndex38(): Unit = {
+  def snippetForSearchClientSearchSingleIndex40(): Unit = {
     // >SEPARATOR searchSingleIndex userToken1234
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          userToken = Some("user-1234")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            userToken = Some("user-1234")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5097,24 +5856,24 @@ class SnippetSearchClient {
     *
     * analyticsTag
     */
-  def snippetForSearchClientSearchSingleIndex39(): Unit = {
+  def snippetForSearchClientSearchSingleIndex41(): Unit = {
     // >SEPARATOR searchSingleIndex analyticsTag
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          analyticsTags = Some(Seq("YOUR_ANALYTICS_TAG"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            analyticsTags = Some(Seq("YOUR_ANALYTICS_TAG"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5122,24 +5881,24 @@ class SnippetSearchClient {
     *
     * facetFiltersUsers
     */
-  def snippetForSearchClientSearchSingleIndex40(): Unit = {
+  def snippetForSearchClientSearchSingleIndex42(): Unit = {
     // >SEPARATOR searchSingleIndex facetFiltersUsers
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          facetFilters = Some(FacetFilters(Seq(FacetFilters("user:user42"), FacetFilters("user:public"))))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            facetFilters = Some(FacetFilters(Seq(FacetFilters("user:user42"), FacetFilters("user:public"))))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5147,26 +5906,26 @@ class SnippetSearchClient {
     *
     * buildTheQuery
     */
-  def snippetForSearchClientSearchSingleIndex41(): Unit = {
+  def snippetForSearchClientSearchSingleIndex43(): Unit = {
     // >SEPARATOR searchSingleIndex buildTheQuery
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          filters = Some("categoryPageId: Men's Clothing"),
-          hitsPerPage = Some(50),
-          analyticsTags = Some(Seq("mens-clothing"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            filters = Some("categoryPageId: Men's Clothing"),
+            hitsPerPage = Some(50),
+            analyticsTags = Some(Seq("mens-clothing"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5174,25 +5933,25 @@ class SnippetSearchClient {
     *
     * attributesToHighlightOverride
     */
-  def snippetForSearchClientSearchSingleIndex42(): Unit = {
+  def snippetForSearchClientSearchSingleIndex44(): Unit = {
     // >SEPARATOR searchSingleIndex attributesToHighlightOverride
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          attributesToHighlight = Some(Seq("title", "content"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            attributesToHighlight = Some(Seq("title", "content"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5200,25 +5959,25 @@ class SnippetSearchClient {
     *
     * disableTypoToleranceOnAttributes
     */
-  def snippetForSearchClientSearchSingleIndex43(): Unit = {
+  def snippetForSearchClientSearchSingleIndex45(): Unit = {
     // >SEPARATOR searchSingleIndex disableTypoToleranceOnAttributes
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          disableTypoToleranceOnAttributes = Some(Seq("serial_number"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            disableTypoToleranceOnAttributes = Some(Seq("serial_number"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5226,24 +5985,24 @@ class SnippetSearchClient {
     *
     * search_a_query
     */
-  def snippetForSearchClientSearchSingleIndex44(): Unit = {
+  def snippetForSearchClientSearchSingleIndex46(): Unit = {
     // >SEPARATOR searchSingleIndex search_a_query
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("shirt")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("shirt")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5251,24 +6010,24 @@ class SnippetSearchClient {
     *
     * search_everything
     */
-  def snippetForSearchClientSearchSingleIndex45(): Unit = {
+  def snippetForSearchClientSearchSingleIndex47(): Unit = {
     // >SEPARATOR searchSingleIndex search_everything
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5276,25 +6035,25 @@ class SnippetSearchClient {
     *
     * api_filtering_range_example
     */
-  def snippetForSearchClientSearchSingleIndex46(): Unit = {
+  def snippetForSearchClientSearchSingleIndex48(): Unit = {
     // >SEPARATOR searchSingleIndex api_filtering_range_example
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("books"),
-          filters = Some("price:10 TO 20")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("books"),
+            filters = Some("price:10 TO 20")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5302,26 +6061,26 @@ class SnippetSearchClient {
     *
     * search_a_query
     */
-  def snippetForSearchClientSearchSingleIndex47(): Unit = {
+  def snippetForSearchClientSearchSingleIndex49(): Unit = {
     // >SEPARATOR searchSingleIndex search_a_query
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some(""),
-          similarQuery = Some("Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen"),
-          filters = Some("year:1991 TO 2001")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some(""),
+            similarQuery = Some("Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen"),
+            filters = Some("year:1991 TO 2001")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5329,25 +6088,25 @@ class SnippetSearchClient {
     *
     * override_retrievable_attributes
     */
-  def snippetForSearchClientSearchSingleIndex48(): Unit = {
+  def snippetForSearchClientSearchSingleIndex50(): Unit = {
     // >SEPARATOR searchSingleIndex override_retrievable_attributes
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          attributesToRetrieve = Some(Seq("title", "content"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            attributesToRetrieve = Some(Seq("title", "content"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5355,25 +6114,25 @@ class SnippetSearchClient {
     *
     * restrict_searchable_attributes
     */
-  def snippetForSearchClientSearchSingleIndex49(): Unit = {
+  def snippetForSearchClientSearchSingleIndex51(): Unit = {
     // >SEPARATOR searchSingleIndex restrict_searchable_attributes
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          restrictSearchableAttributes = Some(Seq("title", "author"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            restrictSearchableAttributes = Some(Seq("title", "author"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5381,25 +6140,25 @@ class SnippetSearchClient {
     *
     * override_default_relevancy
     */
-  def snippetForSearchClientSearchSingleIndex50(): Unit = {
+  def snippetForSearchClientSearchSingleIndex52(): Unit = {
     // >SEPARATOR searchSingleIndex override_default_relevancy
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          relevancyStrictness = Some(70)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            relevancyStrictness = Some(70)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5407,25 +6166,25 @@ class SnippetSearchClient {
     *
     * apply_filters
     */
-  def snippetForSearchClientSearchSingleIndex51(): Unit = {
+  def snippetForSearchClientSearchSingleIndex53(): Unit = {
     // >SEPARATOR searchSingleIndex apply_filters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          filters = Some("(category:Book OR category:Ebook) AND _tags:published")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            filters = Some("(category:Book OR category:Ebook) AND _tags:published")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5433,27 +6192,27 @@ class SnippetSearchClient {
     *
     * apply_all_filters
     */
-  def snippetForSearchClientSearchSingleIndex52(): Unit = {
+  def snippetForSearchClientSearchSingleIndex54(): Unit = {
     // >SEPARATOR searchSingleIndex apply_all_filters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          filters = Some(
-            "available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\"John Doe\""
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            filters = Some(
+              "available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\"John Doe\""
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5461,25 +6220,25 @@ class SnippetSearchClient {
     *
     * escape_spaces
     */
-  def snippetForSearchClientSearchSingleIndex53(): Unit = {
+  def snippetForSearchClientSearchSingleIndex55(): Unit = {
     // >SEPARATOR searchSingleIndex escape_spaces
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          filters = Some("category:\"Books and Comics\"")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            filters = Some("category:\"Books and Comics\"")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5487,25 +6246,25 @@ class SnippetSearchClient {
     *
     * escape_keywords
     */
-  def snippetForSearchClientSearchSingleIndex54(): Unit = {
+  def snippetForSearchClientSearchSingleIndex56(): Unit = {
     // >SEPARATOR searchSingleIndex escape_keywords
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          filters = Some("keyword:\"OR\"")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            filters = Some("keyword:\"OR\"")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5513,25 +6272,25 @@ class SnippetSearchClient {
     *
     * escape_single_quotes
     */
-  def snippetForSearchClientSearchSingleIndex55(): Unit = {
+  def snippetForSearchClientSearchSingleIndex57(): Unit = {
     // >SEPARATOR searchSingleIndex escape_single_quotes
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          filters = Some("content:\"It's a wonderful day\"")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            filters = Some("content:\"It's a wonderful day\"")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5539,25 +6298,25 @@ class SnippetSearchClient {
     *
     * escape_double_quotes
     */
-  def snippetForSearchClientSearchSingleIndex56(): Unit = {
+  def snippetForSearchClientSearchSingleIndex58(): Unit = {
     // >SEPARATOR searchSingleIndex escape_double_quotes
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          filters = Some("content:\"She said \"Hello World\"")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            filters = Some("content:\"She said \"Hello World\"")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5565,26 +6324,26 @@ class SnippetSearchClient {
     *
     * apply_filters
     */
-  def snippetForSearchClientSearchSingleIndex57(): Unit = {
+  def snippetForSearchClientSearchSingleIndex59(): Unit = {
     // >SEPARATOR searchSingleIndex apply_filters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          optionalFilters =
-            Some(OptionalFilters(Seq(OptionalFilters("category:Book"), OptionalFilters("author:John Doe"))))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            optionalFilters =
+              Some(OptionalFilters(Seq(OptionalFilters("category:Book"), OptionalFilters("author:John Doe"))))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5592,26 +6351,52 @@ class SnippetSearchClient {
     *
     * apply_negative_filters
     */
-  def snippetForSearchClientSearchSingleIndex58(): Unit = {
+  def snippetForSearchClientSearchSingleIndex60(): Unit = {
     // >SEPARATOR searchSingleIndex apply_negative_filters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          optionalFilters =
-            Some(OptionalFilters(Seq(OptionalFilters("category:Book"), OptionalFilters("author:-John Doe"))))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            optionalFilters =
+              Some(OptionalFilters(Seq(OptionalFilters("category:Book"), OptionalFilters("author:-John Doe"))))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the searchSingleIndex method.
+    *
+    * apply_negative_filters_restaurants
+    */
+  def snippetForSearchClientSearchSingleIndex61(): Unit = {
+    // >SEPARATOR searchSingleIndex apply_negative_filters_restaurants
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("restaurant:-Bert's Inn"))))
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 
@@ -5619,32 +6404,32 @@ class SnippetSearchClient {
     *
     * apply_numeric_filters
     */
-  def snippetForSearchClientSearchSingleIndex59(): Unit = {
+  def snippetForSearchClientSearchSingleIndex62(): Unit = {
     // >SEPARATOR searchSingleIndex apply_numeric_filters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          numericFilters = Some(
-            NumericFilters(
-              Seq(
-                NumericFilters("price < 1000"),
-                NumericFilters(Seq(NumericFilters("inStock = 1"), NumericFilters("deliveryDate < 1441755506")))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            numericFilters = Some(
+              NumericFilters(
+                Seq(
+                  NumericFilters("price < 1000"),
+                  NumericFilters(Seq(NumericFilters("inStock = 1"), NumericFilters("deliveryDate < 1441755506")))
+                )
               )
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5652,26 +6437,26 @@ class SnippetSearchClient {
     *
     * apply_tag_filters
     */
-  def snippetForSearchClientSearchSingleIndex60(): Unit = {
+  def snippetForSearchClientSearchSingleIndex63(): Unit = {
     // >SEPARATOR searchSingleIndex apply_tag_filters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          tagFilters =
-            Some(TagFilters(Seq(TagFilters("SciFi"), TagFilters(Seq(TagFilters("Book"), TagFilters("Movie"))))))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            tagFilters =
+              Some(TagFilters(Seq(TagFilters("SciFi"), TagFilters(Seq(TagFilters("Book"), TagFilters("Movie"))))))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5679,25 +6464,25 @@ class SnippetSearchClient {
     *
     * apply_filters
     */
-  def snippetForSearchClientSearchSingleIndex61(): Unit = {
+  def snippetForSearchClientSearchSingleIndex64(): Unit = {
     // >SEPARATOR searchSingleIndex apply_filters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          sumOrFiltersScores = Some(true)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            sumOrFiltersScores = Some(true)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5705,25 +6490,25 @@ class SnippetSearchClient {
     *
     * facets_all
     */
-  def snippetForSearchClientSearchSingleIndex62(): Unit = {
+  def snippetForSearchClientSearchSingleIndex65(): Unit = {
     // >SEPARATOR searchSingleIndex facets_all
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          facets = Some(Seq("*"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            facets = Some(Seq("*"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5731,25 +6516,25 @@ class SnippetSearchClient {
     *
     * retrieve_only_some_facets
     */
-  def snippetForSearchClientSearchSingleIndex63(): Unit = {
+  def snippetForSearchClientSearchSingleIndex66(): Unit = {
     // >SEPARATOR searchSingleIndex retrieve_only_some_facets
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          facets = Some(Seq("category", "author"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            facets = Some(Seq("category", "author"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5757,25 +6542,25 @@ class SnippetSearchClient {
     *
     * override_default_max_values_per_facet
     */
-  def snippetForSearchClientSearchSingleIndex64(): Unit = {
+  def snippetForSearchClientSearchSingleIndex67(): Unit = {
     // >SEPARATOR searchSingleIndex override_default_max_values_per_facet
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          maxValuesPerFacet = Some(20)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            maxValuesPerFacet = Some(20)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5783,25 +6568,25 @@ class SnippetSearchClient {
     *
     * enable_faceting_after_distinct
     */
-  def snippetForSearchClientSearchSingleIndex65(): Unit = {
+  def snippetForSearchClientSearchSingleIndex68(): Unit = {
     // >SEPARATOR searchSingleIndex enable_faceting_after_distinct
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          facetingAfterDistinct = Some(true)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            facetingAfterDistinct = Some(true)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5809,25 +6594,25 @@ class SnippetSearchClient {
     *
     * sort_facet_values_alphabetically
     */
-  def snippetForSearchClientSearchSingleIndex66(): Unit = {
+  def snippetForSearchClientSearchSingleIndex69(): Unit = {
     // >SEPARATOR searchSingleIndex sort_facet_values_alphabetically
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          sortFacetValuesBy = Some("count")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            sortFacetValuesBy = Some("count")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5835,25 +6620,25 @@ class SnippetSearchClient {
     *
     * override_attributes_to_snippet
     */
-  def snippetForSearchClientSearchSingleIndex67(): Unit = {
+  def snippetForSearchClientSearchSingleIndex70(): Unit = {
     // >SEPARATOR searchSingleIndex override_attributes_to_snippet
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          attributesToSnippet = Some(Seq("title", "content:80"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            attributesToSnippet = Some(Seq("title", "content:80"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5861,25 +6646,25 @@ class SnippetSearchClient {
     *
     * override_default_highlight_pre_tag
     */
-  def snippetForSearchClientSearchSingleIndex68(): Unit = {
+  def snippetForSearchClientSearchSingleIndex71(): Unit = {
     // >SEPARATOR searchSingleIndex override_default_highlight_pre_tag
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          highlightPreTag = Some("<strong>")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            highlightPreTag = Some("<strong>")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5887,25 +6672,25 @@ class SnippetSearchClient {
     *
     * override_default_highlight_post_tag
     */
-  def snippetForSearchClientSearchSingleIndex69(): Unit = {
+  def snippetForSearchClientSearchSingleIndex72(): Unit = {
     // >SEPARATOR searchSingleIndex override_default_highlight_post_tag
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          highlightPostTag = Some("</strong>")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            highlightPostTag = Some("</strong>")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5913,25 +6698,25 @@ class SnippetSearchClient {
     *
     * override_default_snippet_ellipsis_text
     */
-  def snippetForSearchClientSearchSingleIndex70(): Unit = {
+  def snippetForSearchClientSearchSingleIndex73(): Unit = {
     // >SEPARATOR searchSingleIndex override_default_snippet_ellipsis_text
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          snippetEllipsisText = Some("")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            snippetEllipsisText = Some("")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5939,25 +6724,25 @@ class SnippetSearchClient {
     *
     * enable_restrict_highlight_and_snippet_arrays
     */
-  def snippetForSearchClientSearchSingleIndex71(): Unit = {
+  def snippetForSearchClientSearchSingleIndex74(): Unit = {
     // >SEPARATOR searchSingleIndex enable_restrict_highlight_and_snippet_arrays
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          restrictHighlightAndSnippetArrays = Some(false)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            restrictHighlightAndSnippetArrays = Some(false)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5965,25 +6750,25 @@ class SnippetSearchClient {
     *
     * access_page
     */
-  def snippetForSearchClientSearchSingleIndex72(): Unit = {
+  def snippetForSearchClientSearchSingleIndex75(): Unit = {
     // >SEPARATOR searchSingleIndex access_page
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          page = Some(0)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            page = Some(0)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -5991,25 +6776,25 @@ class SnippetSearchClient {
     *
     * override_default_hits_per_page
     */
-  def snippetForSearchClientSearchSingleIndex73(): Unit = {
+  def snippetForSearchClientSearchSingleIndex76(): Unit = {
     // >SEPARATOR searchSingleIndex override_default_hits_per_page
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          hitsPerPage = Some(10)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            hitsPerPage = Some(10)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6017,25 +6802,25 @@ class SnippetSearchClient {
     *
     * get_nth_hit
     */
-  def snippetForSearchClientSearchSingleIndex74(): Unit = {
+  def snippetForSearchClientSearchSingleIndex77(): Unit = {
     // >SEPARATOR searchSingleIndex get_nth_hit
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          offset = Some(4)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            offset = Some(4)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6043,25 +6828,25 @@ class SnippetSearchClient {
     *
     * get_n_results
     */
-  def snippetForSearchClientSearchSingleIndex75(): Unit = {
+  def snippetForSearchClientSearchSingleIndex78(): Unit = {
     // >SEPARATOR searchSingleIndex get_n_results
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          length = Some(4)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            length = Some(4)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6069,25 +6854,25 @@ class SnippetSearchClient {
     *
     * override_default_min_word_size_for_one_typo
     */
-  def snippetForSearchClientSearchSingleIndex76(): Unit = {
+  def snippetForSearchClientSearchSingleIndex79(): Unit = {
     // >SEPARATOR searchSingleIndex override_default_min_word_size_for_one_typo
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          minWordSizefor1Typo = Some(2)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            minWordSizefor1Typo = Some(2)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6095,25 +6880,25 @@ class SnippetSearchClient {
     *
     * override_default_min_word_size_for_two_typos
     */
-  def snippetForSearchClientSearchSingleIndex77(): Unit = {
+  def snippetForSearchClientSearchSingleIndex80(): Unit = {
     // >SEPARATOR searchSingleIndex override_default_min_word_size_for_two_typos
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          minWordSizefor2Typos = Some(2)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            minWordSizefor2Typos = Some(2)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6121,25 +6906,25 @@ class SnippetSearchClient {
     *
     * override_default_typo_tolerance_mode
     */
-  def snippetForSearchClientSearchSingleIndex78(): Unit = {
+  def snippetForSearchClientSearchSingleIndex81(): Unit = {
     // >SEPARATOR searchSingleIndex override_default_typo_tolerance_mode
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          typoTolerance = Some(TypoTolerance(false))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            typoTolerance = Some(TypoTolerance(false))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6147,25 +6932,25 @@ class SnippetSearchClient {
     *
     * disable_typos_on_numeric_tokens_at_search_time
     */
-  def snippetForSearchClientSearchSingleIndex79(): Unit = {
+  def snippetForSearchClientSearchSingleIndex82(): Unit = {
     // >SEPARATOR searchSingleIndex disable_typos_on_numeric_tokens_at_search_time
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          allowTyposOnNumericTokens = Some(false)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            allowTyposOnNumericTokens = Some(false)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6173,25 +6958,25 @@ class SnippetSearchClient {
     *
     * search_around_a_position
     */
-  def snippetForSearchClientSearchSingleIndex80(): Unit = {
+  def snippetForSearchClientSearchSingleIndex83(): Unit = {
     // >SEPARATOR searchSingleIndex search_around_a_position
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          aroundLatLng = Some("40.71, -74.01")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            aroundLatLng = Some("40.71, -74.01")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6199,34 +6984,34 @@ class SnippetSearchClient {
     *
     * search_around_server_ip
     */
-  def snippetForSearchClientSearchSingleIndex81(): Unit = {
+  def snippetForSearchClientSearchSingleIndex84(): Unit = {
     // >SEPARATOR searchSingleIndex search_around_server_ip
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          aroundLatLngViaIP = Some(true)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            aroundLatLngViaIP = Some(true)
+          )
+        ),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader(
+              "x-forwarded-for",
+              "94.228.178.246 // should be replaced with the actual IP you would like to search around"
+            )
+            .build()
         )
       ),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withHeader(
-            "x-forwarded-for",
-            "94.228.178.246 // should be replaced with the actual IP you would like to search around"
-          )
-          .build()
-      )
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6234,25 +7019,25 @@ class SnippetSearchClient {
     *
     * set_around_radius
     */
-  def snippetForSearchClientSearchSingleIndex82(): Unit = {
+  def snippetForSearchClientSearchSingleIndex85(): Unit = {
     // >SEPARATOR searchSingleIndex set_around_radius
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          aroundRadius = Some(AroundRadius(1000))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            aroundRadius = Some(AroundRadius(1000))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6260,25 +7045,25 @@ class SnippetSearchClient {
     *
     * disable_automatic_radius
     */
-  def snippetForSearchClientSearchSingleIndex83(): Unit = {
+  def snippetForSearchClientSearchSingleIndex86(): Unit = {
     // >SEPARATOR searchSingleIndex disable_automatic_radius
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          aroundRadius = Some(AroundRadiusAll.withName("all"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            aroundRadius = Some(AroundRadiusAll.withName("all"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6286,25 +7071,25 @@ class SnippetSearchClient {
     *
     * set_geo_search_precision
     */
-  def snippetForSearchClientSearchSingleIndex84(): Unit = {
+  def snippetForSearchClientSearchSingleIndex87(): Unit = {
     // >SEPARATOR searchSingleIndex set_geo_search_precision
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          aroundPrecision = Some(AroundPrecision(100))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            aroundPrecision = Some(AroundPrecision(100))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6312,38 +7097,38 @@ class SnippetSearchClient {
     *
     * set_geo_search_precision_non_linear
     */
-  def snippetForSearchClientSearchSingleIndex85(): Unit = {
+  def snippetForSearchClientSearchSingleIndex88(): Unit = {
     // >SEPARATOR searchSingleIndex set_geo_search_precision_non_linear
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          aroundPrecision = Some(
-            AroundPrecision(
-              Seq(
-                Range(
-                  from = Some(0),
-                  value = Some(25)
-                ),
-                Range(
-                  from = Some(2000),
-                  value = Some(1000)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            aroundPrecision = Some(
+              AroundPrecision(
+                Seq(
+                  Range(
+                    from = Some(0),
+                    value = Some(25)
+                  ),
+                  Range(
+                    from = Some(2000),
+                    value = Some(1000)
+                  )
                 )
               )
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6351,25 +7136,25 @@ class SnippetSearchClient {
     *
     * set_minimum_geo_search_radius
     */
-  def snippetForSearchClientSearchSingleIndex86(): Unit = {
+  def snippetForSearchClientSearchSingleIndex89(): Unit = {
     // >SEPARATOR searchSingleIndex set_minimum_geo_search_radius
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          minimumAroundRadius = Some(1000)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            minimumAroundRadius = Some(1000)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6377,26 +7162,26 @@ class SnippetSearchClient {
     *
     * search_inside_rectangular_area
     */
-  def snippetForSearchClientSearchSingleIndex87(): Unit = {
+  def snippetForSearchClientSearchSingleIndex90(): Unit = {
     // >SEPARATOR searchSingleIndex search_inside_rectangular_area
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          insideBoundingBox =
-            Some(InsideBoundingBox(Seq(Seq(46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625))))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            insideBoundingBox =
+              Some(InsideBoundingBox(Seq(Seq(46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625))))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6404,32 +7189,32 @@ class SnippetSearchClient {
     *
     * search_inside_multiple_rectangular_areas
     */
-  def snippetForSearchClientSearchSingleIndex88(): Unit = {
+  def snippetForSearchClientSearchSingleIndex91(): Unit = {
     // >SEPARATOR searchSingleIndex search_inside_multiple_rectangular_areas
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          insideBoundingBox = Some(
-            InsideBoundingBox(
-              Seq(
-                Seq(46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625),
-                Seq(49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            insideBoundingBox = Some(
+              InsideBoundingBox(
+                Seq(
+                  Seq(46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625),
+                  Seq(49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875)
+                )
               )
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6437,27 +7222,27 @@ class SnippetSearchClient {
     *
     * search_inside_polygon_area
     */
-  def snippetForSearchClientSearchSingleIndex89(): Unit = {
+  def snippetForSearchClientSearchSingleIndex92(): Unit = {
     // >SEPARATOR searchSingleIndex search_inside_polygon_area
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          insidePolygon = Some(
-            Seq(Seq(46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625, 49.62625916704081, 4.6181640625))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            insidePolygon = Some(
+              Seq(Seq(46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625, 49.62625916704081, 4.6181640625))
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6465,31 +7250,31 @@ class SnippetSearchClient {
     *
     * search_inside_multiple_polygon_areas
     */
-  def snippetForSearchClientSearchSingleIndex90(): Unit = {
+  def snippetForSearchClientSearchSingleIndex93(): Unit = {
     // >SEPARATOR searchSingleIndex search_inside_multiple_polygon_areas
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          insidePolygon = Some(
-            Seq(
-              Seq(46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625, 49.62625916704081, 4.6181640625),
-              Seq(49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875, 45.17210966999772, 1.009765625,
-                50.62626704081, 4.6181640625)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            insidePolygon = Some(
+              Seq(
+                Seq(46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625, 49.62625916704081, 4.6181640625),
+                Seq(49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875, 45.17210966999772, 1.009765625,
+                  50.62626704081, 4.6181640625)
+              )
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6497,25 +7282,25 @@ class SnippetSearchClient {
     *
     * set_querylanguages_override
     */
-  def snippetForSearchClientSearchSingleIndex91(): Unit = {
+  def snippetForSearchClientSearchSingleIndex94(): Unit = {
     // >SEPARATOR searchSingleIndex set_querylanguages_override
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          ignorePlurals = Some(IgnorePlurals(Seq(SupportedLanguage.withName("ca"), SupportedLanguage.withName("es"))))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            ignorePlurals = Some(IgnorePlurals(Seq(SupportedLanguage.withName("ca"), SupportedLanguage.withName("es"))))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6523,26 +7308,26 @@ class SnippetSearchClient {
     *
     * set_querylanguages_override
     */
-  def snippetForSearchClientSearchSingleIndex92(): Unit = {
+  def snippetForSearchClientSearchSingleIndex95(): Unit = {
     // >SEPARATOR searchSingleIndex set_querylanguages_override
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          removeStopWords =
-            Some(RemoveStopWords(Seq(SupportedLanguage.withName("ca"), SupportedLanguage.withName("es"))))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            removeStopWords =
+              Some(RemoveStopWords(Seq(SupportedLanguage.withName("ca"), SupportedLanguage.withName("es"))))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6550,26 +7335,26 @@ class SnippetSearchClient {
     *
     * set_querylanguages_override
     */
-  def snippetForSearchClientSearchSingleIndex93(): Unit = {
+  def snippetForSearchClientSearchSingleIndex96(): Unit = {
     // >SEPARATOR searchSingleIndex set_querylanguages_override
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          removeStopWords =
-            Some(RemoveStopWords(Seq(SupportedLanguage.withName("ca"), SupportedLanguage.withName("es"))))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            removeStopWords =
+              Some(RemoveStopWords(Seq(SupportedLanguage.withName("ca"), SupportedLanguage.withName("es"))))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6577,25 +7362,25 @@ class SnippetSearchClient {
     *
     * set_querylanguages_with_japanese_query
     */
-  def snippetForSearchClientSearchSingleIndex94(): Unit = {
+  def snippetForSearchClientSearchSingleIndex97(): Unit = {
     // >SEPARATOR searchSingleIndex set_querylanguages_with_japanese_query
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          queryLanguages = Some(Seq(SupportedLanguage.withName("ja"), SupportedLanguage.withName("en")))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            queryLanguages = Some(Seq(SupportedLanguage.withName("ja"), SupportedLanguage.withName("en")))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6603,25 +7388,25 @@ class SnippetSearchClient {
     *
     * set_natural_languages
     */
-  def snippetForSearchClientSearchSingleIndex95(): Unit = {
+  def snippetForSearchClientSearchSingleIndex98(): Unit = {
     // >SEPARATOR searchSingleIndex set_natural_languages
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some(""),
-          naturalLanguages = Some(Seq(SupportedLanguage.withName("fr")))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some(""),
+            naturalLanguages = Some(Seq(SupportedLanguage.withName("fr")))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6629,26 +7414,26 @@ class SnippetSearchClient {
     *
     * override_natural_languages_with_query
     */
-  def snippetForSearchClientSearchSingleIndex96(): Unit = {
+  def snippetForSearchClientSearchSingleIndex99(): Unit = {
     // >SEPARATOR searchSingleIndex override_natural_languages_with_query
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some(""),
-          naturalLanguages = Some(Seq(SupportedLanguage.withName("fr"))),
-          removeWordsIfNoResults = Some(RemoveWordsIfNoResults.withName("firstWords"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some(""),
+            naturalLanguages = Some(Seq(SupportedLanguage.withName("fr"))),
+            removeWordsIfNoResults = Some(RemoveWordsIfNoResults.withName("firstWords"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6656,25 +7441,25 @@ class SnippetSearchClient {
     *
     * enable_decompound_query_search_time
     */
-  def snippetForSearchClientSearchSingleIndex97(): Unit = {
+  def snippetForSearchClientSearchSingleIndex100(): Unit = {
     // >SEPARATOR searchSingleIndex enable_decompound_query_search_time
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          decompoundQuery = Some(true)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            decompoundQuery = Some(true)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6682,25 +7467,25 @@ class SnippetSearchClient {
     *
     * enable_rules_search_time
     */
-  def snippetForSearchClientSearchSingleIndex98(): Unit = {
+  def snippetForSearchClientSearchSingleIndex101(): Unit = {
     // >SEPARATOR searchSingleIndex enable_rules_search_time
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          enableRules = Some(true)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            enableRules = Some(true)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6708,25 +7493,25 @@ class SnippetSearchClient {
     *
     * set_rule_contexts
     */
-  def snippetForSearchClientSearchSingleIndex99(): Unit = {
+  def snippetForSearchClientSearchSingleIndex102(): Unit = {
     // >SEPARATOR searchSingleIndex set_rule_contexts
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          ruleContexts = Some(Seq("front_end", "website2"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            ruleContexts = Some(Seq("front_end", "website2"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6734,25 +7519,25 @@ class SnippetSearchClient {
     *
     * enable_personalization
     */
-  def snippetForSearchClientSearchSingleIndex100(): Unit = {
+  def snippetForSearchClientSearchSingleIndex103(): Unit = {
     // >SEPARATOR searchSingleIndex enable_personalization
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          enablePersonalization = Some(true)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            enablePersonalization = Some(true)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6760,26 +7545,26 @@ class SnippetSearchClient {
     *
     * enable_personalization_with_user_token
     */
-  def snippetForSearchClientSearchSingleIndex101(): Unit = {
+  def snippetForSearchClientSearchSingleIndex104(): Unit = {
     // >SEPARATOR searchSingleIndex enable_personalization_with_user_token
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          enablePersonalization = Some(true),
-          userToken = Some("123456")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            enablePersonalization = Some(true),
+            userToken = Some("123456")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6787,25 +7572,25 @@ class SnippetSearchClient {
     *
     * personalization_impact
     */
-  def snippetForSearchClientSearchSingleIndex102(): Unit = {
+  def snippetForSearchClientSearchSingleIndex105(): Unit = {
     // >SEPARATOR searchSingleIndex personalization_impact
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          personalizationImpact = Some(20)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            personalizationImpact = Some(20)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6813,25 +7598,25 @@ class SnippetSearchClient {
     *
     * set_user_token
     */
-  def snippetForSearchClientSearchSingleIndex103(): Unit = {
+  def snippetForSearchClientSearchSingleIndex106(): Unit = {
     // >SEPARATOR searchSingleIndex set_user_token
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          userToken = Some("123456")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            userToken = Some("123456")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6839,26 +7624,26 @@ class SnippetSearchClient {
     *
     * set_user_token_with_personalization
     */
-  def snippetForSearchClientSearchSingleIndex104(): Unit = {
+  def snippetForSearchClientSearchSingleIndex107(): Unit = {
     // >SEPARATOR searchSingleIndex set_user_token_with_personalization
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          enablePersonalization = Some(true),
-          userToken = Some("123456")
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            enablePersonalization = Some(true),
+            userToken = Some("123456")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6866,25 +7651,25 @@ class SnippetSearchClient {
     *
     * override_default_query_type
     */
-  def snippetForSearchClientSearchSingleIndex105(): Unit = {
+  def snippetForSearchClientSearchSingleIndex108(): Unit = {
     // >SEPARATOR searchSingleIndex override_default_query_type
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          queryType = Some(QueryType.withName("prefixAll"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            queryType = Some(QueryType.withName("prefixAll"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6892,25 +7677,25 @@ class SnippetSearchClient {
     *
     * override_default_remove_words_if_no_results
     */
-  def snippetForSearchClientSearchSingleIndex106(): Unit = {
+  def snippetForSearchClientSearchSingleIndex109(): Unit = {
     // >SEPARATOR searchSingleIndex override_default_remove_words_if_no_results
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          removeWordsIfNoResults = Some(RemoveWordsIfNoResults.withName("lastWords"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            removeWordsIfNoResults = Some(RemoveWordsIfNoResults.withName("lastWords"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6918,25 +7703,25 @@ class SnippetSearchClient {
     *
     * enable_advanced_syntax_search_time
     */
-  def snippetForSearchClientSearchSingleIndex107(): Unit = {
+  def snippetForSearchClientSearchSingleIndex110(): Unit = {
     // >SEPARATOR searchSingleIndex enable_advanced_syntax_search_time
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          advancedSyntax = Some(true)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            advancedSyntax = Some(true)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6944,25 +7729,25 @@ class SnippetSearchClient {
     *
     * overide_default_optional_words
     */
-  def snippetForSearchClientSearchSingleIndex108(): Unit = {
+  def snippetForSearchClientSearchSingleIndex111(): Unit = {
     // >SEPARATOR searchSingleIndex overide_default_optional_words
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          optionalWords = Some(OptionalWords(Seq("toyota", "2020 2021")))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            optionalWords = Some(OptionalWords(Seq("toyota", "2020 2021")))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6970,25 +7755,25 @@ class SnippetSearchClient {
     *
     * disabling_exact_for_some_attributes_search_time
     */
-  def snippetForSearchClientSearchSingleIndex109(): Unit = {
+  def snippetForSearchClientSearchSingleIndex112(): Unit = {
     // >SEPARATOR searchSingleIndex disabling_exact_for_some_attributes_search_time
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          disableExactOnAttributes = Some(Seq("description"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            disableExactOnAttributes = Some(Seq("description"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -6996,25 +7781,25 @@ class SnippetSearchClient {
     *
     * override_default_exact_single_word_query
     */
-  def snippetForSearchClientSearchSingleIndex110(): Unit = {
+  def snippetForSearchClientSearchSingleIndex113(): Unit = {
     // >SEPARATOR searchSingleIndex override_default_exact_single_word_query
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          exactOnSingleWordQuery = Some(ExactOnSingleWordQuery.withName("none"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            exactOnSingleWordQuery = Some(ExactOnSingleWordQuery.withName("none"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7022,25 +7807,25 @@ class SnippetSearchClient {
     *
     * override_default_aternative_as_exact
     */
-  def snippetForSearchClientSearchSingleIndex111(): Unit = {
+  def snippetForSearchClientSearchSingleIndex114(): Unit = {
     // >SEPARATOR searchSingleIndex override_default_aternative_as_exact
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          alternativesAsExact = Some(Seq(AlternativesAsExact.withName("multiWordsSynonym")))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            alternativesAsExact = Some(Seq(AlternativesAsExact.withName("multiWordsSynonym")))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7048,26 +7833,26 @@ class SnippetSearchClient {
     *
     * enable_advanced_syntax_exact_phrase
     */
-  def snippetForSearchClientSearchSingleIndex112(): Unit = {
+  def snippetForSearchClientSearchSingleIndex115(): Unit = {
     // >SEPARATOR searchSingleIndex enable_advanced_syntax_exact_phrase
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          advancedSyntax = Some(true),
-          advancedSyntaxFeatures = Some(Seq(AdvancedSyntaxFeatures.withName("exactPhrase")))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            advancedSyntax = Some(true),
+            advancedSyntaxFeatures = Some(Seq(AdvancedSyntaxFeatures.withName("exactPhrase")))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7075,26 +7860,26 @@ class SnippetSearchClient {
     *
     * enable_advanced_syntax_exclude_words
     */
-  def snippetForSearchClientSearchSingleIndex113(): Unit = {
+  def snippetForSearchClientSearchSingleIndex116(): Unit = {
     // >SEPARATOR searchSingleIndex enable_advanced_syntax_exclude_words
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          advancedSyntax = Some(true),
-          advancedSyntaxFeatures = Some(Seq(AdvancedSyntaxFeatures.withName("excludeWords")))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            advancedSyntax = Some(true),
+            advancedSyntaxFeatures = Some(Seq(AdvancedSyntaxFeatures.withName("excludeWords")))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7102,25 +7887,25 @@ class SnippetSearchClient {
     *
     * override_distinct
     */
-  def snippetForSearchClientSearchSingleIndex114(): Unit = {
+  def snippetForSearchClientSearchSingleIndex117(): Unit = {
     // >SEPARATOR searchSingleIndex override_distinct
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          distinct = Some(Distinct(0))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            distinct = Some(Distinct(0))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7128,25 +7913,25 @@ class SnippetSearchClient {
     *
     * get_ranking_info
     */
-  def snippetForSearchClientSearchSingleIndex115(): Unit = {
+  def snippetForSearchClientSearchSingleIndex118(): Unit = {
     // >SEPARATOR searchSingleIndex get_ranking_info
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          getRankingInfo = Some(true)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            getRankingInfo = Some(true)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7154,25 +7939,25 @@ class SnippetSearchClient {
     *
     * disable_click_analytics
     */
-  def snippetForSearchClientSearchSingleIndex116(): Unit = {
+  def snippetForSearchClientSearchSingleIndex119(): Unit = {
     // >SEPARATOR searchSingleIndex disable_click_analytics
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          clickAnalytics = Some(false)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            clickAnalytics = Some(false)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7180,25 +7965,25 @@ class SnippetSearchClient {
     *
     * enable_click_analytics
     */
-  def snippetForSearchClientSearchSingleIndex117(): Unit = {
+  def snippetForSearchClientSearchSingleIndex120(): Unit = {
     // >SEPARATOR searchSingleIndex enable_click_analytics
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          clickAnalytics = Some(true)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            clickAnalytics = Some(true)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7206,25 +7991,25 @@ class SnippetSearchClient {
     *
     * disable_analytics
     */
-  def snippetForSearchClientSearchSingleIndex118(): Unit = {
+  def snippetForSearchClientSearchSingleIndex121(): Unit = {
     // >SEPARATOR searchSingleIndex disable_analytics
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          analytics = Some(false)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            analytics = Some(false)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7232,25 +8017,25 @@ class SnippetSearchClient {
     *
     * add_analytics_tags
     */
-  def snippetForSearchClientSearchSingleIndex119(): Unit = {
+  def snippetForSearchClientSearchSingleIndex122(): Unit = {
     // >SEPARATOR searchSingleIndex add_analytics_tags
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          analyticsTags = Some(Seq("front_end", "website2"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            analyticsTags = Some(Seq("front_end", "website2"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7258,25 +8043,25 @@ class SnippetSearchClient {
     *
     * disable_synonyms
     */
-  def snippetForSearchClientSearchSingleIndex120(): Unit = {
+  def snippetForSearchClientSearchSingleIndex123(): Unit = {
     // >SEPARATOR searchSingleIndex disable_synonyms
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          synonyms = Some(false)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            synonyms = Some(false)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7284,25 +8069,25 @@ class SnippetSearchClient {
     *
     * override_replace_synonyms_in_highlights
     */
-  def snippetForSearchClientSearchSingleIndex121(): Unit = {
+  def snippetForSearchClientSearchSingleIndex124(): Unit = {
     // >SEPARATOR searchSingleIndex override_replace_synonyms_in_highlights
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          replaceSynonymsInHighlight = Some(true)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            replaceSynonymsInHighlight = Some(true)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7310,25 +8095,25 @@ class SnippetSearchClient {
     *
     * override_min_proximity
     */
-  def snippetForSearchClientSearchSingleIndex122(): Unit = {
+  def snippetForSearchClientSearchSingleIndex125(): Unit = {
     // >SEPARATOR searchSingleIndex override_min_proximity
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          minProximity = Some(2)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            minProximity = Some(2)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7336,25 +8121,25 @@ class SnippetSearchClient {
     *
     * override_default_field
     */
-  def snippetForSearchClientSearchSingleIndex123(): Unit = {
+  def snippetForSearchClientSearchSingleIndex126(): Unit = {
     // >SEPARATOR searchSingleIndex override_default_field
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          responseFields = Some(Seq("hits", "facets"))
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            responseFields = Some(Seq("hits", "facets"))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7362,25 +8147,25 @@ class SnippetSearchClient {
     *
     * override_percentile_computation
     */
-  def snippetForSearchClientSearchSingleIndex124(): Unit = {
+  def snippetForSearchClientSearchSingleIndex127(): Unit = {
     // >SEPARATOR searchSingleIndex override_percentile_computation
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          percentileComputation = Some(false)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            percentileComputation = Some(false)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7388,25 +8173,25 @@ class SnippetSearchClient {
     *
     * set_ab_test
     */
-  def snippetForSearchClientSearchSingleIndex125(): Unit = {
+  def snippetForSearchClientSearchSingleIndex128(): Unit = {
     // >SEPARATOR searchSingleIndex set_ab_test
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          enableABTest = Some(false)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            enableABTest = Some(false)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7414,25 +8199,87 @@ class SnippetSearchClient {
     *
     * set_enable_re_ranking
     */
-  def snippetForSearchClientSearchSingleIndex126(): Unit = {
+  def snippetForSearchClientSearchSingleIndex129(): Unit = {
     // >SEPARATOR searchSingleIndex set_enable_re_ranking
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          enableReRanking = Some(false)
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query"),
+            enableReRanking = Some(false)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the searchSingleIndex method.
+    *
+    * with algolia user id
+    */
+  def snippetForSearchClientSearchSingleIndex130(): Unit = {
+    // >SEPARATOR searchSingleIndex with algolia user id
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("query")
+          )
+        ),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("X-Algolia-User-ID", "user1234")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the searchSingleIndex method.
+    *
+    * mcm with algolia user id
+    */
+  def snippetForSearchClientSearchSingleIndex131(): Unit = {
+    // >SEPARATOR searchSingleIndex mcm with algolia user id
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.searchSingleIndex(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("peace")
+          )
+        ),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("X-Algolia-User-ID", "user42")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 
@@ -7446,13 +8293,13 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSynonyms(
-      indexName = "<YOUR_INDEX_NAME>"
+    val response = Await.result(
+      client.searchSynonyms(
+        indexName = "<YOUR_INDEX_NAME>"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7466,21 +8313,21 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchSynonyms(
-      indexName = "<YOUR_INDEX_NAME>",
-      searchSynonymsParams = Some(
-        SearchSynonymsParams(
-          query = Some("myQuery"),
-          `type` = Some(SynonymType.withName("altcorrection1")),
-          page = Some(10),
-          hitsPerPage = Some(10)
+    val response = Await.result(
+      client.searchSynonyms(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchSynonymsParams = Some(
+          SearchSynonymsParams(
+            query = Some("myQuery"),
+            `type` = Some(SynonymType.withName("altcorrection1")),
+            page = Some(10),
+            hitsPerPage = Some(10)
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7494,18 +8341,34 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchUserIds(
-      searchUserIdsParams = SearchUserIdsParams(
-        query = "test",
-        clusterName = Some("theClusterName"),
-        page = Some(5),
-        hitsPerPage = Some(10)
-      )
+    val response = Await.result(
+      client.searchUserIds(
+        searchUserIdsParams = SearchUserIdsParams(
+          query = "test",
+          clusterName = Some("theClusterName"),
+          page = Some(5),
+          hitsPerPage = Some(10)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the setClientApiKey method.
+    *
+    * switch API key
+    */
+  def snippetForSearchClientSetClientApiKey(): Unit = {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    client.setClientApiKey(
+      apiKey = "updated-api-key"
+    ) // >LOG
     // SEPARATOR<
   }
 
@@ -7519,17 +8382,17 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setDictionarySettings(
-      dictionarySettingsParams = DictionarySettingsParams(
-        disableStandardEntries = StandardEntries(
-          plurals = Some(Map("fr" -> false, "en" -> false, "ru" -> true))
+    val response = Await.result(
+      client.setDictionarySettings(
+        dictionarySettingsParams = DictionarySettingsParams(
+          disableStandardEntries = StandardEntries(
+            plurals = Some(Map("fr" -> false, "en" -> false, "ru" -> true))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7543,19 +8406,19 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setDictionarySettings(
-      dictionarySettingsParams = DictionarySettingsParams(
-        disableStandardEntries = StandardEntries(
-          plurals = Some(Map("fr" -> false, "en" -> false, "ru" -> true)),
-          stopwords = Some(Map("fr" -> false)),
-          compounds = Some(Map("ru" -> true))
+    val response = Await.result(
+      client.setDictionarySettings(
+        dictionarySettingsParams = DictionarySettingsParams(
+          disableStandardEntries = StandardEntries(
+            plurals = Some(Map("fr" -> false, "en" -> false, "ru" -> true)),
+            stopwords = Some(Map("fr" -> false)),
+            compounds = Some(Map("ru" -> true))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7569,17 +8432,17 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        paginationLimitedTo = Some(10)
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          paginationLimitedTo = Some(10)
+        ),
+        forwardToReplicas = Some(true)
       ),
-      forwardToReplicas = Some(true)
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7593,17 +8456,17 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        typoTolerance = Some(TypoTolerance(true))
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          typoTolerance = Some(TypoTolerance(true))
+        ),
+        forwardToReplicas = Some(true)
       ),
-      forwardToReplicas = Some(true)
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7617,17 +8480,17 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        typoTolerance = Some(TypoToleranceEnum.withName("min"))
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          typoTolerance = Some(TypoToleranceEnum.withName("min"))
+        ),
+        forwardToReplicas = Some(true)
       ),
-      forwardToReplicas = Some(true)
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7641,17 +8504,17 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        ignorePlurals = Some(IgnorePlurals(true))
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          ignorePlurals = Some(IgnorePlurals(true))
+        ),
+        forwardToReplicas = Some(true)
       ),
-      forwardToReplicas = Some(true)
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7665,17 +8528,17 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        ignorePlurals = Some(IgnorePlurals(Seq(SupportedLanguage.withName("fr"))))
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          ignorePlurals = Some(IgnorePlurals(Seq(SupportedLanguage.withName("fr"))))
+        ),
+        forwardToReplicas = Some(true)
       ),
-      forwardToReplicas = Some(true)
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7689,17 +8552,17 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        removeStopWords = Some(RemoveStopWords(true))
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          removeStopWords = Some(RemoveStopWords(true))
+        ),
+        forwardToReplicas = Some(true)
       ),
-      forwardToReplicas = Some(true)
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7713,17 +8576,17 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        removeStopWords = Some(RemoveStopWords(Seq(SupportedLanguage.withName("fr"))))
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          removeStopWords = Some(RemoveStopWords(Seq(SupportedLanguage.withName("fr"))))
+        ),
+        forwardToReplicas = Some(true)
       ),
-      forwardToReplicas = Some(true)
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7737,17 +8600,17 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        distinct = Some(Distinct(true))
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          distinct = Some(Distinct(true))
+        ),
+        forwardToReplicas = Some(true)
       ),
-      forwardToReplicas = Some(true)
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7761,17 +8624,17 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        distinct = Some(Distinct(1))
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          distinct = Some(Distinct(1))
+        ),
+        forwardToReplicas = Some(true)
       ),
-      forwardToReplicas = Some(true)
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7785,17 +8648,17 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributeForDistinct = Some("company"),
-        distinct = Some(Distinct(true))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributeForDistinct = Some("company"),
+          distinct = Some(Distinct(true))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7809,17 +8672,17 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributeForDistinct = Some("design"),
-        distinct = Some(Distinct(true))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributeForDistinct = Some("design"),
+          distinct = Some(Distinct(true))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7833,16 +8696,16 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        distinct = Some(Distinct(true))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          distinct = Some(Distinct(true))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7856,17 +8719,17 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributeForDistinct = Some("section"),
-        distinct = Some(Distinct(true))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributeForDistinct = Some("section"),
+          distinct = Some(Distinct(true))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7880,16 +8743,39 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributesForFaceting = Some(Seq("allergens"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributesForFaceting = Some(Seq("allergens"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the setSettings method.
+    *
+    * attributesForFaceting availableIn
+    */
+  def snippetForSearchClientSetSettings14(): Unit = {
+    // >SEPARATOR setSettings attributesForFaceting availableIn
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributesForFaceting = Some(Seq("color", "availableIn"))
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 
@@ -7897,22 +8783,22 @@ class SnippetSearchClient {
     *
     * api_attributes_for_faceting
     */
-  def snippetForSearchClientSetSettings14(): Unit = {
+  def snippetForSearchClientSetSettings15(): Unit = {
     // >SEPARATOR setSettings api_attributes_for_faceting
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributesForFaceting = Some(Seq("genre", "author"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributesForFaceting = Some(Seq("genre", "author"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7920,22 +8806,22 @@ class SnippetSearchClient {
     *
     * api_attributes_for_faceting_searchable
     */
-  def snippetForSearchClientSetSettings15(): Unit = {
+  def snippetForSearchClientSetSettings16(): Unit = {
     // >SEPARATOR setSettings api_attributes_for_faceting_searchable
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributesForFaceting = Some(Seq("genre", "searchable(author)"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributesForFaceting = Some(Seq("genre", "searchable(author)"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7943,22 +8829,22 @@ class SnippetSearchClient {
     *
     * api_attributes_for_filter_only
     */
-  def snippetForSearchClientSetSettings16(): Unit = {
+  def snippetForSearchClientSetSettings17(): Unit = {
     // >SEPARATOR setSettings api_attributes_for_filter_only
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributesForFaceting = Some(Seq("filterOnly(genre)", "author"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributesForFaceting = Some(Seq("filterOnly(genre)", "author"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7966,22 +8852,22 @@ class SnippetSearchClient {
     *
     * attributesForFaceting categoryPageId
     */
-  def snippetForSearchClientSetSettings17(): Unit = {
+  def snippetForSearchClientSetSettings18(): Unit = {
     // >SEPARATOR setSettings attributesForFaceting categoryPageId
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributesForFaceting = Some(Seq("searchable(categoryPageId)"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributesForFaceting = Some(Seq("searchable(categoryPageId)"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -7989,22 +8875,22 @@ class SnippetSearchClient {
     *
     * unretrievableAttributes
     */
-  def snippetForSearchClientSetSettings18(): Unit = {
+  def snippetForSearchClientSetSettings19(): Unit = {
     // >SEPARATOR setSettings unretrievableAttributes
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        unretrievableAttributes = Some(Seq("visible_by"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          unretrievableAttributes = Some(Seq("visible_by"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8012,22 +8898,22 @@ class SnippetSearchClient {
     *
     * attributesForFaceting user restricted data
     */
-  def snippetForSearchClientSetSettings19(): Unit = {
+  def snippetForSearchClientSetSettings20(): Unit = {
     // >SEPARATOR setSettings attributesForFaceting user restricted data
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributesForFaceting = Some(Seq("filterOnly(visible_by)"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributesForFaceting = Some(Seq("filterOnly(visible_by)"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8035,22 +8921,22 @@ class SnippetSearchClient {
     *
     * attributesForFaceting optional filters
     */
-  def snippetForSearchClientSetSettings20(): Unit = {
+  def snippetForSearchClientSetSettings21(): Unit = {
     // >SEPARATOR setSettings attributesForFaceting optional filters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributesForFaceting = Some(Seq("can_deliver_quickly", "restaurant"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributesForFaceting = Some(Seq("can_deliver_quickly", "restaurant"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8058,22 +8944,22 @@ class SnippetSearchClient {
     *
     * attributesForFaceting redirect index
     */
-  def snippetForSearchClientSetSettings21(): Unit = {
+  def snippetForSearchClientSetSettings22(): Unit = {
     // >SEPARATOR setSettings attributesForFaceting redirect index
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributesForFaceting = Some(Seq("query_terms"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributesForFaceting = Some(Seq("query_terms"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8081,22 +8967,22 @@ class SnippetSearchClient {
     *
     * attributesForFaceting multiple consequences
     */
-  def snippetForSearchClientSetSettings22(): Unit = {
+  def snippetForSearchClientSetSettings23(): Unit = {
     // >SEPARATOR setSettings attributesForFaceting multiple consequences
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributesForFaceting = Some(Seq("director"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributesForFaceting = Some(Seq("director"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8104,22 +8990,22 @@ class SnippetSearchClient {
     *
     * attributesForFaceting in-depth optional filters
     */
-  def snippetForSearchClientSetSettings23(): Unit = {
+  def snippetForSearchClientSetSettings24(): Unit = {
     // >SEPARATOR setSettings attributesForFaceting in-depth optional filters
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributesForFaceting = Some(Seq("filterOnly(brand)"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributesForFaceting = Some(Seq("filterOnly(brand)"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8127,22 +9013,22 @@ class SnippetSearchClient {
     *
     * mode neuralSearch
     */
-  def snippetForSearchClientSetSettings24(): Unit = {
+  def snippetForSearchClientSetSettings25(): Unit = {
     // >SEPARATOR setSettings mode neuralSearch
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        mode = Some(Mode.withName("neuralSearch"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          mode = Some(Mode.withName("neuralSearch"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8150,22 +9036,22 @@ class SnippetSearchClient {
     *
     * mode keywordSearch
     */
-  def snippetForSearchClientSetSettings25(): Unit = {
+  def snippetForSearchClientSetSettings26(): Unit = {
     // >SEPARATOR setSettings mode keywordSearch
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        mode = Some(Mode.withName("keywordSearch"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          mode = Some(Mode.withName("keywordSearch"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8173,22 +9059,22 @@ class SnippetSearchClient {
     *
     * searchableAttributes same priority
     */
-  def snippetForSearchClientSetSettings26(): Unit = {
+  def snippetForSearchClientSetSettings27(): Unit = {
     // >SEPARATOR setSettings searchableAttributes same priority
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        searchableAttributes = Some(Seq("title,comments", "ingredients"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          searchableAttributes = Some(Seq("title,comments", "ingredients"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8196,22 +9082,22 @@ class SnippetSearchClient {
     *
     * searchableAttributes higher priority
     */
-  def snippetForSearchClientSetSettings27(): Unit = {
+  def snippetForSearchClientSetSettings28(): Unit = {
     // >SEPARATOR setSettings searchableAttributes higher priority
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        searchableAttributes = Some(Seq("title", "ingredients"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          searchableAttributes = Some(Seq("title", "ingredients"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8219,22 +9105,22 @@ class SnippetSearchClient {
     *
     * customRanking retweets
     */
-  def snippetForSearchClientSetSettings28(): Unit = {
+  def snippetForSearchClientSetSettings29(): Unit = {
     // >SEPARATOR setSettings customRanking retweets
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        customRanking = Some(Seq("desc(retweets)", "desc(likes)"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          customRanking = Some(Seq("desc(retweets)", "desc(likes)"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8242,22 +9128,22 @@ class SnippetSearchClient {
     *
     * customRanking boosted
     */
-  def snippetForSearchClientSetSettings29(): Unit = {
+  def snippetForSearchClientSetSettings30(): Unit = {
     // >SEPARATOR setSettings customRanking boosted
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        customRanking = Some(Seq("desc(boosted)"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          customRanking = Some(Seq("desc(boosted)"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8265,22 +9151,22 @@ class SnippetSearchClient {
     *
     * customRanking pageviews
     */
-  def snippetForSearchClientSetSettings30(): Unit = {
+  def snippetForSearchClientSetSettings31(): Unit = {
     // >SEPARATOR setSettings customRanking pageviews
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        customRanking = Some(Seq("desc(pageviews)", "desc(comments)"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          customRanking = Some(Seq("desc(pageviews)", "desc(comments)"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8288,23 +9174,23 @@ class SnippetSearchClient {
     *
     * customRanking applying search parameters for a specific query
     */
-  def snippetForSearchClientSetSettings31(): Unit = {
+  def snippetForSearchClientSetSettings32(): Unit = {
     // >SEPARATOR setSettings customRanking applying search parameters for a specific query
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        customRanking = Some(Seq("desc(nb_airline_liaisons)")),
-        attributesForFaceting = Some(Seq("city, country"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          customRanking = Some(Seq("desc(nb_airline_liaisons)")),
+          attributesForFaceting = Some(Seq("city, country"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8312,22 +9198,22 @@ class SnippetSearchClient {
     *
     * customRanking rounded pageviews
     */
-  def snippetForSearchClientSetSettings32(): Unit = {
+  def snippetForSearchClientSetSettings33(): Unit = {
     // >SEPARATOR setSettings customRanking rounded pageviews
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        customRanking = Some(Seq("desc(rounded_pageviews)", "desc(comments)"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          customRanking = Some(Seq("desc(rounded_pageviews)", "desc(comments)"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8335,46 +9221,71 @@ class SnippetSearchClient {
     *
     * customRanking price
     */
-  def snippetForSearchClientSetSettings33(): Unit = {
+  def snippetForSearchClientSetSettings34(): Unit = {
     // >SEPARATOR setSettings customRanking price
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        customRanking = Some(Seq("desc(price)"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          customRanking = Some(Seq("desc(price)"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
   /** Snippet for the setSettings method.
     *
-    * ranking exhaustive
+    * ranking exhaustive (price)
     */
-  def snippetForSearchClientSetSettings34(): Unit = {
-    // >SEPARATOR setSettings ranking exhaustive
+  def snippetForSearchClientSetSettings35(): Unit = {
+    // >SEPARATOR setSettings ranking exhaustive (price)
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        ranking =
-          Some(Seq("desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          ranking =
+            Some(Seq("desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the setSettings method.
+    *
+    * ranking exhaustive (is_popular)
+    */
+  def snippetForSearchClientSetSettings36(): Unit = {
+    // >SEPARATOR setSettings ranking exhaustive (is_popular)
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          ranking = Some(
+            Seq("desc(is_popular)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom")
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 
@@ -8382,22 +9293,22 @@ class SnippetSearchClient {
     *
     * ranking standard replica
     */
-  def snippetForSearchClientSetSettings35(): Unit = {
+  def snippetForSearchClientSetSettings37(): Unit = {
     // >SEPARATOR setSettings ranking standard replica
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        ranking = Some(Seq("desc(post_date_timestamp)"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          ranking = Some(Seq("desc(post_date_timestamp)"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8405,22 +9316,22 @@ class SnippetSearchClient {
     *
     * ranking virtual replica
     */
-  def snippetForSearchClientSetSettings36(): Unit = {
+  def snippetForSearchClientSetSettings38(): Unit = {
     // >SEPARATOR setSettings ranking virtual replica
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        customRanking = Some(Seq("desc(post_date_timestamp)"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          customRanking = Some(Seq("desc(post_date_timestamp)"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8428,23 +9339,23 @@ class SnippetSearchClient {
     *
     * customRanking and ranking sort alphabetically
     */
-  def snippetForSearchClientSetSettings37(): Unit = {
+  def snippetForSearchClientSetSettings39(): Unit = {
     // >SEPARATOR setSettings customRanking and ranking sort alphabetically
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        customRanking = Some(Seq("asc(textual_attribute)")),
-        ranking = Some(Seq("custom", "typo", "geo", "words", "filters", "proximity", "attribute", "exact"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          customRanking = Some(Seq("asc(textual_attribute)")),
+          ranking = Some(Seq("custom", "typo", "geo", "words", "filters", "proximity", "attribute", "exact"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8452,23 +9363,23 @@ class SnippetSearchClient {
     *
     * relevancyStrictness
     */
-  def snippetForSearchClientSetSettings38(): Unit = {
+  def snippetForSearchClientSetSettings40(): Unit = {
     // >SEPARATOR setSettings relevancyStrictness
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        customRanking = Some(Seq("asc(textual_attribute)")),
-        relevancyStrictness = Some(0)
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          customRanking = Some(Seq("asc(textual_attribute)")),
+          relevancyStrictness = Some(0)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8476,22 +9387,22 @@ class SnippetSearchClient {
     *
     * create replica index
     */
-  def snippetForSearchClientSetSettings39(): Unit = {
+  def snippetForSearchClientSetSettings41(): Unit = {
     // >SEPARATOR setSettings create replica index
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        replicas = Some(Seq("products_price_desc"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          replicas = Some(Seq("products_price_desc"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8499,22 +9410,22 @@ class SnippetSearchClient {
     *
     * create replica index articles
     */
-  def snippetForSearchClientSetSettings40(): Unit = {
+  def snippetForSearchClientSetSettings42(): Unit = {
     // >SEPARATOR setSettings create replica index articles
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        replicas = Some(Seq("articles_date_desc"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          replicas = Some(Seq("articles_date_desc"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8522,22 +9433,22 @@ class SnippetSearchClient {
     *
     * create virtual replica index
     */
-  def snippetForSearchClientSetSettings41(): Unit = {
+  def snippetForSearchClientSetSettings43(): Unit = {
     // >SEPARATOR setSettings create virtual replica index
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        replicas = Some(Seq("virtual(products_price_desc)"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          replicas = Some(Seq("virtual(products_price_desc)"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8545,22 +9456,22 @@ class SnippetSearchClient {
     *
     * unlink replica index
     */
-  def snippetForSearchClientSetSettings42(): Unit = {
+  def snippetForSearchClientSetSettings44(): Unit = {
     // >SEPARATOR setSettings unlink replica index
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        replicas = Some(Seq(""))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          replicas = Some(Seq(""))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8568,23 +9479,23 @@ class SnippetSearchClient {
     *
     * forwardToReplicas
     */
-  def snippetForSearchClientSetSettings43(): Unit = {
+  def snippetForSearchClientSetSettings45(): Unit = {
     // >SEPARATOR setSettings forwardToReplicas
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        searchableAttributes = Some(Seq("name", "description"))
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          searchableAttributes = Some(Seq("name", "description"))
+        ),
+        forwardToReplicas = Some(true)
       ),
-      forwardToReplicas = Some(true)
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8592,22 +9503,22 @@ class SnippetSearchClient {
     *
     * maxValuesPerFacet
     */
-  def snippetForSearchClientSetSettings44(): Unit = {
+  def snippetForSearchClientSetSettings46(): Unit = {
     // >SEPARATOR setSettings maxValuesPerFacet
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        maxValuesPerFacet = Some(1000)
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          maxValuesPerFacet = Some(1000)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8615,22 +9526,22 @@ class SnippetSearchClient {
     *
     * maxFacetHits
     */
-  def snippetForSearchClientSetSettings45(): Unit = {
+  def snippetForSearchClientSetSettings47(): Unit = {
     // >SEPARATOR setSettings maxFacetHits
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        maxFacetHits = Some(1000)
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          maxFacetHits = Some(100)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8638,22 +9549,22 @@ class SnippetSearchClient {
     *
     * attributesForFaceting complex
     */
-  def snippetForSearchClientSetSettings46(): Unit = {
+  def snippetForSearchClientSetSettings48(): Unit = {
     // >SEPARATOR setSettings attributesForFaceting complex
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributesForFaceting = Some(Seq("actor", "filterOnly(category)", "searchable(publisher)"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributesForFaceting = Some(Seq("actor", "filterOnly(category)", "searchable(publisher)"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8661,24 +9572,24 @@ class SnippetSearchClient {
     *
     * ranking closest dates
     */
-  def snippetForSearchClientSetSettings47(): Unit = {
+  def snippetForSearchClientSetSettings49(): Unit = {
     // >SEPARATOR setSettings ranking closest dates
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        ranking = Some(
-          Seq("asc(date_timestamp)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom")
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          ranking = Some(
+            Seq("asc(date_timestamp)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom")
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8686,22 +9597,22 @@ class SnippetSearchClient {
     *
     * searchableAttributes item variation
     */
-  def snippetForSearchClientSetSettings48(): Unit = {
+  def snippetForSearchClientSetSettings50(): Unit = {
     // >SEPARATOR setSettings searchableAttributes item variation
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        searchableAttributes = Some(Seq("design", "type", "color"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          searchableAttributes = Some(Seq("design", "type", "color"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8709,23 +9620,23 @@ class SnippetSearchClient {
     *
     * searchableAttributes around location
     */
-  def snippetForSearchClientSetSettings49(): Unit = {
+  def snippetForSearchClientSetSettings51(): Unit = {
     // >SEPARATOR setSettings searchableAttributes around location
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        searchableAttributes = Some(Seq("name", "country", "code", "iata_code")),
-        customRanking = Some(Seq("desc(links_count)"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          searchableAttributes = Some(Seq("name", "country", "city", "iata_code")),
+          customRanking = Some(Seq("desc(links_count)"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8733,22 +9644,22 @@ class SnippetSearchClient {
     *
     * attributesToHighlight
     */
-  def snippetForSearchClientSetSettings50(): Unit = {
+  def snippetForSearchClientSetSettings52(): Unit = {
     // >SEPARATOR setSettings attributesToHighlight
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributesToHighlight = Some(Seq("author", "title", "content"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributesToHighlight = Some(Seq("author", "title", "content"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8756,22 +9667,22 @@ class SnippetSearchClient {
     *
     * attributesToHighlightStar
     */
-  def snippetForSearchClientSetSettings51(): Unit = {
+  def snippetForSearchClientSetSettings53(): Unit = {
     // >SEPARATOR setSettings attributesToHighlightStar
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributesToHighlight = Some(Seq("*"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributesToHighlight = Some(Seq("*"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8779,106 +9690,106 @@ class SnippetSearchClient {
     *
     * everything
     */
-  def snippetForSearchClientSetSettings52(): Unit = {
+  def snippetForSearchClientSetSettings54(): Unit = {
     // >SEPARATOR setSettings everything
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        advancedSyntax = Some(true),
-        advancedSyntaxFeatures = Some(Seq(AdvancedSyntaxFeatures.withName("exactPhrase"))),
-        allowCompressionOfIntegerArray = Some(true),
-        allowTyposOnNumericTokens = Some(true),
-        alternativesAsExact = Some(Seq(AlternativesAsExact.withName("singleWordSynonym"))),
-        attributeCriteriaComputedByMinProximity = Some(true),
-        attributeForDistinct = Some("test"),
-        attributesForFaceting = Some(Seq("algolia")),
-        attributesToHighlight = Some(Seq("algolia")),
-        attributesToRetrieve = Some(Seq("algolia")),
-        attributesToSnippet = Some(Seq("algolia")),
-        attributesToTransliterate = Some(Seq("algolia")),
-        camelCaseAttributes = Some(Seq("algolia")),
-        customNormalization = Some(Map("algolia" -> Map("aloglia" -> "aglolia"))),
-        customRanking = Some(Seq("algolia")),
-        decompoundQuery = Some(false),
-        decompoundedAttributes = Some(JObject(List(JField("algolia", JString("aloglia"))))),
-        disableExactOnAttributes = Some(Seq("algolia")),
-        disablePrefixOnAttributes = Some(Seq("algolia")),
-        disableTypoToleranceOnAttributes = Some(Seq("algolia")),
-        disableTypoToleranceOnWords = Some(Seq("algolia")),
-        distinct = Some(Distinct(3)),
-        enablePersonalization = Some(true),
-        enableReRanking = Some(false),
-        enableRules = Some(true),
-        exactOnSingleWordQuery = Some(ExactOnSingleWordQuery.withName("attribute")),
-        highlightPreTag = Some("<span>"),
-        highlightPostTag = Some("</span>"),
-        hitsPerPage = Some(10),
-        ignorePlurals = Some(IgnorePlurals(false)),
-        indexLanguages = Some(Seq(SupportedLanguage.withName("fr"))),
-        keepDiacriticsOnCharacters = Some("abc"),
-        maxFacetHits = Some(20),
-        maxValuesPerFacet = Some(30),
-        minProximity = Some(6),
-        minWordSizefor1Typo = Some(5),
-        minWordSizefor2Typos = Some(11),
-        mode = Some(Mode.withName("neuralSearch")),
-        numericAttributesForFiltering = Some(Seq("algolia")),
-        optionalWords = Some(OptionalWords(Seq("myspace"))),
-        paginationLimitedTo = Some(0),
-        queryLanguages = Some(Seq(SupportedLanguage.withName("fr"))),
-        queryType = Some(QueryType.withName("prefixLast")),
-        ranking = Some(Seq("geo")),
-        reRankingApplyFilter = Some(ReRankingApplyFilter("mySearch:filters")),
-        relevancyStrictness = Some(10),
-        removeStopWords = Some(RemoveStopWords(false)),
-        removeWordsIfNoResults = Some(RemoveWordsIfNoResults.withName("lastWords")),
-        renderingContent = Some(
-          RenderingContent(
-            facetOrdering = Some(
-              FacetOrdering(
-                facets = Some(
-                  Facets(
-                    order = Some(Seq("a", "b"))
-                  )
-                ),
-                values = Some(
-                  Map(
-                    "a" -> Value(
-                      order = Some(Seq("b")),
-                      sortRemainingBy = Some(SortRemainingBy.withName("count"))
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          advancedSyntax = Some(true),
+          advancedSyntaxFeatures = Some(Seq(AdvancedSyntaxFeatures.withName("exactPhrase"))),
+          allowCompressionOfIntegerArray = Some(true),
+          allowTyposOnNumericTokens = Some(true),
+          alternativesAsExact = Some(Seq(AlternativesAsExact.withName("singleWordSynonym"))),
+          attributeCriteriaComputedByMinProximity = Some(true),
+          attributeForDistinct = Some("test"),
+          attributesForFaceting = Some(Seq("algolia")),
+          attributesToHighlight = Some(Seq("algolia")),
+          attributesToRetrieve = Some(Seq("algolia")),
+          attributesToSnippet = Some(Seq("algolia")),
+          attributesToTransliterate = Some(Seq("algolia")),
+          camelCaseAttributes = Some(Seq("algolia")),
+          customNormalization = Some(Map("algolia" -> Map("aloglia" -> "aglolia"))),
+          customRanking = Some(Seq("algolia")),
+          decompoundQuery = Some(false),
+          decompoundedAttributes = Some(JObject(List(JField("algolia", JString("aloglia"))))),
+          disableExactOnAttributes = Some(Seq("algolia")),
+          disablePrefixOnAttributes = Some(Seq("algolia")),
+          disableTypoToleranceOnAttributes = Some(Seq("algolia")),
+          disableTypoToleranceOnWords = Some(Seq("algolia")),
+          distinct = Some(Distinct(3)),
+          enablePersonalization = Some(true),
+          enableReRanking = Some(false),
+          enableRules = Some(true),
+          exactOnSingleWordQuery = Some(ExactOnSingleWordQuery.withName("attribute")),
+          highlightPreTag = Some("<span>"),
+          highlightPostTag = Some("</span>"),
+          hitsPerPage = Some(10),
+          ignorePlurals = Some(IgnorePlurals(false)),
+          indexLanguages = Some(Seq(SupportedLanguage.withName("fr"))),
+          keepDiacriticsOnCharacters = Some("abc"),
+          maxFacetHits = Some(20),
+          maxValuesPerFacet = Some(30),
+          minProximity = Some(6),
+          minWordSizefor1Typo = Some(5),
+          minWordSizefor2Typos = Some(11),
+          mode = Some(Mode.withName("neuralSearch")),
+          numericAttributesForFiltering = Some(Seq("algolia")),
+          optionalWords = Some(OptionalWords(Seq("myspace"))),
+          paginationLimitedTo = Some(0),
+          queryLanguages = Some(Seq(SupportedLanguage.withName("fr"))),
+          queryType = Some(QueryType.withName("prefixLast")),
+          ranking = Some(Seq("geo")),
+          reRankingApplyFilter = Some(ReRankingApplyFilter("mySearch:filters")),
+          relevancyStrictness = Some(10),
+          removeStopWords = Some(RemoveStopWords(false)),
+          removeWordsIfNoResults = Some(RemoveWordsIfNoResults.withName("lastWords")),
+          renderingContent = Some(
+            RenderingContent(
+              facetOrdering = Some(
+                FacetOrdering(
+                  facets = Some(
+                    Facets(
+                      order = Some(Seq("a", "b"))
+                    )
+                  ),
+                  values = Some(
+                    Map(
+                      "a" -> Value(
+                        order = Some(Seq("b")),
+                        sortRemainingBy = Some(SortRemainingBy.withName("count"))
+                      )
                     )
                   )
                 )
               )
             )
-          )
-        ),
-        replaceSynonymsInHighlight = Some(true),
-        replicas = Some(Seq("")),
-        responseFields = Some(Seq("algolia")),
-        restrictHighlightAndSnippetArrays = Some(true),
-        searchableAttributes = Some(Seq("foo")),
-        semanticSearch = Some(
-          SemanticSearch(
-            eventSources = Some(Seq("foo"))
-          )
-        ),
-        separatorsToIndex = Some("bar"),
-        snippetEllipsisText = Some("---"),
-        sortFacetValuesBy = Some("date"),
-        typoTolerance = Some(TypoTolerance(false)),
-        unretrievableAttributes = Some(Seq("foo")),
-        userData = Some(JObject(List(JField("user", JString("data")))))
-      )
+          ),
+          replaceSynonymsInHighlight = Some(true),
+          replicas = Some(Seq("")),
+          responseFields = Some(Seq("algolia")),
+          restrictHighlightAndSnippetArrays = Some(true),
+          searchableAttributes = Some(Seq("foo")),
+          semanticSearch = Some(
+            SemanticSearch(
+              eventSources = Some(Seq("foo"))
+            )
+          ),
+          separatorsToIndex = Some("bar"),
+          snippetEllipsisText = Some("---"),
+          sortFacetValuesBy = Some("date"),
+          typoTolerance = Some(TypoTolerance(false)),
+          unretrievableAttributes = Some(Seq("foo")),
+          userData = Some(JObject(List(JField("user", JString("data")))))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8886,24 +9797,24 @@ class SnippetSearchClient {
     *
     * searchableAttributesWithCustomRankingsAndAttributesForFaceting
     */
-  def snippetForSearchClientSetSettings53(): Unit = {
+  def snippetForSearchClientSetSettings55(): Unit = {
     // >SEPARATOR setSettings searchableAttributesWithCustomRankingsAndAttributesForFaceting
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        searchableAttributes = Some(Seq("brand", "name", "categories", "unordered(description)")),
-        customRanking = Some(Seq("desc(popularity)")),
-        attributesForFaceting = Some(Seq("searchable(brand)", "type", "categories", "price"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          searchableAttributes = Some(Seq("brand", "name", "categories", "unordered(description)")),
+          customRanking = Some(Seq("desc(popularity)")),
+          attributesForFaceting = Some(Seq("searchable(brand)", "type", "categories", "price"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8911,22 +9822,22 @@ class SnippetSearchClient {
     *
     * searchableAttributesOrdering
     */
-  def snippetForSearchClientSetSettings54(): Unit = {
+  def snippetForSearchClientSetSettings56(): Unit = {
     // >SEPARATOR setSettings searchableAttributesOrdering
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        searchableAttributes = Some(Seq("unordered(title)", "cast"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          searchableAttributes = Some(Seq("unordered(title)", "cast"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8934,22 +9845,22 @@ class SnippetSearchClient {
     *
     * searchableAttributesProductReferenceSuffixes
     */
-  def snippetForSearchClientSetSettings55(): Unit = {
+  def snippetForSearchClientSetSettings57(): Unit = {
     // >SEPARATOR setSettings searchableAttributesProductReferenceSuffixes
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        searchableAttributes = Some(Seq("name", "product_reference", "product_reference_suffixes"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          searchableAttributes = Some(Seq("name", "product_reference", "product_reference_suffixes"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8957,23 +9868,23 @@ class SnippetSearchClient {
     *
     * queryLanguageAndIgnorePlurals
     */
-  def snippetForSearchClientSetSettings56(): Unit = {
+  def snippetForSearchClientSetSettings58(): Unit = {
     // >SEPARATOR setSettings queryLanguageAndIgnorePlurals
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        queryLanguages = Some(Seq(SupportedLanguage.withName("en"))),
-        ignorePlurals = Some(IgnorePlurals(true))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          queryLanguages = Some(Seq(SupportedLanguage.withName("en"))),
+          ignorePlurals = Some(IgnorePlurals(true))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -8981,22 +9892,22 @@ class SnippetSearchClient {
     *
     * searchableAttributesInMovies
     */
-  def snippetForSearchClientSetSettings57(): Unit = {
+  def snippetForSearchClientSetSettings59(): Unit = {
     // >SEPARATOR setSettings searchableAttributesInMovies
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        searchableAttributes = Some(Seq("title_eng", "title_fr", "title_es"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          searchableAttributes = Some(Seq("title_eng", "title_fr", "title_es"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9004,22 +9915,22 @@ class SnippetSearchClient {
     *
     * disablePrefixOnAttributes
     */
-  def snippetForSearchClientSetSettings58(): Unit = {
+  def snippetForSearchClientSetSettings60(): Unit = {
     // >SEPARATOR setSettings disablePrefixOnAttributes
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        disablePrefixOnAttributes = Some(Seq("serial_number"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          disablePrefixOnAttributes = Some(Seq("serial_number"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9027,22 +9938,22 @@ class SnippetSearchClient {
     *
     * disableTypoToleranceOnAttributes
     */
-  def snippetForSearchClientSetSettings59(): Unit = {
+  def snippetForSearchClientSetSettings61(): Unit = {
     // >SEPARATOR setSettings disableTypoToleranceOnAttributes
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        disableTypoToleranceOnAttributes = Some(Seq("serial_number"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          disableTypoToleranceOnAttributes = Some(Seq("serial_number"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9050,22 +9961,22 @@ class SnippetSearchClient {
     *
     * searchableAttributesSimpleExample
     */
-  def snippetForSearchClientSetSettings60(): Unit = {
+  def snippetForSearchClientSetSettings62(): Unit = {
     // >SEPARATOR setSettings searchableAttributesSimpleExample
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        searchableAttributes = Some(Seq("serial_number"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          searchableAttributes = Some(Seq("serial_number"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9073,22 +9984,22 @@ class SnippetSearchClient {
     *
     * searchableAttributesSimpleExampleAlt
     */
-  def snippetForSearchClientSetSettings61(): Unit = {
+  def snippetForSearchClientSetSettings63(): Unit = {
     // >SEPARATOR setSettings searchableAttributesSimpleExampleAlt
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        searchableAttributes = Some(Seq("serial_number", "serial_number_suffixes"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          searchableAttributes = Some(Seq("serial_number", "serial_number_suffixes"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9096,22 +10007,22 @@ class SnippetSearchClient {
     *
     * set_searchable_attributes
     */
-  def snippetForSearchClientSetSettings62(): Unit = {
+  def snippetForSearchClientSetSettings64(): Unit = {
     // >SEPARATOR setSettings set_searchable_attributes
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        searchableAttributes = Some(Seq("title,alternative_title", "author", "unordered(text)", "emails.personal"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          searchableAttributes = Some(Seq("title,alternative_title", "author", "unordered(text)", "emails.personal"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9119,30 +10030,30 @@ class SnippetSearchClient {
     *
     * set_searchable_attributes
     */
-  def snippetForSearchClientSetSettings63(): Unit = {
+  def snippetForSearchClientSetSettings65(): Unit = {
     // >SEPARATOR setSettings set_searchable_attributes
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributesForFaceting = Some(
-          Seq(
-            "author",
-            "filterOnly(isbn)",
-            "searchable(edition)",
-            "afterDistinct(category)",
-            "afterDistinct(searchable(publisher))"
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributesForFaceting = Some(
+            Seq(
+              "author",
+              "filterOnly(isbn)",
+              "searchable(edition)",
+              "afterDistinct(category)",
+              "afterDistinct(searchable(publisher))"
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9150,22 +10061,22 @@ class SnippetSearchClient {
     *
     * unretrievable_attributes
     */
-  def snippetForSearchClientSetSettings64(): Unit = {
+  def snippetForSearchClientSetSettings66(): Unit = {
     // >SEPARATOR setSettings unretrievable_attributes
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        unretrievableAttributes = Some(Seq("total_number_of_sales"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          unretrievableAttributes = Some(Seq("total_number_of_sales"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9173,22 +10084,22 @@ class SnippetSearchClient {
     *
     * set_retrievable_attributes
     */
-  def snippetForSearchClientSetSettings65(): Unit = {
+  def snippetForSearchClientSetSettings67(): Unit = {
     // >SEPARATOR setSettings set_retrievable_attributes
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributesToRetrieve = Some(Seq("author", "title", "content"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributesToRetrieve = Some(Seq("author", "title", "content"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9196,22 +10107,22 @@ class SnippetSearchClient {
     *
     * set_all_attributes_as_retrievable
     */
-  def snippetForSearchClientSetSettings66(): Unit = {
+  def snippetForSearchClientSetSettings68(): Unit = {
     // >SEPARATOR setSettings set_all_attributes_as_retrievable
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributesToRetrieve = Some(Seq("*"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributesToRetrieve = Some(Seq("*"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9219,22 +10130,22 @@ class SnippetSearchClient {
     *
     * specify_attributes_not_to_retrieve
     */
-  def snippetForSearchClientSetSettings67(): Unit = {
+  def snippetForSearchClientSetSettings69(): Unit = {
     // >SEPARATOR setSettings specify_attributes_not_to_retrieve
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributesToRetrieve = Some(Seq("*", "-SKU", "-internal_desc"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributesToRetrieve = Some(Seq("*", "-SKU", "-internal_desc"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9242,22 +10153,22 @@ class SnippetSearchClient {
     *
     * neural_search
     */
-  def snippetForSearchClientSetSettings68(): Unit = {
+  def snippetForSearchClientSetSettings70(): Unit = {
     // >SEPARATOR setSettings neural_search
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        mode = Some(Mode.withName("neuralSearch"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          mode = Some(Mode.withName("neuralSearch"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9265,22 +10176,22 @@ class SnippetSearchClient {
     *
     * keyword_search
     */
-  def snippetForSearchClientSetSettings69(): Unit = {
+  def snippetForSearchClientSetSettings71(): Unit = {
     // >SEPARATOR setSettings keyword_search
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        mode = Some(Mode.withName("keywordSearch"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          mode = Some(Mode.withName("keywordSearch"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9288,22 +10199,22 @@ class SnippetSearchClient {
     *
     * set_default_ranking
     */
-  def snippetForSearchClientSetSettings70(): Unit = {
+  def snippetForSearchClientSetSettings72(): Unit = {
     // >SEPARATOR setSettings set_default_ranking
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        ranking = Some(Seq("typo", "geo", "words", "filters", "attribute", "proximity", "exact", "custom"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          ranking = Some(Seq("typo", "geo", "words", "filters", "attribute", "proximity", "exact", "custom"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9311,23 +10222,23 @@ class SnippetSearchClient {
     *
     * set_ranking_by_attribute_asc
     */
-  def snippetForSearchClientSetSettings71(): Unit = {
+  def snippetForSearchClientSetSettings73(): Unit = {
     // >SEPARATOR setSettings set_ranking_by_attribute_asc
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        ranking =
-          Some(Seq("asc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          ranking =
+            Some(Seq("asc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9335,23 +10246,23 @@ class SnippetSearchClient {
     *
     * set_ranking_by_attribute_desc
     */
-  def snippetForSearchClientSetSettings72(): Unit = {
+  def snippetForSearchClientSetSettings74(): Unit = {
     // >SEPARATOR setSettings set_ranking_by_attribute_desc
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        ranking =
-          Some(Seq("desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          ranking =
+            Some(Seq("desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9359,22 +10270,22 @@ class SnippetSearchClient {
     *
     * restrict_searchable_attributes
     */
-  def snippetForSearchClientSetSettings73(): Unit = {
+  def snippetForSearchClientSetSettings75(): Unit = {
     // >SEPARATOR setSettings restrict_searchable_attributes
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        customRanking = Some(Seq("desc(popularity)", "asc(price)"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          customRanking = Some(Seq("desc(popularity)", "asc(price)"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9382,22 +10293,22 @@ class SnippetSearchClient {
     *
     * set_default_relevancy
     */
-  def snippetForSearchClientSetSettings74(): Unit = {
+  def snippetForSearchClientSetSettings76(): Unit = {
     // >SEPARATOR setSettings set_default_relevancy
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        relevancyStrictness = Some(90)
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          relevancyStrictness = Some(90)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9405,22 +10316,22 @@ class SnippetSearchClient {
     *
     * set_replicas
     */
-  def snippetForSearchClientSetSettings75(): Unit = {
+  def snippetForSearchClientSetSettings77(): Unit = {
     // >SEPARATOR setSettings set_replicas
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        replicas = Some(Seq("name_of_replica_index1", "name_of_replica_index2"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          replicas = Some(Seq("name_of_replica_index1", "name_of_replica_index2"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9428,22 +10339,22 @@ class SnippetSearchClient {
     *
     * set_default_max_values_per_facet
     */
-  def snippetForSearchClientSetSettings76(): Unit = {
+  def snippetForSearchClientSetSettings78(): Unit = {
     // >SEPARATOR setSettings set_default_max_values_per_facet
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        maxValuesPerFacet = Some(100)
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          maxValuesPerFacet = Some(100)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9451,22 +10362,22 @@ class SnippetSearchClient {
     *
     * set_default_sort_facet_values_by
     */
-  def snippetForSearchClientSetSettings77(): Unit = {
+  def snippetForSearchClientSetSettings79(): Unit = {
     // >SEPARATOR setSettings set_default_sort_facet_values_by
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        sortFacetValuesBy = Some("alpha")
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          sortFacetValuesBy = Some("alpha")
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9474,22 +10385,22 @@ class SnippetSearchClient {
     *
     * set_attributes_to_snippet
     */
-  def snippetForSearchClientSetSettings78(): Unit = {
+  def snippetForSearchClientSetSettings80(): Unit = {
     // >SEPARATOR setSettings set_attributes_to_snippet
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributesToSnippet = Some(Seq("content:80", "description"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributesToSnippet = Some(Seq("content:80", "description"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9497,22 +10408,22 @@ class SnippetSearchClient {
     *
     * set_all_attributes_to_snippet
     */
-  def snippetForSearchClientSetSettings79(): Unit = {
+  def snippetForSearchClientSetSettings81(): Unit = {
     // >SEPARATOR setSettings set_all_attributes_to_snippet
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributesToSnippet = Some(Seq("*:80"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributesToSnippet = Some(Seq("*:80"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9520,22 +10431,22 @@ class SnippetSearchClient {
     *
     * set_default_highlight_pre_tag
     */
-  def snippetForSearchClientSetSettings80(): Unit = {
+  def snippetForSearchClientSetSettings82(): Unit = {
     // >SEPARATOR setSettings set_default_highlight_pre_tag
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        highlightPreTag = Some("<em>")
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          highlightPreTag = Some("<em>")
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9543,22 +10454,22 @@ class SnippetSearchClient {
     *
     * set_default_highlight_post_tag
     */
-  def snippetForSearchClientSetSettings81(): Unit = {
+  def snippetForSearchClientSetSettings83(): Unit = {
     // >SEPARATOR setSettings set_default_highlight_post_tag
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        highlightPostTag = Some("</em>")
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          highlightPostTag = Some("</em>")
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9566,22 +10477,22 @@ class SnippetSearchClient {
     *
     * set_default_snippet_ellipsis_text
     */
-  def snippetForSearchClientSetSettings82(): Unit = {
+  def snippetForSearchClientSetSettings84(): Unit = {
     // >SEPARATOR setSettings set_default_snippet_ellipsis_text
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        snippetEllipsisText = Some("…")
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          snippetEllipsisText = Some("…")
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9589,22 +10500,22 @@ class SnippetSearchClient {
     *
     * enable_restrict_highlight_and_snippet_arrays_by_default
     */
-  def snippetForSearchClientSetSettings83(): Unit = {
+  def snippetForSearchClientSetSettings85(): Unit = {
     // >SEPARATOR setSettings enable_restrict_highlight_and_snippet_arrays_by_default
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        restrictHighlightAndSnippetArrays = Some(true)
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          restrictHighlightAndSnippetArrays = Some(true)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9612,22 +10523,22 @@ class SnippetSearchClient {
     *
     * set_default_hits_per_page
     */
-  def snippetForSearchClientSetSettings84(): Unit = {
+  def snippetForSearchClientSetSettings86(): Unit = {
     // >SEPARATOR setSettings set_default_hits_per_page
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        hitsPerPage = Some(20)
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          hitsPerPage = Some(20)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9635,22 +10546,22 @@ class SnippetSearchClient {
     *
     * set_pagination_limit
     */
-  def snippetForSearchClientSetSettings85(): Unit = {
+  def snippetForSearchClientSetSettings87(): Unit = {
     // >SEPARATOR setSettings set_pagination_limit
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        paginationLimitedTo = Some(1000)
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          paginationLimitedTo = Some(1000)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9658,22 +10569,22 @@ class SnippetSearchClient {
     *
     * set_default_min_word_size_for_one_typo
     */
-  def snippetForSearchClientSetSettings86(): Unit = {
+  def snippetForSearchClientSetSettings88(): Unit = {
     // >SEPARATOR setSettings set_default_min_word_size_for_one_typo
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        minWordSizefor1Typo = Some(4)
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          minWordSizefor1Typo = Some(4)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9681,22 +10592,22 @@ class SnippetSearchClient {
     *
     * set_default_min_word_size_for_two_typos
     */
-  def snippetForSearchClientSetSettings87(): Unit = {
+  def snippetForSearchClientSetSettings89(): Unit = {
     // >SEPARATOR setSettings set_default_min_word_size_for_two_typos
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        minWordSizefor2Typos = Some(4)
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          minWordSizefor2Typos = Some(4)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9704,22 +10615,22 @@ class SnippetSearchClient {
     *
     * set_default_typo_tolerance_mode
     */
-  def snippetForSearchClientSetSettings88(): Unit = {
+  def snippetForSearchClientSetSettings90(): Unit = {
     // >SEPARATOR setSettings set_default_typo_tolerance_mode
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        typoTolerance = Some(TypoTolerance(true))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          typoTolerance = Some(TypoTolerance(true))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9727,22 +10638,22 @@ class SnippetSearchClient {
     *
     * disable_typos_on_numeric_tokens_by_default
     */
-  def snippetForSearchClientSetSettings89(): Unit = {
+  def snippetForSearchClientSetSettings91(): Unit = {
     // >SEPARATOR setSettings disable_typos_on_numeric_tokens_by_default
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        allowTyposOnNumericTokens = Some(false)
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          allowTyposOnNumericTokens = Some(false)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9750,22 +10661,22 @@ class SnippetSearchClient {
     *
     * disable_typo_tolerance_for_words
     */
-  def snippetForSearchClientSetSettings90(): Unit = {
+  def snippetForSearchClientSetSettings92(): Unit = {
     // >SEPARATOR setSettings disable_typo_tolerance_for_words
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        disableTypoToleranceOnWords = Some(Seq("wheel", "1X2BCD"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          disableTypoToleranceOnWords = Some(Seq("wheel", "1X2BCD"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9773,70 +10684,22 @@ class SnippetSearchClient {
     *
     * set_separators_to_index
     */
-  def snippetForSearchClientSetSettings91(): Unit = {
+  def snippetForSearchClientSetSettings93(): Unit = {
     // >SEPARATOR setSettings set_separators_to_index
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        separatorsToIndex = Some("+#")
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          separatorsToIndex = Some("+#")
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the setSettings method.
-    *
-    * set_languages_using_querylanguages
-    */
-  def snippetForSearchClientSetSettings92(): Unit = {
-    // >SEPARATOR setSettings set_languages_using_querylanguages
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        queryLanguages = Some(Seq(SupportedLanguage.withName("es"))),
-        ignorePlurals = Some(IgnorePlurals(true))
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the setSettings method.
-    *
-    * set_attributes_to_transliterate
-    */
-  def snippetForSearchClientSetSettings93(): Unit = {
-    // >SEPARATOR setSettings set_attributes_to_transliterate
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        indexLanguages = Some(Seq(SupportedLanguage.withName("ja"))),
-        attributesToTransliterate = Some(Seq("name", "description"))
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9850,139 +10713,41 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        queryLanguages = Some(Seq(SupportedLanguage.withName("es"))),
-        removeStopWords = Some(RemoveStopWords(true))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          queryLanguages = Some(Seq(SupportedLanguage.withName("es"))),
+          ignorePlurals = Some(IgnorePlurals(true))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
   /** Snippet for the setSettings method.
     *
-    * set_camel_case_attributes
+    * set_attributes_to_transliterate
     */
   def snippetForSearchClientSetSettings95(): Unit = {
-    // >SEPARATOR setSettings set_camel_case_attributes
+    // >SEPARATOR setSettings set_attributes_to_transliterate
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        camelCaseAttributes = Some(Seq("description"))
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the setSettings method.
-    *
-    * set_decompounded_attributes
-    */
-  def snippetForSearchClientSetSettings96(): Unit = {
-    // >SEPARATOR setSettings set_decompounded_attributes
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        decompoundedAttributes = Some(JObject(List(JField("de", JArray(List(JString("name")))))))
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the setSettings method.
-    *
-    * set_decompounded_multiple_attributes
-    */
-  def snippetForSearchClientSetSettings97(): Unit = {
-    // >SEPARATOR setSettings set_decompounded_multiple_attributes
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        decompoundedAttributes = Some(
-          JObject(
-            List(
-              JField("de", JArray(List(JString("name_de"), JString("description_de")))),
-              JField("fi", JArray(List(JString("name_fi"), JString("description_fi"))))
-            )
-          )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          indexLanguages = Some(Seq(SupportedLanguage.withName("ja"))),
+          attributesToTransliterate = Some(Seq("name", "description"))
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the setSettings method.
-    *
-    * set_keep_diacritics_on_characters
-    */
-  def snippetForSearchClientSetSettings98(): Unit = {
-    // >SEPARATOR setSettings set_keep_diacritics_on_characters
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        keepDiacriticsOnCharacters = Some("øé")
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the setSettings method.
-    *
-    * set_custom_normalization
-    */
-  def snippetForSearchClientSetSettings99(): Unit = {
-    // >SEPARATOR setSettings set_custom_normalization
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        customNormalization = Some(Map("default" -> Map("ä" -> "ae")))
-      )
-    )
-
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -9990,24 +10755,170 @@ class SnippetSearchClient {
     *
     * set_languages_using_querylanguages
     */
-  def snippetForSearchClientSetSettings100(): Unit = {
+  def snippetForSearchClientSetSettings96(): Unit = {
     // >SEPARATOR setSettings set_languages_using_querylanguages
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        queryLanguages = Some(Seq(SupportedLanguage.withName("es"))),
-        removeStopWords = Some(RemoveStopWords(true)),
-        ignorePlurals = Some(IgnorePlurals(true))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          queryLanguages = Some(Seq(SupportedLanguage.withName("es"))),
+          removeStopWords = Some(RemoveStopWords(true))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the setSettings method.
+    *
+    * set_camel_case_attributes
+    */
+  def snippetForSearchClientSetSettings97(): Unit = {
+    // >SEPARATOR setSettings set_camel_case_attributes
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          camelCaseAttributes = Some(Seq("description"))
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the setSettings method.
+    *
+    * set_decompounded_attributes
+    */
+  def snippetForSearchClientSetSettings98(): Unit = {
+    // >SEPARATOR setSettings set_decompounded_attributes
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          decompoundedAttributes = Some(JObject(List(JField("de", JArray(List(JString("name")))))))
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the setSettings method.
+    *
+    * set_decompounded_multiple_attributes
+    */
+  def snippetForSearchClientSetSettings99(): Unit = {
+    // >SEPARATOR setSettings set_decompounded_multiple_attributes
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          decompoundedAttributes = Some(
+            JObject(
+              List(
+                JField("de", JArray(List(JString("name_de"), JString("description_de")))),
+                JField("fi", JArray(List(JString("name_fi"), JString("description_fi"))))
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the setSettings method.
+    *
+    * set_keep_diacritics_on_characters
+    */
+  def snippetForSearchClientSetSettings100(): Unit = {
+    // >SEPARATOR setSettings set_keep_diacritics_on_characters
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          keepDiacriticsOnCharacters = Some("øé")
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the setSettings method.
+    *
+    * set_custom_normalization
+    */
+  def snippetForSearchClientSetSettings101(): Unit = {
+    // >SEPARATOR setSettings set_custom_normalization
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          customNormalization = Some(Map("default" -> Map("ä" -> "ae")))
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the setSettings method.
+    *
+    * set_languages_using_querylanguages
+    */
+  def snippetForSearchClientSetSettings102(): Unit = {
+    // >SEPARATOR setSettings set_languages_using_querylanguages
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          queryLanguages = Some(Seq(SupportedLanguage.withName("es"))),
+          removeStopWords = Some(RemoveStopWords(true)),
+          ignorePlurals = Some(IgnorePlurals(true))
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 
@@ -10015,22 +10926,22 @@ class SnippetSearchClient {
     *
     * set_indexlanguages
     */
-  def snippetForSearchClientSetSettings101(): Unit = {
+  def snippetForSearchClientSetSettings103(): Unit = {
     // >SEPARATOR setSettings set_indexlanguages
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        indexLanguages = Some(Seq(SupportedLanguage.withName("ja")))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          indexLanguages = Some(Seq(SupportedLanguage.withName("ja")))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10038,22 +10949,22 @@ class SnippetSearchClient {
     *
     * enable_decompound_query_by_default
     */
-  def snippetForSearchClientSetSettings102(): Unit = {
+  def snippetForSearchClientSetSettings104(): Unit = {
     // >SEPARATOR setSettings enable_decompound_query_by_default
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        decompoundQuery = Some(true)
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          decompoundQuery = Some(true)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10061,22 +10972,22 @@ class SnippetSearchClient {
     *
     * enable_rules_syntax_by_default
     */
-  def snippetForSearchClientSetSettings103(): Unit = {
+  def snippetForSearchClientSetSettings105(): Unit = {
     // >SEPARATOR setSettings enable_rules_syntax_by_default
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        enableRules = Some(true)
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          enableRules = Some(true)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10084,22 +10995,22 @@ class SnippetSearchClient {
     *
     * enable_personalization_settings
     */
-  def snippetForSearchClientSetSettings104(): Unit = {
+  def snippetForSearchClientSetSettings106(): Unit = {
     // >SEPARATOR setSettings enable_personalization_settings
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        enablePersonalization = Some(true)
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          enablePersonalization = Some(true)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10107,22 +11018,22 @@ class SnippetSearchClient {
     *
     * set_default_query_type
     */
-  def snippetForSearchClientSetSettings105(): Unit = {
+  def snippetForSearchClientSetSettings107(): Unit = {
     // >SEPARATOR setSettings set_default_query_type
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        queryType = Some(QueryType.withName("prefixLast"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          queryType = Some(QueryType.withName("prefixLast"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10130,22 +11041,22 @@ class SnippetSearchClient {
     *
     * set_default_remove_words_if_no_result
     */
-  def snippetForSearchClientSetSettings106(): Unit = {
+  def snippetForSearchClientSetSettings108(): Unit = {
     // >SEPARATOR setSettings set_default_remove_words_if_no_result
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        removeWordsIfNoResults = Some(RemoveWordsIfNoResults.withName("none"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          removeWordsIfNoResults = Some(RemoveWordsIfNoResults.withName("none"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10153,22 +11064,22 @@ class SnippetSearchClient {
     *
     * enable_advanced_syntax_by_default
     */
-  def snippetForSearchClientSetSettings107(): Unit = {
+  def snippetForSearchClientSetSettings109(): Unit = {
     // >SEPARATOR setSettings enable_advanced_syntax_by_default
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        advancedSyntax = Some(true)
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          advancedSyntax = Some(true)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10176,22 +11087,22 @@ class SnippetSearchClient {
     *
     * set_default_optional_words
     */
-  def snippetForSearchClientSetSettings108(): Unit = {
+  def snippetForSearchClientSetSettings110(): Unit = {
     // >SEPARATOR setSettings set_default_optional_words
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        optionalWords = Some(OptionalWords(Seq("blue", "iphone case")))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          optionalWords = Some(OptionalWords(Seq("blue", "iphone case")))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10199,22 +11110,22 @@ class SnippetSearchClient {
     *
     * disabling_prefix_search_for_some_attributes_by_default
     */
-  def snippetForSearchClientSetSettings109(): Unit = {
+  def snippetForSearchClientSetSettings111(): Unit = {
     // >SEPARATOR setSettings disabling_prefix_search_for_some_attributes_by_default
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        disablePrefixOnAttributes = Some(Seq("sku"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          disablePrefixOnAttributes = Some(Seq("sku"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10222,22 +11133,22 @@ class SnippetSearchClient {
     *
     * disabling_exact_for_some_attributes_by_default
     */
-  def snippetForSearchClientSetSettings110(): Unit = {
+  def snippetForSearchClientSetSettings112(): Unit = {
     // >SEPARATOR setSettings disabling_exact_for_some_attributes_by_default
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        disableExactOnAttributes = Some(Seq("description"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          disableExactOnAttributes = Some(Seq("description"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10245,22 +11156,22 @@ class SnippetSearchClient {
     *
     * set_default_exact_single_word_query
     */
-  def snippetForSearchClientSetSettings111(): Unit = {
+  def snippetForSearchClientSetSettings113(): Unit = {
     // >SEPARATOR setSettings set_default_exact_single_word_query
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        exactOnSingleWordQuery = Some(ExactOnSingleWordQuery.withName("attribute"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          exactOnSingleWordQuery = Some(ExactOnSingleWordQuery.withName("attribute"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10268,23 +11179,23 @@ class SnippetSearchClient {
     *
     * set_default_aternative_as_exact
     */
-  def snippetForSearchClientSetSettings112(): Unit = {
+  def snippetForSearchClientSetSettings114(): Unit = {
     // >SEPARATOR setSettings set_default_aternative_as_exact
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        alternativesAsExact =
-          Some(Seq(AlternativesAsExact.withName("ignorePlurals"), AlternativesAsExact.withName("singleWordSynonym")))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          alternativesAsExact =
+            Some(Seq(AlternativesAsExact.withName("ignorePlurals"), AlternativesAsExact.withName("singleWordSynonym")))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10292,22 +11203,22 @@ class SnippetSearchClient {
     *
     * enable_advanced_syntax_by_default
     */
-  def snippetForSearchClientSetSettings113(): Unit = {
+  def snippetForSearchClientSetSettings115(): Unit = {
     // >SEPARATOR setSettings enable_advanced_syntax_by_default
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        advancedSyntax = Some(true)
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          advancedSyntax = Some(true)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10315,22 +11226,22 @@ class SnippetSearchClient {
     *
     * set_numeric_attributes_for_filtering
     */
-  def snippetForSearchClientSetSettings114(): Unit = {
+  def snippetForSearchClientSetSettings116(): Unit = {
     // >SEPARATOR setSettings set_numeric_attributes_for_filtering
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        numericAttributesForFiltering = Some(Seq("quantity", "popularity"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          numericAttributesForFiltering = Some(Seq("quantity", "popularity"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10338,22 +11249,22 @@ class SnippetSearchClient {
     *
     * enable_compression_of_integer_array
     */
-  def snippetForSearchClientSetSettings115(): Unit = {
+  def snippetForSearchClientSetSettings117(): Unit = {
     // >SEPARATOR setSettings enable_compression_of_integer_array
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        allowCompressionOfIntegerArray = Some(true)
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          allowCompressionOfIntegerArray = Some(true)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10361,22 +11272,22 @@ class SnippetSearchClient {
     *
     * set_attributes_for_distinct
     */
-  def snippetForSearchClientSetSettings116(): Unit = {
+  def snippetForSearchClientSetSettings118(): Unit = {
     // >SEPARATOR setSettings set_attributes_for_distinct
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributeForDistinct = Some("url")
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributeForDistinct = Some("url")
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10384,23 +11295,23 @@ class SnippetSearchClient {
     *
     * set_distinct
     */
-  def snippetForSearchClientSetSettings117(): Unit = {
+  def snippetForSearchClientSetSettings119(): Unit = {
     // >SEPARATOR setSettings set_distinct
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        distinct = Some(Distinct(1)),
-        attributeForDistinct = Some("url")
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          distinct = Some(Distinct(1)),
+          attributeForDistinct = Some("url")
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10408,22 +11319,22 @@ class SnippetSearchClient {
     *
     * set_replace_synonyms_in_highlights
     */
-  def snippetForSearchClientSetSettings118(): Unit = {
+  def snippetForSearchClientSetSettings120(): Unit = {
     // >SEPARATOR setSettings set_replace_synonyms_in_highlights
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        replaceSynonymsInHighlight = Some(false)
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          replaceSynonymsInHighlight = Some(false)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10431,22 +11342,22 @@ class SnippetSearchClient {
     *
     * set_min_proximity
     */
-  def snippetForSearchClientSetSettings119(): Unit = {
+  def snippetForSearchClientSetSettings121(): Unit = {
     // >SEPARATOR setSettings set_min_proximity
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        minProximity = Some(1)
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          minProximity = Some(1)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10454,22 +11365,22 @@ class SnippetSearchClient {
     *
     * set_default_field
     */
-  def snippetForSearchClientSetSettings120(): Unit = {
+  def snippetForSearchClientSetSettings122(): Unit = {
     // >SEPARATOR setSettings set_default_field
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        responseFields = Some(Seq("hits", "hitsPerPage", "nbPages", "page"))
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          responseFields = Some(Seq("hits", "hitsPerPage", "nbPages", "page"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10477,22 +11388,22 @@ class SnippetSearchClient {
     *
     * set_max_facet_hits
     */
-  def snippetForSearchClientSetSettings121(): Unit = {
+  def snippetForSearchClientSetSettings123(): Unit = {
     // >SEPARATOR setSettings set_max_facet_hits
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        maxFacetHits = Some(10)
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          maxFacetHits = Some(10)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10500,22 +11411,22 @@ class SnippetSearchClient {
     *
     * set_attribute_criteria_computed_by_min_proximity
     */
-  def snippetForSearchClientSetSettings122(): Unit = {
+  def snippetForSearchClientSetSettings124(): Unit = {
     // >SEPARATOR setSettings set_attribute_criteria_computed_by_min_proximity
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        attributeCriteriaComputedByMinProximity = Some(true)
-      )
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          attributeCriteriaComputedByMinProximity = Some(true)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10523,24 +11434,24 @@ class SnippetSearchClient {
     *
     * set_user_data
     */
-  def snippetForSearchClientSetSettings123(): Unit = {
+  def snippetForSearchClientSetSettings125(): Unit = {
     // >SEPARATOR setSettings set_user_data
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        userData = Some(
-          JObject(List(JField("extraData", JString("This is the custom data that you want to store in your index"))))
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          userData = Some(
+            JObject(List(JField("extraData", JString("This is the custom data that you want to store in your index"))))
+          )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10548,34 +11459,36 @@ class SnippetSearchClient {
     *
     * set_rendering_content
     */
-  def snippetForSearchClientSetSettings124(): Unit = {
+  def snippetForSearchClientSetSettings126(): Unit = {
     // >SEPARATOR setSettings set_rendering_content
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = IndexSettings(
-        renderingContent = Some(
-          RenderingContent(
-            facetOrdering = Some(
-              FacetOrdering(
-                facets = Some(
-                  Facets(
-                    order = Some(Seq("size", "brand"))
-                  )
-                ),
-                values = Some(
-                  Map(
-                    "brand" -> Value(
-                      order = Some(Seq("uniqlo")),
-                      hide = Some(Seq("muji")),
-                      sortRemainingBy = Some(SortRemainingBy.withName("count"))
-                    ),
-                    "size" -> Value(
-                      order = Some(Seq("S", "M", "L")),
-                      sortRemainingBy = Some(SortRemainingBy.withName("hidden"))
+    val response = Await.result(
+      client.setSettings(
+        indexName = "<YOUR_INDEX_NAME>",
+        indexSettings = IndexSettings(
+          renderingContent = Some(
+            RenderingContent(
+              facetOrdering = Some(
+                FacetOrdering(
+                  facets = Some(
+                    Facets(
+                      order = Some(Seq("size", "brand"))
+                    )
+                  ),
+                  values = Some(
+                    Map(
+                      "brand" -> Value(
+                        order = Some(Seq("uniqlo")),
+                        hide = Some(Seq("muji")),
+                        sortRemainingBy = Some(SortRemainingBy.withName("count"))
+                      ),
+                      "size" -> Value(
+                        order = Some(Seq("S", "M", "L")),
+                        sortRemainingBy = Some(SortRemainingBy.withName("hidden"))
+                      )
                     )
                   )
                 )
@@ -10583,12 +11496,10 @@ class SnippetSearchClient {
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -10602,19 +11513,134 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.updateApiKey(
-      key = "ALGOLIA_API_KEY",
-      apiKey = ApiKey(
-        acl = Seq(Acl.withName("search"), Acl.withName("addObject")),
-        validity = Some(300),
-        maxQueriesPerIPPerHour = Some(100),
-        maxHitsPerQuery = Some(20)
-      )
+    val response = Await.result(
+      client.updateApiKey(
+        key = "ALGOLIA_API_KEY",
+        apiKey = ApiKey(
+          acl = Seq(Acl.withName("search"), Acl.withName("addObject")),
+          validity = Some(300),
+          maxQueriesPerIPPerHour = Some(100),
+          maxHitsPerQuery = Some(20)
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the waitForApiKey method.
+    *
+    * wait for api key helper - add
+    */
+  def snippetForSearchClientWaitForApiKey(): Unit = {
+    // >SEPARATOR waitForApiKey wait for api key helper - add
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.waitForApiKey(
+        key = "api-key-add-operation-test-scala",
+        operation = ApiKeyOperation.withName("add")
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the waitForApiKey method.
+    *
+    * wait for api key - update
+    */
+  def snippetForSearchClientWaitForApiKey1(): Unit = {
+    // >SEPARATOR waitForApiKey wait for api key - update
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.waitForApiKey(
+        key = "api-key-update-operation-test-scala",
+        operation = ApiKeyOperation.withName("update"),
+        apiKey = Some(
+          ApiKey(
+            description = Some("my updated api key"),
+            acl = Seq(Acl.withName("search"), Acl.withName("addObject"), Acl.withName("deleteObject")),
+            indexes = Some(Seq("Movies", "Books")),
+            referers = Some(Seq("*google.com", "*algolia.com")),
+            validity = Some(305),
+            maxQueriesPerIPPerHour = Some(95),
+            maxHitsPerQuery = Some(20)
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the waitForApiKey method.
+    *
+    * wait for api key - delete
+    */
+  def snippetForSearchClientWaitForApiKey2(): Unit = {
+    // >SEPARATOR waitForApiKey wait for api key - delete
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.waitForApiKey(
+        key = "api-key-delete-operation-test-scala",
+        operation = ApiKeyOperation.withName("delete")
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the waitForAppTask method.
+    *
+    * wait for an application-level task
+    */
+  def snippetForSearchClientWaitForAppTask(): Unit = {
+    // >SEPARATOR waitForAppTask default
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.waitForAppTask(
+        taskID = 123L
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the waitForTask method.
+    *
+    * wait for task
+    */
+  def snippetForSearchClientWaitForTask(): Unit = {
+    // >SEPARATOR waitForTask default
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.waitForTask(
+        indexName = "<YOUR_INDEX_NAME>",
+        taskID = 123L
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 

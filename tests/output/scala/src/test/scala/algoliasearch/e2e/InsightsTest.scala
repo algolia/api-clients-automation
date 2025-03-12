@@ -8,8 +8,6 @@ import org.json4s.*
 import org.json4s.native.JsonParser.*
 import org.scalatest.funsuite.AnyFunSuite
 import io.github.cdimascio.dotenv.Dotenv
-import org.skyscreamer.jsonassert.JSONCompare.compareJSON
-import org.skyscreamer.jsonassert.JSONCompareMode
 import org.json4s.native.Serialization
 import org.json4s.native.Serialization.write
 
@@ -17,9 +15,9 @@ import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
 
-class InsightsTestE2E extends AnyFunSuite {
+class InsightsTest extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   def testClient(): InsightsClient = {
     val region = Some("us")
@@ -50,7 +48,7 @@ class InsightsTestE2E extends AnyFunSuite {
             index = "products",
             userToken = "user-123456",
             authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1738195200000L),
+            timestamp = Some(1741564800000L),
             objectIDs = Seq("9780545139700", "9780439784542"),
             queryID = "43b15df305339e827f0ac0bdc5ebcaa7"
           ),
@@ -60,7 +58,7 @@ class InsightsTestE2E extends AnyFunSuite {
             index = "products",
             userToken = "user-123456",
             authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1738195200000L),
+            timestamp = Some(1741564800000L),
             objectIDs = Seq("9780545139700", "9780439784542")
           )
         )
@@ -68,7 +66,20 @@ class InsightsTestE2E extends AnyFunSuite {
     )
 
     val response = Await.result(future, Duration.Inf)
-    compareJSON("""{"message":"OK","status":200}""", write(response), JSONCompareMode.LENIENT)
+    val expected = parse("""{"message":"OK","status":200}""")
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
   }
 
 }

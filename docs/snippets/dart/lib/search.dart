@@ -5,9 +5,32 @@ import 'package:algolia_client_search/algolia_client_search.dart';
 
 // Snippet for the addApiKey method.
 //
-// addApiKey
+// minimal
 void snippetForaddApiKey() async {
-  // >SEPARATOR addApiKey default
+  // >SEPARATOR addApiKey minimal
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.addApiKey(
+    apiKey: ApiKey(
+      acl: [
+        Acl.fromJson("search"),
+        Acl.fromJson("addObject"),
+      ],
+      description: "my new api key",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the addApiKey method.
+//
+// all
+void snippetForaddApiKey1() async {
+  // >SEPARATOR addApiKey all
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1272,6 +1295,46 @@ void snippetForgenerateSecuredApiKey4() async {
   // SEPARATOR<
 }
 
+// Snippet for the generateSecuredApiKey method.
+//
+// mcm with filters
+void snippetForgenerateSecuredApiKey5() async {
+  // >SEPARATOR generateSecuredApiKey mcm with filters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = client.generateSecuredApiKey(
+    parentApiKey: "YourSearchOnlyApiKey",
+    restrictions: SecuredApiKeyRestrictions(
+      filters: "user:user42 AND user:public",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the generateSecuredApiKey method.
+//
+// mcm with user token
+void snippetForgenerateSecuredApiKey6() async {
+  // >SEPARATOR generateSecuredApiKey mcm with user token
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = client.generateSecuredApiKey(
+    parentApiKey: "YourSearchOnlyApiKey",
+    restrictions: SecuredApiKeyRestrictions(
+      userToken: "user42",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the getApiKey method.
 //
 // getApiKey
@@ -1413,9 +1476,61 @@ void snippetForgetObject1() async {
 
 // Snippet for the getObjects method.
 //
-// getObjects
+// by ID
 void snippetForgetObjects() async {
-  // >SEPARATOR getObjects default
+  // >SEPARATOR getObjects by ID
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getObjects(
+    getObjectsParams: GetObjectsParams(
+      requests: [
+        GetObjectsRequest(
+          objectID: "uniqueID",
+          indexName: "<YOUR_INDEX_NAME>",
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the getObjects method.
+//
+// multiple IDs
+void snippetForgetObjects1() async {
+  // >SEPARATOR getObjects multiple IDs
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getObjects(
+    getObjectsParams: GetObjectsParams(
+      requests: [
+        GetObjectsRequest(
+          objectID: "uniqueID1",
+          indexName: "<YOUR_INDEX_NAME>",
+        ),
+        GetObjectsRequest(
+          objectID: "uniqueID2",
+          indexName: "<YOUR_INDEX_NAME>",
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the getObjects method.
+//
+// with attributesToRetrieve
+void snippetForgetObjects2() async {
+  // >SEPARATOR getObjects with attributesToRetrieve
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1966,6 +2081,54 @@ void snippetForpartialUpdateObject5() async {
   // SEPARATOR<
 }
 
+// Snippet for the partialUpdateObject method.
+//
+// add men pant
+void snippetForpartialUpdateObject6() async {
+  // >SEPARATOR partialUpdateObject add men pant
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.partialUpdateObject(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "productId",
+    attributesToUpdate: {
+      'categoryPageId': {
+        '_operation': "Add",
+        'value': "men-clothing-pants",
+      },
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the partialUpdateObject method.
+//
+// remove men pant
+void snippetForpartialUpdateObject7() async {
+  // >SEPARATOR partialUpdateObject remove men pant
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.partialUpdateObject(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "productId",
+    attributesToUpdate: {
+      'categoryPageId': {
+        '_operation': "Remove",
+        'value': "men-clothing-pants",
+      },
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the partialUpdateObjects method.
 //
 // call partialUpdateObjects with createIfNotExists=true
@@ -2210,8 +2373,10 @@ void snippetForsaveObject() async {
   final response = await client.saveObject(
     indexName: "<YOUR_INDEX_NAME>",
     body: {
-      'objectID': "id",
-      'test': "val",
+      'name': "Black T-shirt",
+      'color': "#000000||black",
+      'availableIn': "https://source.unsplash.com/100x100/?paris||Paris",
+      'objectID': "myID",
     },
   );
   // >LOG
@@ -2319,6 +2484,13 @@ void snippetForsaveObjects3() async {
         'createdAt': "1500240452",
       },
     ],
+    waitForTasks: false,
+    batchSize: 1000,
+    requestOptions: RequestOptions(
+      headers: {
+        'X-Algolia-User-ID': '*',
+      },
+    ),
   );
   // >LOG
   // SEPARATOR<
@@ -3104,6 +3276,69 @@ void snippetForsaveRule19() async {
           ),
         ),
       ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// contextual
+void snippetForsaveRule20() async {
+  // >SEPARATOR saveRule contextual
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "a-rule-id",
+    rule: Rule(
+      objectID: "a-rule-id",
+      conditions: [
+        Condition(
+          context: "mobile",
+        ),
+      ],
+      consequence: Consequence(
+        params: ConsequenceParams(
+          filters: "release_date >= 1577836800",
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRule method.
+//
+// saveRule always active rule
+void snippetForsaveRule21() async {
+  // >SEPARATOR saveRule saveRule always active rule
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "a-rule-id",
+    rule: Rule(
+      objectID: "a-rule-id",
+      consequence: Consequence(
+        params: ConsequenceParams(
+          aroundRadius: 1000,
+        ),
+      ),
+      validity: [
+        TimeRange(
+          from: 1577836800,
+          until: 1577836800,
+        ),
+      ],
     ),
   );
   // >LOG
@@ -4174,7 +4409,7 @@ void snippetForsearchForFacetValues2() async {
     indexName: "<YOUR_INDEX_NAME>",
     facetName: "author",
     searchForFacetValuesRequest: SearchForFacetValuesRequest(
-      facetQuery: "stephen king",
+      facetQuery: "stephen",
     ),
   );
   // >LOG
@@ -4326,8 +4561,49 @@ void snippetForsearchSingleIndex5() async {
 
 // Snippet for the searchSingleIndex method.
 //
-// distinct
+// filters for stores
 void snippetForsearchSingleIndex6() async {
+  // >SEPARATOR searchSingleIndex filters for stores
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "ben",
+      filters: "categories:politics AND store:Gibert Joseph Saint-Michel",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// filters boolean
+void snippetForsearchSingleIndex7() async {
+  // >SEPARATOR searchSingleIndex filters boolean
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      filters: "is_available:true",
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// distinct
+void snippetForsearchSingleIndex8() async {
   // >SEPARATOR searchSingleIndex distinct
   // Initialize the client
   final client =
@@ -4347,7 +4623,7 @@ void snippetForsearchSingleIndex6() async {
 // Snippet for the searchSingleIndex method.
 //
 // filtersNumeric
-void snippetForsearchSingleIndex7() async {
+void snippetForsearchSingleIndex9() async {
   // >SEPARATOR searchSingleIndex filtersNumeric
   // Initialize the client
   final client =
@@ -4367,7 +4643,7 @@ void snippetForsearchSingleIndex7() async {
 // Snippet for the searchSingleIndex method.
 //
 // filtersTimestamp
-void snippetForsearchSingleIndex8() async {
+void snippetForsearchSingleIndex10() async {
   // >SEPARATOR searchSingleIndex filtersTimestamp
   // Initialize the client
   final client =
@@ -4387,7 +4663,7 @@ void snippetForsearchSingleIndex8() async {
 // Snippet for the searchSingleIndex method.
 //
 // filtersSumOrFiltersScoresFalse
-void snippetForsearchSingleIndex9() async {
+void snippetForsearchSingleIndex11() async {
   // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresFalse
   // Initialize the client
   final client =
@@ -4409,7 +4685,7 @@ void snippetForsearchSingleIndex9() async {
 // Snippet for the searchSingleIndex method.
 //
 // filtersSumOrFiltersScoresTrue
-void snippetForsearchSingleIndex10() async {
+void snippetForsearchSingleIndex12() async {
   // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresTrue
   // Initialize the client
   final client =
@@ -4431,7 +4707,7 @@ void snippetForsearchSingleIndex10() async {
 // Snippet for the searchSingleIndex method.
 //
 // filtersStephenKing
-void snippetForsearchSingleIndex11() async {
+void snippetForsearchSingleIndex13() async {
   // >SEPARATOR searchSingleIndex filtersStephenKing
   // Initialize the client
   final client =
@@ -4451,7 +4727,7 @@ void snippetForsearchSingleIndex11() async {
 // Snippet for the searchSingleIndex method.
 //
 // filtersNotTags
-void snippetForsearchSingleIndex12() async {
+void snippetForsearchSingleIndex14() async {
   // >SEPARATOR searchSingleIndex filtersNotTags
   // Initialize the client
   final client =
@@ -4461,7 +4737,8 @@ void snippetForsearchSingleIndex12() async {
   final response = await client.searchSingleIndex(
     indexName: "<YOUR_INDEX_NAME>",
     searchParams: SearchParamsObject(
-      filters: "NOT _tags:non-fiction",
+      query: "harry",
+      filters: "_tags:non-fiction",
     ),
   );
   // >LOG
@@ -4471,7 +4748,7 @@ void snippetForsearchSingleIndex12() async {
 // Snippet for the searchSingleIndex method.
 //
 // facetFiltersList
-void snippetForsearchSingleIndex13() async {
+void snippetForsearchSingleIndex15() async {
   // >SEPARATOR searchSingleIndex facetFiltersList
   // Initialize the client
   final client =
@@ -4497,7 +4774,7 @@ void snippetForsearchSingleIndex13() async {
 // Snippet for the searchSingleIndex method.
 //
 // facetFiltersBook
-void snippetForsearchSingleIndex14() async {
+void snippetForsearchSingleIndex16() async {
   // >SEPARATOR searchSingleIndex facetFiltersBook
   // Initialize the client
   final client =
@@ -4520,7 +4797,7 @@ void snippetForsearchSingleIndex14() async {
 // Snippet for the searchSingleIndex method.
 //
 // facetFiltersAND
-void snippetForsearchSingleIndex15() async {
+void snippetForsearchSingleIndex17() async {
   // >SEPARATOR searchSingleIndex facetFiltersAND
   // Initialize the client
   final client =
@@ -4544,7 +4821,7 @@ void snippetForsearchSingleIndex15() async {
 // Snippet for the searchSingleIndex method.
 //
 // facetFiltersOR
-void snippetForsearchSingleIndex16() async {
+void snippetForsearchSingleIndex18() async {
   // >SEPARATOR searchSingleIndex facetFiltersOR
   // Initialize the client
   final client =
@@ -4570,7 +4847,7 @@ void snippetForsearchSingleIndex16() async {
 // Snippet for the searchSingleIndex method.
 //
 // facetFiltersCombined
-void snippetForsearchSingleIndex17() async {
+void snippetForsearchSingleIndex19() async {
   // >SEPARATOR searchSingleIndex facetFiltersCombined
   // Initialize the client
   final client =
@@ -4597,7 +4874,7 @@ void snippetForsearchSingleIndex17() async {
 // Snippet for the searchSingleIndex method.
 //
 // facetFiltersNeg
-void snippetForsearchSingleIndex18() async {
+void snippetForsearchSingleIndex20() async {
   // >SEPARATOR searchSingleIndex facetFiltersNeg
   // Initialize the client
   final client =
@@ -4617,7 +4894,7 @@ void snippetForsearchSingleIndex18() async {
 // Snippet for the searchSingleIndex method.
 //
 // filtersAndFacetFilters
-void snippetForsearchSingleIndex19() async {
+void snippetForsearchSingleIndex21() async {
   // >SEPARATOR searchSingleIndex filtersAndFacetFilters
   // Initialize the client
   final client =
@@ -4640,7 +4917,7 @@ void snippetForsearchSingleIndex19() async {
 // Snippet for the searchSingleIndex method.
 //
 // facet author genre
-void snippetForsearchSingleIndex20() async {
+void snippetForsearchSingleIndex22() async {
   // >SEPARATOR searchSingleIndex facet author genre
   // Initialize the client
   final client =
@@ -4663,7 +4940,7 @@ void snippetForsearchSingleIndex20() async {
 // Snippet for the searchSingleIndex method.
 //
 // facet wildcard
-void snippetForsearchSingleIndex21() async {
+void snippetForsearchSingleIndex23() async {
   // >SEPARATOR searchSingleIndex facet wildcard
   // Initialize the client
   final client =
@@ -4685,7 +4962,7 @@ void snippetForsearchSingleIndex21() async {
 // Snippet for the searchSingleIndex method.
 //
 // maxValuesPerFacet
-void snippetForsearchSingleIndex22() async {
+void snippetForsearchSingleIndex24() async {
   // >SEPARATOR searchSingleIndex maxValuesPerFacet
   // Initialize the client
   final client =
@@ -4705,7 +4982,7 @@ void snippetForsearchSingleIndex22() async {
 // Snippet for the searchSingleIndex method.
 //
 // aroundLatLng
-void snippetForsearchSingleIndex23() async {
+void snippetForsearchSingleIndex25() async {
   // >SEPARATOR searchSingleIndex aroundLatLng
   // Initialize the client
   final client =
@@ -4725,7 +5002,7 @@ void snippetForsearchSingleIndex23() async {
 // Snippet for the searchSingleIndex method.
 //
 // aroundLatLngViaIP
-void snippetForsearchSingleIndex24() async {
+void snippetForsearchSingleIndex26() async {
   // >SEPARATOR searchSingleIndex aroundLatLngViaIP
   // Initialize the client
   final client =
@@ -4745,7 +5022,7 @@ void snippetForsearchSingleIndex24() async {
 // Snippet for the searchSingleIndex method.
 //
 // aroundRadius
-void snippetForsearchSingleIndex25() async {
+void snippetForsearchSingleIndex27() async {
   // >SEPARATOR searchSingleIndex aroundRadius
   // Initialize the client
   final client =
@@ -4766,7 +5043,7 @@ void snippetForsearchSingleIndex25() async {
 // Snippet for the searchSingleIndex method.
 //
 // insideBoundingBox
-void snippetForsearchSingleIndex26() async {
+void snippetForsearchSingleIndex28() async {
   // >SEPARATOR searchSingleIndex insideBoundingBox
   // Initialize the client
   final client =
@@ -4793,7 +5070,7 @@ void snippetForsearchSingleIndex26() async {
 // Snippet for the searchSingleIndex method.
 //
 // insidePolygon
-void snippetForsearchSingleIndex27() async {
+void snippetForsearchSingleIndex29() async {
   // >SEPARATOR searchSingleIndex insidePolygon
   // Initialize the client
   final client =
@@ -4828,7 +5105,7 @@ void snippetForsearchSingleIndex27() async {
 // Snippet for the searchSingleIndex method.
 //
 // insidePolygon
-void snippetForsearchSingleIndex28() async {
+void snippetForsearchSingleIndex30() async {
   // >SEPARATOR searchSingleIndex insidePolygon
   // Initialize the client
   final client =
@@ -4863,7 +5140,7 @@ void snippetForsearchSingleIndex28() async {
 // Snippet for the searchSingleIndex method.
 //
 // optionalFilters
-void snippetForsearchSingleIndex29() async {
+void snippetForsearchSingleIndex31() async {
   // >SEPARATOR searchSingleIndex optionalFilters
   // Initialize the client
   final client =
@@ -4885,7 +5162,7 @@ void snippetForsearchSingleIndex29() async {
 // Snippet for the searchSingleIndex method.
 //
 // optionalFiltersMany
-void snippetForsearchSingleIndex30() async {
+void snippetForsearchSingleIndex32() async {
   // >SEPARATOR searchSingleIndex optionalFiltersMany
   // Initialize the client
   final client =
@@ -4909,7 +5186,7 @@ void snippetForsearchSingleIndex30() async {
 // Snippet for the searchSingleIndex method.
 //
 // optionalFiltersSimple
-void snippetForsearchSingleIndex31() async {
+void snippetForsearchSingleIndex33() async {
   // >SEPARATOR searchSingleIndex optionalFiltersSimple
   // Initialize the client
   final client =
@@ -4932,7 +5209,7 @@ void snippetForsearchSingleIndex31() async {
 // Snippet for the searchSingleIndex method.
 //
 // restrictSearchableAttributes
-void snippetForsearchSingleIndex32() async {
+void snippetForsearchSingleIndex34() async {
   // >SEPARATOR searchSingleIndex restrictSearchableAttributes
   // Initialize the client
   final client =
@@ -4954,7 +5231,7 @@ void snippetForsearchSingleIndex32() async {
 // Snippet for the searchSingleIndex method.
 //
 // getRankingInfo
-void snippetForsearchSingleIndex33() async {
+void snippetForsearchSingleIndex35() async {
   // >SEPARATOR searchSingleIndex getRankingInfo
   // Initialize the client
   final client =
@@ -4974,7 +5251,7 @@ void snippetForsearchSingleIndex33() async {
 // Snippet for the searchSingleIndex method.
 //
 // clickAnalytics
-void snippetForsearchSingleIndex34() async {
+void snippetForsearchSingleIndex36() async {
   // >SEPARATOR searchSingleIndex clickAnalytics
   // Initialize the client
   final client =
@@ -4994,7 +5271,7 @@ void snippetForsearchSingleIndex34() async {
 // Snippet for the searchSingleIndex method.
 //
 // clickAnalyticsUserToken
-void snippetForsearchSingleIndex35() async {
+void snippetForsearchSingleIndex37() async {
   // >SEPARATOR searchSingleIndex clickAnalyticsUserToken
   // Initialize the client
   final client =
@@ -5015,7 +5292,7 @@ void snippetForsearchSingleIndex35() async {
 // Snippet for the searchSingleIndex method.
 //
 // enablePersonalization
-void snippetForsearchSingleIndex36() async {
+void snippetForsearchSingleIndex38() async {
   // >SEPARATOR searchSingleIndex enablePersonalization
   // Initialize the client
   final client =
@@ -5036,7 +5313,7 @@ void snippetForsearchSingleIndex36() async {
 // Snippet for the searchSingleIndex method.
 //
 // userToken
-void snippetForsearchSingleIndex37() async {
+void snippetForsearchSingleIndex39() async {
   // >SEPARATOR searchSingleIndex userToken
   // Initialize the client
   final client =
@@ -5056,7 +5333,7 @@ void snippetForsearchSingleIndex37() async {
 // Snippet for the searchSingleIndex method.
 //
 // userToken1234
-void snippetForsearchSingleIndex38() async {
+void snippetForsearchSingleIndex40() async {
   // >SEPARATOR searchSingleIndex userToken1234
   // Initialize the client
   final client =
@@ -5077,7 +5354,7 @@ void snippetForsearchSingleIndex38() async {
 // Snippet for the searchSingleIndex method.
 //
 // analyticsTag
-void snippetForsearchSingleIndex39() async {
+void snippetForsearchSingleIndex41() async {
   // >SEPARATOR searchSingleIndex analyticsTag
   // Initialize the client
   final client =
@@ -5099,7 +5376,7 @@ void snippetForsearchSingleIndex39() async {
 // Snippet for the searchSingleIndex method.
 //
 // facetFiltersUsers
-void snippetForsearchSingleIndex40() async {
+void snippetForsearchSingleIndex42() async {
   // >SEPARATOR searchSingleIndex facetFiltersUsers
   // Initialize the client
   final client =
@@ -5122,7 +5399,7 @@ void snippetForsearchSingleIndex40() async {
 // Snippet for the searchSingleIndex method.
 //
 // buildTheQuery
-void snippetForsearchSingleIndex41() async {
+void snippetForsearchSingleIndex43() async {
   // >SEPARATOR searchSingleIndex buildTheQuery
   // Initialize the client
   final client =
@@ -5146,7 +5423,7 @@ void snippetForsearchSingleIndex41() async {
 // Snippet for the searchSingleIndex method.
 //
 // attributesToHighlightOverride
-void snippetForsearchSingleIndex42() async {
+void snippetForsearchSingleIndex44() async {
   // >SEPARATOR searchSingleIndex attributesToHighlightOverride
   // Initialize the client
   final client =
@@ -5170,7 +5447,7 @@ void snippetForsearchSingleIndex42() async {
 // Snippet for the searchSingleIndex method.
 //
 // disableTypoToleranceOnAttributes
-void snippetForsearchSingleIndex43() async {
+void snippetForsearchSingleIndex45() async {
   // >SEPARATOR searchSingleIndex disableTypoToleranceOnAttributes
   // Initialize the client
   final client =
@@ -5193,7 +5470,7 @@ void snippetForsearchSingleIndex43() async {
 // Snippet for the searchSingleIndex method.
 //
 // search_a_query
-void snippetForsearchSingleIndex44() async {
+void snippetForsearchSingleIndex46() async {
   // >SEPARATOR searchSingleIndex search_a_query
   // Initialize the client
   final client =
@@ -5213,7 +5490,7 @@ void snippetForsearchSingleIndex44() async {
 // Snippet for the searchSingleIndex method.
 //
 // search_everything
-void snippetForsearchSingleIndex45() async {
+void snippetForsearchSingleIndex47() async {
   // >SEPARATOR searchSingleIndex search_everything
   // Initialize the client
   final client =
@@ -5233,7 +5510,7 @@ void snippetForsearchSingleIndex45() async {
 // Snippet for the searchSingleIndex method.
 //
 // api_filtering_range_example
-void snippetForsearchSingleIndex46() async {
+void snippetForsearchSingleIndex48() async {
   // >SEPARATOR searchSingleIndex api_filtering_range_example
   // Initialize the client
   final client =
@@ -5254,7 +5531,7 @@ void snippetForsearchSingleIndex46() async {
 // Snippet for the searchSingleIndex method.
 //
 // search_a_query
-void snippetForsearchSingleIndex47() async {
+void snippetForsearchSingleIndex49() async {
   // >SEPARATOR searchSingleIndex search_a_query
   // Initialize the client
   final client =
@@ -5277,7 +5554,7 @@ void snippetForsearchSingleIndex47() async {
 // Snippet for the searchSingleIndex method.
 //
 // override_retrievable_attributes
-void snippetForsearchSingleIndex48() async {
+void snippetForsearchSingleIndex50() async {
   // >SEPARATOR searchSingleIndex override_retrievable_attributes
   // Initialize the client
   final client =
@@ -5301,7 +5578,7 @@ void snippetForsearchSingleIndex48() async {
 // Snippet for the searchSingleIndex method.
 //
 // restrict_searchable_attributes
-void snippetForsearchSingleIndex49() async {
+void snippetForsearchSingleIndex51() async {
   // >SEPARATOR searchSingleIndex restrict_searchable_attributes
   // Initialize the client
   final client =
@@ -5325,7 +5602,7 @@ void snippetForsearchSingleIndex49() async {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_relevancy
-void snippetForsearchSingleIndex50() async {
+void snippetForsearchSingleIndex52() async {
   // >SEPARATOR searchSingleIndex override_default_relevancy
   // Initialize the client
   final client =
@@ -5346,7 +5623,7 @@ void snippetForsearchSingleIndex50() async {
 // Snippet for the searchSingleIndex method.
 //
 // apply_filters
-void snippetForsearchSingleIndex51() async {
+void snippetForsearchSingleIndex53() async {
   // >SEPARATOR searchSingleIndex apply_filters
   // Initialize the client
   final client =
@@ -5367,7 +5644,7 @@ void snippetForsearchSingleIndex51() async {
 // Snippet for the searchSingleIndex method.
 //
 // apply_all_filters
-void snippetForsearchSingleIndex52() async {
+void snippetForsearchSingleIndex54() async {
   // >SEPARATOR searchSingleIndex apply_all_filters
   // Initialize the client
   final client =
@@ -5389,7 +5666,7 @@ void snippetForsearchSingleIndex52() async {
 // Snippet for the searchSingleIndex method.
 //
 // escape_spaces
-void snippetForsearchSingleIndex53() async {
+void snippetForsearchSingleIndex55() async {
   // >SEPARATOR searchSingleIndex escape_spaces
   // Initialize the client
   final client =
@@ -5410,7 +5687,7 @@ void snippetForsearchSingleIndex53() async {
 // Snippet for the searchSingleIndex method.
 //
 // escape_keywords
-void snippetForsearchSingleIndex54() async {
+void snippetForsearchSingleIndex56() async {
   // >SEPARATOR searchSingleIndex escape_keywords
   // Initialize the client
   final client =
@@ -5431,7 +5708,7 @@ void snippetForsearchSingleIndex54() async {
 // Snippet for the searchSingleIndex method.
 //
 // escape_single_quotes
-void snippetForsearchSingleIndex55() async {
+void snippetForsearchSingleIndex57() async {
   // >SEPARATOR searchSingleIndex escape_single_quotes
   // Initialize the client
   final client =
@@ -5452,7 +5729,7 @@ void snippetForsearchSingleIndex55() async {
 // Snippet for the searchSingleIndex method.
 //
 // escape_double_quotes
-void snippetForsearchSingleIndex56() async {
+void snippetForsearchSingleIndex58() async {
   // >SEPARATOR searchSingleIndex escape_double_quotes
   // Initialize the client
   final client =
@@ -5473,7 +5750,7 @@ void snippetForsearchSingleIndex56() async {
 // Snippet for the searchSingleIndex method.
 //
 // apply_filters
-void snippetForsearchSingleIndex57() async {
+void snippetForsearchSingleIndex59() async {
   // >SEPARATOR searchSingleIndex apply_filters
   // Initialize the client
   final client =
@@ -5497,7 +5774,7 @@ void snippetForsearchSingleIndex57() async {
 // Snippet for the searchSingleIndex method.
 //
 // apply_negative_filters
-void snippetForsearchSingleIndex58() async {
+void snippetForsearchSingleIndex60() async {
   // >SEPARATOR searchSingleIndex apply_negative_filters
   // Initialize the client
   final client =
@@ -5520,8 +5797,31 @@ void snippetForsearchSingleIndex58() async {
 
 // Snippet for the searchSingleIndex method.
 //
+// apply_negative_filters_restaurants
+void snippetForsearchSingleIndex61() async {
+  // >SEPARATOR searchSingleIndex apply_negative_filters_restaurants
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+      optionalFilters: [
+        "restaurant:-Bert's Inn",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
 // apply_numeric_filters
-void snippetForsearchSingleIndex59() async {
+void snippetForsearchSingleIndex62() async {
   // >SEPARATOR searchSingleIndex apply_numeric_filters
   // Initialize the client
   final client =
@@ -5548,7 +5848,7 @@ void snippetForsearchSingleIndex59() async {
 // Snippet for the searchSingleIndex method.
 //
 // apply_tag_filters
-void snippetForsearchSingleIndex60() async {
+void snippetForsearchSingleIndex63() async {
   // >SEPARATOR searchSingleIndex apply_tag_filters
   // Initialize the client
   final client =
@@ -5575,7 +5875,7 @@ void snippetForsearchSingleIndex60() async {
 // Snippet for the searchSingleIndex method.
 //
 // apply_filters
-void snippetForsearchSingleIndex61() async {
+void snippetForsearchSingleIndex64() async {
   // >SEPARATOR searchSingleIndex apply_filters
   // Initialize the client
   final client =
@@ -5596,7 +5896,7 @@ void snippetForsearchSingleIndex61() async {
 // Snippet for the searchSingleIndex method.
 //
 // facets_all
-void snippetForsearchSingleIndex62() async {
+void snippetForsearchSingleIndex65() async {
   // >SEPARATOR searchSingleIndex facets_all
   // Initialize the client
   final client =
@@ -5619,7 +5919,7 @@ void snippetForsearchSingleIndex62() async {
 // Snippet for the searchSingleIndex method.
 //
 // retrieve_only_some_facets
-void snippetForsearchSingleIndex63() async {
+void snippetForsearchSingleIndex66() async {
   // >SEPARATOR searchSingleIndex retrieve_only_some_facets
   // Initialize the client
   final client =
@@ -5643,7 +5943,7 @@ void snippetForsearchSingleIndex63() async {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_max_values_per_facet
-void snippetForsearchSingleIndex64() async {
+void snippetForsearchSingleIndex67() async {
   // >SEPARATOR searchSingleIndex override_default_max_values_per_facet
   // Initialize the client
   final client =
@@ -5664,7 +5964,7 @@ void snippetForsearchSingleIndex64() async {
 // Snippet for the searchSingleIndex method.
 //
 // enable_faceting_after_distinct
-void snippetForsearchSingleIndex65() async {
+void snippetForsearchSingleIndex68() async {
   // >SEPARATOR searchSingleIndex enable_faceting_after_distinct
   // Initialize the client
   final client =
@@ -5685,7 +5985,7 @@ void snippetForsearchSingleIndex65() async {
 // Snippet for the searchSingleIndex method.
 //
 // sort_facet_values_alphabetically
-void snippetForsearchSingleIndex66() async {
+void snippetForsearchSingleIndex69() async {
   // >SEPARATOR searchSingleIndex sort_facet_values_alphabetically
   // Initialize the client
   final client =
@@ -5706,7 +6006,7 @@ void snippetForsearchSingleIndex66() async {
 // Snippet for the searchSingleIndex method.
 //
 // override_attributes_to_snippet
-void snippetForsearchSingleIndex67() async {
+void snippetForsearchSingleIndex70() async {
   // >SEPARATOR searchSingleIndex override_attributes_to_snippet
   // Initialize the client
   final client =
@@ -5730,7 +6030,7 @@ void snippetForsearchSingleIndex67() async {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_highlight_pre_tag
-void snippetForsearchSingleIndex68() async {
+void snippetForsearchSingleIndex71() async {
   // >SEPARATOR searchSingleIndex override_default_highlight_pre_tag
   // Initialize the client
   final client =
@@ -5751,7 +6051,7 @@ void snippetForsearchSingleIndex68() async {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_highlight_post_tag
-void snippetForsearchSingleIndex69() async {
+void snippetForsearchSingleIndex72() async {
   // >SEPARATOR searchSingleIndex override_default_highlight_post_tag
   // Initialize the client
   final client =
@@ -5772,7 +6072,7 @@ void snippetForsearchSingleIndex69() async {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_snippet_ellipsis_text
-void snippetForsearchSingleIndex70() async {
+void snippetForsearchSingleIndex73() async {
   // >SEPARATOR searchSingleIndex override_default_snippet_ellipsis_text
   // Initialize the client
   final client =
@@ -5793,7 +6093,7 @@ void snippetForsearchSingleIndex70() async {
 // Snippet for the searchSingleIndex method.
 //
 // enable_restrict_highlight_and_snippet_arrays
-void snippetForsearchSingleIndex71() async {
+void snippetForsearchSingleIndex74() async {
   // >SEPARATOR searchSingleIndex enable_restrict_highlight_and_snippet_arrays
   // Initialize the client
   final client =
@@ -5814,7 +6114,7 @@ void snippetForsearchSingleIndex71() async {
 // Snippet for the searchSingleIndex method.
 //
 // access_page
-void snippetForsearchSingleIndex72() async {
+void snippetForsearchSingleIndex75() async {
   // >SEPARATOR searchSingleIndex access_page
   // Initialize the client
   final client =
@@ -5835,7 +6135,7 @@ void snippetForsearchSingleIndex72() async {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_hits_per_page
-void snippetForsearchSingleIndex73() async {
+void snippetForsearchSingleIndex76() async {
   // >SEPARATOR searchSingleIndex override_default_hits_per_page
   // Initialize the client
   final client =
@@ -5856,7 +6156,7 @@ void snippetForsearchSingleIndex73() async {
 // Snippet for the searchSingleIndex method.
 //
 // get_nth_hit
-void snippetForsearchSingleIndex74() async {
+void snippetForsearchSingleIndex77() async {
   // >SEPARATOR searchSingleIndex get_nth_hit
   // Initialize the client
   final client =
@@ -5877,7 +6177,7 @@ void snippetForsearchSingleIndex74() async {
 // Snippet for the searchSingleIndex method.
 //
 // get_n_results
-void snippetForsearchSingleIndex75() async {
+void snippetForsearchSingleIndex78() async {
   // >SEPARATOR searchSingleIndex get_n_results
   // Initialize the client
   final client =
@@ -5898,7 +6198,7 @@ void snippetForsearchSingleIndex75() async {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_min_word_size_for_one_typo
-void snippetForsearchSingleIndex76() async {
+void snippetForsearchSingleIndex79() async {
   // >SEPARATOR searchSingleIndex override_default_min_word_size_for_one_typo
   // Initialize the client
   final client =
@@ -5919,7 +6219,7 @@ void snippetForsearchSingleIndex76() async {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_min_word_size_for_two_typos
-void snippetForsearchSingleIndex77() async {
+void snippetForsearchSingleIndex80() async {
   // >SEPARATOR searchSingleIndex override_default_min_word_size_for_two_typos
   // Initialize the client
   final client =
@@ -5940,7 +6240,7 @@ void snippetForsearchSingleIndex77() async {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_typo_tolerance_mode
-void snippetForsearchSingleIndex78() async {
+void snippetForsearchSingleIndex81() async {
   // >SEPARATOR searchSingleIndex override_default_typo_tolerance_mode
   // Initialize the client
   final client =
@@ -5961,7 +6261,7 @@ void snippetForsearchSingleIndex78() async {
 // Snippet for the searchSingleIndex method.
 //
 // disable_typos_on_numeric_tokens_at_search_time
-void snippetForsearchSingleIndex79() async {
+void snippetForsearchSingleIndex82() async {
   // >SEPARATOR searchSingleIndex disable_typos_on_numeric_tokens_at_search_time
   // Initialize the client
   final client =
@@ -5982,7 +6282,7 @@ void snippetForsearchSingleIndex79() async {
 // Snippet for the searchSingleIndex method.
 //
 // search_around_a_position
-void snippetForsearchSingleIndex80() async {
+void snippetForsearchSingleIndex83() async {
   // >SEPARATOR searchSingleIndex search_around_a_position
   // Initialize the client
   final client =
@@ -6003,7 +6303,7 @@ void snippetForsearchSingleIndex80() async {
 // Snippet for the searchSingleIndex method.
 //
 // search_around_server_ip
-void snippetForsearchSingleIndex81() async {
+void snippetForsearchSingleIndex84() async {
   // >SEPARATOR searchSingleIndex search_around_server_ip
   // Initialize the client
   final client =
@@ -6030,7 +6330,7 @@ void snippetForsearchSingleIndex81() async {
 // Snippet for the searchSingleIndex method.
 //
 // set_around_radius
-void snippetForsearchSingleIndex82() async {
+void snippetForsearchSingleIndex85() async {
   // >SEPARATOR searchSingleIndex set_around_radius
   // Initialize the client
   final client =
@@ -6051,7 +6351,7 @@ void snippetForsearchSingleIndex82() async {
 // Snippet for the searchSingleIndex method.
 //
 // disable_automatic_radius
-void snippetForsearchSingleIndex83() async {
+void snippetForsearchSingleIndex86() async {
   // >SEPARATOR searchSingleIndex disable_automatic_radius
   // Initialize the client
   final client =
@@ -6072,7 +6372,7 @@ void snippetForsearchSingleIndex83() async {
 // Snippet for the searchSingleIndex method.
 //
 // set_geo_search_precision
-void snippetForsearchSingleIndex84() async {
+void snippetForsearchSingleIndex87() async {
   // >SEPARATOR searchSingleIndex set_geo_search_precision
   // Initialize the client
   final client =
@@ -6093,7 +6393,7 @@ void snippetForsearchSingleIndex84() async {
 // Snippet for the searchSingleIndex method.
 //
 // set_geo_search_precision_non_linear
-void snippetForsearchSingleIndex85() async {
+void snippetForsearchSingleIndex88() async {
   // >SEPARATOR searchSingleIndex set_geo_search_precision_non_linear
   // Initialize the client
   final client =
@@ -6123,7 +6423,7 @@ void snippetForsearchSingleIndex85() async {
 // Snippet for the searchSingleIndex method.
 //
 // set_minimum_geo_search_radius
-void snippetForsearchSingleIndex86() async {
+void snippetForsearchSingleIndex89() async {
   // >SEPARATOR searchSingleIndex set_minimum_geo_search_radius
   // Initialize the client
   final client =
@@ -6144,7 +6444,7 @@ void snippetForsearchSingleIndex86() async {
 // Snippet for the searchSingleIndex method.
 //
 // search_inside_rectangular_area
-void snippetForsearchSingleIndex87() async {
+void snippetForsearchSingleIndex90() async {
   // >SEPARATOR searchSingleIndex search_inside_rectangular_area
   // Initialize the client
   final client =
@@ -6172,7 +6472,7 @@ void snippetForsearchSingleIndex87() async {
 // Snippet for the searchSingleIndex method.
 //
 // search_inside_multiple_rectangular_areas
-void snippetForsearchSingleIndex88() async {
+void snippetForsearchSingleIndex91() async {
   // >SEPARATOR searchSingleIndex search_inside_multiple_rectangular_areas
   // Initialize the client
   final client =
@@ -6206,7 +6506,7 @@ void snippetForsearchSingleIndex88() async {
 // Snippet for the searchSingleIndex method.
 //
 // search_inside_polygon_area
-void snippetForsearchSingleIndex89() async {
+void snippetForsearchSingleIndex92() async {
   // >SEPARATOR searchSingleIndex search_inside_polygon_area
   // Initialize the client
   final client =
@@ -6236,7 +6536,7 @@ void snippetForsearchSingleIndex89() async {
 // Snippet for the searchSingleIndex method.
 //
 // search_inside_multiple_polygon_areas
-void snippetForsearchSingleIndex90() async {
+void snippetForsearchSingleIndex93() async {
   // >SEPARATOR searchSingleIndex search_inside_multiple_polygon_areas
   // Initialize the client
   final client =
@@ -6276,7 +6576,7 @@ void snippetForsearchSingleIndex90() async {
 // Snippet for the searchSingleIndex method.
 //
 // set_querylanguages_override
-void snippetForsearchSingleIndex91() async {
+void snippetForsearchSingleIndex94() async {
   // >SEPARATOR searchSingleIndex set_querylanguages_override
   // Initialize the client
   final client =
@@ -6300,7 +6600,7 @@ void snippetForsearchSingleIndex91() async {
 // Snippet for the searchSingleIndex method.
 //
 // set_querylanguages_override
-void snippetForsearchSingleIndex92() async {
+void snippetForsearchSingleIndex95() async {
   // >SEPARATOR searchSingleIndex set_querylanguages_override
   // Initialize the client
   final client =
@@ -6324,7 +6624,7 @@ void snippetForsearchSingleIndex92() async {
 // Snippet for the searchSingleIndex method.
 //
 // set_querylanguages_override
-void snippetForsearchSingleIndex93() async {
+void snippetForsearchSingleIndex96() async {
   // >SEPARATOR searchSingleIndex set_querylanguages_override
   // Initialize the client
   final client =
@@ -6348,7 +6648,7 @@ void snippetForsearchSingleIndex93() async {
 // Snippet for the searchSingleIndex method.
 //
 // set_querylanguages_with_japanese_query
-void snippetForsearchSingleIndex94() async {
+void snippetForsearchSingleIndex97() async {
   // >SEPARATOR searchSingleIndex set_querylanguages_with_japanese_query
   // Initialize the client
   final client =
@@ -6372,7 +6672,7 @@ void snippetForsearchSingleIndex94() async {
 // Snippet for the searchSingleIndex method.
 //
 // set_natural_languages
-void snippetForsearchSingleIndex95() async {
+void snippetForsearchSingleIndex98() async {
   // >SEPARATOR searchSingleIndex set_natural_languages
   // Initialize the client
   final client =
@@ -6395,7 +6695,7 @@ void snippetForsearchSingleIndex95() async {
 // Snippet for the searchSingleIndex method.
 //
 // override_natural_languages_with_query
-void snippetForsearchSingleIndex96() async {
+void snippetForsearchSingleIndex99() async {
   // >SEPARATOR searchSingleIndex override_natural_languages_with_query
   // Initialize the client
   final client =
@@ -6419,7 +6719,7 @@ void snippetForsearchSingleIndex96() async {
 // Snippet for the searchSingleIndex method.
 //
 // enable_decompound_query_search_time
-void snippetForsearchSingleIndex97() async {
+void snippetForsearchSingleIndex100() async {
   // >SEPARATOR searchSingleIndex enable_decompound_query_search_time
   // Initialize the client
   final client =
@@ -6440,7 +6740,7 @@ void snippetForsearchSingleIndex97() async {
 // Snippet for the searchSingleIndex method.
 //
 // enable_rules_search_time
-void snippetForsearchSingleIndex98() async {
+void snippetForsearchSingleIndex101() async {
   // >SEPARATOR searchSingleIndex enable_rules_search_time
   // Initialize the client
   final client =
@@ -6461,7 +6761,7 @@ void snippetForsearchSingleIndex98() async {
 // Snippet for the searchSingleIndex method.
 //
 // set_rule_contexts
-void snippetForsearchSingleIndex99() async {
+void snippetForsearchSingleIndex102() async {
   // >SEPARATOR searchSingleIndex set_rule_contexts
   // Initialize the client
   final client =
@@ -6485,7 +6785,7 @@ void snippetForsearchSingleIndex99() async {
 // Snippet for the searchSingleIndex method.
 //
 // enable_personalization
-void snippetForsearchSingleIndex100() async {
+void snippetForsearchSingleIndex103() async {
   // >SEPARATOR searchSingleIndex enable_personalization
   // Initialize the client
   final client =
@@ -6506,7 +6806,7 @@ void snippetForsearchSingleIndex100() async {
 // Snippet for the searchSingleIndex method.
 //
 // enable_personalization_with_user_token
-void snippetForsearchSingleIndex101() async {
+void snippetForsearchSingleIndex104() async {
   // >SEPARATOR searchSingleIndex enable_personalization_with_user_token
   // Initialize the client
   final client =
@@ -6528,7 +6828,7 @@ void snippetForsearchSingleIndex101() async {
 // Snippet for the searchSingleIndex method.
 //
 // personalization_impact
-void snippetForsearchSingleIndex102() async {
+void snippetForsearchSingleIndex105() async {
   // >SEPARATOR searchSingleIndex personalization_impact
   // Initialize the client
   final client =
@@ -6549,7 +6849,7 @@ void snippetForsearchSingleIndex102() async {
 // Snippet for the searchSingleIndex method.
 //
 // set_user_token
-void snippetForsearchSingleIndex103() async {
+void snippetForsearchSingleIndex106() async {
   // >SEPARATOR searchSingleIndex set_user_token
   // Initialize the client
   final client =
@@ -6570,7 +6870,7 @@ void snippetForsearchSingleIndex103() async {
 // Snippet for the searchSingleIndex method.
 //
 // set_user_token_with_personalization
-void snippetForsearchSingleIndex104() async {
+void snippetForsearchSingleIndex107() async {
   // >SEPARATOR searchSingleIndex set_user_token_with_personalization
   // Initialize the client
   final client =
@@ -6592,7 +6892,7 @@ void snippetForsearchSingleIndex104() async {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_query_type
-void snippetForsearchSingleIndex105() async {
+void snippetForsearchSingleIndex108() async {
   // >SEPARATOR searchSingleIndex override_default_query_type
   // Initialize the client
   final client =
@@ -6613,7 +6913,7 @@ void snippetForsearchSingleIndex105() async {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_remove_words_if_no_results
-void snippetForsearchSingleIndex106() async {
+void snippetForsearchSingleIndex109() async {
   // >SEPARATOR searchSingleIndex override_default_remove_words_if_no_results
   // Initialize the client
   final client =
@@ -6634,7 +6934,7 @@ void snippetForsearchSingleIndex106() async {
 // Snippet for the searchSingleIndex method.
 //
 // enable_advanced_syntax_search_time
-void snippetForsearchSingleIndex107() async {
+void snippetForsearchSingleIndex110() async {
   // >SEPARATOR searchSingleIndex enable_advanced_syntax_search_time
   // Initialize the client
   final client =
@@ -6655,7 +6955,7 @@ void snippetForsearchSingleIndex107() async {
 // Snippet for the searchSingleIndex method.
 //
 // overide_default_optional_words
-void snippetForsearchSingleIndex108() async {
+void snippetForsearchSingleIndex111() async {
   // >SEPARATOR searchSingleIndex overide_default_optional_words
   // Initialize the client
   final client =
@@ -6679,7 +6979,7 @@ void snippetForsearchSingleIndex108() async {
 // Snippet for the searchSingleIndex method.
 //
 // disabling_exact_for_some_attributes_search_time
-void snippetForsearchSingleIndex109() async {
+void snippetForsearchSingleIndex112() async {
   // >SEPARATOR searchSingleIndex disabling_exact_for_some_attributes_search_time
   // Initialize the client
   final client =
@@ -6702,7 +7002,7 @@ void snippetForsearchSingleIndex109() async {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_exact_single_word_query
-void snippetForsearchSingleIndex110() async {
+void snippetForsearchSingleIndex113() async {
   // >SEPARATOR searchSingleIndex override_default_exact_single_word_query
   // Initialize the client
   final client =
@@ -6723,7 +7023,7 @@ void snippetForsearchSingleIndex110() async {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_aternative_as_exact
-void snippetForsearchSingleIndex111() async {
+void snippetForsearchSingleIndex114() async {
   // >SEPARATOR searchSingleIndex override_default_aternative_as_exact
   // Initialize the client
   final client =
@@ -6746,7 +7046,7 @@ void snippetForsearchSingleIndex111() async {
 // Snippet for the searchSingleIndex method.
 //
 // enable_advanced_syntax_exact_phrase
-void snippetForsearchSingleIndex112() async {
+void snippetForsearchSingleIndex115() async {
   // >SEPARATOR searchSingleIndex enable_advanced_syntax_exact_phrase
   // Initialize the client
   final client =
@@ -6770,7 +7070,7 @@ void snippetForsearchSingleIndex112() async {
 // Snippet for the searchSingleIndex method.
 //
 // enable_advanced_syntax_exclude_words
-void snippetForsearchSingleIndex113() async {
+void snippetForsearchSingleIndex116() async {
   // >SEPARATOR searchSingleIndex enable_advanced_syntax_exclude_words
   // Initialize the client
   final client =
@@ -6794,7 +7094,7 @@ void snippetForsearchSingleIndex113() async {
 // Snippet for the searchSingleIndex method.
 //
 // override_distinct
-void snippetForsearchSingleIndex114() async {
+void snippetForsearchSingleIndex117() async {
   // >SEPARATOR searchSingleIndex override_distinct
   // Initialize the client
   final client =
@@ -6815,7 +7115,7 @@ void snippetForsearchSingleIndex114() async {
 // Snippet for the searchSingleIndex method.
 //
 // get_ranking_info
-void snippetForsearchSingleIndex115() async {
+void snippetForsearchSingleIndex118() async {
   // >SEPARATOR searchSingleIndex get_ranking_info
   // Initialize the client
   final client =
@@ -6836,7 +7136,7 @@ void snippetForsearchSingleIndex115() async {
 // Snippet for the searchSingleIndex method.
 //
 // disable_click_analytics
-void snippetForsearchSingleIndex116() async {
+void snippetForsearchSingleIndex119() async {
   // >SEPARATOR searchSingleIndex disable_click_analytics
   // Initialize the client
   final client =
@@ -6857,7 +7157,7 @@ void snippetForsearchSingleIndex116() async {
 // Snippet for the searchSingleIndex method.
 //
 // enable_click_analytics
-void snippetForsearchSingleIndex117() async {
+void snippetForsearchSingleIndex120() async {
   // >SEPARATOR searchSingleIndex enable_click_analytics
   // Initialize the client
   final client =
@@ -6878,7 +7178,7 @@ void snippetForsearchSingleIndex117() async {
 // Snippet for the searchSingleIndex method.
 //
 // disable_analytics
-void snippetForsearchSingleIndex118() async {
+void snippetForsearchSingleIndex121() async {
   // >SEPARATOR searchSingleIndex disable_analytics
   // Initialize the client
   final client =
@@ -6899,7 +7199,7 @@ void snippetForsearchSingleIndex118() async {
 // Snippet for the searchSingleIndex method.
 //
 // add_analytics_tags
-void snippetForsearchSingleIndex119() async {
+void snippetForsearchSingleIndex122() async {
   // >SEPARATOR searchSingleIndex add_analytics_tags
   // Initialize the client
   final client =
@@ -6923,7 +7223,7 @@ void snippetForsearchSingleIndex119() async {
 // Snippet for the searchSingleIndex method.
 //
 // disable_synonyms
-void snippetForsearchSingleIndex120() async {
+void snippetForsearchSingleIndex123() async {
   // >SEPARATOR searchSingleIndex disable_synonyms
   // Initialize the client
   final client =
@@ -6944,7 +7244,7 @@ void snippetForsearchSingleIndex120() async {
 // Snippet for the searchSingleIndex method.
 //
 // override_replace_synonyms_in_highlights
-void snippetForsearchSingleIndex121() async {
+void snippetForsearchSingleIndex124() async {
   // >SEPARATOR searchSingleIndex override_replace_synonyms_in_highlights
   // Initialize the client
   final client =
@@ -6965,7 +7265,7 @@ void snippetForsearchSingleIndex121() async {
 // Snippet for the searchSingleIndex method.
 //
 // override_min_proximity
-void snippetForsearchSingleIndex122() async {
+void snippetForsearchSingleIndex125() async {
   // >SEPARATOR searchSingleIndex override_min_proximity
   // Initialize the client
   final client =
@@ -6986,7 +7286,7 @@ void snippetForsearchSingleIndex122() async {
 // Snippet for the searchSingleIndex method.
 //
 // override_default_field
-void snippetForsearchSingleIndex123() async {
+void snippetForsearchSingleIndex126() async {
   // >SEPARATOR searchSingleIndex override_default_field
   // Initialize the client
   final client =
@@ -7010,7 +7310,7 @@ void snippetForsearchSingleIndex123() async {
 // Snippet for the searchSingleIndex method.
 //
 // override_percentile_computation
-void snippetForsearchSingleIndex124() async {
+void snippetForsearchSingleIndex127() async {
   // >SEPARATOR searchSingleIndex override_percentile_computation
   // Initialize the client
   final client =
@@ -7031,7 +7331,7 @@ void snippetForsearchSingleIndex124() async {
 // Snippet for the searchSingleIndex method.
 //
 // set_ab_test
-void snippetForsearchSingleIndex125() async {
+void snippetForsearchSingleIndex128() async {
   // >SEPARATOR searchSingleIndex set_ab_test
   // Initialize the client
   final client =
@@ -7052,7 +7352,7 @@ void snippetForsearchSingleIndex125() async {
 // Snippet for the searchSingleIndex method.
 //
 // set_enable_re_ranking
-void snippetForsearchSingleIndex126() async {
+void snippetForsearchSingleIndex129() async {
   // >SEPARATOR searchSingleIndex set_enable_re_ranking
   // Initialize the client
   final client =
@@ -7064,6 +7364,56 @@ void snippetForsearchSingleIndex126() async {
     searchParams: SearchParamsObject(
       query: "query",
       enableReRanking: false,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// with algolia user id
+void snippetForsearchSingleIndex130() async {
+  // >SEPARATOR searchSingleIndex with algolia user id
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "query",
+    ),
+    requestOptions: RequestOptions(
+      headers: {
+        'X-Algolia-User-ID': 'user1234',
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchSingleIndex method.
+//
+// mcm with algolia user id
+void snippetForsearchSingleIndex131() async {
+  // >SEPARATOR searchSingleIndex mcm with algolia user id
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchSingleIndex(
+    indexName: "<YOUR_INDEX_NAME>",
+    searchParams: SearchParamsObject(
+      query: "peace",
+    ),
+    requestOptions: RequestOptions(
+      headers: {
+        'X-Algolia-User-ID': 'user42',
+      },
     ),
   );
   // >LOG
@@ -7505,8 +7855,31 @@ void snippetForsetSettings13() async {
 
 // Snippet for the setSettings method.
 //
-// api_attributes_for_faceting
+// attributesForFaceting availableIn
 void snippetForsetSettings14() async {
+  // >SEPARATOR setSettings attributesForFaceting availableIn
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesForFaceting: [
+        "color",
+        "availableIn",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// api_attributes_for_faceting
+void snippetForsetSettings15() async {
   // >SEPARATOR setSettings api_attributes_for_faceting
   // Initialize the client
   final client =
@@ -7529,7 +7902,7 @@ void snippetForsetSettings14() async {
 // Snippet for the setSettings method.
 //
 // api_attributes_for_faceting_searchable
-void snippetForsetSettings15() async {
+void snippetForsetSettings16() async {
   // >SEPARATOR setSettings api_attributes_for_faceting_searchable
   // Initialize the client
   final client =
@@ -7552,7 +7925,7 @@ void snippetForsetSettings15() async {
 // Snippet for the setSettings method.
 //
 // api_attributes_for_filter_only
-void snippetForsetSettings16() async {
+void snippetForsetSettings17() async {
   // >SEPARATOR setSettings api_attributes_for_filter_only
   // Initialize the client
   final client =
@@ -7575,7 +7948,7 @@ void snippetForsetSettings16() async {
 // Snippet for the setSettings method.
 //
 // attributesForFaceting categoryPageId
-void snippetForsetSettings17() async {
+void snippetForsetSettings18() async {
   // >SEPARATOR setSettings attributesForFaceting categoryPageId
   // Initialize the client
   final client =
@@ -7597,7 +7970,7 @@ void snippetForsetSettings17() async {
 // Snippet for the setSettings method.
 //
 // unretrievableAttributes
-void snippetForsetSettings18() async {
+void snippetForsetSettings19() async {
   // >SEPARATOR setSettings unretrievableAttributes
   // Initialize the client
   final client =
@@ -7619,7 +7992,7 @@ void snippetForsetSettings18() async {
 // Snippet for the setSettings method.
 //
 // attributesForFaceting user restricted data
-void snippetForsetSettings19() async {
+void snippetForsetSettings20() async {
   // >SEPARATOR setSettings attributesForFaceting user restricted data
   // Initialize the client
   final client =
@@ -7641,7 +8014,7 @@ void snippetForsetSettings19() async {
 // Snippet for the setSettings method.
 //
 // attributesForFaceting optional filters
-void snippetForsetSettings20() async {
+void snippetForsetSettings21() async {
   // >SEPARATOR setSettings attributesForFaceting optional filters
   // Initialize the client
   final client =
@@ -7664,7 +8037,7 @@ void snippetForsetSettings20() async {
 // Snippet for the setSettings method.
 //
 // attributesForFaceting redirect index
-void snippetForsetSettings21() async {
+void snippetForsetSettings22() async {
   // >SEPARATOR setSettings attributesForFaceting redirect index
   // Initialize the client
   final client =
@@ -7686,7 +8059,7 @@ void snippetForsetSettings21() async {
 // Snippet for the setSettings method.
 //
 // attributesForFaceting multiple consequences
-void snippetForsetSettings22() async {
+void snippetForsetSettings23() async {
   // >SEPARATOR setSettings attributesForFaceting multiple consequences
   // Initialize the client
   final client =
@@ -7708,7 +8081,7 @@ void snippetForsetSettings22() async {
 // Snippet for the setSettings method.
 //
 // attributesForFaceting in-depth optional filters
-void snippetForsetSettings23() async {
+void snippetForsetSettings24() async {
   // >SEPARATOR setSettings attributesForFaceting in-depth optional filters
   // Initialize the client
   final client =
@@ -7730,7 +8103,7 @@ void snippetForsetSettings23() async {
 // Snippet for the setSettings method.
 //
 // mode neuralSearch
-void snippetForsetSettings24() async {
+void snippetForsetSettings25() async {
   // >SEPARATOR setSettings mode neuralSearch
   // Initialize the client
   final client =
@@ -7750,7 +8123,7 @@ void snippetForsetSettings24() async {
 // Snippet for the setSettings method.
 //
 // mode keywordSearch
-void snippetForsetSettings25() async {
+void snippetForsetSettings26() async {
   // >SEPARATOR setSettings mode keywordSearch
   // Initialize the client
   final client =
@@ -7770,7 +8143,7 @@ void snippetForsetSettings25() async {
 // Snippet for the setSettings method.
 //
 // searchableAttributes same priority
-void snippetForsetSettings26() async {
+void snippetForsetSettings27() async {
   // >SEPARATOR setSettings searchableAttributes same priority
   // Initialize the client
   final client =
@@ -7793,7 +8166,7 @@ void snippetForsetSettings26() async {
 // Snippet for the setSettings method.
 //
 // searchableAttributes higher priority
-void snippetForsetSettings27() async {
+void snippetForsetSettings28() async {
   // >SEPARATOR setSettings searchableAttributes higher priority
   // Initialize the client
   final client =
@@ -7816,7 +8189,7 @@ void snippetForsetSettings27() async {
 // Snippet for the setSettings method.
 //
 // customRanking retweets
-void snippetForsetSettings28() async {
+void snippetForsetSettings29() async {
   // >SEPARATOR setSettings customRanking retweets
   // Initialize the client
   final client =
@@ -7839,7 +8212,7 @@ void snippetForsetSettings28() async {
 // Snippet for the setSettings method.
 //
 // customRanking boosted
-void snippetForsetSettings29() async {
+void snippetForsetSettings30() async {
   // >SEPARATOR setSettings customRanking boosted
   // Initialize the client
   final client =
@@ -7861,7 +8234,7 @@ void snippetForsetSettings29() async {
 // Snippet for the setSettings method.
 //
 // customRanking pageviews
-void snippetForsetSettings30() async {
+void snippetForsetSettings31() async {
   // >SEPARATOR setSettings customRanking pageviews
   // Initialize the client
   final client =
@@ -7884,7 +8257,7 @@ void snippetForsetSettings30() async {
 // Snippet for the setSettings method.
 //
 // customRanking applying search parameters for a specific query
-void snippetForsetSettings31() async {
+void snippetForsetSettings32() async {
   // >SEPARATOR setSettings customRanking applying search parameters for a specific query
   // Initialize the client
   final client =
@@ -7909,7 +8282,7 @@ void snippetForsetSettings31() async {
 // Snippet for the setSettings method.
 //
 // customRanking rounded pageviews
-void snippetForsetSettings32() async {
+void snippetForsetSettings33() async {
   // >SEPARATOR setSettings customRanking rounded pageviews
   // Initialize the client
   final client =
@@ -7932,7 +8305,7 @@ void snippetForsetSettings32() async {
 // Snippet for the setSettings method.
 //
 // customRanking price
-void snippetForsetSettings33() async {
+void snippetForsetSettings34() async {
   // >SEPARATOR setSettings customRanking price
   // Initialize the client
   final client =
@@ -7953,9 +8326,9 @@ void snippetForsetSettings33() async {
 
 // Snippet for the setSettings method.
 //
-// ranking exhaustive
-void snippetForsetSettings34() async {
-  // >SEPARATOR setSettings ranking exhaustive
+// ranking exhaustive (price)
+void snippetForsetSettings35() async {
+  // >SEPARATOR setSettings ranking exhaustive (price)
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -7983,8 +8356,38 @@ void snippetForsetSettings34() async {
 
 // Snippet for the setSettings method.
 //
+// ranking exhaustive (is_popular)
+void snippetForsetSettings36() async {
+  // >SEPARATOR setSettings ranking exhaustive (is_popular)
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      ranking: [
+        "desc(is_popular)",
+        "typo",
+        "geo",
+        "words",
+        "filters",
+        "proximity",
+        "attribute",
+        "exact",
+        "custom",
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
 // ranking standard replica
-void snippetForsetSettings35() async {
+void snippetForsetSettings37() async {
   // >SEPARATOR setSettings ranking standard replica
   // Initialize the client
   final client =
@@ -8006,7 +8409,7 @@ void snippetForsetSettings35() async {
 // Snippet for the setSettings method.
 //
 // ranking virtual replica
-void snippetForsetSettings36() async {
+void snippetForsetSettings38() async {
   // >SEPARATOR setSettings ranking virtual replica
   // Initialize the client
   final client =
@@ -8028,7 +8431,7 @@ void snippetForsetSettings36() async {
 // Snippet for the setSettings method.
 //
 // customRanking and ranking sort alphabetically
-void snippetForsetSettings37() async {
+void snippetForsetSettings39() async {
   // >SEPARATOR setSettings customRanking and ranking sort alphabetically
   // Initialize the client
   final client =
@@ -8060,7 +8463,7 @@ void snippetForsetSettings37() async {
 // Snippet for the setSettings method.
 //
 // relevancyStrictness
-void snippetForsetSettings38() async {
+void snippetForsetSettings40() async {
   // >SEPARATOR setSettings relevancyStrictness
   // Initialize the client
   final client =
@@ -8083,7 +8486,7 @@ void snippetForsetSettings38() async {
 // Snippet for the setSettings method.
 //
 // create replica index
-void snippetForsetSettings39() async {
+void snippetForsetSettings41() async {
   // >SEPARATOR setSettings create replica index
   // Initialize the client
   final client =
@@ -8105,7 +8508,7 @@ void snippetForsetSettings39() async {
 // Snippet for the setSettings method.
 //
 // create replica index articles
-void snippetForsetSettings40() async {
+void snippetForsetSettings42() async {
   // >SEPARATOR setSettings create replica index articles
   // Initialize the client
   final client =
@@ -8127,7 +8530,7 @@ void snippetForsetSettings40() async {
 // Snippet for the setSettings method.
 //
 // create virtual replica index
-void snippetForsetSettings41() async {
+void snippetForsetSettings43() async {
   // >SEPARATOR setSettings create virtual replica index
   // Initialize the client
   final client =
@@ -8149,7 +8552,7 @@ void snippetForsetSettings41() async {
 // Snippet for the setSettings method.
 //
 // unlink replica index
-void snippetForsetSettings42() async {
+void snippetForsetSettings44() async {
   // >SEPARATOR setSettings unlink replica index
   // Initialize the client
   final client =
@@ -8171,7 +8574,7 @@ void snippetForsetSettings42() async {
 // Snippet for the setSettings method.
 //
 // forwardToReplicas
-void snippetForsetSettings43() async {
+void snippetForsetSettings45() async {
   // >SEPARATOR setSettings forwardToReplicas
   // Initialize the client
   final client =
@@ -8195,7 +8598,7 @@ void snippetForsetSettings43() async {
 // Snippet for the setSettings method.
 //
 // maxValuesPerFacet
-void snippetForsetSettings44() async {
+void snippetForsetSettings46() async {
   // >SEPARATOR setSettings maxValuesPerFacet
   // Initialize the client
   final client =
@@ -8215,7 +8618,7 @@ void snippetForsetSettings44() async {
 // Snippet for the setSettings method.
 //
 // maxFacetHits
-void snippetForsetSettings45() async {
+void snippetForsetSettings47() async {
   // >SEPARATOR setSettings maxFacetHits
   // Initialize the client
   final client =
@@ -8225,7 +8628,7 @@ void snippetForsetSettings45() async {
   final response = await client.setSettings(
     indexName: "<YOUR_INDEX_NAME>",
     indexSettings: IndexSettings(
-      maxFacetHits: 1000,
+      maxFacetHits: 100,
     ),
   );
   // >LOG
@@ -8235,7 +8638,7 @@ void snippetForsetSettings45() async {
 // Snippet for the setSettings method.
 //
 // attributesForFaceting complex
-void snippetForsetSettings46() async {
+void snippetForsetSettings48() async {
   // >SEPARATOR setSettings attributesForFaceting complex
   // Initialize the client
   final client =
@@ -8259,7 +8662,7 @@ void snippetForsetSettings46() async {
 // Snippet for the setSettings method.
 //
 // ranking closest dates
-void snippetForsetSettings47() async {
+void snippetForsetSettings49() async {
   // >SEPARATOR setSettings ranking closest dates
   // Initialize the client
   final client =
@@ -8289,7 +8692,7 @@ void snippetForsetSettings47() async {
 // Snippet for the setSettings method.
 //
 // searchableAttributes item variation
-void snippetForsetSettings48() async {
+void snippetForsetSettings50() async {
   // >SEPARATOR setSettings searchableAttributes item variation
   // Initialize the client
   final client =
@@ -8313,7 +8716,7 @@ void snippetForsetSettings48() async {
 // Snippet for the setSettings method.
 //
 // searchableAttributes around location
-void snippetForsetSettings49() async {
+void snippetForsetSettings51() async {
   // >SEPARATOR setSettings searchableAttributes around location
   // Initialize the client
   final client =
@@ -8326,7 +8729,7 @@ void snippetForsetSettings49() async {
       searchableAttributes: [
         "name",
         "country",
-        "code",
+        "city",
         "iata_code",
       ],
       customRanking: [
@@ -8341,7 +8744,7 @@ void snippetForsetSettings49() async {
 // Snippet for the setSettings method.
 //
 // attributesToHighlight
-void snippetForsetSettings50() async {
+void snippetForsetSettings52() async {
   // >SEPARATOR setSettings attributesToHighlight
   // Initialize the client
   final client =
@@ -8365,7 +8768,7 @@ void snippetForsetSettings50() async {
 // Snippet for the setSettings method.
 //
 // attributesToHighlightStar
-void snippetForsetSettings51() async {
+void snippetForsetSettings53() async {
   // >SEPARATOR setSettings attributesToHighlightStar
   // Initialize the client
   final client =
@@ -8387,7 +8790,7 @@ void snippetForsetSettings51() async {
 // Snippet for the setSettings method.
 //
 // everything
-void snippetForsetSettings52() async {
+void snippetForsetSettings54() async {
   // >SEPARATOR setSettings everything
   // Initialize the client
   final client =
@@ -8540,7 +8943,7 @@ void snippetForsetSettings52() async {
 // Snippet for the setSettings method.
 //
 // searchableAttributesWithCustomRankingsAndAttributesForFaceting
-void snippetForsetSettings53() async {
+void snippetForsetSettings55() async {
   // >SEPARATOR setSettings searchableAttributesWithCustomRankingsAndAttributesForFaceting
   // Initialize the client
   final client =
@@ -8574,7 +8977,7 @@ void snippetForsetSettings53() async {
 // Snippet for the setSettings method.
 //
 // searchableAttributesOrdering
-void snippetForsetSettings54() async {
+void snippetForsetSettings56() async {
   // >SEPARATOR setSettings searchableAttributesOrdering
   // Initialize the client
   final client =
@@ -8597,7 +9000,7 @@ void snippetForsetSettings54() async {
 // Snippet for the setSettings method.
 //
 // searchableAttributesProductReferenceSuffixes
-void snippetForsetSettings55() async {
+void snippetForsetSettings57() async {
   // >SEPARATOR setSettings searchableAttributesProductReferenceSuffixes
   // Initialize the client
   final client =
@@ -8621,7 +9024,7 @@ void snippetForsetSettings55() async {
 // Snippet for the setSettings method.
 //
 // queryLanguageAndIgnorePlurals
-void snippetForsetSettings56() async {
+void snippetForsetSettings58() async {
   // >SEPARATOR setSettings queryLanguageAndIgnorePlurals
   // Initialize the client
   final client =
@@ -8644,7 +9047,7 @@ void snippetForsetSettings56() async {
 // Snippet for the setSettings method.
 //
 // searchableAttributesInMovies
-void snippetForsetSettings57() async {
+void snippetForsetSettings59() async {
   // >SEPARATOR setSettings searchableAttributesInMovies
   // Initialize the client
   final client =
@@ -8668,7 +9071,7 @@ void snippetForsetSettings57() async {
 // Snippet for the setSettings method.
 //
 // disablePrefixOnAttributes
-void snippetForsetSettings58() async {
+void snippetForsetSettings60() async {
   // >SEPARATOR setSettings disablePrefixOnAttributes
   // Initialize the client
   final client =
@@ -8690,7 +9093,7 @@ void snippetForsetSettings58() async {
 // Snippet for the setSettings method.
 //
 // disableTypoToleranceOnAttributes
-void snippetForsetSettings59() async {
+void snippetForsetSettings61() async {
   // >SEPARATOR setSettings disableTypoToleranceOnAttributes
   // Initialize the client
   final client =
@@ -8712,7 +9115,7 @@ void snippetForsetSettings59() async {
 // Snippet for the setSettings method.
 //
 // searchableAttributesSimpleExample
-void snippetForsetSettings60() async {
+void snippetForsetSettings62() async {
   // >SEPARATOR setSettings searchableAttributesSimpleExample
   // Initialize the client
   final client =
@@ -8734,7 +9137,7 @@ void snippetForsetSettings60() async {
 // Snippet for the setSettings method.
 //
 // searchableAttributesSimpleExampleAlt
-void snippetForsetSettings61() async {
+void snippetForsetSettings63() async {
   // >SEPARATOR setSettings searchableAttributesSimpleExampleAlt
   // Initialize the client
   final client =
@@ -8757,7 +9160,7 @@ void snippetForsetSettings61() async {
 // Snippet for the setSettings method.
 //
 // set_searchable_attributes
-void snippetForsetSettings62() async {
+void snippetForsetSettings64() async {
   // >SEPARATOR setSettings set_searchable_attributes
   // Initialize the client
   final client =
@@ -8782,7 +9185,7 @@ void snippetForsetSettings62() async {
 // Snippet for the setSettings method.
 //
 // set_searchable_attributes
-void snippetForsetSettings63() async {
+void snippetForsetSettings65() async {
   // >SEPARATOR setSettings set_searchable_attributes
   // Initialize the client
   final client =
@@ -8808,7 +9211,7 @@ void snippetForsetSettings63() async {
 // Snippet for the setSettings method.
 //
 // unretrievable_attributes
-void snippetForsetSettings64() async {
+void snippetForsetSettings66() async {
   // >SEPARATOR setSettings unretrievable_attributes
   // Initialize the client
   final client =
@@ -8830,7 +9233,7 @@ void snippetForsetSettings64() async {
 // Snippet for the setSettings method.
 //
 // set_retrievable_attributes
-void snippetForsetSettings65() async {
+void snippetForsetSettings67() async {
   // >SEPARATOR setSettings set_retrievable_attributes
   // Initialize the client
   final client =
@@ -8854,7 +9257,7 @@ void snippetForsetSettings65() async {
 // Snippet for the setSettings method.
 //
 // set_all_attributes_as_retrievable
-void snippetForsetSettings66() async {
+void snippetForsetSettings68() async {
   // >SEPARATOR setSettings set_all_attributes_as_retrievable
   // Initialize the client
   final client =
@@ -8876,7 +9279,7 @@ void snippetForsetSettings66() async {
 // Snippet for the setSettings method.
 //
 // specify_attributes_not_to_retrieve
-void snippetForsetSettings67() async {
+void snippetForsetSettings69() async {
   // >SEPARATOR setSettings specify_attributes_not_to_retrieve
   // Initialize the client
   final client =
@@ -8900,7 +9303,7 @@ void snippetForsetSettings67() async {
 // Snippet for the setSettings method.
 //
 // neural_search
-void snippetForsetSettings68() async {
+void snippetForsetSettings70() async {
   // >SEPARATOR setSettings neural_search
   // Initialize the client
   final client =
@@ -8920,7 +9323,7 @@ void snippetForsetSettings68() async {
 // Snippet for the setSettings method.
 //
 // keyword_search
-void snippetForsetSettings69() async {
+void snippetForsetSettings71() async {
   // >SEPARATOR setSettings keyword_search
   // Initialize the client
   final client =
@@ -8940,7 +9343,7 @@ void snippetForsetSettings69() async {
 // Snippet for the setSettings method.
 //
 // set_default_ranking
-void snippetForsetSettings70() async {
+void snippetForsetSettings72() async {
   // >SEPARATOR setSettings set_default_ranking
   // Initialize the client
   final client =
@@ -8969,7 +9372,7 @@ void snippetForsetSettings70() async {
 // Snippet for the setSettings method.
 //
 // set_ranking_by_attribute_asc
-void snippetForsetSettings71() async {
+void snippetForsetSettings73() async {
   // >SEPARATOR setSettings set_ranking_by_attribute_asc
   // Initialize the client
   final client =
@@ -8999,7 +9402,7 @@ void snippetForsetSettings71() async {
 // Snippet for the setSettings method.
 //
 // set_ranking_by_attribute_desc
-void snippetForsetSettings72() async {
+void snippetForsetSettings74() async {
   // >SEPARATOR setSettings set_ranking_by_attribute_desc
   // Initialize the client
   final client =
@@ -9029,7 +9432,7 @@ void snippetForsetSettings72() async {
 // Snippet for the setSettings method.
 //
 // restrict_searchable_attributes
-void snippetForsetSettings73() async {
+void snippetForsetSettings75() async {
   // >SEPARATOR setSettings restrict_searchable_attributes
   // Initialize the client
   final client =
@@ -9052,7 +9455,7 @@ void snippetForsetSettings73() async {
 // Snippet for the setSettings method.
 //
 // set_default_relevancy
-void snippetForsetSettings74() async {
+void snippetForsetSettings76() async {
   // >SEPARATOR setSettings set_default_relevancy
   // Initialize the client
   final client =
@@ -9072,7 +9475,7 @@ void snippetForsetSettings74() async {
 // Snippet for the setSettings method.
 //
 // set_replicas
-void snippetForsetSettings75() async {
+void snippetForsetSettings77() async {
   // >SEPARATOR setSettings set_replicas
   // Initialize the client
   final client =
@@ -9095,7 +9498,7 @@ void snippetForsetSettings75() async {
 // Snippet for the setSettings method.
 //
 // set_default_max_values_per_facet
-void snippetForsetSettings76() async {
+void snippetForsetSettings78() async {
   // >SEPARATOR setSettings set_default_max_values_per_facet
   // Initialize the client
   final client =
@@ -9115,7 +9518,7 @@ void snippetForsetSettings76() async {
 // Snippet for the setSettings method.
 //
 // set_default_sort_facet_values_by
-void snippetForsetSettings77() async {
+void snippetForsetSettings79() async {
   // >SEPARATOR setSettings set_default_sort_facet_values_by
   // Initialize the client
   final client =
@@ -9135,7 +9538,7 @@ void snippetForsetSettings77() async {
 // Snippet for the setSettings method.
 //
 // set_attributes_to_snippet
-void snippetForsetSettings78() async {
+void snippetForsetSettings80() async {
   // >SEPARATOR setSettings set_attributes_to_snippet
   // Initialize the client
   final client =
@@ -9158,7 +9561,7 @@ void snippetForsetSettings78() async {
 // Snippet for the setSettings method.
 //
 // set_all_attributes_to_snippet
-void snippetForsetSettings79() async {
+void snippetForsetSettings81() async {
   // >SEPARATOR setSettings set_all_attributes_to_snippet
   // Initialize the client
   final client =
@@ -9180,7 +9583,7 @@ void snippetForsetSettings79() async {
 // Snippet for the setSettings method.
 //
 // set_default_highlight_pre_tag
-void snippetForsetSettings80() async {
+void snippetForsetSettings82() async {
   // >SEPARATOR setSettings set_default_highlight_pre_tag
   // Initialize the client
   final client =
@@ -9200,7 +9603,7 @@ void snippetForsetSettings80() async {
 // Snippet for the setSettings method.
 //
 // set_default_highlight_post_tag
-void snippetForsetSettings81() async {
+void snippetForsetSettings83() async {
   // >SEPARATOR setSettings set_default_highlight_post_tag
   // Initialize the client
   final client =
@@ -9220,7 +9623,7 @@ void snippetForsetSettings81() async {
 // Snippet for the setSettings method.
 //
 // set_default_snippet_ellipsis_text
-void snippetForsetSettings82() async {
+void snippetForsetSettings84() async {
   // >SEPARATOR setSettings set_default_snippet_ellipsis_text
   // Initialize the client
   final client =
@@ -9240,7 +9643,7 @@ void snippetForsetSettings82() async {
 // Snippet for the setSettings method.
 //
 // enable_restrict_highlight_and_snippet_arrays_by_default
-void snippetForsetSettings83() async {
+void snippetForsetSettings85() async {
   // >SEPARATOR setSettings enable_restrict_highlight_and_snippet_arrays_by_default
   // Initialize the client
   final client =
@@ -9260,7 +9663,7 @@ void snippetForsetSettings83() async {
 // Snippet for the setSettings method.
 //
 // set_default_hits_per_page
-void snippetForsetSettings84() async {
+void snippetForsetSettings86() async {
   // >SEPARATOR setSettings set_default_hits_per_page
   // Initialize the client
   final client =
@@ -9280,7 +9683,7 @@ void snippetForsetSettings84() async {
 // Snippet for the setSettings method.
 //
 // set_pagination_limit
-void snippetForsetSettings85() async {
+void snippetForsetSettings87() async {
   // >SEPARATOR setSettings set_pagination_limit
   // Initialize the client
   final client =
@@ -9300,7 +9703,7 @@ void snippetForsetSettings85() async {
 // Snippet for the setSettings method.
 //
 // set_default_min_word_size_for_one_typo
-void snippetForsetSettings86() async {
+void snippetForsetSettings88() async {
   // >SEPARATOR setSettings set_default_min_word_size_for_one_typo
   // Initialize the client
   final client =
@@ -9320,7 +9723,7 @@ void snippetForsetSettings86() async {
 // Snippet for the setSettings method.
 //
 // set_default_min_word_size_for_two_typos
-void snippetForsetSettings87() async {
+void snippetForsetSettings89() async {
   // >SEPARATOR setSettings set_default_min_word_size_for_two_typos
   // Initialize the client
   final client =
@@ -9340,7 +9743,7 @@ void snippetForsetSettings87() async {
 // Snippet for the setSettings method.
 //
 // set_default_typo_tolerance_mode
-void snippetForsetSettings88() async {
+void snippetForsetSettings90() async {
   // >SEPARATOR setSettings set_default_typo_tolerance_mode
   // Initialize the client
   final client =
@@ -9360,7 +9763,7 @@ void snippetForsetSettings88() async {
 // Snippet for the setSettings method.
 //
 // disable_typos_on_numeric_tokens_by_default
-void snippetForsetSettings89() async {
+void snippetForsetSettings91() async {
   // >SEPARATOR setSettings disable_typos_on_numeric_tokens_by_default
   // Initialize the client
   final client =
@@ -9380,7 +9783,7 @@ void snippetForsetSettings89() async {
 // Snippet for the setSettings method.
 //
 // disable_typo_tolerance_for_words
-void snippetForsetSettings90() async {
+void snippetForsetSettings92() async {
   // >SEPARATOR setSettings disable_typo_tolerance_for_words
   // Initialize the client
   final client =
@@ -9403,7 +9806,7 @@ void snippetForsetSettings90() async {
 // Snippet for the setSettings method.
 //
 // set_separators_to_index
-void snippetForsetSettings91() async {
+void snippetForsetSettings93() async {
   // >SEPARATOR setSettings set_separators_to_index
   // Initialize the client
   final client =
@@ -9423,7 +9826,7 @@ void snippetForsetSettings91() async {
 // Snippet for the setSettings method.
 //
 // set_languages_using_querylanguages
-void snippetForsetSettings92() async {
+void snippetForsetSettings94() async {
   // >SEPARATOR setSettings set_languages_using_querylanguages
   // Initialize the client
   final client =
@@ -9446,7 +9849,7 @@ void snippetForsetSettings92() async {
 // Snippet for the setSettings method.
 //
 // set_attributes_to_transliterate
-void snippetForsetSettings93() async {
+void snippetForsetSettings95() async {
   // >SEPARATOR setSettings set_attributes_to_transliterate
   // Initialize the client
   final client =
@@ -9472,7 +9875,7 @@ void snippetForsetSettings93() async {
 // Snippet for the setSettings method.
 //
 // set_languages_using_querylanguages
-void snippetForsetSettings94() async {
+void snippetForsetSettings96() async {
   // >SEPARATOR setSettings set_languages_using_querylanguages
   // Initialize the client
   final client =
@@ -9495,7 +9898,7 @@ void snippetForsetSettings94() async {
 // Snippet for the setSettings method.
 //
 // set_camel_case_attributes
-void snippetForsetSettings95() async {
+void snippetForsetSettings97() async {
   // >SEPARATOR setSettings set_camel_case_attributes
   // Initialize the client
   final client =
@@ -9517,7 +9920,7 @@ void snippetForsetSettings95() async {
 // Snippet for the setSettings method.
 //
 // set_decompounded_attributes
-void snippetForsetSettings96() async {
+void snippetForsetSettings98() async {
   // >SEPARATOR setSettings set_decompounded_attributes
   // Initialize the client
   final client =
@@ -9541,7 +9944,7 @@ void snippetForsetSettings96() async {
 // Snippet for the setSettings method.
 //
 // set_decompounded_multiple_attributes
-void snippetForsetSettings97() async {
+void snippetForsetSettings99() async {
   // >SEPARATOR setSettings set_decompounded_multiple_attributes
   // Initialize the client
   final client =
@@ -9570,7 +9973,7 @@ void snippetForsetSettings97() async {
 // Snippet for the setSettings method.
 //
 // set_keep_diacritics_on_characters
-void snippetForsetSettings98() async {
+void snippetForsetSettings100() async {
   // >SEPARATOR setSettings set_keep_diacritics_on_characters
   // Initialize the client
   final client =
@@ -9590,7 +9993,7 @@ void snippetForsetSettings98() async {
 // Snippet for the setSettings method.
 //
 // set_custom_normalization
-void snippetForsetSettings99() async {
+void snippetForsetSettings101() async {
   // >SEPARATOR setSettings set_custom_normalization
   // Initialize the client
   final client =
@@ -9614,7 +10017,7 @@ void snippetForsetSettings99() async {
 // Snippet for the setSettings method.
 //
 // set_languages_using_querylanguages
-void snippetForsetSettings100() async {
+void snippetForsetSettings102() async {
   // >SEPARATOR setSettings set_languages_using_querylanguages
   // Initialize the client
   final client =
@@ -9638,7 +10041,7 @@ void snippetForsetSettings100() async {
 // Snippet for the setSettings method.
 //
 // set_indexlanguages
-void snippetForsetSettings101() async {
+void snippetForsetSettings103() async {
   // >SEPARATOR setSettings set_indexlanguages
   // Initialize the client
   final client =
@@ -9660,7 +10063,7 @@ void snippetForsetSettings101() async {
 // Snippet for the setSettings method.
 //
 // enable_decompound_query_by_default
-void snippetForsetSettings102() async {
+void snippetForsetSettings104() async {
   // >SEPARATOR setSettings enable_decompound_query_by_default
   // Initialize the client
   final client =
@@ -9680,7 +10083,7 @@ void snippetForsetSettings102() async {
 // Snippet for the setSettings method.
 //
 // enable_rules_syntax_by_default
-void snippetForsetSettings103() async {
+void snippetForsetSettings105() async {
   // >SEPARATOR setSettings enable_rules_syntax_by_default
   // Initialize the client
   final client =
@@ -9700,7 +10103,7 @@ void snippetForsetSettings103() async {
 // Snippet for the setSettings method.
 //
 // enable_personalization_settings
-void snippetForsetSettings104() async {
+void snippetForsetSettings106() async {
   // >SEPARATOR setSettings enable_personalization_settings
   // Initialize the client
   final client =
@@ -9720,7 +10123,7 @@ void snippetForsetSettings104() async {
 // Snippet for the setSettings method.
 //
 // set_default_query_type
-void snippetForsetSettings105() async {
+void snippetForsetSettings107() async {
   // >SEPARATOR setSettings set_default_query_type
   // Initialize the client
   final client =
@@ -9740,7 +10143,7 @@ void snippetForsetSettings105() async {
 // Snippet for the setSettings method.
 //
 // set_default_remove_words_if_no_result
-void snippetForsetSettings106() async {
+void snippetForsetSettings108() async {
   // >SEPARATOR setSettings set_default_remove_words_if_no_result
   // Initialize the client
   final client =
@@ -9760,7 +10163,7 @@ void snippetForsetSettings106() async {
 // Snippet for the setSettings method.
 //
 // enable_advanced_syntax_by_default
-void snippetForsetSettings107() async {
+void snippetForsetSettings109() async {
   // >SEPARATOR setSettings enable_advanced_syntax_by_default
   // Initialize the client
   final client =
@@ -9780,7 +10183,7 @@ void snippetForsetSettings107() async {
 // Snippet for the setSettings method.
 //
 // set_default_optional_words
-void snippetForsetSettings108() async {
+void snippetForsetSettings110() async {
   // >SEPARATOR setSettings set_default_optional_words
   // Initialize the client
   final client =
@@ -9803,7 +10206,7 @@ void snippetForsetSettings108() async {
 // Snippet for the setSettings method.
 //
 // disabling_prefix_search_for_some_attributes_by_default
-void snippetForsetSettings109() async {
+void snippetForsetSettings111() async {
   // >SEPARATOR setSettings disabling_prefix_search_for_some_attributes_by_default
   // Initialize the client
   final client =
@@ -9825,7 +10228,7 @@ void snippetForsetSettings109() async {
 // Snippet for the setSettings method.
 //
 // disabling_exact_for_some_attributes_by_default
-void snippetForsetSettings110() async {
+void snippetForsetSettings112() async {
   // >SEPARATOR setSettings disabling_exact_for_some_attributes_by_default
   // Initialize the client
   final client =
@@ -9847,7 +10250,7 @@ void snippetForsetSettings110() async {
 // Snippet for the setSettings method.
 //
 // set_default_exact_single_word_query
-void snippetForsetSettings111() async {
+void snippetForsetSettings113() async {
   // >SEPARATOR setSettings set_default_exact_single_word_query
   // Initialize the client
   final client =
@@ -9867,7 +10270,7 @@ void snippetForsetSettings111() async {
 // Snippet for the setSettings method.
 //
 // set_default_aternative_as_exact
-void snippetForsetSettings112() async {
+void snippetForsetSettings114() async {
   // >SEPARATOR setSettings set_default_aternative_as_exact
   // Initialize the client
   final client =
@@ -9890,7 +10293,7 @@ void snippetForsetSettings112() async {
 // Snippet for the setSettings method.
 //
 // enable_advanced_syntax_by_default
-void snippetForsetSettings113() async {
+void snippetForsetSettings115() async {
   // >SEPARATOR setSettings enable_advanced_syntax_by_default
   // Initialize the client
   final client =
@@ -9910,7 +10313,7 @@ void snippetForsetSettings113() async {
 // Snippet for the setSettings method.
 //
 // set_numeric_attributes_for_filtering
-void snippetForsetSettings114() async {
+void snippetForsetSettings116() async {
   // >SEPARATOR setSettings set_numeric_attributes_for_filtering
   // Initialize the client
   final client =
@@ -9933,7 +10336,7 @@ void snippetForsetSettings114() async {
 // Snippet for the setSettings method.
 //
 // enable_compression_of_integer_array
-void snippetForsetSettings115() async {
+void snippetForsetSettings117() async {
   // >SEPARATOR setSettings enable_compression_of_integer_array
   // Initialize the client
   final client =
@@ -9953,7 +10356,7 @@ void snippetForsetSettings115() async {
 // Snippet for the setSettings method.
 //
 // set_attributes_for_distinct
-void snippetForsetSettings116() async {
+void snippetForsetSettings118() async {
   // >SEPARATOR setSettings set_attributes_for_distinct
   // Initialize the client
   final client =
@@ -9973,7 +10376,7 @@ void snippetForsetSettings116() async {
 // Snippet for the setSettings method.
 //
 // set_distinct
-void snippetForsetSettings117() async {
+void snippetForsetSettings119() async {
   // >SEPARATOR setSettings set_distinct
   // Initialize the client
   final client =
@@ -9994,7 +10397,7 @@ void snippetForsetSettings117() async {
 // Snippet for the setSettings method.
 //
 // set_replace_synonyms_in_highlights
-void snippetForsetSettings118() async {
+void snippetForsetSettings120() async {
   // >SEPARATOR setSettings set_replace_synonyms_in_highlights
   // Initialize the client
   final client =
@@ -10014,7 +10417,7 @@ void snippetForsetSettings118() async {
 // Snippet for the setSettings method.
 //
 // set_min_proximity
-void snippetForsetSettings119() async {
+void snippetForsetSettings121() async {
   // >SEPARATOR setSettings set_min_proximity
   // Initialize the client
   final client =
@@ -10034,7 +10437,7 @@ void snippetForsetSettings119() async {
 // Snippet for the setSettings method.
 //
 // set_default_field
-void snippetForsetSettings120() async {
+void snippetForsetSettings122() async {
   // >SEPARATOR setSettings set_default_field
   // Initialize the client
   final client =
@@ -10059,7 +10462,7 @@ void snippetForsetSettings120() async {
 // Snippet for the setSettings method.
 //
 // set_max_facet_hits
-void snippetForsetSettings121() async {
+void snippetForsetSettings123() async {
   // >SEPARATOR setSettings set_max_facet_hits
   // Initialize the client
   final client =
@@ -10079,7 +10482,7 @@ void snippetForsetSettings121() async {
 // Snippet for the setSettings method.
 //
 // set_attribute_criteria_computed_by_min_proximity
-void snippetForsetSettings122() async {
+void snippetForsetSettings124() async {
   // >SEPARATOR setSettings set_attribute_criteria_computed_by_min_proximity
   // Initialize the client
   final client =
@@ -10099,7 +10502,7 @@ void snippetForsetSettings122() async {
 // Snippet for the setSettings method.
 //
 // set_user_data
-void snippetForsetSettings123() async {
+void snippetForsetSettings125() async {
   // >SEPARATOR setSettings set_user_data
   // Initialize the client
   final client =
@@ -10122,7 +10525,7 @@ void snippetForsetSettings123() async {
 // Snippet for the setSettings method.
 //
 // set_rendering_content
-void snippetForsetSettings124() async {
+void snippetForsetSettings126() async {
   // >SEPARATOR setSettings set_rendering_content
   // Initialize the client
   final client =

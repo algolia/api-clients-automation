@@ -1,4 +1,4 @@
-$client->{{^hasParams}}{{{method}}}(){{/hasParams}}{{#hasParams}}{{{method}}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}[
+$client->{{^hasParams}}{{{method}}}(){{/hasParams}}{{#hasParams}}{{{method}}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} [
   {{#requestOptions.queryParameters.parameters}}
     'queryParameters' => [
       {{#requestOptions.queryParameters.parametersWithDataType}}
@@ -7,7 +7,7 @@ $client->{{^hasParams}}{{{method}}}(){{/hasParams}}{{#hasParams}}{{{method}}}({{
     ],{{/requestOptions.queryParameters.parameters}}{{#requestOptions.headers.parameters}}
     'headers' => [
       {{#requestOptions.headers.parametersWithDataType}}
-        '{{{key}}}' => '{{{value}}}',
+        '{{{key}}}' => {{#isVerbatim}}${{{value}}}{{/isVerbatim}}{{^isVerbatim}}'{{value}}'{{/isVerbatim}},
       {{/requestOptions.headers.parametersWithDataType}}
     ],
     {{/requestOptions.headers.parameters}}

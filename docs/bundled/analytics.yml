@@ -156,7 +156,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -355,13 +355,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customGet[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customGet[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -385,7 +385,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -584,13 +584,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customPost[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPost[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -614,7 +614,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -813,13 +813,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customPut[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPut[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -837,7 +837,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -1038,13 +1038,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customDelete[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customDelete[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1330,13 +1330,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getTopSearches(
-              index = "index"
+            val response = Await.result(
+              client.getTopSearches(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1605,13 +1605,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getSearchesCount(
-              index = "index"
+            val response = Await.result(
+              client.getSearchesCount(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1877,13 +1877,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getSearchesNoResults(
-              index = "index"
+            val response = Await.result(
+              client.getSearchesNoResults(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2158,13 +2158,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getSearchesNoClicks(
-              index = "index"
+            val response = Await.result(
+              client.getSearchesNoClicks(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2448,13 +2448,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getNoResultsRate(
-              index = "index"
+            val response = Await.result(
+              client.getNoResultsRate(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2738,13 +2738,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getNoClickRate(
-              index = "index"
+            val response = Await.result(
+              client.getNoClickRate(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3035,13 +3035,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getTopHits(
-              index = "index"
+            val response = Await.result(
+              client.getTopHits(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3327,13 +3327,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getUsersCount(
-              index = "index"
+            val response = Await.result(
+              client.getUsersCount(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3582,13 +3582,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getTopFilterAttributes(
-              index = "index"
+            val response = Await.result(
+              client.getTopFilterAttributes(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3849,14 +3849,14 @@ paths:
             )
 
             // Call the API
-            val response = client.getTopFilterForAttribute(
-              attribute = "myAttribute",
-              index = "index"
+            val response = Await.result(
+              client.getTopFilterForAttribute(
+                attribute = "myAttribute",
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4100,13 +4100,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getTopFiltersNoResults(
-              index = "index"
+            val response = Await.result(
+              client.getTopFiltersNoResults(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4371,13 +4371,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getTopCountries(
-              index = "index"
+            val response = Await.result(
+              client.getTopCountries(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4667,13 +4667,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getAverageClickPosition(
-              index = "index"
+            val response = Await.result(
+              client.getAverageClickPosition(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4933,13 +4933,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getClickPositions(
-              index = "index"
+            val response = Await.result(
+              client.getClickPositions(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5233,13 +5233,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getClickThroughRate(
-              index = "index"
+            val response = Await.result(
+              client.getClickThroughRate(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5532,13 +5532,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getConversionRate(
-              index = "index"
+            val response = Await.result(
+              client.getConversionRate(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5841,13 +5841,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getAddToCartRate(
-              index = "index"
+            val response = Await.result(
+              client.getAddToCartRate(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -6150,13 +6150,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getPurchaseRate(
-              index = "index"
+            val response = Await.result(
+              client.getPurchaseRate(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -6426,13 +6426,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getRevenue(
-              index = "index"
+            val response = Await.result(
+              client.getRevenue(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -6677,13 +6677,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getStatus(
-              index = "index"
+            val response = Await.result(
+              client.getStatus(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >

@@ -1,0 +1,21 @@
+<?php
+
+require __DIR__ . '/../vendor/autoload.php';
+{{> snippets/import}}
+use Algolia\AlgoliaSearch\Model\Search\SearchParamsObject;
+
+{{> snippets/init}}
+
+/*
+'94.228.178.246' should be replaced with your user's IP address.
+Depending on your stack there are multiple ways to get this information.
+*/
+$ip = '94.228.178.246';
+$query = 'query';
+
+$searchParams = (new SearchParamsObject())
+  ->setQuery($query)
+  ->setAnalytics(true);
+
+{{#dynamicSnippet}}searchWithSearchParamsAndForwardedHeader{{/dynamicSnippet}};
+

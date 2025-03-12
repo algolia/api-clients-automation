@@ -57,9 +57,6 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
 
       if (buildType !== 'guides') {
         fileNames = gens.reduce((prev, curr) => `${prev} ${createClientName(curr.client, curr.language)}.ts`, '');
-      } else if (!fileNames.includes('search')) {
-        // only search is needed for guides right now, if it's not being built, no need to validate guides
-        break;
       }
 
       await run(`yarn tsc ${fileNames} --noEmit`, {
@@ -85,7 +82,7 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
       break;
     case 'python':
       // there is no type checking for the snippets
-      if (buildType === 'playground') {
+      if (buildType === 'playground' || buildType === 'guides') {
         await formatter(language, cwd); // ruff can detect some types issues.
       }
       if (buildType === 'client') {

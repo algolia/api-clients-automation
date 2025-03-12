@@ -1,0 +1,22 @@
+{{> snippets/import}}
+
+{{> snippets/init}}
+
+object_id = "a-rule-id"
+
+rule = Algolia::Search::Rule.new(
+  object_id: object_id,
+  consequence: Algolia::Search::Consequence.new(
+    # Set relevant consequence
+  ),
+)
+
+# Set validity (optional)
+rule.validity = [
+  Algolia::Search::TimeRange.new(
+    from: 1688774400,
+    until: 1738972800,
+  ),
+]
+
+{{#dynamicSnippet}}saveRule{{/dynamicSnippet}}

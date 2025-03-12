@@ -1,0 +1,19 @@
+{{> snippets/import}}
+import com.algolia.client.model.search.*
+
+suspend fun enableFilterPromote() {
+  val condition = Condition(
+    pattern = "{facet:brand}",
+    anchoring = Anchoring.Is,
+  )
+
+  val consequence = Consequence(
+    filterPromotes = true
+  )
+
+  val rule = Rule(
+    objectID = "rule_with_filterPromotes",
+    conditions = listOf(condition),
+    consequence = consequence
+  )
+}

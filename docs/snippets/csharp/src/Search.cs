@@ -12,11 +12,34 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the AddApiKey method.
   ///
-  /// addApiKey
+  /// minimal
   /// </summary>
   public async Task SnippetForSearchClientAddApiKey()
   {
-    // >SEPARATOR addApiKey default
+    // >SEPARATOR addApiKey minimal
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.AddApiKeyAsync(
+      new ApiKey
+      {
+        Acl = new List<Acl> { Enum.Parse<Acl>("Search"), Enum.Parse<Acl>("AddObject") },
+        Description = "my new api key",
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the AddApiKey method.
+  ///
+  /// all
+  /// </summary>
+  public async Task SnippetForSearchClientAddApiKey1()
+  {
+    // >SEPARATOR addApiKey all
     // Initialize the client
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
@@ -1237,6 +1260,46 @@ public class SnippetSearchClient
   }
 
   /// <summary>
+  /// Snippet for the GenerateSecuredApiKey method.
+  ///
+  /// mcm with filters
+  /// </summary>
+  public async Task SnippetForSearchClientGenerateSecuredApiKey5()
+  {
+    // >SEPARATOR generateSecuredApiKey mcm with filters
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = client.GenerateSecuredApiKey(
+      "YourSearchOnlyApiKey",
+      new SecuredApiKeyRestrictions { Filters = "user:user42 AND user:public" }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GenerateSecuredApiKey method.
+  ///
+  /// mcm with user token
+  /// </summary>
+  public async Task SnippetForSearchClientGenerateSecuredApiKey6()
+  {
+    // >SEPARATOR generateSecuredApiKey mcm with user token
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = client.GenerateSecuredApiKey(
+      "YourSearchOnlyApiKey",
+      new SecuredApiKeyRestrictions { UserToken = "user42" }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the GetApiKey method.
   ///
   /// getApiKey
@@ -1384,11 +1447,62 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the GetObjects method.
   ///
-  /// getObjects
+  /// by ID
   /// </summary>
   public async Task SnippetForSearchClientGetObjects()
   {
-    // >SEPARATOR getObjects default
+    // >SEPARATOR getObjects by ID
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.GetObjectsAsync<Hit>(
+      new GetObjectsParams
+      {
+        Requests = new List<GetObjectsRequest>
+        {
+          new GetObjectsRequest { ObjectID = "uniqueID", IndexName = "<YOUR_INDEX_NAME>" },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GetObjects method.
+  ///
+  /// multiple IDs
+  /// </summary>
+  public async Task SnippetForSearchClientGetObjects1()
+  {
+    // >SEPARATOR getObjects multiple IDs
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.GetObjectsAsync<Hit>(
+      new GetObjectsParams
+      {
+        Requests = new List<GetObjectsRequest>
+        {
+          new GetObjectsRequest { ObjectID = "uniqueID1", IndexName = "<YOUR_INDEX_NAME>" },
+          new GetObjectsRequest { ObjectID = "uniqueID2", IndexName = "<YOUR_INDEX_NAME>" },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GetObjects method.
+  ///
+  /// with attributesToRetrieve
+  /// </summary>
+  public async Task SnippetForSearchClientGetObjects2()
+  {
+    // >SEPARATOR getObjects with attributesToRetrieve
     // Initialize the client
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
@@ -1969,6 +2083,68 @@ public class SnippetSearchClient
   }
 
   /// <summary>
+  /// Snippet for the PartialUpdateObject method.
+  ///
+  /// add men pant
+  /// </summary>
+  public async Task SnippetForSearchClientPartialUpdateObject6()
+  {
+    // >SEPARATOR partialUpdateObject add men pant
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.PartialUpdateObjectAsync(
+      "<YOUR_INDEX_NAME>",
+      "productId",
+      new Dictionary<string, Object>
+      {
+        {
+          "categoryPageId",
+          new Dictionary<string, string>
+          {
+            { "_operation", "Add" },
+            { "value", "men-clothing-pants" },
+          }
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the PartialUpdateObject method.
+  ///
+  /// remove men pant
+  /// </summary>
+  public async Task SnippetForSearchClientPartialUpdateObject7()
+  {
+    // >SEPARATOR partialUpdateObject remove men pant
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.PartialUpdateObjectAsync(
+      "<YOUR_INDEX_NAME>",
+      "productId",
+      new Dictionary<string, Object>
+      {
+        {
+          "categoryPageId",
+          new Dictionary<string, string>
+          {
+            { "_operation", "Remove" },
+            { "value", "men-clothing-pants" },
+          }
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the PartialUpdateObjects method.
   ///
   /// call partialUpdateObjects with createIfNotExists=true
@@ -2175,7 +2351,13 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.SaveObjectAsync(
       "<YOUR_INDEX_NAME>",
-      new Dictionary<string, string> { { "objectID", "id" }, { "test", "val" } }
+      new Dictionary<string, string>
+      {
+        { "name", "Black T-shirt" },
+        { "color", "#000000||black" },
+        { "availableIn", "https://source.unsplash.com/100x100/?paris||Paris" },
+        { "objectID", "myID" },
+      }
     );
     // >LOG
     // SEPARATOR<
@@ -2283,7 +2465,10 @@ public class SnippetSearchClient
           { "playlistId", "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f" },
           { "createdAt", "1500240452" },
         },
-      }
+      },
+      false,
+      1000,
+      new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "*").Build()
     );
     // >LOG
     // SEPARATOR<
@@ -3111,6 +3296,67 @@ public class SnippetSearchClient
               }
             ),
           },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SaveRule method.
+  ///
+  /// contextual
+  /// </summary>
+  public async Task SnippetForSearchClientSaveRule20()
+  {
+    // >SEPARATOR saveRule contextual
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SaveRuleAsync(
+      "<YOUR_INDEX_NAME>",
+      "a-rule-id",
+      new Rule
+      {
+        ObjectID = "a-rule-id",
+        Conditions = new List<Condition> { new Condition { Context = "mobile" } },
+        Consequence = new Consequence
+        {
+          Params = new ConsequenceParams { Filters = "release_date >= 1577836800" },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SaveRule method.
+  ///
+  /// saveRule always active rule
+  /// </summary>
+  public async Task SnippetForSearchClientSaveRule21()
+  {
+    // >SEPARATOR saveRule saveRule always active rule
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SaveRuleAsync(
+      "<YOUR_INDEX_NAME>",
+      "a-rule-id",
+      new Rule
+      {
+        ObjectID = "a-rule-id",
+        Consequence = new Consequence
+        {
+          Params = new ConsequenceParams { AroundRadius = new AroundRadius(1000) },
+        },
+        Validity = new List<TimeRange>
+        {
+          new TimeRange { From = 1577836800L, Until = 1577836800L },
         },
       }
     );
@@ -4286,7 +4532,7 @@ public class SnippetSearchClient
     var response = await client.SearchForFacetValuesAsync(
       "<YOUR_INDEX_NAME>",
       "author",
-      new SearchForFacetValuesRequest { FacetQuery = "stephen king" }
+      new SearchForFacetValuesRequest { FacetQuery = "stephen" }
     );
     // >LOG
     // SEPARATOR<
@@ -4444,9 +4690,55 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the SearchSingleIndex method.
   ///
-  /// distinct
+  /// filters for stores
   /// </summary>
   public async Task SnippetForSearchClientSearchSingleIndex6()
+  {
+    // >SEPARATOR searchSingleIndex filters for stores
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "ben",
+          Filters = "categories:politics AND store:Gibert Joseph Saint-Michel",
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// filters boolean
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex7()
+  {
+    // >SEPARATOR searchSingleIndex filters boolean
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Filters = "is_available:true" })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// distinct
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex8()
   {
     // >SEPARATOR searchSingleIndex distinct
     // Initialize the client
@@ -4466,7 +4758,7 @@ public class SnippetSearchClient
   ///
   /// filtersNumeric
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex7()
+  public async Task SnippetForSearchClientSearchSingleIndex9()
   {
     // >SEPARATOR searchSingleIndex filtersNumeric
     // Initialize the client
@@ -4486,7 +4778,7 @@ public class SnippetSearchClient
   ///
   /// filtersTimestamp
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex8()
+  public async Task SnippetForSearchClientSearchSingleIndex10()
   {
     // >SEPARATOR searchSingleIndex filtersTimestamp
     // Initialize the client
@@ -4508,7 +4800,7 @@ public class SnippetSearchClient
   ///
   /// filtersSumOrFiltersScoresFalse
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex9()
+  public async Task SnippetForSearchClientSearchSingleIndex11()
   {
     // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresFalse
     // Initialize the client
@@ -4535,7 +4827,7 @@ public class SnippetSearchClient
   ///
   /// filtersSumOrFiltersScoresTrue
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex10()
+  public async Task SnippetForSearchClientSearchSingleIndex12()
   {
     // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresTrue
     // Initialize the client
@@ -4562,7 +4854,7 @@ public class SnippetSearchClient
   ///
   /// filtersStephenKing
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex11()
+  public async Task SnippetForSearchClientSearchSingleIndex13()
   {
     // >SEPARATOR searchSingleIndex filtersStephenKing
     // Initialize the client
@@ -4582,7 +4874,7 @@ public class SnippetSearchClient
   ///
   /// filtersNotTags
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex12()
+  public async Task SnippetForSearchClientSearchSingleIndex14()
   {
     // >SEPARATOR searchSingleIndex filtersNotTags
     // Initialize the client
@@ -4591,7 +4883,7 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.SearchSingleIndexAsync<Hit>(
       "<YOUR_INDEX_NAME>",
-      new SearchParams(new SearchParamsObject { Filters = "NOT _tags:non-fiction" })
+      new SearchParams(new SearchParamsObject { Query = "harry", Filters = "_tags:non-fiction" })
     );
     // >LOG
     // SEPARATOR<
@@ -4602,7 +4894,7 @@ public class SnippetSearchClient
   ///
   /// facetFiltersList
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex13()
+  public async Task SnippetForSearchClientSearchSingleIndex15()
   {
     // >SEPARATOR searchSingleIndex facetFiltersList
     // Initialize the client
@@ -4639,7 +4931,7 @@ public class SnippetSearchClient
   ///
   /// facetFiltersBook
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex14()
+  public async Task SnippetForSearchClientSearchSingleIndex16()
   {
     // >SEPARATOR searchSingleIndex facetFiltersBook
     // Initialize the client
@@ -4667,7 +4959,7 @@ public class SnippetSearchClient
   ///
   /// facetFiltersAND
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex15()
+  public async Task SnippetForSearchClientSearchSingleIndex17()
   {
     // >SEPARATOR searchSingleIndex facetFiltersAND
     // Initialize the client
@@ -4699,7 +4991,7 @@ public class SnippetSearchClient
   ///
   /// facetFiltersOR
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex16()
+  public async Task SnippetForSearchClientSearchSingleIndex18()
   {
     // >SEPARATOR searchSingleIndex facetFiltersOR
     // Initialize the client
@@ -4736,7 +5028,7 @@ public class SnippetSearchClient
   ///
   /// facetFiltersCombined
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex17()
+  public async Task SnippetForSearchClientSearchSingleIndex19()
   {
     // >SEPARATOR searchSingleIndex facetFiltersCombined
     // Initialize the client
@@ -4774,7 +5066,7 @@ public class SnippetSearchClient
   ///
   /// facetFiltersNeg
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex18()
+  public async Task SnippetForSearchClientSearchSingleIndex20()
   {
     // >SEPARATOR searchSingleIndex facetFiltersNeg
     // Initialize the client
@@ -4796,7 +5088,7 @@ public class SnippetSearchClient
   ///
   /// filtersAndFacetFilters
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex19()
+  public async Task SnippetForSearchClientSearchSingleIndex21()
   {
     // >SEPARATOR searchSingleIndex filtersAndFacetFilters
     // Initialize the client
@@ -4824,7 +5116,7 @@ public class SnippetSearchClient
   ///
   /// facet author genre
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex20()
+  public async Task SnippetForSearchClientSearchSingleIndex22()
   {
     // >SEPARATOR searchSingleIndex facet author genre
     // Initialize the client
@@ -4849,7 +5141,7 @@ public class SnippetSearchClient
   ///
   /// facet wildcard
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex21()
+  public async Task SnippetForSearchClientSearchSingleIndex23()
   {
     // >SEPARATOR searchSingleIndex facet wildcard
     // Initialize the client
@@ -4869,7 +5161,7 @@ public class SnippetSearchClient
   ///
   /// maxValuesPerFacet
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex22()
+  public async Task SnippetForSearchClientSearchSingleIndex24()
   {
     // >SEPARATOR searchSingleIndex maxValuesPerFacet
     // Initialize the client
@@ -4889,7 +5181,7 @@ public class SnippetSearchClient
   ///
   /// aroundLatLng
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex23()
+  public async Task SnippetForSearchClientSearchSingleIndex25()
   {
     // >SEPARATOR searchSingleIndex aroundLatLng
     // Initialize the client
@@ -4909,7 +5201,7 @@ public class SnippetSearchClient
   ///
   /// aroundLatLngViaIP
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex24()
+  public async Task SnippetForSearchClientSearchSingleIndex26()
   {
     // >SEPARATOR searchSingleIndex aroundLatLngViaIP
     // Initialize the client
@@ -4929,7 +5221,7 @@ public class SnippetSearchClient
   ///
   /// aroundRadius
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex25()
+  public async Task SnippetForSearchClientSearchSingleIndex27()
   {
     // >SEPARATOR searchSingleIndex aroundRadius
     // Initialize the client
@@ -4955,7 +5247,7 @@ public class SnippetSearchClient
   ///
   /// insideBoundingBox
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex26()
+  public async Task SnippetForSearchClientSearchSingleIndex28()
   {
     // >SEPARATOR searchSingleIndex insideBoundingBox
     // Initialize the client
@@ -4985,7 +5277,7 @@ public class SnippetSearchClient
   ///
   /// insidePolygon
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex27()
+  public async Task SnippetForSearchClientSearchSingleIndex29()
   {
     // >SEPARATOR searchSingleIndex insidePolygon
     // Initialize the client
@@ -5027,7 +5319,7 @@ public class SnippetSearchClient
   ///
   /// insidePolygon
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex28()
+  public async Task SnippetForSearchClientSearchSingleIndex30()
   {
     // >SEPARATOR searchSingleIndex insidePolygon
     // Initialize the client
@@ -5069,7 +5361,7 @@ public class SnippetSearchClient
   ///
   /// optionalFilters
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex29()
+  public async Task SnippetForSearchClientSearchSingleIndex31()
   {
     // >SEPARATOR searchSingleIndex optionalFilters
     // Initialize the client
@@ -5096,7 +5388,7 @@ public class SnippetSearchClient
   ///
   /// optionalFiltersMany
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex30()
+  public async Task SnippetForSearchClientSearchSingleIndex32()
   {
     // >SEPARATOR searchSingleIndex optionalFiltersMany
     // Initialize the client
@@ -5128,7 +5420,7 @@ public class SnippetSearchClient
   ///
   /// optionalFiltersSimple
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex31()
+  public async Task SnippetForSearchClientSearchSingleIndex33()
   {
     // >SEPARATOR searchSingleIndex optionalFiltersSimple
     // Initialize the client
@@ -5159,7 +5451,7 @@ public class SnippetSearchClient
   ///
   /// restrictSearchableAttributes
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex32()
+  public async Task SnippetForSearchClientSearchSingleIndex34()
   {
     // >SEPARATOR searchSingleIndex restrictSearchableAttributes
     // Initialize the client
@@ -5181,7 +5473,7 @@ public class SnippetSearchClient
   ///
   /// getRankingInfo
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex33()
+  public async Task SnippetForSearchClientSearchSingleIndex35()
   {
     // >SEPARATOR searchSingleIndex getRankingInfo
     // Initialize the client
@@ -5201,7 +5493,7 @@ public class SnippetSearchClient
   ///
   /// clickAnalytics
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex34()
+  public async Task SnippetForSearchClientSearchSingleIndex36()
   {
     // >SEPARATOR searchSingleIndex clickAnalytics
     // Initialize the client
@@ -5221,7 +5513,7 @@ public class SnippetSearchClient
   ///
   /// clickAnalyticsUserToken
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex35()
+  public async Task SnippetForSearchClientSearchSingleIndex37()
   {
     // >SEPARATOR searchSingleIndex clickAnalyticsUserToken
     // Initialize the client
@@ -5241,7 +5533,7 @@ public class SnippetSearchClient
   ///
   /// enablePersonalization
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex36()
+  public async Task SnippetForSearchClientSearchSingleIndex38()
   {
     // >SEPARATOR searchSingleIndex enablePersonalization
     // Initialize the client
@@ -5263,7 +5555,7 @@ public class SnippetSearchClient
   ///
   /// userToken
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex37()
+  public async Task SnippetForSearchClientSearchSingleIndex39()
   {
     // >SEPARATOR searchSingleIndex userToken
     // Initialize the client
@@ -5283,7 +5575,7 @@ public class SnippetSearchClient
   ///
   /// userToken1234
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex38()
+  public async Task SnippetForSearchClientSearchSingleIndex40()
   {
     // >SEPARATOR searchSingleIndex userToken1234
     // Initialize the client
@@ -5303,7 +5595,7 @@ public class SnippetSearchClient
   ///
   /// analyticsTag
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex39()
+  public async Task SnippetForSearchClientSearchSingleIndex41()
   {
     // >SEPARATOR searchSingleIndex analyticsTag
     // Initialize the client
@@ -5325,7 +5617,7 @@ public class SnippetSearchClient
   ///
   /// facetFiltersUsers
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex40()
+  public async Task SnippetForSearchClientSearchSingleIndex42()
   {
     // >SEPARATOR searchSingleIndex facetFiltersUsers
     // Initialize the client
@@ -5356,7 +5648,7 @@ public class SnippetSearchClient
   ///
   /// buildTheQuery
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex41()
+  public async Task SnippetForSearchClientSearchSingleIndex43()
   {
     // >SEPARATOR searchSingleIndex buildTheQuery
     // Initialize the client
@@ -5383,7 +5675,7 @@ public class SnippetSearchClient
   ///
   /// attributesToHighlightOverride
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex42()
+  public async Task SnippetForSearchClientSearchSingleIndex44()
   {
     // >SEPARATOR searchSingleIndex attributesToHighlightOverride
     // Initialize the client
@@ -5409,7 +5701,7 @@ public class SnippetSearchClient
   ///
   /// disableTypoToleranceOnAttributes
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex43()
+  public async Task SnippetForSearchClientSearchSingleIndex45()
   {
     // >SEPARATOR searchSingleIndex disableTypoToleranceOnAttributes
     // Initialize the client
@@ -5435,7 +5727,7 @@ public class SnippetSearchClient
   ///
   /// search_a_query
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex44()
+  public async Task SnippetForSearchClientSearchSingleIndex46()
   {
     // >SEPARATOR searchSingleIndex search_a_query
     // Initialize the client
@@ -5455,7 +5747,7 @@ public class SnippetSearchClient
   ///
   /// search_everything
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex45()
+  public async Task SnippetForSearchClientSearchSingleIndex47()
   {
     // >SEPARATOR searchSingleIndex search_everything
     // Initialize the client
@@ -5475,7 +5767,7 @@ public class SnippetSearchClient
   ///
   /// api_filtering_range_example
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex46()
+  public async Task SnippetForSearchClientSearchSingleIndex48()
   {
     // >SEPARATOR searchSingleIndex api_filtering_range_example
     // Initialize the client
@@ -5495,7 +5787,7 @@ public class SnippetSearchClient
   ///
   /// search_a_query
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex47()
+  public async Task SnippetForSearchClientSearchSingleIndex49()
   {
     // >SEPARATOR searchSingleIndex search_a_query
     // Initialize the client
@@ -5522,7 +5814,7 @@ public class SnippetSearchClient
   ///
   /// override_retrievable_attributes
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex48()
+  public async Task SnippetForSearchClientSearchSingleIndex50()
   {
     // >SEPARATOR searchSingleIndex override_retrievable_attributes
     // Initialize the client
@@ -5548,7 +5840,7 @@ public class SnippetSearchClient
   ///
   /// restrict_searchable_attributes
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex49()
+  public async Task SnippetForSearchClientSearchSingleIndex51()
   {
     // >SEPARATOR searchSingleIndex restrict_searchable_attributes
     // Initialize the client
@@ -5574,7 +5866,7 @@ public class SnippetSearchClient
   ///
   /// override_default_relevancy
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex50()
+  public async Task SnippetForSearchClientSearchSingleIndex52()
   {
     // >SEPARATOR searchSingleIndex override_default_relevancy
     // Initialize the client
@@ -5594,7 +5886,7 @@ public class SnippetSearchClient
   ///
   /// apply_filters
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex51()
+  public async Task SnippetForSearchClientSearchSingleIndex53()
   {
     // >SEPARATOR searchSingleIndex apply_filters
     // Initialize the client
@@ -5620,7 +5912,7 @@ public class SnippetSearchClient
   ///
   /// apply_all_filters
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex52()
+  public async Task SnippetForSearchClientSearchSingleIndex54()
   {
     // >SEPARATOR searchSingleIndex apply_all_filters
     // Initialize the client
@@ -5647,7 +5939,7 @@ public class SnippetSearchClient
   ///
   /// escape_spaces
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex53()
+  public async Task SnippetForSearchClientSearchSingleIndex55()
   {
     // >SEPARATOR searchSingleIndex escape_spaces
     // Initialize the client
@@ -5669,7 +5961,7 @@ public class SnippetSearchClient
   ///
   /// escape_keywords
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex54()
+  public async Task SnippetForSearchClientSearchSingleIndex56()
   {
     // >SEPARATOR searchSingleIndex escape_keywords
     // Initialize the client
@@ -5689,7 +5981,7 @@ public class SnippetSearchClient
   ///
   /// escape_single_quotes
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex55()
+  public async Task SnippetForSearchClientSearchSingleIndex57()
   {
     // >SEPARATOR searchSingleIndex escape_single_quotes
     // Initialize the client
@@ -5711,7 +6003,7 @@ public class SnippetSearchClient
   ///
   /// escape_double_quotes
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex56()
+  public async Task SnippetForSearchClientSearchSingleIndex58()
   {
     // >SEPARATOR searchSingleIndex escape_double_quotes
     // Initialize the client
@@ -5733,7 +6025,7 @@ public class SnippetSearchClient
   ///
   /// apply_filters
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex57()
+  public async Task SnippetForSearchClientSearchSingleIndex59()
   {
     // >SEPARATOR searchSingleIndex apply_filters
     // Initialize the client
@@ -5765,7 +6057,7 @@ public class SnippetSearchClient
   ///
   /// apply_negative_filters
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex58()
+  public async Task SnippetForSearchClientSearchSingleIndex60()
   {
     // >SEPARATOR searchSingleIndex apply_negative_filters
     // Initialize the client
@@ -5795,9 +6087,37 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the SearchSingleIndex method.
   ///
+  /// apply_negative_filters_restaurants
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex61()
+  {
+    // >SEPARATOR searchSingleIndex apply_negative_filters_restaurants
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(
+        new SearchParamsObject
+        {
+          Query = "query",
+          OptionalFilters = new OptionalFilters(
+            new List<OptionalFilters> { new OptionalFilters("restaurant:-Bert's Inn") }
+          ),
+        }
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
   /// apply_numeric_filters
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex59()
+  public async Task SnippetForSearchClientSearchSingleIndex62()
   {
     // >SEPARATOR searchSingleIndex apply_numeric_filters
     // Initialize the client
@@ -5835,7 +6155,7 @@ public class SnippetSearchClient
   ///
   /// apply_tag_filters
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex60()
+  public async Task SnippetForSearchClientSearchSingleIndex63()
   {
     // >SEPARATOR searchSingleIndex apply_tag_filters
     // Initialize the client
@@ -5869,7 +6189,7 @@ public class SnippetSearchClient
   ///
   /// apply_filters
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex61()
+  public async Task SnippetForSearchClientSearchSingleIndex64()
   {
     // >SEPARATOR searchSingleIndex apply_filters
     // Initialize the client
@@ -5889,7 +6209,7 @@ public class SnippetSearchClient
   ///
   /// facets_all
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex62()
+  public async Task SnippetForSearchClientSearchSingleIndex65()
   {
     // >SEPARATOR searchSingleIndex facets_all
     // Initialize the client
@@ -5915,7 +6235,7 @@ public class SnippetSearchClient
   ///
   /// retrieve_only_some_facets
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex63()
+  public async Task SnippetForSearchClientSearchSingleIndex66()
   {
     // >SEPARATOR searchSingleIndex retrieve_only_some_facets
     // Initialize the client
@@ -5941,7 +6261,7 @@ public class SnippetSearchClient
   ///
   /// override_default_max_values_per_facet
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex64()
+  public async Task SnippetForSearchClientSearchSingleIndex67()
   {
     // >SEPARATOR searchSingleIndex override_default_max_values_per_facet
     // Initialize the client
@@ -5961,7 +6281,7 @@ public class SnippetSearchClient
   ///
   /// enable_faceting_after_distinct
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex65()
+  public async Task SnippetForSearchClientSearchSingleIndex68()
   {
     // >SEPARATOR searchSingleIndex enable_faceting_after_distinct
     // Initialize the client
@@ -5981,7 +6301,7 @@ public class SnippetSearchClient
   ///
   /// sort_facet_values_alphabetically
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex66()
+  public async Task SnippetForSearchClientSearchSingleIndex69()
   {
     // >SEPARATOR searchSingleIndex sort_facet_values_alphabetically
     // Initialize the client
@@ -6001,7 +6321,7 @@ public class SnippetSearchClient
   ///
   /// override_attributes_to_snippet
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex67()
+  public async Task SnippetForSearchClientSearchSingleIndex70()
   {
     // >SEPARATOR searchSingleIndex override_attributes_to_snippet
     // Initialize the client
@@ -6027,7 +6347,7 @@ public class SnippetSearchClient
   ///
   /// override_default_highlight_pre_tag
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex68()
+  public async Task SnippetForSearchClientSearchSingleIndex71()
   {
     // >SEPARATOR searchSingleIndex override_default_highlight_pre_tag
     // Initialize the client
@@ -6047,7 +6367,7 @@ public class SnippetSearchClient
   ///
   /// override_default_highlight_post_tag
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex69()
+  public async Task SnippetForSearchClientSearchSingleIndex72()
   {
     // >SEPARATOR searchSingleIndex override_default_highlight_post_tag
     // Initialize the client
@@ -6067,7 +6387,7 @@ public class SnippetSearchClient
   ///
   /// override_default_snippet_ellipsis_text
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex70()
+  public async Task SnippetForSearchClientSearchSingleIndex73()
   {
     // >SEPARATOR searchSingleIndex override_default_snippet_ellipsis_text
     // Initialize the client
@@ -6087,7 +6407,7 @@ public class SnippetSearchClient
   ///
   /// enable_restrict_highlight_and_snippet_arrays
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex71()
+  public async Task SnippetForSearchClientSearchSingleIndex74()
   {
     // >SEPARATOR searchSingleIndex enable_restrict_highlight_and_snippet_arrays
     // Initialize the client
@@ -6109,7 +6429,7 @@ public class SnippetSearchClient
   ///
   /// access_page
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex72()
+  public async Task SnippetForSearchClientSearchSingleIndex75()
   {
     // >SEPARATOR searchSingleIndex access_page
     // Initialize the client
@@ -6129,7 +6449,7 @@ public class SnippetSearchClient
   ///
   /// override_default_hits_per_page
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex73()
+  public async Task SnippetForSearchClientSearchSingleIndex76()
   {
     // >SEPARATOR searchSingleIndex override_default_hits_per_page
     // Initialize the client
@@ -6149,7 +6469,7 @@ public class SnippetSearchClient
   ///
   /// get_nth_hit
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex74()
+  public async Task SnippetForSearchClientSearchSingleIndex77()
   {
     // >SEPARATOR searchSingleIndex get_nth_hit
     // Initialize the client
@@ -6169,7 +6489,7 @@ public class SnippetSearchClient
   ///
   /// get_n_results
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex75()
+  public async Task SnippetForSearchClientSearchSingleIndex78()
   {
     // >SEPARATOR searchSingleIndex get_n_results
     // Initialize the client
@@ -6189,7 +6509,7 @@ public class SnippetSearchClient
   ///
   /// override_default_min_word_size_for_one_typo
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex76()
+  public async Task SnippetForSearchClientSearchSingleIndex79()
   {
     // >SEPARATOR searchSingleIndex override_default_min_word_size_for_one_typo
     // Initialize the client
@@ -6209,7 +6529,7 @@ public class SnippetSearchClient
   ///
   /// override_default_min_word_size_for_two_typos
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex77()
+  public async Task SnippetForSearchClientSearchSingleIndex80()
   {
     // >SEPARATOR searchSingleIndex override_default_min_word_size_for_two_typos
     // Initialize the client
@@ -6229,7 +6549,7 @@ public class SnippetSearchClient
   ///
   /// override_default_typo_tolerance_mode
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex78()
+  public async Task SnippetForSearchClientSearchSingleIndex81()
   {
     // >SEPARATOR searchSingleIndex override_default_typo_tolerance_mode
     // Initialize the client
@@ -6251,7 +6571,7 @@ public class SnippetSearchClient
   ///
   /// disable_typos_on_numeric_tokens_at_search_time
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex79()
+  public async Task SnippetForSearchClientSearchSingleIndex82()
   {
     // >SEPARATOR searchSingleIndex disable_typos_on_numeric_tokens_at_search_time
     // Initialize the client
@@ -6273,7 +6593,7 @@ public class SnippetSearchClient
   ///
   /// search_around_a_position
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex80()
+  public async Task SnippetForSearchClientSearchSingleIndex83()
   {
     // >SEPARATOR searchSingleIndex search_around_a_position
     // Initialize the client
@@ -6293,7 +6613,7 @@ public class SnippetSearchClient
   ///
   /// search_around_server_ip
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex81()
+  public async Task SnippetForSearchClientSearchSingleIndex84()
   {
     // >SEPARATOR searchSingleIndex search_around_server_ip
     // Initialize the client
@@ -6319,7 +6639,7 @@ public class SnippetSearchClient
   ///
   /// set_around_radius
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex82()
+  public async Task SnippetForSearchClientSearchSingleIndex85()
   {
     // >SEPARATOR searchSingleIndex set_around_radius
     // Initialize the client
@@ -6341,7 +6661,7 @@ public class SnippetSearchClient
   ///
   /// disable_automatic_radius
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex83()
+  public async Task SnippetForSearchClientSearchSingleIndex86()
   {
     // >SEPARATOR searchSingleIndex disable_automatic_radius
     // Initialize the client
@@ -6367,7 +6687,7 @@ public class SnippetSearchClient
   ///
   /// set_geo_search_precision
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex84()
+  public async Task SnippetForSearchClientSearchSingleIndex87()
   {
     // >SEPARATOR searchSingleIndex set_geo_search_precision
     // Initialize the client
@@ -6389,7 +6709,7 @@ public class SnippetSearchClient
   ///
   /// set_geo_search_precision_non_linear
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex85()
+  public async Task SnippetForSearchClientSearchSingleIndex88()
   {
     // >SEPARATOR searchSingleIndex set_geo_search_precision_non_linear
     // Initialize the client
@@ -6421,7 +6741,7 @@ public class SnippetSearchClient
   ///
   /// set_minimum_geo_search_radius
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex86()
+  public async Task SnippetForSearchClientSearchSingleIndex89()
   {
     // >SEPARATOR searchSingleIndex set_minimum_geo_search_radius
     // Initialize the client
@@ -6441,7 +6761,7 @@ public class SnippetSearchClient
   ///
   /// search_inside_rectangular_area
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex87()
+  public async Task SnippetForSearchClientSearchSingleIndex90()
   {
     // >SEPARATOR searchSingleIndex search_inside_rectangular_area
     // Initialize the client
@@ -6472,7 +6792,7 @@ public class SnippetSearchClient
   ///
   /// search_inside_multiple_rectangular_areas
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex88()
+  public async Task SnippetForSearchClientSearchSingleIndex91()
   {
     // >SEPARATOR searchSingleIndex search_inside_multiple_rectangular_areas
     // Initialize the client
@@ -6504,7 +6824,7 @@ public class SnippetSearchClient
   ///
   /// search_inside_polygon_area
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex89()
+  public async Task SnippetForSearchClientSearchSingleIndex92()
   {
     // >SEPARATOR searchSingleIndex search_inside_polygon_area
     // Initialize the client
@@ -6541,7 +6861,7 @@ public class SnippetSearchClient
   ///
   /// search_inside_multiple_polygon_areas
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex90()
+  public async Task SnippetForSearchClientSearchSingleIndex93()
   {
     // >SEPARATOR searchSingleIndex search_inside_multiple_polygon_areas
     // Initialize the client
@@ -6589,7 +6909,7 @@ public class SnippetSearchClient
   ///
   /// set_querylanguages_override
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex91()
+  public async Task SnippetForSearchClientSearchSingleIndex94()
   {
     // >SEPARATOR searchSingleIndex set_querylanguages_override
     // Initialize the client
@@ -6621,7 +6941,7 @@ public class SnippetSearchClient
   ///
   /// set_querylanguages_override
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex92()
+  public async Task SnippetForSearchClientSearchSingleIndex95()
   {
     // >SEPARATOR searchSingleIndex set_querylanguages_override
     // Initialize the client
@@ -6653,7 +6973,7 @@ public class SnippetSearchClient
   ///
   /// set_querylanguages_override
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex93()
+  public async Task SnippetForSearchClientSearchSingleIndex96()
   {
     // >SEPARATOR searchSingleIndex set_querylanguages_override
     // Initialize the client
@@ -6685,7 +7005,7 @@ public class SnippetSearchClient
   ///
   /// set_querylanguages_with_japanese_query
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex94()
+  public async Task SnippetForSearchClientSearchSingleIndex97()
   {
     // >SEPARATOR searchSingleIndex set_querylanguages_with_japanese_query
     // Initialize the client
@@ -6715,7 +7035,7 @@ public class SnippetSearchClient
   ///
   /// set_natural_languages
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex95()
+  public async Task SnippetForSearchClientSearchSingleIndex98()
   {
     // >SEPARATOR searchSingleIndex set_natural_languages
     // Initialize the client
@@ -6741,7 +7061,7 @@ public class SnippetSearchClient
   ///
   /// override_natural_languages_with_query
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex96()
+  public async Task SnippetForSearchClientSearchSingleIndex99()
   {
     // >SEPARATOR searchSingleIndex override_natural_languages_with_query
     // Initialize the client
@@ -6768,7 +7088,7 @@ public class SnippetSearchClient
   ///
   /// enable_decompound_query_search_time
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex97()
+  public async Task SnippetForSearchClientSearchSingleIndex100()
   {
     // >SEPARATOR searchSingleIndex enable_decompound_query_search_time
     // Initialize the client
@@ -6788,7 +7108,7 @@ public class SnippetSearchClient
   ///
   /// enable_rules_search_time
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex98()
+  public async Task SnippetForSearchClientSearchSingleIndex101()
   {
     // >SEPARATOR searchSingleIndex enable_rules_search_time
     // Initialize the client
@@ -6808,7 +7128,7 @@ public class SnippetSearchClient
   ///
   /// set_rule_contexts
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex99()
+  public async Task SnippetForSearchClientSearchSingleIndex102()
   {
     // >SEPARATOR searchSingleIndex set_rule_contexts
     // Initialize the client
@@ -6834,7 +7154,7 @@ public class SnippetSearchClient
   ///
   /// enable_personalization
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex100()
+  public async Task SnippetForSearchClientSearchSingleIndex103()
   {
     // >SEPARATOR searchSingleIndex enable_personalization
     // Initialize the client
@@ -6854,7 +7174,7 @@ public class SnippetSearchClient
   ///
   /// enable_personalization_with_user_token
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex101()
+  public async Task SnippetForSearchClientSearchSingleIndex104()
   {
     // >SEPARATOR searchSingleIndex enable_personalization_with_user_token
     // Initialize the client
@@ -6881,7 +7201,7 @@ public class SnippetSearchClient
   ///
   /// personalization_impact
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex102()
+  public async Task SnippetForSearchClientSearchSingleIndex105()
   {
     // >SEPARATOR searchSingleIndex personalization_impact
     // Initialize the client
@@ -6901,7 +7221,7 @@ public class SnippetSearchClient
   ///
   /// set_user_token
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex103()
+  public async Task SnippetForSearchClientSearchSingleIndex106()
   {
     // >SEPARATOR searchSingleIndex set_user_token
     // Initialize the client
@@ -6921,7 +7241,7 @@ public class SnippetSearchClient
   ///
   /// set_user_token_with_personalization
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex104()
+  public async Task SnippetForSearchClientSearchSingleIndex107()
   {
     // >SEPARATOR searchSingleIndex set_user_token_with_personalization
     // Initialize the client
@@ -6948,7 +7268,7 @@ public class SnippetSearchClient
   ///
   /// override_default_query_type
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex105()
+  public async Task SnippetForSearchClientSearchSingleIndex108()
   {
     // >SEPARATOR searchSingleIndex override_default_query_type
     // Initialize the client
@@ -6970,7 +7290,7 @@ public class SnippetSearchClient
   ///
   /// override_default_remove_words_if_no_results
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex106()
+  public async Task SnippetForSearchClientSearchSingleIndex109()
   {
     // >SEPARATOR searchSingleIndex override_default_remove_words_if_no_results
     // Initialize the client
@@ -6996,7 +7316,7 @@ public class SnippetSearchClient
   ///
   /// enable_advanced_syntax_search_time
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex107()
+  public async Task SnippetForSearchClientSearchSingleIndex110()
   {
     // >SEPARATOR searchSingleIndex enable_advanced_syntax_search_time
     // Initialize the client
@@ -7016,7 +7336,7 @@ public class SnippetSearchClient
   ///
   /// overide_default_optional_words
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex108()
+  public async Task SnippetForSearchClientSearchSingleIndex111()
   {
     // >SEPARATOR searchSingleIndex overide_default_optional_words
     // Initialize the client
@@ -7042,7 +7362,7 @@ public class SnippetSearchClient
   ///
   /// disabling_exact_for_some_attributes_search_time
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex109()
+  public async Task SnippetForSearchClientSearchSingleIndex112()
   {
     // >SEPARATOR searchSingleIndex disabling_exact_for_some_attributes_search_time
     // Initialize the client
@@ -7068,7 +7388,7 @@ public class SnippetSearchClient
   ///
   /// override_default_exact_single_word_query
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex110()
+  public async Task SnippetForSearchClientSearchSingleIndex113()
   {
     // >SEPARATOR searchSingleIndex override_default_exact_single_word_query
     // Initialize the client
@@ -7094,7 +7414,7 @@ public class SnippetSearchClient
   ///
   /// override_default_aternative_as_exact
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex111()
+  public async Task SnippetForSearchClientSearchSingleIndex114()
   {
     // >SEPARATOR searchSingleIndex override_default_aternative_as_exact
     // Initialize the client
@@ -7123,7 +7443,7 @@ public class SnippetSearchClient
   ///
   /// enable_advanced_syntax_exact_phrase
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex112()
+  public async Task SnippetForSearchClientSearchSingleIndex115()
   {
     // >SEPARATOR searchSingleIndex enable_advanced_syntax_exact_phrase
     // Initialize the client
@@ -7153,7 +7473,7 @@ public class SnippetSearchClient
   ///
   /// enable_advanced_syntax_exclude_words
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex113()
+  public async Task SnippetForSearchClientSearchSingleIndex116()
   {
     // >SEPARATOR searchSingleIndex enable_advanced_syntax_exclude_words
     // Initialize the client
@@ -7183,7 +7503,7 @@ public class SnippetSearchClient
   ///
   /// override_distinct
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex114()
+  public async Task SnippetForSearchClientSearchSingleIndex117()
   {
     // >SEPARATOR searchSingleIndex override_distinct
     // Initialize the client
@@ -7203,7 +7523,7 @@ public class SnippetSearchClient
   ///
   /// get_ranking_info
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex115()
+  public async Task SnippetForSearchClientSearchSingleIndex118()
   {
     // >SEPARATOR searchSingleIndex get_ranking_info
     // Initialize the client
@@ -7223,7 +7543,7 @@ public class SnippetSearchClient
   ///
   /// disable_click_analytics
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex116()
+  public async Task SnippetForSearchClientSearchSingleIndex119()
   {
     // >SEPARATOR searchSingleIndex disable_click_analytics
     // Initialize the client
@@ -7243,7 +7563,7 @@ public class SnippetSearchClient
   ///
   /// enable_click_analytics
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex117()
+  public async Task SnippetForSearchClientSearchSingleIndex120()
   {
     // >SEPARATOR searchSingleIndex enable_click_analytics
     // Initialize the client
@@ -7263,7 +7583,7 @@ public class SnippetSearchClient
   ///
   /// disable_analytics
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex118()
+  public async Task SnippetForSearchClientSearchSingleIndex121()
   {
     // >SEPARATOR searchSingleIndex disable_analytics
     // Initialize the client
@@ -7283,7 +7603,7 @@ public class SnippetSearchClient
   ///
   /// add_analytics_tags
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex119()
+  public async Task SnippetForSearchClientSearchSingleIndex122()
   {
     // >SEPARATOR searchSingleIndex add_analytics_tags
     // Initialize the client
@@ -7309,7 +7629,7 @@ public class SnippetSearchClient
   ///
   /// disable_synonyms
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex120()
+  public async Task SnippetForSearchClientSearchSingleIndex123()
   {
     // >SEPARATOR searchSingleIndex disable_synonyms
     // Initialize the client
@@ -7329,7 +7649,7 @@ public class SnippetSearchClient
   ///
   /// override_replace_synonyms_in_highlights
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex121()
+  public async Task SnippetForSearchClientSearchSingleIndex124()
   {
     // >SEPARATOR searchSingleIndex override_replace_synonyms_in_highlights
     // Initialize the client
@@ -7351,7 +7671,7 @@ public class SnippetSearchClient
   ///
   /// override_min_proximity
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex122()
+  public async Task SnippetForSearchClientSearchSingleIndex125()
   {
     // >SEPARATOR searchSingleIndex override_min_proximity
     // Initialize the client
@@ -7371,7 +7691,7 @@ public class SnippetSearchClient
   ///
   /// override_default_field
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex123()
+  public async Task SnippetForSearchClientSearchSingleIndex126()
   {
     // >SEPARATOR searchSingleIndex override_default_field
     // Initialize the client
@@ -7397,7 +7717,7 @@ public class SnippetSearchClient
   ///
   /// override_percentile_computation
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex124()
+  public async Task SnippetForSearchClientSearchSingleIndex127()
   {
     // >SEPARATOR searchSingleIndex override_percentile_computation
     // Initialize the client
@@ -7417,7 +7737,7 @@ public class SnippetSearchClient
   ///
   /// set_ab_test
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex125()
+  public async Task SnippetForSearchClientSearchSingleIndex128()
   {
     // >SEPARATOR searchSingleIndex set_ab_test
     // Initialize the client
@@ -7437,7 +7757,7 @@ public class SnippetSearchClient
   ///
   /// set_enable_re_ranking
   /// </summary>
-  public async Task SnippetForSearchClientSearchSingleIndex126()
+  public async Task SnippetForSearchClientSearchSingleIndex129()
   {
     // >SEPARATOR searchSingleIndex set_enable_re_ranking
     // Initialize the client
@@ -7447,6 +7767,48 @@ public class SnippetSearchClient
     var response = await client.SearchSingleIndexAsync<Hit>(
       "<YOUR_INDEX_NAME>",
       new SearchParams(new SearchParamsObject { Query = "query", EnableReRanking = false })
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// with algolia user id
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex130()
+  {
+    // >SEPARATOR searchSingleIndex with algolia user id
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "query" }),
+      new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "user1234").Build()
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchSingleIndex method.
+  ///
+  /// mcm with algolia user id
+  /// </summary>
+  public async Task SnippetForSearchClientSearchSingleIndex131()
+  {
+    // >SEPARATOR searchSingleIndex mcm with algolia user id
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SearchSingleIndexAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new SearchParams(new SearchParamsObject { Query = "peace" }),
+      new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "user42").Build()
     );
     // >LOG
     // SEPARATOR<
@@ -7901,9 +8263,32 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the SetSettings method.
   ///
-  /// api_attributes_for_faceting
+  /// attributesForFaceting availableIn
   /// </summary>
   public async Task SnippetForSearchClientSetSettings14()
+  {
+    // >SEPARATOR setSettings attributesForFaceting availableIn
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        AttributesForFaceting = new List<string> { "color", "availableIn" },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
+  /// api_attributes_for_faceting
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings15()
   {
     // >SEPARATOR setSettings api_attributes_for_faceting
     // Initialize the client
@@ -7926,7 +8311,7 @@ public class SnippetSearchClient
   ///
   /// api_attributes_for_faceting_searchable
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings15()
+  public async Task SnippetForSearchClientSetSettings16()
   {
     // >SEPARATOR setSettings api_attributes_for_faceting_searchable
     // Initialize the client
@@ -7949,7 +8334,7 @@ public class SnippetSearchClient
   ///
   /// api_attributes_for_filter_only
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings16()
+  public async Task SnippetForSearchClientSetSettings17()
   {
     // >SEPARATOR setSettings api_attributes_for_filter_only
     // Initialize the client
@@ -7972,7 +8357,7 @@ public class SnippetSearchClient
   ///
   /// attributesForFaceting categoryPageId
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings17()
+  public async Task SnippetForSearchClientSetSettings18()
   {
     // >SEPARATOR setSettings attributesForFaceting categoryPageId
     // Initialize the client
@@ -7995,7 +8380,7 @@ public class SnippetSearchClient
   ///
   /// unretrievableAttributes
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings18()
+  public async Task SnippetForSearchClientSetSettings19()
   {
     // >SEPARATOR setSettings unretrievableAttributes
     // Initialize the client
@@ -8015,7 +8400,7 @@ public class SnippetSearchClient
   ///
   /// attributesForFaceting user restricted data
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings19()
+  public async Task SnippetForSearchClientSetSettings20()
   {
     // >SEPARATOR setSettings attributesForFaceting user restricted data
     // Initialize the client
@@ -8035,7 +8420,7 @@ public class SnippetSearchClient
   ///
   /// attributesForFaceting optional filters
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings20()
+  public async Task SnippetForSearchClientSetSettings21()
   {
     // >SEPARATOR setSettings attributesForFaceting optional filters
     // Initialize the client
@@ -8058,7 +8443,7 @@ public class SnippetSearchClient
   ///
   /// attributesForFaceting redirect index
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings21()
+  public async Task SnippetForSearchClientSetSettings22()
   {
     // >SEPARATOR setSettings attributesForFaceting redirect index
     // Initialize the client
@@ -8078,7 +8463,7 @@ public class SnippetSearchClient
   ///
   /// attributesForFaceting multiple consequences
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings22()
+  public async Task SnippetForSearchClientSetSettings23()
   {
     // >SEPARATOR setSettings attributesForFaceting multiple consequences
     // Initialize the client
@@ -8098,7 +8483,7 @@ public class SnippetSearchClient
   ///
   /// attributesForFaceting in-depth optional filters
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings23()
+  public async Task SnippetForSearchClientSetSettings24()
   {
     // >SEPARATOR setSettings attributesForFaceting in-depth optional filters
     // Initialize the client
@@ -8118,7 +8503,7 @@ public class SnippetSearchClient
   ///
   /// mode neuralSearch
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings24()
+  public async Task SnippetForSearchClientSetSettings25()
   {
     // >SEPARATOR setSettings mode neuralSearch
     // Initialize the client
@@ -8138,7 +8523,7 @@ public class SnippetSearchClient
   ///
   /// mode keywordSearch
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings25()
+  public async Task SnippetForSearchClientSetSettings26()
   {
     // >SEPARATOR setSettings mode keywordSearch
     // Initialize the client
@@ -8158,7 +8543,7 @@ public class SnippetSearchClient
   ///
   /// searchableAttributes same priority
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings26()
+  public async Task SnippetForSearchClientSetSettings27()
   {
     // >SEPARATOR setSettings searchableAttributes same priority
     // Initialize the client
@@ -8181,7 +8566,7 @@ public class SnippetSearchClient
   ///
   /// searchableAttributes higher priority
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings27()
+  public async Task SnippetForSearchClientSetSettings28()
   {
     // >SEPARATOR setSettings searchableAttributes higher priority
     // Initialize the client
@@ -8204,7 +8589,7 @@ public class SnippetSearchClient
   ///
   /// customRanking retweets
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings28()
+  public async Task SnippetForSearchClientSetSettings29()
   {
     // >SEPARATOR setSettings customRanking retweets
     // Initialize the client
@@ -8227,7 +8612,7 @@ public class SnippetSearchClient
   ///
   /// customRanking boosted
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings29()
+  public async Task SnippetForSearchClientSetSettings30()
   {
     // >SEPARATOR setSettings customRanking boosted
     // Initialize the client
@@ -8247,7 +8632,7 @@ public class SnippetSearchClient
   ///
   /// customRanking pageviews
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings30()
+  public async Task SnippetForSearchClientSetSettings31()
   {
     // >SEPARATOR setSettings customRanking pageviews
     // Initialize the client
@@ -8270,7 +8655,7 @@ public class SnippetSearchClient
   ///
   /// customRanking applying search parameters for a specific query
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings31()
+  public async Task SnippetForSearchClientSetSettings32()
   {
     // >SEPARATOR setSettings customRanking applying search parameters for a specific query
     // Initialize the client
@@ -8294,7 +8679,7 @@ public class SnippetSearchClient
   ///
   /// customRanking rounded pageviews
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings32()
+  public async Task SnippetForSearchClientSetSettings33()
   {
     // >SEPARATOR setSettings customRanking rounded pageviews
     // Initialize the client
@@ -8317,7 +8702,7 @@ public class SnippetSearchClient
   ///
   /// customRanking price
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings33()
+  public async Task SnippetForSearchClientSetSettings34()
   {
     // >SEPARATOR setSettings customRanking price
     // Initialize the client
@@ -8335,11 +8720,11 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the SetSettings method.
   ///
-  /// ranking exhaustive
+  /// ranking exhaustive (price)
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings34()
+  public async Task SnippetForSearchClientSetSettings35()
   {
-    // >SEPARATOR setSettings ranking exhaustive
+    // >SEPARATOR setSettings ranking exhaustive (price)
     // Initialize the client
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
@@ -8369,9 +8754,43 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the SetSettings method.
   ///
+  /// ranking exhaustive (is_popular)
+  /// </summary>
+  public async Task SnippetForSearchClientSetSettings36()
+  {
+    // >SEPARATOR setSettings ranking exhaustive (is_popular)
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        Ranking = new List<string>
+        {
+          "desc(is_popular)",
+          "typo",
+          "geo",
+          "words",
+          "filters",
+          "proximity",
+          "attribute",
+          "exact",
+          "custom",
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetSettings method.
+  ///
   /// ranking standard replica
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings35()
+  public async Task SnippetForSearchClientSetSettings37()
   {
     // >SEPARATOR setSettings ranking standard replica
     // Initialize the client
@@ -8391,7 +8810,7 @@ public class SnippetSearchClient
   ///
   /// ranking virtual replica
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings36()
+  public async Task SnippetForSearchClientSetSettings38()
   {
     // >SEPARATOR setSettings ranking virtual replica
     // Initialize the client
@@ -8411,7 +8830,7 @@ public class SnippetSearchClient
   ///
   /// customRanking and ranking sort alphabetically
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings37()
+  public async Task SnippetForSearchClientSetSettings39()
   {
     // >SEPARATOR setSettings customRanking and ranking sort alphabetically
     // Initialize the client
@@ -8445,7 +8864,7 @@ public class SnippetSearchClient
   ///
   /// relevancyStrictness
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings38()
+  public async Task SnippetForSearchClientSetSettings40()
   {
     // >SEPARATOR setSettings relevancyStrictness
     // Initialize the client
@@ -8469,7 +8888,7 @@ public class SnippetSearchClient
   ///
   /// create replica index
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings39()
+  public async Task SnippetForSearchClientSetSettings41()
   {
     // >SEPARATOR setSettings create replica index
     // Initialize the client
@@ -8489,7 +8908,7 @@ public class SnippetSearchClient
   ///
   /// create replica index articles
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings40()
+  public async Task SnippetForSearchClientSetSettings42()
   {
     // >SEPARATOR setSettings create replica index articles
     // Initialize the client
@@ -8509,7 +8928,7 @@ public class SnippetSearchClient
   ///
   /// create virtual replica index
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings41()
+  public async Task SnippetForSearchClientSetSettings43()
   {
     // >SEPARATOR setSettings create virtual replica index
     // Initialize the client
@@ -8529,7 +8948,7 @@ public class SnippetSearchClient
   ///
   /// unlink replica index
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings42()
+  public async Task SnippetForSearchClientSetSettings44()
   {
     // >SEPARATOR setSettings unlink replica index
     // Initialize the client
@@ -8549,7 +8968,7 @@ public class SnippetSearchClient
   ///
   /// forwardToReplicas
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings43()
+  public async Task SnippetForSearchClientSetSettings45()
   {
     // >SEPARATOR setSettings forwardToReplicas
     // Initialize the client
@@ -8573,7 +8992,7 @@ public class SnippetSearchClient
   ///
   /// maxValuesPerFacet
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings44()
+  public async Task SnippetForSearchClientSetSettings46()
   {
     // >SEPARATOR setSettings maxValuesPerFacet
     // Initialize the client
@@ -8593,7 +9012,7 @@ public class SnippetSearchClient
   ///
   /// maxFacetHits
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings45()
+  public async Task SnippetForSearchClientSetSettings47()
   {
     // >SEPARATOR setSettings maxFacetHits
     // Initialize the client
@@ -8602,7 +9021,7 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.SetSettingsAsync(
       "<YOUR_INDEX_NAME>",
-      new IndexSettings { MaxFacetHits = 1000 }
+      new IndexSettings { MaxFacetHits = 100 }
     );
     // >LOG
     // SEPARATOR<
@@ -8613,7 +9032,7 @@ public class SnippetSearchClient
   ///
   /// attributesForFaceting complex
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings46()
+  public async Task SnippetForSearchClientSetSettings48()
   {
     // >SEPARATOR setSettings attributesForFaceting complex
     // Initialize the client
@@ -8641,7 +9060,7 @@ public class SnippetSearchClient
   ///
   /// ranking closest dates
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings47()
+  public async Task SnippetForSearchClientSetSettings49()
   {
     // >SEPARATOR setSettings ranking closest dates
     // Initialize the client
@@ -8675,7 +9094,7 @@ public class SnippetSearchClient
   ///
   /// searchableAttributes item variation
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings48()
+  public async Task SnippetForSearchClientSetSettings50()
   {
     // >SEPARATOR setSettings searchableAttributes item variation
     // Initialize the client
@@ -8698,7 +9117,7 @@ public class SnippetSearchClient
   ///
   /// searchableAttributes around location
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings49()
+  public async Task SnippetForSearchClientSetSettings51()
   {
     // >SEPARATOR setSettings searchableAttributes around location
     // Initialize the client
@@ -8709,7 +9128,7 @@ public class SnippetSearchClient
       "<YOUR_INDEX_NAME>",
       new IndexSettings
       {
-        SearchableAttributes = new List<string> { "name", "country", "code", "iata_code" },
+        SearchableAttributes = new List<string> { "name", "country", "city", "iata_code" },
         CustomRanking = new List<string> { "desc(links_count)" },
       }
     );
@@ -8722,7 +9141,7 @@ public class SnippetSearchClient
   ///
   /// attributesToHighlight
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings50()
+  public async Task SnippetForSearchClientSetSettings52()
   {
     // >SEPARATOR setSettings attributesToHighlight
     // Initialize the client
@@ -8745,7 +9164,7 @@ public class SnippetSearchClient
   ///
   /// attributesToHighlightStar
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings51()
+  public async Task SnippetForSearchClientSetSettings53()
   {
     // >SEPARATOR setSettings attributesToHighlightStar
     // Initialize the client
@@ -8765,7 +9184,7 @@ public class SnippetSearchClient
   ///
   /// everything
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings52()
+  public async Task SnippetForSearchClientSetSettings54()
   {
     // >SEPARATOR setSettings everything
     // Initialize the client
@@ -8880,7 +9299,7 @@ public class SnippetSearchClient
   ///
   /// searchableAttributesWithCustomRankingsAndAttributesForFaceting
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings53()
+  public async Task SnippetForSearchClientSetSettings55()
   {
     // >SEPARATOR setSettings searchableAttributesWithCustomRankingsAndAttributesForFaceting
     // Initialize the client
@@ -8917,7 +9336,7 @@ public class SnippetSearchClient
   ///
   /// searchableAttributesOrdering
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings54()
+  public async Task SnippetForSearchClientSetSettings56()
   {
     // >SEPARATOR setSettings searchableAttributesOrdering
     // Initialize the client
@@ -8940,7 +9359,7 @@ public class SnippetSearchClient
   ///
   /// searchableAttributesProductReferenceSuffixes
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings55()
+  public async Task SnippetForSearchClientSetSettings57()
   {
     // >SEPARATOR setSettings searchableAttributesProductReferenceSuffixes
     // Initialize the client
@@ -8968,7 +9387,7 @@ public class SnippetSearchClient
   ///
   /// queryLanguageAndIgnorePlurals
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings56()
+  public async Task SnippetForSearchClientSetSettings58()
   {
     // >SEPARATOR setSettings queryLanguageAndIgnorePlurals
     // Initialize the client
@@ -8992,7 +9411,7 @@ public class SnippetSearchClient
   ///
   /// searchableAttributesInMovies
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings57()
+  public async Task SnippetForSearchClientSetSettings59()
   {
     // >SEPARATOR setSettings searchableAttributesInMovies
     // Initialize the client
@@ -9015,7 +9434,7 @@ public class SnippetSearchClient
   ///
   /// disablePrefixOnAttributes
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings58()
+  public async Task SnippetForSearchClientSetSettings60()
   {
     // >SEPARATOR setSettings disablePrefixOnAttributes
     // Initialize the client
@@ -9035,7 +9454,7 @@ public class SnippetSearchClient
   ///
   /// disableTypoToleranceOnAttributes
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings59()
+  public async Task SnippetForSearchClientSetSettings61()
   {
     // >SEPARATOR setSettings disableTypoToleranceOnAttributes
     // Initialize the client
@@ -9055,7 +9474,7 @@ public class SnippetSearchClient
   ///
   /// searchableAttributesSimpleExample
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings60()
+  public async Task SnippetForSearchClientSetSettings62()
   {
     // >SEPARATOR setSettings searchableAttributesSimpleExample
     // Initialize the client
@@ -9075,7 +9494,7 @@ public class SnippetSearchClient
   ///
   /// searchableAttributesSimpleExampleAlt
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings61()
+  public async Task SnippetForSearchClientSetSettings63()
   {
     // >SEPARATOR setSettings searchableAttributesSimpleExampleAlt
     // Initialize the client
@@ -9098,7 +9517,7 @@ public class SnippetSearchClient
   ///
   /// set_searchable_attributes
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings62()
+  public async Task SnippetForSearchClientSetSettings64()
   {
     // >SEPARATOR setSettings set_searchable_attributes
     // Initialize the client
@@ -9127,7 +9546,7 @@ public class SnippetSearchClient
   ///
   /// set_searchable_attributes
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings63()
+  public async Task SnippetForSearchClientSetSettings65()
   {
     // >SEPARATOR setSettings set_searchable_attributes
     // Initialize the client
@@ -9157,7 +9576,7 @@ public class SnippetSearchClient
   ///
   /// unretrievable_attributes
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings64()
+  public async Task SnippetForSearchClientSetSettings66()
   {
     // >SEPARATOR setSettings unretrievable_attributes
     // Initialize the client
@@ -9177,7 +9596,7 @@ public class SnippetSearchClient
   ///
   /// set_retrievable_attributes
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings65()
+  public async Task SnippetForSearchClientSetSettings67()
   {
     // >SEPARATOR setSettings set_retrievable_attributes
     // Initialize the client
@@ -9200,7 +9619,7 @@ public class SnippetSearchClient
   ///
   /// set_all_attributes_as_retrievable
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings66()
+  public async Task SnippetForSearchClientSetSettings68()
   {
     // >SEPARATOR setSettings set_all_attributes_as_retrievable
     // Initialize the client
@@ -9220,7 +9639,7 @@ public class SnippetSearchClient
   ///
   /// specify_attributes_not_to_retrieve
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings67()
+  public async Task SnippetForSearchClientSetSettings69()
   {
     // >SEPARATOR setSettings specify_attributes_not_to_retrieve
     // Initialize the client
@@ -9243,7 +9662,7 @@ public class SnippetSearchClient
   ///
   /// neural_search
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings68()
+  public async Task SnippetForSearchClientSetSettings70()
   {
     // >SEPARATOR setSettings neural_search
     // Initialize the client
@@ -9263,7 +9682,7 @@ public class SnippetSearchClient
   ///
   /// keyword_search
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings69()
+  public async Task SnippetForSearchClientSetSettings71()
   {
     // >SEPARATOR setSettings keyword_search
     // Initialize the client
@@ -9283,7 +9702,7 @@ public class SnippetSearchClient
   ///
   /// set_default_ranking
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings70()
+  public async Task SnippetForSearchClientSetSettings72()
   {
     // >SEPARATOR setSettings set_default_ranking
     // Initialize the client
@@ -9316,7 +9735,7 @@ public class SnippetSearchClient
   ///
   /// set_ranking_by_attribute_asc
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings71()
+  public async Task SnippetForSearchClientSetSettings73()
   {
     // >SEPARATOR setSettings set_ranking_by_attribute_asc
     // Initialize the client
@@ -9350,7 +9769,7 @@ public class SnippetSearchClient
   ///
   /// set_ranking_by_attribute_desc
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings72()
+  public async Task SnippetForSearchClientSetSettings74()
   {
     // >SEPARATOR setSettings set_ranking_by_attribute_desc
     // Initialize the client
@@ -9384,7 +9803,7 @@ public class SnippetSearchClient
   ///
   /// restrict_searchable_attributes
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings73()
+  public async Task SnippetForSearchClientSetSettings75()
   {
     // >SEPARATOR setSettings restrict_searchable_attributes
     // Initialize the client
@@ -9407,7 +9826,7 @@ public class SnippetSearchClient
   ///
   /// set_default_relevancy
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings74()
+  public async Task SnippetForSearchClientSetSettings76()
   {
     // >SEPARATOR setSettings set_default_relevancy
     // Initialize the client
@@ -9427,7 +9846,7 @@ public class SnippetSearchClient
   ///
   /// set_replicas
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings75()
+  public async Task SnippetForSearchClientSetSettings77()
   {
     // >SEPARATOR setSettings set_replicas
     // Initialize the client
@@ -9450,7 +9869,7 @@ public class SnippetSearchClient
   ///
   /// set_default_max_values_per_facet
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings76()
+  public async Task SnippetForSearchClientSetSettings78()
   {
     // >SEPARATOR setSettings set_default_max_values_per_facet
     // Initialize the client
@@ -9470,7 +9889,7 @@ public class SnippetSearchClient
   ///
   /// set_default_sort_facet_values_by
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings77()
+  public async Task SnippetForSearchClientSetSettings79()
   {
     // >SEPARATOR setSettings set_default_sort_facet_values_by
     // Initialize the client
@@ -9490,7 +9909,7 @@ public class SnippetSearchClient
   ///
   /// set_attributes_to_snippet
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings78()
+  public async Task SnippetForSearchClientSetSettings80()
   {
     // >SEPARATOR setSettings set_attributes_to_snippet
     // Initialize the client
@@ -9513,7 +9932,7 @@ public class SnippetSearchClient
   ///
   /// set_all_attributes_to_snippet
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings79()
+  public async Task SnippetForSearchClientSetSettings81()
   {
     // >SEPARATOR setSettings set_all_attributes_to_snippet
     // Initialize the client
@@ -9533,7 +9952,7 @@ public class SnippetSearchClient
   ///
   /// set_default_highlight_pre_tag
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings80()
+  public async Task SnippetForSearchClientSetSettings82()
   {
     // >SEPARATOR setSettings set_default_highlight_pre_tag
     // Initialize the client
@@ -9553,7 +9972,7 @@ public class SnippetSearchClient
   ///
   /// set_default_highlight_post_tag
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings81()
+  public async Task SnippetForSearchClientSetSettings83()
   {
     // >SEPARATOR setSettings set_default_highlight_post_tag
     // Initialize the client
@@ -9573,7 +9992,7 @@ public class SnippetSearchClient
   ///
   /// set_default_snippet_ellipsis_text
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings82()
+  public async Task SnippetForSearchClientSetSettings84()
   {
     // >SEPARATOR setSettings set_default_snippet_ellipsis_text
     // Initialize the client
@@ -9593,7 +10012,7 @@ public class SnippetSearchClient
   ///
   /// enable_restrict_highlight_and_snippet_arrays_by_default
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings83()
+  public async Task SnippetForSearchClientSetSettings85()
   {
     // >SEPARATOR setSettings enable_restrict_highlight_and_snippet_arrays_by_default
     // Initialize the client
@@ -9613,7 +10032,7 @@ public class SnippetSearchClient
   ///
   /// set_default_hits_per_page
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings84()
+  public async Task SnippetForSearchClientSetSettings86()
   {
     // >SEPARATOR setSettings set_default_hits_per_page
     // Initialize the client
@@ -9633,7 +10052,7 @@ public class SnippetSearchClient
   ///
   /// set_pagination_limit
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings85()
+  public async Task SnippetForSearchClientSetSettings87()
   {
     // >SEPARATOR setSettings set_pagination_limit
     // Initialize the client
@@ -9653,7 +10072,7 @@ public class SnippetSearchClient
   ///
   /// set_default_min_word_size_for_one_typo
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings86()
+  public async Task SnippetForSearchClientSetSettings88()
   {
     // >SEPARATOR setSettings set_default_min_word_size_for_one_typo
     // Initialize the client
@@ -9673,7 +10092,7 @@ public class SnippetSearchClient
   ///
   /// set_default_min_word_size_for_two_typos
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings87()
+  public async Task SnippetForSearchClientSetSettings89()
   {
     // >SEPARATOR setSettings set_default_min_word_size_for_two_typos
     // Initialize the client
@@ -9693,7 +10112,7 @@ public class SnippetSearchClient
   ///
   /// set_default_typo_tolerance_mode
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings88()
+  public async Task SnippetForSearchClientSetSettings90()
   {
     // >SEPARATOR setSettings set_default_typo_tolerance_mode
     // Initialize the client
@@ -9713,7 +10132,7 @@ public class SnippetSearchClient
   ///
   /// disable_typos_on_numeric_tokens_by_default
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings89()
+  public async Task SnippetForSearchClientSetSettings91()
   {
     // >SEPARATOR setSettings disable_typos_on_numeric_tokens_by_default
     // Initialize the client
@@ -9733,7 +10152,7 @@ public class SnippetSearchClient
   ///
   /// disable_typo_tolerance_for_words
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings90()
+  public async Task SnippetForSearchClientSetSettings92()
   {
     // >SEPARATOR setSettings disable_typo_tolerance_for_words
     // Initialize the client
@@ -9756,7 +10175,7 @@ public class SnippetSearchClient
   ///
   /// set_separators_to_index
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings91()
+  public async Task SnippetForSearchClientSetSettings93()
   {
     // >SEPARATOR setSettings set_separators_to_index
     // Initialize the client
@@ -9776,7 +10195,7 @@ public class SnippetSearchClient
   ///
   /// set_languages_using_querylanguages
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings92()
+  public async Task SnippetForSearchClientSetSettings94()
   {
     // >SEPARATOR setSettings set_languages_using_querylanguages
     // Initialize the client
@@ -9800,7 +10219,7 @@ public class SnippetSearchClient
   ///
   /// set_attributes_to_transliterate
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings93()
+  public async Task SnippetForSearchClientSetSettings95()
   {
     // >SEPARATOR setSettings set_attributes_to_transliterate
     // Initialize the client
@@ -9824,7 +10243,7 @@ public class SnippetSearchClient
   ///
   /// set_languages_using_querylanguages
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings94()
+  public async Task SnippetForSearchClientSetSettings96()
   {
     // >SEPARATOR setSettings set_languages_using_querylanguages
     // Initialize the client
@@ -9848,7 +10267,7 @@ public class SnippetSearchClient
   ///
   /// set_camel_case_attributes
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings95()
+  public async Task SnippetForSearchClientSetSettings97()
   {
     // >SEPARATOR setSettings set_camel_case_attributes
     // Initialize the client
@@ -9868,7 +10287,7 @@ public class SnippetSearchClient
   ///
   /// set_decompounded_attributes
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings96()
+  public async Task SnippetForSearchClientSetSettings98()
   {
     // >SEPARATOR setSettings set_decompounded_attributes
     // Initialize the client
@@ -9897,7 +10316,7 @@ public class SnippetSearchClient
   ///
   /// set_decompounded_multiple_attributes
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings97()
+  public async Task SnippetForSearchClientSetSettings99()
   {
     // >SEPARATOR setSettings set_decompounded_multiple_attributes
     // Initialize the client
@@ -9930,7 +10349,7 @@ public class SnippetSearchClient
   ///
   /// set_keep_diacritics_on_characters
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings98()
+  public async Task SnippetForSearchClientSetSettings100()
   {
     // >SEPARATOR setSettings set_keep_diacritics_on_characters
     // Initialize the client
@@ -9950,7 +10369,7 @@ public class SnippetSearchClient
   ///
   /// set_custom_normalization
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings99()
+  public async Task SnippetForSearchClientSetSettings101()
   {
     // >SEPARATOR setSettings set_custom_normalization
     // Initialize the client
@@ -9979,7 +10398,7 @@ public class SnippetSearchClient
   ///
   /// set_languages_using_querylanguages
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings100()
+  public async Task SnippetForSearchClientSetSettings102()
   {
     // >SEPARATOR setSettings set_languages_using_querylanguages
     // Initialize the client
@@ -10004,7 +10423,7 @@ public class SnippetSearchClient
   ///
   /// set_indexlanguages
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings101()
+  public async Task SnippetForSearchClientSetSettings103()
   {
     // >SEPARATOR setSettings set_indexlanguages
     // Initialize the client
@@ -10027,7 +10446,7 @@ public class SnippetSearchClient
   ///
   /// enable_decompound_query_by_default
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings102()
+  public async Task SnippetForSearchClientSetSettings104()
   {
     // >SEPARATOR setSettings enable_decompound_query_by_default
     // Initialize the client
@@ -10047,7 +10466,7 @@ public class SnippetSearchClient
   ///
   /// enable_rules_syntax_by_default
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings103()
+  public async Task SnippetForSearchClientSetSettings105()
   {
     // >SEPARATOR setSettings enable_rules_syntax_by_default
     // Initialize the client
@@ -10067,7 +10486,7 @@ public class SnippetSearchClient
   ///
   /// enable_personalization_settings
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings104()
+  public async Task SnippetForSearchClientSetSettings106()
   {
     // >SEPARATOR setSettings enable_personalization_settings
     // Initialize the client
@@ -10087,7 +10506,7 @@ public class SnippetSearchClient
   ///
   /// set_default_query_type
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings105()
+  public async Task SnippetForSearchClientSetSettings107()
   {
     // >SEPARATOR setSettings set_default_query_type
     // Initialize the client
@@ -10107,7 +10526,7 @@ public class SnippetSearchClient
   ///
   /// set_default_remove_words_if_no_result
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings106()
+  public async Task SnippetForSearchClientSetSettings108()
   {
     // >SEPARATOR setSettings set_default_remove_words_if_no_result
     // Initialize the client
@@ -10127,7 +10546,7 @@ public class SnippetSearchClient
   ///
   /// enable_advanced_syntax_by_default
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings107()
+  public async Task SnippetForSearchClientSetSettings109()
   {
     // >SEPARATOR setSettings enable_advanced_syntax_by_default
     // Initialize the client
@@ -10147,7 +10566,7 @@ public class SnippetSearchClient
   ///
   /// set_default_optional_words
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings108()
+  public async Task SnippetForSearchClientSetSettings110()
   {
     // >SEPARATOR setSettings set_default_optional_words
     // Initialize the client
@@ -10170,7 +10589,7 @@ public class SnippetSearchClient
   ///
   /// disabling_prefix_search_for_some_attributes_by_default
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings109()
+  public async Task SnippetForSearchClientSetSettings111()
   {
     // >SEPARATOR setSettings disabling_prefix_search_for_some_attributes_by_default
     // Initialize the client
@@ -10190,7 +10609,7 @@ public class SnippetSearchClient
   ///
   /// disabling_exact_for_some_attributes_by_default
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings110()
+  public async Task SnippetForSearchClientSetSettings112()
   {
     // >SEPARATOR setSettings disabling_exact_for_some_attributes_by_default
     // Initialize the client
@@ -10210,7 +10629,7 @@ public class SnippetSearchClient
   ///
   /// set_default_exact_single_word_query
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings111()
+  public async Task SnippetForSearchClientSetSettings113()
   {
     // >SEPARATOR setSettings set_default_exact_single_word_query
     // Initialize the client
@@ -10230,7 +10649,7 @@ public class SnippetSearchClient
   ///
   /// set_default_aternative_as_exact
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings112()
+  public async Task SnippetForSearchClientSetSettings114()
   {
     // >SEPARATOR setSettings set_default_aternative_as_exact
     // Initialize the client
@@ -10257,7 +10676,7 @@ public class SnippetSearchClient
   ///
   /// enable_advanced_syntax_by_default
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings113()
+  public async Task SnippetForSearchClientSetSettings115()
   {
     // >SEPARATOR setSettings enable_advanced_syntax_by_default
     // Initialize the client
@@ -10277,7 +10696,7 @@ public class SnippetSearchClient
   ///
   /// set_numeric_attributes_for_filtering
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings114()
+  public async Task SnippetForSearchClientSetSettings116()
   {
     // >SEPARATOR setSettings set_numeric_attributes_for_filtering
     // Initialize the client
@@ -10300,7 +10719,7 @@ public class SnippetSearchClient
   ///
   /// enable_compression_of_integer_array
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings115()
+  public async Task SnippetForSearchClientSetSettings117()
   {
     // >SEPARATOR setSettings enable_compression_of_integer_array
     // Initialize the client
@@ -10320,7 +10739,7 @@ public class SnippetSearchClient
   ///
   /// set_attributes_for_distinct
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings116()
+  public async Task SnippetForSearchClientSetSettings118()
   {
     // >SEPARATOR setSettings set_attributes_for_distinct
     // Initialize the client
@@ -10340,7 +10759,7 @@ public class SnippetSearchClient
   ///
   /// set_distinct
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings117()
+  public async Task SnippetForSearchClientSetSettings119()
   {
     // >SEPARATOR setSettings set_distinct
     // Initialize the client
@@ -10360,7 +10779,7 @@ public class SnippetSearchClient
   ///
   /// set_replace_synonyms_in_highlights
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings118()
+  public async Task SnippetForSearchClientSetSettings120()
   {
     // >SEPARATOR setSettings set_replace_synonyms_in_highlights
     // Initialize the client
@@ -10380,7 +10799,7 @@ public class SnippetSearchClient
   ///
   /// set_min_proximity
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings119()
+  public async Task SnippetForSearchClientSetSettings121()
   {
     // >SEPARATOR setSettings set_min_proximity
     // Initialize the client
@@ -10400,7 +10819,7 @@ public class SnippetSearchClient
   ///
   /// set_default_field
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings120()
+  public async Task SnippetForSearchClientSetSettings122()
   {
     // >SEPARATOR setSettings set_default_field
     // Initialize the client
@@ -10423,7 +10842,7 @@ public class SnippetSearchClient
   ///
   /// set_max_facet_hits
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings121()
+  public async Task SnippetForSearchClientSetSettings123()
   {
     // >SEPARATOR setSettings set_max_facet_hits
     // Initialize the client
@@ -10443,7 +10862,7 @@ public class SnippetSearchClient
   ///
   /// set_attribute_criteria_computed_by_min_proximity
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings122()
+  public async Task SnippetForSearchClientSetSettings124()
   {
     // >SEPARATOR setSettings set_attribute_criteria_computed_by_min_proximity
     // Initialize the client
@@ -10463,7 +10882,7 @@ public class SnippetSearchClient
   ///
   /// set_user_data
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings123()
+  public async Task SnippetForSearchClientSetSettings125()
   {
     // >SEPARATOR setSettings set_user_data
     // Initialize the client
@@ -10489,7 +10908,7 @@ public class SnippetSearchClient
   ///
   /// set_rendering_content
   /// </summary>
-  public async Task SnippetForSearchClientSetSettings124()
+  public async Task SnippetForSearchClientSetSettings126()
   {
     // >SEPARATOR setSettings set_rendering_content
     // Initialize the client

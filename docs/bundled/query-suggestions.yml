@@ -104,7 +104,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -303,13 +303,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customGet[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customGet[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -333,7 +333,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -532,13 +532,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customPost[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPost[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -562,7 +562,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -761,13 +761,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customPut[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPut[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -785,7 +785,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -986,13 +986,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customDelete[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customDelete[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1203,12 +1203,12 @@ paths:
             )
 
             // Call the API
-            val response = client.getAllConfigs(
+            val response = Await.result(
+              client.getAllConfigs(
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1581,30 +1581,30 @@ paths:
             )
 
             // Call the API
-            val response = client.createConfig(
-              configurationWithIndex = ConfigurationWithIndex(
-                indexName = "<YOUR_INDEX_NAME>",
-                sourceIndices = Seq(
-                  SourceIndex(
-                    indexName = "<YOUR_INDEX_NAME>",
-                    facets = Some(
-                      Seq(
-                        Facet(
-                          attribute = Some("test")
+            val response = Await.result(
+              client.createConfig(
+                configurationWithIndex = ConfigurationWithIndex(
+                  indexName = "<YOUR_INDEX_NAME>",
+                  sourceIndices = Seq(
+                    SourceIndex(
+                      indexName = "<YOUR_INDEX_NAME>",
+                      facets = Some(
+                        Seq(
+                          Facet(
+                            attribute = Some("test")
+                          )
                         )
-                      )
-                    ),
-                    generate = Some(Seq(Seq("facetA", "facetB"), Seq("facetC")))
-                  )
-                ),
-                languages = Some(Languages(Seq("french"))),
-                exclude = Some(Seq("test"))
-              )
+                      ),
+                      generate = Some(Seq(Seq("facetA", "facetB"), Seq("facetC")))
+                    )
+                  ),
+                  languages = Some(Languages(Seq("french"))),
+                  exclude = Some(Seq("test"))
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1842,13 +1842,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getConfig(
-              indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.getConfig(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2170,13 +2170,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getConfigStatus(
-              indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.getConfigStatus(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2421,13 +2421,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getLogFile(
-              indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.getLogFile(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >

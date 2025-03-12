@@ -281,6 +281,28 @@
     }
   },
   {
+    "testName": "attributesForFaceting availableIn",
+    "parameters": {
+      "indexName": "<YOUR_INDEX_NAME>",
+      "indexSettings": {
+        "attributesForFaceting": [
+          "color",
+          "availableIn"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings",
+      "method": "PUT",
+      "body": {
+        "attributesForFaceting": [
+          "color",
+          "availableIn"
+        ]
+      }
+    }
+  },
+  {
     "testName": "api_attributes_for_faceting",
     "parameters": {
       "indexName": "<YOUR_INDEX_NAME>",
@@ -697,7 +719,7 @@
     }
   },
   {
-    "testName": "ranking exhaustive",
+    "testName": "ranking exhaustive (price)",
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -728,6 +750,26 @@
           "attribute",
           "exact",
           "custom"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "ranking exhaustive (is_popular)",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "ranking": [
+          "desc(is_popular)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "ranking": [
+          "desc(is_popular)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"
         ]
       }
     }
@@ -961,14 +1003,14 @@
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
-        "maxFacetHits": 1000
+        "maxFacetHits": 100
       }
     },
     "request": {
       "path": "/1/indexes/theIndexName/settings",
       "method": "PUT",
       "body": {
-        "maxFacetHits": 1000
+        "maxFacetHits": 100
       }
     }
   },
@@ -1064,7 +1106,7 @@
         "searchableAttributes": [
           "name",
           "country",
-          "code",
+          "city",
           "iata_code"
         ],
         "customRanking": [
@@ -1079,7 +1121,7 @@
         "searchableAttributes": [
           "name",
           "country",
-          "code",
+          "city",
           "iata_code"
         ],
         "customRanking": [
@@ -1460,7 +1502,6 @@
   },
   {
     "testName": "searchableAttributesOrdering",
-    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {

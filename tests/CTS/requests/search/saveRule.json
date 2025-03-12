@@ -889,30 +889,30 @@
         }
       }
     },
-      "request": {
-        "path": "/1/indexes/indexName/rules/diet-rule",
-        "method": "PUT",
-        "body": {
-          "objectID": "diet-rule",
-          "conditions": [{
-            "pattern": "diet",
-            "anchoring": "contains"
-          }],
-          "consequence": {
-            "params": {
-              "filters": "'low-carb' OR 'low-fat'",
-              "query": {
-                "edits": [
-                  {
-                    "type": "remove",
-                    "delete": "diet"
-                  }
-                ]
-              }
+    "request": {
+      "path": "/1/indexes/indexName/rules/diet-rule",
+      "method": "PUT",
+      "body": {
+        "objectID": "diet-rule",
+        "conditions": [{
+          "pattern": "diet",
+          "anchoring": "contains"
+        }],
+        "consequence": {
+          "params": {
+            "filters": "'low-carb' OR 'low-fat'",
+            "query": {
+              "edits": [
+                {
+                  "type": "remove",
+                  "delete": "diet"
+                }
+              ]
             }
           }
         }
       }
+    }
   },
   {
     "testName": "conditionless",
@@ -936,25 +936,97 @@
         }
       }
     },
-      "request": {
-        "path": "/1/indexes/indexName/rules/diet-rule",
-        "method": "PUT",
-        "body": {
-          "objectID": "diet-rule",
-          "consequence": {
-            "params": {
-              "filters": "'low-carb' OR 'low-fat'",
-              "query": {
-                "edits": [
-                  {
-                    "type": "remove",
-                    "delete": "diet"
-                  }
-                ]
-              }
+    "request": {
+      "path": "/1/indexes/indexName/rules/diet-rule",
+      "method": "PUT",
+      "body": {
+        "objectID": "diet-rule",
+        "consequence": {
+          "params": {
+            "filters": "'low-carb' OR 'low-fat'",
+            "query": {
+              "edits": [
+                {
+                  "type": "remove",
+                  "delete": "diet"
+                }
+              ]
             }
           }
         }
       }
+    }
+  },
+  {
+    "testName": "contextual",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "a-rule-id",
+      "rule": {
+        "objectID": "a-rule-id",
+        "conditions": [{
+          "context": "mobile"
+        }],
+        "consequence": {
+          "params": {
+            "filters": "release_date >= 1577836800"
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/a-rule-id",
+      "method": "PUT",
+      "body": {
+        "objectID": "a-rule-id",
+        "conditions": [{
+          "context": "mobile"
+        }],
+        "consequence": {
+          "params": {
+            "filters": "release_date >= 1577836800"
+          }
+        }
+      }
+    }
+  },
+  {
+    "testName": "saveRule always active rule",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "a-rule-id",
+      "rule": {
+        "objectID": "a-rule-id",
+        "consequence": {
+          "params": {
+            "aroundRadius": 1000
+          }
+        },
+        "validity": [
+          {
+            "from": 1577836800,
+            "until": 1577836800
+          }
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/a-rule-id",
+      "method": "PUT",
+      "body": {
+        "objectID": "a-rule-id",
+        "consequence": {
+          "params": {
+            "aroundRadius": 1000
+          }
+        },
+        "validity": [
+          {
+            "from": 1577836800,
+            "until": 1577836800
+          }
+        ]
+      }
+    }
   }
 ]

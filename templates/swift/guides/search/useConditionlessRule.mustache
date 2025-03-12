@@ -1,0 +1,29 @@
+import Foundation
+#if os(Linux) // For linux interop
+  import FoundationNetworking
+#endif
+
+import Core
+{{> snippets/import}}
+
+func useConditionlessRule() async throws {
+  {{> snippets/init}}
+
+  let objectID = "a-rule-id";
+
+  let rule = Rule(
+      objectID: objectID,
+      consequence: SearchConsequence(
+          // Set relevant consequence
+      ),
+      // Set validity (optional)
+      validity: [
+        SearchTimeRange(
+              from: 1_688_774_400,
+              until: 1_738_972_800
+          )
+      ]
+  )
+
+  {{#dynamicSnippet}}saveRule{{/dynamicSnippet}}
+}

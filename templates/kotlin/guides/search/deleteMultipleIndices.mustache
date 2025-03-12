@@ -1,0 +1,38 @@
+{{> snippets/import}}
+import com.algolia.client.model.search.*
+
+ suspend fun deleteMultipleIndices() {
+  // You need an API key with `deleteIndex`
+  {{> snippets/init}}
+
+  // List all indices
+  val indices = client.{{#dynamicSnippet}}listIndicesSimple{{/dynamicSnippet}}
+
+  // Primary indices don't have a `primary` key
+  val primaryIndices = indices.items.filter { it.primary == null }
+  val replicaIndices = indices.items.filter { it.primary != null }
+
+  // Delete primary indices first
+  if (primaryIndices.isNotEmpty()) {
+      val requests = primaryIndices.map {
+          MultipleBatchRequest(
+              action = Action.Delete,
+              indexName = it.name
+          )
+      }
+      client.{{#dynamicSnippet}}deleteMultipleIndicesPrimary{{/dynamicSnippet}}
+      println("Deleted primary indices.")
+  }
+
+  // Now, delete replica indices
+  if (replicaIndices.isNotEmpty()) {
+      val requests = replicaIndices.map {
+          MultipleBatchRequest(
+              action = Action.Delete,
+              indexName = it.name
+          )
+      }
+      client.{{#dynamicSnippet}}deleteMultipleIndicesReplica{{/dynamicSnippet}}
+      println("Deleted replica indices.")
+  }
+}

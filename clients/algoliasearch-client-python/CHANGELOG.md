@@ -1,3 +1,23 @@
+## [4.14.0](https://github.com/algolia/algoliasearch-client-python/compare/4.13.3...4.14.0)
+
+- [ab623194e](https://github.com/algolia/api-clients-automation/commit/ab623194e) feat(specs): add `subscriptionAction` to ingestion specs ([#4587](https://github.com/algolia/api-clients-automation/pull/4587)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.13.3](https://github.com/algolia/algoliasearch-client-python/compare/4.13.2...4.13.3)
+
+- [5dd667ba1a](https://github.com/algolia/api-clients-automation/commit/5dd667ba1a) chore(guides): some missing snippets + guides ([#4477](https://github.com/algolia/api-clients-automation/pull/4477)) by [@Fluf22](https://github.com/Fluf22/)
+- [92bd911848](https://github.com/algolia/api-clients-automation/commit/92bd911848) chore(scripts): point jira issues to another epic ([#4505](https://github.com/algolia/api-clients-automation/pull/4505)) by [@millotp](https://github.com/millotp/)
+- [97d2722bc9](https://github.com/algolia/api-clients-automation/commit/97d2722bc9) fix(specs): Increase optionalWords visibility in docs ([#4559](https://github.com/algolia/api-clients-automation/pull/4559)) by [@gazconroy](https://github.com/gazconroy/)
+
+## [4.13.2](https://github.com/algolia/algoliasearch-client-python/compare/4.13.1...4.13.2)
+
+- [c0e70d9864](https://github.com/algolia/api-clients-automation/commit/c0e70d9864) chore(deps): dependencies 2025-02-10 ([#4432](https://github.com/algolia/api-clients-automation/pull/4432)) by [@algolia-bot](https://github.com/algolia-bot/)
+
+## [4.13.1](https://github.com/algolia/algoliasearch-client-python/compare/4.13.0...4.13.1)
+
+- [ad43bfbdac](https://github.com/algolia/api-clients-automation/commit/ad43bfbdac) guides: add missing snippets to docs ([#4391](https://github.com/algolia/api-clients-automation/pull/4391)) by [@shortcuts](https://github.com/shortcuts/)
+- [506b8a5636](https://github.com/algolia/api-clients-automation/commit/506b8a5636) fix(specs): responseFields description ([#4399](https://github.com/algolia/api-clients-automation/pull/4399)) by [@kai687](https://github.com/kai687/)
+- [09e657fa76](https://github.com/algolia/api-clients-automation/commit/09e657fa76) fix(specs): add a linter to assert that type is present ([#4393](https://github.com/algolia/api-clients-automation/pull/4393)) by [@millotp](https://github.com/millotp/)
+
 ## [4.13.0](https://github.com/algolia/algoliasearch-client-python/compare/4.12.0...4.13.0)
 
 - [5aa57630d6](https://github.com/algolia/api-clients-automation/commit/5aa57630d6) feat(specs): only use shortname in the source input ([#4287](https://github.com/algolia/api-clients-automation/pull/4287)) by [@millotp](https://github.com/millotp/)

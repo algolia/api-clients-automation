@@ -123,7 +123,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -322,13 +322,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customGet[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customGet[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -352,7 +352,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -551,13 +551,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customPost[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPost[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -581,7 +581,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -780,13 +780,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customPut[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPut[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -804,7 +804,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -1005,13 +1005,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customDelete[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customDelete[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1240,12 +1240,12 @@ paths:
             )
 
             // Call the API
-            val response = client.listAuthentications(
+            val response = Await.result(
+              client.listAuthentications(
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1528,21 +1528,21 @@ paths:
             )
 
             // Call the API
-            val response = client.createAuthentication(
-              authenticationCreate = AuthenticationCreate(
-                `type` = AuthenticationType.withName("oauth"),
-                name = "authName",
-                input = AuthOAuth(
-                  url = "http://test.oauth",
-                  client_id = "myID",
-                  client_secret = "mySecret"
+            val response = Await.result(
+              client.createAuthentication(
+                authenticationCreate = AuthenticationCreate(
+                  `type` = AuthenticationType.withName("oauth"),
+                  name = "authName",
+                  input = AuthOAuth(
+                    url = "http://test.oauth",
+                    clientId = "myID",
+                    clientSecret = "mySecret"
+                  )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1813,15 +1813,15 @@ paths:
             )
 
             // Call the API
-            val response = client.searchAuthentications(
-              authenticationSearch = AuthenticationSearch(
-                authenticationIDs = Seq("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
-              )
+            val response = Await.result(
+              client.searchAuthentications(
+                authenticationSearch = AuthenticationSearch(
+                  authenticationIDs = Seq("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2059,13 +2059,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getAuthentication(
-              authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.getAuthentication(
+                authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2346,12 +2346,12 @@ paths:
             )
 
             // Call the API
-            val response = client.listDestinations(
+            val response = Await.result(
+              client.listDestinations(
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2628,20 +2628,20 @@ paths:
             )
 
             // Call the API
-            val response = client.createDestination(
-              destinationCreate = DestinationCreate(
-                `type` = DestinationType.withName("search"),
-                name = "destinationName",
-                input = DestinationIndexName(
-                  indexName = "<YOUR_INDEX_NAME>"
-                ),
-                authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-              )
+            val response = Await.result(
+              client.createDestination(
+                destinationCreate = DestinationCreate(
+                  `type` = DestinationType.withName("search"),
+                  name = "destinationName",
+                  input = DestinationIndexName(
+                    indexName = "<YOUR_INDEX_NAME>"
+                  ),
+                  authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2912,15 +2912,15 @@ paths:
             )
 
             // Call the API
-            val response = client.searchDestinations(
-              destinationSearch = DestinationSearch(
-                destinationIDs = Seq("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
-              )
+            val response = Await.result(
+              client.searchDestinations(
+                destinationSearch = DestinationSearch(
+                  destinationIDs = Seq("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3160,13 +3160,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getDestination(
-              destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.getDestination(
+                destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3446,12 +3446,12 @@ paths:
             )
 
             // Call the API
-            val response = client.listSources(
+            val response = Await.result(
+              client.listSources(
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3766,25 +3766,25 @@ paths:
             )
 
             // Call the API
-            val response = client.createSource(
-              sourceCreate = SourceCreate(
-                `type` = SourceType.withName("commercetools"),
-                name = "sourceName",
-                input = Some(
-                  SourceCommercetools(
-                    storeKeys = Some(Seq("myStore")),
-                    locales = Some(Seq("de")),
-                    url = "http://commercetools.com",
-                    projectKey = "keyID"
-                  )
-                ),
-                authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-              )
+            val response = Await.result(
+              client.createSource(
+                sourceCreate = SourceCreate(
+                  `type` = SourceType.withName("commercetools"),
+                  name = "sourceName",
+                  input = Some(
+                    SourceCommercetools(
+                      storeKeys = Some(Seq("myStore")),
+                      locales = Some(Seq("de")),
+                      url = "http://commercetools.com",
+                      projectKey = "keyID"
+                    )
+                  ),
+                  authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4115,27 +4115,27 @@ paths:
             )
 
             // Call the API
-            val response = client.validateSource(
-              sourceCreate = Some(
-                SourceCreate(
-                  `type` = SourceType.withName("commercetools"),
-                  name = "sourceName",
-                  input = Some(
-                    SourceCommercetools(
-                      storeKeys = Some(Seq("myStore")),
-                      locales = Some(Seq("de")),
-                      url = "http://commercetools.com",
-                      projectKey = "keyID"
-                    )
-                  ),
-                  authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+            val response = Await.result(
+              client.validateSource(
+                sourceCreate = Some(
+                  SourceCreate(
+                    `type` = SourceType.withName("commercetools"),
+                    name = "sourceName",
+                    input = Some(
+                      SourceCommercetools(
+                        storeKeys = Some(Seq("myStore")),
+                        locales = Some(Seq("de")),
+                        url = "http://commercetools.com",
+                        projectKey = "keyID"
+                      )
+                    ),
+                    authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+                  )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4412,15 +4412,15 @@ paths:
             )
 
             // Call the API
-            val response = client.searchSources(
-              sourceSearch = SourceSearch(
-                sourceIDs = Seq("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
-              )
+            val response = Await.result(
+              client.searchSources(
+                sourceSearch = SourceSearch(
+                  sourceIDs = Seq("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4657,13 +4657,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getSource(
-              sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac"
+            val response = Await.result(
+              client.getSource(
+                sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4963,16 +4963,16 @@ paths:
             )
 
             // Call the API
-            val response = client.validateSourceBeforeUpdate(
-              sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              sourceUpdate = SourceUpdate(
-                name = Some("newName")
-              )
+            val response = Await.result(
+              client.validateSourceBeforeUpdate(
+                sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                sourceUpdate = SourceUpdate(
+                  name = Some("newName")
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5205,13 +5205,13 @@ paths:
             )
 
             // Call the API
-            val response = client.triggerDockerSourceDiscover(
-              sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.triggerDockerSourceDiscover(
+                sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5511,20 +5511,20 @@ paths:
             )
 
             // Call the API
-            val response = client.runSource(
-              sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              runSourcePayload = Some(
-                RunSourcePayload(
-                  indexToInclude = Some(Seq("products_us", "products eu")),
-                  entityIDs = Some(Seq("1234", "5678")),
-                  entityType = Some(EntityType.withName("product"))
+            val response = Await.result(
+              client.runSource(
+                sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                runSourcePayload = Some(
+                  RunSourcePayload(
+                    indexToInclude = Some(Seq("products_us", "products eu")),
+                    entityIDs = Some(Seq("1234", "5678")),
+                    entityType = Some(EntityType.withName("product"))
+                  )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5765,12 +5765,12 @@ paths:
             )
 
             // Call the API
-            val response = client.listTasks(
+            val response = Await.result(
+              client.listTasks(
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -6018,17 +6018,17 @@ paths:
             )
 
             // Call the API
-            val response = client.createTask(
-              taskCreate = TaskCreate(
-                sourceID = "search",
-                destinationID = "destinationName",
-                action = ActionType.withName("replace")
-              )
+            val response = Await.result(
+              client.createTask(
+                taskCreate = TaskCreate(
+                  sourceID = "search",
+                  destinationID = "destinationName",
+                  action = ActionType.withName("replace")
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -6314,19 +6314,19 @@ paths:
             )
 
             // Call the API
-            val response = client.searchTasks(
-              taskSearch = TaskSearch(
-                taskIDs = Seq(
-                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                  "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+            val response = Await.result(
+              client.searchTasks(
+                taskSearch = TaskSearch(
+                  taskIDs = Seq(
+                    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                    "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                    "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+                  )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -6564,13 +6564,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getTask(
-              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.getTask(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -6836,13 +6836,13 @@ paths:
             )
 
             // Call the API
-            val response = client.runTask(
-              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.runTask(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -7205,26 +7205,26 @@ paths:
             )
 
             // Call the API
-            val response = client.pushTask(
-              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              pushTaskPayload = PushTaskPayload(
-                action = Action.withName("addObject"),
-                records = Seq(
-                  PushTaskRecords(
-                    objectID = "o",
-                    additionalProperties = Some(List(JField("key", JString("bar")), JField("foo", JString("1"))))
-                  ),
-                  PushTaskRecords(
-                    objectID = "k",
-                    additionalProperties = Some(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+            val response = Await.result(
+              client.pushTask(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                pushTaskPayload = PushTaskPayload(
+                  action = Action.withName("addObject"),
+                  records = Seq(
+                    PushTaskRecords(
+                      objectID = "o",
+                      additionalProperties = Some(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+                    ),
+                    PushTaskRecords(
+                      objectID = "k",
+                      additionalProperties = Some(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+                    )
                   )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -7465,13 +7465,13 @@ paths:
             )
 
             // Call the API
-            val response = client.enableTask(
-              taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+            val response = Await.result(
+              client.enableTask(
+                taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -7696,13 +7696,13 @@ paths:
             )
 
             // Call the API
-            val response = client.disableTask(
-              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.disableTask(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -7939,12 +7939,12 @@ paths:
             )
 
             // Call the API
-            val response = client.listTasksV1(
+            val response = Await.result(
+              client.listTasksV1(
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -8223,20 +8223,20 @@ paths:
             )
 
             // Call the API
-            val response = client.createTaskV1(
-              taskCreate = TaskCreateV1(
-                sourceID = "search",
-                destinationID = "destinationName",
-                trigger = OnDemandTriggerInput(
-                  `type` = OnDemandTriggerType.withName("onDemand")
-                ),
-                action = ActionType.withName("replace")
-              )
+            val response = Await.result(
+              client.createTaskV1(
+                taskCreate = TaskCreateV1(
+                  sourceID = "search",
+                  destinationID = "destinationName",
+                  trigger = OnDemandTriggerInput(
+                    `type` = OnDemandTriggerType.withName("onDemand")
+                  ),
+                  action = ActionType.withName("replace")
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -8528,19 +8528,19 @@ paths:
             )
 
             // Call the API
-            val response = client.searchTasksV1(
-              taskSearch = TaskSearch(
-                taskIDs = Seq(
-                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                  "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+            val response = Await.result(
+              client.searchTasksV1(
+                taskSearch = TaskSearch(
+                  taskIDs = Seq(
+                    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                    "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                    "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+                  )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -8782,13 +8782,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getTaskV1(
-              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.getTaskV1(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -9063,13 +9063,13 @@ paths:
             )
 
             // Call the API
-            val response = client.runTaskV1(
-              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.runTaskV1(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -9296,13 +9296,13 @@ paths:
             )
 
             // Call the API
-            val response = client.enableTaskV1(
-              taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+            val response = Await.result(
+              client.enableTaskV1(
+                taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -9529,13 +9529,13 @@ paths:
             )
 
             // Call the API
-            val response = client.disableTaskV1(
-              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.disableTaskV1(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -9764,12 +9764,12 @@ paths:
             )
 
             // Call the API
-            val response = client.listTransformations(
+            val response = Await.result(
+              client.listTransformations(
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -10018,17 +10018,17 @@ paths:
             )
 
             // Call the API
-            val response = client.createTransformation(
-              transformationCreate = TransformationCreate(
-                code = "foo",
-                name = "bar",
-                description = Some("baz")
-              )
+            val response = Await.result(
+              client.createTransformation(
+                transformationCreate = TransformationCreate(
+                  code = "foo",
+                  name = "bar",
+                  description = Some("baz")
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -10300,16 +10300,16 @@ paths:
             )
 
             // Call the API
-            val response = client.tryTransformation(
-              transformationTry = TransformationTry(
-                code = "foo",
-                sampleRecord = JObject(List(JField("bar", JString("baz"))))
-              )
+            val response = Await.result(
+              client.tryTransformation(
+                transformationTry = TransformationTry(
+                  code = "foo",
+                  sampleRecord = JObject(List(JField("bar", JString("baz"))))
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -10598,19 +10598,19 @@ paths:
             )
 
             // Call the API
-            val response = client.searchTransformations(
-              transformationSearch = TransformationSearch(
-                transformationIDs = Seq(
-                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                  "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+            val response = Await.result(
+              client.searchTransformations(
+                transformationSearch = TransformationSearch(
+                  transformationIDs = Seq(
+                    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                    "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                    "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+                  )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -10849,13 +10849,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getTransformation(
-              transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.getTransformation(
+                transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -11164,17 +11164,17 @@ paths:
             )
 
             // Call the API
-            val response = client.tryTransformationBeforeUpdate(
-              transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              transformationTry = TransformationTry(
-                code = "foo",
-                sampleRecord = JObject(List(JField("bar", JString("baz"))))
-              )
+            val response = Await.result(
+              client.tryTransformationBeforeUpdate(
+                transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                transformationTry = TransformationTry(
+                  code = "foo",
+                  sampleRecord = JObject(List(JField("bar", JString("baz"))))
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -11408,12 +11408,12 @@ paths:
             )
 
             // Call the API
-            val response = client.listRuns(
+            val response = Await.result(
+              client.listRuns(
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -11644,13 +11644,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getRun(
-              runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.getRun(
+                runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -11910,13 +11910,13 @@ paths:
             )
 
             // Call the API
-            val response = client.listEvents(
-              runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.listEvents(
+                runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -12146,14 +12146,14 @@ paths:
             )
 
             // Call the API
-            val response = client.getEvent(
-              runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              eventID = "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
+            val response = Await.result(
+              client.getEvent(
+                runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                eventID = "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -13991,6 +13991,8 @@ components:
           $ref: '#/components/schemas/failureThreshold'
         action:
           $ref: '#/components/schemas/ActionType'
+        subscriptionAction:
+          $ref: '#/components/schemas/ActionType'
         cursor:
           $ref: '#/components/schemas/cursor'
         notifications:
@@ -14017,6 +14019,8 @@ components:
         destinationID:
           $ref: '#/components/schemas/destinationID'
         action:
+          $ref: '#/components/schemas/ActionType'
+        subscriptionAction:
           $ref: '#/components/schemas/ActionType'
         cron:
           $ref: '#/components/schemas/Cron'
@@ -14073,6 +14077,8 @@ components:
         enabled:
           type: boolean
           description: Whether the task is enabled.
+        subscriptionAction:
+          $ref: '#/components/schemas/ActionType'
         failureThreshold:
           $ref: '#/components/schemas/failureThreshold'
         notifications:

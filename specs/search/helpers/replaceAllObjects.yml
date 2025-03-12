@@ -40,6 +40,7 @@ method:
         required: false
         schema:
           type: integer
+          default: 1000
       - in: query
         name: scopes
         description: List of scopes to kepp in the index. Defaults to `settings`, `synonyms`, and `rules`.

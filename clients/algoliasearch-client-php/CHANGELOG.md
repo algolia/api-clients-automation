@@ -1,3 +1,27 @@
+## [4.16.0](https://github.com/algolia/algoliasearch-client-php/compare/4.15.1...4.16.0)
+
+- [ab623194e](https://github.com/algolia/api-clients-automation/commit/ab623194e) feat(specs): add `subscriptionAction` to ingestion specs ([#4587](https://github.com/algolia/api-clients-automation/pull/4587)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.15.1](https://github.com/algolia/algoliasearch-client-php/compare/4.15.0...4.15.1)
+
+- [92bd911848](https://github.com/algolia/api-clients-automation/commit/92bd911848) chore(scripts): point jira issues to another epic ([#4505](https://github.com/algolia/api-clients-automation/pull/4505)) by [@millotp](https://github.com/millotp/)
+- [97d2722bc9](https://github.com/algolia/api-clients-automation/commit/97d2722bc9) fix(specs): Increase optionalWords visibility in docs ([#4559](https://github.com/algolia/api-clients-automation/pull/4559)) by [@gazconroy](https://github.com/gazconroy/)
+
+## [4.15.0](https://github.com/algolia/algoliasearch-client-php/compare/4.14.0...4.15.0)
+
+- [d2127cf74b](https://github.com/algolia/api-clients-automation/commit/d2127cf74b) feat(clients): more manual snippets for doc ([#4452](https://github.com/algolia/api-clients-automation/pull/4452)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [4.14.0](https://github.com/algolia/algoliasearch-client-php/compare/4.13.1...4.14.0)
+
+- [fd2353a092](https://github.com/algolia/api-clients-automation/commit/fd2353a092) feat(clients): add manual snippets for search doc ([#4388](https://github.com/algolia/api-clients-automation/pull/4388)) by [@Fluf22](https://github.com/Fluf22/)
+- [9745e6d6f2](https://github.com/algolia/api-clients-automation/commit/9745e6d6f2) feat(php): add `setMaxRetries` ([#4448](https://github.com/algolia/api-clients-automation/pull/4448)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.13.1](https://github.com/algolia/algoliasearch-client-php/compare/4.13.0...4.13.1)
+
+- [506b8a5636](https://github.com/algolia/api-clients-automation/commit/506b8a5636) fix(specs): responseFields description ([#4399](https://github.com/algolia/api-clients-automation/pull/4399)) by [@kai687](https://github.com/kai687/)
+- [09e657fa76](https://github.com/algolia/api-clients-automation/commit/09e657fa76) fix(specs): add a linter to assert that type is present ([#4393](https://github.com/algolia/api-clients-automation/pull/4393)) by [@millotp](https://github.com/millotp/)
+- [437c99303c](https://github.com/algolia/api-clients-automation/commit/437c99303c) fix(clients): mark php incompatible with 8.3.0 ([#4416](https://github.com/algolia/api-clients-automation/pull/4416)) by [@millotp](https://github.com/millotp/)
+
 ## [4.13.0](https://github.com/algolia/algoliasearch-client-php/compare/4.12.0...4.13.0)
 
 - [5aa57630d6](https://github.com/algolia/api-clients-automation/commit/5aa57630d6) feat(specs): only use shortname in the source input ([#4287](https://github.com/algolia/api-clients-automation/pull/4287)) by [@millotp](https://github.com/millotp/)
