@@ -106,7 +106,7 @@ info:
     `/1/` in each endpoint's URL.
   version: 1.0.0
 servers:
-  - url: https://{appId}.algolianet.com
+  - url: https://{appId}.algolia.net
     variables:
       appId:
         default: ALGOLIA_APPLICATION_ID
@@ -122,7 +122,7 @@ servers:
     variables:
       appId:
         default: ALGOLIA_APPLICATION_ID
-  - url: https://{appId}-dsn.algolianet.com
+  - url: https://{appId}-dsn.algolia.net
     variables:
       appId:
         default: ALGOLIA_APPLICATION_ID
