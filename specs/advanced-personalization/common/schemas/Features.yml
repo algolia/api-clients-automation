@@ -1,0 +1,12 @@
+features:
+  type: object
+  properties:
+    realtime:
+      $ref: '#/realtime'
+
+realtime:
+  type: object
+  properties:
+    enabled:
+      type: bool
+      description: Whether the realtime personalization feature is enabled.

@@ -38,4 +38,6 @@ configurationObject:
       $ref: './Configuration.yml#/profileType'
     status:
       $ref: './Configuration.yml#/status'
-  required: [indices, personalzationReRanking, profileType, status]
+    features:
+      $ref: './Configuration.yml#/features'
+  required: [indices, personalzationReRanking, profileType, status, features]
