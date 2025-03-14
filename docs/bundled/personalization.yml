@@ -104,7 +104,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -302,13 +302,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customGet[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customGet[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -332,7 +332,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -530,13 +530,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customPost[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPost[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -560,7 +560,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -758,13 +758,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customPut[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPut[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -782,7 +782,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -982,13 +982,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customDelete[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customDelete[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1234,13 +1234,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getUserTokenProfile(
-              userToken = "UserToken"
+            val response = Await.result(
+              client.getUserTokenProfile(
+                userToken = "UserToken"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1484,13 +1484,13 @@ paths:
             )
 
             // Call the API
-            val response = client.deleteUserProfile(
-              userToken = "UserToken"
+            val response = Await.result(
+              client.deleteUserProfile(
+                userToken = "UserToken"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1703,12 +1703,12 @@ paths:
             )
 
             // Call the API
-            val response = client.getPersonalizationStrategy(
+            val response = Await.result(
+              client.getPersonalizationStrategy(
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2029,28 +2029,28 @@ paths:
             )
 
             // Call the API
-            val response = client.setPersonalizationStrategy(
-              personalizationStrategyParams = PersonalizationStrategyParams(
-                eventsScoring = Seq(
-                  EventsScoring(
-                    score = 42,
-                    eventName = "Algolia",
-                    eventType = EventType.withName("click")
-                  )
-                ),
-                facetsScoring = Seq(
-                  FacetsScoring(
-                    score = 42,
-                    facetName = "Event"
-                  )
-                ),
-                personalizationImpact = 42
-              )
+            val response = Await.result(
+              client.setPersonalizationStrategy(
+                personalizationStrategyParams = PersonalizationStrategyParams(
+                  eventsScoring = Seq(
+                    EventsScoring(
+                      score = 42,
+                      eventName = "Algolia",
+                      eventType = EventType.withName("click")
+                    )
+                  ),
+                  facetsScoring = Seq(
+                    FacetsScoring(
+                      score = 42,
+                      facetName = "Event"
+                    )
+                  ),
+                  personalizationImpact = 42
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >

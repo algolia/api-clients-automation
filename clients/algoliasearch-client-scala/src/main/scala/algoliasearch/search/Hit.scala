@@ -33,8 +33,7 @@
   */
 package algoliasearch.search
 
-import org.json4s.MonadicJValue.jvalueToMonadic
-import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, TypeInfo}
+import org.json4s._
 
 /** Search result. A hit is a record from your index, augmented with special attributes for highlighting, snippeting,
   * and ranking.
@@ -48,29 +47,41 @@ import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, Typ
   */
 case class Hit(
     objectID: String,
-    highlightResult: Option[Map[String, HighlightResult]] = scala.None,
-    snippetResult: Option[Map[String, SnippetResult]] = scala.None,
-    rankingInfo: Option[RankingInfo] = scala.None,
-    distinctSeqID: Option[Int] = scala.None,
+    highlightResult /* _highlightResult */: Option[Map[String, HighlightResult]] = scala.None,
+    snippetResult /* _snippetResult */: Option[Map[String, SnippetResult]] = scala.None,
+    rankingInfo /* _rankingInfo */: Option[RankingInfo] = scala.None,
+    distinctSeqID /* _distinctSeqID */: Option[Int] = scala.None,
     additionalProperties: Option[List[JField]] = None
 )
 
 class HitSerializer extends Serializer[Hit] {
 
+  private val renamedFields = Map[String, String](
+    "_highlightResult" -> "highlightResult",
+    "_snippetResult" -> "snippetResult",
+    "_rankingInfo" -> "rankingInfo",
+    "_distinctSeqID" -> "distinctSeqID"
+  )
   override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), Hit] = {
     case (TypeInfo(clazz, _), json) if clazz == classOf[Hit] =>
       json match {
         case jobject: JObject =>
+          // Rename fields from JSON to Scala
+          val renamedObject = JObject(
+            jobject.obj.map { field =>
+              renamedFields.get(field._1).map(JField(_, field._2)).getOrElse(field)
+            }
+          )
           val formats = format - this
           val mf = manifest[Hit]
-          val obj = Extraction.extract[Hit](jobject)(formats, mf)
+          val obj = Extraction.extract[Hit](renamedObject)(formats, mf)
 
-          val fields = Set("objectID", "highlightResult", "snippetResult", "rankingInfo", "distinctSeqID")
+          val fields = Set("objectID", "_highlightResult", "_snippetResult", "_rankingInfo", "_distinctSeqID")
           val additionalProperties = jobject removeField {
             case (name, _) if fields.contains(name) => true
             case _                                  => false
           }
-          additionalProperties.values match {
+          additionalProperties match {
             case JObject(fieldsList) => obj copy (additionalProperties = Some(fieldsList))
             case _                   => obj
           }
@@ -80,9 +91,13 @@ class HitSerializer extends Serializer[Hit] {
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: Hit =>
     val formats = format - this // remove current serializer from formats to avoid stackoverflow
+    val baseObj = Extraction.decompose(value.copy(additionalProperties = None))(formats)
+    val renamedObj = baseObj transformField {
+      case JField(name, value) if renamedFields.exists(_._2 == name) => (renamedFields.find(_._2 == name).get._1, value)
+    }
     value.additionalProperties match {
-      case Some(fields) => Extraction.decompose(value.copy(additionalProperties = None))(formats) merge JObject(fields)
-      case None         => Extraction.decompose(value)(formats)
+      case Some(fields) => renamedObj merge JObject(fields)
+      case None         => renamedObj
     }
   }
 }

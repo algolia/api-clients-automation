@@ -42,11 +42,13 @@ sealed trait Distinct
 object Distinct {
 
   case class BooleanValue(value: Boolean) extends Distinct
+
   case class IntValue(value: Int) extends Distinct
 
   def apply(value: Boolean): Distinct = {
     Distinct.BooleanValue(value)
   }
+
   def apply(value: Int): Distinct = {
     Distinct.IntValue(value)
   }

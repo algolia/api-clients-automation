@@ -30,5 +30,5 @@
     "react-dom": "18.3.1",
     "remark-smartypants": "3.0.2"
   },
-  "packageManager": "yarn@4.6.0"
+  "packageManager": "yarn@4.7.0"
 }

@@ -33,6 +33,8 @@
   */
 package algoliasearch.search
 
+import org.json4s._
+
 /** UserHit
   *
   * @param userID
@@ -52,5 +54,37 @@ case class UserHit(
     nbRecords: Int,
     dataSize: Int,
     objectID: String,
-    highlightResult: UserHighlightResult
+    highlightResult /* _highlightResult */: UserHighlightResult
 )
+
+class UserHitSerializer extends Serializer[UserHit] {
+
+  private val renamedFields = Map[String, String](
+    "_highlightResult" -> "highlightResult"
+  )
+  override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), UserHit] = {
+    case (TypeInfo(clazz, _), json) if clazz == classOf[UserHit] =>
+      json match {
+        case jobject: JObject =>
+          // Rename fields from JSON to Scala
+          val renamedObject = JObject(
+            jobject.obj.map { field =>
+              renamedFields.get(field._1).map(JField(_, field._2)).getOrElse(field)
+            }
+          )
+          val formats = format - this
+          val mf = manifest[UserHit]
+          Extraction.extract[UserHit](renamedObject)(formats, mf)
+
+        case _ => throw new IllegalArgumentException(s"Can't deserialize $json as UserHit")
+      }
+  }
+
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: UserHit =>
+    val formats = format - this // remove current serializer from formats to avoid stackoverflow
+    val baseObj = Extraction.decompose(value)(formats)
+    baseObj transformField {
+      case JField(name, value) if renamedFields.exists(_._2 == name) => (renamedFields.find(_._2 == name).get._1, value)
+    }
+  }
+}

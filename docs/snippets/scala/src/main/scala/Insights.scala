@@ -16,7 +16,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class SnippetInsightsClient {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   /** Snippet for the customDelete method.
     *
@@ -32,13 +32,13 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.customDelete[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customDelete[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -56,14 +56,14 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.customDelete[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters"))
+    val response = Await.result(
+      client.customDelete[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters"))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -81,13 +81,13 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.customGet[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -105,14 +105,14 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.customGet[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters with space"))
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters with space"))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -130,22 +130,22 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.customGet[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "to be overriden")),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("query", "parameters with space")
-          .withQueryParameter("and an array", Seq("array", "with spaces"))
-          .withHeader("x-header-1", "spaces are left alone")
-          .build()
-      )
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "to be overriden")),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query", "parameters with space")
+            .withQueryParameter("and an array", Seq("array", "with spaces"))
+            .withHeader("x-header-1", "spaces are left alone")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -163,13 +163,13 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -187,15 +187,15 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("body", JString("parameters")))))
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("body", JString("parameters")))))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -213,21 +213,21 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("query", "myQueryParameter")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query", "myQueryParameter")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -245,21 +245,21 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("query2", "myQueryParameter")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query2", "myQueryParameter")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -277,21 +277,21 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -309,21 +309,21 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -341,21 +341,21 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("isItWorking", true)
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("isItWorking", true)
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -373,21 +373,21 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", 2)
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", 2)
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -405,21 +405,21 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", Seq("b and c", "d"))
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq("b and c", "d"))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -437,21 +437,21 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", Seq(true, true, false))
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq(true, true, false))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -469,21 +469,21 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", Seq(1, 2))
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq(1, 2))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -501,13 +501,13 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.customPut[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customPut[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -525,15 +525,15 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.customPut[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("body", JString("parameters")))))
+    val response = Await.result(
+      client.customPut[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("body", JString("parameters")))))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -551,10 +551,12 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    client.deleteUserToken(
-      userToken = "test-user-1"
+    Await.result(
+      client.deleteUserToken(
+        userToken = "test-user-1"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
     // SEPARATOR<
   }
@@ -573,27 +575,27 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.pushEvents(
-      insightsEvents = InsightsEvents(
-        events = Seq(
-          ClickedObjectIDsAfterSearch(
-            eventType = ClickEvent.withName("click"),
-            eventName = "Product Clicked",
-            index = "products",
-            userToken = "user-123456",
-            authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1641290601962L),
-            objectIDs = Seq("9780545139700", "9780439784542"),
-            queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
-            positions = Seq(7, 6)
+    val response = Await.result(
+      client.pushEvents(
+        insightsEvents = InsightsEvents(
+          events = Seq(
+            ClickedObjectIDsAfterSearch(
+              eventType = ClickEvent.withName("click"),
+              eventName = "Product Clicked",
+              index = "products",
+              userToken = "user-123456",
+              authenticatedUserToken = Some("user-123456"),
+              timestamp = Some(1641290601962L),
+              objectIDs = Seq("9780545139700", "9780439784542"),
+              queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
+              positions = Seq(7, 6)
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -611,35 +613,35 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.pushEvents(
-      insightsEvents = InsightsEvents(
-        events = Seq(
-          ConvertedObjectIDsAfterSearch(
-            eventType = ConversionEvent.withName("conversion"),
-            eventName = "Product Purchased",
-            index = "products",
-            userToken = "user-123456",
-            authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1740268800000L),
-            objectIDs = Seq("9780545139700", "9780439784542"),
-            queryID = "43b15df305339e827f0ac0bdc5ebcaa7"
-          ),
-          ViewedObjectIDs(
-            eventType = ViewEvent.withName("view"),
-            eventName = "Product Detail Page Viewed",
-            index = "products",
-            userToken = "user-123456",
-            authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1740268800000L),
-            objectIDs = Seq("9780545139700", "9780439784542")
+    val response = Await.result(
+      client.pushEvents(
+        insightsEvents = InsightsEvents(
+          events = Seq(
+            ConvertedObjectIDsAfterSearch(
+              eventType = ConversionEvent.withName("conversion"),
+              eventName = "Product Purchased",
+              index = "products",
+              userToken = "user-123456",
+              authenticatedUserToken = Some("user-123456"),
+              timestamp = Some(1741564800000L),
+              objectIDs = Seq("9780545139700", "9780439784542"),
+              queryID = "43b15df305339e827f0ac0bdc5ebcaa7"
+            ),
+            ViewedObjectIDs(
+              eventType = ViewEvent.withName("view"),
+              eventName = "Product Detail Page Viewed",
+              index = "products",
+              userToken = "user-123456",
+              authenticatedUserToken = Some("user-123456"),
+              timestamp = Some(1741564800000L),
+              objectIDs = Seq("9780545139700", "9780439784542")
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -657,26 +659,26 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.pushEvents(
-      insightsEvents = InsightsEvents(
-        events = Seq(
-          ConvertedObjectIDsAfterSearch(
-            eventType = ConversionEvent.withName("conversion"),
-            eventName = "Product Purchased",
-            index = "products",
-            userToken = "user-123456",
-            authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1641290601962L),
-            objectIDs = Seq("9780545139700", "9780439784542"),
-            queryID = "43b15df305339e827f0ac0bdc5ebcaa7"
+    val response = Await.result(
+      client.pushEvents(
+        insightsEvents = InsightsEvents(
+          events = Seq(
+            ConvertedObjectIDsAfterSearch(
+              eventType = ConversionEvent.withName("conversion"),
+              eventName = "Product Purchased",
+              index = "products",
+              userToken = "user-123456",
+              authenticatedUserToken = Some("user-123456"),
+              timestamp = Some(1641290601962L),
+              objectIDs = Seq("9780545139700", "9780439784542"),
+              queryID = "43b15df305339e827f0ac0bdc5ebcaa7"
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -694,25 +696,25 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.pushEvents(
-      insightsEvents = InsightsEvents(
-        events = Seq(
-          ViewedObjectIDs(
-            eventType = ViewEvent.withName("view"),
-            eventName = "Product Detail Page Viewed",
-            index = "products",
-            userToken = "user-123456",
-            authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1641290601962L),
-            objectIDs = Seq("9780545139700", "9780439784542")
+    val response = Await.result(
+      client.pushEvents(
+        insightsEvents = InsightsEvents(
+          events = Seq(
+            ViewedObjectIDs(
+              eventType = ViewEvent.withName("view"),
+              eventName = "Product Detail Page Viewed",
+              index = "products",
+              userToken = "user-123456",
+              authenticatedUserToken = Some("user-123456"),
+              timestamp = Some(1641290601962L),
+              objectIDs = Seq("9780545139700", "9780439784542")
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -730,42 +732,62 @@ class SnippetInsightsClient {
     )
 
     // Call the API
-    val response = client.pushEvents(
-      insightsEvents = InsightsEvents(
-        events = Seq(
-          AddedToCartObjectIDsAfterSearch(
-            eventType = ConversionEvent.withName("conversion"),
-            eventSubtype = AddToCartEvent.withName("addToCart"),
-            eventName = "Product Added To Cart",
-            index = "products",
-            queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
-            userToken = "user-123456",
-            authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1641290601962L),
-            objectIDs = Seq("9780545139700", "9780439784542"),
-            objectData = Some(
-              Seq(
-                ObjectDataAfterSearch(
-                  price = Some(Price(19.99)),
-                  quantity = Some(10),
-                  discount = Some(Discount(2.5))
-                ),
-                ObjectDataAfterSearch(
-                  price = Some(Price("8$")),
-                  quantity = Some(7),
-                  discount = Some(Discount("30%"))
+    val response = Await.result(
+      client.pushEvents(
+        insightsEvents = InsightsEvents(
+          events = Seq(
+            AddedToCartObjectIDsAfterSearch(
+              eventType = ConversionEvent.withName("conversion"),
+              eventSubtype = AddToCartEvent.withName("addToCart"),
+              eventName = "Product Added To Cart",
+              index = "products",
+              queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
+              userToken = "user-123456",
+              authenticatedUserToken = Some("user-123456"),
+              timestamp = Some(1641290601962L),
+              objectIDs = Seq("9780545139700", "9780439784542"),
+              objectData = Some(
+                Seq(
+                  ObjectDataAfterSearch(
+                    price = Some(Price(19.99)),
+                    quantity = Some(10),
+                    discount = Some(Discount(2.5))
+                  ),
+                  ObjectDataAfterSearch(
+                    price = Some(Price("8$")),
+                    quantity = Some(7),
+                    discount = Some(Discount("30%"))
+                  )
                 )
-              )
-            ),
-            currency = Some("USD")
+              ),
+              currency = Some("USD")
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the setClientApiKey method.
+    *
+    * switch API key
+    */
+  def snippetForInsightsClientSetClientApiKey(): Unit = {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    val client = InsightsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
     )
 
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // Call the API
+    client.setClientApiKey(
+      apiKey = "updated-api-key"
+    ) // >LOG
     // SEPARATOR<
   }
 

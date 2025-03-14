@@ -95,10 +95,10 @@ security:
   - BasicAuth: []
 tags:
   - name: actions
-    x-displayName: Actions
+    x-displayName: State
     description: >
-      Actions change the state of crawlers, such as pausing and unpausing
-      schedules or testing the crawler with specific URLs.
+      Change the state of crawlers, such as pausing crawl schedules or testing
+      the crawler with specific URLs.
   - name: config
     x-displayName: Configuration
     description: >
@@ -117,7 +117,7 @@ tags:
       The editor has autocomplete and built-in validation so you can try your
       configuration changes before committing them.
   - name: crawlers
-    x-displayName: Crawler
+    x-displayName: Manage
     description: |
       A crawler is an object with a name and a [configuration](#tag/config).
       Use these endpoints to create, rename, and delete crawlers.
@@ -817,7 +817,7 @@ components:
 
 
         For more information, see the [`cache`
-        documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/cache/).
+        documentation](https://www.algolia.com/doc/tools/crawler/apis/cache/).
       properties:
         enabled:
           type: boolean
@@ -861,7 +861,7 @@ components:
 
 
         For more information, see the [`hostnameAliases`
-        documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/hostname-aliases/).
+        documentation](https://www.algolia.com/doc/tools/crawler/apis/hostnamealiases/).
       additionalProperties:
         type: string
         description: Hostname that should be added in the records.
@@ -919,11 +919,11 @@ components:
         discoveryPatterns:
           type: array
           description: >
-            Indicates additional pages that the crawler should visit.
+            Indicates _intermediary_ pages that the crawler should visit.
 
 
             For more information, see the [`discoveryPatterns`
-            documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/discovery-patterns/).
+            documentation](https://www.algolia.com/doc/tools/crawler/apis/discoverypatterns/).
           items:
             $ref: '#/components/schemas/urlPattern'
         fileTypesToMatch:
@@ -986,7 +986,7 @@ components:
 
 
             For details, consult the [`recordExtractor`
-            documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/actions/#parameter-param-recordextractor).
+            documentation](https://www.algolia.com/doc/tools/crawler/apis/recordextractor/).
           properties:
             __type:
               $ref: '#/components/schemas/configurationRecordExtractorType'
@@ -1017,10 +1017,19 @@ components:
     ignoreCanonicalTo:
       oneOf:
         - type: boolean
-          description: |
-            Whether to ignore canonical redirects.
+          description: >
+            Determines if the crawler should extract records from a page with a
+            [canonical
+            URL](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/#canonical-urls-and-crawler-behaviorr).
 
-            If true, canonical URLs for pages are ignored.
+
+            If ignoreCanonicalTo is set to:
+
+
+            - `true` all canonical URLs are ignored.
+
+            - One or more URL patterns, the crawler will ignore the canonical
+            URL if it matches a pattern.
         - type: array
           description: |
             Canonical URLs or URL patterns to ignore.
@@ -1781,6 +1790,13 @@ components:
       example:
         - blue
         - iphone case
+      description: >-
+        List of [optional
+        words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
+      default: []
+      x-categories:
+        - Query strategy
+    optionalWords:
       description: >
         Words that should be considered optional when found in the query.
 
@@ -1818,10 +1834,6 @@ components:
 
         For more information, see [Optional
         words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
-      default: []
-      x-categories:
-        - Query strategy
-    optionalWords:
       oneOf:
         - type: string
         - type: 'null'
@@ -2702,10 +2714,12 @@ components:
           type: number
           default: 0
           description: Minimum waiting time in milliseconds.
+          example: 7000
         max:
           type: number
           default: 20000
           description: Maximum waiting time in milliseconds.
+          example: 15000
     browserRequest:
       type: object
       description: |
@@ -2807,11 +2821,15 @@ components:
         - $ref: '#/components/schemas/oauthRequest'
     renderJavaScript:
       description: >
-        Crawl JavaScript-rendered pages with a headless browser.
+        If `true`, use a Chrome headless browser to crawl pages.
 
 
-        For more information, see the [`renderJavaScript`
-        documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/render-java-script/).
+        Because crawling JavaScript-based web pages is slower than crawling
+        regular HTML pages, you can apply this setting to a specific list of
+        pages. 
+
+        Use [micromatch](https://github.com/micromatch/micromatch) to define URL
+        patterns, including negations and wildcards.
       oneOf:
         - type: boolean
           description: Whether to render all pages.
@@ -2820,25 +2838,30 @@ components:
           items:
             type: string
             description: URL or URL pattern to render.
-            example: https://www.example.com
+            example:
+              - http://www.mysite.com/dynamic-pages/**
         - title: headlessBrowserConfig
           type: object
           description: Configuration for rendering HTML.
           properties:
             enabled:
               type: boolean
-              description: Whether to render matching URLs.
+              description: Whether to enable JavaScript rendering.
+              example: true
             patterns:
               type: array
               description: URLs or URL patterns to render.
               items:
                 type: string
+              example:
+                - http://www.mysite.com/dynamic-pages/**
             adBlock:
               type: boolean
+              default: false
               description: >
-                Whether to turn on the built-in adblocker.
+                Whether to use the Crawler's ad blocker.
 
-                This blocks most ads and tracking scripts but can break some
+                It blocks most ads and tracking scripts but can break some
                 sites.
             waitTime:
               $ref: '#/components/schemas/waitTime'
@@ -2847,7 +2870,7 @@ components:
             - patterns
     requestOptions:
       type: object
-      description: Options to add to all HTTP requests made by the crawler.
+      description: Lets you add options to HTTP requests made by the crawler.
       properties:
         proxy:
           type: string
@@ -2898,7 +2921,7 @@ components:
 
 
         For more information, see the [`schedule`
-        documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/schedule/).
+        documentation](https://www.algolia.com/doc/tools/crawler/apis/schedule/).
       example: every weekday at 12:00 pm
     Configuration:
       type: object
@@ -2922,7 +2945,7 @@ components:
 
 
             For more information, see the [`apiKey`
-            documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/api-key/).
+            documentation](https://www.algolia.com/doc/tools/crawler/apis/apikey/).
         appId:
           $ref: '#/components/schemas/applicationID'
         exclusionPatterns:
@@ -2961,11 +2984,11 @@ components:
           type: array
           maxItems: 9999
           description: >
-            URLs from where to start crawling.
+            The Crawler treats `extraUrls` the same as `startUrls`.
 
-
-            For more information, see the [`extraUrls`
-            documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/extra-urls/).
+            Specify `extraUrls` if you want to differentiate between URLs you
+            manually added to fix site crawling from those you initially
+            specified in `startUrls`.
           items:
             type: string
         ignoreCanonicalTo:
@@ -2977,7 +3000,7 @@ components:
 
 
             For more information, see the [`ignoreNoFollowTo`
-            documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/ignore-no-follow-to/).
+            documentation](https://www.algolia.com/doc/tools/crawler/apis/ignorenofollowto/).
         ignoreNoIndex:
           type: boolean
           description: |
@@ -3022,8 +3045,13 @@ components:
             Crawler index settings.
 
 
-            For more information, see the [`initialIndexSettings`
-            documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/initial-index-settings/).
+            These index settings are only applied during the first crawl of an
+            index.
+
+            Any subsequent changes won't be applied to the index.
+
+            Instead, make changes to your index settings in the [Algolia
+            dashboard](https://dashboard.algolia.com/explorer/configuration/).
           additionalProperties:
             $ref: '#/components/schemas/indexSettings'
             x-additionalPropertiesName: indexName
@@ -3035,7 +3063,7 @@ components:
 
 
             For more information, see the [`linkExtractor`
-            documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/link-extractor/).
+            documentation](https://www.algolia.com/doc/tools/crawler/apis/linkextractor/).
           properties:
             __type:
               $ref: '#/components/schemas/configurationRecordExtractorType'
@@ -3067,11 +3095,18 @@ components:
           maximum: 100
         maxUrls:
           type: number
-          description: |
-            Maximum number of crawled URLs.
+          description: >
+            Limits the number of URLs your crawler processes.
 
-            Setting `maxUrls` doesn't guarantee consistency between crawls
-            because the crawler processes URLs in parallel.
+
+            Change it to a low value, such as 100, for quick crawling tests.
+
+            Change it to a higher explicit value for full crawls to prevent it
+            from getting "lost" in complex site structures.
+
+
+            Because the Crawler works on many pages simultaneously, `maxUrls`
+            doesn't guarantee finding the same pages each time it runs.
           minimum: 1
           maximum: 15000000
         rateLimit:

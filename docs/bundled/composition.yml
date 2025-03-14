@@ -420,23 +420,21 @@ paths:
 
             // Call the API
 
-            val response = client.search(
-              compositionID = "foo",
-              requestBody = RequestBody(
-                params = Some(
-                  Params(
-                    query = Some("batman")
+            val response = Await.result(
+              client.search(
+                compositionID = "foo",
+                requestBody = RequestBody(
+                  params = Some(
+                    Params(
+                      query = Some("batman")
+                    )
                   )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
   /1/compositions/{compositionID}/facets/{facetName}/query:
     post:
       tags:
@@ -737,26 +735,24 @@ paths:
 
             // Call the API
 
-            val response = client.searchForFacetValues(
-              compositionID = "foo",
-              facetName = "brand",
-              searchForFacetValuesRequest = Some(
-                SearchForFacetValuesRequest(
-                  params = Some(
-                    SearchForFacetValuesParams(
-                      maxFacetHits = Some(10)
+            val response = Await.result(
+              client.searchForFacetValues(
+                compositionID = "foo",
+                facetName = "brand",
+                searchForFacetValuesRequest = Some(
+                  SearchForFacetValuesRequest(
+                    params = Some(
+                      SearchForFacetValuesParams(
+                        maxFacetHits = Some(10)
+                      )
                     )
                   )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
 components:
   securitySchemes:
     appId:

@@ -69,7 +69,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class IngestionClient
 {
-    public const VERSION = '4.15.0';
+    public const VERSION = '4.16.0';
 
     /**
      * @var ApiWrapperInterface
@@ -276,6 +276,7 @@ class IngestionClient
      *                                     - $taskCreate['sourceID'] => (string) Universally uniqud identifier (UUID) of a source. (required)
      *                                     - $taskCreate['destinationID'] => (string) Universally unique identifier (UUID) of a destination resource. (required)
      *                                     - $taskCreate['action'] => (array)  (required)
+     *                                     - $taskCreate['subscriptionAction'] => (array)
      *                                     - $taskCreate['cron'] => (string) Cron expression for the task's schedule.
      *                                     - $taskCreate['enabled'] => (bool) Whether the task is enabled.
      *                                     - $taskCreate['failureThreshold'] => (int) Maximum accepted percentage of failures for a task run to finish successfully.
@@ -378,7 +379,7 @@ class IngestionClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -417,7 +418,7 @@ class IngestionClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -456,7 +457,7 @@ class IngestionClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -496,7 +497,7 @@ class IngestionClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -2493,6 +2494,7 @@ class IngestionClient
      *                                     - $taskUpdate['cron'] => (string) Cron expression for the task's schedule.
      *                                     - $taskUpdate['input'] => (array)
      *                                     - $taskUpdate['enabled'] => (bool) Whether the task is enabled.
+     *                                     - $taskUpdate['subscriptionAction'] => (array)
      *                                     - $taskUpdate['failureThreshold'] => (int) Maximum accepted percentage of failures for a task run to finish successfully.
      *                                     - $taskUpdate['notifications'] => (array)
      *                                     - $taskUpdate['policies'] => (array)

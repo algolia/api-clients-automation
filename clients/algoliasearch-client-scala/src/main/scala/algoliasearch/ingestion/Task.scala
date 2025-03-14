@@ -57,6 +57,7 @@ case class Task(
     enabled: Boolean,
     failureThreshold: Option[Int] = scala.None,
     action: Option[ActionType] = scala.None,
+    subscriptionAction: Option[ActionType] = scala.None,
     cursor: Option[String] = scala.None,
     notifications: Option[Notifications] = scala.None,
     policies: Option[Policies] = scala.None,

@@ -130,10 +130,10 @@
       "default": "import algoliasearch.api.CompositionClient\nimport algoliasearch.config.*"
     },
     "search": {
-      "default": "val response = client.search(\n  compositionID = \"foo\",\n  requestBody = RequestBody(\n    params = Some(\n      Params(\n        query = Some(\"batman\")\n      )\n    )\n  )\n)"
+      "default": "val response = Await.result(\n  client.search(\n    compositionID = \"foo\",\n    requestBody = RequestBody(\n      params = Some(\n        Params(\n          query = Some(\"batman\")\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "searchForFacetValues": {
-      "default": "val response = client.searchForFacetValues(\n  compositionID = \"foo\",\n  facetName = \"brand\",\n  searchForFacetValuesRequest = Some(\n    SearchForFacetValuesRequest(\n      params = Some(\n        SearchForFacetValuesParams(\n          maxFacetHits = Some(10)\n        )\n      )\n    )\n  )\n)"
+      "default": "val response = Await.result(\n  client.searchForFacetValues(\n    compositionID = \"foo\",\n    facetName = \"brand\",\n    searchForFacetValuesRequest = Some(\n      SearchForFacetValuesRequest(\n        params = Some(\n          SearchForFacetValuesParams(\n            maxFacetHits = Some(10)\n          )\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "init": {
       "default": "val client = CompositionClient(appId = \"ALGOLIA_APPLICATION_ID\", apiKey = \"ALGOLIA_API_KEY\")"

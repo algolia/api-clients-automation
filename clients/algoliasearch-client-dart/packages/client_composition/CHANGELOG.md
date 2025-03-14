@@ -1,3 +1,9 @@
+## [1.30.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.30.1...1.30.2)
+
+- [4f68190e10](https://github.com/algolia/api-clients-automation/commit/4f68190e10) fix(specs): update Recommend maxRecommendations to 30 max [RECO-2361] ([#4483](https://github.com/algolia/api-clients-automation/pull/4483)) by [@raed667](https://github.com/raed667/)
+- [92bd911848](https://github.com/algolia/api-clients-automation/commit/92bd911848) chore(scripts): point jira issues to another epic ([#4505](https://github.com/algolia/api-clients-automation/pull/4505)) by [@millotp](https://github.com/millotp/)
+- [97d2722bc9](https://github.com/algolia/api-clients-automation/commit/97d2722bc9) fix(specs): Increase optionalWords visibility in docs ([#4559](https://github.com/algolia/api-clients-automation/pull/4559)) by [@gazconroy](https://github.com/gazconroy/)
+
 ## [1.30.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.30.0...1.30.1)
 
 - [7698297bcd](https://github.com/algolia/api-clients-automation/commit/7698297bcd) fix(dart): version test ([#4387](https://github.com/algolia/api-clients-automation/pull/4387)) by [@shortcuts](https://github.com/shortcuts/)

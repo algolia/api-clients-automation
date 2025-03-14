@@ -36,11 +36,13 @@ sealed trait Discount
 object Discount {
 
   case class DoubleValue(value: Double) extends Discount
+
   case class StringValue(value: String) extends Discount
 
   def apply(value: Double): Discount = {
     Discount.DoubleValue(value)
   }
+
   def apply(value: String): Discount = {
     Discount.StringValue(value)
   }

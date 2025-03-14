@@ -90,6 +90,8 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
     .filter(Boolean);
 
   if (!process.env.FORCE && !lastCommitMessage.startsWith(commitStartRelease)) {
+    console.warn('FORCE not provided or not a commit release, skipping');
+
     return;
   }
 
@@ -158,8 +160,7 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
       head: task.prBranch,
     });
 
-    await run(`echo ${ensureGitHubToken()} | gh auth login --with-token`);
-    await run(`gh --repo ${OWNER}/${repository} pr merge ${data.number} --auto`);
+    await run(`gh --repo ${OWNER}/${repository} pr merge ${data.number} --squash --auto`);
 
     console.log(`Pull request created on ${OWNER}/${repository}`);
     console.log(`  > ${data.url}`);

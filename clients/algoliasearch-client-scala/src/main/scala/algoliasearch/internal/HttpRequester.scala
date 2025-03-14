@@ -8,13 +8,16 @@ import algoliasearch.internal.util.UseReadTransporter
 import okhttp3._
 import okhttp3.internal.http.HttpMethod
 import okio.BufferedSink
-import org.json4s.Formats
+import org.json4s.native.{JsonMethods, JsonParser, parseJson}
+import org.json4s.{DefaultFormats, Extraction, Formats}
+import org.json4s.native.Serialization.read
 
 import java.io.IOException
 import java.util.Collections
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
 import scala.collection.mutable.ListBuffer
+import scala.util.Try
 
 /** HttpRequester is responsible for making HTTP requests using the OkHttp client. It provides a mechanism for request
   * serialization and deserialization using a given JsonSerializer.
@@ -162,6 +165,20 @@ private[algoliasearch] class HttpRequester private (
       jsonSerializer.deserialize[T](response.body.byteStream)
     } catch {
       case exception: IOException => throw AlgoliaClientException(cause = exception)
+      case exception: AlgoliaApiException =>
+        var message = ""
+        try {
+          val errorMap = read[Map[String, Any]](exception.message)(DefaultFormats, manifest[Map[String, Any]])
+          message = errorMap.getOrElse("message", exception.message).toString
+        } catch {
+          case _: Throwable => message = exception.message
+        }
+
+        throw AlgoliaApiException(
+          message = message,
+          cause = exception.cause,
+          httpErrorCode = exception.httpErrorCode
+        )
     } finally if (response != null) response.close()
   }
 }
