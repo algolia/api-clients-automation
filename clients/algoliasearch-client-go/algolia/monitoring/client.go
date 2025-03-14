@@ -83,7 +83,7 @@ func getDefaultHosts() []transport.StatefulHost {
 }
 
 func getUserAgent() string {
-	return fmt.Sprintf("Algolia for Go (4.12.4); Go (%s); Monitoring (4.12.4)", runtime.Version())
+	return fmt.Sprintf("Algolia for Go (4.13.0); Go (%s); Monitoring (4.13.0)", runtime.Version())
 }
 
 // AddDefaultHeader adds a new HTTP header to the default header in the request.
@@ -352,4 +352,10 @@ func (o *APIError) UnmarshalJSON(bytes []byte) error {
 	o.AdditionalProperties = additionalProperties
 
 	return nil
+}
+
+func (a APIError) Is(target error) bool {
+	_, ok := target.(*APIError)
+
+	return ok
 }
