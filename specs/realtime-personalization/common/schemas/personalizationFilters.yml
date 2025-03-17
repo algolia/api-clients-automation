@@ -1,0 +1,20 @@
+personalizationFilters:
+  type: object
+  additionalProperties: false
+  required:
+    - version
+    - userID
+    - search
+  properties:
+    version:
+      type: string
+      description: Version of the response format.
+    userID:
+      type: string
+      description: User ID of the user.
+    search:
+      type: object
+      description: |
+        Index personalization filters by index name.
+      additionalProperties:
+        $ref: '#/searchFilters'

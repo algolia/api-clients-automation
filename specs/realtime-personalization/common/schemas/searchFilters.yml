@@ -1,0 +1,30 @@
+searchFilters:
+  type: object
+  additionalProperties: false
+  properties:
+    indices:
+      type: array
+      items:
+        type: string
+      example: ['storefront', 'storefront_price_asc', 'storefront_price_desc']
+    strategy:
+      $ref: '#/strategy'
+    filters:
+      $ref: '#/searchFilter'
+
+searchFilter:
+  type: object
+  additionalProperties: false
+  properties:
+    session:
+      type: array
+      items:
+        type: string
+      example: ['brand:Dyson<score=12>']
+
+strategy:
+  type: string
+  enum:
+    - session
+    - hybrid
+  example: 'session'
