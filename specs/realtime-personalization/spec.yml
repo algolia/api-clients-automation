@@ -15,8 +15,7 @@ components:
     apiKey:
       $ref: '../common/securitySchemes.yml#/apiKey'
 servers:
-  # TODO: Update the URL
-  - url: https://personalization.{region}.algolia.com
+  - url: https://ai-personalization.{region}.algolia.com
     variables:
       region:
         enum:
@@ -41,5 +40,5 @@ paths:
   # ### Custom request ###
   # ######################
 
-  /1/filters/{userToken}:
+  /2/realtime/{userToken}:
     $ref: 'paths/getPersonalizationFilters.yml'
