@@ -13991,6 +13991,8 @@ components:
           $ref: '#/components/schemas/failureThreshold'
         action:
           $ref: '#/components/schemas/ActionType'
+        subscriptionAction:
+          $ref: '#/components/schemas/ActionType'
         cursor:
           $ref: '#/components/schemas/cursor'
         notifications:
@@ -14017,6 +14019,8 @@ components:
         destinationID:
           $ref: '#/components/schemas/destinationID'
         action:
+          $ref: '#/components/schemas/ActionType'
+        subscriptionAction:
           $ref: '#/components/schemas/ActionType'
         cron:
           $ref: '#/components/schemas/Cron'
@@ -14073,6 +14077,8 @@ components:
         enabled:
           type: boolean
           description: Whether the task is enabled.
+        subscriptionAction:
+          $ref: '#/components/schemas/ActionType'
         failureThreshold:
           $ref: '#/components/schemas/failureThreshold'
         notifications:
