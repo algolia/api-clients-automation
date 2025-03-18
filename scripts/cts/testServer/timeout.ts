@@ -102,6 +102,15 @@ function addRoutes(app: express.Express): void {
     res.setHeader('Content-Type', 'text/html');
     res.status(429).send('<html><body>429 Too Many Requests</body></html>');
   });
+
+  app.get('/1/long-wait', (req, res) => {
+    setTimeout(
+      () => {
+        res.json({ message: 'ok' });
+      },
+      parseInt(req.query.ms?.toString() || '0'),
+    );
+  });
 }
 
 export function timeoutServer(): Promise<Server> {

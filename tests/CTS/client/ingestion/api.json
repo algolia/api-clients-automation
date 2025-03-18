@@ -78,6 +78,36 @@
     ]
   },
   {
+    "testName": "can leave call opened for close to 25s",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "region": "us",
+          "customHosts": [
+            {
+              "port": 6676
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "customGet",
+        "parameters": {
+          "path": "1/long-wait?ms=23000"
+        },
+        "expected": {
+          "type": "response",
+          "match": {"message":"OK"}
+        }
+      }
+    ]
+  },
+  {
     "testName": "endpoint level timeout",
     "steps": [
       {
