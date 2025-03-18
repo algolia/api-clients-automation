@@ -98,7 +98,7 @@
         "type": "method",
         "method": "customGet",
         "parameters": {
-          "path": "1/long-wait?ms=23000"
+          "path": "1/long-wait"
         },
         "expected": {
           "type": "response",

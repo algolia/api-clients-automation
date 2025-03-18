@@ -104,12 +104,9 @@ function addRoutes(app: express.Express): void {
   });
 
   app.get('/1/long-wait', (req, res) => {
-    setTimeout(
-      () => {
-        res.json({ message: 'OK' });
-      },
-      parseInt(req.query.ms?.toString() || '0'),
-    );
+    setTimeout(() => {
+      res.json({ message: 'OK' });
+    }, 23000);
   });
 }
 
