@@ -3,10 +3,14 @@ Action:
   description: |
     How to process crawled URLs.
 
+
     Each action defines:
 
+
     - The targeted subset of URLs it processes.
+
     - What information to extract from the web pages.
+
     - The Algolia indices where the extracted records will be stored.
 
     If a single web page matches several actions,
@@ -21,15 +25,22 @@ Action:
     discoveryPatterns:
       type: array
       description: |
-        Indicates _intermediary_ pages that the crawler should visit.
+        Which _intermediary_ web pages the crawler should visit.
+        Use `discoveryPatterns` to define pages that should be visited _just_ for their links to other pages, _not_ their content.
 
-        For more information, see the [`discoveryPatterns` documentation](https://www.algolia.com/doc/tools/crawler/apis/discoverypatterns/).
+
+        It functions similarly to the `pathsToMatch` action but without record extraction.
+
+
+        `discoveryPatterns` uses [micromatch](https://github.com/micromatch/micromatch) to support matching with wildcards, negation, and other features. 
+        The crawler adds all matching URLs to its queue.
       items:
         $ref: '#/urlPattern'
     fileTypesToMatch:
       type: array
       description: |
         File types for crawling non-HTML documents.
+
 
         For more information, see [Extract data from non-HTML documents](https://www.algolia.com/doc/tools/crawler/extracting-data/non-html-documents/).
       maxItems: 100
@@ -59,6 +70,7 @@ Action:
       description: |
         URLs to which this action should apply.
 
+
         Uses [micromatch](https://github.com/micromatch/micromatch) for negation, wildcards, and more.
       minItems: 1
       maxItems: 100
@@ -69,9 +81,12 @@ Action:
       type: object
       description: |
         Function for extracting information from a crawled page and transforming it into Algolia records for indexing.
-        The Crawler has an [editor](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/#the-editor) with autocomplete and validation to help you update the `recordExtractor` property.
 
-        For details, consult the [`recordExtractor` documentation](https://www.algolia.com/doc/tools/crawler/apis/recordextractor/).
+
+        The Crawler has an [editor](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/#the-editor) with autocomplete and validation to help you update the `recordExtractor`.
+
+
+        For details, consult the [`recordExtractor` documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/actions/#parameter-param-recordextractor).
       properties:
         __type:
           $ref: '#/configurationRecordExtractorType'
@@ -110,7 +125,8 @@ ActionSchedule:
 fileTypes:
   type: string
   description: |
-    Supported file type for indexing non-HTML documents.
+    Supported file types for indexing non-HTML documents.
+
     
     For more information, see [Extract data from non-HTML documents](https://www.algolia.com/doc/tools/crawler/extracting-data/non-html-documents/).
   enum:
@@ -129,6 +145,7 @@ urlPattern:
   description: |
     Pattern for matching URLs.
 
+
     Uses [micromatch](https://github.com/micromatch/micromatch) for negation, wildcards, and more.
   example: https://www.algolia.com/**
 
@@ -140,7 +157,43 @@ hostnameAliases:
     Key-value pairs to replace matching hostnames found in a sitemap,
     on a page, in canonical links, or redirects.
 
-    For more information, see the [`hostnameAliases` documentation](https://www.algolia.com/doc/tools/crawler/apis/hostnamealiases/).
+
+    During a crawl, this action maps one hostname to another whenever the crawler encounters specific URLs.
+    This helps with links to staging environments (like `dev.example.com`) or external hosting services (such as YouTube).
+
+
+    For example, with this `hostnameAliases` mapping:
+
+        {
+        hostnameAliases: {
+            'dev.example.com': 'example.com'
+        }
+        }
+
+    1. The crawler encounters `https://dev.example.com/solutions/voice-search/`.
+
+    1. `hostnameAliases` transforms the URL to `https://example.com/solutions/voice-search/`.
+
+    1. The crawler follows the transformed URL (not the original).
+
+    
+    **`hostnameAliases` only changes URLs, not page text. In the preceding example, if the extracted text contains the string `dev.example.com`, it remains unchanged.**
+
+
+    The crawler can discover URLs in places such as:
+
+
+    - Crawled pages
+
+    - Sitemaps
+
+    - [Canonical URLs](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/#canonical-urls-and-crawler-behavior)
+
+    - Redirects. 
+
+
+    However, `hostnameAliases` doesn't transform URLs you explicitly set in the `startUrls` or `sitemaps` parameters,
+    nor does it affect the `pathsToMatch` action or other configuration elements.
   additionalProperties:
     type: string
     description: Hostname that should be added in the records.
@@ -153,11 +206,15 @@ pathAliases:
       '/foo': '/bar'
   description: |
     Key-value pairs to replace matching paths with new values.
+
     
     It doesn't replace:
-      
+
+
     - URLs in the `startUrls`, `sitemaps`, `pathsToMatch`, and other settings.
+    
     - Paths found in extracted text.
+
 
     The crawl continues from the _transformed_ URLs.
   additionalProperties:
@@ -172,9 +229,10 @@ pathAliases:
 cache:
   type: object
   description: |
-    Whether the crawler should cache crawled pages.
+        Whether the crawler should cache crawled pages.
 
-    For more information, see the [`cache` documentation](https://www.algolia.com/doc/tools/crawler/apis/cache/).
+
+        For more information, see [Partial crawls with caching](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/#partial-crawls-with-caching).
   properties:
     enabled:
       type: boolean

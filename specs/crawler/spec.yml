@@ -13,14 +13,12 @@ info:
     **All requests must use HTTPS.**
 
     ## Availability and authentication
-
-    Access to the Crawler API is available with the [Crawler add-on](https://www.algolia.com/pricing/).
-
+    
     To authenticate your API requests, use the **basic authentication** header:
 
     - `Authorization: Basic <credentials>`
 
-    where `<credentials>` is a base64-encoded string `<user-id>:<api-key>`.
+    Where `<credentials>` is a base64-encoded string `<user-id>:<api-key>`.
 
     - `<user-id>`. The Crawler user ID.
     - `<api-key>`. The Crawler API key.
