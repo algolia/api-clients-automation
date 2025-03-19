@@ -23,13 +23,14 @@ Configuration:
         The API key must have:
 
 
-        - These [rights and restrictions](https://www.algolia.com/doc/guides/security/api-keys/#rights-and-restrictions): `search`, `addObject`, `deleteObject`, `deleteIndex`, `settings`, `editSettings`, `listIndexes`, `browse`
+        - These [rights and restrictions](https://www.algolia.com/doc/guides/security/api-keys/#rights-and-restrictions):
+        `search`, `addObject`, `deleteObject`, `deleteIndex`, `settings`, `editSettings`, `listIndexes`, `browse`.
 
         - Access to the correct set of indices, based on the crawler's `indexPrefix`.
-        For example, if the prefix is `crawler_`, the API key must have access to `crawler_*`)
+        For example, if the prefix is `crawler_`, the API key must have access to `crawler_*`.
 
 
-        **You can't use your [Admin API key](https://www.algolia.com/doc/guides/security/api-keys/#predefined-api-keys).**
+        **Don't use your [Admin API key](https://www.algolia.com/doc/guides/security/api-keys/#predefined-api-keys).**
     appId:
       $ref: '../parameters.yml#/applicationID'
     exclusionPatterns:
@@ -287,9 +288,9 @@ ignoreCanonicalTo:
   oneOf:
     - type: boolean
       description: |
-        Determines if the crawler should extract records from a page with a [canonical URL](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/#canonical-urls-and-crawler-behaviorr).
+        Determines if the crawler should extract records from a page with a [canonical URL](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/#canonical-urls-and-crawler-behavior).
 
-        If ignoreCanonicalTo is set to:
+        If `ignoreCanonicalTo` is set to:
 
         - `true` all canonical URLs are ignored.
         - One or more URL patterns, the crawler will ignore the canonical URL if it matches a pattern.
