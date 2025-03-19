@@ -8,6 +8,8 @@ Source:
       $ref: '#/SourceType'
     name:
       type: string
+    owner:
+      $ref: './common.yml#/owner'
     input:
       $ref: '#/SourceInput'
     authenticationID:
