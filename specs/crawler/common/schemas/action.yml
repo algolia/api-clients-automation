@@ -32,7 +32,7 @@ Action:
         It functions similarly to the `pathsToMatch` action but without record extraction.
 
 
-        `discoveryPatterns` uses [micromatch](https://github.com/micromatch/micromatch) to support matching with wildcards, negation, and other features. 
+        Uses [micromatch](https://github.com/micromatch/micromatch) to match wildcards, negation, and other features. 
         The crawler adds all matching URLs to its queue.
       items:
         $ref: '#/urlPattern'
@@ -217,6 +217,14 @@ pathAliases:
 
 
     The crawl continues from the _transformed_ URLs.
+    
+
+    For example, if you create a mapping for `{ "dev.example.com": { '/foo': '/bar' } }` and the crawler encounters `https://dev.example.com/foo/hello/`,
+    it’s transformed to `https://dev.example.com/bar/hello/`.
+    
+
+    > Compare with the `hostnameAliases` action.
+
   additionalProperties:
     type: object
     description: Hostname for which matching paths should be replaced.
