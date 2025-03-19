@@ -8,6 +8,11 @@ unauthorized:
   description: HTTP status code for an authorization error.
   enum: [401]
 
+paymentRequired:
+  type: integer
+  description: HTTP status code for a payment required error.
+  enum: [402]
+
 notFound:
   type: integer
   description: HTTP status code for a not found error.
