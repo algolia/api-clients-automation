@@ -25,17 +25,12 @@ Action:
         Use `discoveryPatterns` to define pages that should be visited _just_ for their links to other pages,
         _not_ their content.
         It functions similarly to the `pathsToMatch` action but without record extraction.
-
-        `discoveryPatterns` uses [micromatch](https://github.com/micromatch/micromatch) to support matching with wildcards,
-        negation, and other features.
       items:
         $ref: '#/urlPattern'
     fileTypesToMatch:
       type: array
       description: |
         File types for crawling non-HTML documents.
-
-        For more information, see [Extract data from non-HTML documents](https://www.algolia.com/doc/tools/crawler/extracting-data/non-html-documents/).
       maxItems: 100
       items:
         $ref: '#/fileTypes'
@@ -91,7 +86,8 @@ Action:
       maxItems: 100
       items:
         type: string
-        description: DOM selector. Negation is supported. This lets you ignore pages that match the selector.
+        description: |
+          Prefix a selector with `!` to ignore matching pages. 
       example:
         - .products
         - '!.featured'
@@ -114,8 +110,6 @@ ActionSchedule:
 fileTypes:
   type: string
   description: |
-    Supported file types for indexing non-HTML documents.
-
     For more information, see [Extract data from non-HTML documents](https://www.algolia.com/doc/tools/crawler/extracting-data/non-html-documents/).
   enum:
     - doc
@@ -131,9 +125,7 @@ fileTypes:
 urlPattern:
   type: string
   description: |
-    Pattern for matching URLs.
-
-    Uses [micromatch](https://github.com/micromatch/micromatch) for negation, wildcards, and more.
+    Use [micromatch](https://github.com/micromatch/micromatch) for negation, wildcards, and more.
   example: https://www.algolia.com/**
 
 hostnameAliases:
