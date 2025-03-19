@@ -12603,6 +12603,11 @@ components:
     name:
       type: string
       description: Descriptive name for the resource.
+    owner:
+      oneOf:
+        - type: string
+          description: Owner of the resource.
+        - type: 'null'
     AuthGoogleServiceAccountPartial:
       type: object
       description: >-
@@ -12727,6 +12732,8 @@ components:
           $ref: '#/components/schemas/name'
         platform:
           $ref: '#/components/schemas/Platform'
+        owner:
+          $ref: '#/components/schemas/owner'
         input:
           $ref: '#/components/schemas/AuthInputPartial'
         createdAt:
@@ -13049,6 +13056,8 @@ components:
           $ref: '#/components/schemas/DestinationType'
         name:
           $ref: '#/components/schemas/name'
+        owner:
+          $ref: '#/components/schemas/owner'
         input:
           $ref: '#/components/schemas/DestinationInput'
         createdAt:
@@ -13464,6 +13473,8 @@ components:
           $ref: '#/components/schemas/SourceType'
         name:
           type: string
+        owner:
+          $ref: '#/components/schemas/owner'
         input:
           $ref: '#/components/schemas/SourceInput'
         authenticationID:
@@ -13981,6 +13992,8 @@ components:
           $ref: '#/components/schemas/LastRun'
         nextRun:
           $ref: '#/components/schemas/NextRun'
+        owner:
+          $ref: '#/components/schemas/owner'
         input:
           $ref: '#/components/schemas/TaskInput'
         enabled:
@@ -14363,6 +14376,8 @@ components:
           $ref: '#/components/schemas/Name'
         description:
           $ref: '#/components/schemas/Description'
+        owner:
+          $ref: '#/components/schemas/owner'
         createdAt:
           $ref: '#/components/schemas/createdAt'
         updatedAt:

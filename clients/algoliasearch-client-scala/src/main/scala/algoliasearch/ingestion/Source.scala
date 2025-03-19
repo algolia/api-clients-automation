@@ -25,6 +25,8 @@ import algoliasearch.ingestion.SourceType._
   *
   * @param sourceID
   *   Universally uniqud identifier (UUID) of a source.
+  * @param owner
+  *   Owner of the resource.
   * @param authenticationID
   *   Universally unique identifier (UUID) of an authentication resource.
   * @param createdAt
@@ -36,6 +38,7 @@ case class Source(
     sourceID: String,
     `type`: SourceType,
     name: String,
+    owner: Option[String] = scala.None,
     input: Option[SourceInput] = scala.None,
     authenticationID: Option[String] = scala.None,
     createdAt: String,
