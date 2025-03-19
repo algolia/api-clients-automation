@@ -78,11 +78,11 @@ Configuration:
       type: boolean
       description: |
         Whether to ignore the `noindex` robots meta tag.
-        If `true` pages with this meta tag _will_ be crawled.
+        If `true`, pages with this meta tag _will_ be crawled.
     ignorePaginationAttributes:
       type: boolean
       description: |
-        Whether the crawler should follow `rel="prev"` and `rel="next"` pagination links in your `<head>` HTML.
+        Whether the crawler should follow `rel="prev"` and `rel="next"` pagination links in the `<head>` section of an HTML page.
 
         - If `true`, the crawler ignores the pagination links.
         - If `false`, the crawler follows the pagination links.
@@ -92,10 +92,10 @@ Configuration:
       description: |
         Query parameters to ignore while crawling.
 
-        All URLs with the matching query parameters will be treated as identical.
+        All URLs with the matching query parameters are treated as identical.
         This prevents indexing URLs that just differ by their query parameters.
 
-        You can use wildcard characters to pattern match.
+        Use wildcards to match multiple query parameters.
       maxItems: 9999
       example:
         - ref
