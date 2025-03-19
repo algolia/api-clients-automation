@@ -18,19 +18,18 @@ servers:
   - url: https://ai-personalization.{region}.algolia.com
     variables:
       region:
-        enum:
-          - us
-          - eu
-        default: us
+        description: |
+          Use the URL that matches your [analytics region](https://dashboard.algolia.com/account/infrastructure/analytics).
+        enum: [eu, us]
+        default: eu
 security:
   - appId: []
     apiKey: []
 tags:
-  - name: filters
-    x-displayName: Filters
+  - name: users
+    x-displayName: Users
     description: |
-      Filters are used to personalize the search results for a user.
-      They are used to filter the search results based on the user's preferences.
+      User profiles contains the search filters each user has for the different facets in your index.
 x-tagGroups:
   - name: General
     tags:
@@ -40,5 +39,5 @@ paths:
   # ### Custom request ###
   # ######################
 
-  /2/realtime/{userToken}:
-    $ref: 'paths/getPersonalizationFilters.yml'
+  /2/realtime/users/{userToken}:
+    $ref: 'paths/getUser.yml'

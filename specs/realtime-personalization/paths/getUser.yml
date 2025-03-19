@@ -1,11 +1,11 @@
 get:
   tags:
-    - filters
-  operationId: getIndexPersonalizationFilters
+    - users
+  operationId: getUser
   x-acl:
     - recommendation
-  summary: Retrieve the index personalization filters
-  description: Retrieves the current index personalization filters.
+  summary: Retrieve the user's personalization profile
+  description: Retrieves the user's personalization profiles containing search filters.
   parameters:
     - $ref: '../common/parameters.yml#/UserToken'
   responses:
@@ -14,7 +14,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../common/schemas/personalizationFilters.yml#/personalizationFilters'
+            $ref: '../common/schemas/user.yml#/user'
     '400':
       $ref: '../../common/responses/BadRequest.yml'
     '402':

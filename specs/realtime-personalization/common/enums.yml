@@ -1,0 +1,6 @@
+strategy:
+  type: string
+  enum:
+    - session
+    - hybrid
+  example: 'session'
