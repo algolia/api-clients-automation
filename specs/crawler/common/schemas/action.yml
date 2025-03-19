@@ -78,6 +78,12 @@ Action:
           type: string
           description: |
             A JavaScript function (as a string) that returns one or more Algolia records for each crawled page.
+    schedule:
+      type: string
+      description: |
+        How often to perform a complete crawl for this action.
+        
+        For mopre information, consult the [`schedule` parameter documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/schedule/).
     selectorsToMatch:
       type: array
       description: |
