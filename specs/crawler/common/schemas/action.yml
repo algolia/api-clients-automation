@@ -21,17 +21,16 @@ Action:
     discoveryPatterns:
       type: array
       description: |
-        Indicates _intermediary_ pages that the crawler should visit.
-
-        For more information, see the [`discoveryPatterns` documentation](https://www.algolia.com/doc/tools/crawler/apis/discoverypatterns/).
+        Which _intermediary_ web pages the crawler should visit.
+        Use `discoveryPatterns` to define pages that should be visited _just_ for their links to other pages,
+        _not_ their content.
+        It functions similarly to the `pathsToMatch` action but without record extraction.
       items:
         $ref: '#/urlPattern'
     fileTypesToMatch:
       type: array
       description: |
         File types for crawling non-HTML documents.
-
-        For more information, see [Extract data from non-HTML documents](https://www.algolia.com/doc/tools/crawler/extracting-data/non-html-documents/).
       maxItems: 100
       items:
         $ref: '#/fileTypes'
@@ -69,9 +68,9 @@ Action:
       type: object
       description: |
         Function for extracting information from a crawled page and transforming it into Algolia records for indexing.
-        The Crawler has an [editor](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/#the-editor) with autocomplete and validation to help you update the `recordExtractor` property.
 
-        For details, consult the [`recordExtractor` documentation](https://www.algolia.com/doc/tools/crawler/apis/recordextractor/).
+        The Crawler has an [editor](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/#the-editor) with autocomplete and validation to help you update the `recordExtractor`.
+        For details, see the [`recordExtractor` documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/actions/#parameter-param-recordextractor).
       properties:
         __type:
           $ref: '#/configurationRecordExtractorType'
@@ -79,6 +78,12 @@ Action:
           type: string
           description: |
             A JavaScript function (as a string) that returns one or more Algolia records for each crawled page.
+    schedule:
+      type: string
+      description: |
+        How often to perform a complete crawl for this action.
+        
+        For mopre information, consult the [`schedule` parameter documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/schedule/).
     selectorsToMatch:
       type: array
       description: |
@@ -87,7 +92,8 @@ Action:
       maxItems: 100
       items:
         type: string
-        description: DOM selector. Negation is supported. This lets you ignore pages that match the selector.
+        description: |
+          Prefix a selector with `!` to ignore matching pages. 
       example:
         - .products
         - '!.featured'
@@ -110,8 +116,6 @@ ActionSchedule:
 fileTypes:
   type: string
   description: |
-    Supported file type for indexing non-HTML documents.
-    
     For more information, see [Extract data from non-HTML documents](https://www.algolia.com/doc/tools/crawler/extracting-data/non-html-documents/).
   enum:
     - doc
@@ -127,20 +131,14 @@ fileTypes:
 urlPattern:
   type: string
   description: |
-    Pattern for matching URLs.
-
-    Uses [micromatch](https://github.com/micromatch/micromatch) for negation, wildcards, and more.
+    Use [micromatch](https://github.com/micromatch/micromatch) for negation, wildcards, and more.
   example: https://www.algolia.com/**
 
 hostnameAliases:
   type: object
   example:
     'dev.example.com': 'example.com'
-  description: |
-    Key-value pairs to replace matching hostnames found in a sitemap,
-    on a page, in canonical links, or redirects.
-
-    For more information, see the [`hostnameAliases` documentation](https://www.algolia.com/doc/tools/crawler/apis/hostnamealiases/).
+  description: "Key-value pairs to replace matching hostnames found in a sitemap,\non a page, in canonical links, or redirects.\n\n\nDuring a crawl, this action maps one hostname to another whenever the crawler encounters specific URLs.\nThis helps with links to staging environments (like `dev.example.com`) or external hosting services (such as YouTube).\n\n\nFor example, with this `hostnameAliases` mapping:\n\n    {\n    hostnameAliases: {\n        'dev.example.com': 'example.com'\n    }\n    }\n\n1. The crawler encounters `https://dev.example.com/solutions/voice-search/`.\n\n1. `hostnameAliases` transforms the URL to `https://example.com/solutions/voice-search/`.\n\n1. The crawler follows the transformed URL (not the original).\n\n\n**`hostnameAliases` only changes URLs, not page text. In the preceding example, if the extracted text contains the string `dev.example.com`, it remains unchanged.**\n\n\nThe crawler can discover URLs in places such as:\n\n\n- Crawled pages\n\n- Sitemaps\n\n- [Canonical URLs](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/#canonical-urls-and-crawler-behavior)\n\n- Redirects. \n\n\nHowever, `hostnameAliases` doesn't transform URLs you explicitly set in the `startUrls` or `sitemaps` parameters,\nnor does it affect the `pathsToMatch` action or other configuration elements.\n"
   additionalProperties:
     type: string
     description: Hostname that should be added in the records.
@@ -153,13 +151,21 @@ pathAliases:
       '/foo': '/bar'
   description: |
     Key-value pairs to replace matching paths with new values.
-    
+
     It doesn't replace:
-      
+
     - URLs in the `startUrls`, `sitemaps`, `pathsToMatch`, and other settings.
     - Paths found in extracted text.
 
     The crawl continues from the _transformed_ URLs.
+    
+
+    For example, if you create a mapping for `{ "dev.example.com": { '/foo': '/bar' } }` and the crawler encounters `https://dev.example.com/foo/hello/`,
+    it’s transformed to `https://dev.example.com/bar/hello/`.
+    
+
+    > Compare with the `hostnameAliases` action.
+
   additionalProperties:
     type: object
     description: Hostname for which matching paths should be replaced.
@@ -174,7 +180,7 @@ cache:
   description: |
     Whether the crawler should cache crawled pages.
 
-    For more information, see the [`cache` documentation](https://www.algolia.com/doc/tools/crawler/apis/cache/).
+    For more information, see [Partial crawls with caching](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/#partial-crawls-with-caching).
   properties:
     enabled:
       type: boolean
