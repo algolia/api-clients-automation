@@ -11,6 +11,8 @@ Authentication:
       $ref: './common.yml#/name'
     platform:
       $ref: '#/Platform'
+    owner:
+      $ref: './common.yml#/owner'
     input:
       $ref: '#/AuthInputPartial'
     createdAt:

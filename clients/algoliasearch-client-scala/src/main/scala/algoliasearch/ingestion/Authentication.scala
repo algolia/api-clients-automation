@@ -28,6 +28,8 @@ import algoliasearch.ingestion.Platform._
   *   Universally unique identifier (UUID) of an authentication resource.
   * @param name
   *   Descriptive name for the resource.
+  * @param owner
+  *   Owner of the resource.
   * @param createdAt
   *   Date of creation in RFC 3339 format.
   * @param updatedAt
@@ -38,6 +40,7 @@ case class Authentication(
     `type`: AuthenticationType,
     name: String,
     platform: Option[Platform] = scala.None,
+    owner: Option[String] = scala.None,
     input: AuthInputPartial,
     createdAt: String,
     updatedAt: Option[String] = scala.None

@@ -27,6 +27,9 @@ public class Transformation {
   @JsonProperty("description")
   private String description;
 
+  @JsonProperty("owner")
+  private String owner;
+
   @JsonProperty("createdAt")
   private String createdAt;
 
@@ -96,6 +99,17 @@ public class Transformation {
     return description;
   }
 
+  public Transformation setOwner(String owner) {
+    this.owner = owner;
+    return this;
+  }
+
+  /** Owner of the resource. */
+  @javax.annotation.Nullable
+  public String getOwner() {
+    return owner;
+  }
+
   public Transformation setCreatedAt(String createdAt) {
     this.createdAt = createdAt;
     return this;
@@ -133,6 +147,7 @@ public class Transformation {
       Objects.equals(this.code, transformation.code) &&
       Objects.equals(this.name, transformation.name) &&
       Objects.equals(this.description, transformation.description) &&
+      Objects.equals(this.owner, transformation.owner) &&
       Objects.equals(this.createdAt, transformation.createdAt) &&
       Objects.equals(this.updatedAt, transformation.updatedAt)
     );
@@ -140,7 +155,7 @@ public class Transformation {
 
   @Override
   public int hashCode() {
-    return Objects.hash(transformationID, authenticationIDs, code, name, description, createdAt, updatedAt);
+    return Objects.hash(transformationID, authenticationIDs, code, name, description, owner, createdAt, updatedAt);
   }
 
   @Override
@@ -152,6 +167,7 @@ public class Transformation {
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    owner: ").append(toIndentedString(owner)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
     sb.append("}");

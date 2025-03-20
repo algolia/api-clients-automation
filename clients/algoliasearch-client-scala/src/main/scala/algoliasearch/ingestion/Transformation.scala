@@ -31,6 +31,8 @@ package algoliasearch.ingestion
   *   The uniquely identified name of your transformation.
   * @param description
   *   A descriptive name for your transformation of what it does.
+  * @param owner
+  *   Owner of the resource.
   * @param createdAt
   *   Date of creation in RFC 3339 format.
   * @param updatedAt
@@ -42,6 +44,7 @@ case class Transformation(
     code: String,
     name: String,
     description: Option[String] = scala.None,
+    owner: Option[String] = scala.None,
     createdAt: String,
     updatedAt: Option[String] = scala.None
 )
