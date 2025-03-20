@@ -10,7 +10,8 @@
       "personalization",
       "query-suggestions",
       "recommend",
-      "search"
+      "search",
+      "realtime-personalization"
     ],
     "folder": "clients/algoliasearch-client-csharp",
     "gitRepoId": "algoliasearch-client-csharp",
@@ -48,6 +49,10 @@
       {
         "name": "search",
         "output": "clients/algoliasearch-client-dart/packages/client_search"
+      },
+      {
+        "name": "realtime-personalization",
+        "output": "clients/algoliasearch-client-dart/packages/client_search_realtime_personalization"
       }
     ],
     "folder": "clients/algoliasearch-client-dart",
@@ -76,7 +81,8 @@
       "personalization",
       "query-suggestions",
       "recommend",
-      "search"
+      "search",
+      "realtime-personalization"
     ],
     "folder": "clients/algoliasearch-client-go",
     "gitRepoId": "algoliasearch-client-go",
@@ -104,7 +110,8 @@
       "personalization",
       "query-suggestions",
       "recommend",
-      "search"
+      "search",
+      "realtime-personalization"
     ],
     "folder": "clients/algoliasearch-client-java",
     "gitRepoId": "algoliasearch-client-java",
@@ -176,6 +183,10 @@
       {
         "name": "composition-full",
         "output": "clients/algoliasearch-client-javascript/packages/client-composition"
+      },
+      {
+        "name": "realtime-personalization",
+        "output": "clients/algoliasearch-client-javascript/packages/client-realtime-personalization"
       }
     ],
     "folder": "clients/algoliasearch-client-javascript",
@@ -203,7 +214,8 @@
       "personalization",
       "query-suggestions",
       "recommend",
-      "search"
+      "search",
+      "realtime-personalization"
     ],
     "folder": "clients/algoliasearch-client-kotlin",
     "gitRepoId": "algoliasearch-client-kotlin",
@@ -231,7 +243,8 @@
       "personalization",
       "query-suggestions",
       "recommend",
-      "search"
+      "search",
+      "realtime-personalization"
     ],
     "folder": "clients/algoliasearch-client-php",
     "gitRepoId": "algoliasearch-client-php",
@@ -259,7 +272,8 @@
       "personalization",
       "query-suggestions",
       "recommend",
-      "search"
+      "search",
+      "realtime-personalization"
     ],
     "folder": "clients/algoliasearch-client-python",
     "gitRepoId": "algoliasearch-client-python",
@@ -294,7 +308,8 @@
       "personalization",
       "query-suggestions",
       "recommend",
-      "search"
+      "search",
+      "realtime-personalization"
     ],
     "folder": "clients/algoliasearch-client-ruby",
     "gitRepoId": "algoliasearch-client-ruby",
@@ -322,7 +337,8 @@
       "personalization",
       "query-suggestions",
       "recommend",
-      "search"
+      "search",
+      "realtime-personalization"
     ],
     "folder": "clients/algoliasearch-client-scala",
     "gitRepoId": "algoliasearch-client-scala",
@@ -349,7 +365,8 @@
       "personalization",
       "query-suggestions",
       "recommend",
-      "search"
+      "search",
+      "realtime-personalization"
     ],
     "folder": "clients/algoliasearch-client-swift",
     "gitRepoId": "algoliasearch-client-swift",
