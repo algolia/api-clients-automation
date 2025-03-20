@@ -19,6 +19,9 @@ public class Source {
   @JsonProperty("name")
   private String name;
 
+  @JsonProperty("owner")
+  private String owner;
+
   @JsonProperty("input")
   private SourceInput input;
 
@@ -62,6 +65,17 @@ public class Source {
   @javax.annotation.Nonnull
   public String getName() {
     return name;
+  }
+
+  public Source setOwner(String owner) {
+    this.owner = owner;
+    return this;
+  }
+
+  /** Owner of the resource. */
+  @javax.annotation.Nullable
+  public String getOwner() {
+    return owner;
   }
 
   public Source setInput(SourceInput input) {
@@ -121,6 +135,7 @@ public class Source {
       Objects.equals(this.sourceID, source.sourceID) &&
       Objects.equals(this.type, source.type) &&
       Objects.equals(this.name, source.name) &&
+      Objects.equals(this.owner, source.owner) &&
       Objects.equals(this.input, source.input) &&
       Objects.equals(this.authenticationID, source.authenticationID) &&
       Objects.equals(this.createdAt, source.createdAt) &&
@@ -130,7 +145,7 @@ public class Source {
 
   @Override
   public int hashCode() {
-    return Objects.hash(sourceID, type, name, input, authenticationID, createdAt, updatedAt);
+    return Objects.hash(sourceID, type, name, owner, input, authenticationID, createdAt, updatedAt);
   }
 
   @Override
@@ -140,6 +155,7 @@ public class Source {
     sb.append("    sourceID: ").append(toIndentedString(sourceID)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    owner: ").append(toIndentedString(owner)).append("\n");
     sb.append("    input: ").append(toIndentedString(input)).append("\n");
     sb.append("    authenticationID: ").append(toIndentedString(authenticationID)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");

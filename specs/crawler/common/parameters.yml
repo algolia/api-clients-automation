@@ -54,7 +54,6 @@ applicationID:
   type: string
   description: |
     Algolia application ID where the crawler creates and updates indices.
-    The Crawler add-on must be enabled for this application.
 
 CrawlerID:
   type: string

@@ -28,6 +28,9 @@ public class Task {
   @JsonProperty("nextRun")
   private String nextRun;
 
+  @JsonProperty("owner")
+  private String owner;
+
   @JsonProperty("input")
   private TaskInput input;
 
@@ -122,6 +125,17 @@ public class Task {
   @javax.annotation.Nullable
   public String getNextRun() {
     return nextRun;
+  }
+
+  public Task setOwner(String owner) {
+    this.owner = owner;
+    return this;
+  }
+
+  /** Owner of the resource. */
+  @javax.annotation.Nullable
+  public String getOwner() {
+    return owner;
   }
 
   public Task setInput(TaskInput input) {
@@ -253,6 +267,7 @@ public class Task {
       Objects.equals(this.cron, task.cron) &&
       Objects.equals(this.lastRun, task.lastRun) &&
       Objects.equals(this.nextRun, task.nextRun) &&
+      Objects.equals(this.owner, task.owner) &&
       Objects.equals(this.input, task.input) &&
       Objects.equals(this.enabled, task.enabled) &&
       Objects.equals(this.failureThreshold, task.failureThreshold) &&
@@ -275,6 +290,7 @@ public class Task {
       cron,
       lastRun,
       nextRun,
+      owner,
       input,
       enabled,
       failureThreshold,
@@ -298,6 +314,7 @@ public class Task {
     sb.append("    cron: ").append(toIndentedString(cron)).append("\n");
     sb.append("    lastRun: ").append(toIndentedString(lastRun)).append("\n");
     sb.append("    nextRun: ").append(toIndentedString(nextRun)).append("\n");
+    sb.append("    owner: ").append(toIndentedString(owner)).append("\n");
     sb.append("    input: ").append(toIndentedString(input)).append("\n");
     sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
     sb.append("    failureThreshold: ").append(toIndentedString(failureThreshold)).append("\n");
