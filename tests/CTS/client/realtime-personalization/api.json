@@ -1,6 +1,6 @@
 [
   {
-    "testName": "throws when region is not given",
+    "testName": "throws when incorrect region is given",
     "autoCreateClient": false,
     "steps": [
       {
@@ -8,7 +8,7 @@
         "parameters": {
           "appId": "my-app-id",
           "apiKey": "my-api-key",
-          "region": ""
+          "region": "not_a_region"
         },
         "expected": {
           "error": "`region` is required and must be one of the following: eu, us"
