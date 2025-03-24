@@ -122,6 +122,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@algolia/client-realtime-personalization@npm:0.0.1, @algolia/client-realtime-personalization@workspace:packages/client-realtime-personalization":
+  version: 0.0.0-use.local
+  resolution: "@algolia/client-realtime-personalization@workspace:packages/client-realtime-personalization"
+  dependencies:
+    "@algolia/client-common": "npm:5.22.0"
+    "@algolia/requester-browser-xhr": "npm:5.22.0"
+    "@algolia/requester-fetch": "npm:5.22.0"
+    "@algolia/requester-node-http": "npm:5.22.0"
+    "@arethetypeswrong/cli": "npm:0.17.4"
+    "@types/node": "npm:22.13.11"
+    publint: "npm:0.3.9"
+    rollup: "npm:4.36.0"
+    tsup: "npm:8.4.0"
+    typescript: "npm:5.7.3"
+  languageName: unknown
+  linkType: soft
+
 "@algolia/client-search@npm:5.22.0, @algolia/client-search@workspace:packages/client-search":
   version: 0.0.0-use.local
   resolution: "@algolia/client-search@workspace:packages/client-search"
@@ -2232,6 +2249,7 @@ __metadata:
     "@algolia/client-insights": "npm:5.22.0"
     "@algolia/client-personalization": "npm:5.22.0"
     "@algolia/client-query-suggestions": "npm:5.22.0"
+    "@algolia/client-realtime-personalization": "npm:0.0.1"
     "@algolia/client-search": "npm:5.22.0"
     "@algolia/ingestion": "npm:1.22.0"
     "@algolia/monitoring": "npm:1.22.0"
