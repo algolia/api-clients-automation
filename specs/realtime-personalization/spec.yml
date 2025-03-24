@@ -41,5 +41,11 @@ paths:
   /{path}:
     $ref: '../common/paths/customRequest.yml'
 
+  # ###############
+  # ### Helpers ###
+  # ###############
+  /setClientApiKey:
+    $ref: '../common/helpers/setClientApiKey.yml#/method'
+
   /2/realtime/users/{userToken}:
     $ref: 'paths/getUser.yml'

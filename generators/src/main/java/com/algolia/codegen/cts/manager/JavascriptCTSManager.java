@@ -56,6 +56,10 @@ public class JavascriptCTSManager implements CTSManager {
         bundle.put("clientName", "compositionClient");
         bundle.put("importPackage", "@algolia/client-composition");
         break;
+      case "realtime-personalization":
+        bundle.put("clientName", "realtimePersonalizationClient");
+        bundle.put("importPackage", "@algolia/client-realtime-personalization");
+        break;
       case "algoliasearch":
         bundle.put("clientName", "liteClient");
         bundle.put("importPackage", "algoliasearch/lite");
