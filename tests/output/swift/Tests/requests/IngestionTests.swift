@@ -241,9 +241,8 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"action\":\"replace\"}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"action\":\"replace\"}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -987,10 +986,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters = try XCTUnwrap(
-            "{\"query\":\"parameters\",\"myParam\":\"2\"}"
-                .data(using: .utf8)
-        )
+        let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"2\"}".data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
