@@ -52,7 +52,7 @@
       },
       {
         "name": "realtime-personalization",
-        "output": "clients/algoliasearch-client-dart/packages/client_search_realtime_personalization"
+        "output": "clients/algoliasearch-client-dart/packages/client_realtime_personalization"
       }
     ],
     "folder": "clients/algoliasearch-client-dart",
