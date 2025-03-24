@@ -122,7 +122,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-realtime-personalization@npm:0.0.1, @algolia/client-realtime-personalization@workspace:packages/client-realtime-personalization":
+"@algolia/client-realtime-personalization@workspace:packages/client-realtime-personalization":
   version: 0.0.0-use.local
   resolution: "@algolia/client-realtime-personalization@workspace:packages/client-realtime-personalization"
   dependencies:
@@ -2249,7 +2249,6 @@ __metadata:
     "@algolia/client-insights": "npm:5.22.0"
     "@algolia/client-personalization": "npm:5.22.0"
     "@algolia/client-query-suggestions": "npm:5.22.0"
-    "@algolia/client-realtime-personalization": "npm:0.0.1"
     "@algolia/client-search": "npm:5.22.0"
     "@algolia/ingestion": "npm:1.22.0"
     "@algolia/monitoring": "npm:1.22.0"
