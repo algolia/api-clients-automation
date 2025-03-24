@@ -49,7 +49,7 @@ __metadata:
     publint: "npm:0.3.9"
     ts-node: "npm:10.9.2"
     tsup: "npm:8.4.0"
-    typescript: "npm:5.8.2"
+    typescript: "npm:5.7.3"
     vitest: "npm:3.0.9"
   languageName: unknown
   linkType: soft
@@ -67,7 +67,7 @@ __metadata:
     publint: "npm:0.3.9"
     rollup: "npm:4.36.0"
     tsup: "npm:8.4.0"
-    typescript: "npm:5.8.2"
+    typescript: "npm:5.7.3"
   languageName: unknown
   linkType: soft
 
@@ -152,7 +152,7 @@ __metadata:
     publint: "npm:0.3.9"
     rollup: "npm:4.36.0"
     tsup: "npm:8.4.0"
-    typescript: "npm:5.8.2"
+    typescript: "npm:5.7.3"
   languageName: unknown
   linkType: soft
 
@@ -184,7 +184,7 @@ __metadata:
     publint: "npm:0.3.9"
     ts-node: "npm:10.9.2"
     tsup: "npm:8.4.0"
-    typescript: "npm:5.8.2"
+    typescript: "npm:5.7.3"
     vitest: "npm:3.0.9"
   languageName: unknown
   linkType: soft
@@ -233,7 +233,7 @@ __metadata:
     jsdom: "npm:26.0.0"
     publint: "npm:0.3.9"
     tsup: "npm:8.4.0"
-    typescript: "npm:5.8.2"
+    typescript: "npm:5.7.3"
     vitest: "npm:3.0.9"
     xhr-mock: "npm:2.5.1"
   languageName: unknown
@@ -250,7 +250,7 @@ __metadata:
     nock: "npm:14.0.1"
     publint: "npm:0.3.9"
     tsup: "npm:8.4.0"
-    typescript: "npm:5.8.2"
+    typescript: "npm:5.7.3"
     vitest: "npm:3.0.9"
   languageName: unknown
   linkType: soft
@@ -265,7 +265,7 @@ __metadata:
     nock: "npm:14.0.1"
     publint: "npm:0.3.9"
     tsup: "npm:8.4.0"
-    typescript: "npm:5.8.2"
+    typescript: "npm:5.7.3"
     vitest: "npm:3.0.9"
   languageName: unknown
   linkType: soft
@@ -282,7 +282,7 @@ __metadata:
     "@types/node": "npm:22.13.11"
     publint: "npm:0.3.9"
     tsup: "npm:8.4.0"
-    typescript: "npm:5.8.2"
+    typescript: "npm:5.7.3"
   languageName: unknown
   linkType: soft
 
@@ -2427,7 +2427,7 @@ __metadata:
     execa: "npm:9.5.2"
     lerna: "npm:8.2.1"
     rollup: "npm:4.36.0"
-    typescript: "npm:5.8.2"
+    typescript: "npm:5.7.3"
   languageName: unknown
   linkType: soft
 
@@ -8454,7 +8454,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.8.2, typescript@npm:>=3 < 6":
+"typescript@npm:>=3 < 6":
   version: 5.8.2
   resolution: "typescript@npm:5.8.2"
   bin:
@@ -8484,7 +8484,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A5.8.2#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A>=3 < 6#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A>=3 < 6#optional!builtin<compat/typescript>":
   version: 5.8.2
   resolution: "typescript@patch:typescript@npm%3A5.8.2#optional!builtin<compat/typescript>::version=5.8.2&hash=5786d5"
   bin:
