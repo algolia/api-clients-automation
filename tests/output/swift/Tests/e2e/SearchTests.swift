@@ -78,10 +78,7 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
             return
         }
 
-        let response = try await client.getObjectWithHTTPInfo(
-            indexName: "cts_e2e_browse",
-            objectID: "Batman and Robin"
-        )
+        let response = try await client.getObjectWithHTTPInfo(indexName: "cts_e2e_browse", objectID: "Batman and Robin")
         let responseBody = try XCTUnwrap(response.body)
         let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
 
