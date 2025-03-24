@@ -12,12 +12,12 @@ user:
     userID:
       type: string
       description: User ID of the user.
-#    search:
-#      type: object
-#      description: |
-#        Index personalization filters by index name.
-#      additionalProperties:
-#        $ref: '#/searchFilters'
+    search:
+      type: object
+      description: |
+        Index personalization filters by index name.
+      additionalProperties:
+        $ref: '#/searchFilters'
 
 searchFilters:
   type: object
