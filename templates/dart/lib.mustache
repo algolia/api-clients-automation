@@ -7,6 +7,4 @@ export 'package:algolia_client_core/algolia_client_core.dart';
 {{/apis}}{{/apiInfo}}
 {{#models}}{{#model}}export '{{sourceFolder}}/{{modelPackage}}/{{classFilename}}.dart';
 {{/model}}{{/models}}
-{{^isCompositionClient}}
 export 'src/extension.dart';
-{{/isCompositionClient}}

@@ -148,6 +148,12 @@ __metadata:
   languageName: node
   linkType: soft
 
+"@algolia/client-realtime-personalization@link:../../../clients/algoliasearch-client-javascript/packages/client-realtime-personalization::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode":
+  version: 0.0.0-use.local
+  resolution: "@algolia/client-realtime-personalization@link:../../../clients/algoliasearch-client-javascript/packages/client-realtime-personalization::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode"
+  languageName: node
+  linkType: soft
+
 "@algolia/client-search@link:../../../clients/algoliasearch-client-javascript/packages/client-search::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode":
   version: 0.0.0-use.local
   resolution: "@algolia/client-search@link:../../../clients/algoliasearch-client-javascript/packages/client-search::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode"
@@ -5478,6 +5484,7 @@ __metadata:
     "@algolia/client-insights": "link:../../../clients/algoliasearch-client-javascript/packages/client-insights"
     "@algolia/client-personalization": "link:../../../clients/algoliasearch-client-javascript/packages/client-personalization"
     "@algolia/client-query-suggestions": "link:../../../clients/algoliasearch-client-javascript/packages/client-query-suggestions"
+    "@algolia/client-realtime-personalization": "link:../../../clients/algoliasearch-client-javascript/packages/client-realtime-personalization"
     "@algolia/client-search": "link:../../../clients/algoliasearch-client-javascript/packages/client-search"
     "@algolia/composition": "link:../../../clients/algoliasearch-client-javascript/packages/composition"
     "@algolia/ingestion": "link:../../../clients/algoliasearch-client-javascript/packages/ingestion"
