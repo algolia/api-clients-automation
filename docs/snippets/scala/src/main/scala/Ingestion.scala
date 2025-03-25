@@ -167,7 +167,8 @@ class SnippetIngestionClient {
               storeKeys = Some(Seq("myStore")),
               locales = Some(Seq("de")),
               url = "http://commercetools.com",
-              projectKey = "keyID"
+              projectKey = "keyID",
+              productQueryPredicate = Some("masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))")
             )
           ),
           authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")

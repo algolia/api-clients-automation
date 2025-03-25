@@ -25,6 +25,9 @@ public class SourceUpdateCommercetools implements SourceUpdateInput {
   @JsonProperty("fallbackIsInStockValue")
   private Boolean fallbackIsInStockValue;
 
+  @JsonProperty("productQueryPredicate")
+  private String productQueryPredicate;
+
   @JsonProperty("customFields")
   private CommercetoolsCustomFields customFields;
 
@@ -91,6 +94,20 @@ public class SourceUpdateCommercetools implements SourceUpdateInput {
     return fallbackIsInStockValue;
   }
 
+  public SourceUpdateCommercetools setProductQueryPredicate(String productQueryPredicate) {
+    this.productQueryPredicate = productQueryPredicate;
+    return this;
+  }
+
+  /**
+   * Predicate to filter out specific products when indexing. For more information, see [Query
+   * Predicate](https://docs.commercetools.com/api/predicates/query).
+   */
+  @javax.annotation.Nullable
+  public String getProductQueryPredicate() {
+    return productQueryPredicate;
+  }
+
   public SourceUpdateCommercetools setCustomFields(CommercetoolsCustomFields customFields) {
     this.customFields = customFields;
     return this;
@@ -116,13 +133,14 @@ public class SourceUpdateCommercetools implements SourceUpdateInput {
       Objects.equals(this.locales, sourceUpdateCommercetools.locales) &&
       Objects.equals(this.url, sourceUpdateCommercetools.url) &&
       Objects.equals(this.fallbackIsInStockValue, sourceUpdateCommercetools.fallbackIsInStockValue) &&
+      Objects.equals(this.productQueryPredicate, sourceUpdateCommercetools.productQueryPredicate) &&
       Objects.equals(this.customFields, sourceUpdateCommercetools.customFields)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(storeKeys, locales, url, fallbackIsInStockValue, customFields);
+    return Objects.hash(storeKeys, locales, url, fallbackIsInStockValue, productQueryPredicate, customFields);
   }
 
   @Override
@@ -133,6 +151,7 @@ public class SourceUpdateCommercetools implements SourceUpdateInput {
     sb.append("    locales: ").append(toIndentedString(locales)).append("\n");
     sb.append("    url: ").append(toIndentedString(url)).append("\n");
     sb.append("    fallbackIsInStockValue: ").append(toIndentedString(fallbackIsInStockValue)).append("\n");
+    sb.append("    productQueryPredicate: ").append(toIndentedString(productQueryPredicate)).append("\n");
     sb.append("    customFields: ").append(toIndentedString(customFields)).append("\n");
     sb.append("}");
     return sb.toString();

@@ -166,7 +166,8 @@ final class IngestionClientRequestsTests: XCTestCase {
                 storeKeys: ["myStore"],
                 locales: ["de"],
                 url: "http://commercetools.com",
-                projectKey: "keyID"
+                projectKey: "keyID",
+                productQueryPredicate: "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"
             )),
             authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
         ))
@@ -177,7 +178,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}"
+            "{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\",\"productQueryPredicate\":\"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 

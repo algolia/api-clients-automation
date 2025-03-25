@@ -149,6 +149,8 @@ public class SnippetIngestionClient
             Locales = new List<string> { "de" },
             Url = "http://commercetools.com",
             ProjectKey = "keyID",
+            ProductQueryPredicate =
+              "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))",
           }
         ),
         AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",

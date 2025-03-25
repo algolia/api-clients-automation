@@ -112,7 +112,8 @@ class TestIngestionClient < Test::Unit::TestCase
           store_keys: ["myStore"],
           locales: ["de"],
           url: "http://commercetools.com",
-          project_key: "keyID"
+          project_key: "keyID",
+          product_query_predicate: "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"
         ),
         authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
       )
@@ -124,7 +125,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}"
+        "{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\",\"productQueryPredicate\":\"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}"
       ),
       JSON.parse(req.body)
     )

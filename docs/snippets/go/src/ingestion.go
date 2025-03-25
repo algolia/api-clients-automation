@@ -148,7 +148,7 @@ func SnippetForCreateSourceOfIngestion() {
 		ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType("commercetools")).SetName("sourceName").SetInput(ingestion.SourceCommercetoolsAsSourceInput(
 			ingestion.NewEmptySourceCommercetools().SetStoreKeys(
 				[]string{"myStore"}).SetLocales(
-				[]string{"de"}).SetUrl("http://commercetools.com").SetProjectKey("keyID"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
+				[]string{"de"}).SetUrl("http://commercetools.com").SetProjectKey("keyID").SetProductQueryPredicate("masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
