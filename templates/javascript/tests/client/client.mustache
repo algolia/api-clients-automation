@@ -10,7 +10,7 @@ const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
 function createClient() {
-  return {{{clientName}}}(appId, apiKey{{#isStandaloneClient}}, { requester: nodeEchoRequester() }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester() }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
+  return {{{clientName}}}(appId, apiKey{{#isStandaloneClient}}, {{#hasRegionalHost}}'{{{defaultRegion}}}', {{/hasRegionalHost}} { requester: nodeEchoRequester() }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester() }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
 }
 
 {{#blocksClient}}
@@ -20,8 +20,8 @@ function createClient() {
 {{^isCompositionClient}}
 describe('init', () => {
   test('sets authMode', async () => {
-    const qpClient =  {{{clientName}}}('foo', 'bar'{{#isStandaloneClient}}, { requester: nodeEchoRequester(), authMode: 'WithinQueryParameters' }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester(), authMode: 'WithinQueryParameters' }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
-    const headerClient =  {{{clientName}}}('foo', 'bar'{{#isStandaloneClient}}, { requester: nodeEchoRequester(), authMode: 'WithinHeaders' }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester(), authMode: 'WithinHeaders' }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
+    const qpClient =  {{{clientName}}}('foo', 'bar'{{#isStandaloneClient}},{{#hasRegionalHost}}'{{{defaultRegion}}}', {{/hasRegionalHost}} { requester: nodeEchoRequester(), authMode: 'WithinQueryParameters' }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester(), authMode: 'WithinQueryParameters' }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
+    const headerClient =  {{{clientName}}}('foo', 'bar'{{#isStandaloneClient}},{{#hasRegionalHost}}'{{{defaultRegion}}}', {{/hasRegionalHost}} { requester: nodeEchoRequester(), authMode: 'WithinHeaders' }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester(), authMode: 'WithinHeaders' }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
 
     const qpResult = (await qpClient.customGet({
       path: '1/foo',
