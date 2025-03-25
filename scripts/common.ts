@@ -30,9 +30,13 @@ export const ROOT_DIR = path.resolve(process.cwd(), '..');
 
 // Build `GENERATORS` from the `clients.config.json` file
 export const GENERATORS = Object.entries(clientsConfig).reduce(
-  (current, [language, { clients, folder, ...gen }]) => {
-    for (const client of clients) {
-      let output = folder;
+  (current, [language, opts]) => {
+    if (typeof opts === 'string'){
+      return current;
+    }
+
+    for (const client of opts.clients) {
+      let output = opts.folder;
       let key = '';
       let clientName = '';
 
@@ -47,7 +51,7 @@ export const GENERATORS = Object.entries(clientsConfig).reduce(
 
       current[key] = {
         additionalProperties: {},
-        ...gen,
+        ...opts,
         output,
         client: clientName,
         language: language as Language,
