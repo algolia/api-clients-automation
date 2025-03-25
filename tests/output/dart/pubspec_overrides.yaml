@@ -11,5 +11,3 @@ dependency_overrides:
     path: ../../../clients/algoliasearch-client-dart/packages/client_recommend
   algolia_client_composition:
     path: ../../../clients/algoliasearch-client-dart/packages/client_composition
-  algolia_client_realtime_personalization:
-    path: ../../../clients/algoliasearch-client-dart/packages/client_realtime_personalization

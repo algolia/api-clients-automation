@@ -17,4 +17,3 @@ dependencies:
   algolia_client_core: any
 dev_dependencies:
   lints: ^4.0.0
-  algolia_client_realtime_personalization: any
