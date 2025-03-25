@@ -1,3 +1,8 @@
+## [1.31.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.30.2...1.31.0)
+
+- [3994f53d4](https://github.com/algolia/api-clients-automation/commit/3994f53d4) feat(clients): add new realtime-personalization api ([#4613](https://github.com/algolia/api-clients-automation/pull/4613)) by [@benamib](https://github.com/benamib/)
+- [6d8c0548d](https://github.com/algolia/api-clients-automation/commit/6d8c0548d) chore: do not generate realtime personalization ([#4655](https://github.com/algolia/api-clients-automation/pull/4655)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [1.30.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.30.1...1.30.2)
 
 - [4f68190e10](https://github.com/algolia/api-clients-automation/commit/4f68190e10) fix(specs): update Recommend maxRecommendations to 30 max [RECO-2361] ([#4483](https://github.com/algolia/api-clients-automation/pull/4483)) by [@raed667](https://github.com/raed667/)
