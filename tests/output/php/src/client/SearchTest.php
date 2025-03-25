@@ -178,7 +178,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.17.0\).*/',
+                '/^Algolia for PHP \(4.18.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
