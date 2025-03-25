@@ -31,7 +31,7 @@ export const ROOT_DIR = path.resolve(process.cwd(), '..');
 // Build `GENERATORS` from the `clients.config.json` file
 export const GENERATORS = Object.entries(clientsConfig).reduce(
   (current, [language, opts]) => {
-    if (typeof opts === 'string'){
+    if (typeof opts === 'string') {
       return current;
     }
 
