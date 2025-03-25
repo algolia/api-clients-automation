@@ -54,17 +54,25 @@
           }
         ]
       },
-      "folder": { "type": "string" },
-      "gitRepoId": { "type": "string" },
-      "packageVersion": { "type": "string" },
-      "modelFolder": { "type": "string" },
-      "apiFolder": { "type": "string" },
-      "dockerImage": { "type": "string" },
+      "folder": { "type": "string", "description": "the output folder of your client, usually matching the github repository name, e.g. clients/algoliasearch-client-dart" },
+      "gitRepoId": { "type": "string", "description": "the github repository name, without the organization or username that owns it, e.g. algoliasearch-client-php"},
+      "packageVersion": { "type": "string", "description": "the version to publish the packages with, it must be semver compatible, e.g. 1.2.3" },
+      "modelFolder": { "type": "string", "description": "the models folder, e.g. algoliasearch/models"},
+      "apiFolder": { "type": "string", "description": "the api folder, e.g. lib/src"},
+      "dockerImage": { 
+        "type": "string",
+        "description": "whether your client requires a custom docker image with specific needs, most clients require 'apic_base'",
+        "enum": [
+          "apic_base",
+          "apic_ruby",
+          "apic_swift"
+        ]
+      },
       "tests": {
         "type": "object",
         "properties": {
-          "extension": { "type": "string" },
-          "outputFolder": { "type": "string" }
+          "extension": { "type": "string", "description": "the test file extension, e.g. .test.ts" },
+          "outputFolder": { "type": "string", "description": "the test output folder, e.g. src/generated" }
         },
         "required": ["extension", "outputFolder"],
         "additionalProperties": false
@@ -72,14 +80,15 @@
       "snippets": {
         "type": "object",
         "properties": {
-          "extension": { "type": "string" },
-          "outputFolder": { "type": "string" }
+          "extension": { "type": "string", "description": "the snippet file extension, e.g. .cs" },
+          "outputFolder": { "type": "string", "description": "the snippet output folder, e.g. src" }
         },
         "required": ["extension", "outputFolder"],
         "additionalProperties": false
       },
       "supportedVersions": {
         "type": "array",
+        "description": "hints the CI on what matrix to generate for this client, this must be language specific versions, e.g. versions of node",
         "items": { "type": "string" }
       }
     },
