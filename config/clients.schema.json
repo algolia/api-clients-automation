@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "clients": {
+        "oneOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "abtesting",
+                "analytics",
+                "composition",
+                "ingestion",
+                "insights",
+                "monitoring",
+                "personalization",
+                "query-suggestions",
+                "recommend",
+                "search"
+              ]
+            }
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "enum": [
+                    "algoliasearch",
+                    "abtesting",
+                    "analytics",
+                    "composition",
+                    "composition-full",
+                    "ingestion",
+                    "insights",
+                    "monitoring",
+                    "personalization",
+                    "query-suggestions",
+                    "recommend",
+                    "search"
+                  ]
+                },
+                "output": { "type": "string" }
+              },
+              "required": ["name", "output"],
+              "additionalProperties": false
+            }
+          }
+        ]
+      },
+      "folder": { "type": "string" },
+      "gitRepoId": { "type": "string" },
+      "packageVersion": { "type": "string" },
+      "modelFolder": { "type": "string" },
+      "apiFolder": { "type": "string" },
+      "dockerImage": { "type": "string" },
+      "tests": {
+        "type": "object",
+        "properties": {
+          "extension": { "type": "string" },
+          "outputFolder": { "type": "string" }
+        },
+        "required": ["extension", "outputFolder"],
+        "additionalProperties": false
+      },
+      "snippets": {
+        "type": "object",
+        "properties": {
+          "extension": { "type": "string" },
+          "outputFolder": { "type": "string" }
+        },
+        "required": ["extension", "outputFolder"],
+        "additionalProperties": false
+      },
+      "supportedVersions": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    },
+    "required": ["clients", "folder", "gitRepoId", "packageVersion", "modelFolder", "apiFolder", "tests", "snippets"],
+    "additionalProperties": false
+  }
+}

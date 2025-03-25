@@ -1,4 +1,5 @@
 {
+  "$schema": "./clients.schema.json",
   "csharp": {
     "clients": [
       "abtesting",
