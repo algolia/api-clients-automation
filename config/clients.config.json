@@ -144,7 +144,8 @@
       },
       {
         "name": "composition",
-        "output": "clients/algoliasearch-client-javascript/packages/composition"
+        "output": "clients/algoliasearch-client-javascript/packages/composition",
+        "isStandaloneClient": true
       },
       {
         "name": "ingestion",
@@ -176,7 +177,9 @@
       },
       {
         "name": "composition-full",
-        "output": "clients/algoliasearch-client-javascript/packages/client-composition"
+        "output": "clients/algoliasearch-client-javascript/packages/client-composition",
+        "isStandaloneClient": true,
+        "clientName": "composition"
       }
     ],
     "folder": "clients/algoliasearch-client-javascript",
