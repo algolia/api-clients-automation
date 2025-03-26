@@ -18,11 +18,14 @@ async function run(command) {
 
 export function getPatterns() {
   const entries = patterns;
-  for (const [language, { tests }] of Object.entries(clientConfig)) {
-    entries.unshift(`tests/output/${language}/${tests.outputFolder}/client/**`);
-    entries.unshift(`tests/output/${language}/${tests.outputFolder}/requests/**`);
-    entries.unshift(`tests/output/${language}/${tests.outputFolder}/e2e/**`);
-    entries.unshift(`tests/output/${language}/${tests.outputFolder}/benchmark/**`);
+  for (const [language, opts] of Object.entries(clientConfig)) {
+    if (typeof opts !== 'object') {
+      continue;
+    }
+    entries.unshift(`tests/output/${language}/${opts.tests.outputFolder}/client/**`);
+    entries.unshift(`tests/output/${language}/${opts.tests.outputFolder}/requests/**`);
+    entries.unshift(`tests/output/${language}/${opts.tests.outputFolder}/e2e/**`);
+    entries.unshift(`tests/output/${language}/${opts.tests.outputFolder}/benchmark/**`);
   }
   return entries;
 }

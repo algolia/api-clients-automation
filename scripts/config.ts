@@ -8,6 +8,10 @@ export function getClientsConfigField(
   pathToField: string[] | string,
   required: boolean = true,
 ): any {
+  if (typeof clientsConfig[language] !== 'object') {
+    throw new Error(`${language} doesn't exist in clients.config.json`);
+  }
+
   const config: LanguageConfig = clientsConfig[language];
   const path = Array.isArray(pathToField) ? pathToField : [pathToField];
 
@@ -42,11 +46,11 @@ export function getTestOutputFolder(language: Language): string {
 }
 
 export function getDockerImage(language?: Language): string | undefined {
-  if (CI || !language || !('dockerImage' in clientsConfig[language])) {
+  if (CI || !language) {
     return undefined;
   }
 
-  return getClientsConfigField(language, 'dockerImage');
+  return getClientsConfigField(language, 'dockerImage', false);
 }
 
 /**
@@ -57,7 +61,7 @@ export function getPackageVersionDefault(language: Language): string {
 }
 
 export function getGitHubUrl(language: Language, options?: { token: string }): string {
-  const { gitRepoId } = clientsConfig[language];
+  const gitRepoId = getClientsConfigField(language, ['gitRepoId']);
 
   // GitHub Action provides a default token for authentication
   // https://docs.github.com/en/actions/security-guides/automatic-token-authentication
