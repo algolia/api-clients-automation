@@ -1,6 +1,6 @@
 post:
   tags:
-    - search
+    - Search
   operationId: searchForFacetValues
   x-use-read-transporter: true
   x-cacheable: true
