@@ -98,6 +98,10 @@ export async function bundleSpecsForDoc(bundledPath: string, clientName: string)
           throw new Error(`Could not find a the correct HAR request for ${method} ${pathKey}`);
         }
 
+        if (!harRequest?.headers) {
+          break;
+        }
+
         for (const harRequestHeader of harRequest.headers) {
           if (harRequestHeader.name === bundledSpec.components.securitySchemes.appId?.name) {
             harRequestHeader.value = 'ALGOLIA_APPLICATION_ID';
