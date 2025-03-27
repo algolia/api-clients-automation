@@ -1,6 +1,6 @@
 post:
   tags:
-    - search
+    - Search
   operationId: search
   x-use-read-transporter: true
   x-cacheable: true
