@@ -81,8 +81,12 @@ export async function bundleSpecsForDoc(bundledPath: string, clientName: string)
 
       // skip custom path for cURL
       if (pathKey !== '/{path}' && specMethod['x-codeSamples']) {
-        const harRequest = harRequests.find((baseHarRequest) =>
-          baseHarRequest.url.includes(pathKey.replace('{indexName}', 'ALGOLIA_INDEX_NAME')),
+        const harRequest = harRequests.find(
+          (baseHarRequest) =>
+            // the url also has the query parameters, so we need to check if it ends with the path
+            (baseHarRequest.url.endsWith(pathKey.replace('{indexName}', 'ALGOLIA_INDEX_NAME')) ||
+              baseHarRequest.url.includes(pathKey.replace('{indexName}', 'ALGOLIA_INDEX_NAME') + '?')) &&
+            baseHarRequest.method.toLowerCase() === method.toLowerCase(),
         );
 
         if (!harRequest?.headers) {
