@@ -1566,11 +1566,13 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request GET \
-              --url 'https://data.us.algolia.com/1/authentications?itemsPerPage=10&page=1&type=basic%2Coauth&platform=commercetools%2Cnone&sort=createdAt&order=desc' \
+            curl --request POST \
+              --url https://data.us.algolia.com/1/authentications \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"type":"googleServiceAccount","name":"lorem","platform":"bigcommerce","input":{"clientEmail":"service-account-name@project-id.iam.gserviceaccount.com","privateKey":"lorem"}}'
   /1/authentications/search:
     post:
       tags:
@@ -2081,6 +2083,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://data.us.algolia.com/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     patch:
       tags:
         - authentications
@@ -2108,6 +2118,243 @@ paths:
                 $ref: '#/components/schemas/AuthenticationUpdateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            var response = await client.UpdateAuthenticationAsync(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new AuthenticationUpdate { Name = "newName" }
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.UpdateAuthentication(client.NewApiUpdateAuthenticationRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ingestion.NewEmptyAuthenticationUpdate().SetName("newName")))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.updateAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            new AuthenticationUpdate().setName("newName"));
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.updateAuthentication({
+              authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+              authenticationUpdate: { name: 'newName' },
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.updateAuthentication(
+              authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              authenticationUpdate = AuthenticationUpdate(
+                name = "newName",
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->updateAuthentication(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                ['name' => 'newName',
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.update_authentication(
+                authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                authentication_update={
+                    "name": "newName",
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.update_authentication(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              Algolia::Ingestion::AuthenticationUpdate.new(name: "newName")
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.updateAuthentication(
+                authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                authenticationUpdate = AuthenticationUpdate(
+                  name = Some("newName")
+                )
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.updateAuthentication(
+                authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                authenticationUpdate: AuthenticationUpdate(name: "newName")
+            )
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PATCH \
+              --url https://data.us.algolia.com/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"type":"googleServiceAccount","name":"lorem","platform":"bigcommerce","input":{"clientEmail":"service-account-name@project-id.iam.gserviceaccount.com","privateKey":"lorem"}}'
     delete:
       tags:
         - authentications
@@ -2131,6 +2378,225 @@ paths:
                 $ref: '#/components/schemas/DeleteResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+
+            // Call the API
+
+            var response = await
+            client.DeleteAuthenticationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.DeleteAuthentication(client.NewApiDeleteAuthenticationRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.deleteAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.deleteAuthentication({
+            authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.deleteAuthentication(
+              authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->deleteAuthentication(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.delete_authentication(
+                authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response =
+            client.delete_authentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.deleteAuthentication(
+                authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await
+            client.deleteAuthentication(authenticationID:
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://data.us.algolia.com/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/destinations:
     get:
       tags:
@@ -2665,11 +3131,13 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request GET \
-              --url 'https://data.us.algolia.com/1/destinations?itemsPerPage=10&page=1&type=search&authenticationID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&transformationID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&sort=type&order=desc' \
+            curl --request POST \
+              --url https://data.us.algolia.com/1/destinations \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"type":"search","name":"lorem","input":{"indexName":"lorem","recordType":"product","attributesToExclude":["lorem"]},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'
   /1/destinations/search:
     post:
       tags:
@@ -3182,6 +3650,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://data.us.algolia.com/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     patch:
       tags:
         - destinations
@@ -3209,6 +3685,243 @@ paths:
                 $ref: '#/components/schemas/DestinationUpdateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            var response = await client.UpdateDestinationAsync(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new DestinationUpdate { Name = "newName" }
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.UpdateDestination(client.NewApiUpdateDestinationRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ingestion.NewEmptyDestinationUpdate().SetName("newName")))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.updateDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new
+            DestinationUpdate().setName("newName"));
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.updateDestination({
+              destinationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+              destinationUpdate: { name: 'newName' },
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.updateDestination(
+              destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              destinationUpdate = DestinationUpdate(
+                name = "newName",
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->updateDestination(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                ['name' => 'newName',
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.update_destination(
+                destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                destination_update={
+                    "name": "newName",
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.update_destination(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              Algolia::Ingestion::DestinationUpdate.new(name: "newName")
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.updateDestination(
+                destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                destinationUpdate = DestinationUpdate(
+                  name = Some("newName")
+                )
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.updateDestination(
+                destinationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                destinationUpdate: DestinationUpdate(name: "newName")
+            )
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PATCH \
+              --url https://data.us.algolia.com/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"type":"search","name":"lorem","input":{"indexName":"lorem","recordType":"product","attributesToExclude":["lorem"]},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'
     delete:
       tags:
         - destinations
@@ -3232,6 +3945,224 @@ paths:
                 $ref: '#/components/schemas/DeleteResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+
+            // Call the API
+
+            var response = await
+            client.DeleteDestinationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.DeleteDestination(client.NewApiDeleteDestinationRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.deleteDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.deleteDestination({ destinationID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.deleteDestination(
+              destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->deleteDestination(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.delete_destination(
+                destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response =
+            client.delete_destination("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.deleteDestination(
+                destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.deleteDestination(destinationID:
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://data.us.algolia.com/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/sources:
     get:
       tags:
@@ -3828,11 +4759,13 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request GET \
-              --url 'https://data.us.algolia.com/1/sources?itemsPerPage=10&page=1&type=commercetools%2Cbigcommerce&authenticationID=10000000-0a75-4000-a000-000000000001%2Cnone&sort=createdAt&order=desc' \
+            curl --request POST \
+              --url https://data.us.algolia.com/1/sources \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"type":"bigcommerce","name":"lorem","input":{"storeKeys":["lorem"],"locales":["fr-FR"],"url":"lorem","projectKey":"lorem","fallbackIsInStockValue":true,"productQueryPredicate":"lorem","customFields":{"inventory":["lorem"],"price":["lorem"],"category":["lorem"]}},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'
   /1/sources/validate:
     post:
       tags:
@@ -4694,6 +5627,14 @@ paths:
             "75eeb306-51d3-4e5e-a279-3c92bd8893ac")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://data.us.algolia.com/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     patch:
       tags:
         - sources
@@ -4721,6 +5662,243 @@ paths:
                 $ref: '#/components/schemas/SourceUpdateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            var response = await client.UpdateSourceAsync(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new SourceUpdate { Name = "newName" }
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.UpdateSource(client.NewApiUpdateSourceRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ingestion.NewEmptySourceUpdate().SetName("newName")))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.updateSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new
+            SourceUpdate().setName("newName"));
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.updateSource({
+              sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+              sourceUpdate: { name: 'newName' },
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.updateSource(
+              sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              sourceUpdate = SourceUpdate(
+                name = "newName",
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->updateSource(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                ['name' => 'newName',
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.update_source(
+                source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                source_update={
+                    "name": "newName",
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.update_source(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              Algolia::Ingestion::SourceUpdate.new(name: "newName")
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.updateSource(
+                sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                sourceUpdate = SourceUpdate(
+                  name = Some("newName")
+                )
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.updateSource(
+                sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                sourceUpdate: SourceUpdate(name: "newName")
+            )
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PATCH \
+              --url https://data.us.algolia.com/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"name":"lorem","input":{"storeKeys":["lorem"],"locales":["fr-FR"],"url":"lorem","fallbackIsInStockValue":true,"productQueryPredicate":"lorem","customFields":{"inventory":["lorem"],"price":["lorem"],"category":["lorem"]}},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'
     delete:
       tags:
         - sources
@@ -4744,6 +5922,224 @@ paths:
                 $ref: '#/components/schemas/DeleteResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+
+            // Call the API
+
+            var response = await
+            client.DeleteSourceAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.DeleteSource(client.NewApiDeleteSourceRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.deleteSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.deleteSource({ sourceID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.deleteSource(
+              sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->deleteSource(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.delete_source(
+                source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response =
+            client.delete_source("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.deleteSource(
+                sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.deleteSource(sourceID:
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://data.us.algolia.com/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/sources/{sourceID}/validate:
     post:
       tags:
@@ -5005,6 +6401,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://data.us.algolia.com/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/validate \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"name":"lorem","input":{"storeKeys":["lorem"],"locales":["fr-FR"],"url":"lorem","fallbackIsInStockValue":true,"productQueryPredicate":"lorem","customFields":{"inventory":["lorem"],"price":["lorem"],"category":["lorem"]}},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'
   /1/sources/{sourceID}/discover:
     post:
       tags:
@@ -5243,6 +6649,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://data.us.algolia.com/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/sources/{sourceID}/run:
     post:
       tags:
@@ -5561,6 +6975,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://data.us.algolia.com/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"indexToInclude":["lorem"],"indexToExclude":["lorem"],"entityIDs":["lorem"],"entityType":"product"}'
   /2/tasks:
     get:
       tags:
@@ -6065,11 +7489,13 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request GET \
-              --url 'https://data.us.algolia.com/2/tasks?itemsPerPage=10&page=1&action=save%2Creplace%2Cpartial%2Cappend&enabled=true&sourceID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&sourceType=json%2Ccommercetools&destinationID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&triggerType=onDemand%2Cschedule%2Csubscription%2Cstreaming&withEmailNotifications=true&sort=createdAt&order=desc' \
+            curl --request POST \
+              --url https://data.us.algolia.com/2/tasks \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"sourceID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","destinationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","action":"replace","subscriptionAction":"replace","cron":"* * 1 * *","enabled":true,"failureThreshold":0,"input":{"mapping":{"format":"mappingkit/v1","actions":[{"id":"lorem","enabled":true,"trigger":"lorem","fieldDirectives":[{"fieldKey":"lorem","value":{}}]}]}},"cursor":"lorem","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":1}}'
   /2/tasks/search:
     post:
       tags:
@@ -6601,6 +8027,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://data.us.algolia.com/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     patch:
       tags:
         - tasks
@@ -6624,6 +8058,246 @@ paths:
                 $ref: '#/components/schemas/TaskUpdateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            var response = await client.UpdateTaskAsync(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new TaskUpdate { Enabled = false, Cron = "* * * * *" }
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.UpdateTask(client.NewApiUpdateTaskRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ingestion.NewEmptyTaskUpdate().SetEnabled(false).SetCron("* * * * *")))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.updateTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new
+            TaskUpdate().setEnabled(false).setCron("* * * * *"));
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.updateTask({
+              taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+              taskUpdate: { enabled: false, cron: '* * * * *' },
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.updateTask(
+              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              taskUpdate = TaskUpdate(
+                enabled = false,
+                cron = "* * * * *",
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->updateTask(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                ['enabled' => false,
+                    'cron' => '* * * * *',
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.update_task(
+                task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                task_update={
+                    "enabled": False,
+                    "cron": "* * * * *",
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.update_task(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              Algolia::Ingestion::TaskUpdate.new(enabled: false, cron: "* * * * *")
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.updateTask(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                taskUpdate = TaskUpdate(
+                  enabled = Some(false),
+                  cron = Some("* * * * *")
+                )
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.updateTask(
+                taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                taskUpdate: TaskUpdate(cron: "* * * * *", enabled: false)
+            )
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PATCH \
+              --url https://data.us.algolia.com/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"destinationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","cron":"* * 1 * *","input":{"mapping":{"format":"mappingkit/v1","actions":[{"id":"lorem","enabled":true,"trigger":"lorem","fieldDirectives":[{"fieldKey":"lorem","value":{}}]}]}},"enabled":true,"subscriptionAction":"replace","failureThreshold":0,"notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":1}}'
     delete:
       tags:
         - tasks
@@ -6641,6 +8315,223 @@ paths:
                 $ref: '#/components/schemas/DeleteResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+
+            // Call the API
+
+            var response = await
+            client.DeleteTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.DeleteTask(client.NewApiDeleteTaskRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.deleteTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.deleteTask({ taskID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.deleteTask(
+              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->deleteTask(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.delete_task(
+                task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response =
+            client.delete_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.deleteTask(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.deleteTask(taskID:
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://data.us.algolia.com/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/tasks/{taskID}/run:
     post:
       tags:
@@ -6873,6 +8764,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://data.us.algolia.com/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/tasks/{taskID}/push:
     post:
       tags:
@@ -7271,6 +9170,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url 'https://data.us.algolia.com/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push?watch=true' \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"action":"addObject","records":[{"objectID":"test-record-123"}]}'
   /2/tasks/{taskID}/enable:
     put:
       tags:
@@ -7502,6 +9411,14 @@ paths:
             "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PUT \
+              --url https://data.us.algolia.com/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/enable \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/tasks/{taskID}/disable:
     put:
       tags:
@@ -7733,6 +9650,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PUT \
+              --url https://data.us.algolia.com/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/tasks:
     get:
       tags:
@@ -8275,11 +10200,13 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request GET \
-              --url 'https://data.us.algolia.com/1/tasks?itemsPerPage=10&page=1&action=save%2Creplace%2Cpartial%2Cappend&enabled=true&sourceID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&destinationID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&triggerType=onDemand%2Cschedule%2Csubscription%2Cstreaming&sort=createdAt&order=desc' \
+            curl --request POST \
+              --url https://data.us.algolia.com/1/tasks \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"sourceID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","destinationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","trigger":{"type":"onDemand"},"action":"replace","enabled":true,"failureThreshold":0,"input":{"mapping":{"format":"mappingkit/v1","actions":[{"id":"lorem","enabled":true,"trigger":"lorem","fieldDirectives":[{"fieldKey":"lorem","value":{}}]}]}},"cursor":"lorem"}'
   /1/tasks/search:
     post:
       tags:
@@ -8819,6 +10746,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://data.us.algolia.com/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     patch:
       tags:
         - tasks
@@ -8846,6 +10781,243 @@ paths:
                 $ref: '#/components/schemas/TaskUpdateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            var response = await client.UpdateTaskV1Async(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new TaskUpdateV1 { Enabled = false }
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.UpdateTaskV1(client.NewApiUpdateTaskV1Request(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ingestion.NewEmptyTaskUpdateV1().SetEnabled(false)))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.updateTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new
+            TaskUpdateV1().setEnabled(false));
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.updateTaskV1({
+              taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+              taskUpdate: { enabled: false },
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.updateTaskV1(
+              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              taskUpdate = TaskUpdateV1(
+                enabled = false,
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->updateTaskV1(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                ['enabled' => false,
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.update_task_v1(
+                task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                task_update={
+                    "enabled": False,
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.update_task_v1(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              Algolia::Ingestion::TaskUpdateV1.new(enabled: false)
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.updateTaskV1(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                taskUpdate = TaskUpdateV1(
+                  enabled = Some(false)
+                )
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.updateTaskV1(
+                taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                taskUpdate: TaskUpdateV1(enabled: false)
+            )
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PATCH \
+              --url https://data.us.algolia.com/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"destinationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","trigger":{"cron":"* * 1 * *"},"input":{"mapping":{"format":"mappingkit/v1","actions":[{"id":"lorem","enabled":true,"trigger":"lorem","fieldDirectives":[{"fieldKey":"lorem","value":{}}]}]}},"enabled":true,"failureThreshold":0}'
     delete:
       tags:
         - tasks
@@ -8866,6 +11038,224 @@ paths:
                 $ref: '#/components/schemas/DeleteResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+
+            // Call the API
+
+            var response = await
+            client.DeleteTaskV1Async("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.DeleteTaskV1(client.NewApiDeleteTaskV1Request(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.deleteTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.deleteTaskV1({ taskID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.deleteTaskV1(
+              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->deleteTaskV1(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.delete_task_v1(
+                task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response =
+            client.delete_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.deleteTaskV1(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.deleteTaskV1(taskID:
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://data.us.algolia.com/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/tasks/{taskID}/run:
     post:
       tags:
@@ -9100,6 +11490,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://data.us.algolia.com/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/tasks/{taskID}/enable:
     put:
       tags:
@@ -9333,6 +11731,14 @@ paths:
             "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PUT \
+              --url https://data.us.algolia.com/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/enable \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/tasks/{taskID}/disable:
     put:
       tags:
@@ -9566,6 +11972,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PUT \
+              --url https://data.us.algolia.com/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/transformations:
     get:
       tags:
@@ -10067,11 +12481,13 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request GET \
-              --url 'https://data.us.algolia.com/1/transformations?itemsPerPage=10&page=1&sort=createdAt&order=desc' \
+            curl --request POST \
+              --url https://data.us.algolia.com/1/transformations \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"code":"lorem","name":"lorem","description":"lorem","authenticationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'
   /1/transformations/try:
     post:
       tags:
@@ -10886,6 +13302,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://data.us.algolia.com/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     put:
       tags:
         - transformations
@@ -10909,6 +13333,258 @@ paths:
                 $ref: '#/components/schemas/TransformationUpdateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            var response = await client.UpdateTransformationAsync(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new TransformationCreate
+              {
+                Code = "foo",
+                Name = "bar",
+                Description = "baz",
+              }
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.UpdateTransformation(client.NewApiUpdateTransformationRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ingestion.NewEmptyTransformationCreate().SetCode("foo").SetName("bar").SetDescription("baz")))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.updateTransformation(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new TransformationCreate().setCode("foo").setName("bar").setDescription("baz")
+            );
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.updateTransformation({
+              transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+              transformationCreate: { code: 'foo', name: 'bar', description: 'baz' },
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.updateTransformation(
+              transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              transformationCreate = TransformationCreate(
+                code = "foo",
+                name = "bar",
+                description = "baz",
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->updateTransformation(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                ['code' => 'foo',
+                    'name' => 'bar',
+                    'description' => 'baz',
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.update_transformation(
+                transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                transformation_create={
+                    "code": "foo",
+                    "name": "bar",
+                    "description": "baz",
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.update_transformation(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              Algolia::Ingestion::TransformationCreate.new(code: "foo", name: "bar", description: "baz")
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.updateTransformation(
+                transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                transformationCreate = TransformationCreate(
+                  code = "foo",
+                  name = "bar",
+                  description = Some("baz")
+                )
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.updateTransformation(
+                transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                transformationCreate: TransformationCreate(code: "foo", name: "bar", description: "baz")
+            )
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PUT \
+              --url https://data.us.algolia.com/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"code":"lorem","name":"lorem","description":"lorem","authenticationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'
     delete:
       tags:
         - transformations
@@ -10926,6 +13602,225 @@ paths:
                 $ref: '#/components/schemas/DeleteResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+
+            // Call the API
+
+            var response = await
+            client.DeleteTransformationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.DeleteTransformation(client.NewApiDeleteTransformationRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.deleteTransformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.deleteTransformation({
+            transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.deleteTransformation(
+              transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->deleteTransformation(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.delete_transformation(
+                transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response =
+            client.delete_transformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.deleteTransformation(
+                transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await
+            client.deleteTransformation(transformationID:
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://data.us.algolia.com/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/transformations/{transformationID}/try:
     post:
       tags:
@@ -11207,6 +14102,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://data.us.algolia.com/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"code":"lorem","sampleRecord":{},"authentications":[{"type":"googleServiceAccount","name":"lorem","platform":"bigcommerce","input":{"clientEmail":"service-account-name@project-id.iam.gserviceaccount.com","privateKey":"lorem"}}]}'
   /1/runs:
     get:
       tags:
@@ -11681,6 +14586,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://data.us.algolia.com/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/runs/{runID}/events:
     get:
       tags:
@@ -11947,6 +14860,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://data.us.algolia.com/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events?itemsPerPage=10&page=1&status=created&type=fetch&sort=status&order=desc&startDate=lorem&endDate=lorem' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/runs/{runID}/events/{eventID}:
     get:
       tags:
@@ -12186,6 +15107,14 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://data.us.algolia.com/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
 components:
   securitySchemes:
     appId:

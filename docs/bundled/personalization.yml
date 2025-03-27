@@ -1256,6 +1256,14 @@ paths:
             "UserToken")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://personalization.us.algolia.com/1/profiles/personalization/test-user-123 \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/profiles/{userToken}:
     delete:
       tags:
@@ -1506,6 +1514,14 @@ paths:
             "UserToken")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://personalization.us.algolia.com/1/profiles/test-user-123 \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/strategies/personalization:
     get:
       tags:
@@ -2074,11 +2090,13 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request GET \
+            curl --request POST \
               --url https://personalization.us.algolia.com/1/strategies/personalization \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"eventsScoring":[{"score":42,"eventName":"lorem","eventType":"click"}],"facetsScoring":[{"score":42,"facetName":"lorem"}],"personalizationImpact":0}'
 components:
   securitySchemes:
     appId:

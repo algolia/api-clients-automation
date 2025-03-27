@@ -1410,6 +1410,12 @@ paths:
             let response = try await client.getClusterStatus(clusters: "c1-de")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://status.algolia.com/1/status/c1-de%2Cc2-de%2Cc3-de \
+              --header 'accept: application/json'
   /1/incidents:
     get:
       summary: Retrieve all incidents
@@ -1840,6 +1846,12 @@ paths:
             "c1-de")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://status.algolia.com/1/incidents/c1-de%2Cc2-de%2Cc3-de \
+              --header 'accept: application/json'
   /1/inventory/servers:
     get:
       summary: Retrieve servers
@@ -2277,6 +2289,12 @@ paths:
             let response = try await client.getLatency(clusters: "c1-de")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://status.algolia.com/1/latency/c1-de%2Cc2-de%2Cc3-de \
+              --header 'accept: application/json'
   /1/indexing/{clusters}:
     get:
       summary: Retrieve indexing times
@@ -2493,6 +2511,12 @@ paths:
             let response = try await client.getIndexingTime(clusters: "c1-de")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://status.algolia.com/1/indexing/c1-de%2Cc2-de%2Cc3-de \
+              --header 'accept: application/json'
   /1/reachability/{clusters}/probes:
     get:
       summary: Test the reachability of clusters
@@ -2709,6 +2733,12 @@ paths:
             let response = try await client.getReachability(clusters: "c1-de")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://status.algolia.com/1/reachability/c1-de%2Cc2-de%2Cc3-de/probes \
+              --header 'accept: application/json'
   /1/infrastructure/{metric}/period/{period}:
     get:
       summary: Retrieve metrics
@@ -2941,6 +2971,12 @@ paths:
             Metric.avgBuildTime, period: Period.minute)
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://status.algolia.com/1/infrastructure/%2A/period/week \
+              --header 'accept: application/json'
 components:
   securitySchemes:
     appId:

@@ -2149,6 +2149,13 @@ paths:
             try await client.deleteUserToken(userToken: "test-user-1")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://insights.us.algolia.io/1/usertokens/test-user-1 \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
 components:
   securitySchemes:
     appId:
