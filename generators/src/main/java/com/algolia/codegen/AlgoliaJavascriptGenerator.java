@@ -174,7 +174,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
 
         String version = Helpers.getPackageJsonVersion(name);
 
-        if (version.contains("alpha") || version.contains("beta")) {
+        if (version.contains("alpha") || version.contains("beta") || (boolean) pkg.getOrDefault("isStandaloneClient", false) == true) {
           continue;
         }
 
@@ -193,9 +193,8 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
       additionalProperties.put("dependencies", dependencies);
 
       // Files used to generate the `lite` client
-      clientName = "lite" + Helpers.API_SUFFIX;
       additionalProperties.put("apiName", "search");
-      additionalProperties.put("clientName", clientName);
+      additionalProperties.put("clientName", "lite" + Helpers.API_SUFFIX);
       additionalProperties.put("algoliaAgent", "Lite");
     }
   }

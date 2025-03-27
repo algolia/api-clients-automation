@@ -46,7 +46,9 @@
                     "search"
                   ]
                 },
-                "output": { "type": "string" }
+                "output": { "type": "string" },
+                "isStandaloneClient": { "type": "boolean", "description": "this property only matters for the javascript client, when `true`, your package will be built as a standalone client and not be part of `algoliasearch` directly. This is recommended for non stable APIs." },
+                "clientName": { "type": "string", "description": "when defined, the name of the generated instance of the client will be hardcoded, otherwise it defaults to the `spec` name, e.g. search -> searchClient" }
               },
               "required": ["name", "output"],
               "additionalProperties": false
