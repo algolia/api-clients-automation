@@ -13,7 +13,7 @@ python = ">= 3.8.1"
 algoliasearch = { path = "../../clients/algoliasearch-client-python", develop = true }
 ruff = "== 0.9.6"
 pyright = "== 1.1.391"
-python-dotenv = "== 1.0.1"
+python-dotenv = "==1.1.0"
 
 [tool.poetry.scripts]
 search = "app.search:main"
