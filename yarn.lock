@@ -2177,10 +2177,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/semver@npm:7.5.8":
-  version: 7.5.8
-  resolution: "@types/semver@npm:7.5.8"
-  checksum: 10/3496808818ddb36deabfe4974fd343a78101fa242c4690044ccdc3b95dcf8785b494f5d628f2f47f38a702f8db9c53c67f47d7818f2be1b79f2efb09692e1178
+"@types/semver@npm:7.7.0":
+  version: 7.7.0
+  resolution: "@types/semver@npm:7.7.0"
+  checksum: 10/ee4514c6c852b1c38f951239db02f9edeea39f5310fad9396a00b51efa2a2d96b3dfca1ae84c88181ea5b7157c57d32d7ef94edacee36fbf975546396b85ba5b
   languageName: node
   linkType: hard
 
@@ -7436,7 +7436,7 @@ __metadata:
     "@types/fs-extra": "npm:11.0.4"
     "@types/js-yaml": "npm:4.0.9"
     "@types/node": "npm:22.13.14"
-    "@types/semver": "npm:7.5.8"
+    "@types/semver": "npm:7.7.0"
     "@types/spinnies": "npm:0.5.3"
     chai: "npm:5.2.0"
     chalk: "npm:5.4.1"
