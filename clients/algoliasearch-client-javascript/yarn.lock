@@ -14,11 +14,11 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.23.0"
     "@algolia/requester-node-http": "npm:5.23.0"
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@types/node": "npm:22.13.11"
+    "@types/node": "npm:22.13.14"
     publint: "npm:0.3.9"
     rollup: "npm:4.36.0"
     tsup: "npm:8.4.0"
-    typescript: "npm:5.7.3"
+    typescript: "npm:5.8.2"
   languageName: unknown
   linkType: soft
 
@@ -31,11 +31,11 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.23.0"
     "@algolia/requester-node-http": "npm:5.23.0"
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@types/node": "npm:22.13.11"
+    "@types/node": "npm:22.13.14"
     publint: "npm:0.3.9"
     rollup: "npm:4.36.0"
     tsup: "npm:8.4.0"
-    typescript: "npm:5.7.3"
+    typescript: "npm:5.8.2"
   languageName: unknown
   linkType: soft
 
@@ -80,11 +80,11 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.23.0"
     "@algolia/requester-node-http": "npm:5.23.0"
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@types/node": "npm:22.13.11"
+    "@types/node": "npm:22.13.14"
     publint: "npm:0.3.9"
     rollup: "npm:4.36.0"
     tsup: "npm:8.4.0"
-    typescript: "npm:5.7.3"
+    typescript: "npm:5.8.2"
   languageName: unknown
   linkType: soft
 
@@ -97,11 +97,11 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.23.0"
     "@algolia/requester-node-http": "npm:5.23.0"
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@types/node": "npm:22.13.11"
+    "@types/node": "npm:22.13.14"
     publint: "npm:0.3.9"
     rollup: "npm:4.36.0"
     tsup: "npm:8.4.0"
-    typescript: "npm:5.7.3"
+    typescript: "npm:5.8.2"
   languageName: unknown
   linkType: soft
 
@@ -114,11 +114,11 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.23.0"
     "@algolia/requester-node-http": "npm:5.23.0"
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@types/node": "npm:22.13.11"
+    "@types/node": "npm:22.13.14"
     publint: "npm:0.3.9"
     rollup: "npm:4.36.0"
     tsup: "npm:8.4.0"
-    typescript: "npm:5.7.3"
+    typescript: "npm:5.8.2"
   languageName: unknown
   linkType: soft
 
@@ -131,11 +131,11 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.23.0"
     "@algolia/requester-node-http": "npm:5.23.0"
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@types/node": "npm:22.13.11"
+    "@types/node": "npm:22.13.14"
     publint: "npm:0.3.9"
     rollup: "npm:4.36.0"
     tsup: "npm:8.4.0"
-    typescript: "npm:5.7.3"
+    typescript: "npm:5.8.2"
   languageName: unknown
   linkType: soft
 
@@ -165,11 +165,11 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.23.0"
     "@algolia/requester-node-http": "npm:5.23.0"
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@types/node": "npm:22.13.11"
+    "@types/node": "npm:22.13.14"
     publint: "npm:0.3.9"
     rollup: "npm:4.36.0"
     tsup: "npm:8.4.0"
-    typescript: "npm:5.7.3"
+    typescript: "npm:5.8.2"
   languageName: unknown
   linkType: soft
 
@@ -198,11 +198,11 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.23.0"
     "@algolia/requester-node-http": "npm:5.23.0"
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@types/node": "npm:22.13.11"
+    "@types/node": "npm:22.13.14"
     publint: "npm:0.3.9"
     rollup: "npm:4.36.0"
     tsup: "npm:8.4.0"
-    typescript: "npm:5.7.3"
+    typescript: "npm:5.8.2"
   languageName: unknown
   linkType: soft
 
@@ -215,11 +215,11 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.23.0"
     "@algolia/requester-node-http": "npm:5.23.0"
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@types/node": "npm:22.13.11"
+    "@types/node": "npm:22.13.14"
     publint: "npm:0.3.9"
     rollup: "npm:4.36.0"
     tsup: "npm:8.4.0"
-    typescript: "npm:5.7.3"
+    typescript: "npm:5.8.2"
   languageName: unknown
   linkType: soft
 
@@ -2017,15 +2017,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:22.13.11":
-  version: 22.13.11
-  resolution: "@types/node@npm:22.13.11"
-  dependencies:
-    undici-types: "npm:~6.20.0"
-  checksum: 10/5e556eda347f3395669bd6fa7a10c77722f06befe0a6b51b97ed7a4bd0f92b24aa867ee611b547614f17dfc5a0bb7946a75263bd1f302bcac3039729d22acab5
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:22.13.14":
   version: 22.13.14
   resolution: "@types/node@npm:22.13.14"
@@ -2251,12 +2242,12 @@ __metadata:
     "@algolia/requester-node-http": "npm:5.23.0"
     "@algolia/requester-testing": "npm:5.23.0"
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@types/node": "npm:22.13.11"
+    "@types/node": "npm:22.13.14"
     jsdom: "npm:26.0.0"
     publint: "npm:0.3.9"
     rollup: "npm:4.36.0"
     tsup: "npm:8.4.0"
-    typescript: "npm:5.7.3"
+    typescript: "npm:5.8.2"
     vitest: "npm:3.0.9"
     vitest-environment-miniflare: "npm:2.14.4"
   languageName: unknown
@@ -8176,16 +8167,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.7.3":
-  version: 5.7.3
-  resolution: "typescript@npm:5.7.3"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10/6a7e556de91db3d34dc51cd2600e8e91f4c312acd8e52792f243c7818dfadb27bae677175fad6947f9c81efb6c57eb6b2d0c736f196a6ee2f1f7d57b74fc92fa
-  languageName: node
-  linkType: hard
-
 "typescript@npm:5.8.2, typescript@npm:>=3 < 6":
   version: 5.8.2
   resolution: "typescript@npm:5.8.2"
@@ -8203,16 +8184,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10/462e0bb46c63abfc5bfc43f2bb00b9777a4228f3ed52d8930b46404dce71dbada63c27a99262ff4570b5ff7d01455701bfd36823bd3c766e443b6fa33cd31dea
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@npm%3A5.7.3#optional!builtin<compat/typescript>":
-  version: 5.7.3
-  resolution: "typescript@patch:typescript@npm%3A5.7.3#optional!builtin<compat/typescript>::version=5.7.3&hash=5786d5"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10/dc58d777eb4c01973f7fbf1fd808aad49a0efdf545528dab9b07d94fdcb65b8751742804c3057e9619a4627f2d9cc85547fdd49d9f4326992ad0181b49e61d81
   languageName: node
   linkType: hard
 
