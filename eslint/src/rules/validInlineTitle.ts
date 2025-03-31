@@ -1,3 +1,4 @@
+// @ts-ignore
 import { createRule } from 'eslint-plugin-yml/lib/utils';
 
 import { isNullable, isPairWithKey } from '../utils.js';
