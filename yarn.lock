@@ -90,7 +90,7 @@ __metadata:
     prettier-plugin-java: "npm:2.6.7"
     prettier-plugin-organize-imports: "npm:4.1.0"
     renovate-config-algolia: "npm:2.2.0"
-    typescript: "npm:5.7.3"
+    typescript: "npm:5.8.2"
   languageName: unknown
   linkType: soft
 
@@ -3967,7 +3967,7 @@ __metadata:
     eslint: "npm:8.57.1"
     eslint-plugin-yml: "npm:1.17.0"
     eslint-vitest-rule-tester: "npm:2.2.0"
-    typescript: "npm:5.7.3"
+    typescript: "npm:5.8.2"
     vitest: "npm:3.0.9"
     yaml-eslint-parser: "npm:1.3.0"
   languageName: unknown
@@ -5407,7 +5407,7 @@ __metadata:
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
     react-instantsearch: "npm:^7.15.3"
-    typescript: "npm:5.7.3"
+    typescript: "npm:5.8.2"
     typescript-eslint: "npm:8.28.0"
     vite: "npm:6.2.3"
   languageName: unknown
@@ -5432,7 +5432,7 @@ __metadata:
     "@algolia/recommend": "link:../../../clients/algoliasearch-client-javascript/packages/recommend"
     "@algolia/requester-node-http": "link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http"
     algoliasearch: "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
-    typescript: "npm:5.7.3"
+    typescript: "npm:5.8.2"
   languageName: unknown
   linkType: soft
 
@@ -7394,7 +7394,7 @@ __metadata:
     micromatch: "npm:4.0.8"
     semver: "npm:7.7.1"
     spinnies: "npm:0.5.1"
-    typescript: "npm:5.7.3"
+    typescript: "npm:5.8.2"
     vitest: "npm:3.0.9"
   languageName: unknown
   linkType: soft
@@ -8234,6 +8234,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:5.8.2":
+  version: 5.8.2
+  resolution: "typescript@npm:5.8.2"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10/dbc2168a55d56771f4d581997be52bab5cbc09734fec976cfbaabd787e61fb4c6cf9125fd48c6f98054ce549c77ecedefc7f64252a830dd8e9c3381f61fbeb78
+  languageName: node
+  linkType: hard
+
 "typescript@npm:^3.9":
   version: 3.9.10
   resolution: "typescript@npm:3.9.10"
@@ -8251,6 +8261,16 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10/dc58d777eb4c01973f7fbf1fd808aad49a0efdf545528dab9b07d94fdcb65b8751742804c3057e9619a4627f2d9cc85547fdd49d9f4326992ad0181b49e61d81
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A5.8.2#optional!builtin<compat/typescript>":
+  version: 5.8.2
+  resolution: "typescript@patch:typescript@npm%3A5.8.2#optional!builtin<compat/typescript>::version=5.8.2&hash=5786d5"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10/97920a082ffc57583b1cb6bc4faa502acc156358e03f54c7fc7fdf0b61c439a717f4c9070c449ee9ee683d4cfc3bb203127c2b9794b2950f66d9d307a4ff262c
   languageName: node
   linkType: hard
 
