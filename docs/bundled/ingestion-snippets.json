@@ -12,7 +12,7 @@
       "with transformationIDs": "var response = await client.CreateDestinationAsync(\n  new DestinationCreate\n  {\n    Type = Enum.Parse<DestinationType>(\"Search\"),\n    Name = \"destinationName\",\n    Input = new DestinationInput(new DestinationIndexName { IndexName = \"<YOUR_INDEX_NAME>\" }),\n    TransformationIDs = new List<string> { \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\" },\n  }\n);"
     },
     "createSource": {
-      "createSource": "var response = await client.CreateSourceAsync(\n  new SourceCreate\n  {\n    Type = Enum.Parse<SourceType>(\"Commercetools\"),\n    Name = \"sourceName\",\n    Input = new SourceInput(\n      new SourceCommercetools\n      {\n        StoreKeys = new List<string> { \"myStore\" },\n        Locales = new List<string> { \"de\" },\n        Url = \"http://commercetools.com\",\n        ProjectKey = \"keyID\",\n      }\n    ),\n    AuthenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  }\n);",
+      "createSource": "var response = await client.CreateSourceAsync(\n  new SourceCreate\n  {\n    Type = Enum.Parse<SourceType>(\"Commercetools\"),\n    Name = \"sourceName\",\n    Input = new SourceInput(\n      new SourceCommercetools\n      {\n        StoreKeys = new List<string> { \"myStore\" },\n        Locales = new List<string> { \"de\" },\n        Url = \"http://commercetools.com\",\n        ProjectKey = \"keyID\",\n        ProductQueryPredicate =\n          \"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\",\n      }\n    ),\n    AuthenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  }\n);",
       "push": "var response = await client.CreateSourceAsync(\n  new SourceCreate { Type = Enum.Parse<SourceType>(\"Push\"), Name = \"pushezpourentrer\" }\n);"
     },
     "createTask": {
@@ -221,7 +221,7 @@
       "with transformationIDs": "response, err := client.CreateDestination(client.NewApiCreateDestinationRequest(\n\n  ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType(\"search\")).SetName(\"destinationName\").SetInput(ingestion.DestinationIndexNameAsDestinationInput(\n    ingestion.NewEmptyDestinationIndexName().SetIndexName(\"<YOUR_INDEX_NAME>\"))).SetTransformationIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "createSource": {
-      "createSource": "response, err := client.CreateSource(client.NewApiCreateSourceRequest(\n\n  ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType(\"commercetools\")).SetName(\"sourceName\").SetInput(ingestion.SourceCommercetoolsAsSourceInput(\n    ingestion.NewEmptySourceCommercetools().SetStoreKeys(\n      []string{\"myStore\"}).SetLocales(\n      []string{\"de\"}).SetUrl(\"http://commercetools.com\").SetProjectKey(\"keyID\"))).SetAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "createSource": "response, err := client.CreateSource(client.NewApiCreateSourceRequest(\n\n  ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType(\"commercetools\")).SetName(\"sourceName\").SetInput(ingestion.SourceCommercetoolsAsSourceInput(\n    ingestion.NewEmptySourceCommercetools().SetStoreKeys(\n      []string{\"myStore\"}).SetLocales(\n      []string{\"de\"}).SetUrl(\"http://commercetools.com\").SetProjectKey(\"keyID\").SetProductQueryPredicate(\"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\"))).SetAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "push": "response, err := client.CreateSource(client.NewApiCreateSourceRequest(\n\n  ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType(\"push\")).SetName(\"pushezpourentrer\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "createTask": {
@@ -429,7 +429,7 @@
       "with transformationIDs": "client.createDestination(\n  new DestinationCreate()\n    .setType(DestinationType.SEARCH)\n    .setName(\"destinationName\")\n    .setInput(new DestinationIndexName().setIndexName(\"<YOUR_INDEX_NAME>\"))\n    .setTransformationIDs(Arrays.asList(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\n);"
     },
     "createSource": {
-      "createSource": "client.createSource(\n  new SourceCreate()\n    .setType(SourceType.COMMERCETOOLS)\n    .setName(\"sourceName\")\n    .setInput(\n      new SourceCommercetools()\n        .setStoreKeys(Arrays.asList(\"myStore\"))\n        .setLocales(Arrays.asList(\"de\"))\n        .setUrl(\"http://commercetools.com\")\n        .setProjectKey(\"keyID\")\n    )\n    .setAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n);",
+      "createSource": "client.createSource(\n  new SourceCreate()\n    .setType(SourceType.COMMERCETOOLS)\n    .setName(\"sourceName\")\n    .setInput(\n      new SourceCommercetools()\n        .setStoreKeys(Arrays.asList(\"myStore\"))\n        .setLocales(Arrays.asList(\"de\"))\n        .setUrl(\"http://commercetools.com\")\n        .setProjectKey(\"keyID\")\n        .setProductQueryPredicate(\"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\")\n    )\n    .setAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n);",
       "push": "client.createSource(new SourceCreate().setType(SourceType.PUSH).setName(\"pushezpourentrer\"));"
     },
     "createTask": {
@@ -637,7 +637,7 @@
       "with transformationIDs": "const response = await client.createDestination({\n  type: 'search',\n  name: 'destinationName',\n  input: { indexName: 'full_name______' },\n  transformationIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f'],\n});"
     },
     "createSource": {
-      "createSource": "const response = await client.createSource({\n  type: 'commercetools',\n  name: 'sourceName',\n  input: { storeKeys: ['myStore'], locales: ['de'], url: 'http://commercetools.com', projectKey: 'keyID' },\n  authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});",
+      "createSource": "const response = await client.createSource({\n  type: 'commercetools',\n  name: 'sourceName',\n  input: {\n    storeKeys: ['myStore'],\n    locales: ['de'],\n    url: 'http://commercetools.com',\n    projectKey: 'keyID',\n    productQueryPredicate: 'masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))',\n  },\n  authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});",
       "push": "const response = await client.createSource({ type: 'push', name: 'pushezpourentrer' });"
     },
     "createTask": {
@@ -845,7 +845,7 @@
       "with transformationIDs": "var response = client.createDestination(\n  destinationCreate = DestinationCreate(\n    type = DestinationType.entries.first { it.value == \"search\" },\n    name = \"destinationName\",\n    input = DestinationIndexName(\n      indexName = \"<YOUR_INDEX_NAME>\",\n    ),\n    transformationIDs = listOf(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"),\n  ),\n)"
     },
     "createSource": {
-      "createSource": "var response = client.createSource(\n  sourceCreate = SourceCreate(\n    type = SourceType.entries.first { it.value == \"commercetools\" },\n    name = \"sourceName\",\n    input = SourceCommercetools(\n      storeKeys = listOf(\"myStore\"),\n      locales = listOf(\"de\"),\n      url = \"http://commercetools.com\",\n      projectKey = \"keyID\",\n    ),\n    authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ),\n)",
+      "createSource": "var response = client.createSource(\n  sourceCreate = SourceCreate(\n    type = SourceType.entries.first { it.value == \"commercetools\" },\n    name = \"sourceName\",\n    input = SourceCommercetools(\n      storeKeys = listOf(\"myStore\"),\n      locales = listOf(\"de\"),\n      url = \"http://commercetools.com\",\n      projectKey = \"keyID\",\n      productQueryPredicate = \"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\",\n    ),\n    authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ),\n)",
       "push": "var response = client.createSource(\n  sourceCreate = SourceCreate(\n    type = SourceType.entries.first { it.value == \"push\" },\n    name = \"pushezpourentrer\",\n  ),\n)"
     },
     "createTask": {
@@ -1053,7 +1053,7 @@
       "with transformationIDs": "$response = $client->createDestination(\n    ['type' => 'search',\n        'name' => 'destinationName',\n        'input' => ['indexName' => '<YOUR_INDEX_NAME>',\n        ],\n        'transformationIDs' => [\n            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n        ],\n    ],\n);"
     },
     "createSource": {
-      "createSource": "$response = $client->createSource(\n    ['type' => 'commercetools',\n        'name' => 'sourceName',\n        'input' => ['storeKeys' => [\n            'myStore',\n        ],\n            'locales' => [\n                'de',\n            ],\n            'url' => 'http://commercetools.com',\n            'projectKey' => 'keyID',\n        ],\n        'authenticationID' => '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ],\n);",
+      "createSource": "$response = $client->createSource(\n    ['type' => 'commercetools',\n        'name' => 'sourceName',\n        'input' => ['storeKeys' => [\n            'myStore',\n        ],\n            'locales' => [\n                'de',\n            ],\n            'url' => 'http://commercetools.com',\n            'projectKey' => 'keyID',\n            'productQueryPredicate' => 'masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))',\n        ],\n        'authenticationID' => '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ],\n);",
       "push": "$response = $client->createSource(\n    ['type' => 'push',\n        'name' => 'pushezpourentrer',\n    ],\n);"
     },
     "createTask": {
@@ -1261,7 +1261,7 @@
       "with transformationIDs": "response = client.create_destination(\n    destination_create={\n        \"type\": \"search\",\n        \"name\": \"destinationName\",\n        \"input\": {\n            \"indexName\": \"<YOUR_INDEX_NAME>\",\n        },\n        \"transformationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n        ],\n    },\n)"
     },
     "createSource": {
-      "createSource": "response = client.create_source(\n    source_create={\n        \"type\": \"commercetools\",\n        \"name\": \"sourceName\",\n        \"input\": {\n            \"storeKeys\": [\n                \"myStore\",\n            ],\n            \"locales\": [\n                \"de\",\n            ],\n            \"url\": \"http://commercetools.com\",\n            \"projectKey\": \"keyID\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)",
+      "createSource": "response = client.create_source(\n    source_create={\n        \"type\": \"commercetools\",\n        \"name\": \"sourceName\",\n        \"input\": {\n            \"storeKeys\": [\n                \"myStore\",\n            ],\n            \"locales\": [\n                \"de\",\n            ],\n            \"url\": \"http://commercetools.com\",\n            \"projectKey\": \"keyID\",\n            \"productQueryPredicate\": 'masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))',\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)",
       "push": "response = client.create_source(\n    source_create={\n        \"type\": \"push\",\n        \"name\": \"pushezpourentrer\",\n    },\n)"
     },
     "createTask": {
@@ -1469,7 +1469,7 @@
       "with transformationIDs": "response = client.create_destination(\n  Algolia::Ingestion::DestinationCreate.new(\n    type: \"search\",\n    name: \"destinationName\",\n    input: Algolia::Ingestion::DestinationIndexName.new(index_name: \"<YOUR_INDEX_NAME>\"),\n    transformation_ids: [\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"]\n  )\n)"
     },
     "createSource": {
-      "createSource": "response = client.create_source(\n  Algolia::Ingestion::SourceCreate.new(\n    type: \"commercetools\",\n    name: \"sourceName\",\n    input: Algolia::Ingestion::SourceCommercetools.new(\n      store_keys: [\"myStore\"],\n      locales: [\"de\"],\n      url: \"http://commercetools.com\",\n      project_key: \"keyID\"\n    ),\n    authentication_id: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  )\n)",
+      "createSource": "response = client.create_source(\n  Algolia::Ingestion::SourceCreate.new(\n    type: \"commercetools\",\n    name: \"sourceName\",\n    input: Algolia::Ingestion::SourceCommercetools.new(\n      store_keys: [\"myStore\"],\n      locales: [\"de\"],\n      url: \"http://commercetools.com\",\n      project_key: \"keyID\",\n      product_query_predicate: \"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\"\n    ),\n    authentication_id: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  )\n)",
       "push": "response = client.create_source(Algolia::Ingestion::SourceCreate.new(type: \"push\", name: \"pushezpourentrer\"))"
     },
     "createTask": {
@@ -1677,7 +1677,7 @@
       "with transformationIDs": "val response = Await.result(\n  client.createDestination(\n    destinationCreate = DestinationCreate(\n      `type` = DestinationType.withName(\"search\"),\n      name = \"destinationName\",\n      input = DestinationIndexName(\n        indexName = \"<YOUR_INDEX_NAME>\"\n      ),\n      transformationIDs = Some(Seq(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "createSource": {
-      "createSource": "val response = Await.result(\n  client.createSource(\n    sourceCreate = SourceCreate(\n      `type` = SourceType.withName(\"commercetools\"),\n      name = \"sourceName\",\n      input = Some(\n        SourceCommercetools(\n          storeKeys = Some(Seq(\"myStore\")),\n          locales = Some(Seq(\"de\")),\n          url = \"http://commercetools.com\",\n          projectKey = \"keyID\"\n        )\n      ),\n      authenticationID = Some(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "createSource": "val response = Await.result(\n  client.createSource(\n    sourceCreate = SourceCreate(\n      `type` = SourceType.withName(\"commercetools\"),\n      name = \"sourceName\",\n      input = Some(\n        SourceCommercetools(\n          storeKeys = Some(Seq(\"myStore\")),\n          locales = Some(Seq(\"de\")),\n          url = \"http://commercetools.com\",\n          projectKey = \"keyID\",\n          productQueryPredicate = Some(\"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\")\n        )\n      ),\n      authenticationID = Some(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n    )\n  ),\n  Duration(100, \"sec\")\n)",
       "push": "val response = Await.result(\n  client.createSource(\n    sourceCreate = SourceCreate(\n      `type` = SourceType.withName(\"push\"),\n      name = \"pushezpourentrer\"\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "createTask": {
@@ -1885,7 +1885,7 @@
       "with transformationIDs": "let response = try await client.createDestination(destinationCreate: DestinationCreate(\n    type: DestinationType.search,\n    name: \"destinationName\",\n    input: DestinationInput.destinationIndexName(DestinationIndexName(indexName: \"<YOUR_INDEX_NAME>\")),\n    transformationIDs: [\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"]\n))"
     },
     "createSource": {
-      "createSource": "let response = try await client.createSource(sourceCreate: SourceCreate(\n    type: SourceType.commercetools,\n    name: \"sourceName\",\n    input: SourceInput.sourceCommercetools(SourceCommercetools(\n        storeKeys: [\"myStore\"],\n        locales: [\"de\"],\n        url: \"http://commercetools.com\",\n        projectKey: \"keyID\"\n    )),\n    authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n))",
+      "createSource": "let response = try await client.createSource(sourceCreate: SourceCreate(\n    type: SourceType.commercetools,\n    name: \"sourceName\",\n    input: SourceInput.sourceCommercetools(SourceCommercetools(\n        storeKeys: [\"myStore\"],\n        locales: [\"de\"],\n        url: \"http://commercetools.com\",\n        projectKey: \"keyID\",\n        productQueryPredicate: \"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\"\n    )),\n    authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n))",
       "push": "let response = try await client.createSource(sourceCreate: SourceCreate(\n    type: SourceType.push,\n    name: \"pushezpourentrer\"\n))"
     },
     "createTask": {

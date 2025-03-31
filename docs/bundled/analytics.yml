@@ -3872,6 +3872,14 @@ paths:
             "myAttribute", index: "index")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/filters/brand?index=ALGOLIA_INDEX_NAME&search=enable%20ab%20test&startDate=2022-09-19&endDate=2023-01-21&limit=10&offset=0&tags=device%3Amobile%2520phone' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/filters/noResults:
     get:
       tags:

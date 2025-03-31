@@ -27,6 +27,8 @@ import algoliasearch.ingestion.DestinationType._
   *   Universally unique identifier (UUID) of a destination resource.
   * @param name
   *   Descriptive name for the resource.
+  * @param owner
+  *   Owner of the resource.
   * @param createdAt
   *   Date of creation in RFC 3339 format.
   * @param updatedAt
@@ -38,6 +40,7 @@ case class Destination(
     destinationID: String,
     `type`: DestinationType,
     name: String,
+    owner: Option[String] = scala.None,
     input: DestinationInput,
     createdAt: String,
     updatedAt: Option[String] = scala.None,

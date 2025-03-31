@@ -24,6 +24,9 @@ public class Authentication {
   @JsonProperty("platform")
   private Platform platform;
 
+  @JsonProperty("owner")
+  private String owner;
+
   @JsonProperty("input")
   private AuthInputPartial input;
 
@@ -77,6 +80,17 @@ public class Authentication {
     return platform;
   }
 
+  public Authentication setOwner(String owner) {
+    this.owner = owner;
+    return this;
+  }
+
+  /** Owner of the resource. */
+  @javax.annotation.Nullable
+  public String getOwner() {
+    return owner;
+  }
+
   public Authentication setInput(AuthInputPartial input) {
     this.input = input;
     return this;
@@ -124,6 +138,7 @@ public class Authentication {
       Objects.equals(this.type, authentication.type) &&
       Objects.equals(this.name, authentication.name) &&
       Objects.equals(this.platform, authentication.platform) &&
+      Objects.equals(this.owner, authentication.owner) &&
       Objects.equals(this.input, authentication.input) &&
       Objects.equals(this.createdAt, authentication.createdAt) &&
       Objects.equals(this.updatedAt, authentication.updatedAt)
@@ -132,7 +147,7 @@ public class Authentication {
 
   @Override
   public int hashCode() {
-    return Objects.hash(authenticationID, type, name, platform, input, createdAt, updatedAt);
+    return Objects.hash(authenticationID, type, name, platform, owner, input, createdAt, updatedAt);
   }
 
   @Override
@@ -143,6 +158,7 @@ public class Authentication {
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    platform: ").append(toIndentedString(platform)).append("\n");
+    sb.append("    owner: ").append(toIndentedString(owner)).append("\n");
     sb.append("    input: ").append(toIndentedString(input)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");

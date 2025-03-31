@@ -60,10 +60,7 @@ final class IngestionClientRequestsTestsE2E: XCTestCase {
         let responseBody = try XCTUnwrap(response.body)
         let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
 
-        let expectedBodyData = try XCTUnwrap(
-            "{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}"
-                .data(using: .utf8)
-        )
+        let expectedBodyData = try XCTUnwrap("{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}".data(using: .utf8))
 
         XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
 
@@ -81,10 +78,7 @@ final class IngestionClientRequestsTestsE2E: XCTestCase {
         let responseBody = try XCTUnwrap(response.body)
         let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
 
-        let expectedBodyData = try XCTUnwrap(
-            "{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}"
-                .data(using: .utf8)
-        )
+        let expectedBodyData = try XCTUnwrap("{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}".data(using: .utf8))
 
         XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
 

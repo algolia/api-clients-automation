@@ -127,7 +127,8 @@ def snippet_for_create_source
         store_keys: ["myStore"],
         locales: ["de"],
         url: "http://commercetools.com",
-        project_key: "keyID"
+        project_key: "keyID",
+        product_query_predicate: "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"
       ),
       authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
     )

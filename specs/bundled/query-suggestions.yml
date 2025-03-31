@@ -546,7 +546,7 @@ components:
       title: indexName
       type: string
       description: Name of the Query Suggestions index (case-sensitive).
-      example: products_query_suggestions
+      example: ALGOLIA_INDEX_NAME
     AnalyticsTags:
       title: analyticsTags
       description: >

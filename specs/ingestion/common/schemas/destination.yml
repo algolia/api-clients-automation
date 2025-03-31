@@ -9,6 +9,8 @@ Destination:
       $ref: '#/DestinationType'
     name:
       $ref: './common.yml#/name'
+    owner:
+      $ref: './common.yml#/owner'
     input:
       $ref: '#/DestinationInput'
     createdAt:

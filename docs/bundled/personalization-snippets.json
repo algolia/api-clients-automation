@@ -484,7 +484,7 @@
       "default": "try client.setClientApiKey(apiKey: \"updated-api-key\")"
     },
     "setPersonalizationStrategy": {
-      "default": "let response = try await client\n    .setPersonalizationStrategy(personalizationStrategyParams: PersonalizationStrategyParams(\n        eventsScoring: [EventsScoring(\n            score: 42,\n            eventName: \"Algolia\",\n            eventType: PersonalizationEventType.click\n        )],\n        facetsScoring: [FacetsScoring(score: 42, facetName: \"Event\")],\n        personalizationImpact: 42\n    ))"
+      "default": "let response = try await client\n    .setPersonalizationStrategy(personalizationStrategyParams: PersonalizationStrategyParams(\n        eventsScoring: [\n            EventsScoring(score: 42, eventName: \"Algolia\", eventType: PersonalizationEventType.click),\n        ],\n        facetsScoring: [FacetsScoring(score: 42, facetName: \"Event\")],\n        personalizationImpact: 42\n    ))"
     },
     "init": {
       "default": "let client = try PersonalizationClient(appID: \"ALGOLIA_APPLICATION_ID\", apiKey: \"ALGOLIA_API_KEY\", region: .us)"

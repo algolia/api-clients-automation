@@ -152,22 +152,19 @@ security:
   - appId: []
     apiKey: []
 tags:
-  - name: compositions
-    x-displayName: Compositions
+  - name: Compositions
     description: |
       Manage your compositions and composition settings.
-  - name: rules
-    x-displayName: Rules
+  - name: Rules
     description: |
       Manage your compositions rules.
-  - name: search
-    x-displayName: Search
+  - name: Search
     description: Search one composition for matching records or facet values.
 paths:
   /1/compositions/{compositionID}/run:
     post:
       tags:
-        - search
+        - Search
       operationId: search
       x-use-read-transporter: true
       x-cacheable: true
@@ -435,10 +432,20 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/compositions/lorem/run \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"params":{"query":"","filters":"(category:Book OR category:Ebook) AND _tags:published","page":0,"getRankingInfo":true,"relevancyStrictness":42,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"hitsPerPage":20,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"queryLanguages":["es"],"naturalLanguages":[],"enableRules":true,"ruleContexts":["mobile"],"userToken":"test-user-123","clickAnalytics":false,"analytics":true,"analyticsTags":[],"enableABTest":true,"enableReRanking":true}}'
   /1/compositions/{compositionID}/facets/{facetName}/query:
     post:
       tags:
-        - search
+        - Search
       operationId: searchForFacetValues
       x-use-read-transporter: true
       x-cacheable: true
@@ -753,6 +760,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/compositions/lorem/facets/lorem/query \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"params":{"query":"","maxFacetHits":10,"searchQuery":{"query":"","filters":"(category:Book OR category:Ebook) AND _tags:published","page":0,"getRankingInfo":true,"relevancyStrictness":42,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"hitsPerPage":20,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"queryLanguages":["es"],"naturalLanguages":[],"enableRules":true,"ruleContexts":["mobile"],"userToken":"test-user-123","clickAnalytics":false,"analytics":true,"analyticsTags":[],"enableABTest":true,"enableReRanking":true}}}'
 components:
   securitySchemes:
     appId:
@@ -2245,4 +2262,4 @@ components:
 x-tagGroups:
   - name: Compositions
     tags:
-      - search
+      - Search
