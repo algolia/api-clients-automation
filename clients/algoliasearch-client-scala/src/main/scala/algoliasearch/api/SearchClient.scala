@@ -228,6 +228,8 @@ class SearchClient(
     * Required API Key ACLs:
     *   - admin
     *
+    * @deprecated
+    *
     * @param xAlgoliaUserID
     *   Unique identifier of the user who makes the search request.
     */
@@ -276,6 +278,8 @@ class SearchClient(
     *
     * Required API Key ACLs:
     *   - admin
+    *
+    * @deprecated
     *
     * @param xAlgoliaUserID
     *   Unique identifier of the user who makes the search request.
@@ -1008,6 +1012,8 @@ class SearchClient(
     *
     * Required API Key ACLs:
     *   - admin
+    *
+    * @deprecated
     */
   def getTopUserIds(
       requestOptions: Option[RequestOptions] = None
@@ -1026,6 +1032,8 @@ class SearchClient(
     *
     * Required API Key ACLs:
     *   - admin
+    *
+    * @deprecated
     *
     * @param userID
     *   Unique identifier of the user who makes the search request.
@@ -1048,6 +1056,8 @@ class SearchClient(
     *
     * Required API Key ACLs:
     *   - admin
+    *
+    * @deprecated
     *
     * @param getClusters
     *   Whether to include the cluster's pending mapping state in the response.
@@ -1086,6 +1096,8 @@ class SearchClient(
     *
     * Required API Key ACLs:
     *   - admin
+    *
+    * @deprecated
     */
   def listClusters(
       requestOptions: Option[RequestOptions] = None
@@ -1131,6 +1143,8 @@ class SearchClient(
     *
     * Required API Key ACLs:
     *   - admin
+    *
+    * @deprecated
     *
     * @param page
     *   Requested page of the API response. If `null`, the API response is not paginated.
@@ -1272,6 +1286,8 @@ class SearchClient(
     *
     * Required API Key ACLs:
     *   - admin
+    *
+    * @deprecated
     *
     * @param userID
     *   Unique identifier of the user who makes the search request.
@@ -1676,6 +1692,8 @@ class SearchClient(
     *
     * Required API Key ACLs:
     *   - admin
+    *
+    * @deprecated
     */
   def searchUserIds(searchUserIdsParams: SearchUserIdsParams, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext

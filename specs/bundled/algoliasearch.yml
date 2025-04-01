@@ -175,12 +175,9 @@ tags:
     description: |
       Multi-cluster operations.
 
-      Algolia no longer offers multi-cluster management.
-    externalDocs:
-      url: >-
-        https://www.algolia.com/doc/guides/scaling/managing-multiple-clusters-mcm/
-      description: |
-        Related guide: Multi-cluster management.
+      Multi-cluster operations are **deprecated**.
+      If you have issues with your Algolia infrastructure
+      due to large volumes of data, contact the Algolia support team.
   - name: Dictionaries
     description: >
       Manage your dictionaries.
