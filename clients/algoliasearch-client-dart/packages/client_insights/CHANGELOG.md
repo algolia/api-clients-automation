@@ -1,3 +1,7 @@
+## [1.31.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.31.0...1.31.1)
+
+- [a51683025e](https://github.com/algolia/api-clients-automation/commit/a51683025e) chore: deprecate mcm methods ([#4694](https://github.com/algolia/api-clients-automation/pull/4694)) by [@kai687](https://github.com/kai687/)
+
 ## [1.31.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.30.2...1.31.0)
 
 - [3994f53d4](https://github.com/algolia/api-clients-automation/commit/3994f53d4) feat(clients): add new realtime-personalization api ([#4613](https://github.com/algolia/api-clients-automation/pull/4613)) by [@benamib](https://github.com/benamib/)
