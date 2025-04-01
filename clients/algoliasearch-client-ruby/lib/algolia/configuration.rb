@@ -31,10 +31,6 @@ module Algolia
       @compression_type = opts[:compression_type] || "none"
       @requester = opts[:requester]
 
-      puts(@connect_timeout)
-      puts(@read_timeout)
-      puts(@write_timeout)
-
       @user_agent = UserAgent.new.add(client_name, VERSION)
 
       if opts[:user_agent_segments]
