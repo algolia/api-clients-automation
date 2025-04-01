@@ -22,7 +22,7 @@ describe('commonApi', () => {
     expect(decodeURIComponent(result.algoliaAgent)).toMatch(
       /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Monitoring (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/,
     );
-  }, 15000);
+  }, 25000);
 
   test('the user agent contains the latest version', async () => {
     const client = createClient();
@@ -30,7 +30,7 @@ describe('commonApi', () => {
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
     expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.23.0\).*/);
-  }, 15000);
+  }, 25000);
 });
 
 describe('parameters', () => {
@@ -43,7 +43,7 @@ describe('parameters', () => {
     const result = (await client.customDelete({ path: 'test' })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('status.algolia.com');
-  }, 15000);
+  }, 25000);
 });
 
 describe('setClientApiKey', () => {
@@ -73,7 +73,7 @@ describe('setClientApiKey', () => {
 
       expect(result).toEqual({ headerAPIKeyValue: 'updated-api-key' });
     }
-  }, 15000);
+  }, 25000);
 });
 
 describe('init', () => {

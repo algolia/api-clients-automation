@@ -70,6 +70,35 @@ class TestIngestionClient:
 
     async def test_api_3(self):
         """
+        can leave call opened for a long time
+        """
+
+        _config = IngestionConfig("test-app-id", "test-api-key", "us")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6676,
+                )
+            ]
+        )
+        _client = IngestionClient.create_with_config(config=_config)
+        _req = await _client.custom_get(
+            path="1/long-wait",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"message":"OK"}""")
+
+    async def test_api_4(self):
+        """
         endpoint level timeout
         """
         _client = self.create_client()
@@ -83,7 +112,7 @@ class TestIngestionClient:
         assert _req.timeouts.get("connect") == 180000
         assert _req.timeouts.get("response") == 180000
 
-    async def test_api_4(self):
+    async def test_api_5(self):
         """
         can override endpoint level timeout
         """
@@ -260,6 +289,35 @@ class TestIngestionClientSync:
 
     def test_api_3(self):
         """
+        can leave call opened for a long time
+        """
+
+        _config = IngestionConfig("test-app-id", "test-api-key", "us")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6676,
+                )
+            ]
+        )
+        _client = IngestionClientSync.create_with_config(config=_config)
+        _req = _client.custom_get(
+            path="1/long-wait",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"message":"OK"}""")
+
+    def test_api_4(self):
+        """
         endpoint level timeout
         """
         _client = self.create_client()
@@ -273,7 +331,7 @@ class TestIngestionClientSync:
         assert _req.timeouts.get("connect") == 180000
         assert _req.timeouts.get("response") == 180000
 
-    def test_api_4(self):
+    def test_api_5(self):
         """
         can override endpoint level timeout
         """

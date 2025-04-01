@@ -59,6 +59,23 @@ class IngestionTest {
   }
 
   @Test
+  fun `can leave call opened for a long time`() = runTest {
+    val client = IngestionClient(appId = "test-app-id", apiKey = "test-api-key", "us", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6676))))
+    client.runTest(
+      call = {
+        customGet(
+          path = "1/long-wait",
+        )
+      },
+
+      response = {
+        val response = Json.encodeToString(it)
+        assertEquals("{\"message\":\"OK\"}", response)
+      },
+    )
+  }
+
+  @Test
   fun `endpoint level timeout`() = runTest {
     val client = IngestionClient(appId = "appId", apiKey = "apiKey", region = "us")
     client.runTest(
