@@ -2,6 +2,7 @@ get:
   tags:
     - Clusters
   operationId: listClusters
+  deprecated: true
   x-acl:
     - admin
   summary: List clusters

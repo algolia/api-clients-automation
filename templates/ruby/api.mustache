@@ -101,6 +101,9 @@ module {{moduleName}}
     #   - {{.}}
     {{/x-acl}}
     {{/vendorExtensions}}
+    {{#isDeprecated}}
+    # THIS OPERATION IS DEPRECATED
+    {{/isDeprecated}}
 {{#allParams}}
 {{#required}}
     # @param {{paramName}} [{{{dataType}}}] {{{description}}} (required)
