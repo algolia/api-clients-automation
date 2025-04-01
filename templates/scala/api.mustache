@@ -30,7 +30,7 @@ object {{classname}} {
     * @param apiKey
     *   api key
     {{#hasRegionalHost}} * @param region
-    *   region{{/hasRegionalHost}} 
+    *   region{{/hasRegionalHost}}
     * @param clientOptions
     *   client options
     */
@@ -44,7 +44,7 @@ object {{classname}} {
   ) = new {{classname}}(
     appId = appId,
     apiKey = apiKey,
-    {{#hasRegionalHost}}region = region,{{/hasRegionalHost}} 
+    {{#hasRegionalHost}}region = region,{{/hasRegionalHost}}
     clientOptions = clientOptions
   )
 
@@ -119,7 +119,7 @@ class {{classname}}(
       formats = JsonSupport.format,
       options = clientOptions
     ) {
-  
+
 {{#operation}}
 /** {{{notes}}}
 {{#vendorExtensions}}
@@ -130,10 +130,14 @@ class {{classname}}(
 *   - {{.}}
 {{/x-acl}}
 {{/vendorExtensions}}
+{{#isDeprecated}}
+*
+* @deprecated
+{{/isDeprecated}}
 *
 {{#allParams}}
 {{#description}}
-* @param {{{paramName}}} 
+* @param {{{paramName}}}
 *   {{{.}}}
 {{/description}}
 {{/allParams}}
@@ -145,9 +149,9 @@ class {{classname}}(
 
     val request = HttpRequest.builder()
       .withMethod("{{httpMethod}}")
-      .withPath({{#vendorExtensions}}{{#x-is-custom-request}}s"{{{path}}}"{{/x-is-custom-request}}{{^x-is-custom-request}}s"{{#lambda.escape-path}}{{{path}}}{{/lambda.escape-path}}"{{/x-is-custom-request}}{{/vendorExtensions}})      
+      .withPath({{#vendorExtensions}}{{#x-is-custom-request}}s"{{{path}}}"{{/x-is-custom-request}}{{^x-is-custom-request}}s"{{#lambda.escape-path}}{{{path}}}{{/lambda.escape-path}}"{{/x-is-custom-request}}{{/vendorExtensions}})
       {{#bodyParam}}.withBody({{paramName}}){{/bodyParam}}
-      {{#headerParams}}.withHeader("{{baseName}}", {{paramName}}){{/headerParams}}   
+      {{#headerParams}}.withHeader("{{baseName}}", {{paramName}}){{/headerParams}}
       {{#vendorExtensions.x-use-read-transporter}}.withRead(true){{/vendorExtensions.x-use-read-transporter}}
       {{#vendorExtensions}}{{#queryParams}}{{^x-is-custom-request}}.withQueryParameter("{{baseName}}", {{paramName}}){{/x-is-custom-request}}{{#x-is-custom-request}}.withQueryParameters(parameters){{/x-is-custom-request}}{{/queryParams}}{{/vendorExtensions}}
       .build()

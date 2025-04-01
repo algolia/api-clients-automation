@@ -2,6 +2,7 @@ post:
   tags:
     - Clusters
   operationId: batchAssignUserIds
+  deprecated: true
   x-acl:
     - admin
   summary: Assign multiple userIDs

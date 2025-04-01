@@ -2,6 +2,7 @@ get:
   tags:
     - Clusters
   operationId: getTopUserIds
+  deprecated: true
   x-acl:
     - admin
   summary: Get top user IDs
