@@ -276,7 +276,9 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CreatedAtResponse assignUserId(
     @Nonnull String xAlgoliaUserID,
     @Nonnull AssignUserIdParams assignUserIdParams,
@@ -292,7 +294,9 @@ public class SearchClient extends ApiClient {
    * @param xAlgoliaUserID Unique identifier of the user who makes the search request. (required)
    * @param assignUserIdParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CreatedAtResponse assignUserId(@Nonnull String xAlgoliaUserID, @Nonnull AssignUserIdParams assignUserIdParams)
     throws AlgoliaRuntimeException {
     return this.assignUserId(xAlgoliaUserID, assignUserIdParams, null);
@@ -307,7 +311,9 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<CreatedAtResponse> assignUserIdAsync(
     @Nonnull String xAlgoliaUserID,
     @Nonnull AssignUserIdParams assignUserIdParams,
@@ -333,7 +339,9 @@ public class SearchClient extends ApiClient {
    * @param xAlgoliaUserID Unique identifier of the user who makes the search request. (required)
    * @param assignUserIdParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<CreatedAtResponse> assignUserIdAsync(
     @Nonnull String xAlgoliaUserID,
     @Nonnull AssignUserIdParams assignUserIdParams
@@ -431,7 +439,9 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CreatedAtResponse batchAssignUserIds(
     @Nonnull String xAlgoliaUserID,
     @Nonnull BatchAssignUserIdsParams batchAssignUserIdsParams,
@@ -446,7 +456,9 @@ public class SearchClient extends ApiClient {
    * @param xAlgoliaUserID Unique identifier of the user who makes the search request. (required)
    * @param batchAssignUserIdsParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CreatedAtResponse batchAssignUserIds(@Nonnull String xAlgoliaUserID, @Nonnull BatchAssignUserIdsParams batchAssignUserIdsParams)
     throws AlgoliaRuntimeException {
     return this.batchAssignUserIds(xAlgoliaUserID, batchAssignUserIdsParams, null);
@@ -461,7 +473,9 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<CreatedAtResponse> batchAssignUserIdsAsync(
     @Nonnull String xAlgoliaUserID,
     @Nonnull BatchAssignUserIdsParams batchAssignUserIdsParams,
@@ -490,7 +504,9 @@ public class SearchClient extends ApiClient {
    * @param xAlgoliaUserID Unique identifier of the user who makes the search request. (required)
    * @param batchAssignUserIdsParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<CreatedAtResponse> batchAssignUserIdsAsync(
     @Nonnull String xAlgoliaUserID,
     @Nonnull BatchAssignUserIdsParams batchAssignUserIdsParams
@@ -2944,7 +2960,9 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public GetTopUserIdsResponse getTopUserIds(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getTopUserIdsAsync(requestOptions));
   }
@@ -2954,7 +2972,9 @@ public class SearchClient extends ApiClient {
    * few seconds to get the data from the different clusters, the response isn't real-time.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public GetTopUserIdsResponse getTopUserIds() throws AlgoliaRuntimeException {
     return this.getTopUserIds(null);
   }
@@ -2967,7 +2987,9 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<GetTopUserIdsResponse> getTopUserIdsAsync(@Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     HttpRequest request = HttpRequest.builder().setPath("/1/clusters/mapping/top").setMethod("GET").build();
@@ -2981,7 +3003,9 @@ public class SearchClient extends ApiClient {
    * real-time.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<GetTopUserIdsResponse> getTopUserIdsAsync() throws AlgoliaRuntimeException {
     return this.getTopUserIdsAsync(null);
   }
@@ -2994,7 +3018,9 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public UserId getUserId(@Nonnull String userID, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getUserIdAsync(userID, requestOptions));
   }
@@ -3005,7 +3031,9 @@ public class SearchClient extends ApiClient {
    *
    * @param userID Unique identifier of the user who makes the search request. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public UserId getUserId(@Nonnull String userID) throws AlgoliaRuntimeException {
     return this.getUserId(userID, null);
   }
@@ -3018,7 +3046,9 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<UserId> getUserIdAsync(@Nonnull String userID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(userID, "Parameter `userID` is required when calling `getUserId`.");
@@ -3033,7 +3063,9 @@ public class SearchClient extends ApiClient {
    *
    * @param userID Unique identifier of the user who makes the search request. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<UserId> getUserIdAsync(@Nonnull String userID) throws AlgoliaRuntimeException {
     return this.getUserIdAsync(userID, null);
   }
@@ -3048,7 +3080,9 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public HasPendingMappingsResponse hasPendingMappings(Boolean getClusters, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     return LaunderThrowable.await(hasPendingMappingsAsync(getClusters, requestOptions));
@@ -3062,7 +3096,9 @@ public class SearchClient extends ApiClient {
    * @param getClusters Whether to include the cluster's pending mapping state in the response.
    *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public HasPendingMappingsResponse hasPendingMappings(Boolean getClusters) throws AlgoliaRuntimeException {
     return this.hasPendingMappings(getClusters, null);
   }
@@ -3101,7 +3137,9 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<HasPendingMappingsResponse> hasPendingMappingsAsync(
     Boolean getClusters,
     @Nullable RequestOptions requestOptions
@@ -3122,7 +3160,9 @@ public class SearchClient extends ApiClient {
    * @param getClusters Whether to include the cluster's pending mapping state in the response.
    *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<HasPendingMappingsResponse> hasPendingMappingsAsync(Boolean getClusters) throws AlgoliaRuntimeException {
     return this.hasPendingMappingsAsync(getClusters, null);
   }
@@ -3204,7 +3244,9 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public ListClustersResponse listClusters(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(listClustersAsync(requestOptions));
   }
@@ -3213,7 +3255,9 @@ public class SearchClient extends ApiClient {
    * Lists the available clusters in a multi-cluster setup.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public ListClustersResponse listClusters() throws AlgoliaRuntimeException {
     return this.listClusters(null);
   }
@@ -3224,7 +3268,9 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<ListClustersResponse> listClustersAsync(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
     HttpRequest request = HttpRequest.builder().setPath("/1/clusters").setMethod("GET").build();
 
@@ -3235,7 +3281,9 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Lists the available clusters in a multi-cluster setup.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<ListClustersResponse> listClustersAsync() throws AlgoliaRuntimeException {
     return this.listClustersAsync(null);
   }
@@ -3361,7 +3409,9 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public ListUserIdsResponse listUserIds(Integer page, Integer hitsPerPage, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     return LaunderThrowable.await(listUserIdsAsync(page, hitsPerPage, requestOptions));
@@ -3375,7 +3425,9 @@ public class SearchClient extends ApiClient {
    *     (optional)
    * @param hitsPerPage Number of hits per page. (optional, default to 100)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public ListUserIdsResponse listUserIds(Integer page, Integer hitsPerPage) throws AlgoliaRuntimeException {
     return this.listUserIds(page, hitsPerPage, null);
   }
@@ -3412,7 +3464,9 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<ListUserIdsResponse> listUserIdsAsync(
     Integer page,
     Integer hitsPerPage,
@@ -3435,7 +3489,9 @@ public class SearchClient extends ApiClient {
    *     (optional)
    * @param hitsPerPage Number of hits per page. (optional, default to 100)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<ListUserIdsResponse> listUserIdsAsync(Integer page, Integer hitsPerPage) throws AlgoliaRuntimeException {
     return this.listUserIdsAsync(page, hitsPerPage, null);
   }
@@ -4025,7 +4081,9 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public RemoveUserIdResponse removeUserId(@Nonnull String userID, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(removeUserIdAsync(userID, requestOptions));
   }
@@ -4035,7 +4093,9 @@ public class SearchClient extends ApiClient {
    *
    * @param userID Unique identifier of the user who makes the search request. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public RemoveUserIdResponse removeUserId(@Nonnull String userID) throws AlgoliaRuntimeException {
     return this.removeUserId(userID, null);
   }
@@ -4047,7 +4107,9 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<RemoveUserIdResponse> removeUserIdAsync(@Nonnull String userID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(userID, "Parameter `userID` is required when calling `removeUserId`.");
@@ -4061,7 +4123,9 @@ public class SearchClient extends ApiClient {
    *
    * @param userID Unique identifier of the user who makes the search request. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<RemoveUserIdResponse> removeUserIdAsync(@Nonnull String userID) throws AlgoliaRuntimeException {
     return this.removeUserIdAsync(userID, null);
   }
@@ -5650,7 +5714,9 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public SearchUserIdsResponse searchUserIds(@Nonnull SearchUserIdsParams searchUserIdsParams, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     return LaunderThrowable.await(searchUserIdsAsync(searchUserIdsParams, requestOptions));
@@ -5665,7 +5731,9 @@ public class SearchClient extends ApiClient {
    *
    * @param searchUserIdsParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public SearchUserIdsResponse searchUserIds(@Nonnull SearchUserIdsParams searchUserIdsParams) throws AlgoliaRuntimeException {
     return this.searchUserIds(searchUserIdsParams, null);
   }
@@ -5681,7 +5749,9 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<SearchUserIdsResponse> searchUserIdsAsync(
     @Nonnull SearchUserIdsParams searchUserIdsParams,
     @Nullable RequestOptions requestOptions
@@ -5706,7 +5776,9 @@ public class SearchClient extends ApiClient {
    *
    * @param searchUserIdsParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<SearchUserIdsResponse> searchUserIdsAsync(@Nonnull SearchUserIdsParams searchUserIdsParams)
     throws AlgoliaRuntimeException {
     return this.searchUserIdsAsync(searchUserIdsParams, null);

@@ -175,12 +175,9 @@ tags:
     description: |
       Multi-cluster operations.
 
-      Algolia no longer offers multi-cluster management.
-    externalDocs:
-      url: >-
-        https://www.algolia.com/doc/guides/scaling/managing-multiple-clusters-mcm/
-      description: |
-        Related guide: Multi-cluster management.
+      Multi-cluster operations are **deprecated**.
+      If you have issues with your Algolia infrastructure
+      due to large volumes of data, contact the Algolia support team.
   - name: Dictionaries
     description: >
       Manage your dictionaries.
@@ -2216,6 +2213,7 @@ paths:
       tags:
         - search
       operationId: assignUserId
+      deprecated: true
       x-acl:
         - admin
       summary: Assign or move a user ID
@@ -2256,6 +2254,7 @@ paths:
       tags:
         - search
       operationId: listUserIds
+      deprecated: true
       x-acl:
         - admin
       summary: List user IDs
@@ -2300,6 +2299,7 @@ paths:
       tags:
         - search
       operationId: batchAssignUserIds
+      deprecated: true
       x-acl:
         - admin
       summary: Assign multiple userIDs
@@ -2349,6 +2349,7 @@ paths:
       tags:
         - search
       operationId: getTopUserIds
+      deprecated: true
       x-acl:
         - admin
       summary: Get top user IDs
@@ -2399,6 +2400,7 @@ paths:
       tags:
         - search
       operationId: getUserId
+      deprecated: true
       x-acl:
         - admin
       summary: Retrieve user ID
@@ -2431,6 +2433,7 @@ paths:
       tags:
         - search
       operationId: removeUserId
+      deprecated: true
       x-acl:
         - admin
       summary: Delete user ID
@@ -2464,6 +2467,7 @@ paths:
       tags:
         - search
       operationId: listClusters
+      deprecated: true
       x-acl:
         - admin
       summary: List clusters
@@ -2501,6 +2505,7 @@ paths:
       tags:
         - search
       operationId: searchUserIds
+      deprecated: true
       x-use-read-transporter: true
       x-cacheable: true
       x-acl:
@@ -2615,6 +2620,7 @@ paths:
       tags:
         - search
       operationId: hasPendingMappings
+      deprecated: true
       x-acl:
         - admin
       summary: Get migration and user mapping status

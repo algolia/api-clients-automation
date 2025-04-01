@@ -245,6 +245,8 @@ class IngestionClient(
 
   /** Creates a new task using the v1 endpoint, please use `createTask` instead.
     *
+    * @deprecated
+    *
     * @param taskCreate
     *   Request body for creating a task.
     */
@@ -474,6 +476,8 @@ class IngestionClient(
 
   /** Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
     *
+    * @deprecated
+    *
     * @param taskID
     *   Unique identifier of a task.
     */
@@ -538,6 +542,8 @@ class IngestionClient(
     *   - deleteIndex
     *   - editSettings
     *
+    * @deprecated
+    *
     * @param taskID
     *   Unique identifier of a task.
     */
@@ -583,6 +589,8 @@ class IngestionClient(
     *   - addObject
     *   - deleteIndex
     *   - editSettings
+    *
+    * @deprecated
     *
     * @param taskID
     *   Unique identifier of a task.
@@ -746,6 +754,8 @@ class IngestionClient(
     *   - addObject
     *   - deleteIndex
     *   - editSettings
+    *
+    * @deprecated
     *
     * @param taskID
     *   Unique identifier of a task.
@@ -1106,6 +1116,8 @@ class IngestionClient(
     *   - deleteIndex
     *   - editSettings
     *
+    * @deprecated
+    *
     * @param itemsPerPage
     *   Number of items per page.
     * @param page
@@ -1293,6 +1305,8 @@ class IngestionClient(
     *   - deleteIndex
     *   - editSettings
     *
+    * @deprecated
+    *
     * @param taskID
     *   Unique identifier of a task.
     */
@@ -1402,6 +1416,8 @@ class IngestionClient(
     *   - addObject
     *   - deleteIndex
     *   - editSettings
+    *
+    * @deprecated
     */
   def searchTasksV1(taskSearch: TaskSearch, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -1631,6 +1647,8 @@ class IngestionClient(
   }
 
   /** Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+    *
+    * @deprecated
     *
     * @param taskID
     *   Unique identifier of a task.
