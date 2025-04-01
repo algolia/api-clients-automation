@@ -1,7 +1,6 @@
 #! /bin/bash
 
 export NODE_VERSION=$(cat .nvmrc)
-export JAVA_VERSION=$(cat clients/algoliasearch-client-java/.java-version)
 
 while read line; do
   arr=($line)
