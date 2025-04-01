@@ -70,7 +70,7 @@ function getVersionFileForLanguage(lang: Language): string {
 
   // jvm lang rely on the same java version
   if (lang === 'kotlin' || lang === 'java' || lang === 'scala') {
-    return 'config/.java-version';
+    return 'clients/algoliasearch-client-java/.java-version';
   }
 
   return `config/.${lang}-version`;

@@ -22,7 +22,7 @@ runs:
       uses: actions/setup-java@v4.7.0
       with:
         distribution: zulu
-        java-version-file: config/.java-version
+        java-version-file: clients/algoliasearch-client-java/.java-version
 
     - name: Setup gradle
       if: inputs.type != 'minimal'
