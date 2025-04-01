@@ -78,7 +78,7 @@
     ]
   },
   {
-    "testName": "can leave call opened for close to 25s",
+    "testName": "can leave call opened for a long time",
     "autoCreateClient": false,
     "steps": [
       {
