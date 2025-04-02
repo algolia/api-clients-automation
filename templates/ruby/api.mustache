@@ -58,15 +58,15 @@ module {{moduleName}}
     end
 
     def self.create_with_config(config)
-      if config.connect_timeout.nil? ||config.connect_timeout.empty?
+      if config.connect_timeout.nil?
         config.connect_timeout = {{x-timeouts.server.connect}}
       end
 
-      if config.read_timeout.nil? || config.read_timeout.empty?
+      if config.read_timeout.nil?
         config.read_timeout = {{x-timeouts.server.read}}
       end
 
-      if config.write_timeout.nil? || config.write_timeout.empty?
+      if config.write_timeout.nil?
         config.write_timeout = {{x-timeouts.server.write}}
       end
 
