@@ -25,6 +25,7 @@ Authentication:
     - name
     - input
     - createdAt
+    - updatedAt
 
 AuthenticationCreate:
   type: object
