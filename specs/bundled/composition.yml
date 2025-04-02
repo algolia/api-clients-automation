@@ -152,16 +152,13 @@ security:
   - appId: []
     apiKey: []
 tags:
-  - name: compositions
-    x-displayName: Compositions
+  - name: Compositions
     description: |
       Manage your compositions and composition settings.
-  - name: rules
-    x-displayName: Rules
+  - name: Rules
     description: |
       Manage your compositions rules.
-  - name: search
-    x-displayName: Search
+  - name: Search
     description: Search one composition for matching records or facet values.
 paths:
   /1/compositions/{compositionID}/run:
@@ -1760,4 +1757,4 @@ components:
 x-tagGroups:
   - name: Compositions
     tags:
-      - search
+      - Search

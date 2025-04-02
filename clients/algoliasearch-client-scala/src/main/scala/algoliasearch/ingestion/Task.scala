@@ -35,6 +35,8 @@ import algoliasearch.ingestion.ActionType._
   *   The last time the scheduled task ran in RFC 3339 format.
   * @param nextRun
   *   The next scheduled run of the task in RFC 3339 format.
+  * @param owner
+  *   Owner of the resource.
   * @param enabled
   *   Whether the task is enabled.
   * @param failureThreshold
@@ -53,6 +55,7 @@ case class Task(
     cron: Option[String] = scala.None,
     lastRun: Option[String] = scala.None,
     nextRun: Option[String] = scala.None,
+    owner: Option[String] = scala.None,
     input: Option[TaskInput] = scala.None,
     enabled: Boolean,
     failureThreshold: Option[Int] = scala.None,

@@ -65,8 +65,32 @@ final class IngestionClientClientTests: XCTestCase {
         XCTAssertEqual(TimeInterval(25000) / 1000, echoResponse.timeout)
     }
 
-    /// endpoint level timeout
+    /// can leave call opened for a long time
     func testApiTest3() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            region: Region(rawValue: "us"),
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6676"
+            )!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+        let response = try await client.customGetWithHTTPInfo(path: "1/long-wait")
+
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
+
+        let comparableData = "{\"message\":\"OK\"}".data(using: .utf8)
+        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+        XCTAssertEqual(comparableJSON, responseBodyJSON)
+    }
+
+    /// endpoint level timeout
+    func testApiTest4() async throws {
         let configuration = try IngestionClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
@@ -83,7 +107,7 @@ final class IngestionClientClientTests: XCTestCase {
     }
 
     /// can override endpoint level timeout
-    func testApiTest4() async throws {
+    func testApiTest5() async throws {
         let configuration = try IngestionClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
@@ -132,7 +156,7 @@ final class IngestionClientClientTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let pattern = "^Algolia for Swift \\(9.16.0\\).*"
+        let pattern = "^Algolia for Swift \\(9.18.1\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern

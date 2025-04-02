@@ -222,6 +222,7 @@ final class SearchClient implements ApiClient {
   /// * [xAlgoliaUserID] Unique identifier of the user who makes the search request.
   /// * [assignUserIdParams]
   /// * [requestOptions] additional request configuration.
+  @Deprecated('This operation has been deprecated')
   Future<CreatedAtResponse> assignUserId({
     required String xAlgoliaUserID,
     required AssignUserIdParams assignUserIdParams,
@@ -291,6 +292,7 @@ final class SearchClient implements ApiClient {
   /// * [xAlgoliaUserID] Unique identifier of the user who makes the search request.
   /// * [batchAssignUserIdsParams]
   /// * [requestOptions] additional request configuration.
+  @Deprecated('This operation has been deprecated')
   Future<CreatedAtResponse> batchAssignUserIds({
     required String xAlgoliaUserID,
     required BatchAssignUserIdsParams batchAssignUserIdsParams,
@@ -1301,6 +1303,7 @@ final class SearchClient implements ApiClient {
   ///
   /// Parameters:
   /// * [requestOptions] additional request configuration.
+  @Deprecated('This operation has been deprecated')
   Future<GetTopUserIdsResponse> getTopUserIds({
     RequestOptions? requestOptions,
   }) async {
@@ -1327,6 +1330,7 @@ final class SearchClient implements ApiClient {
   /// Parameters:
   /// * [userID] Unique identifier of the user who makes the search request.
   /// * [requestOptions] additional request configuration.
+  @Deprecated('This operation has been deprecated')
   Future<UserId> getUserId({
     required String userID,
     RequestOptions? requestOptions,
@@ -1359,6 +1363,7 @@ final class SearchClient implements ApiClient {
   /// Parameters:
   /// * [getClusters] Whether to include the cluster's pending mapping state in the response.
   /// * [requestOptions] additional request configuration.
+  @Deprecated('This operation has been deprecated')
   Future<HasPendingMappingsResponse> hasPendingMappings({
     bool? getClusters,
     RequestOptions? requestOptions,
@@ -1413,6 +1418,7 @@ final class SearchClient implements ApiClient {
   ///
   /// Parameters:
   /// * [requestOptions] additional request configuration.
+  @Deprecated('This operation has been deprecated')
   Future<ListClustersResponse> listClusters({
     RequestOptions? requestOptions,
   }) async {
@@ -1473,6 +1479,7 @@ final class SearchClient implements ApiClient {
   /// * [page] Requested page of the API response. If `null`, the API response is not paginated.
   /// * [hitsPerPage] Number of hits per page.
   /// * [requestOptions] additional request configuration.
+  @Deprecated('This operation has been deprecated')
   Future<ListUserIdsResponse> listUserIds({
     int? page,
     int? hitsPerPage,
@@ -1627,6 +1634,7 @@ final class SearchClient implements ApiClient {
   /// Parameters:
   /// * [userID] Unique identifier of the user who makes the search request.
   /// * [requestOptions] additional request configuration.
+  @Deprecated('This operation has been deprecated')
   Future<RemoveUserIdResponse> removeUserId({
     required String userID,
     RequestOptions? requestOptions,
@@ -2169,6 +2177,7 @@ final class SearchClient implements ApiClient {
   /// Parameters:
   /// * [searchUserIdsParams]
   /// * [requestOptions] additional request configuration.
+  @Deprecated('This operation has been deprecated')
   Future<SearchUserIdsResponse> searchUserIds({
     required SearchUserIdsParams searchUserIdsParams,
     RequestOptions? requestOptions,

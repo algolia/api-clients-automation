@@ -145,7 +145,8 @@ class IngestionTest extends AnyFunSuite {
             storeKeys = Some(Seq("myStore")),
             locales = Some(Seq("de")),
             url = "http://commercetools.com",
-            projectKey = "keyID"
+            projectKey = "keyID",
+            productQueryPredicate = Some("masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))")
           )
         ),
         authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -158,7 +159,7 @@ class IngestionTest extends AnyFunSuite {
     assert(res.path == "/1/sources")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}"""
+      """{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID","productQueryPredicate":"masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)

@@ -31,22 +31,22 @@
     "website:build": "bash scripts/website/build.sh"
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "2.17.0",
+    "@openapitools/openapi-generator-cli": "2.18.4",
     "@redocly/cli": "1.29.0",
     "eslint": "8.57.1",
     "eslint-plugin-automation-custom": "1.0.0",
     "eslint-plugin-json": "4.0.1",
     "eslint-plugin-yml": "1.17.0",
     "husky": "9.1.7",
-    "lint-staged": "15.4.3",
-    "oxlint": "0.15.12",
+    "lint-staged": "15.5.0",
+    "oxlint": "0.15.15",
     "prettier": "3.5.3",
     "prettier-plugin-java": "2.6.7",
     "prettier-plugin-organize-imports": "4.1.0",
     "renovate-config-algolia": "2.2.0",
-    "typescript": "5.7.3"
+    "typescript": "5.8.2"
   },
-  "packageManager": "yarn@4.7.0",
+  "packageManager": "yarn@4.8.1",
   "engines": {
     "node": "^22.0.0",
     "yarn": "^4.0.0"

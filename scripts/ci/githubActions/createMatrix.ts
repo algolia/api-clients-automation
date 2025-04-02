@@ -6,7 +6,7 @@ import { createClientName, exists, GENERATORS, LANGUAGES, toAbsolutePath } from 
 import { getClientsConfigField, getLanguageFolder, getTestExtension, getTestOutputFolder } from '../../config.ts';
 
 import type { ClientMatrix, CreateMatrix, ToRunMatrix } from './types.ts';
-import { COMMON_DEPENDENCIES, DEPENDENCIES, isBaseChanged } from './utils.ts';
+import { COMMON_DEPENDENCIES, DEPENDENCIES, getVersionFileForLanguage, isBaseChanged } from './utils.ts';
 
 // This empty matrix is required by the CI, otherwise it throws
 const EMPTY_MATRIX = { client: ['no-run'] };
@@ -66,11 +66,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
 
     const testsRootFolder = `tests/output/${language}`;
     const testsOutputBase = `${testsRootFolder}/${getTestOutputFolder(language)}`;
-    const versionFile = toAbsolutePath(
-      language === 'javascript'
-        ? '.nvmrc'
-        : `config/.${language === 'kotlin' || language === 'scala' ? 'java' : language}-version`,
-    );
+    const versionFile = toAbsolutePath(getVersionFileForLanguage(language));
     let version: string | undefined = undefined;
     if (await exists(versionFile)) {
       version = (await fsp.readFile(versionFile)).toString();

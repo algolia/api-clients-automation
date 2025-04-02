@@ -97,6 +97,36 @@ class IngestionTest extends AnyFunSuite {
     assert(echo.lastResponse.get.responseTimeout == 25000)
   }
 
+  test("can leave call opened for a long time") {
+
+    val client = IngestionClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      region = "us",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6676)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.customGet[JObject](
+        path = "1/long-wait"
+      ),
+      Duration.Inf
+    )
+    assert(parse(write(res)) == parse("{\"message\":\"OK\"}"))
+  }
+
   test("endpoint level timeout") {
     val (client, echo) = testClient()
 
@@ -159,7 +189,7 @@ class IngestionTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.15.0\).*""".r
+    val regexp = """^Algolia for Scala \(2.17.1\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }

@@ -6,6 +6,10 @@
   {{#x-acl}}
   *  - {{.}}
   {{/x-acl}}
+  {{#isDeprecated}}
+  *
+  * @deprecated
+  {{/isDeprecated}}
   {{#x-create-wrapping-object}}
     * @param {{nickname}} - The {{nickname}} object.
     {{#allParams}}

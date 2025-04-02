@@ -12,6 +12,8 @@ Transformation:
       $ref: '#/Name'
     description:
       $ref: '#/Description'
+    owner:
+      $ref: './common.yml#/owner'
     createdAt:
       $ref: './common.yml#/createdAt'
     updatedAt:

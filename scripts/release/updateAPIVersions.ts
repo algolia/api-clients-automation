@@ -13,7 +13,7 @@ import type { Changelog, Versions } from './types.ts';
 async function updateConfigFiles(versionsToRelease: Versions): Promise<void> {
   // update the other versions in clients.config.json
   for (const lang of Object.keys(versionsToRelease) as Language[]) {
-    if (versionsToRelease[lang]?.next) {
+    if (typeof clientsConfig[lang] == 'object' && versionsToRelease[lang]?.next) {
       clientsConfig[lang].packageVersion = versionsToRelease[lang].next;
     }
   }

@@ -22,15 +22,15 @@ describe('commonApi', () => {
     expect(decodeURIComponent(result.algoliaAgent)).toMatch(
       /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Insights (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/,
     );
-  }, 15000);
+  }, 25000);
 
   test('the user agent contains the latest version', async () => {
     const client = createClient();
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.21.0\).*/);
-  }, 15000);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.23.1\).*/);
+  }, 25000);
 });
 
 describe('parameters', () => {
@@ -59,7 +59,7 @@ describe('parameters', () => {
     })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('insights.algolia.io');
-  }, 15000);
+  }, 25000);
 
   test('uses the correct region', async () => {
     const client = algoliasearch('my-app-id', 'my-api-key').initInsights({
@@ -72,7 +72,7 @@ describe('parameters', () => {
     const result = (await client.customDelete({ path: 'test' })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('insights.us.algolia.io');
-  }, 15000);
+  }, 25000);
 
   test('throws when incorrect region is given', async () => {
     try {
@@ -88,7 +88,7 @@ describe('parameters', () => {
     } catch (e) {
       expect((e as Error).message).toMatch('`region` must be one of the following: de, us');
     }
-  }, 15000);
+  }, 25000);
 });
 
 describe('setClientApiKey', () => {
@@ -120,7 +120,7 @@ describe('setClientApiKey', () => {
 
       expect(result).toEqual({ headerAPIKeyValue: 'updated-api-key' });
     }
-  }, 15000);
+  }, 25000);
 });
 
 describe('init', () => {

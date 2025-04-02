@@ -85,8 +85,36 @@ func TestIngestionapi2(t *testing.T) {
 	require.Equal(t, int64(25000), echo.Timeout.Milliseconds())
 }
 
-// endpoint level timeout
+// can leave call opened for a long time
 func TestIngestionapi3(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *ingestion.APIClient
+	var cfg ingestion.IngestionConfiguration
+	_ = client
+	_ = echo
+	cfg = ingestion.IngestionConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6676", call.IsReadWrite)},
+		},
+		Region: ingestion.Region("us"),
+	}
+	client, err = ingestion.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
+		"1/long-wait"))
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `{"message":"OK"}`, string(rawBody))
+}
+
+// endpoint level timeout
+func TestIngestionapi4(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -101,7 +129,7 @@ func TestIngestionapi3(t *testing.T) {
 }
 
 // can override endpoint level timeout
-func TestIngestionapi4(t *testing.T) {
+func TestIngestionapi5(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -138,7 +166,7 @@ func TestIngestioncommonApi1(t *testing.T) {
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.13.0\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.15.1\).*`), echo.Header.Get("User-Agent"))
 }
 
 // uses the correct region

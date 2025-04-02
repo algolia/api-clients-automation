@@ -2,6 +2,7 @@ post:
   tags:
     - Clusters
   operationId: assignUserId
+  deprecated: true
   x-acl:
     - admin
   summary: Assign or move a user ID
@@ -41,6 +42,7 @@ get:
   tags:
     - Clusters
   operationId: listUserIds
+  deprecated: true
   x-acl:
     - admin
   summary: List user IDs

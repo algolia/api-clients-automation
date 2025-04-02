@@ -476,9 +476,8 @@ final class RecommendClientSnippet {
                         threshold: 42.1,
                         maxRecommendations: 10,
                         queryParameters: RecommendSearchParams(
-                            facetFilters: RecommendFacetFilters.arrayOfRecommendFacetFilters(
-                                [RecommendFacetFilters.string("query")]
-                            ),
+                            facetFilters: RecommendFacetFilters
+                                .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query")]),
                             query: "myQuery"
                         ),
                         model: RelatedModel.relatedProducts,
@@ -535,9 +534,8 @@ final class RecommendClientSnippet {
                         threshold: 42.1,
                         maxRecommendations: 10,
                         queryParameters: RecommendSearchParams(
-                            facetFilters: RecommendFacetFilters.arrayOfRecommendFacetFilters(
-                                [RecommendFacetFilters.string("query")]
-                            ),
+                            facetFilters: RecommendFacetFilters
+                                .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query")]),
                             query: "myQuery"
                         ),
                         facetName: "myFacetName",

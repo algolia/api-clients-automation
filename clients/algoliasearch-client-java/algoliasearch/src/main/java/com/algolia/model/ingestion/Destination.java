@@ -21,6 +21,9 @@ public class Destination {
   @JsonProperty("name")
   private String name;
 
+  @JsonProperty("owner")
+  private String owner;
+
   @JsonProperty("input")
   private DestinationInput input;
 
@@ -67,6 +70,17 @@ public class Destination {
   @javax.annotation.Nonnull
   public String getName() {
     return name;
+  }
+
+  public Destination setOwner(String owner) {
+    this.owner = owner;
+    return this;
+  }
+
+  /** Owner of the resource. */
+  @javax.annotation.Nullable
+  public String getOwner() {
+    return owner;
   }
 
   public Destination setInput(DestinationInput input) {
@@ -145,6 +159,7 @@ public class Destination {
       Objects.equals(this.destinationID, destination.destinationID) &&
       Objects.equals(this.type, destination.type) &&
       Objects.equals(this.name, destination.name) &&
+      Objects.equals(this.owner, destination.owner) &&
       Objects.equals(this.input, destination.input) &&
       Objects.equals(this.createdAt, destination.createdAt) &&
       Objects.equals(this.updatedAt, destination.updatedAt) &&
@@ -155,7 +170,7 @@ public class Destination {
 
   @Override
   public int hashCode() {
-    return Objects.hash(destinationID, type, name, input, createdAt, updatedAt, authenticationID, transformationIDs);
+    return Objects.hash(destinationID, type, name, owner, input, createdAt, updatedAt, authenticationID, transformationIDs);
   }
 
   @Override
@@ -165,6 +180,7 @@ public class Destination {
     sb.append("    destinationID: ").append(toIndentedString(destinationID)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    owner: ").append(toIndentedString(owner)).append("\n");
     sb.append("    input: ").append(toIndentedString(input)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");

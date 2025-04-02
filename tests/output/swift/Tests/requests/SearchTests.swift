@@ -271,8 +271,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"requests\":[{\"action\":\"clear\",\"body\":{\"key\":\"value\"}}]}"
-            .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"action\":\"clear\",\"body\":{\"key\":\"value\"}}]}".data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -1238,10 +1237,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters = try XCTUnwrap(
-            "{\"query\":\"parameters\",\"myParam\":\"2\"}"
-                .data(using: .utf8)
-        )
+        let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"2\"}".data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1783,10 +1779,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/uniqueID")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters = try XCTUnwrap(
-            "{\"attributesToRetrieve\":\"attr1%2Cattr2\"}"
-                .data(using: .utf8)
-        )
+        let expectedQueryParameters = try XCTUnwrap("{\"attributesToRetrieve\":\"attr1%2Cattr2\"}".data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -3730,8 +3723,10 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters =
-            try XCTUnwrap("{\"forwardToReplicas\":\"false\",\"clearExistingRules\":\"true\"}".data(using: .utf8))
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"forwardToReplicas\":\"false\",\"clearExistingRules\":\"true\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -3805,8 +3800,10 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters =
-            try XCTUnwrap("{\"forwardToReplicas\":\"true\",\"clearExistingRules\":\"true\"}".data(using: .utf8))
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"forwardToReplicas\":\"true\",\"clearExistingRules\":\"true\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -3989,10 +3986,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"forwardToReplicas\":\"true\",\"replaceExistingSynonyms\":\"true\"}"
-                    .data(using: .utf8)
-            )
+            try XCTUnwrap("{\"forwardToReplicas\":\"true\",\"replaceExistingSynonyms\":\"true\"}".data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -4800,8 +4794,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"query\":\"foo\",\"page\":4,\"hitsPerPage\":2,\"language\":\"fr\"}"
-            .data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"foo\",\"page\":4,\"hitsPerPage\":2,\"language\":\"fr\"}".data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -8466,8 +8459,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"query\":\"query\",\"ruleContexts\":[\"front_end\",\"website2\"]}"
-            .data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"query\",\"ruleContexts\":[\"front_end\",\"website2\"]}".data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -8801,8 +8793,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"query\":\"query\",\"disableExactOnAttributes\":[\"description\"]}"
-            .data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"query\",\"disableExactOnAttributes\":[\"description\"]}".data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -9139,8 +9130,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"query\":\"query\",\"analyticsTags\":[\"front_end\",\"website2\"]}"
-            .data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"query\",\"analyticsTags\":[\"front_end\",\"website2\"]}".data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -10336,8 +10326,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"attributesForFaceting\":[\"can_deliver_quickly\",\"restaurant\"]}"
-            .data(using: .utf8)
+        let expectedBodyData = "{\"attributesForFaceting\":[\"can_deliver_quickly\",\"restaurant\"]}".data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -10702,8 +10691,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"customRanking\":[\"desc(rounded_pageviews)\",\"desc(comments)\"]}"
-            .data(using: .utf8)
+        let expectedBodyData = "{\"customRanking\":[\"desc(rounded_pageviews)\",\"desc(comments)\"]}".data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -11625,8 +11613,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"searchableAttributes\":[\"title_eng\",\"title_fr\",\"title_es\"]}"
-            .data(using: .utf8)
+        let expectedBodyData = "{\"searchableAttributes\":[\"title_eng\",\"title_fr\",\"title_es\"]}".data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -12764,9 +12751,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"indexLanguages\":[\"ja\"],\"attributesToTransliterate\":[\"name\",\"description\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"indexLanguages\":[\"ja\"],\"attributesToTransliterate\":[\"name\",\"description\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -13352,8 +13338,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"alternativesAsExact\":[\"ignorePlurals\",\"singleWordSynonym\"]}"
-            .data(using: .utf8)
+        let expectedBodyData = "{\"alternativesAsExact\":[\"ignorePlurals\",\"singleWordSynonym\"]}".data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -13593,8 +13578,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"responseFields\":[\"hits\",\"hitsPerPage\",\"nbPages\",\"page\"]}"
-            .data(using: .utf8)
+        let expectedBodyData = "{\"responseFields\":[\"hits\",\"hitsPerPage\",\"nbPages\",\"page\"]}".data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)

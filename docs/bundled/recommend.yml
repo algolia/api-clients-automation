@@ -106,7 +106,7 @@ info:
     `/1/` in each endpoint's URL.
   version: 1.0.0
 servers:
-  - url: https://{appId}.algolianet.com
+  - url: https://{appId}.algolia.net
     variables:
       appId:
         default: ALGOLIA_APPLICATION_ID
@@ -122,7 +122,7 @@ servers:
     variables:
       appId:
         default: ALGOLIA_APPLICATION_ID
-  - url: https://{appId}-dsn.algolianet.com
+  - url: https://{appId}-dsn.algolia.net
     variables:
       appId:
         default: ALGOLIA_APPLICATION_ID
@@ -1460,7 +1460,7 @@ paths:
           label: curl
           source: |-
             curl --request POST \
-              --url 'https://algolia_application_id.algolianet.com/1/indexes/*/recommendations' \
+              --url 'https://algolia_application_id.algolia.net/1/indexes/*/recommendations' \
               --header 'accept: application/json' \
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
@@ -1732,6 +1732,14 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/related-products/recommend/rules/test-record-123 \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     delete:
       tags:
         - rules
@@ -1755,6 +1763,250 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new RecommendClient(
+              new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+            );
+
+            // Call the API
+            var response = await client.DeleteRecommendRuleAsync(
+              "<YOUR_INDEX_NAME>",
+              Enum.Parse<RecommendModels>("RelatedProducts"),
+              "objectID"
+            );
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client = RecommendClient(
+                appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+            // Call the API
+            final response = await client.deleteRecommendRule(
+              indexName: "<YOUR_INDEX_NAME>",
+              model: RecommendModels.fromJson("related-products"),
+              objectID: "objectID",
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client
+
+            client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.DeleteRecommendRule(client.NewApiDeleteRecommendRuleRequest(
+              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            RecommendClient client = new
+            RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+
+            // Call the API
+
+            client.deleteRecommendRule("<YOUR_INDEX_NAME>",
+            RecommendModels.RELATED_PRODUCTS, "objectID");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initRecommend();
+
+
+            // Call the API
+
+            const response = await client.deleteRecommendRule({
+              indexName: 'indexName',
+              model: 'related-products',
+              objectID: 'objectID',
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            var response = client.deleteRecommendRule(
+              indexName = "<YOUR_INDEX_NAME>",
+              model = RecommendModels.entries.first { it.value == "related-products" },
+              objectID = "objectID",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            $response = $client->deleteRecommendRule(
+                '<YOUR_INDEX_NAME>',
+                'related-products',
+                'objectID',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use RecommendClient instead,
+            which exposes the exact same methods.
+
+            client = RecommendClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.delete_recommend_rule(
+                index_name="<YOUR_INDEX_NAME>",
+                model="related-products",
+                object_id="objectID",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.delete_recommend_rule("<YOUR_INDEX_NAME>",
+            "related-products", "objectID")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            val response = Await.result(
+              client.deleteRecommendRule(
+                indexName = "<YOUR_INDEX_NAME>",
+                model = RecommendModels.withName("related-products"),
+                objectID = "objectID"
+              ),
+              Duration(100, "sec")
+            )
+
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            let response = try await client.deleteRecommendRule(
+                indexName: "<YOUR_INDEX_NAME>",
+                model: RecommendModels.relatedProducts,
+                objectID: "objectID"
+            )
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/related-products/recommend/rules/test-record-123 \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/indexes/{indexName}/{model}/task/{taskID}:
     get:
       tags:
@@ -2041,6 +2293,14 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/related-products/task/1514562690001 \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/indexes/{indexName}/{model}/recommend/rules/search:
     post:
       tags:
@@ -2367,6 +2627,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/related-products/recommend/rules/search \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"query":"","context":"mobile","page":0,"hitsPerPage":20,"enabled":true,"filters":"objectID:rr-123456","facets":["*"],"maxValuesPerFacet":1}'
   /1/indexes/{indexName}/{model}/recommend/rules/batch:
     post:
       tags:
@@ -2646,6 +2916,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/related-products/recommend/rules/batch \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '[{"_metadata":{"lastUpdate":"2023-07-04T12:49:15Z"},"objectID":"lorem","condition":{"filters":"(category:Book OR category:Ebook) AND _tags:published","context":"mobile"},"consequence":{"hide":[{"objectID":"test-record-123"}],"promote":[{"objectID":"test-record-123","position":0}],"params":{"automaticFacetFilters":[{"facet":"lorem","negative":true}],"filters":"(category:Book OR category:Ebook) AND _tags:published","optionalFilters":["category:books<score=1>","category:-movies<score=1>"]}},"description":"Boost on-sale items","enabled":true,"validity":[{"from":42,"until":42}]}]'
 components:
   securitySchemes:
     appId:

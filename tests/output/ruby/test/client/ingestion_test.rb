@@ -60,8 +60,29 @@ class TestClientIngestionClient < Test::Unit::TestCase
     assert_equal(25000, req.timeout)
   end
 
-  # endpoint level timeout
+  # can leave call opened for a long time
   def test_api3
+    client = Algolia::IngestionClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6676,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "ingestionClient"
+      )
+    )
+    req = client.custom_get("1/long-wait")
+    assert_equal({:"message" => "OK"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+  end
+
+  # endpoint level timeout
+  def test_api4
     client = Algolia::IngestionClient.create(
       "APP_ID",
       "API_KEY",
@@ -77,7 +98,7 @@ class TestClientIngestionClient < Test::Unit::TestCase
   end
 
   # can override endpoint level timeout
-  def test_api4
+  def test_api5
     client = Algolia::IngestionClient.create(
       "APP_ID",
       "API_KEY",
@@ -118,7 +139,7 @@ class TestClientIngestionClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.13.0\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.15.1\).*/))
   end
 
   # uses the correct region

@@ -14,6 +14,8 @@ Task:
       $ref: '#/LastRun'
     nextRun:
       $ref: '#/NextRun'
+    owner:
+      $ref: './common.yml#/owner'
     input:
       $ref: '#/TaskInput'
     enabled:

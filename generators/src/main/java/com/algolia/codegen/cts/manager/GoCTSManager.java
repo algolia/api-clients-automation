@@ -23,11 +23,13 @@ public class GoCTSManager implements CTSManager {
 
   @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
-    Object clientPrefix = bundle.get("clientPrefix");
+    String clientPrefix = (String) bundle.get("clientPrefix");
     bundle.put("clientName", Helpers.toPascalCase(this.client));
 
     if (clientPrefix.equals("query-suggestions")) {
       bundle.put("clientPrefix", "suggestions");
+    } else {
+      bundle.put("clientPrefix", Helpers.camelize(clientPrefix));
     }
 
     bundle.put("clientImport", clientPrefix);
