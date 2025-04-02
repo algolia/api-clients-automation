@@ -43,5 +43,5 @@ case class Authentication(
     owner: Option[String] = scala.None,
     input: AuthInputPartial,
     createdAt: String,
-    updatedAt: Option[String] = scala.None
+    updatedAt: String
 )

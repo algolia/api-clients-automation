@@ -2347,6 +2347,7 @@ components:
         - name
         - input
         - createdAt
+        - updatedAt
     Pagination:
       type: object
       description: Paginated API response.
@@ -2675,6 +2676,7 @@ components:
         - name
         - input
         - createdAt
+        - updatedAt
     DestinationCreate:
       type: object
       additionalProperties: false
@@ -3095,6 +3097,7 @@ components:
         - type
         - name
         - createdAt
+        - updatedAt
     SourceCreate:
       type: object
       additionalProperties: false
@@ -3635,6 +3638,7 @@ components:
         - destinationID
         - enabled
         - createdAt
+        - updatedAt
     TaskCreate:
       type: object
       additionalProperties: false
@@ -3866,6 +3870,7 @@ components:
         - trigger
         - enabled
         - createdAt
+        - updatedAt
     OnDemandTriggerInput:
       type: object
       additionalProperties: false
@@ -4000,6 +4005,7 @@ components:
         - code
         - name
         - createdAt
+        - updatedAt
     TransformationCreate:
       type: object
       additionalProperties: false
@@ -4050,9 +4056,11 @@ components:
       properties:
         payloads:
           type: array
-          description: The array of records returned by the transformation service.
+          description: >-
+            The array of stringified records returned by the transformation
+            service.
           items:
-            type: object
+            type: string
         error:
           title: transformationError
           type: object

@@ -42,5 +42,5 @@ case class Source(
     input: Option[SourceInput] = scala.None,
     authenticationID: Option[String] = scala.None,
     createdAt: String,
-    updatedAt: Option[String] = scala.None
+    updatedAt: String
 )

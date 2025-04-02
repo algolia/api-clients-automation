@@ -111,7 +111,7 @@ public class Destination {
   }
 
   /** Date of last update in RFC 3339 format. */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public String getUpdatedAt() {
     return updatedAt;
   }

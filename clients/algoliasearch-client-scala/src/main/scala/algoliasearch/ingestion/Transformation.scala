@@ -46,5 +46,5 @@ case class Transformation(
     description: Option[String] = scala.None,
     owner: Option[String] = scala.None,
     createdAt: String,
-    updatedAt: Option[String] = scala.None
+    updatedAt: String
 )

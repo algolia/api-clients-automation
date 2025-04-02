@@ -43,7 +43,7 @@ case class Destination(
     owner: Option[String] = scala.None,
     input: DestinationInput,
     createdAt: String,
-    updatedAt: Option[String] = scala.None,
+    updatedAt: String,
     authenticationID: Option[String] = scala.None,
     transformationIDs: Option[Seq[String]] = scala.None
 )
