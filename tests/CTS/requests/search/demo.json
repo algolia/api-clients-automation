@@ -1,0 +1,15 @@
+[
+  {
+    "testName": "provides bar to foo",
+    "parameters": {
+      "foo": "bar"
+    },
+    "request": {
+      "path": "/1/demo",
+      "method": "POST",
+      "body": {
+        "foo": "bar"
+      }
+    }
+  }
+]

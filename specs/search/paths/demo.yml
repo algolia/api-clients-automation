@@ -1,0 +1,30 @@
+post:
+  tags:
+    - Vaults
+  operationId: demo
+  x-acl:
+    - admin
+  description: The demo description.
+  summary: Demo foo bar 
+  requestBody:
+    required: true
+    description: wow it does so much!.
+    content:
+      application/json:
+        schema:
+          title: demoPayload
+          type: object
+          properties:
+            foo:
+              type: string
+  responses:
+    '200':
+      $ref: '../../common/responses/CreatedAt.yml'
+    '400':
+      $ref: '../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../common/responses/IndexNotFound.yml'

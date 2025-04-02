@@ -224,6 +224,9 @@ paths:
   /{path}:
     $ref: '../common/paths/customRequest.yml'
 
+  /1/demo:
+    $ref: 'paths/demo.yml'
+
   # ########################
   # ### Search Endpoints ###
   # ########################
