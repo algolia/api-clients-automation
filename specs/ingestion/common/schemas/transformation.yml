@@ -120,9 +120,9 @@ TransformationTryResponse:
   properties:
     payloads:
       type: array
-      description: The array of records returned by the transformation service.
+      description: The array of stringified records returned by the transformation service.
       items:
-        type: object
+        type: string
     error:
       title: transformationError
       type: object
