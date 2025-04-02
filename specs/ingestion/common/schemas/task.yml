@@ -44,6 +44,7 @@ Task:
     - destinationID
     - enabled
     - createdAt
+    - updatedAt
 
 TaskV1:
   type: object
@@ -86,6 +87,7 @@ TaskV1:
     - trigger
     - enabled
     - createdAt
+    - updatedAt
 
 Trigger:
   description: Trigger that runs the task.

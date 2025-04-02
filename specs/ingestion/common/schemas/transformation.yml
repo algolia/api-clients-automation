@@ -23,6 +23,7 @@ Transformation:
     - code
     - name
     - createdAt
+    - updatedAt
 
 Code:
   type: string

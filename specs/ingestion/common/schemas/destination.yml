@@ -27,6 +27,7 @@ Destination:
     - name
     - input
     - createdAt
+    - updatedAt
 
 DestinationCreate:
   type: object

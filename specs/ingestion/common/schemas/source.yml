@@ -23,6 +23,7 @@ Source:
     - type
     - name
     - createdAt
+    - updatedAt
 
 SourceCreate:
   type: object
