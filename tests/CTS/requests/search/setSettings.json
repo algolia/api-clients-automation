@@ -760,7 +760,15 @@
       "indexName": "theIndexName",
       "indexSettings": {
         "ranking": [
-          "desc(is_popular)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"
+          "desc(is_popular)",
+          "typo",
+          "geo",
+          "words",
+          "filters",
+          "proximity",
+          "attribute",
+          "exact",
+          "custom"
         ]
       }
     },
@@ -769,7 +777,15 @@
       "method": "PUT",
       "body": {
         "ranking": [
-          "desc(is_popular)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"
+          "desc(is_popular)",
+          "typo",
+          "geo",
+          "words",
+          "filters",
+          "proximity",
+          "attribute",
+          "exact",
+          "custom"
         ]
       }
     }
