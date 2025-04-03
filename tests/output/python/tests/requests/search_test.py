@@ -7804,9 +7804,7 @@ class TestSearchClient:
                 "unretrievableAttributes": [
                     "foo",
                 ],
-                "userData": {
-                    "user": "data",
-                },
+                "userData": {"user": "data"},
             },
         )
 
@@ -9245,7 +9243,7 @@ class TestSearchClient:
             index_name="theIndexName",
             index_settings={
                 "userData": {
-                    "extraData": "This is the custom data that you want to store in your index",
+                    "extraData": "This is the custom data that you want to store in your index"
                 },
             },
         )
@@ -17128,9 +17126,7 @@ class TestSearchClientSync:
                 "unretrievableAttributes": [
                     "foo",
                 ],
-                "userData": {
-                    "user": "data",
-                },
+                "userData": {"user": "data"},
             },
         )
 
@@ -18569,7 +18565,7 @@ class TestSearchClientSync:
             index_name="theIndexName",
             index_settings={
                 "userData": {
-                    "extraData": "This is the custom data that you want to store in your index",
+                    "extraData": "This is the custom data that you want to store in your index"
                 },
             },
         )

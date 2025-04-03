@@ -9287,7 +9287,7 @@ public class SnippetSearchClient
         SortFacetValuesBy = "date",
         TypoTolerance = new TypoTolerance(false),
         UnretrievableAttributes = new List<string> { "foo" },
-        UserData = new Dictionary<string, string> { { "user", "data" } },
+        UserData = new Dictionary<string, object> { { "user", "data" } },
       }
     );
     // >LOG
@@ -10893,7 +10893,7 @@ public class SnippetSearchClient
       "<YOUR_INDEX_NAME>",
       new IndexSettings
       {
-        UserData = new Dictionary<string, string>
+        UserData = new Dictionary<string, object>
         {
           { "extraData", "This is the custom data that you want to store in your index" },
         },

@@ -5933,7 +5933,7 @@ class TestSearchClient < Test::Unit::TestCase
         sort_facet_values_by: "date",
         typo_tolerance: false,
         unretrievable_attributes: ["foo"],
-        user_data: {user: "data"}
+        user_data: {:"user" => "data"}
       )
     )
 
@@ -6990,7 +6990,7 @@ class TestSearchClient < Test::Unit::TestCase
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(
-        user_data: {extraData: "This is the custom data that you want to store in your index"}
+        user_data: {:"extraData" => "This is the custom data that you want to store in your index"}
       )
     )
 

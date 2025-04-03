@@ -9784,7 +9784,13 @@ class SnippetSearchClient {
           sortFacetValuesBy = Some("date"),
           typoTolerance = Some(TypoTolerance(false)),
           unretrievableAttributes = Some(Seq("foo")),
-          userData = Some(JObject(List(JField("user", JString("data")))))
+          userData = Some(
+            JObject(
+              List(
+                JField("user", JString("data"))
+              )
+            )
+          )
         )
       ),
       Duration(100, "sec")
@@ -11445,7 +11451,11 @@ class SnippetSearchClient {
         indexName = "<YOUR_INDEX_NAME>",
         indexSettings = IndexSettings(
           userData = Some(
-            JObject(List(JField("extraData", JString("This is the custom data that you want to store in your index"))))
+            JObject(
+              List(
+                JField("extraData", JString("This is the custom data that you want to store in your index"))
+              )
+            )
           )
         )
       ),

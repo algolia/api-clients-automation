@@ -10651,9 +10651,7 @@ def snippet_for_set_settings54():
             "unretrievableAttributes": [
                 "foo",
             ],
-            "userData": {
-                "user": "data",
-            },
+            "userData": {"user": "data"},
         },
     )
 
@@ -12588,7 +12586,7 @@ def snippet_for_set_settings125():
         index_name="<YOUR_INDEX_NAME>",
         index_settings={
             "userData": {
-                "extraData": "This is the custom data that you want to store in your index",
+                "extraData": "This is the custom data that you want to store in your index"
             },
         },
     )

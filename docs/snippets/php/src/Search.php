@@ -10374,8 +10374,7 @@ class SnippetSearchClient
                 'unretrievableAttributes' => [
                     'foo',
                 ],
-                'userData' => ['user' => 'data',
-                ],
+                'userData' => ['user' => 'data'],
             ],
         );
 
@@ -12293,8 +12292,7 @@ class SnippetSearchClient
         // Call the API
         $response = $client->setSettings(
             '<YOUR_INDEX_NAME>',
-            ['userData' => ['extraData' => 'This is the custom data that you want to store in your index',
-            ],
+            ['userData' => ['extraData' => 'This is the custom data that you want to store in your index'],
             ],
         );
 

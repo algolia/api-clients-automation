@@ -433,7 +433,7 @@ final class SettingsResponse {
       numericAttributesForFiltering.hashCode +
       separatorsToIndex.hashCode +
       searchableAttributes.hashCode +
-      userData.hashCode +
+      (userData == null ? 0 : userData.hashCode) +
       customNormalization.hashCode +
       attributeForDistinct.hashCode +
       maxFacetHits.hashCode +

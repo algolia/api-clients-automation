@@ -7717,10 +7717,7 @@ class SearchTest {
             typoTolerance = TypoTolerance.of(false),
             unretrievableAttributes = listOf("foo"),
             userData = buildJsonObject {
-              put(
-                "user",
-                JsonPrimitive("data"),
-              )
+              put("user", "data")
             },
           ),
         )
@@ -9108,10 +9105,7 @@ class SearchTest {
           indexName = "theIndexName",
           indexSettings = IndexSettings(
             userData = buildJsonObject {
-              put(
-                "extraData",
-                JsonPrimitive("This is the custom data that you want to store in your index"),
-              )
+              put("extraData", "This is the custom data that you want to store in your index")
             },
           ),
         )

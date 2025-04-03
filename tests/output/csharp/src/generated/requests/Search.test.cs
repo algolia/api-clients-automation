@@ -8327,7 +8327,7 @@ public class SearchClientRequestTests
         SortFacetValuesBy = "date",
         TypoTolerance = new TypoTolerance(false),
         UnretrievableAttributes = new List<string> { "foo" },
-        UserData = new Dictionary<string, string> { { "user", "data" } },
+        UserData = new Dictionary<string, object> { { "user", "data" } },
       }
     );
 
@@ -9727,7 +9727,7 @@ public class SearchClientRequestTests
       "theIndexName",
       new IndexSettings
       {
-        UserData = new Dictionary<string, string>
+        UserData = new Dictionary<string, object>
         {
           { "extraData", "This is the custom data that you want to store in your index" },
         },

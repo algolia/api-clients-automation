@@ -8788,7 +8788,7 @@ def snippet_for_set_settings54
       sort_facet_values_by: "date",
       typo_tolerance: false,
       unretrievable_attributes: ["foo"],
-      user_data: {user: "data"}
+      user_data: {:"user" => "data"}
     )
   )
 
@@ -10372,7 +10372,7 @@ def snippet_for_set_settings125
   response = client.set_settings(
     "<YOUR_INDEX_NAME>",
     Algolia::Search::IndexSettings.new(
-      user_data: {extraData: "This is the custom data that you want to store in your index"}
+      user_data: {:"extraData" => "This is the custom data that you want to store in your index"}
     )
   )
 

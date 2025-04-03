@@ -9669,7 +9669,7 @@ void main() {
             "foo",
           ],
           userData: {
-            'user': "data",
+            'user': 'data',
           },
         ),
       ),
@@ -11501,7 +11501,7 @@ void main() {
         indexSettings: IndexSettings(
           userData: {
             'extraData':
-                "This is the custom data that you want to store in your index",
+                'This is the custom data that you want to store in your index',
           },
         ),
       ),

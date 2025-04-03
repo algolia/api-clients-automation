@@ -8139,8 +8139,7 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'unretrievableAttributes' => [
                     'foo',
                 ],
-                'userData' => ['user' => 'data',
-                ],
+                'userData' => ['user' => 'data'],
             ],
         );
 
@@ -9703,8 +9702,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $client->setSettings(
             'theIndexName',
-            ['userData' => ['extraData' => 'This is the custom data that you want to store in your index',
-            ],
+            ['userData' => ['extraData' => 'This is the custom data that you want to store in your index'],
             ],
         );
 

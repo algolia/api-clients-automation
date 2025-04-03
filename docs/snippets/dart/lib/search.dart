@@ -8932,7 +8932,7 @@ void snippetForsetSettings54() async {
         "foo",
       ],
       userData: {
-        'user': "data",
+        'user': 'data',
       },
     ),
   );
@@ -10514,7 +10514,7 @@ void snippetForsetSettings125() async {
     indexSettings: IndexSettings(
       userData: {
         'extraData':
-            "This is the custom data that you want to store in your index",
+            'This is the custom data that you want to store in your index',
       },
     ),
   );

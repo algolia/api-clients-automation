@@ -205,7 +205,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
       renderingContent.hashCode +
       serverTimeMS.hashCode +
       serverUsed.hashCode +
-      userData.hashCode +
+      (userData == null ? 0 : userData.hashCode) +
       queryID.hashCode +
       automaticInsights.hashCode +
       const MapEquality<String, dynamic>().hash(this);

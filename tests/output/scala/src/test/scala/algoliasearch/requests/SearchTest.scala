@@ -8304,7 +8304,13 @@ class SearchTest extends AnyFunSuite {
         sortFacetValuesBy = Some("date"),
         typoTolerance = Some(TypoTolerance(false)),
         unretrievableAttributes = Some(Seq("foo")),
-        userData = Some(JObject(List(JField("user", JString("data")))))
+        userData = Some(
+          JObject(
+            List(
+              JField("user", JString("data"))
+            )
+          )
+        )
       )
     )
 
@@ -9692,7 +9698,11 @@ class SearchTest extends AnyFunSuite {
       indexName = "theIndexName",
       indexSettings = IndexSettings(
         userData = Some(
-          JObject(List(JField("extraData", JString("This is the custom data that you want to store in your index"))))
+          JObject(
+            List(
+              JField("extraData", JString("This is the custom data that you want to store in your index"))
+            )
+          )
         )
       )
     )
