@@ -1,0 +1,21 @@
+name: algolia_chopper_requester
+description: Chopper Requester for Algolia Search Client
+version: 1.17.0
+topics:
+  - search
+  - discovery
+  - http
+  - client
+
+environment:
+  sdk: ^3.0.0
+
+dependencies:
+  algolia_client_core: ^1.17.0
+  chopper: ^8.0.1+1
+  http: ^1.1.0
+  logging: ^1.2.0
+
+dev_dependencies:
+  lints: ^4.0.0
+  test: ^1.25.7
