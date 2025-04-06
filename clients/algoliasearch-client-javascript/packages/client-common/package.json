@@ -41,7 +41,7 @@
     "publint": "0.3.10",
     "ts-node": "10.9.2",
     "tsup": "8.4.0",
-    "typescript": "5.8.2",
+    "typescript": "5.8.3",
     "vitest": "3.1.1"
   },
   "engines": {

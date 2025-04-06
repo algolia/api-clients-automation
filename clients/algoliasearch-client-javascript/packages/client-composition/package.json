@@ -60,7 +60,7 @@
     "publint": "0.3.10",
     "rollup": "4.36.0",
     "tsup": "8.4.0",
-    "typescript": "5.8.2"
+    "typescript": "5.8.3"
   },
   "engines": {
     "node": ">= 14.0.0"
