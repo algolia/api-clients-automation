@@ -85,5 +85,5 @@ realtime:
   type: object
   properties:
     enabled:
-      type: bool
+      type: boolean
       description: Whether the realtime personalization feature is enabled.
