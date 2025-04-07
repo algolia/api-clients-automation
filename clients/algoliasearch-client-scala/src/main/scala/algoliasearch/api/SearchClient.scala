@@ -1245,8 +1245,9 @@ class SearchClient(
     * the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater
     * than 0. You can specify an operation by providing an object with the attribute to update as the key and its value
     * being an object with the following properties: - _operation: the operation to apply on the attribute - value: the
-    * right-hand side argument to the operation, for example, increment or decrement step, value to add or remove. This
-    * operation is subject to [indexing rate
+    * right-hand side argument to the operation, for example, increment or decrement step, value to add or remove. When
+    * updating multiple attributes or using multiple operations targeting the same record, you should use a single
+    * partial update for faster processing. This operation is subject to [indexing rate
     * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     *
     * Required API Key ACLs:
