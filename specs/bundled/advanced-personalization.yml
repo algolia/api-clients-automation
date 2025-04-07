@@ -329,10 +329,13 @@ paths:
                   $ref: '#/components/schemas/personalizationReRanking'
                 profileType:
                   $ref: '#/components/schemas/profileType'
+                features:
+                  $ref: '#/components/schemas/features'
               required:
                 - indices
                 - personalizationReRanking
                 - profileType
+                - features
       responses:
         '200':
           description: OK
@@ -363,6 +366,8 @@ paths:
           $ref: '#/components/responses/BadRequest-2'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled-2'
         '500':
           $ref: '#/components/responses/InternalServerError'
   /2/users:
@@ -742,6 +747,17 @@ components:
             $ref: '#/components/schemas/errorCodes'
         lastUpdatedAt:
           type: string
+    realtime:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether the realtime personalization feature is enabled.
+    features:
+      type: object
+      properties:
+        realtime:
+          $ref: '#/components/schemas/realtime'
     configurationObject:
       type: object
       properties:
@@ -788,11 +804,14 @@ components:
           $ref: '#/components/schemas/profileType'
         status:
           $ref: '#/components/schemas/Configuration_status'
+        features:
+          $ref: '#/components/schemas/features'
       required:
         - indices
         - personalzationReRanking
         - profileType
         - status
+        - features
     unauthorized:
       type: integer
       description: HTTP status code for an authorization error.
@@ -844,6 +863,28 @@ components:
           $ref: '#/components/schemas/badRequest'
         message:
           $ref: '#/components/schemas/ErrorMessages_badRequest'
+    paymentRequired:
+      type: integer
+      description: HTTP status code for a payment required error.
+      enum:
+        - 402
+    featureNotEnabled:
+      type: string
+      description: Details about the response, such as error messages.
+      enum:
+        - >-
+          Predictive profiles are not allowed for this app. Please contact
+          support to upgrade your plan: https://support.algolia.com/
+        - >-
+          Realtime Personalization is not allowed for this app. Please contact
+          support to upgrade your plan: https://support.algolia.com/
+    ErrorResponses_featureNotEnabled:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/paymentRequired'
+        message:
+          $ref: '#/components/schemas/featureNotEnabled'
     user:
       type: object
       properties:
@@ -989,6 +1030,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponses_badRequest'
+    FeatureNotEnabled-2:
+      description: Feature not enabled.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponses_featureNotEnabled'
     GenericUnprocessableEntity:
       description: Unprocessable entity.
       content:

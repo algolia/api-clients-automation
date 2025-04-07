@@ -17,8 +17,8 @@ featureNotEnabled:
   type: string
   description: Details about the response, such as error messages.
   enum:
-    - "Predictive profiles are not allowed for this app. Please contact support to upgrade your plan: https://support.algolia.com/"
-    - "Realtime Personalization is not allowed for this app. Please contact support to upgrade your plan: https://support.algolia.com/"
+    - 'Predictive profiles are not allowed for this app. Please contact support to upgrade your plan: https://support.algolia.com/'
+    - 'Realtime Personalization is not allowed for this app. Please contact support to upgrade your plan: https://support.algolia.com/'
 
 genericNotFound:
   type: string
