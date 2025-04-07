@@ -247,7 +247,7 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.17.4"
     "@types/node": "npm:22.14.0"
     cross-fetch: "npm:4.1.0"
-    nock: "npm:14.0.2"
+    nock: "npm:14.0.3"
     publint: "npm:0.3.10"
     tsup: "npm:8.4.0"
     typescript: "npm:5.8.3"
@@ -262,7 +262,7 @@ __metadata:
     "@algolia/client-common": "npm:5.23.2"
     "@arethetypeswrong/cli": "npm:0.17.4"
     "@types/node": "npm:22.14.0"
-    nock: "npm:14.0.2"
+    nock: "npm:14.0.3"
     publint: "npm:0.3.10"
     tsup: "npm:8.4.0"
     typescript: "npm:5.8.3"
@@ -1021,9 +1021,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mswjs/interceptors@npm:^0.38.0":
-  version: 0.38.0
-  resolution: "@mswjs/interceptors@npm:0.38.0"
+"@mswjs/interceptors@npm:^0.38.1":
+  version: 0.38.1
+  resolution: "@mswjs/interceptors@npm:0.38.1"
   dependencies:
     "@open-draft/deferred-promise": "npm:^2.2.0"
     "@open-draft/logger": "npm:^0.3.0"
@@ -1032,7 +1032,7 @@ __metadata:
     jsdom: "npm:^26.0.0"
     outvariant: "npm:^1.4.3"
     strict-event-emitter: "npm:^0.5.1"
-  checksum: 10/758d8867d9635f1aeabf8ef7c76aa0158b41a3f718f3329a0e24448b70ddaff01e3d6b467b67103d8251bdce6c4afb84c5386c5c51b3ae93b02d4351cc2a480a
+  checksum: 10/8bffe0b98c97d564d60049e7f541d5920a05ebac4982d79b5a0361fce2260a41fe39a230d97abb8bc9500504e17f9e3ef40403856d791b8ba50ca6af1ea3d48f
   languageName: node
   linkType: hard
 
@@ -5814,14 +5814,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nock@npm:14.0.2":
-  version: 14.0.2
-  resolution: "nock@npm:14.0.2"
+"nock@npm:14.0.3":
+  version: 14.0.3
+  resolution: "nock@npm:14.0.3"
   dependencies:
-    "@mswjs/interceptors": "npm:^0.38.0"
+    "@mswjs/interceptors": "npm:^0.38.1"
     json-stringify-safe: "npm:^5.0.1"
     propagate: "npm:^2.0.0"
-  checksum: 10/3abf8f3026af898014e55acf76888e69e4bcdab34f59c0f4240faca2cdc0ee6913d1d7eac775b808b1f546263cad225cf76d95e1a0943b41bb6be15658a21a7c
+  checksum: 10/e9f9599c43b38d10337b749d246bbdb4092c67a38c3c7211635975724e0fd2fc6a629acdbebbeffcc94a9d37704262b6be5cd4647e3bcc02874fa6449766ea94
   languageName: node
   linkType: hard
 
