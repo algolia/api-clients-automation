@@ -123,4 +123,4 @@ WatchResponse:
       description: a message describing the outcome of a validate run.
       type: string
   required:
-    - message
+    - runID
