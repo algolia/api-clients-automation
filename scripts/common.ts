@@ -156,7 +156,7 @@ async function buildCustomGenerators(): Promise<void> {
   const cache = new Cache({
     folder: toAbsolutePath('generators/'),
     generatedFiles: ['build/classes'],
-    filesToCache: ['src', 'build.gradle', 'settings.gradle'],
+    filesToCache: ['src', 'build.gradle', 'settings.gradle', '../config/.java-version'],
     cacheFile: toAbsolutePath('generators/.cache'),
   });
 
