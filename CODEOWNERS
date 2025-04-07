@@ -3,6 +3,6 @@
 
 specs/ @algolia/doc-approvers
 website/ @algolia/doc-approvers
-* @algolia/api-clients-automation
-
 specs/advanced-personalization @algolia/predict-fe
+
+* @algolia/api-clients-automation
