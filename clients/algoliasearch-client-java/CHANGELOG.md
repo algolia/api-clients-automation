@@ -1,3 +1,8 @@
+## [4.15.3](https://github.com/algolia/algoliasearch-client-java/compare/4.15.2...4.15.3)
+
+- [a922dca5a](https://github.com/algolia/api-clients-automation/commit/a922dca5a) docs(partialUpdate): add note about multiple operations ([#4721](https://github.com/algolia/api-clients-automation/pull/4721)) by [@Jerska](https://github.com/Jerska/)
+- [e150cd934](https://github.com/algolia/api-clients-automation/commit/e150cd934) fix(specs): message is not required in WatchResponse ([#4723](https://github.com/algolia/api-clients-automation/pull/4723)) by [@millotp](https://github.com/millotp/)
+
 ## [4.15.2](https://github.com/algolia/algoliasearch-client-java/compare/4.15.1...4.15.2)
 
 - [9a92af24c8](https://github.com/algolia/api-clients-automation/commit/9a92af24c8) chore(scripts): reuse java-version ([#4696](https://github.com/algolia/api-clients-automation/pull/4696)) by [@millotp](https://github.com/millotp/)
