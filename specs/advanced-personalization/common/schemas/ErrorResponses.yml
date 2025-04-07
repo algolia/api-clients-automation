@@ -53,3 +53,11 @@ internalServerError:
       $ref: './ErrorCodes.yml#/internalServerError'
     message:
       $ref: './ErrorMessages.yml#/internalServerError'
+
+featureNotEnabled:
+  type: object
+  properties:
+    status:
+      $ref: './ErrorCodes.yml#/paymentRequired'
+    message:
+      $ref: './ErrorMessages.yml#/featureNotEnabled'

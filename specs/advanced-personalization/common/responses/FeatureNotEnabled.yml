@@ -1,0 +1,5 @@
+description: Feature not enabled.
+content:
+  application/json:
+    schema:
+      $ref: '../schemas/ErrorResponses.yml#/featureNotEnabled'
