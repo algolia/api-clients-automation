@@ -44,7 +44,7 @@
     "prettier-plugin-java": "2.6.7",
     "prettier-plugin-organize-imports": "4.1.0",
     "renovate-config-algolia": "2.2.0",
-    "typescript": "5.8.2"
+    "typescript": "5.8.3"
   },
   "packageManager": "yarn@4.8.1",
   "engines": {

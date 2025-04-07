@@ -57,7 +57,7 @@
     "nock": "14.0.2",
     "publint": "0.3.10",
     "tsup": "8.4.0",
-    "typescript": "5.8.2",
+    "typescript": "5.8.3",
     "vitest": "3.1.1"
   },
   "engines": {
