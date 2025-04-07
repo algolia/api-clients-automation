@@ -67,7 +67,9 @@ put:
               $ref: '../common/schemas/Configuration.yml#/personalizationReRanking'
             profileType:
               $ref: '../common/schemas/Configuration.yml#/profileType'
-          required: [indices, personalizationReRanking, profileType]
+            features:
+              $ref: '../common/schemas/Configuration.yml#/features'
+          required: [indices, personalizationReRanking, profileType, features]
   responses:
     '200':
       description: OK
@@ -94,5 +96,7 @@ put:
       $ref: '../common/responses/BadRequest.yml'
     '401':
       $ref: '../common/responses/Unauthorized.yml'
+    '402':
+      $ref: '../common/responses/FeatureNotEnabled.yml'
     '500':
       $ref: '../common/responses/InternalServerError.yml'
