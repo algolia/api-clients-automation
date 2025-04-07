@@ -1,4 +1,4 @@
-import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
+import { defineWorkersConfig } from '@cloudflare/vitest-pool-workers/config';
 
 export default defineWorkersConfig([
   {
@@ -35,8 +35,8 @@ export default defineWorkersConfig([
       include: ['__tests__/algoliasearch.fetch.test.ts'],
       name: 'miniflare fetch',
       poolOptions: {
-        workers: {}
-      }
+        workers: {},
+      },
     },
   },
   {
@@ -49,8 +49,8 @@ export default defineWorkersConfig([
       include: ['__tests__/algoliasearch.worker.test.ts'],
       name: 'miniflare worker',
       poolOptions: {
-        workers: {}
-      }
+        workers: {},
+      },
     },
   },
 ]);
