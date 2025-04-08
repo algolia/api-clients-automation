@@ -11,6 +11,13 @@ get:
   responses:
     '200':
       description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:
