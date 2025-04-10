@@ -61,7 +61,7 @@ public class Event {
   }
 
   /** Get status */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public EventStatus getStatus() {
     return status;
   }

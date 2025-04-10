@@ -22,7 +22,7 @@ public class SourceDocker implements SourceInput {
     return this;
   }
 
-  /** Shortname of the image, as returned by the referential. */
+  /** Name of the connector. */
   @javax.annotation.Nonnull
   public String getImage() {
     return image;

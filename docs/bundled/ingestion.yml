@@ -16371,7 +16371,7 @@ components:
       properties:
         image:
           type: string
-          description: Shortname of the image, as returned by the referential.
+          description: Name of the connector.
           example: zendesk
         configuration:
           type: object
@@ -16481,14 +16481,16 @@ components:
       description: Universally unique identifier (UUID) of an event.
       example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     EventStatus:
-      type: string
-      enum:
-        - created
-        - started
-        - retried
-        - failed
-        - succeeded
-        - critical
+      oneOf:
+        - type: string
+          enum:
+            - created
+            - started
+            - retried
+            - failed
+            - succeeded
+            - critical
+        - type: 'null'
     EventType:
       type: string
       enum:
@@ -16519,8 +16521,10 @@ components:
           minimum: 0
           multipleOf: 1
         data:
-          type: object
-          additionalProperties: true
+          oneOf:
+            - type: object
+              additionalProperties: true
+            - type: 'null'
         publishedAt:
           $ref: '#/components/schemas/publishedAt'
       required:
