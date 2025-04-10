@@ -1,0 +1,43 @@
+Timeseries:
+  type: object
+  additionalProperties: false
+  properties:
+    abTestID:
+      $ref: "../parameters.yml#/abTestID"
+    variants:
+      $ref: "#/timeseriesVariants"
+  required:
+    - abTestID
+    - variants
+
+timeseriesVariants:
+  type: array
+  description: |
+    A/B test timeseries variants.
+
+    The first variant is your _control_ index, typically your production index.
+    All of the additional variants are indexes with changed settings that you want to test against the control.
+  items:
+    $ref: "#/timeseriesVariant"
+
+timeseriesVariant:
+  type: object
+  properties:
+    dates:
+      $ref: "#/metricDates"
+
+metricDates:
+  type: array
+  items:
+    $ref: "#/metricDate"
+
+metricDate:
+  type: object
+  properties:
+    date:
+      type: string
+      description: Date where the metric was updated, in RFC 3339 format.
+      format: date
+      example: 2025-06-15
+    metrics:
+       $ref: "Variant.yml#/metrics"

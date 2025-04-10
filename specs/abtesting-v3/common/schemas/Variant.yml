@@ -53,10 +53,22 @@ metric:
     value:
       type: number
       format: double
+    valueCIHigh:
+      type: number
+      format: double
+    valueCILow:
+      type: number
+      format: double
     pValue:
       type: number
       format: double
       description: PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the current variant based on the control.
+    pValueCIHigh:
+      type: number
+      format: double
+    pValueCILow:
+      type: number
+      format: double
     dimension:
       type: string
       description: Dimension defined during test creation
