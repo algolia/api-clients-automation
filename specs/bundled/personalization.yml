@@ -61,6 +61,27 @@ info:
     Error responses have a `message` property with more information.
 
 
+    ## Rate limiting
+
+
+    When making requests to the Personalization API, you are limited to 40 API
+    calls per second per application.
+
+
+    The following headers provide information about your current limit:
+
+
+    - `x-ratelimit-limit`: The number of requests allowed every second.
+
+    - `x-ratelimit-remaining`: The number of requests remaining in the current
+
+    second period.
+
+    - `x-ratelimit-reset`: [Unix timestamp](https://www.unixtimestamp.com/) of
+
+    the next time period.
+
+
     ## Version
 
 
@@ -223,6 +244,13 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/x-ratelimit-limit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/x-ratelimit-remaining'
+            x-ratelimit-reset:
+              $ref: '#/components/headers/x-ratelimit-reset'
           content:
             application/json:
               schema:
@@ -278,6 +306,13 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/x-ratelimit-limit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/x-ratelimit-remaining'
+            x-ratelimit-reset:
+              $ref: '#/components/headers/x-ratelimit-reset'
           content:
             application/json:
               schema:
@@ -318,6 +353,13 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/x-ratelimit-limit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/x-ratelimit-remaining'
+            x-ratelimit-reset:
+              $ref: '#/components/headers/x-ratelimit-reset'
           content:
             application/json:
               schema:
@@ -554,6 +596,24 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
+  headers:
+    x-ratelimit-limit:
+      description: Number of allowed requests per one minute.
+      example: 100
+      schema:
+        type: integer
+    x-ratelimit-remaining:
+      description: Number of remaining requests in the current period.
+      example: 99
+      schema:
+        type: integer
+    x-ratelimit-reset:
+      description: >-
+        Timstamp when the rate limit will reset, measured in seconds since the
+        Unix epoch.
+      example: 1710682486
+      schema:
+        type: integer
 x-tagGroups:
   - name: General
     tags:

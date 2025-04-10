@@ -9,8 +9,12 @@
   * be JSON objects. ## Response status and errors The Personalization API returns JSON responses. Since JSON doesn't
   * guarantee any specific ordering, don't rely on the order of attributes in the API response. Successful responses
   * return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status. Error
-  * responses have a `message` property with more information. ## Version The current version of the Personalization API
-  * is version 1, as indicated by the `/1/` in each endpoint's URL.
+  * responses have a `message` property with more information. ## Rate limiting When making requests to the
+  * Personalization API, you are limited to 40 API calls per second per application. The following headers provide
+  * information about your current limit: - `x-ratelimit-limit`: The number of requests allowed every second. -
+  * `x-ratelimit-remaining`: The number of requests remaining in the current second period. - `x-ratelimit-reset`: [Unix
+  * timestamp](https://www.unixtimestamp.com/) of the next time period. ## Version The current version of the
+  * Personalization API is version 1, as indicated by the `/1/` in each endpoint's URL.
   *
   * The version of the OpenAPI document: 1.0.0
   *
