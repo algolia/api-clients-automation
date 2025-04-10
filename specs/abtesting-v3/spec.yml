@@ -101,6 +101,8 @@ paths:
     $ref: "paths/scheduleABTest.yml"
   /3/abtests/estimate:
     $ref: "paths/estimate.yml"
+  /3/abtests/{id}/timeseries:
+    $ref: "paths/timeseries.yml"
 
   # ###############
   # ### Helpers ###
