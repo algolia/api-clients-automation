@@ -352,7 +352,7 @@ SourceDocker:
   properties:
     image:
       type: string
-      description: Shortname of the image, as returned by the referential.
+      description: Name of the connector.
       example: zendesk
     configuration:
       type: object
