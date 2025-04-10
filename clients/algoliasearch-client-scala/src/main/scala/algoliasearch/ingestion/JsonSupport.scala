@@ -22,7 +22,7 @@ package algoliasearch.ingestion
 import org.json4s._
 
 object JsonSupport {
-  private def enumSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
+  private def enumSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
     new ActionSerializer() :+
     new ActionTypeSerializer() :+
     new AuthenticationSortKeysSerializer() :+
@@ -57,7 +57,7 @@ object JsonSupport {
     new TransformationSortKeysSerializer() :+
     new TriggerTypeSerializer()
 
-  private def oneOfsSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
+  private def oneOfsSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
     AuthInputSerializer :+
     AuthInputPartialSerializer :+
     DestinationInputSerializer :+
@@ -68,7 +68,9 @@ object JsonSupport {
     TaskInputSerializer :+
     TriggerSerializer
 
-  private def classMapSerializers: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
+  private def classMapSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
+    new AuthOAuthSerializer() :+
+    new AuthOAuthPartialSerializer() :+
     new ErrorBaseSerializer() :+
     new PushTaskRecordsSerializer()
 

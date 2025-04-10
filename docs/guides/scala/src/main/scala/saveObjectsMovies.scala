@@ -6,6 +6,7 @@ import algoliasearch.api.SearchClient
 import algoliasearch.config.*
 import algoliasearch.extension.SearchClientExtensions
 
+import algoliasearch.search.JsonSupport
 import algoliasearch.extension.SearchClientExtensions
 
 import org.json4s.native.JsonMethods
@@ -14,7 +15,7 @@ import org.json4s.jvalue2extractable
 object Main {
   def main(args: Array[String]): Unit = {
     implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-    implicit val formats: org.json4s.Formats = org.json4s.DefaultFormats
+    implicit val formats: org.json4s.Formats = JsonSupport.format
 
     // Fetch sample dataset
     val url = "https://dashboard.algolia.com/api/1/sample_datasets?type=movie"

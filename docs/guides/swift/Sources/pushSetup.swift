@@ -17,7 +17,7 @@ func pushSetup() async throws {
         let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // setting `watch` to `true` will make the call synchronous
-        let resp = try await client.pushTaskWithHTTPInfo(
+        let resp = try await client.pushTask(
             taskID: "YOUR_TASK_ID",
             pushTaskPayload: PushTaskPayload(action: IngestionAction.addObject, records: records),
             watch: true

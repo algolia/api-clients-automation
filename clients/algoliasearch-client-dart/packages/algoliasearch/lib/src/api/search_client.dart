@@ -46,7 +46,7 @@ final class SearchClient implements ApiClient {
     _retryStrategy.requester.setClientApiKey(apiKey);
   }
 
-  /// This method allow you to send requests to the Algolia REST API.
+  /// This method lets you send requests to the Algolia REST API.
   ///
   /// Parameters:
   /// * [path] Path of the endpoint, anything after \"/1\" must be specified.

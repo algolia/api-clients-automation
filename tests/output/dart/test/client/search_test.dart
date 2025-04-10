@@ -294,6 +294,29 @@ void main() {
     );
   });
 
+  test('with algolia user id', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6686',
+              scheme: 'http'),
+        ]));
+    try {
+      final res = await client.searchSingleIndex(
+        indexName: "playlists",
+        searchParams: SearchParamsObject(
+          query: "foo",
+        ),
+      );
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
   test('switch API key', () async {
     final requester = RequestInterceptor();
     final client = SearchClient(

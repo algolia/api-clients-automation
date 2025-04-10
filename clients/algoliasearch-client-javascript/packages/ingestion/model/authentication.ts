@@ -22,6 +22,11 @@ export type Authentication = {
 
   platform?: Platform | null;
 
+  /**
+   * Owner of the resource.
+   */
+  owner?: string | null;
+
   input: AuthInputPartial;
 
   /**
@@ -32,5 +37,5 @@ export type Authentication = {
   /**
    * Date of last update in RFC 3339 format.
    */
-  updatedAt?: string;
+  updatedAt: string;
 };

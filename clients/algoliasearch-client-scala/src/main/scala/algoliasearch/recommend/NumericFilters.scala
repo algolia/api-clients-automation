@@ -41,11 +41,13 @@ sealed trait NumericFilters
 object NumericFilters {
 
   case class SeqOfNumericFilters(value: Seq[NumericFilters]) extends NumericFilters
+
   case class StringValue(value: String) extends NumericFilters
 
   def apply(value: Seq[NumericFilters]): NumericFilters = {
     NumericFilters.SeqOfNumericFilters(value)
   }
+
   def apply(value: String): NumericFilters = {
     NumericFilters.StringValue(value)
   }
@@ -57,8 +59,7 @@ object NumericFiltersSerializer extends Serializer[NumericFilters] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[NumericFilters] =>
       json match {
-        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
-          NumericFilters.SeqOfNumericFilters(value.map(_.extract))
+        case value: JArray  => NumericFilters.apply(Extraction.extract[Seq[NumericFilters]](value))
         case JString(value) => NumericFilters.StringValue(value)
         case _              => throw new MappingException("Can't convert " + json + " to NumericFilters")
       }

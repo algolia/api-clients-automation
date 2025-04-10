@@ -129,6 +129,7 @@ public partial interface ISearchClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>Task of CreatedAtResponse</returns>
+  [Obsolete]
   Task<CreatedAtResponse> AssignUserIdAsync(string xAlgoliaUserID, AssignUserIdParams assignUserIdParams, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -145,6 +146,7 @@ public partial interface ISearchClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>CreatedAtResponse</returns>
+  [Obsolete]
   CreatedAtResponse AssignUserId(string xAlgoliaUserID, AssignUserIdParams assignUserIdParams, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -187,6 +189,7 @@ public partial interface ISearchClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>Task of CreatedAtResponse</returns>
+  [Obsolete]
   Task<CreatedAtResponse> BatchAssignUserIdsAsync(string xAlgoliaUserID, BatchAssignUserIdsParams batchAssignUserIdsParams, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -203,6 +206,7 @@ public partial interface ISearchClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>CreatedAtResponse</returns>
+  [Obsolete]
   CreatedAtResponse BatchAssignUserIds(string xAlgoliaUserID, BatchAssignUserIdsParams batchAssignUserIdsParams, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -364,7 +368,7 @@ public partial interface ISearchClient
   UpdatedAtResponse ClearSynonyms(string indexName, bool? forwardToReplicas = default, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
-  /// This method allow you to send requests to the Algolia REST API.
+  /// This method lets you send requests to the Algolia REST API.
   /// </summary>
   /// <param name="path">Path of the endpoint, anything after \"/1\" must be specified.</param>
   /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
@@ -377,7 +381,7 @@ public partial interface ISearchClient
   Task<object> CustomDeleteAsync(string path, Dictionary<string, object> parameters = default, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
-  /// This method allow you to send requests to the Algolia REST API. (Synchronous version)
+  /// This method lets you send requests to the Algolia REST API. (Synchronous version)
   /// </summary>
   /// <param name="path">Path of the endpoint, anything after \"/1\" must be specified.</param>
   /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
@@ -390,7 +394,7 @@ public partial interface ISearchClient
   object CustomDelete(string path, Dictionary<string, object> parameters = default, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
-  /// This method allow you to send requests to the Algolia REST API.
+  /// This method lets you send requests to the Algolia REST API.
   /// </summary>
   /// <param name="path">Path of the endpoint, anything after \"/1\" must be specified.</param>
   /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
@@ -403,7 +407,7 @@ public partial interface ISearchClient
   Task<object> CustomGetAsync(string path, Dictionary<string, object> parameters = default, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
-  /// This method allow you to send requests to the Algolia REST API. (Synchronous version)
+  /// This method lets you send requests to the Algolia REST API. (Synchronous version)
   /// </summary>
   /// <param name="path">Path of the endpoint, anything after \"/1\" must be specified.</param>
   /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
@@ -416,7 +420,7 @@ public partial interface ISearchClient
   object CustomGet(string path, Dictionary<string, object> parameters = default, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
-  /// This method allow you to send requests to the Algolia REST API.
+  /// This method lets you send requests to the Algolia REST API.
   /// </summary>
   /// <param name="path">Path of the endpoint, anything after \"/1\" must be specified.</param>
   /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
@@ -430,7 +434,7 @@ public partial interface ISearchClient
   Task<object> CustomPostAsync(string path, Dictionary<string, object> parameters = default, object body = default, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
-  /// This method allow you to send requests to the Algolia REST API. (Synchronous version)
+  /// This method lets you send requests to the Algolia REST API. (Synchronous version)
   /// </summary>
   /// <param name="path">Path of the endpoint, anything after \"/1\" must be specified.</param>
   /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
@@ -444,7 +448,7 @@ public partial interface ISearchClient
   object CustomPost(string path, Dictionary<string, object> parameters = default, object body = default, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
-  /// This method allow you to send requests to the Algolia REST API.
+  /// This method lets you send requests to the Algolia REST API.
   /// </summary>
   /// <param name="path">Path of the endpoint, anything after \"/1\" must be specified.</param>
   /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
@@ -458,7 +462,7 @@ public partial interface ISearchClient
   Task<object> CustomPutAsync(string path, Dictionary<string, object> parameters = default, object body = default, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
-  /// This method allow you to send requests to the Algolia REST API. (Synchronous version)
+  /// This method lets you send requests to the Algolia REST API. (Synchronous version)
   /// </summary>
   /// <param name="path">Path of the endpoint, anything after \"/1\" must be specified.</param>
   /// <param name="parameters">Query parameters to apply to the current query. (optional)</param>
@@ -1069,6 +1073,7 @@ public partial interface ISearchClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>Task of GetTopUserIdsResponse</returns>
+  [Obsolete]
   Task<GetTopUserIdsResponse> GetTopUserIdsAsync(RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -1083,6 +1088,7 @@ public partial interface ISearchClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>GetTopUserIdsResponse</returns>
+  [Obsolete]
   GetTopUserIdsResponse GetTopUserIds(RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -1098,6 +1104,7 @@ public partial interface ISearchClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>Task of UserId</returns>
+  [Obsolete]
   Task<UserId> GetUserIdAsync(string userID, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -1113,6 +1120,7 @@ public partial interface ISearchClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>UserId</returns>
+  [Obsolete]
   UserId GetUserId(string userID, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -1128,6 +1136,7 @@ public partial interface ISearchClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>Task of HasPendingMappingsResponse</returns>
+  [Obsolete]
   Task<HasPendingMappingsResponse> HasPendingMappingsAsync(bool? getClusters = default, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -1143,6 +1152,7 @@ public partial interface ISearchClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>HasPendingMappingsResponse</returns>
+  [Obsolete]
   HasPendingMappingsResponse HasPendingMappings(bool? getClusters = default, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -1185,6 +1195,7 @@ public partial interface ISearchClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>Task of ListClustersResponse</returns>
+  [Obsolete]
   Task<ListClustersResponse> ListClustersAsync(RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -1199,6 +1210,7 @@ public partial interface ISearchClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>ListClustersResponse</returns>
+  [Obsolete]
   ListClustersResponse ListClusters(RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -1247,6 +1259,7 @@ public partial interface ISearchClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>Task of ListUserIdsResponse</returns>
+  [Obsolete]
   Task<ListUserIdsResponse> ListUserIdsAsync(int? page = default, int? hitsPerPage = default, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -1263,6 +1276,7 @@ public partial interface ISearchClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>ListUserIdsResponse</returns>
+  [Obsolete]
   ListUserIdsResponse ListUserIds(int? page = default, int? hitsPerPage = default, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -1322,7 +1336,7 @@ public partial interface ISearchClient
   UpdatedAtResponse OperationIndex(string indexName, OperationIndexParams operationIndexParams, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
-  /// Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia). 
+  /// Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia). 
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1340,7 +1354,7 @@ public partial interface ISearchClient
   Task<UpdatedAtWithObjectIdResponse> PartialUpdateObjectAsync(string indexName, string objectID, object attributesToUpdate, bool? createIfNotExists = default, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
-  /// Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).  (Synchronous version)
+  /// Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).  (Synchronous version)
   /// </summary>
   ///
   /// Required API Key ACLs:
@@ -1370,6 +1384,7 @@ public partial interface ISearchClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>Task of RemoveUserIdResponse</returns>
+  [Obsolete]
   Task<RemoveUserIdResponse> RemoveUserIdAsync(string userID, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -1385,6 +1400,7 @@ public partial interface ISearchClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>RemoveUserIdResponse</returns>
+  [Obsolete]
   RemoveUserIdResponse RemoveUserId(string userID, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -1828,6 +1844,7 @@ public partial interface ISearchClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>Task of SearchUserIdsResponse</returns>
+  [Obsolete]
   Task<SearchUserIdsResponse> SearchUserIdsAsync(SearchUserIdsParams searchUserIdsParams, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -1843,6 +1860,7 @@ public partial interface ISearchClient
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>SearchUserIdsResponse</returns>
+  [Obsolete]
   SearchUserIdsResponse SearchUserIds(SearchUserIdsParams searchUserIdsParams, RequestOptions options = null, CancellationToken cancellationToken = default);
 
   /// <summary>
@@ -2091,6 +2109,7 @@ public partial class SearchClient : ISearchClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public async Task<CreatedAtResponse> AssignUserIdAsync(string xAlgoliaUserID, AssignUserIdParams assignUserIdParams, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
 
@@ -2111,6 +2130,7 @@ public partial class SearchClient : ISearchClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public CreatedAtResponse AssignUserId(string xAlgoliaUserID, AssignUserIdParams assignUserIdParams, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => AssignUserIdAsync(xAlgoliaUserID, assignUserIdParams, options, cancellationToken));
 
@@ -2141,6 +2161,7 @@ public partial class SearchClient : ISearchClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public async Task<CreatedAtResponse> BatchAssignUserIdsAsync(string xAlgoliaUserID, BatchAssignUserIdsParams batchAssignUserIdsParams, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
 
@@ -2161,6 +2182,7 @@ public partial class SearchClient : ISearchClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public CreatedAtResponse BatchAssignUserIds(string xAlgoliaUserID, BatchAssignUserIdsParams batchAssignUserIdsParams, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => BatchAssignUserIdsAsync(xAlgoliaUserID, batchAssignUserIdsParams, options, cancellationToken));
 
@@ -2756,6 +2778,7 @@ public partial class SearchClient : ISearchClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public async Task<GetTopUserIdsResponse> GetTopUserIdsAsync(RequestOptions options = null, CancellationToken cancellationToken = default)
   {
     var requestOptions = new InternalRequestOptions(options);
@@ -2766,11 +2789,13 @@ public partial class SearchClient : ISearchClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public GetTopUserIdsResponse GetTopUserIds(RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => GetTopUserIdsAsync(options, cancellationToken));
 
 
   /// <inheritdoc />
+  [Obsolete]
   public async Task<UserId> GetUserIdAsync(string userID, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
 
@@ -2786,11 +2811,13 @@ public partial class SearchClient : ISearchClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public UserId GetUserId(string userID, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => GetUserIdAsync(userID, options, cancellationToken));
 
 
   /// <inheritdoc />
+  [Obsolete]
   public async Task<HasPendingMappingsResponse> HasPendingMappingsAsync(bool? getClusters = default, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
     var requestOptions = new InternalRequestOptions(options);
@@ -2802,6 +2829,7 @@ public partial class SearchClient : ISearchClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public HasPendingMappingsResponse HasPendingMappings(bool? getClusters = default, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => HasPendingMappingsAsync(getClusters, options, cancellationToken));
 
@@ -2822,6 +2850,7 @@ public partial class SearchClient : ISearchClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public async Task<ListClustersResponse> ListClustersAsync(RequestOptions options = null, CancellationToken cancellationToken = default)
   {
     var requestOptions = new InternalRequestOptions(options);
@@ -2832,6 +2861,7 @@ public partial class SearchClient : ISearchClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public ListClustersResponse ListClusters(RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => ListClustersAsync(options, cancellationToken));
 
@@ -2854,6 +2884,7 @@ public partial class SearchClient : ISearchClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public async Task<ListUserIdsResponse> ListUserIdsAsync(int? page = default, int? hitsPerPage = default, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
     var requestOptions = new InternalRequestOptions(options);
@@ -2866,6 +2897,7 @@ public partial class SearchClient : ISearchClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public ListUserIdsResponse ListUserIds(int? page = default, int? hitsPerPage = default, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => ListUserIdsAsync(page, hitsPerPage, options, cancellationToken));
 
@@ -2947,6 +2979,7 @@ public partial class SearchClient : ISearchClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public async Task<RemoveUserIdResponse> RemoveUserIdAsync(string userID, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
 
@@ -2962,6 +2995,7 @@ public partial class SearchClient : ISearchClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public RemoveUserIdResponse RemoveUserId(string userID, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => RemoveUserIdAsync(userID, options, cancellationToken));
 
@@ -3285,6 +3319,7 @@ public partial class SearchClient : ISearchClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public async Task<SearchUserIdsResponse> SearchUserIdsAsync(SearchUserIdsParams searchUserIdsParams, RequestOptions options = null, CancellationToken cancellationToken = default)
   {
 
@@ -3301,6 +3336,7 @@ public partial class SearchClient : ISearchClient
 
 
   /// <inheritdoc />
+  [Obsolete]
   public SearchUserIdsResponse SearchUserIds(SearchUserIdsParams searchUserIdsParams, RequestOptions options = null, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => SearchUserIdsAsync(searchUserIdsParams, options, cancellationToken));
 
