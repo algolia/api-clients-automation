@@ -85,9 +85,10 @@ public class Condition {
   }
 
   /**
-   * Filters that trigger the rule. You can add add filters using the syntax `facet:value` so that
-   * the rule is triggered, when the specific filter is selected. You can use `filters` on its own
-   * or combine it with the `pattern` parameter.
+   * Filters that trigger the rule. You can add filters using the syntax `facet:value` so that the
+   * rule is triggered, when the specific filter is selected. You can use `filters` on its own or
+   * combine it with the `pattern` parameter. You can't combine multiple filters with `OR` and you
+   * can't use numeric filters.
    */
   @javax.annotation.Nullable
   public String getFilters() {
