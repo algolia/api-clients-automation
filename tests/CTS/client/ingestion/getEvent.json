@@ -28,10 +28,8 @@
           "match": {
             "eventID": "6c02aeb1-775e-418e-870b-1faccd4b2c0a",
             "runID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            "status": null,
             "type": "log",
             "batchSize": 100,
-            "data": null,
             "publishedAt": "2023-10-03T12:00:00Z"
           }
         }
