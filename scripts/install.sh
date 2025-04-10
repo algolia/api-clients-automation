@@ -19,7 +19,7 @@ apic() {
 export apic
 
 _list_languages() {
-  cat $ROOT/config/clients.config.json | jq -r 'keys[]'
+  cat $ROOT/config/clients.config.json | jq -r 'keys[] | select(. != "$schema")'
 }
 
 _list_languages_all() {

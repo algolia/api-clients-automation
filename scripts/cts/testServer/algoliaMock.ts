@@ -37,6 +37,18 @@ function addRoutes(app: Express): void {
       processingTimeMS: 0,
     });
   });
+
+  app.get('/1/runs/:runID/events/:eventID', (req, res) => {
+    res.json({
+      eventID: req.params.eventID,
+      runID: req.params.runID,
+      status: null,
+      type: 'log',
+      batchSize: 100,
+      data: null,
+      publishedAt: '2023-10-03T12:00:00Z',
+    });
+  });
 }
 
 export function algoliaMockServer(): Promise<Server> {
