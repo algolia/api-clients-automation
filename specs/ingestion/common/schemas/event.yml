@@ -18,8 +18,10 @@ Event:
       minimum: 0
       multipleOf: 1
     data:
-      type: object
-      additionalProperties: true
+      oneOf:
+        - type: object
+          additionalProperties: true
+        - type: 'null'
     publishedAt:
       $ref: './common.yml#/publishedAt'
   required:
@@ -31,8 +33,10 @@ Event:
     - publishedAt
 
 EventStatus:
-  type: string
-  enum: [created, started, retried, failed, succeeded, critical]
+  oneOf:
+    - type: string
+      enum: [created, started, retried, failed, succeeded, critical]
+    - type: 'null'
 
 EventType:
   type: string
