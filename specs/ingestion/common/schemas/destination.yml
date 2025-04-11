@@ -138,7 +138,7 @@ DestinationIndexName:
 RecordType:
   type: string
   description: Record type for ecommerce sources.
-  enum: [product, variant]
+  enum: [product, variant, collection]
 
 AttributesToExclude:
   type: array
