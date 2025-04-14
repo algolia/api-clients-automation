@@ -38,7 +38,7 @@
     "eslint-plugin-json": "4.0.1",
     "eslint-plugin-yml": "1.17.0",
     "husky": "9.1.7",
-    "lint-staged": "15.5.0",
+    "lint-staged": "15.5.1",
     "oxlint": "0.16.4",
     "prettier": "3.5.3",
     "prettier-plugin-java": "2.6.7",
@@ -46,7 +46,7 @@
     "renovate-config-algolia": "2.2.0",
     "typescript": "5.8.3"
   },
-  "packageManager": "yarn@4.8.1",
+  "packageManager": "yarn@4.9.0",
   "engines": {
     "node": "^22.0.0",
     "yarn": "^4.0.0"
