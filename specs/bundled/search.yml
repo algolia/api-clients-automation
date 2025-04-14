@@ -442,6 +442,11 @@ paths:
 
         - Multiple searches to the same index—for example, with different
         filters.
+
+
+        Use the helper `searchForHits` or `searchForFacets` to get the results
+        in a more convenient format, if you already know the return type you
+        want.
       requestBody:
         required: true
         description: >-

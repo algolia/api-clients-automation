@@ -6,18 +6,33 @@ package com.algolia.model.search;
 import com.algolia.exceptions.AlgoliaRuntimeException;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.*;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.annotation.*;
+import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 import java.io.IOException;
 import java.util.logging.Logger;
 
 /** SearchResult */
 @JsonDeserialize(using = SearchResult.Deserializer.class)
 public interface SearchResult<T> {
-  class Deserializer<T> extends JsonDeserializer<SearchResult<T>> {
+  class Deserializer<T> extends JsonDeserializer<SearchResult<T>> implements ContextualDeserializer {
 
     private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
+
+    private JavaType returnType;
+
+    public Deserializer() {}
+
+    private Deserializer(JavaType returnType) {
+      this.returnType = returnType;
+    }
+
+    @Override
+    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) {
+      JavaType contextualType = ctxt.getContextualType().containedType(0);
+      return new Deserializer(contextualType);
+    }
 
     @Override
     public SearchResult<T> deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
@@ -36,7 +51,12 @@ public interface SearchResult<T> {
       // deserialize SearchResponse
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(new TypeReference<SearchResponse<T>>() {});
+          // For generic types, the innerType is erased by Java, we need to use the contextual type.
+          JavaType innerType = ctxt.getTypeFactory().constructParametricType(SearchResponse.class, returnType);
+          if (parser.getCurrentToken() == null) {
+            parser.nextToken();
+          }
+          return ctxt.readValue(parser, innerType);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf SearchResponse (error: " + e.getMessage() + ") (type: SearchResponse)");
