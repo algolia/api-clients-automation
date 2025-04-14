@@ -2605,6 +2605,7 @@ components:
       enum:
         - product
         - variant
+        - collection
     AttributesToExclude:
       type: array
       description: >
