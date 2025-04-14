@@ -1,3 +1,8 @@
+## [1.31.3](https://github.com/algolia/algoliasearch-client-dart/compare/1.31.2...1.31.3)
+
+- [369c14232](https://github.com/algolia/api-clients-automation/commit/369c14232) fix(specs): condition cant be numeric filter ([#4726](https://github.com/algolia/api-clients-automation/pull/4726)) by [@kai687](https://github.com/kai687/)
+- [4570f18b8](https://github.com/algolia/api-clients-automation/commit/4570f18b8) fix(clients): correctly deserialize SearchResult ([#4756](https://github.com/algolia/api-clients-automation/pull/4756)) by [@millotp](https://github.com/millotp/)
+
 ## [1.31.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.31.1...1.31.2)
 
 - [dbaef6696](https://github.com/algolia/api-clients-automation/commit/dbaef6696) fix(specs): userData is any type ([#4702](https://github.com/algolia/api-clients-automation/pull/4702)) by [@millotp](https://github.com/millotp/)
