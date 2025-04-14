@@ -6,29 +6,29 @@ variants:
     The first variant is your _control_ index, typically your production index.
     All of the additional variants are indexes with changed settings that you want to test against the control.
   items:
-    $ref: "#/variant"
+    $ref: '#/variant'
 
 variant:
   type: object
   additionalProperties: false
   properties:
     description:
-      $ref: "../parameters.yml#/description"
+      $ref: '../parameters.yml#/description'
     estimatedSampleSize:
       type: integer
       description: |
         Estimated number of searches required to achieve the desired statistical significance.
 
-        The A/B test configuration must include a `mininmumDetectableEffect` setting for this number to be included in the response.
+        The A/B test configuration must include a `minimumDetectableEffect` setting for this number to be included in the response.
       example: 0
     index:
-      $ref: "../parameters.yml#/index"
+      $ref: '../parameters.yml#/index'
     trafficPercentage:
-      $ref: "../parameters.yml#/trafficPercentage"
+      $ref: '../parameters.yml#/trafficPercentage'
     metrics:
-      $ref: "#/metrics"
+      $ref: '#/metrics'
     metadata:
-      $ref: "#/variantMetadata"
+      $ref: '#/variantMetadata'
 
   required:
     - index
@@ -38,9 +38,9 @@ variant:
 
 metrics:
   type: array
-  description: All ABTest metrics that were defined during test creation
+  description: All ABTest metrics that were defined during test creation.
   items:
-    $ref: "#/metric"
+    $ref: '#/metric'
 
 metric:
   type: object
@@ -56,24 +56,28 @@ metric:
     valueCIHigh:
       type: number
       format: double
+      description: |
+        The upper bound of the 95% confidence interval for the metric value. The confidence interval is calculated using 
+        either the relative ratio or relative difference between the metric values for the control and the variant.
+        Relative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate), 
+        while relative difference is used for continuous metrics (e.g., revenue).
     valueCILow:
       type: number
       format: double
+      description: |
+        The lower bound of the 95% confidence interval for the metric value. The confidence interval is calculated using 
+        either the relative ratio or relative difference between the metric values for the control and the variant.
+        Relative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate), 
+        while relative difference is used for continuous metrics (e.g., revenue).
     pValue:
       type: number
       format: double
       description: PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the current variant based on the control.
-    pValueCIHigh:
-      type: number
-      format: double
-    pValueCILow:
-      type: number
-      format: double
     dimension:
       type: string
-      description: Dimension defined during test creation
+      description: Dimension defined during test creation.
     metadata:
-      $ref: "#/metricMetadata"
+      $ref: '#/metricMetadata'
   required:
     - name
     - updatedAt
@@ -93,24 +97,24 @@ metric:
       updatedAt: 2025-05-15T17:52:15.644906Z
       value: 1200.50
       pValue: 0.04
-      metadata: { "winsorizedValue": 80.2 }
+      metadata: {'winsorizedValue': 80.2}
     - name: revenue
       dimension: EUR
       updatedAt: 2025-05-15T17:52:15.644906Z
       value: 999.66
       pValue: 0.04
-      metadata: { "winsorizedValue": 888.8 }
+      metadata: {'winsorizedValue': 888.8}
 
 variantMetadata:
   type: object
-  description: Variant specific metadata
+  description: Variant specific metadata.
   properties:
     filterEffects:
-      $ref: "../parameters.yml#/filterEffects"
+      $ref: '../parameters.yml#/filterEffects'
 
 metricMetadata:
   type: object
-  description: Metric specific metadata
+  description: Metric specific metadata.
   properties:
     winsorizedValue:
       type: number
