@@ -566,7 +566,7 @@ void snippetForpushEvents1() async {
           index: "products",
           userToken: "user-123456",
           authenticatedUserToken: "user-123456",
-          timestamp: 1744156800000,
+          timestamp: 1744416000000,
           objectIDs: [
             "9780545139700",
             "9780439784542",
@@ -579,7 +579,7 @@ void snippetForpushEvents1() async {
           index: "products",
           userToken: "user-123456",
           authenticatedUserToken: "user-123456",
-          timestamp: 1744156800000,
+          timestamp: 1744416000000,
           objectIDs: [
             "9780545139700",
             "9780439784542",
