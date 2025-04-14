@@ -32,7 +32,10 @@ object RecordType {
   case object Variant extends RecordType {
     override def toString = "variant"
   }
-  val values: Seq[RecordType] = Seq(Product, Variant)
+  case object Collection extends RecordType {
+    override def toString = "collection"
+  }
+  val values: Seq[RecordType] = Seq(Product, Variant, Collection)
 
   def withName(name: String): RecordType = RecordType.values
     .find(_.toString == name)
