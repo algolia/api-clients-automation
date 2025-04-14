@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.annotation.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.algolia.exceptions.AlgoliaRuntimeException;
 import com.algolia.utils.CompoundType;
+import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
+import com.fasterxml.jackson.databind.BeanProperty;
 
 import java.io.IOException;
 import java.util.List;
@@ -87,9 +89,25 @@ public interface {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/ven
     {{/isModel}}
     {{/composedSchemas.oneOf}}
 
-    class Deserializer{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} extends JsonDeserializer<{{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}> {
+    class Deserializer{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} extends JsonDeserializer<{{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}>{{#vendorExtensions.x-has-child-generic}} implements ContextualDeserializer{{/vendorExtensions.x-has-child-generic}} {
 
         private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
+
+        {{#vendorExtensions.x-has-child-generic}}
+        private JavaType returnType;
+
+        public Deserializer() {}
+
+        private Deserializer(JavaType returnType) {
+          this.returnType = returnType;
+        }
+
+        @Override
+        public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) {
+          JavaType contextualType = ctxt.getContextualType().containedType(0);
+          return new Deserializer(contextualType);
+        }
+        {{/vendorExtensions.x-has-child-generic}}
 
         @Override
         public {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
@@ -97,9 +115,19 @@ public interface {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/ven
             {{#composedSchemas.oneOf}}
             // deserialize {{{datatypeWithEnum}}}
             if (tree.{{#isModel}}isObject(){{#vendorExtensions.x-discriminator-fields}} && tree.has("{{{.}}}"){{/vendorExtensions.x-discriminator-fields}}{{/isModel}}{{#isEnumRef}}isTextual(){{/isEnumRef}}{{#isArray}}isArray(){{/isArray}}{{#isInteger}}isInt(){{/isInteger}}{{#isLong}}isLong(){{/isLong}}{{#isDouble}}isDouble(){{/isDouble}}{{#isBoolean}}isBoolean(){{/isBoolean}}{{#isString}}isTextual(){{/isString}}{{^isEnumRef}}{{^isModel}}{{^isArray}}{{^isInteger}}{{^isLong}}{{^isDouble}}{{^isBoolean}}{{^isString}}isObject(){{/isString}}{{/isBoolean}}{{/isDouble}}{{/isLong}}{{/isInteger}}{{/isArray}}{{/isModel}}{{/isEnumRef}}){
-                try(JsonParser parser = tree.traverse(jp.getCodec())) {  
+                try(JsonParser parser = tree.traverse(jp.getCodec())) {
                     {{#isModel}}
-                    return parser.readValueAs({{#vendorExtensions.x-has-child-generic}}new TypeReference<{{datatypeWithEnum}}<T>>() {}{{/vendorExtensions.x-has-child-generic}}{{^vendorExtensions.x-has-child-generic}}{{{datatypeWithEnum}}}.class{{/vendorExtensions.x-has-child-generic}});
+                    {{#vendorExtensions.x-has-child-generic}}
+                    // For generic types, the innerType is erased by Java, we need to use the contextual type.
+                    JavaType innerType = ctxt.getTypeFactory().constructParametricType({{dataType}}.class, returnType);
+                    if (parser.getCurrentToken() == null) {
+                      parser.nextToken();
+                    }
+                    return ctxt.readValue(parser, innerType);
+                    {{/vendorExtensions.x-has-child-generic}}
+                    {{^vendorExtensions.x-has-child-generic}}
+                    return parser.readValueAs({{{datatypeWithEnum}}}.class);
+                    {{/vendorExtensions.x-has-child-generic}}
                     {{/isModel}}
                     {{#isEnumRef}}
                     return parser.readValueAs({{{datatypeWithEnum}}}.class);
