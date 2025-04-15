@@ -34,12 +34,14 @@ public partial class Source
   /// <param name="type">type (required).</param>
   /// <param name="name">name (required).</param>
   /// <param name="createdAt">Date of creation in RFC 3339 format. (required).</param>
-  public Source(string sourceID, SourceType? type, string name, string createdAt)
+  /// <param name="updatedAt">Date of last update in RFC 3339 format. (required).</param>
+  public Source(string sourceID, SourceType? type, string name, string createdAt, string updatedAt)
   {
     SourceID = sourceID ?? throw new ArgumentNullException(nameof(sourceID));
     Type = type;
     Name = name ?? throw new ArgumentNullException(nameof(name));
     CreatedAt = createdAt ?? throw new ArgumentNullException(nameof(createdAt));
+    UpdatedAt = updatedAt ?? throw new ArgumentNullException(nameof(updatedAt));
   }
 
   /// <summary>
@@ -54,6 +56,13 @@ public partial class Source
   /// </summary>
   [JsonPropertyName("name")]
   public string Name { get; set; }
+
+  /// <summary>
+  /// Owner of the resource.
+  /// </summary>
+  /// <value>Owner of the resource.</value>
+  [JsonPropertyName("owner")]
+  public string Owner { get; set; }
 
   /// <summary>
   /// Gets or Sets Input
@@ -93,6 +102,7 @@ public partial class Source
     sb.Append("  SourceID: ").Append(SourceID).Append("\n");
     sb.Append("  Type: ").Append(Type).Append("\n");
     sb.Append("  Name: ").Append(Name).Append("\n");
+    sb.Append("  Owner: ").Append(Owner).Append("\n");
     sb.Append("  Input: ").Append(Input).Append("\n");
     sb.Append("  AuthenticationID: ").Append(AuthenticationID).Append("\n");
     sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
@@ -126,6 +136,7 @@ public partial class Source
         (SourceID == input.SourceID || (SourceID != null && SourceID.Equals(input.SourceID))) &&
         (Type == input.Type || Type.Equals(input.Type)) &&
         (Name == input.Name || (Name != null && Name.Equals(input.Name))) &&
+        (Owner == input.Owner || (Owner != null && Owner.Equals(input.Owner))) &&
         (Input == input.Input || (Input != null && Input.Equals(input.Input))) &&
         (AuthenticationID == input.AuthenticationID || (AuthenticationID != null && AuthenticationID.Equals(input.AuthenticationID))) &&
         (CreatedAt == input.CreatedAt || (CreatedAt != null && CreatedAt.Equals(input.CreatedAt))) &&
@@ -149,6 +160,10 @@ public partial class Source
       if (Name != null)
       {
         hashCode = (hashCode * 59) + Name.GetHashCode();
+      }
+      if (Owner != null)
+      {
+        hashCode = (hashCode * 59) + Owner.GetHashCode();
       }
       if (Input != null)
       {

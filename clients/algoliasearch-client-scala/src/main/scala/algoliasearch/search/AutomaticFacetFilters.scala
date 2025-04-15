@@ -51,6 +51,7 @@ object AutomaticFacetFiltersEvidence {
 object AutomaticFacetFilters {
 
   case class SeqOfAutomaticFacetFilter(value: Seq[AutomaticFacetFilter]) extends AutomaticFacetFilters
+
   case class SeqOfString(value: Seq[String]) extends AutomaticFacetFilters
 
   def apply(
@@ -71,11 +72,9 @@ object AutomaticFacetFiltersSerializer extends Serializer[AutomaticFacetFilters]
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[AutomaticFacetFilters] =>
       json match {
-        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
-          AutomaticFacetFilters.SeqOfAutomaticFacetFilter(value.map(_.extract))
-        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
-          AutomaticFacetFilters.SeqOfString(value.map(_.extract))
-        case _ => throw new MappingException("Can't convert " + json + " to AutomaticFacetFilters")
+        case value: JArray => AutomaticFacetFilters.apply(Extraction.extract[Seq[AutomaticFacetFilter]](value))
+        case value: JArray => AutomaticFacetFilters.apply(Extraction.extract[Seq[String]](value))
+        case _             => throw new MappingException("Can't convert " + json + " to AutomaticFacetFilters")
       }
   }
 

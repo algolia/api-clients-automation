@@ -25,6 +25,9 @@ package algoliasearch.ingestion
   *   Locales for your commercetools stores.
   * @param fallbackIsInStockValue
   *   Whether a fallback value is stored in the Algolia record if there's no inventory information about the product.
+  * @param productQueryPredicate
+  *   Predicate to filter out specific products when indexing. For more information, see [Query
+  *   Predicate](https://docs.commercetools.com/api/predicates/query).
   */
 case class SourceCommercetools(
     storeKeys: Option[Seq[String]] = scala.None,
@@ -32,5 +35,6 @@ case class SourceCommercetools(
     url: String,
     projectKey: String,
     fallbackIsInStockValue: Option[Boolean] = scala.None,
+    productQueryPredicate: Option[String] = scala.None,
     customFields: Option[CommercetoolsCustomFields] = scala.None
 ) extends SourceInputTrait

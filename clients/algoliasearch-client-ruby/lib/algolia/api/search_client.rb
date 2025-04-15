@@ -34,6 +34,18 @@ module Algolia
     end
 
     def self.create_with_config(config)
+      if config.connect_timeout.nil?
+        config.connect_timeout = 2000
+      end
+
+      if config.read_timeout.nil?
+        config.read_timeout = 5000
+      end
+
+      if config.write_timeout.nil?
+        config.write_timeout = 30000
+      end
+
       new(config)
     end
 
@@ -207,6 +219,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
+    # THIS OPERATION IS DEPRECATED
     # @param x_algolia_user_id [String] Unique identifier of the user who makes the search request. (required)
     # @param assign_user_id_params [AssignUserIdParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -304,6 +317,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
+    # THIS OPERATION IS DEPRECATED
     # @param x_algolia_user_id [String] Unique identifier of the user who makes the search request. (required)
     # @param batch_assign_user_ids_params [BatchAssignUserIdsParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -598,7 +612,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::UpdatedAtResponse")
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -630,7 +644,7 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -641,7 +655,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -673,7 +687,7 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -684,7 +698,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -717,7 +731,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -729,7 +743,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -762,7 +776,7 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -1673,6 +1687,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
+    # THIS OPERATION IS DEPRECATED
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_top_user_ids_with_http_info(request_options = {})
@@ -1710,6 +1725,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
+    # THIS OPERATION IS DEPRECATED
     # @param user_id [String] Unique identifier of the user who makes the search request. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1754,6 +1770,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
+    # THIS OPERATION IS DEPRECATED
     # @param get_clusters [Boolean] Whether to include the cluster's pending mapping state in the response.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1834,6 +1851,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
+    # THIS OPERATION IS DEPRECATED
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def list_clusters_with_http_info(request_options = {})
@@ -1914,6 +1932,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
+    # THIS OPERATION IS DEPRECATED
     # @param page [Integer] Requested page of the API response. If `null`, the API response is not paginated.
     # @param hits_per_page [Integer] Number of hits per page. (default to 100)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -2043,7 +2062,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::UpdatedAtResponse")
     end
 
-    # Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+    # Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2095,7 +2114,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+    # Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2129,6 +2148,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
+    # THIS OPERATION IS DEPRECATED
     # @param user_id [String] Unique identifier of the user who makes the search request. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -2583,7 +2603,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::UpdatedAtResponse")
     end
 
-    # Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.
+    # Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
     #
     # Required API Key ACLs:
     #   - search
@@ -2615,7 +2635,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.
+    # Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
     #
     # Required API Key ACLs:
     #   - search
@@ -2906,6 +2926,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
+    # THIS OPERATION IS DEPRECATED
     # @param search_user_ids_params [SearchUserIdsParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response

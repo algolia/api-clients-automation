@@ -10,7 +10,9 @@ import com.fasterxml.jackson.databind.annotation.*;
 public enum RecordType {
   PRODUCT("product"),
 
-  VARIANT("variant");
+  VARIANT("variant"),
+
+  COLLECTION("collection");
 
   private final String value;
 

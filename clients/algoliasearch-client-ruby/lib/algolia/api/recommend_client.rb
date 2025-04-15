@@ -31,6 +31,18 @@ module Algolia
     end
 
     def self.create_with_config(config)
+      if config.connect_timeout.nil?
+        config.connect_timeout = 2000
+      end
+
+      if config.read_timeout.nil?
+        config.read_timeout = 5000
+      end
+
+      if config.write_timeout.nil?
+        config.write_timeout = 30000
+      end
+
       new(config)
     end
 
@@ -107,7 +119,7 @@ module Algolia
       )
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -139,7 +151,7 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -150,7 +162,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -182,7 +194,7 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -193,7 +205,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -226,7 +238,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -238,7 +250,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -271,7 +283,7 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.

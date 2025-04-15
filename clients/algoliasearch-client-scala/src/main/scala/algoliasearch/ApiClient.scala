@@ -6,7 +6,6 @@ import algoliasearch.internal.interceptor.{AuthInterceptor, RetryStrategy, UserA
 import algoliasearch.internal.{AlgoliaAgent, HttpRequester, StatefulHost}
 import org.json4s.Formats
 
-import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.Duration
 import scala.util.Try
 

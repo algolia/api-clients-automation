@@ -1,3 +1,5 @@
+package com.algolia;
+
 import com.algolia.api.SearchClient;
 import com.algolia.config.*;
 import com.algolia.model.search.*;

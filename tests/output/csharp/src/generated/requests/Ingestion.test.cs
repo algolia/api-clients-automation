@@ -140,6 +140,8 @@ public class IngestionClientRequestTests
             Locales = new List<string> { "de" },
             Url = "http://commercetools.com",
             ProjectKey = "keyID",
+            ProductQueryPredicate =
+              "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))",
           }
         ),
         AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -150,7 +152,7 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/sources", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}",
+      "{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\",\"productQueryPredicate\":\"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}",
       req.Body,
       new JsonDiffConfig(false)
     );

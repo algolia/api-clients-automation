@@ -1,0 +1,21 @@
+from algoliasearch.search.models.anchoring import Anchoring
+from algoliasearch.search.models.condition import Condition
+from algoliasearch.search.models.consequence import Consequence
+from algoliasearch.search.models.rule import Rule
+
+
+condition = Condition(
+    anchoring=Anchoring.IS,
+    pattern="{facet:brand}",
+)
+
+consequence = Consequence(
+    filter_promotes=True,
+)
+
+rule = Rule(
+    enabled=True,
+    object_id="rule_with_filterPromotes",
+    conditions=[condition],
+    consequence=consequence,
+)

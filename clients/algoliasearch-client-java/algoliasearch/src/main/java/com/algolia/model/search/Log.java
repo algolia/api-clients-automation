@@ -5,7 +5,6 @@ package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,7 +28,7 @@ public class Log {
   private String answer;
 
   @JsonProperty("url")
-  private URI url;
+  private String url;
 
   @JsonProperty("ip")
   private String ip;
@@ -113,14 +112,14 @@ public class Log {
     return answer;
   }
 
-  public Log setUrl(URI url) {
+  public Log setUrl(String url) {
     this.url = url;
     return this;
   }
 
   /** URL of the API endpoint. */
   @javax.annotation.Nonnull
-  public URI getUrl() {
+  public String getUrl() {
     return url;
   }
 

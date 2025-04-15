@@ -30,7 +30,7 @@ public class WatchResponse {
   }
 
   /** Universally unique identifier (UUID) of a task run. */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public String getRunID() {
     return runID;
   }
@@ -81,7 +81,7 @@ public class WatchResponse {
   }
 
   /** a message describing the outcome of a validate run. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public String getMessage() {
     return message;
   }

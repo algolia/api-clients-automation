@@ -1,3 +1,5 @@
+package com.algolia;
+
 import com.algolia.api.IngestionClient;
 import com.algolia.config.*;
 import com.algolia.model.ingestion.*;

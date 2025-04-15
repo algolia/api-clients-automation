@@ -25,7 +25,7 @@ describe('api', () => {
     })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('test-app-id-dsn.algolia.net');
-  }, 15000);
+  }, 25000);
 
   test('calls api with correct write host', async () => {
     const client = compositionClient('test-app-id', 'test-api-key', {
@@ -38,5 +38,5 @@ describe('api', () => {
     })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('test-app-id-dsn.algolia.net');
-  }, 15000);
+  }, 25000);
 });

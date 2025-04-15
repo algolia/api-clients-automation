@@ -22,9 +22,9 @@ package algoliasearch.ingestion
 /** TransformationTryResponse
   *
   * @param payloads
-  *   The array of records returned by the transformation service.
+  *   The array of stringified records returned by the transformation service.
   */
 case class TransformationTryResponse(
-    payloads: Seq[Any],
+    payloads: Seq[String],
     error: Option[TransformationError] = scala.None
 )

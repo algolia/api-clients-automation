@@ -4,6 +4,8 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 // Task struct for Task.
@@ -19,13 +21,16 @@ type Task struct {
 	// The last time the scheduled task ran in RFC 3339 format.
 	LastRun *string `json:"lastRun,omitempty"`
 	// The next scheduled run of the task in RFC 3339 format.
-	NextRun *string    `json:"nextRun,omitempty"`
-	Input   *TaskInput `json:"input,omitempty"`
+	NextRun *string `json:"nextRun,omitempty"`
+	// Owner of the resource.
+	Owner utils.Nullable[string] `json:"owner,omitempty"`
+	Input *TaskInput             `json:"input,omitempty"`
 	// Whether the task is enabled.
 	Enabled bool `json:"enabled"`
 	// Maximum accepted percentage of failures for a task run to finish successfully.
-	FailureThreshold *int32      `json:"failureThreshold,omitempty"`
-	Action           *ActionType `json:"action,omitempty"`
+	FailureThreshold   *int32      `json:"failureThreshold,omitempty"`
+	Action             *ActionType `json:"action,omitempty"`
+	SubscriptionAction *ActionType `json:"subscriptionAction,omitempty"`
 	// Date of the last cursor in RFC 3339 format.
 	Cursor        *string        `json:"cursor,omitempty"`
 	Notifications *Notifications `json:"notifications,omitempty"`
@@ -33,7 +38,7 @@ type Task struct {
 	// Date of creation in RFC 3339 format.
 	CreatedAt string `json:"createdAt"`
 	// Date of last update in RFC 3339 format.
-	UpdatedAt *string `json:"updatedAt,omitempty"`
+	UpdatedAt string `json:"updatedAt"`
 }
 
 type TaskOption func(f *Task)
@@ -56,6 +61,12 @@ func WithTaskNextRun(val string) TaskOption {
 	}
 }
 
+func WithTaskOwner(val utils.Nullable[string]) TaskOption {
+	return func(f *Task) {
+		f.Owner = val
+	}
+}
+
 func WithTaskInput(val TaskInput) TaskOption {
 	return func(f *Task) {
 		f.Input = &val
@@ -71,6 +82,12 @@ func WithTaskFailureThreshold(val int32) TaskOption {
 func WithTaskAction(val ActionType) TaskOption {
 	return func(f *Task) {
 		f.Action = &val
+	}
+}
+
+func WithTaskSubscriptionAction(val ActionType) TaskOption {
+	return func(f *Task) {
+		f.SubscriptionAction = &val
 	}
 }
 
@@ -92,23 +109,18 @@ func WithTaskPolicies(val Policies) TaskOption {
 	}
 }
 
-func WithTaskUpdatedAt(val string) TaskOption {
-	return func(f *Task) {
-		f.UpdatedAt = &val
-	}
-}
-
 // NewTask instantiates a new Task object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed.
-func NewTask(taskID string, sourceID string, destinationID string, enabled bool, createdAt string, opts ...TaskOption) *Task {
+func NewTask(taskID string, sourceID string, destinationID string, enabled bool, createdAt string, updatedAt string, opts ...TaskOption) *Task {
 	this := &Task{}
 	this.TaskID = taskID
 	this.SourceID = sourceID
 	this.DestinationID = destinationID
 	this.Enabled = enabled
 	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
 	for _, opt := range opts {
 		opt(this)
 	}
@@ -294,6 +306,50 @@ func (o *Task) SetNextRun(v string) *Task {
 	return o
 }
 
+// GetOwner returns the Owner field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Task) GetOwner() string {
+	if o == nil || o.Owner.Get() == nil {
+		var ret string
+		return ret
+	}
+	return *o.Owner.Get()
+}
+
+// GetOwnerOk returns a tuple with the Owner field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned.
+func (o *Task) GetOwnerOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Owner.Get(), o.Owner.IsSet()
+}
+
+// HasOwner returns a boolean if a field has been set.
+func (o *Task) HasOwner() bool {
+	if o != nil && o.Owner.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOwner gets a reference to the given utils.Nullable[string] and assigns it to the Owner field.
+func (o *Task) SetOwner(v string) *Task {
+	o.Owner.Set(&v)
+	return o
+}
+
+// SetOwnerNil sets the value for Owner to be an explicit nil.
+func (o *Task) SetOwnerNil() {
+	o.Owner.Set(nil)
+}
+
+// UnsetOwner ensures that no value is present for Owner, not even an explicit nil.
+func (o *Task) UnsetOwner() {
+	o.Owner.Unset()
+}
+
 // GetInput returns the Input field value if set, zero value otherwise.
 func (o *Task) GetInput() TaskInput {
 	if o == nil || o.Input == nil {
@@ -415,6 +471,39 @@ func (o *Task) HasAction() bool {
 // SetAction gets a reference to the given ActionType and assigns it to the Action field.
 func (o *Task) SetAction(v ActionType) *Task {
 	o.Action = &v
+	return o
+}
+
+// GetSubscriptionAction returns the SubscriptionAction field value if set, zero value otherwise.
+func (o *Task) GetSubscriptionAction() ActionType {
+	if o == nil || o.SubscriptionAction == nil {
+		var ret ActionType
+		return ret
+	}
+	return *o.SubscriptionAction
+}
+
+// GetSubscriptionActionOk returns a tuple with the SubscriptionAction field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Task) GetSubscriptionActionOk() (*ActionType, bool) {
+	if o == nil || o.SubscriptionAction == nil {
+		return nil, false
+	}
+	return o.SubscriptionAction, true
+}
+
+// HasSubscriptionAction returns a boolean if a field has been set.
+func (o *Task) HasSubscriptionAction() bool {
+	if o != nil && o.SubscriptionAction != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetSubscriptionAction gets a reference to the given ActionType and assigns it to the SubscriptionAction field.
+func (o *Task) SetSubscriptionAction(v ActionType) *Task {
+	o.SubscriptionAction = &v
 	return o
 }
 
@@ -542,50 +631,36 @@ func (o *Task) SetCreatedAt(v string) *Task {
 	return o
 }
 
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
+// GetUpdatedAt returns the UpdatedAt field value.
 func (o *Task) GetUpdatedAt() string {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.UpdatedAt
+
+	return o.UpdatedAt
 }
 
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
 // and a boolean to check if the value has been set.
 func (o *Task) GetUpdatedAtOk() (*string, bool) {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.UpdatedAt, true
+	return &o.UpdatedAt, true
 }
 
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *Task) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given string and assigns it to the UpdatedAt field.
+// SetUpdatedAt sets field value.
 func (o *Task) SetUpdatedAt(v string) *Task {
-	o.UpdatedAt = &v
+	o.UpdatedAt = v
 	return o
 }
 
 func (o Task) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]any{}
-	if true {
-		toSerialize["taskID"] = o.TaskID
-	}
-	if true {
-		toSerialize["sourceID"] = o.SourceID
-	}
-	if true {
-		toSerialize["destinationID"] = o.DestinationID
-	}
+	toSerialize["taskID"] = o.TaskID
+	toSerialize["sourceID"] = o.SourceID
+	toSerialize["destinationID"] = o.DestinationID
 	if o.Cron != nil {
 		toSerialize["cron"] = o.Cron
 	}
@@ -595,17 +670,21 @@ func (o Task) MarshalJSON() ([]byte, error) {
 	if o.NextRun != nil {
 		toSerialize["nextRun"] = o.NextRun
 	}
+	if o.Owner.IsSet() {
+		toSerialize["owner"] = o.Owner.Get()
+	}
 	if o.Input != nil {
 		toSerialize["input"] = o.Input
 	}
-	if true {
-		toSerialize["enabled"] = o.Enabled
-	}
+	toSerialize["enabled"] = o.Enabled
 	if o.FailureThreshold != nil {
 		toSerialize["failureThreshold"] = o.FailureThreshold
 	}
 	if o.Action != nil {
 		toSerialize["action"] = o.Action
+	}
+	if o.SubscriptionAction != nil {
+		toSerialize["subscriptionAction"] = o.SubscriptionAction
 	}
 	if o.Cursor != nil {
 		toSerialize["cursor"] = o.Cursor
@@ -616,12 +695,8 @@ func (o Task) MarshalJSON() ([]byte, error) {
 	if o.Policies != nil {
 		toSerialize["policies"] = o.Policies
 	}
-	if true {
-		toSerialize["createdAt"] = o.CreatedAt
-	}
-	if o.UpdatedAt != nil {
-		toSerialize["updatedAt"] = o.UpdatedAt
-	}
+	toSerialize["createdAt"] = o.CreatedAt
+	toSerialize["updatedAt"] = o.UpdatedAt
 	serialized, err := json.Marshal(toSerialize)
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal Task: %w", err)
@@ -638,10 +713,12 @@ func (o Task) String() string {
 	out += fmt.Sprintf("  cron=%v\n", o.Cron)
 	out += fmt.Sprintf("  lastRun=%v\n", o.LastRun)
 	out += fmt.Sprintf("  nextRun=%v\n", o.NextRun)
+	out += fmt.Sprintf("  owner=%v\n", o.Owner)
 	out += fmt.Sprintf("  input=%v\n", o.Input)
 	out += fmt.Sprintf("  enabled=%v\n", o.Enabled)
 	out += fmt.Sprintf("  failureThreshold=%v\n", o.FailureThreshold)
 	out += fmt.Sprintf("  action=%v\n", o.Action)
+	out += fmt.Sprintf("  subscriptionAction=%v\n", o.SubscriptionAction)
 	out += fmt.Sprintf("  cursor=%v\n", o.Cursor)
 	out += fmt.Sprintf("  notifications=%v\n", o.Notifications)
 	out += fmt.Sprintf("  policies=%v\n", o.Policies)

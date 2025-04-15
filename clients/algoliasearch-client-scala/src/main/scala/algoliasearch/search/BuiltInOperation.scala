@@ -35,9 +35,43 @@ package algoliasearch.search
 
 import algoliasearch.search.BuiltInOperationType._
 
+import org.json4s._
+
 /** Update to perform on the attribute.
   */
 case class BuiltInOperation(
-    _operation: BuiltInOperationType,
+    operation /* _operation */: BuiltInOperationType,
     value: BuiltInOperationValue
 ) extends AttributeToUpdateTrait
+
+class BuiltInOperationSerializer extends Serializer[BuiltInOperation] {
+
+  private val renamedFields = Map[String, String](
+    "_operation" -> "operation"
+  )
+  override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), BuiltInOperation] = {
+    case (TypeInfo(clazz, _), json) if clazz == classOf[BuiltInOperation] =>
+      json match {
+        case jobject: JObject =>
+          // Rename fields from JSON to Scala
+          val renamedObject = JObject(
+            jobject.obj.map { field =>
+              renamedFields.get(field._1).map(JField(_, field._2)).getOrElse(field)
+            }
+          )
+          val formats = format - this
+          val mf = manifest[BuiltInOperation]
+          Extraction.extract[BuiltInOperation](renamedObject)(formats, mf)
+
+        case _ => throw new IllegalArgumentException(s"Can't deserialize $json as BuiltInOperation")
+      }
+  }
+
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: BuiltInOperation =>
+    val formats = format - this // remove current serializer from formats to avoid stackoverflow
+    val baseObj = Extraction.decompose(value)(formats)
+    baseObj transformField {
+      case JField(name, value) if renamedFields.exists(_._2 == name) => (renamedFields.find(_._2 == name).get._1, value)
+    }
+  }
+}

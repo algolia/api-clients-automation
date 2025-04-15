@@ -4,6 +4,8 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 // Destination Destinations are Algolia resources like indices or event streams.
@@ -12,12 +14,14 @@ type Destination struct {
 	DestinationID string          `json:"destinationID"`
 	Type          DestinationType `json:"type"`
 	// Descriptive name for the resource.
-	Name  string           `json:"name"`
-	Input DestinationInput `json:"input"`
+	Name string `json:"name"`
+	// Owner of the resource.
+	Owner utils.Nullable[string] `json:"owner,omitempty"`
+	Input DestinationInput       `json:"input"`
 	// Date of creation in RFC 3339 format.
 	CreatedAt string `json:"createdAt"`
 	// Date of last update in RFC 3339 format.
-	UpdatedAt *string `json:"updatedAt,omitempty"`
+	UpdatedAt string `json:"updatedAt"`
 	// Universally unique identifier (UUID) of an authentication resource.
 	AuthenticationID  *string  `json:"authenticationID,omitempty"`
 	TransformationIDs []string `json:"transformationIDs,omitempty"`
@@ -25,9 +29,9 @@ type Destination struct {
 
 type DestinationOption func(f *Destination)
 
-func WithDestinationUpdatedAt(val string) DestinationOption {
+func WithDestinationOwner(val utils.Nullable[string]) DestinationOption {
 	return func(f *Destination) {
-		f.UpdatedAt = &val
+		f.Owner = val
 	}
 }
 
@@ -47,13 +51,14 @@ func WithDestinationTransformationIDs(val []string) DestinationOption {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed.
-func NewDestination(destinationID string, type_ DestinationType, name string, input DestinationInput, createdAt string, opts ...DestinationOption) *Destination {
+func NewDestination(destinationID string, type_ DestinationType, name string, input DestinationInput, createdAt string, updatedAt string, opts ...DestinationOption) *Destination {
 	this := &Destination{}
 	this.DestinationID = destinationID
 	this.Type = type_
 	this.Name = name
 	this.Input = input
 	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
 	for _, opt := range opts {
 		opt(this)
 	}
@@ -140,6 +145,50 @@ func (o *Destination) SetName(v string) *Destination {
 	return o
 }
 
+// GetOwner returns the Owner field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Destination) GetOwner() string {
+	if o == nil || o.Owner.Get() == nil {
+		var ret string
+		return ret
+	}
+	return *o.Owner.Get()
+}
+
+// GetOwnerOk returns a tuple with the Owner field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned.
+func (o *Destination) GetOwnerOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Owner.Get(), o.Owner.IsSet()
+}
+
+// HasOwner returns a boolean if a field has been set.
+func (o *Destination) HasOwner() bool {
+	if o != nil && o.Owner.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOwner gets a reference to the given utils.Nullable[string] and assigns it to the Owner field.
+func (o *Destination) SetOwner(v string) *Destination {
+	o.Owner.Set(&v)
+	return o
+}
+
+// SetOwnerNil sets the value for Owner to be an explicit nil.
+func (o *Destination) SetOwnerNil() {
+	o.Owner.Set(nil)
+}
+
+// UnsetOwner ensures that no value is present for Owner, not even an explicit nil.
+func (o *Destination) UnsetOwner() {
+	o.Owner.Unset()
+}
+
 // GetInput returns the Input field value.
 func (o *Destination) GetInput() DestinationInput {
 	if o == nil {
@@ -190,36 +239,28 @@ func (o *Destination) SetCreatedAt(v string) *Destination {
 	return o
 }
 
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
+// GetUpdatedAt returns the UpdatedAt field value.
 func (o *Destination) GetUpdatedAt() string {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.UpdatedAt
+
+	return o.UpdatedAt
 }
 
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
 // and a boolean to check if the value has been set.
 func (o *Destination) GetUpdatedAtOk() (*string, bool) {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.UpdatedAt, true
+	return &o.UpdatedAt, true
 }
 
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *Destination) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given string and assigns it to the UpdatedAt field.
+// SetUpdatedAt sets field value.
 func (o *Destination) SetUpdatedAt(v string) *Destination {
-	o.UpdatedAt = &v
+	o.UpdatedAt = v
 	return o
 }
 
@@ -291,24 +332,15 @@ func (o *Destination) SetTransformationIDs(v []string) *Destination {
 
 func (o Destination) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]any{}
-	if true {
-		toSerialize["destinationID"] = o.DestinationID
+	toSerialize["destinationID"] = o.DestinationID
+	toSerialize["type"] = o.Type
+	toSerialize["name"] = o.Name
+	if o.Owner.IsSet() {
+		toSerialize["owner"] = o.Owner.Get()
 	}
-	if true {
-		toSerialize["type"] = o.Type
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if true {
-		toSerialize["input"] = o.Input
-	}
-	if true {
-		toSerialize["createdAt"] = o.CreatedAt
-	}
-	if o.UpdatedAt != nil {
-		toSerialize["updatedAt"] = o.UpdatedAt
-	}
+	toSerialize["input"] = o.Input
+	toSerialize["createdAt"] = o.CreatedAt
+	toSerialize["updatedAt"] = o.UpdatedAt
 	if o.AuthenticationID != nil {
 		toSerialize["authenticationID"] = o.AuthenticationID
 	}
@@ -328,6 +360,7 @@ func (o Destination) String() string {
 	out += fmt.Sprintf("  destinationID=%v\n", o.DestinationID)
 	out += fmt.Sprintf("  type=%v\n", o.Type)
 	out += fmt.Sprintf("  name=%v\n", o.Name)
+	out += fmt.Sprintf("  owner=%v\n", o.Owner)
 	out += fmt.Sprintf("  input=%v\n", o.Input)
 	out += fmt.Sprintf("  createdAt=%v\n", o.CreatedAt)
 	out += fmt.Sprintf("  updatedAt=%v\n", o.UpdatedAt)

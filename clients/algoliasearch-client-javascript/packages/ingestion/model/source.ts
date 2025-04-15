@@ -13,6 +13,11 @@ export type Source = {
 
   name: string;
 
+  /**
+   * Owner of the resource.
+   */
+  owner?: string | null;
+
   input?: SourceInput;
 
   /**
@@ -28,5 +33,5 @@ export type Source = {
   /**
    * Date of last update in RFC 3339 format.
    */
-  updatedAt?: string;
+  updatedAt: string;
 };

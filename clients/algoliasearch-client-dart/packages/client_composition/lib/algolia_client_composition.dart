@@ -56,3 +56,5 @@ export 'src/model/sort_remaining_by.dart';
 export 'src/model/supported_language.dart';
 export 'src/model/value.dart';
 export 'src/model/widgets.dart';
+
+export 'src/extension.dart';

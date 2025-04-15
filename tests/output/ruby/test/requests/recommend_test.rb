@@ -77,7 +77,7 @@ class TestRecommendClient < Test::Unit::TestCase
       "test/all",
       {query: "to be overriden"},
       {
-        :header_params => JSON.parse("{\"x-header-1\":\"spaces are left alone\"}", :symbolize_names => true),
+        :header_params => {"x-header-1" => "spaces are left alone"},
         :query_params => JSON.parse(
           "{\"query\":\"parameters with space\",\"and an array\":[\"array\",\"with spaces\"]}",
           :symbolize_names => true
@@ -159,7 +159,7 @@ class TestRecommendClient < Test::Unit::TestCase
       "test/requestOptions",
       {query: "parameters"},
       {facet: "filters"},
-      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
+      {:header_params => {"x-algolia-api-key" => "ALGOLIA_API_KEY"}}
     )
 
     assert_equal(:post, req.method)
@@ -178,7 +178,7 @@ class TestRecommendClient < Test::Unit::TestCase
       "test/requestOptions",
       {query: "parameters"},
       {facet: "filters"},
-      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
+      {:header_params => {"x-algolia-api-key" => "ALGOLIA_API_KEY"}}
     )
 
     assert_equal(:post, req.method)

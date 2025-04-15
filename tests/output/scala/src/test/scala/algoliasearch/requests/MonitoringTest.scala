@@ -15,7 +15,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class MonitoringTest extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   def testClient(): (MonitoringClient, EchoInterceptor) = {
     val echo = EchoInterceptor()

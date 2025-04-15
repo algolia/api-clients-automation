@@ -42,11 +42,13 @@ sealed trait FacetFilters
 object FacetFilters {
 
   case class SeqOfFacetFilters(value: Seq[FacetFilters]) extends FacetFilters
+
   case class StringValue(value: String) extends FacetFilters
 
   def apply(value: Seq[FacetFilters]): FacetFilters = {
     FacetFilters.SeqOfFacetFilters(value)
   }
+
   def apply(value: String): FacetFilters = {
     FacetFilters.StringValue(value)
   }
@@ -58,8 +60,7 @@ object FacetFiltersSerializer extends Serializer[FacetFilters] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[FacetFilters] =>
       json match {
-        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
-          FacetFilters.SeqOfFacetFilters(value.map(_.extract))
+        case value: JArray  => FacetFilters.apply(Extraction.extract[Seq[FacetFilters]](value))
         case JString(value) => FacetFilters.StringValue(value)
         case _              => throw new MappingException("Can't convert " + json + " to FacetFilters")
       }
