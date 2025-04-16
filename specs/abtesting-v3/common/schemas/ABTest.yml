@@ -27,6 +27,8 @@ ABTest:
       $ref: "Variant.yml#/variants"
     configuration:
       $ref: "#/ABTestConfiguration"
+    migratedAbTestID:
+      $ref: "#/MigratedABTestId"
   required:
     - status
     - name
@@ -107,3 +109,8 @@ EffectMetric:
     - clickThroughRate
     - conversionRate
     - purchaseRate
+
+MigratedABTestId:
+  type: integer
+  description: Unique migrated A/B test identifier.
+  example: 224
