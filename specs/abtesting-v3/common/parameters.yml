@@ -56,8 +56,8 @@ description:
 trafficPercentage:
   type: integer
   description: Percentage of search requests each variant receives.
-  minimum: 0
-  maximum: 100
+  minimum: 1
+  maximum: 99
   example: 60
 
 currencies:
