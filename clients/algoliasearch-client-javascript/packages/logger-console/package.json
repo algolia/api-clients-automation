@@ -38,7 +38,7 @@
     "@arethetypeswrong/cli": "0.17.4",
     "@types/node": "22.14.1",
     "jsdom": "26.1.0",
-    "publint": "0.3.11",
+    "publint": "0.3.12",
     "ts-node": "10.9.2",
     "tsup": "8.4.0",
     "typescript": "5.8.3",
