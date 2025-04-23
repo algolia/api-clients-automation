@@ -1,9 +1,9 @@
 openapi: 3.0.2
 info:
-  title: Composition API (beta)
+  title: Composition API
   description: >
     The Algolia Composition API lets you run composed search requests on your
-    Compositions. The Composition API is in Beta.
+    Compositions.
 
 
     ## Client libraries
