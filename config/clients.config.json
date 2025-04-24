@@ -139,6 +139,11 @@
         "output": "clients/algoliasearch-client-javascript/packages/client-abtesting"
       },
       {
+        "name": "abtesting-v3",
+        "output": "clients/algoliasearch-client-javascript/packages/abtesting",
+        "isStandaloneClient": true
+      },
+      {
         "name": "analytics",
         "output": "clients/algoliasearch-client-javascript/packages/client-analytics"
       },
