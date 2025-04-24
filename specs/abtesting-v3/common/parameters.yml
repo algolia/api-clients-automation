@@ -5,13 +5,13 @@ ID:
   description: Unique A/B test identifier.
   required: true
   schema:
-    $ref: "#/abTestID"
+    $ref: '#/abTestID'
 
 # misc
 index:
   type: string
   description: Index name of the A/B test variant (case-sensitive).
-  example: "delcourt_production"
+  example: 'delcourt_production'
 
 abTestID:
   type: integer
@@ -75,7 +75,7 @@ currencies:
       mean: 43.7
       standardDeviation: 10.3
   additionalProperties:
-    $ref: "#/currency"
+    $ref: '#/currency'
     x-additionalPropertiesName: currency code
 
 currency:
@@ -84,7 +84,7 @@ currency:
     currency:
       type: string
       description: Currency code.
-      example: "USD"
+      example: 'USD'
     revenue:
       type: number
       format: double
