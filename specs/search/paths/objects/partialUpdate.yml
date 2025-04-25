@@ -2,6 +2,7 @@ post:
   tags:
     - Records
   operationId: partialUpdateObject
+  x-mcp-tool: true
   x-acl:
     - addObject
   summary: Add or update attributes
