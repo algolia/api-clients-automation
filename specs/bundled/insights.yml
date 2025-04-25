@@ -100,6 +100,7 @@ servers:
   - url: https://insights.{region}.algolia.io
     variables:
       region:
+        description: The region where your Algolia application is hosted.
         enum:
           - us
           - de

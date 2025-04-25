@@ -92,6 +92,7 @@ servers:
   - url: https://analytics.{region}.algolia.com
     variables:
       region:
+        description: The region where your Algolia application is hosted.
         enum:
           - us
           - de
@@ -282,6 +283,7 @@ paths:
       tags:
         - abtesting
       operationId: listABTests
+      x-mcp-tool: true
       x-acl:
         - analytics
       summary: List all A/B tests
