@@ -78,6 +78,17 @@ metric:
       description: Dimension defined during test creation.
     metadata:
       $ref: '#/metricMetadata'
+    criticalValue:
+      type: number
+      format: double
+      description: |
+        The value that was computed during error correction. It is used to determine significance of the metric pValue.
+        The critical value is calculated using Bonferroni or Benjamini-Hochberg corrections, based on the given 
+        configuration during the A/B test creation.
+    significant:
+      type: boolean
+      description: |
+        Whether the pValue is significant or not based on the critical value and the error correction algorithm used.
   required:
     - name
     - updatedAt
