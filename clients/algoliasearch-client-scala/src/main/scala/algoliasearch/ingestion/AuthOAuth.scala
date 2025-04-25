@@ -19,20 +19,55 @@
   */
 package algoliasearch.ingestion
 
+import org.json4s._
+
 /** Credentials for authenticating with OAuth 2.0.
   *
   * @param url
   *   URL for the OAuth endpoint.
-  * @param client_id
+  * @param clientId
   *   Client ID.
-  * @param client_secret
+  * @param clientSecret
   *   Client secret. This field is `null` in the API response.
   * @param scope
   *   OAuth scope.
   */
 case class AuthOAuth(
     url: String,
-    client_id: String,
-    client_secret: String,
+    clientId /* client_id */: String,
+    clientSecret /* client_secret */: String,
     scope: Option[String] = scala.None
 ) extends AuthInputTrait
+
+class AuthOAuthSerializer extends Serializer[AuthOAuth] {
+
+  private val renamedFields = Map[String, String](
+    "client_id" -> "clientId",
+    "client_secret" -> "clientSecret"
+  )
+  override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), AuthOAuth] = {
+    case (TypeInfo(clazz, _), json) if clazz == classOf[AuthOAuth] =>
+      json match {
+        case jobject: JObject =>
+          // Rename fields from JSON to Scala
+          val renamedObject = JObject(
+            jobject.obj.map { field =>
+              renamedFields.get(field._1).map(JField(_, field._2)).getOrElse(field)
+            }
+          )
+          val formats = format - this
+          val mf = manifest[AuthOAuth]
+          Extraction.extract[AuthOAuth](renamedObject)(formats, mf)
+
+        case _ => throw new IllegalArgumentException(s"Can't deserialize $json as AuthOAuth")
+      }
+  }
+
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: AuthOAuth =>
+    val formats = format - this // remove current serializer from formats to avoid stackoverflow
+    val baseObj = Extraction.decompose(value)(formats)
+    baseObj transformField {
+      case JField(name, value) if renamedFields.exists(_._2 == name) => (renamedFields.find(_._2 == name).get._1, value)
+    }
+  }
+}

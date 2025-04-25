@@ -222,6 +222,7 @@ final class SearchClient implements ApiClient {
   /// * [xAlgoliaUserID] Unique identifier of the user who makes the search request.
   /// * [assignUserIdParams]
   /// * [requestOptions] additional request configuration.
+  @Deprecated('This operation has been deprecated')
   Future<CreatedAtResponse> assignUserId({
     required String xAlgoliaUserID,
     required AssignUserIdParams assignUserIdParams,
@@ -291,6 +292,7 @@ final class SearchClient implements ApiClient {
   /// * [xAlgoliaUserID] Unique identifier of the user who makes the search request.
   /// * [batchAssignUserIdsParams]
   /// * [requestOptions] additional request configuration.
+  @Deprecated('This operation has been deprecated')
   Future<CreatedAtResponse> batchAssignUserIds({
     required String xAlgoliaUserID,
     required BatchAssignUserIdsParams batchAssignUserIdsParams,
@@ -493,7 +495,7 @@ final class SearchClient implements ApiClient {
     );
   }
 
-  /// This method allow you to send requests to the Algolia REST API.
+  /// This method lets you send requests to the Algolia REST API.
   ///
   /// Parameters:
   /// * [path] Path of the endpoint, anything after \"/1\" must be specified.
@@ -526,7 +528,7 @@ final class SearchClient implements ApiClient {
     );
   }
 
-  /// This method allow you to send requests to the Algolia REST API.
+  /// This method lets you send requests to the Algolia REST API.
   ///
   /// Parameters:
   /// * [path] Path of the endpoint, anything after \"/1\" must be specified.
@@ -559,7 +561,7 @@ final class SearchClient implements ApiClient {
     );
   }
 
-  /// This method allow you to send requests to the Algolia REST API.
+  /// This method lets you send requests to the Algolia REST API.
   ///
   /// Parameters:
   /// * [path] Path of the endpoint, anything after \"/1\" must be specified.
@@ -595,7 +597,7 @@ final class SearchClient implements ApiClient {
     );
   }
 
-  /// This method allow you to send requests to the Algolia REST API.
+  /// This method lets you send requests to the Algolia REST API.
   ///
   /// Parameters:
   /// * [path] Path of the endpoint, anything after \"/1\" must be specified.
@@ -1301,6 +1303,7 @@ final class SearchClient implements ApiClient {
   ///
   /// Parameters:
   /// * [requestOptions] additional request configuration.
+  @Deprecated('This operation has been deprecated')
   Future<GetTopUserIdsResponse> getTopUserIds({
     RequestOptions? requestOptions,
   }) async {
@@ -1327,6 +1330,7 @@ final class SearchClient implements ApiClient {
   /// Parameters:
   /// * [userID] Unique identifier of the user who makes the search request.
   /// * [requestOptions] additional request configuration.
+  @Deprecated('This operation has been deprecated')
   Future<UserId> getUserId({
     required String userID,
     RequestOptions? requestOptions,
@@ -1359,6 +1363,7 @@ final class SearchClient implements ApiClient {
   /// Parameters:
   /// * [getClusters] Whether to include the cluster's pending mapping state in the response.
   /// * [requestOptions] additional request configuration.
+  @Deprecated('This operation has been deprecated')
   Future<HasPendingMappingsResponse> hasPendingMappings({
     bool? getClusters,
     RequestOptions? requestOptions,
@@ -1413,6 +1418,7 @@ final class SearchClient implements ApiClient {
   ///
   /// Parameters:
   /// * [requestOptions] additional request configuration.
+  @Deprecated('This operation has been deprecated')
   Future<ListClustersResponse> listClusters({
     RequestOptions? requestOptions,
   }) async {
@@ -1473,6 +1479,7 @@ final class SearchClient implements ApiClient {
   /// * [page] Requested page of the API response. If `null`, the API response is not paginated.
   /// * [hitsPerPage] Number of hits per page.
   /// * [requestOptions] additional request configuration.
+  @Deprecated('This operation has been deprecated')
   Future<ListUserIdsResponse> listUserIds({
     int? page,
     int? hitsPerPage,
@@ -1557,7 +1564,7 @@ final class SearchClient implements ApiClient {
     );
   }
 
-  /// Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+  /// Adds new attributes to a record, or updates existing ones.  - If a record with the specified object ID doesn't exist,   a new record is added to the index **if** `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index. - You can use any first-level attribute but not nested attributes.   If you specify a nested attribute, this operation replaces its first-level ancestor.  To update an attribute without pushing the entire record, you can use these built-in operations. These operations can be helpful if you don't have access to your initial data.  - Increment: increment a numeric attribute - Decrement: decrement a numeric attribute - Add: append a number or string element to an array attribute - Remove: remove all matching number or string elements from an array attribute made of numbers or strings - AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present - IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.  You can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:  - _operation: the operation to apply on the attribute - value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.  When updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
   ///
   /// Required API Key ACLs:
   ///   - addObject
@@ -1627,6 +1634,7 @@ final class SearchClient implements ApiClient {
   /// Parameters:
   /// * [userID] Unique identifier of the user who makes the search request.
   /// * [requestOptions] additional request configuration.
+  @Deprecated('This operation has been deprecated')
   Future<RemoveUserIdResponse> removeUserId({
     required String userID,
     RequestOptions? requestOptions,
@@ -1944,7 +1952,7 @@ final class SearchClient implements ApiClient {
     );
   }
 
-  /// Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.
+  /// Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
   ///
   /// Required API Key ACLs:
   ///   - search
@@ -2169,6 +2177,7 @@ final class SearchClient implements ApiClient {
   /// Parameters:
   /// * [searchUserIdsParams]
   /// * [requestOptions] additional request configuration.
+  @Deprecated('This operation has been deprecated')
   Future<SearchUserIdsResponse> searchUserIds({
     required SearchUserIdsParams searchUserIdsParams,
     RequestOptions? requestOptions,

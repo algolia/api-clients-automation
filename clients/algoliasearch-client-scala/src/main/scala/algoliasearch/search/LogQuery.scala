@@ -33,6 +33,8 @@
   */
 package algoliasearch.search
 
+import org.json4s._
+
 /** LogQuery
   *
   * @param indexName
@@ -43,7 +45,41 @@ package algoliasearch.search
   *   Unique query identifier.
   */
 case class LogQuery(
-    indexName: Option[String] = scala.None,
-    userToken: Option[String] = scala.None,
-    queryId: Option[String] = scala.None
+    indexName /* index_name */: Option[String] = scala.None,
+    userToken /* user_token */: Option[String] = scala.None,
+    queryId /* query_id */: Option[String] = scala.None
 )
+
+class LogQuerySerializer extends Serializer[LogQuery] {
+
+  private val renamedFields = Map[String, String](
+    "index_name" -> "indexName",
+    "user_token" -> "userToken",
+    "query_id" -> "queryId"
+  )
+  override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), LogQuery] = {
+    case (TypeInfo(clazz, _), json) if clazz == classOf[LogQuery] =>
+      json match {
+        case jobject: JObject =>
+          // Rename fields from JSON to Scala
+          val renamedObject = JObject(
+            jobject.obj.map { field =>
+              renamedFields.get(field._1).map(JField(_, field._2)).getOrElse(field)
+            }
+          )
+          val formats = format - this
+          val mf = manifest[LogQuery]
+          Extraction.extract[LogQuery](renamedObject)(formats, mf)
+
+        case _ => throw new IllegalArgumentException(s"Can't deserialize $json as LogQuery")
+      }
+  }
+
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: LogQuery =>
+    val formats = format - this // remove current serializer from formats to avoid stackoverflow
+    val baseObj = Extraction.decompose(value)(formats)
+    baseObj transformField {
+      case JField(name, value) if renamedFields.exists(_._2 == name) => (renamedFields.find(_._2 == name).get._1, value)
+    }
+  }
+}

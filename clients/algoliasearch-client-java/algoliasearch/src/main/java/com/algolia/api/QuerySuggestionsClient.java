@@ -120,7 +120,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -134,7 +134,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -145,7 +145,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -157,7 +157,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -167,7 +167,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -187,7 +187,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -198,7 +198,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -211,7 +211,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -221,7 +221,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -235,7 +235,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -246,7 +246,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -258,7 +258,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -268,7 +268,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -288,7 +288,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -299,7 +299,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -312,7 +312,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -322,7 +322,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -337,7 +337,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -349,7 +349,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -361,7 +361,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -371,7 +371,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -398,7 +398,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -411,7 +411,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -424,7 +424,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -434,7 +434,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -449,7 +449,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -461,7 +461,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -473,7 +473,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -483,7 +483,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -510,7 +510,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -523,7 +523,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -536,7 +536,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call

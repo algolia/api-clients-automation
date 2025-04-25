@@ -38,11 +38,13 @@ sealed trait InsideBoundingBox
 object InsideBoundingBox {
 
   case class StringValue(value: String) extends InsideBoundingBox
+
   case class SeqOfSeqOfDouble(value: Seq[Seq[Double]]) extends InsideBoundingBox
 
   def apply(value: String): InsideBoundingBox = {
     InsideBoundingBox.StringValue(value)
   }
+
   def apply(value: Seq[Seq[Double]]): InsideBoundingBox = {
     InsideBoundingBox.SeqOfSeqOfDouble(value)
   }
@@ -55,9 +57,8 @@ object InsideBoundingBoxSerializer extends Serializer[InsideBoundingBox] {
     case (TypeInfo(clazz, _), json) if clazz == classOf[InsideBoundingBox] =>
       json match {
         case JString(value) => InsideBoundingBox.StringValue(value)
-        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
-          InsideBoundingBox.SeqOfSeqOfDouble(value.map(_.extract))
-        case _ => throw new MappingException("Can't convert " + json + " to InsideBoundingBox")
+        case value: JArray  => InsideBoundingBox.apply(Extraction.extract[Seq[Seq[Double]]](value))
+        case _              => throw new MappingException("Can't convert " + json + " to InsideBoundingBox")
       }
   }
 

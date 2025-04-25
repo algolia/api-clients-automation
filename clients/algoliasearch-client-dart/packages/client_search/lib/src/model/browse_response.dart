@@ -248,7 +248,7 @@ final class BrowseResponse {
       renderingContent.hashCode +
       serverTimeMS.hashCode +
       serverUsed.hashCode +
-      userData.hashCode +
+      (userData == null ? 0 : userData.hashCode) +
       queryID.hashCode +
       automaticInsights.hashCode +
       page.hashCode +

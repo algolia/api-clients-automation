@@ -8,8 +8,6 @@ import org.json4s.*
 import org.json4s.native.JsonParser.*
 import org.scalatest.funsuite.AnyFunSuite
 import io.github.cdimascio.dotenv.Dotenv
-import org.skyscreamer.jsonassert.JSONCompare.compareJSON
-import org.skyscreamer.jsonassert.JSONCompareMode
 import org.json4s.native.Serialization
 import org.json4s.native.Serialization.write
 
@@ -17,9 +15,9 @@ import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
 
-class SearchTestE2E extends AnyFunSuite {
+class SearchTest extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   def testClient(): SearchClient = {
     if (System.getenv("CI") == "true") {
@@ -43,11 +41,20 @@ class SearchTestE2E extends AnyFunSuite {
     )
 
     val response = Await.result(future, Duration.Inf)
-    compareJSON(
-      """{"page":0,"nbHits":33191,"nbPages":34,"hitsPerPage":1000,"query":"","params":""}""",
-      write(response),
-      JSONCompareMode.LENIENT
-    )
+    val expected = parse("""{"page":0,"nbHits":33191,"nbPages":34,"hitsPerPage":1000,"query":"","params":""}""")
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
   }
 
   test("search with a real object1") {
@@ -58,11 +65,22 @@ class SearchTestE2E extends AnyFunSuite {
     )
 
     val response = Await.result(future, Duration.Inf)
-    compareJSON(
-      """{"objectID":"Batman and Robin","title":"Batman and Robin","year":1949,"cast":["Robert Lowery","Johnny Duncan","Jane Adams"]}""",
-      write(response),
-      JSONCompareMode.LENIENT
+    val expected = parse(
+      """{"objectID":"Batman and Robin","title":"Batman and Robin","year":1949,"cast":["Robert Lowery","Johnny Duncan","Jane Adams"]}"""
     )
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
   }
 
   test("getRule") {
@@ -73,11 +91,22 @@ class SearchTestE2E extends AnyFunSuite {
     )
 
     val response = Await.result(future, Duration.Inf)
-    compareJSON(
-      """{"description":"test_rule","enabled":true,"objectID":"qr-1725004648916","conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]}}""",
-      write(response),
-      JSONCompareMode.LENIENT
+    val expected = parse(
+      """{"description":"test_rule","enabled":true,"objectID":"qr-1725004648916","conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]}}"""
     )
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
   }
 
   test("getSettings") {
@@ -87,11 +116,22 @@ class SearchTestE2E extends AnyFunSuite {
     )
 
     val response = Await.result(future, Duration.Inf)
-    compareJSON(
-      """{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":100,"maxValuesPerFacet":100,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"]}""",
-      write(response),
-      JSONCompareMode.LENIENT
+    val expected = parse(
+      """{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":100,"maxValuesPerFacet":100,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"]}"""
     )
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
   }
 
   test("search for a single hits request with minimal parameters4") {
@@ -107,11 +147,22 @@ class SearchTestE2E extends AnyFunSuite {
     )
 
     val response = Await.result(future, Duration.Inf)
-    compareJSON(
-      """{"results":[{"hits":[],"page":0,"nbHits":0,"nbPages":0,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"query":"","params":"","index":"cts_e2e_search_empty_index","renderingContent":{}}]}""",
-      write(response),
-      JSONCompareMode.LENIENT
+    val expected = parse(
+      """{"results":[{"hits":[],"page":0,"nbHits":0,"nbPages":0,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"query":"","params":"","index":"cts_e2e_search_empty_index","renderingContent":{}}]}"""
     )
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
   }
 
   test("search with highlight and snippet results5") {
@@ -131,11 +182,22 @@ class SearchTestE2E extends AnyFunSuite {
     )
 
     val response = Await.result(future, Duration.Inf)
-    compareJSON(
-      """{"results":[{"hits":[{"editor":{"name":"vim","type":"beforeneovim"},"names":["vim",":q"],"_snippetResult":{"editor":{"name":{"value":"<em>vim</em>","matchLevel":"full"},"type":{"value":"beforeneovim","matchLevel":"none"}},"names":[{"value":"<em>vim</em>","matchLevel":"full"},{"value":":q","matchLevel":"none"}]},"_highlightResult":{"editor":{"name":{"value":"<em>vim</em>","matchLevel":"full","fullyHighlighted":true,"matchedWords":["vim"]},"type":{"value":"beforeneovim","matchLevel":"none","matchedWords":[]}},"names":[{"value":"<em>vim</em>","matchLevel":"full","fullyHighlighted":true,"matchedWords":["vim"]},{"value":":q","matchLevel":"none","matchedWords":[]}]}}],"nbHits":1,"page":0,"nbPages":1,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"query":"vim","index":"cts_e2e_highlight_snippet_results","renderingContent":{}}]}""",
-      write(response),
-      JSONCompareMode.LENIENT
+    val expected = parse(
+      """{"results":[{"hits":[{"editor":{"name":"vim","type":"beforeneovim"},"names":["vim",":q"],"_snippetResult":{"editor":{"name":{"value":"<em>vim</em>","matchLevel":"full"},"type":{"value":"beforeneovim","matchLevel":"none"}},"names":[{"value":"<em>vim</em>","matchLevel":"full"},{"value":":q","matchLevel":"none"}]},"_highlightResult":{"editor":{"name":{"value":"<em>vim</em>","matchLevel":"full","fullyHighlighted":true,"matchedWords":["vim"]},"type":{"value":"beforeneovim","matchLevel":"none","matchedWords":[]}},"names":[{"value":"<em>vim</em>","matchLevel":"full","fullyHighlighted":true,"matchedWords":["vim"]},{"value":":q","matchLevel":"none","matchedWords":[]}]}}],"nbHits":1,"page":0,"nbPages":1,"hitsPerPage":20,"exhaustiveNbHits":true,"exhaustiveTypo":true,"exhaustive":{"nbHits":true,"typo":true},"query":"vim","index":"cts_e2e_highlight_snippet_results","renderingContent":{}}]}"""
     )
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
   }
 
   test("search for a single facet request with minimal parameters8") {
@@ -154,11 +216,22 @@ class SearchTestE2E extends AnyFunSuite {
     )
 
     val response = Await.result(future, Duration.Inf)
-    compareJSON(
-      """{"results":[{"exhaustiveFacetsCount":true,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"visual studio","value":"visual studio"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}""",
-      write(response),
-      JSONCompareMode.LENIENT
+    val expected = parse(
+      """{"results":[{"exhaustiveFacetsCount":true,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"visual studio","value":"visual studio"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}"""
     )
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
   }
 
   test("search filters end to end14") {
@@ -199,11 +272,22 @@ class SearchTestE2E extends AnyFunSuite {
     )
 
     val response = Await.result(future, Duration.Inf)
-    compareJSON(
-      """{"results":[{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":2,"nbPages":1,"page":0,"hits":[{"editor":"visual studio","_highlightResult":{"editor":{"value":"visual studio","matchLevel":"none"}}},{"editor":"neovim","_highlightResult":{"editor":{"value":"neovim","matchLevel":"none"}}}],"query":"","params":"filters=editor%3A%27visual+studio%27+OR+editor%3Aneovim"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%22editor%3Aneovim%22%5D"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%5D%5D"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%2C%5B%22editor%3Agoland%22%5D%5D%5D"}]}""",
-      write(response),
-      JSONCompareMode.LENIENT
+    val expected = parse(
+      """{"results":[{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":2,"nbPages":1,"page":0,"hits":[{"editor":"visual studio","_highlightResult":{"editor":{"value":"visual studio","matchLevel":"none"}}},{"editor":"neovim","_highlightResult":{"editor":{"value":"neovim","matchLevel":"none"}}}],"query":"","params":"filters=editor%3A%27visual+studio%27+OR+editor%3Aneovim"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%22editor%3Aneovim%22%5D"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%5D%5D"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%2C%5B%22editor%3Agoland%22%5D%5D%5D"}]}"""
     )
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
   }
 
   test("get searchDictionaryEntries results with minimal parameters") {
@@ -216,11 +300,22 @@ class SearchTestE2E extends AnyFunSuite {
     )
 
     val response = Await.result(future, Duration.Inf)
-    compareJSON(
-      """{"hits":[{"objectID":"86ef58032f47d976ca7130a896086783","language":"en","word":"about"}],"page":0,"nbHits":1,"nbPages":1}""",
-      write(response),
-      JSONCompareMode.LENIENT
+    val expected = parse(
+      """{"hits":[{"objectID":"86ef58032f47d976ca7130a896086783","language":"en","word":"about"}],"page":0,"nbHits":1,"nbPages":1}"""
     )
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
   }
 
   test("searchRules") {
@@ -235,11 +330,22 @@ class SearchTestE2E extends AnyFunSuite {
     )
 
     val response = Await.result(future, Duration.Inf)
-    compareJSON(
-      """{"hits":[{"conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]},"description":"test_rule","enabled":true,"objectID":"qr-1725004648916"}],"nbHits":1,"nbPages":1,"page":0}""",
-      write(response),
-      JSONCompareMode.LENIENT
+    val expected = parse(
+      """{"hits":[{"conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]},"description":"test_rule","enabled":true,"objectID":"qr-1725004648916"}],"nbHits":1,"nbPages":1,"page":0}"""
     )
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
   }
 
   test("search with special characters in indexName1") {
@@ -265,11 +371,22 @@ class SearchTestE2E extends AnyFunSuite {
     )
 
     val response = Await.result(future, Duration.Inf)
-    compareJSON(
-      """{"nbHits":1,"hits":[{"_snippetResult":{"genres":[{"value":"Animated","matchLevel":"none"},{"value":"Superhero","matchLevel":"none"},{"value":"Romance","matchLevel":"none"}],"year":{"value":"1993","matchLevel":"none"}},"_highlightResult":{"genres":[{"value":"Animated","matchLevel":"none","matchedWords":[]},{"value":"Superhero","matchLevel":"none","matchedWords":[]},{"value":"Romance","matchLevel":"none","matchedWords":[]}],"year":{"value":"1993","matchLevel":"none","matchedWords":[]}}}]}""",
-      write(response),
-      JSONCompareMode.LENIENT
+    val expected = parse(
+      """{"nbHits":1,"hits":[{"_snippetResult":{"genres":[{"value":"Animated","matchLevel":"none"},{"value":"Superhero","matchLevel":"none"},{"value":"Romance","matchLevel":"none"}],"year":{"value":"1993","matchLevel":"none"}},"_highlightResult":{"genres":[{"value":"Animated","matchLevel":"none","matchedWords":[]},{"value":"Superhero","matchLevel":"none","matchedWords":[]},{"value":"Romance","matchLevel":"none","matchedWords":[]}],"year":{"value":"1993","matchLevel":"none","matchedWords":[]}}}]}"""
     )
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
   }
 
   test("minimal parameters") {

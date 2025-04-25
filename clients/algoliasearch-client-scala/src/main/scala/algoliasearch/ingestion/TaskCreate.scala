@@ -40,6 +40,7 @@ case class TaskCreate(
     sourceID: String,
     destinationID: String,
     action: ActionType,
+    subscriptionAction: Option[ActionType] = scala.None,
     cron: Option[String] = scala.None,
     enabled: Option[Boolean] = scala.None,
     failureThreshold: Option[Int] = scala.None,

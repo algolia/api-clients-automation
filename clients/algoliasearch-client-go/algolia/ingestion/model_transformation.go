@@ -4,6 +4,8 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 // Transformation struct for Transformation.
@@ -18,10 +20,12 @@ type Transformation struct {
 	Name string `json:"name"`
 	// A descriptive name for your transformation of what it does.
 	Description *string `json:"description,omitempty"`
+	// Owner of the resource.
+	Owner utils.Nullable[string] `json:"owner,omitempty"`
 	// Date of creation in RFC 3339 format.
 	CreatedAt string `json:"createdAt"`
 	// Date of last update in RFC 3339 format.
-	UpdatedAt *string `json:"updatedAt,omitempty"`
+	UpdatedAt string `json:"updatedAt"`
 }
 
 type TransformationOption func(f *Transformation)
@@ -38,9 +42,9 @@ func WithTransformationDescription(val string) TransformationOption {
 	}
 }
 
-func WithTransformationUpdatedAt(val string) TransformationOption {
+func WithTransformationOwner(val utils.Nullable[string]) TransformationOption {
 	return func(f *Transformation) {
-		f.UpdatedAt = &val
+		f.Owner = val
 	}
 }
 
@@ -48,12 +52,13 @@ func WithTransformationUpdatedAt(val string) TransformationOption {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed.
-func NewTransformation(transformationID string, code string, name string, createdAt string, opts ...TransformationOption) *Transformation {
+func NewTransformation(transformationID string, code string, name string, createdAt string, updatedAt string, opts ...TransformationOption) *Transformation {
 	this := &Transformation{}
 	this.TransformationID = transformationID
 	this.Code = code
 	this.Name = name
 	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
 	for _, opt := range opts {
 		opt(this)
 	}
@@ -206,6 +211,50 @@ func (o *Transformation) SetDescription(v string) *Transformation {
 	return o
 }
 
+// GetOwner returns the Owner field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Transformation) GetOwner() string {
+	if o == nil || o.Owner.Get() == nil {
+		var ret string
+		return ret
+	}
+	return *o.Owner.Get()
+}
+
+// GetOwnerOk returns a tuple with the Owner field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned.
+func (o *Transformation) GetOwnerOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Owner.Get(), o.Owner.IsSet()
+}
+
+// HasOwner returns a boolean if a field has been set.
+func (o *Transformation) HasOwner() bool {
+	if o != nil && o.Owner.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOwner gets a reference to the given utils.Nullable[string] and assigns it to the Owner field.
+func (o *Transformation) SetOwner(v string) *Transformation {
+	o.Owner.Set(&v)
+	return o
+}
+
+// SetOwnerNil sets the value for Owner to be an explicit nil.
+func (o *Transformation) SetOwnerNil() {
+	o.Owner.Set(nil)
+}
+
+// UnsetOwner ensures that no value is present for Owner, not even an explicit nil.
+func (o *Transformation) UnsetOwner() {
+	o.Owner.Unset()
+}
+
 // GetCreatedAt returns the CreatedAt field value.
 func (o *Transformation) GetCreatedAt() string {
 	if o == nil {
@@ -231,62 +280,47 @@ func (o *Transformation) SetCreatedAt(v string) *Transformation {
 	return o
 }
 
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
+// GetUpdatedAt returns the UpdatedAt field value.
 func (o *Transformation) GetUpdatedAt() string {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.UpdatedAt
+
+	return o.UpdatedAt
 }
 
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
 // and a boolean to check if the value has been set.
 func (o *Transformation) GetUpdatedAtOk() (*string, bool) {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.UpdatedAt, true
+	return &o.UpdatedAt, true
 }
 
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *Transformation) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given string and assigns it to the UpdatedAt field.
+// SetUpdatedAt sets field value.
 func (o *Transformation) SetUpdatedAt(v string) *Transformation {
-	o.UpdatedAt = &v
+	o.UpdatedAt = v
 	return o
 }
 
 func (o Transformation) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]any{}
-	if true {
-		toSerialize["transformationID"] = o.TransformationID
-	}
+	toSerialize["transformationID"] = o.TransformationID
 	if o.AuthenticationIDs != nil {
 		toSerialize["authenticationIDs"] = o.AuthenticationIDs
 	}
-	if true {
-		toSerialize["code"] = o.Code
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
+	toSerialize["code"] = o.Code
+	toSerialize["name"] = o.Name
 	if o.Description != nil {
 		toSerialize["description"] = o.Description
 	}
-	if true {
-		toSerialize["createdAt"] = o.CreatedAt
+	if o.Owner.IsSet() {
+		toSerialize["owner"] = o.Owner.Get()
 	}
-	if o.UpdatedAt != nil {
-		toSerialize["updatedAt"] = o.UpdatedAt
-	}
+	toSerialize["createdAt"] = o.CreatedAt
+	toSerialize["updatedAt"] = o.UpdatedAt
 	serialized, err := json.Marshal(toSerialize)
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal Transformation: %w", err)
@@ -302,6 +336,7 @@ func (o Transformation) String() string {
 	out += fmt.Sprintf("  code=%v\n", o.Code)
 	out += fmt.Sprintf("  name=%v\n", o.Name)
 	out += fmt.Sprintf("  description=%v\n", o.Description)
+	out += fmt.Sprintf("  owner=%v\n", o.Owner)
 	out += fmt.Sprintf("  createdAt=%v\n", o.CreatedAt)
 	out += fmt.Sprintf("  updatedAt=%v\n", o.UpdatedAt)
 	return fmt.Sprintf("Transformation {\n%s}", out)

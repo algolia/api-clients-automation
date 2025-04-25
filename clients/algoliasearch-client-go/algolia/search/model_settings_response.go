@@ -39,7 +39,7 @@ type SettingsResponse struct {
 	// Attributes used for searching. Attribute names are case-sensitive.  By default, all attributes are searchable and the [Attribute](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#attribute) ranking criterion is turned off. With a non-empty list, Algolia only returns results with matches in the selected attributes. In addition, the Attribute ranking criterion is turned on: matches in attributes that are higher in the list of `searchableAttributes` rank first. To make matches in two attributes rank equally, include them in a comma-separated string, such as `\"title,alternate_title\"`. Attributes with the same priority are always unordered.  For more information, see [Searchable attributes](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/setting-searchable-attributes/).  **Modifier**  - `unordered(\"ATTRIBUTE\")`.   Ignore the position of a match within the attribute.  Without a modifier, matches at the beginning of an attribute rank higher than matches at the end.
 	SearchableAttributes []string `json:"searchableAttributes,omitempty"`
 	// An object with custom data.  You can store up to 32kB as custom data.
-	UserData map[string]any `json:"userData,omitempty"`
+	UserData any `json:"userData,omitempty"`
 	// Characters and their normalized replacements. This overrides Algolia's default [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).
 	CustomNormalization *map[string]map[string]string `json:"customNormalization,omitempty"`
 	// Attribute that should be used to establish groups of results. Attribute names are case-sensitive.  All records with the same value for this attribute are considered a group. You can combine `attributeForDistinct` with the `distinct` search parameter to control how many items per group are included in the search results.  If you want to use the same attribute also for faceting, use the `afterDistinct` modifier of the `attributesForFaceting` setting. This applies faceting _after_ deduplication, which will result in accurate facet counts.
@@ -108,7 +108,7 @@ type SettingsResponse struct {
 	ReplaceSynonymsInHighlight *bool `json:"replaceSynonymsInHighlight,omitempty"`
 	// Minimum proximity score for two matching words.  This adjusts the [Proximity ranking criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity) by equally scoring matches that are farther apart.  For example, if `minProximity` is 2, neighboring matches and matches with one word between them would have the same score.
 	MinProximity *int32 `json:"minProximity,omitempty"`
-	// Properties to include in the API response of `search` and `browse` requests.  By default, all response properties are included. To reduce the response size, you can select, which attributes should be included.  You can't exclude these properties: `message`, `warning`, `cursor`, `serverUsed`, `indexUsed`, `abTestVariantID`, `parsedQuery`, or any property triggered by the `getRankingInfo` parameter.  Don't exclude properties that you might need in your search UI.
+	// Properties to include in the API response of search and browse requests.  By default, all response properties are included. To reduce the response size, you can select which properties should be included.  An empty list may lead to an empty API response (except properties you can't exclude).  You can't exclude these properties: `message`, `warning`, `cursor`, `abTestVariantID`, or any property added by setting `getRankingInfo` to true.  Your search depends on the `hits` field. If you omit this field, searches won't return any results. Your UI might also depend on other properties, for example, for pagination. Before restricting the response size, check the impact on your search experience.
 	ResponseFields []string `json:"responseFields,omitempty"`
 	// Maximum number of facet values to return for each facet.
 	MaxValuesPerFacet *int32 `json:"maxValuesPerFacet,omitempty"`
@@ -210,7 +210,7 @@ func WithSettingsResponseSearchableAttributes(val []string) SettingsResponseOpti
 	}
 }
 
-func WithSettingsResponseUserData(val map[string]any) SettingsResponseOption {
+func WithSettingsResponseUserData(val any) SettingsResponseOption {
 	return func(f *SettingsResponse) {
 		f.UserData = val
 	}
@@ -977,10 +977,10 @@ func (o *SettingsResponse) SetSearchableAttributes(v []string) *SettingsResponse
 	return o
 }
 
-// GetUserData returns the UserData field value if set, zero value otherwise.
-func (o *SettingsResponse) GetUserData() map[string]any {
-	if o == nil || o.UserData == nil {
-		var ret map[string]any
+// GetUserData returns the UserData field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *SettingsResponse) GetUserData() any {
+	if o == nil {
+		var ret any
 		return ret
 	}
 	return o.UserData
@@ -988,11 +988,12 @@ func (o *SettingsResponse) GetUserData() map[string]any {
 
 // GetUserDataOk returns a tuple with the UserData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SettingsResponse) GetUserDataOk() (map[string]any, bool) {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned.
+func (o *SettingsResponse) GetUserDataOk() (*any, bool) {
 	if o == nil || o.UserData == nil {
 		return nil, false
 	}
-	return o.UserData, true
+	return &o.UserData, true
 }
 
 // HasUserData returns a boolean if a field has been set.
@@ -1004,8 +1005,8 @@ func (o *SettingsResponse) HasUserData() bool {
 	return false
 }
 
-// SetUserData gets a reference to the given map[string]any and assigns it to the UserData field.
-func (o *SettingsResponse) SetUserData(v map[string]any) *SettingsResponse {
+// SetUserData gets a reference to the given any and assigns it to the UserData field.
+func (o *SettingsResponse) SetUserData(v any) *SettingsResponse {
 	o.UserData = v
 	return o
 }

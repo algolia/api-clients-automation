@@ -36,7 +36,7 @@ import algoliasearch.ingestion.EventType._
 case class Event(
     eventID: String,
     runID: String,
-    status: EventStatus,
+    status: Option[EventStatus] = scala.None,
     `type`: EventType,
     batchSize: Int,
     data: Option[Map[String, Any]] = scala.None,

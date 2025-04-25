@@ -46,11 +46,13 @@ trait HighlightResultTrait extends HighlightResult
 object HighlightResult {
 
   case class MapOfStringHighlightResult(value: Map[String, HighlightResult]) extends HighlightResult
+
   case class SeqOfHighlightResult(value: Seq[HighlightResult]) extends HighlightResult
 
   def apply(value: Map[String, HighlightResult]): HighlightResult = {
     HighlightResult.MapOfStringHighlightResult(value)
   }
+
   def apply(value: Seq[HighlightResult]): HighlightResult = {
     HighlightResult.SeqOfHighlightResult(value)
   }
@@ -65,15 +67,16 @@ object HighlightResultSerializer extends Serializer[HighlightResult] {
         case value: JObject if value.obj.exists(_._1 == "matchLevel") && value.obj.exists(_._1 == "matchedWords") =>
           Extraction.extract[HighlightResultOption](value)
         case value: JObject => HighlightResult.apply(Extraction.extract[Map[String, HighlightResult]](value))
-        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
-          HighlightResult.SeqOfHighlightResult(value.map(_.extract))
-        case _ => throw new MappingException("Can't convert " + json + " to HighlightResult")
+        case value: JArray  => HighlightResult.apply(Extraction.extract[Seq[HighlightResult]](value))
+        case _              => throw new MappingException("Can't convert " + json + " to HighlightResult")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: HighlightResult =>
     value match {
-      case value: HighlightResultOption                => Extraction.decompose(value)(format - this)
+      case value: HighlightResultOption => Extraction.decompose(value)(format - this)
+      case HighlightResult.MapOfStringHighlightResult(value) =>
+        JObject(value.map(kv => JField(kv._1, Extraction.decompose(kv._2)(format))).toList)
       case HighlightResult.SeqOfHighlightResult(value) => JArray(value.map(Extraction.decompose).toList)
     }
   }

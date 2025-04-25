@@ -4,24 +4,34 @@ package ingestion
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 // Source struct for Source.
 type Source struct {
 	// Universally uniqud identifier (UUID) of a source.
-	SourceID string       `json:"sourceID"`
-	Type     SourceType   `json:"type"`
-	Name     string       `json:"name"`
-	Input    *SourceInput `json:"input,omitempty"`
+	SourceID string     `json:"sourceID"`
+	Type     SourceType `json:"type"`
+	Name     string     `json:"name"`
+	// Owner of the resource.
+	Owner utils.Nullable[string] `json:"owner,omitempty"`
+	Input *SourceInput           `json:"input,omitempty"`
 	// Universally unique identifier (UUID) of an authentication resource.
 	AuthenticationID *string `json:"authenticationID,omitempty"`
 	// Date of creation in RFC 3339 format.
 	CreatedAt string `json:"createdAt"`
 	// Date of last update in RFC 3339 format.
-	UpdatedAt *string `json:"updatedAt,omitempty"`
+	UpdatedAt string `json:"updatedAt"`
 }
 
 type SourceOption func(f *Source)
+
+func WithSourceOwner(val utils.Nullable[string]) SourceOption {
+	return func(f *Source) {
+		f.Owner = val
+	}
+}
 
 func WithSourceInput(val SourceInput) SourceOption {
 	return func(f *Source) {
@@ -35,22 +45,17 @@ func WithSourceAuthenticationID(val string) SourceOption {
 	}
 }
 
-func WithSourceUpdatedAt(val string) SourceOption {
-	return func(f *Source) {
-		f.UpdatedAt = &val
-	}
-}
-
 // NewSource instantiates a new Source object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed.
-func NewSource(sourceID string, type_ SourceType, name string, createdAt string, opts ...SourceOption) *Source {
+func NewSource(sourceID string, type_ SourceType, name string, createdAt string, updatedAt string, opts ...SourceOption) *Source {
 	this := &Source{}
 	this.SourceID = sourceID
 	this.Type = type_
 	this.Name = name
 	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
 	for _, opt := range opts {
 		opt(this)
 	}
@@ -135,6 +140,50 @@ func (o *Source) GetNameOk() (*string, bool) {
 func (o *Source) SetName(v string) *Source {
 	o.Name = v
 	return o
+}
+
+// GetOwner returns the Owner field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Source) GetOwner() string {
+	if o == nil || o.Owner.Get() == nil {
+		var ret string
+		return ret
+	}
+	return *o.Owner.Get()
+}
+
+// GetOwnerOk returns a tuple with the Owner field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned.
+func (o *Source) GetOwnerOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Owner.Get(), o.Owner.IsSet()
+}
+
+// HasOwner returns a boolean if a field has been set.
+func (o *Source) HasOwner() bool {
+	if o != nil && o.Owner.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOwner gets a reference to the given utils.Nullable[string] and assigns it to the Owner field.
+func (o *Source) SetOwner(v string) *Source {
+	o.Owner.Set(&v)
+	return o
+}
+
+// SetOwnerNil sets the value for Owner to be an explicit nil.
+func (o *Source) SetOwnerNil() {
+	o.Owner.Set(nil)
+}
+
+// UnsetOwner ensures that no value is present for Owner, not even an explicit nil.
+func (o *Source) UnsetOwner() {
+	o.Owner.Unset()
 }
 
 // GetInput returns the Input field value if set, zero value otherwise.
@@ -228,49 +277,38 @@ func (o *Source) SetCreatedAt(v string) *Source {
 	return o
 }
 
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
+// GetUpdatedAt returns the UpdatedAt field value.
 func (o *Source) GetUpdatedAt() string {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.UpdatedAt
+
+	return o.UpdatedAt
 }
 
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
 // and a boolean to check if the value has been set.
 func (o *Source) GetUpdatedAtOk() (*string, bool) {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.UpdatedAt, true
+	return &o.UpdatedAt, true
 }
 
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *Source) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given string and assigns it to the UpdatedAt field.
+// SetUpdatedAt sets field value.
 func (o *Source) SetUpdatedAt(v string) *Source {
-	o.UpdatedAt = &v
+	o.UpdatedAt = v
 	return o
 }
 
 func (o Source) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]any{}
-	if true {
-		toSerialize["sourceID"] = o.SourceID
-	}
-	if true {
-		toSerialize["type"] = o.Type
-	}
-	if true {
-		toSerialize["name"] = o.Name
+	toSerialize["sourceID"] = o.SourceID
+	toSerialize["type"] = o.Type
+	toSerialize["name"] = o.Name
+	if o.Owner.IsSet() {
+		toSerialize["owner"] = o.Owner.Get()
 	}
 	if o.Input != nil {
 		toSerialize["input"] = o.Input
@@ -278,12 +316,8 @@ func (o Source) MarshalJSON() ([]byte, error) {
 	if o.AuthenticationID != nil {
 		toSerialize["authenticationID"] = o.AuthenticationID
 	}
-	if true {
-		toSerialize["createdAt"] = o.CreatedAt
-	}
-	if o.UpdatedAt != nil {
-		toSerialize["updatedAt"] = o.UpdatedAt
-	}
+	toSerialize["createdAt"] = o.CreatedAt
+	toSerialize["updatedAt"] = o.UpdatedAt
 	serialized, err := json.Marshal(toSerialize)
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal Source: %w", err)
@@ -297,6 +331,7 @@ func (o Source) String() string {
 	out += fmt.Sprintf("  sourceID=%v\n", o.SourceID)
 	out += fmt.Sprintf("  type=%v\n", o.Type)
 	out += fmt.Sprintf("  name=%v\n", o.Name)
+	out += fmt.Sprintf("  owner=%v\n", o.Owner)
 	out += fmt.Sprintf("  input=%v\n", o.Input)
 	out += fmt.Sprintf("  authenticationID=%v\n", o.AuthenticationID)
 	out += fmt.Sprintf("  createdAt=%v\n", o.CreatedAt)

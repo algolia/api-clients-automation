@@ -156,7 +156,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -186,7 +186,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -216,7 +216,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -240,7 +240,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -1928,32 +1928,35 @@ components:
               nbHits:
                 $ref: '#/components/schemas/nbHits'
     clickThroughRate:
-      type: number
-      format: double
-      description: >
-        Click-through rate: calculated as the number of tracked searches with at
-        least one click event divided by the number of tracked searches.
+      oneOf:
+        - type: number
+          format: double
+          description: >
+            Click-through rate: calculated as the number of tracked searches
+            with at least one click event divided by the number of tracked
+            searches.
 
-        If null, Algolia didn't receive any search requests with
-        `clickAnalytics` set to true.
-      nullable: true
-      minimum: 0
-      maximum: 1
-      default: null
-      example: 0.49
+            If null, Algolia didn't receive any search requests with
+            `clickAnalytics` set to true.
+          minimum: 0
+          maximum: 1
+          default: null
+          example: 0.49
+        - type: 'null'
     averageClickPosition:
-      type: number
-      format: double
-      description: >
-        Average position of a clicked search result in the list of search
-        results.
+      oneOf:
+        - type: number
+          format: double
+          description: >
+            Average position of a clicked search result in the list of search
+            results.
 
-        If null, Algolia didn't receive any search requests with
-        `clickAnalytics` set to true.
-      nullable: true
-      minimum: 1
-      example: 2.035
-      default: null
+            If null, Algolia didn't receive any search requests with
+            `clickAnalytics` set to true.
+          minimum: 1
+          example: 2.035
+          default: null
+        - type: 'null'
     clickPositions:
       type: array
       description: >-
@@ -1991,19 +1994,21 @@ components:
             minimum: 0
             default: 0
     conversionRate:
-      type: number
-      format: double
-      description: >
-        Conversion rate: calculated as the number of tracked searches with at
-        least one conversion event divided by the number of tracked searches.
+      oneOf:
+        - type: number
+          format: double
+          description: >
+            Conversion rate: calculated as the number of tracked searches with
+            at least one conversion event divided by the number of tracked
+            searches.
 
-        If null, Algolia didn't receive any search requests with
-        `clickAnalytics` set to true.
-      nullable: true
-      minimum: 0
-      maximum: 1
-      default: null
-      example: 0.05
+            If null, Algolia didn't receive any search requests with
+            `clickAnalytics` set to true.
+          minimum: 0
+          maximum: 1
+          default: null
+          example: 0.05
+        - type: 'null'
     trackedSearchCount:
       type: integer
       example: 2
@@ -2092,19 +2097,21 @@ components:
             description: Revenue associated with this search in this currency.
             example: 999.98
     addToCartRate:
-      type: number
-      format: double
-      description: >
-        Add-to-cart rate: calculated as the number of tracked searches with at
-        least one add-to-cart event divided by the number of tracked searches.
+      oneOf:
+        - type: number
+          format: double
+          description: >
+            Add-to-cart rate: calculated as the number of tracked searches with
+            at least one add-to-cart event divided by the number of tracked
+            searches.
 
-        If null, Algolia didn't receive any search requests with
-        `clickAnalytics` set to true.
-      nullable: true
-      minimum: 0
-      maximum: 1
-      default: null
-      example: 0.1
+            If null, Algolia didn't receive any search requests with
+            `clickAnalytics` set to true.
+          minimum: 0
+          maximum: 1
+          default: null
+          example: 0.1
+        - type: 'null'
     addToCartCount:
       type: integer
       description: Number of add-to-cart events from this search.
@@ -2112,19 +2119,20 @@ components:
       default: 0
       example: 10
     purchaseRate:
-      type: number
-      format: double
-      description: >
-        Purchase rate: calculated as the number of tracked searches with at
-        least one purchase event divided by the number of tracked searches.
+      oneOf:
+        - type: number
+          format: double
+          description: >
+            Purchase rate: calculated as the number of tracked searches with at
+            least one purchase event divided by the number of tracked searches.
 
-        If null, Algolia didn't receive any search requests with
-        `clickAnalytics` set to true.
-      nullable: true
-      minimum: 0
-      maximum: 1
-      default: null
-      example: 0.05
+            If null, Algolia didn't receive any search requests with
+            `clickAnalytics` set to true.
+          minimum: 0
+          maximum: 1
+          default: null
+          example: 0.05
+        - type: 'null'
     purchaseCount:
       type: integer
       description: Number of purchase events from this search.
@@ -2468,26 +2476,25 @@ components:
         - values
       properties:
         values:
-          type: array
-          nullable: true
-          description: >
-            Filters for searches without any results.
+          oneOf:
+            - type: array
+              description: >
+                Filters for searches without any results.
 
-            If null, the search term specified with the `search` parameter isn't
-            a search without results,
+                If null, the search term specified with the `search` parameter
+                isn't a search without results,
 
-            or the `search` parameter is absent from the request.
-          items:
-            $ref: '#/components/schemas/getTopFiltersNoResultsValues'
+                or the `search` parameter is absent from the request.
+              items:
+                $ref: '#/components/schemas/getTopFiltersNoResultsValues'
+            - type: 'null'
     updatedAtNullable:
-      default: null
       oneOf:
         - type: string
+          default: null
+          description: Date and time when the object was updated, in RFC 3339 format.
           example: '2023-07-04T12:49:15Z'
-          description: |
-            Date and time when the object was updated, in RFC 3339 format.
         - type: 'null'
-          description: If null, this object wasn't updated yet.
   responses:
     BadRequest:
       description: Bad request or request arguments.
