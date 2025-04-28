@@ -185,14 +185,6 @@ safe-buffer/index.js:
   (*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> *)
 
 archiver/lib/error.js:
-  (**
-   * Archiver Core
-   *
-   * @ignore
-   * @license [MIT]{@link https://github.com/archiverjs/node-archiver/blob/master/LICENSE}
-   * @copyright (c) 2012-2014 Chris Talkington, contributors.
-   *)
-
 archiver/lib/core.js:
   (**
    * Archiver Core
