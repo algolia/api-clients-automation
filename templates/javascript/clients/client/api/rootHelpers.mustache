@@ -1,0 +1,44 @@
+/**
+ * Helper: Copies the given `sourceIndexName` of the `sourceClient` to the `destinationIndexName` of the `destinationClient`.
+ * See https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation details.
+ *
+ * @summary Helper: Copies the given `sourceIndexName` of the `sourceClient` to the `destinationIndexName` of the `destinationClient`.
+ * @param accountCopyIndex - The `accountCopyIndex` object.
+ * @param accountCopyIndex.sourceClient - The already initialized search client with write ACL credentials, this is the application to copy the index from.
+ * @param accountCopyIndex.sourceIndexName - The name of the index to copy in the `sourceClient`.
+ * @param accountCopyIndex.destinationClient - The already initialized search client with write ACL credentials, this is the application to copy the index to.
+ * @param accountCopyIndex.destinationIndexName - The name of the index to write the copied index to in the `destinationClient`.
+ * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `setSettings`, `saveRules`, `saveSynonyms` and `saveObjects` method and merged with the transporter requestOptions.
+ */
+export async function accountCopyIndex(
+  { sourceClient, sourceIndexName, destinationClient, destinationIndexName }: AccountCopyIndexOptions,
+  requestOptions?: RequestOptions
+): Promise<void> {
+  const responses:Array<{taskID: UpdatedAtResponse['taskID']}> = [];
+
+  if (await destinationClient.indexExists({ indexName: sourceIndexName })) {
+    if (sourceClient.appId === destinationClient.appId) {
+      throw new AlgoliaError('Indices are in the same application. Use operationIndex instead.', 'IndicesInTheSameAppError')
+    }
+
+    throw new AlgoliaError('Destination indice already exists.', 'DestinationIndiceAlreadyExistsError')
+  }
+
+  responses.push(await destinationClient.setSettings({ indexName: destinationIndexName, indexSettings: await sourceClient.getSettings({ indexName: sourceIndexName }) }, requestOptions))
+
+  await sourceClient.browseRules({ indexName: sourceIndexName, async aggregator(response) {
+    responses.push(await destinationClient.saveRules({ indexName: destinationIndexName, rules: response.hits }, requestOptions))
+  },})
+
+  await sourceClient.browseSynonyms({ indexName: sourceIndexName, async aggregator(response) {
+    responses.push(await destinationClient.saveSynonyms({ indexName: destinationIndexName, synonymHit: response.hits }, requestOptions))
+  },})
+
+  await sourceClient.browseObjects({ indexName: sourceIndexName, async aggregator(response) {
+    await destinationClient.saveObjects({ indexName: destinationIndexName, objects: response.hits, waitForTasks: true }, requestOptions)
+  },})
+
+  for (const response of responses) {
+    await destinationClient.waitForTask({indexName: destinationIndexName, taskID: response.taskID})
+  }
+}
