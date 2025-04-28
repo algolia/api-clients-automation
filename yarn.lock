@@ -77,7 +77,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/api-client-automation@workspace:."
   dependencies:
-    "@openapitools/openapi-generator-cli": "npm:2.19.1"
+    "@openapitools/openapi-generator-cli": "npm:2.20.0"
     "@redocly/cli": "npm:1.29.0"
     eslint: "npm:8.57.1"
     eslint-plugin-automation-custom: "npm:1.0.0"
@@ -1326,9 +1326,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openapitools/openapi-generator-cli@npm:2.19.1":
-  version: 2.19.1
-  resolution: "@openapitools/openapi-generator-cli@npm:2.19.1"
+"@openapitools/openapi-generator-cli@npm:2.20.0":
+  version: 2.20.0
+  resolution: "@openapitools/openapi-generator-cli@npm:2.20.0"
   dependencies:
     "@nestjs/axios": "npm:4.0.0"
     "@nestjs/common": "npm:11.0.20"
@@ -1350,7 +1350,7 @@ __metadata:
     tslib: "npm:2.8.1"
   bin:
     openapi-generator-cli: main.js
-  checksum: 10/6a9a63aed012c8929127c77bbf0fc4a8a7a8200a87d7bcb8a603da7a8cc69cdfc2201966fc5f3629e6bca9b42114cde12c366db2a08d9fdb8b5196ad7e587525
+  checksum: 10/b5114d7811505e4fd3e7fa050c1262a76510b1d9e0c1a0e24a417f9570ca986a2edc0c7234eea0e6e30aae2ed698d2e9815ccdd8a5d1663b5794e9e505868edb
   languageName: node
   linkType: hard
 
