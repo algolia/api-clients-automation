@@ -353,7 +353,7 @@ class TestSearchClient:
         _req = await _client.index_exists(
             index_name="indexExistsYES",
         )
-        assert _req is True
+        assert _req
 
     async def test_index_exists_1(self):
         """
@@ -376,7 +376,7 @@ class TestSearchClient:
         _req = await _client.index_exists(
             index_name="indexExistsNO",
         )
-        assert _req is False
+        assert not _req
 
     async def test_index_exists_2(self):
         """
@@ -1450,7 +1450,7 @@ class TestSearchClientSync:
         _req = _client.index_exists(
             index_name="indexExistsYES",
         )
-        assert _req is True
+        assert _req
 
     def test_index_exists_1(self):
         """
@@ -1473,7 +1473,7 @@ class TestSearchClientSync:
         _req = _client.index_exists(
             index_name="indexExistsNO",
         )
-        assert _req is False
+        assert not _req
 
     def test_index_exists_2(self):
         """

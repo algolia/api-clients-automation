@@ -2881,7 +2881,7 @@ paths:
               {
                 Type = Enum.Parse<DestinationType>("Search"),
                 Name = "destinationName",
-                Input = new DestinationInput(new DestinationIndexName { IndexName = "<YOUR_INDEX_NAME>" }),
+                Input = new DestinationInput { IndexName = "<YOUR_INDEX_NAME>" },
                 AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               }
             );
@@ -2906,8 +2906,8 @@ paths:
             response, err :=
             client.CreateDestination(client.NewApiCreateDestinationRequest(
 
-              ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(ingestion.DestinationIndexNameAsDestinationInput(
-                ingestion.NewEmptyDestinationIndexName().SetIndexName("<YOUR_INDEX_NAME>"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
+              ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(
+                ingestion.NewEmptyDestinationInput().SetIndexName("<YOUR_INDEX_NAME>")).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2935,7 +2935,7 @@ paths:
               new DestinationCreate()
                 .setType(DestinationType.SEARCH)
                 .setName("destinationName")
-                .setInput(new DestinationIndexName().setIndexName("<YOUR_INDEX_NAME>"))
+                .setInput(new DestinationInput().setIndexName("<YOUR_INDEX_NAME>"))
                 .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
             );
 
@@ -2981,7 +2981,7 @@ paths:
               destinationCreate = DestinationCreate(
                 type = DestinationType.entries.first { it.value == "search" },
                 name = "destinationName",
-                input = DestinationIndexName(
+                input = DestinationInput(
                   indexName = "<YOUR_INDEX_NAME>",
                 ),
                 authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -3067,7 +3067,7 @@ paths:
               Algolia::Ingestion::DestinationCreate.new(
                 type: "search",
                 name: "destinationName",
-                input: Algolia::Ingestion::DestinationIndexName.new(index_name: "<YOUR_INDEX_NAME>"),
+                input: Algolia::Ingestion::DestinationInput.new(index_name: "<YOUR_INDEX_NAME>"),
                 authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
               )
             )
@@ -3099,7 +3099,7 @@ paths:
                 destinationCreate = DestinationCreate(
                   `type` = DestinationType.withName("search"),
                   name = "destinationName",
-                  input = DestinationIndexName(
+                  input = DestinationInput(
                     indexName = "<YOUR_INDEX_NAME>"
                   ),
                   authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -3123,7 +3123,7 @@ paths:
             DestinationCreate(
                 type: DestinationType.search,
                 name: "destinationName",
-                input: DestinationInput.destinationIndexName(DestinationIndexName(indexName: "<YOUR_INDEX_NAME>")),
+                input: DestinationInput(indexName: "<YOUR_INDEX_NAME>"),
                 authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
             ))
 
@@ -15971,7 +15971,7 @@ components:
           Use `*` as wildcard: `foo.[*].bar` excludes `bar` from all elements of the `foo` array.
       items:
         type: string
-    DestinationIndexName:
+    DestinationInput:
       type: object
       additionalProperties: false
       properties:
@@ -15984,9 +15984,6 @@ components:
           $ref: '#/components/schemas/AttributesToExclude'
       required:
         - indexName
-    DestinationInput:
-      oneOf:
-        - $ref: '#/components/schemas/DestinationIndexName'
     transformationIDs:
       type: array
       items:

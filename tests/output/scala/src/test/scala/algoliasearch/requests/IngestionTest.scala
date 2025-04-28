@@ -90,7 +90,7 @@ class IngestionTest extends AnyFunSuite {
       destinationCreate = DestinationCreate(
         `type` = DestinationType.withName("search"),
         name = "destinationName",
-        input = DestinationIndexName(
+        input = DestinationInput(
           indexName = "full_name______"
         ),
         authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -115,7 +115,7 @@ class IngestionTest extends AnyFunSuite {
       destinationCreate = DestinationCreate(
         `type` = DestinationType.withName("search"),
         name = "destinationName",
-        input = DestinationIndexName(
+        input = DestinationInput(
           indexName = "full_name______"
         ),
         transformationIDs = Some(Seq("6c02aeb1-775e-418e-870b-1faccd4b2c0f"))

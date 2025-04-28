@@ -87,7 +87,7 @@ public class IngestionClientRequestTests
       {
         Type = Enum.Parse<DestinationType>("Search"),
         Name = "destinationName",
-        Input = new DestinationInput(new DestinationIndexName { IndexName = "full_name______" }),
+        Input = new DestinationInput { IndexName = "full_name______" },
         AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       }
     );
@@ -110,7 +110,7 @@ public class IngestionClientRequestTests
       {
         Type = Enum.Parse<DestinationType>("Search"),
         Name = "destinationName",
-        Input = new DestinationInput(new DestinationIndexName { IndexName = "full_name______" }),
+        Input = new DestinationInput { IndexName = "full_name______" },
         TransformationIDs = new List<string> { "6c02aeb1-775e-418e-870b-1faccd4b2c0f" },
       }
     );

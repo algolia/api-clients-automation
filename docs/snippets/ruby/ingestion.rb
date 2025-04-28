@@ -69,7 +69,7 @@ def snippet_for_create_destination
     Algolia::Ingestion::DestinationCreate.new(
       type: "search",
       name: "destinationName",
-      input: Algolia::Ingestion::DestinationIndexName.new(index_name: "<YOUR_INDEX_NAME>"),
+      input: Algolia::Ingestion::DestinationInput.new(index_name: "<YOUR_INDEX_NAME>"),
       authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
     )
   )
@@ -96,7 +96,7 @@ def snippet_for_create_destination1
     Algolia::Ingestion::DestinationCreate.new(
       type: "search",
       name: "destinationName",
-      input: Algolia::Ingestion::DestinationIndexName.new(index_name: "<YOUR_INDEX_NAME>"),
+      input: Algolia::Ingestion::DestinationInput.new(index_name: "<YOUR_INDEX_NAME>"),
       transformation_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]
     )
   )

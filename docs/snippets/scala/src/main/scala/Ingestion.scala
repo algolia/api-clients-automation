@@ -100,7 +100,7 @@ class SnippetIngestionClient {
         destinationCreate = DestinationCreate(
           `type` = DestinationType.withName("search"),
           name = "destinationName",
-          input = DestinationIndexName(
+          input = DestinationInput(
             indexName = "<YOUR_INDEX_NAME>"
           ),
           authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -131,7 +131,7 @@ class SnippetIngestionClient {
         destinationCreate = DestinationCreate(
           `type` = DestinationType.withName("search"),
           name = "destinationName",
-          input = DestinationIndexName(
+          input = DestinationInput(
             indexName = "<YOUR_INDEX_NAME>"
           ),
           transformationIDs = Some(Seq("6c02aeb1-775e-418e-870b-1faccd4b2c0f"))

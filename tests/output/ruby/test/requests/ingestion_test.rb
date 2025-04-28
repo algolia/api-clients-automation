@@ -62,7 +62,7 @@ class TestIngestionClient < Test::Unit::TestCase
       Algolia::Ingestion::DestinationCreate.new(
         type: "search",
         name: "destinationName",
-        input: Algolia::Ingestion::DestinationIndexName.new(index_name: "full_name______"),
+        input: Algolia::Ingestion::DestinationInput.new(index_name: "full_name______"),
         authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
       )
     )
@@ -85,7 +85,7 @@ class TestIngestionClient < Test::Unit::TestCase
       Algolia::Ingestion::DestinationCreate.new(
         type: "search",
         name: "destinationName",
-        input: Algolia::Ingestion::DestinationIndexName.new(index_name: "full_name______"),
+        input: Algolia::Ingestion::DestinationInput.new(index_name: "full_name______"),
         transformation_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]
       )
     )
