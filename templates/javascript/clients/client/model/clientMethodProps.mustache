@@ -14,7 +14,7 @@ import type { {{classname}} } from '{{filename}}';
 
 {{! Imports for the helpers method of the search client }}
 {{#isSearchClient}}
-import type { SearchClient } from '@algolia/client-search';
+import type { createSearchClient } from '../src/searchClient';
 import type { CreateIterablePromise } from '@algolia/client-common';
 {{/isSearchClient}}
 
@@ -193,7 +193,7 @@ export type AccountCopyIndexOptions = {
   /**
    * The name of the index to copy in the `sourceClient`.
    */
-  sourceClient: SearchClient;
+  sourceClient: ReturnType<typeof createSearchClient>;
 
   /**
    * The `indexName` to replace `objects` in.
@@ -203,7 +203,7 @@ export type AccountCopyIndexOptions = {
   /**
    * The already initialized search client with write ACL credentials, this is the application to copy the index to.
    */
-  destinationClient: SearchClient;
+  destinationClient: ReturnType<typeof createSearchClient>;
 
   /**
    * The name of the index to write the copied index to in the `destinationClient`.

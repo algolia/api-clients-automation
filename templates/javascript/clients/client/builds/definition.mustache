@@ -28,7 +28,16 @@ export * from '../model';
 
 {{#isSearchClient}}
 {{^isAlgoliasearchClient}}
-import type { GenerateSecuredApiKeyOptions, GetSecuredApiKeyRemainingValidityOptions, SearchClientNodeHelpers, UpdatedAtResponse, AccountCopyIndexOptions } from '../model';
+import type { 
+  AccountCopyIndexOptions,
+  BrowseResponse,
+  GenerateSecuredApiKeyOptions,
+  GetSecuredApiKeyRemainingValidityOptions,
+  SearchClientNodeHelpers,
+  SearchRulesResponse,
+  SearchSynonymsResponse,
+  UpdatedAtResponse,
+} from '../model';
 {{/isAlgoliasearchClient}}
 {{/isSearchClient}}
 
