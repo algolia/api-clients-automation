@@ -1,28 +1,34 @@
 method:
-  post:
+  get:
     x-helper: true
     tags:
       - Account
     operationId: accountCopyIndex
-    summary: Copies the index of an Algolia application, to an other Algolia application
+    summary: Copies the given `sourceIndexName` records, rules and synonyms to an other Algolia application for the given `destinationIndexName`
     description: |
-      Copies the index of an Algolia application, to an other Algolia application.
+      Copies the given `sourceIndexName` records, rules and synonyms to an other Algolia application for the given `destinationIndexName`.
     parameters:
       - in: query
         name: sourceIndexName
-        description: The name of the index to copy in the `sourceClient`.
+        description: The name of the index to copy.
         required: true
         schema:
           type: string
       - in: query
-        name: destinationClient
-        description: The already initialized search client with write ACL credentials, this is the application to copy the index to.
+        name: destinationAppID
+        description: The application ID to write the index to.
         required: true
         schema:
-          type: object
+          type: string
+      - in: query
+        name: destinationApiKey
+        description: The API Key of the `destinationAppID` to write the index to, must have write ACLs.
+        required: true
+        schema:
+          type: string
       - in: query
         name: destinationIndexName
-        description: The name of the index to write the copied index to in the `destinationClient`.
+        description: The name of the index to write the copied index to.
         required: true
         schema:
           type: string

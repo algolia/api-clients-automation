@@ -197,9 +197,14 @@ export type AccountCopyIndexOptions = {
   sourceIndexName: string;
 
   /**
-   * The already initialized search client with write ACLs, this must target the application to copy the index to.
+   * The application ID to write the index to.
    */
-  destinationClient: ReturnType<typeof createSearchClient>;
+  destinationAppID: string;
+
+  /**
+   * The API Key of the `destinationAppID` to write the index to, must have write ACLs.
+   */
+  destinationApiKey: string;
 
   /**
    * The name of the index to write the copy in.

@@ -131,4 +131,14 @@ async function testAlgoliasearch() {
   }
 }
 
-testAlgoliasearch();
+async function testAccountCopyIndex() {
+  try {
+    await client.accountCopyIndex({destinationClient: client, destinationIndexName: "foo", sourceIndexName: "bar"})
+  } catch(e) {
+    console.log(e)
+  }
+
+}
+
+// testAlgoliasearch();
+testAccountCopyIndex()

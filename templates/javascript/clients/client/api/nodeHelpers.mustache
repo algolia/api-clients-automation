@@ -36,38 +36,50 @@ generateSecuredApiKey: ({
 },
 
 /**
- * Helper: Copies the given `sourceIndexName` to the `destinationIndexName` of the `destinationClient`.
+ * Helper: Copies the given `sourceIndexName` records, rules and synonyms to an other Algolia application for the given `destinationIndexName`.
  * See https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation details.
  *
- * @summary Helper: Copies the given `sourceIndexName` to the `destinationIndexName` of the `destinationClient`.
+ * @summary Helper: Copies the given `sourceIndexName` records, rules and synonyms to an other Algolia application for the given `destinationIndexName`.
  * @param accountCopyIndex - The `accountCopyIndex` object.
- * @param accountCopyIndex.sourceIndexName - The name of the index to copy
- * @param accountCopyIndex.destinationClient - The already initialized search client with write ACL credentials, this is the application to copy the index to.
- * @param accountCopyIndex.destinationIndexName - The name of the index to write the copied index to in the `destinationClient`.
+ * @param accountCopyIndex.sourceIndexName - The name of the index to copy.
+ * @param accountCopyIndex.destinationAppID - The application ID to write the index to.
+ * @param accountCopyIndex.destinationApiKey - The API Key of the `destinationAppID` to write the index to, must have write ACLs.
+ * @param accountCopyIndex.destinationIndexName - The name of the index to write the copied index to.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `setSettings`, `saveRules`, `saveSynonyms` and `saveObjects` method and merged with the transporter requestOptions.
  */
 async accountCopyIndex(
-  { sourceIndexName, destinationClient, destinationIndexName }: AccountCopyIndexOptions,
+  { sourceIndexName, destinationAppID, destinationApiKey, destinationIndexName }: AccountCopyIndexOptions,
   requestOptions?: RequestOptions,
 ): Promise<void> {
   const responses: Array<{ taskID: UpdatedAtResponse['taskID'] }> = [];
 
-  if (this.appId === destinationClient.appId) {
-    throw new AlgoliaError(
-      'Indices are in the same application. Use operationIndex instead.',
-      'IndicesInTheSameAppError',
-    );
+  if (this.appId === destinationAppID) {
+    throw new IndicesInSameAppError();
   }
 
   if (!(await this.indexExists({ indexName: sourceIndexName }))) {
-    throw new AlgoliaError(
-      `${sourceIndexName} does not exist in the source application ${this.appId}`,
-      'IndexNotFound',
-    );
+    throw new IndexNotFoundError(sourceIndexName);
   }
 
+  const destinationClient = createSearchClient({
+    appId: destinationAppID,
+    apiKey: destinationApiKey,
+    timeouts: {
+      connect: {{x-timeouts.server.connect}},
+      read: {{x-timeouts.server.read}},
+      write: {{x-timeouts.server.write}},
+    },
+    logger: createNullLogger(),
+    requester: createHttpRequester(),
+    algoliaAgents: [{ segment: 'accountCopyIndex', version: process.versions.node }],
+    responsesCache: createNullCache(),
+    requestsCache: createNullCache(),
+    hostsCache: createMemoryCache(),
+    ...options,
+  });
+
   if (await destinationClient.indexExists({ indexName: sourceIndexName })) {
-    throw new AlgoliaError('Destination indice already exists.', 'DestinationIndiceAlreadyExistsError');
+    throw new IndexAlreadyExistsError(sourceIndexName);
   }
 
   responses.push(
@@ -84,7 +96,10 @@ async accountCopyIndex(
     indexName: sourceIndexName,
     async aggregator(response: SearchRulesResponse) {
       responses.push(
-        await destinationClient.saveRules({ indexName: destinationIndexName, rules: response.hits }, requestOptions),
+        await destinationClient.saveRules(
+          { indexName: destinationIndexName, rules: response.hits },
+          requestOptions,
+        ),
       );
     },
   });
@@ -104,9 +119,11 @@ async accountCopyIndex(
   await this.browseObjects({
     indexName: sourceIndexName,
     async aggregator(response: BrowseResponse) {
-      await destinationClient.saveObjects(
-        { indexName: destinationIndexName, objects: response.hits, waitForTasks: true },
-        requestOptions,
+      responses.push(
+        ...(await destinationClient.saveObjects(
+          { indexName: destinationIndexName, objects: response.hits },
+          requestOptions,
+        )),
       );
     },
   });

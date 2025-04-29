@@ -1,7 +1,17 @@
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 import { createHttpRequester } from '@algolia/requester-node-http';
 import { createFetchRequester } from '@algolia/requester-fetch';
-import { AlgoliaError, createNullLogger, createMemoryCache, createFallbackableCache, createBrowserLocalStorageCache, createNullCache, serializeQueryParameters } from '@algolia/client-common';
+import { 
+  IndexNotFoundError,
+  IndicesInSameAppError,
+  IndexAlreadyExistsError,
+  createNullLogger,
+  createMemoryCache,
+  createFallbackableCache,
+  createBrowserLocalStorageCache,
+  createNullCache,
+  serializeQueryParameters
+} from '@algolia/client-common';
 
 import type { RequestOptions, ClientOptions } from '@algolia/client-common';
 
