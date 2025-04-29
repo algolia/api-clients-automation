@@ -52,15 +52,22 @@ async accountCopyIndex(
 ): Promise<void> {
   const responses: Array<{ taskID: UpdatedAtResponse['taskID'] }> = [];
 
-  if (await destinationClient.indexExists({ indexName: sourceIndexName })) {
-    if (this.appId === destinationClient.appId) {
-      throw new AlgoliaError(
-        'Indices are in the same application. Use operationIndex instead.',
-        'IndexInSameApp',
-      );
-    }
+  if (this.appId === destinationClient.appId) {
+    throw new AlgoliaError(
+      'Indices are in the same application. Use operationIndex instead.',
+      'IndicesInTheSameAppError',
+    );
+  }
 
-    throw new AlgoliaError('Destination index already exists.', 'IndexAlreadyExists');
+  if (!(await this.indexExists({ indexName: sourceIndexName }))) {
+    throw new AlgoliaError(
+      `${sourceIndexName} does not exist in the source application ${this.appId}`,
+      'IndexNotFound',
+    );
+  }
+
+  if (await destinationClient.indexExists({ indexName: sourceIndexName })) {
+    throw new AlgoliaError('Destination indice already exists.', 'DestinationIndiceAlreadyExistsError');
   }
 
   responses.push(

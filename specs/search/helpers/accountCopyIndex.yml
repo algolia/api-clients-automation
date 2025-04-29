@@ -31,3 +31,5 @@ method:
         $ref: '../../common/responses/IndexInSameApp.yml'
       '403':
         $ref: '../../common/responses/IndexAlreadyExists.yml'
+      '404':
+        $ref: '../../common/responses/IndexNotFound.yml'
