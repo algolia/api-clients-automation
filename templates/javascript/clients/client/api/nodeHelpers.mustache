@@ -36,12 +36,12 @@ generateSecuredApiKey: ({
 },
 
 /**
- * Helper: Copies the given `sourceIndexName` of the `sourceClient` to the `destinationIndexName` of the `destinationClient`.
+ * Helper: Copies the given `sourceIndexName` to the `destinationIndexName` of the `destinationClient`.
  * See https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation details.
  *
- * @summary Helper: Copies the given `sourceIndexName` of the `sourceClient` to the `destinationIndexName` of the `destinationClient`.
+ * @summary Helper: Copies the given `sourceIndexName` to the `destinationIndexName` of the `destinationClient`.
  * @param accountCopyIndex - The `accountCopyIndex` object.
- * @param accountCopyIndex.sourceIndexName - The name of the index to copy in the `sourceClient`.
+ * @param accountCopyIndex.sourceIndexName - The name of the index to copy
  * @param accountCopyIndex.destinationClient - The already initialized search client with write ACL credentials, this is the application to copy the index to.
  * @param accountCopyIndex.destinationIndexName - The name of the index to write the copied index to in the `destinationClient`.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `setSettings`, `saveRules`, `saveSynonyms` and `saveObjects` method and merged with the transporter requestOptions.
