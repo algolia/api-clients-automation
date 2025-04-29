@@ -64,9 +64,17 @@ public class SnippetsGenerator extends TestsGenerator {
         for (var step : test.steps) {
           if (step.method != null && step.type.equals("method")) {
             CodegenOperation ope = operations.get(step.method);
-            if (ope == null || !(boolean) ope.vendorExtensions.getOrDefault("x-helper", false)) {
+            boolean isHelper = (boolean) ope.vendorExtensions.getOrDefault("x-helper", false);
+            if (ope == null || !isHelper) {
               continue;
             }
+
+            List<String> availableLanguages = (List<String>) ope.vendorExtensions.getOrDefault("x-available-languages", new ArrayList<>());
+
+            if (availableLanguages.size() > 0 && !availableLanguages.contains(language)) {
+              continue;
+            }
+
             Snippet newSnippet = new Snippet(step.method, test.testName, step.parameters, step.requestOptions);
             Snippet[] existing = snippets.get(step.method);
             if (existing == null) {
