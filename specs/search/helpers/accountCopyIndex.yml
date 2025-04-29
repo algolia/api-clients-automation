@@ -1,6 +1,8 @@
 method:
   get:
     x-helper: true
+    x-available-languages:
+      - javascript
     tags:
       - Account
     operationId: accountCopyIndex
