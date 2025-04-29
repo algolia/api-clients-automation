@@ -128,9 +128,10 @@ export type GetSecuredApiKeyRemainingValidityOptions = {
 }
 
 export type SearchClientNodeHelpers = {
+  accountCopyIndex: (opts: AccountCopyIndexOptions) => Promise<void>;
   generateSecuredApiKey: (opts: GenerateSecuredApiKeyOptions) => string;
   getSecuredApiKeyRemainingValidity: (opts: GetSecuredApiKeyRemainingValidityOptions) => number;
-}
+};
 {{/isSearchClient}}
 
 export type DeleteObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'waitForTasks' | 'batchSize'> & {
@@ -191,22 +192,17 @@ export type ReplaceAllObjectsOptions = {
 
 export type AccountCopyIndexOptions = {
   /**
-   * The name of the index to copy in the `sourceClient`.
-   */
-  sourceClient: ReturnType<typeof createSearchClient>;
-
-  /**
-   * The `indexName` to replace `objects` in.
+   * The name of the index to copy to the `destinationClient`.
    */
   sourceIndexName: string;
 
   /**
-   * The already initialized search client with write ACL credentials, this is the application to copy the index to.
+   * The already initialized search client with write ACLs, this must target the application to copy the index to.
    */
   destinationClient: ReturnType<typeof createSearchClient>;
 
   /**
-   * The name of the index to write the copied index to in the `destinationClient`.
+   * The name of the index to write the copy in.
    */
   destinationIndexName: string;
 };

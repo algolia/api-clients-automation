@@ -34,3 +34,78 @@ generateSecuredApiKey: ({
   const queryParameters = serializeQueryParameters(mergedRestrictions);
   return Buffer.from(createHmac('sha256', parentApiKey).update(queryParameters).digest('hex') + queryParameters,).toString('base64');
 },
+
+/**
+ * Helper: Copies the given `sourceIndexName` of the `sourceClient` to the `destinationIndexName` of the `destinationClient`.
+ * See https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation details.
+ *
+ * @summary Helper: Copies the given `sourceIndexName` of the `sourceClient` to the `destinationIndexName` of the `destinationClient`.
+ * @param accountCopyIndex - The `accountCopyIndex` object.
+ * @param accountCopyIndex.sourceClient - The already initialized search client with write ACL credentials, this is the application to copy the index from.
+ * @param accountCopyIndex.sourceIndexName - The name of the index to copy in the `sourceClient`.
+ * @param accountCopyIndex.destinationClient - The already initialized search client with write ACL credentials, this is the application to copy the index to.
+ * @param accountCopyIndex.destinationIndexName - The name of the index to write the copied index to in the `destinationClient`.
+ * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `setSettings`, `saveRules`, `saveSynonyms` and `saveObjects` method and merged with the transporter requestOptions.
+ */
+async accountCopyIndex(
+  { sourceIndexName, destinationClient, destinationIndexName }: AccountCopyIndexOptions,
+  requestOptions?: RequestOptions,
+): Promise<void> {
+  const responses: Array<{ taskID: UpdatedAtResponse['taskID'] }> = [];
+
+  if (await destinationClient.indexExists({ indexName: sourceIndexName })) {
+    if (this.appId === destinationClient.appId) {
+      throw new AlgoliaError(
+        'Indices are in the same application. Use operationIndex instead.',
+        'IndicesInTheSameAppError',
+      );
+    }
+
+    throw new AlgoliaError('Destination indice already exists.', 'DestinationIndiceAlreadyExistsError');
+  }
+
+  responses.push(
+    await destinationClient.setSettings(
+      {
+        indexName: destinationIndexName,
+        indexSettings: await this.getSettings({ indexName: sourceIndexName }),
+      },
+      requestOptions,
+    ),
+  );
+
+  await this.browseRules({
+    indexName: sourceIndexName,
+    async aggregator(response: SearchRulesResponse) {
+      responses.push(
+        await destinationClient.saveRules({ indexName: destinationIndexName, rules: response.hits }, requestOptions),
+      );
+    },
+  });
+
+  await this.browseSynonyms({
+    indexName: sourceIndexName,
+    async aggregator(response: SearchSynonymsResponse) {
+      responses.push(
+        await destinationClient.saveSynonyms(
+          { indexName: destinationIndexName, synonymHit: response.hits },
+          requestOptions,
+        ),
+      );
+    },
+  });
+
+  await this.browseObjects({
+    indexName: sourceIndexName,
+    async aggregator(response: BrowseResponse) {
+      await destinationClient.saveObjects(
+        { indexName: destinationIndexName, objects: response.hits, waitForTasks: true },
+        requestOptions,
+      );
+    },
+  });
+
+  for (const response of responses) {
+    await destinationClient.waitForTask({ indexName: destinationIndexName, taskID: response.taskID });
+  }
+},
