@@ -41,7 +41,6 @@ generateSecuredApiKey: ({
  *
  * @summary Helper: Copies the given `sourceIndexName` of the `sourceClient` to the `destinationIndexName` of the `destinationClient`.
  * @param accountCopyIndex - The `accountCopyIndex` object.
- * @param accountCopyIndex.sourceClient - The already initialized search client with write ACL credentials, this is the application to copy the index from.
  * @param accountCopyIndex.sourceIndexName - The name of the index to copy in the `sourceClient`.
  * @param accountCopyIndex.destinationClient - The already initialized search client with write ACL credentials, this is the application to copy the index to.
  * @param accountCopyIndex.destinationIndexName - The name of the index to write the copied index to in the `destinationClient`.
@@ -57,11 +56,11 @@ async accountCopyIndex(
     if (this.appId === destinationClient.appId) {
       throw new AlgoliaError(
         'Indices are in the same application. Use operationIndex instead.',
-        'IndicesInTheSameAppError',
+        'IndexInSameApp',
       );
     }
 
-    throw new AlgoliaError('Destination indice already exists.', 'DestinationIndiceAlreadyExistsError');
+    throw new AlgoliaError('Destination index already exists.', 'IndexAlreadyExists');
   }
 
   responses.push(
