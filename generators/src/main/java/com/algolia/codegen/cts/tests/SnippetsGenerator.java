@@ -64,8 +64,7 @@ public class SnippetsGenerator extends TestsGenerator {
         for (var step : test.steps) {
           if (step.method != null && step.type.equals("method")) {
             CodegenOperation ope = operations.get(step.method);
-            boolean isHelper = (boolean) ope.vendorExtensions.getOrDefault("x-helper", false);
-            if (ope == null || !isHelper) {
+            if (ope == null || !(boolean) ope.vendorExtensions.getOrDefault("x-helper", false)) {
               continue;
             }
 
