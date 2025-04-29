@@ -78,8 +78,8 @@ async accountCopyIndex(
     ...options,
   });
 
-  if (await destinationClient.indexExists({ indexName: sourceIndexName })) {
-    throw new IndexAlreadyExistsError(sourceIndexName);
+  if (await destinationClient.indexExists({ indexName: destinationIndexName })) {
+    throw new IndexAlreadyExistsError(destinationIndexName);
   }
 
   responses.push(

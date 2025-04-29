@@ -25,7 +25,7 @@ const aciState: Record<
 export function assertValidAccountCopyIndex(expectedCount: number): void {
   expect(Object.keys(aciState)).to.have.length(expectedCount);
   for (const lang in aciState) {
-    expect(aciState[lang].successful).to.equal(true);
+    expect(aciState[lang].waitTaskCount).to.equal(4);
   }
 }
 
@@ -38,30 +38,50 @@ function addRoutes(app: Express): void {
   );
 
   app.get('/1/indexes/:indexName/settings', (req, res) => {
-    const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_(source|destination)_(.*)\d+$/)?.[1] as string;
-    expect(aciState).to.include.keys(lang);
+    const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_(source|destination)_(.*)$/)?.[2] as string;
+
+    if (!aciState[lang] || aciState[lang].successful) {
+      aciState[lang] = {
+        setSettingsCount: 0,
+        getSettingsCount: 0,
+        saveRulesCount: 0,
+        browseRulesCount: 0,
+        saveSynonymsCount: 0,
+        browseSynonymsCount: 0,
+        saveObjectsCount: 0,
+        browseObjectsCount: 0,
+        waitTaskCount: 0,
+        successful: false,
+      };
+    } else {
+      expect(aciState).to.include.keys(lang);
+    }
 
     aciState[lang].getSettingsCount++;
 
-    res.json({
-      minWordSizefor1Typo: 4,
-      minWordSizefor2Typos: 8,
-      hitsPerPage: 100,
-      maxValuesPerFacet: 100,
-      paginationLimitedTo: 10,
-      exactOnSingleWordQuery: 'attribute',
-      ranking: ['typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
-      separatorsToIndex: '',
-      removeWordsIfNoResults: 'none',
-      queryType: 'prefixLast',
-      highlightPreTag: '<em>',
-      highlightPostTag: '</em>',
-      alternativesAsExact: ['ignorePlurals', 'singleWordSynonym'],
-    });
+    if (req.params.indexName.includes('destination')) {
+      res.status(404).json({ message: 'Index not found' });
+    } else {
+      res.status(200).json({
+        minWordSizefor1Typo: 4,
+        minWordSizefor2Typos: 8,
+        hitsPerPage: 100,
+        maxValuesPerFacet: 100,
+        paginationLimitedTo: 10,
+        exactOnSingleWordQuery: 'attribute',
+        ranking: ['typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
+        separatorsToIndex: '',
+        removeWordsIfNoResults: 'none',
+        queryType: 'prefixLast',
+        highlightPreTag: '<em>',
+        highlightPostTag: '</em>',
+        alternativesAsExact: ['ignorePlurals', 'singleWordSynonym'],
+      });
+    }
   });
 
   app.put('/1/indexes/:indexName/settings', (req, res) => {
-    const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_destination_(.*)\d+$/)?.[1] as string;
+    const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_destination_(.*)$/)?.[1] as string;
     expect(aciState).to.include.keys(lang);
 
     aciState[lang].setSettingsCount++;
@@ -69,8 +89,8 @@ function addRoutes(app: Express): void {
     res.json({ taskID: 123 + aciState[lang].setSettingsCount, updatedAt: '2021-01-01T00:00:00.000Z' });
   });
 
-  app.get('/1/indexes/:indexName/rules/search', (req, res) => {
-    const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_source_(.*)\d+$/)?.[1] as string;
+  app.post('/1/indexes/:indexName/rules/search', (req, res) => {
+    const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_source_(.*)$/)?.[1] as string;
     expect(aciState).to.include.keys(lang);
 
     aciState[lang].browseRulesCount++;
@@ -109,7 +129,7 @@ function addRoutes(app: Express): void {
   });
 
   app.post('/1/indexes/:indexName/rules/batch', (req, res) => {
-    const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_destination_(.*)\d+$/)?.[1] as string;
+    const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_destination_(.*)$/)?.[1] as string;
     expect(aciState).to.include.keys(lang);
 
     aciState[lang].saveRulesCount++;
@@ -117,8 +137,8 @@ function addRoutes(app: Express): void {
     res.json({ taskID: 456 + aciState[lang].saveRulesCount, updatedAt: '2021-01-01T00:00:00.000Z' });
   });
 
-  app.get('/1/indexes/:indexName/synonyms/search', (req, res) => {
-    const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_source_(.*)\d+$/)?.[1] as string;
+  app.post('/1/indexes/:indexName/synonyms/search', (req, res) => {
+    const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_source_(.*)$/)?.[1] as string;
     expect(aciState).to.include.keys(lang);
 
     aciState[lang].browseSynonymsCount++;
@@ -136,7 +156,7 @@ function addRoutes(app: Express): void {
   });
 
   app.post('/1/indexes/:indexName/synonyms/batch', (req, res) => {
-    const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_destination_(.*)\d+$/)?.[1] as string;
+    const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_destination_(.*)$/)?.[1] as string;
     expect(aciState).to.include.keys(lang);
 
     aciState[lang].saveSynonymsCount++;
@@ -145,7 +165,7 @@ function addRoutes(app: Express): void {
   });
 
   app.post('/1/indexes/:indexName/browse', (req, res) => {
-    const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_source_(.*)\d+$/)?.[1] as string;
+    const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_source_(.*)$/)?.[1] as string;
     expect(aciState).to.include.keys(lang);
 
     aciState[lang].browseObjectsCount++;
@@ -162,7 +182,7 @@ function addRoutes(app: Express): void {
   });
 
   app.post('/1/indexes/:indexName/batch', (req, res) => {
-    const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_destination_(.*)\d+$/)?.[1] as string;
+    const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_destination_(.*)$/)?.[1] as string;
     expect(aciState).to.include.keys(lang);
 
     aciState[lang].saveObjectsCount++;
@@ -171,7 +191,7 @@ function addRoutes(app: Express): void {
   });
 
   app.get('/1/indexes/:indexName/task/:taskID', (req, res) => {
-    const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_destination_(.*)\d+$/)?.[1] as string;
+    const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_destination_(.*)$/)?.[1] as string;
     expect(aciState).to.include.keys(lang);
 
     aciState[lang].waitTaskCount++;
