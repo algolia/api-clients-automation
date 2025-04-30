@@ -13,6 +13,30 @@ function createClient() {
   return algoliasearch(appId, apiKey, { requester: nodeEchoRequester() });
 }
 
+describe('accountCopyIndex', () => {
+  test('call accountCopyIndex without error', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6687,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    {
+      const result = await client.accountCopyIndex({
+        sourceIndexName: 'cts_e2e_account_copy_index_source_javascript',
+        destinationAppID: 'test-app-id-destination',
+        destinationApiKey: 'test-api-key-destination',
+        destinationIndexName: 'cts_e2e_account_copy_index_destination_javascript',
+      });
+    }
+  }, 25000);
+});
+
 describe('api', () => {
   test('calls api with correct read host', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {

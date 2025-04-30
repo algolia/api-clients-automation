@@ -3,6 +3,7 @@ require "algolia"
 require "test/unit"
 
 class TestClientSearchClient < Test::Unit::TestCase
+
   # calls api with correct read host
   def test_api0
 
