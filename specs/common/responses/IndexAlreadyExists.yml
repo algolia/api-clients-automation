@@ -1,0 +1,5 @@
+description: Destination index already exists.
+content:
+  application/json:
+    schema:
+      $ref: '../schemas/ErrorBase.yml'

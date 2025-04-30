@@ -62,7 +62,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.18.4\).*/',
+                '/^Algolia for PHP \(4.18.5\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );

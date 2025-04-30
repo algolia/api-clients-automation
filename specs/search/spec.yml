@@ -372,6 +372,9 @@ paths:
   /generateSecuredApiKey:
     $ref: 'helpers/generateSecuredApiKey.yml#/method'
 
+  /accountCopyIndex:
+    $ref: 'helpers/accountCopyIndex.yml#/method'
+
   /replaceAllObjects:
     $ref: 'helpers/replaceAllObjects.yml#/method'
 
