@@ -14,6 +14,7 @@ import type { {{classname}} } from '{{filename}}';
 
 {{! Imports for the helpers method of the search client }}
 {{#isSearchClient}}
+import type { createSearchClient } from '../src/searchClient';
 import type { CreateIterablePromise } from '@algolia/client-common';
 {{/isSearchClient}}
 
@@ -127,9 +128,10 @@ export type GetSecuredApiKeyRemainingValidityOptions = {
 }
 
 export type SearchClientNodeHelpers = {
+  accountCopyIndex: (opts: AccountCopyIndexOptions) => Promise<void>;
   generateSecuredApiKey: (opts: GenerateSecuredApiKeyOptions) => string;
   getSecuredApiKeyRemainingValidity: (opts: GetSecuredApiKeyRemainingValidityOptions) => number;
-}
+};
 {{/isSearchClient}}
 
 export type DeleteObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'waitForTasks' | 'batchSize'> & {
@@ -187,6 +189,28 @@ export type ReplaceAllObjectsOptions = {
    */
   scopes?: Array<ScopeType>;
 }
+
+export type AccountCopyIndexOptions = {
+  /**
+   * The name of the index to copy to the `destinationClient`.
+   */
+  sourceIndexName: string;
+
+  /**
+   * The application ID to write the index to.
+   */
+  destinationAppID: string;
+
+  /**
+   * The API Key of the `destinationAppID` to write the index to, must have write ACLs.
+   */
+  destinationApiKey: string;
+
+  /**
+   * The name of the index to write the copy in.
+   */
+  destinationIndexName: string;
+};
 {{/isAlgoliasearchClient}}
 {{/isSearchClient}}
 {{#isCompositionFullClient}}

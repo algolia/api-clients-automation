@@ -5,6 +5,7 @@ import { getTestOutputFolder } from '../config.ts';
 import { createSpinner } from '../spinners.ts';
 import type { Language } from '../types.ts';
 
+import { assertValidAccountCopyIndex } from './testServer/accountCopyIndex.ts';
 import { printBenchmarkReport } from './testServer/benchmark.ts';
 import { assertChunkWrapperValid } from './testServer/chunkWrapper.ts';
 import { startTestServer } from './testServer/index.ts';
@@ -147,10 +148,12 @@ export async function runCts(
   if (withClientServer && (clients.includes('search') || clients.includes('all') || process.platform === 'darwin')) {
     // the macos swift CI also runs the clients tests
     const skip = (lang: Language): number => (languages.includes(lang) ? 1 : 0);
+    const only = skip;
 
     assertValidTimeouts(languages.length);
     assertChunkWrapperValid(languages.length - skip('dart'));
     assertValidReplaceAllObjects(languages.length - skip('dart'));
+    assertValidAccountCopyIndex(only('javascript'));
     assertValidReplaceAllObjectsFailed(languages.length - skip('dart'));
     assertValidReplaceAllObjectsScopes(languages.length - skip('dart'));
     assertValidWaitForApiKey(languages.length - skip('dart'));
