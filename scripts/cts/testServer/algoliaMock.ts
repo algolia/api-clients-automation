@@ -38,7 +38,7 @@ function addRoutes(app: Express): void {
     });
   });
 
-  app.get('/1/indexes/:indexName/settings', (req, res) => {
+  app.get('/1/indexes/unknownField/settings', (req, res) => {
     res.json({
       minWordSizefor1Typo: 12,
       minWordSizefor2Typos: 13,
@@ -47,7 +47,7 @@ function addRoutes(app: Express): void {
     });
   });
 
-  app.get('/1/indexes/:indexName/rules/:objectID', (req, res) => {
+  app.get('/1/indexes/unknownFieldInOneOf/rules/:objectID', (req, res) => {
     res.json({
       objectID: req.params.objectID,
       consequence: {

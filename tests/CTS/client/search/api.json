@@ -246,7 +246,7 @@
         "type": "method",
         "method": "getSettings",
         "parameters": {
-          "indexName": "cts_e2e_getSettings_${{language}}"
+          "indexName": "unknownField"
         },
         "expected": {
           "type": "response",
@@ -280,7 +280,7 @@
         "type": "method",
         "method": "getRule",
         "parameters": {
-          "indexName": "cts_e2e_getRule_${{language}}",
+          "indexName": "unknownFieldInOneOf",
           "objectID": "ruleObjectID"
         },
         "expected": {
