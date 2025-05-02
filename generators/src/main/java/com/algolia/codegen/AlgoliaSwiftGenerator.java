@@ -136,8 +136,8 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     return INSTANCE.isReservedWord(text) ? INSTANCE.escapeReservedWord(text) : text;
   }
 
-  public static Boolean isReservedModelName(String name) {
-    return reservedModelNames.contains(name.toLowerCase());
+  public static Boolean isReservedModelName(String name, String client) {
+    return client.equalsIgnoreCase("composition") || reservedModelNames.contains(name.toLowerCase());
   }
 
   public static String prefixReservedModelName(String name, String client) {
@@ -146,7 +146,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     }
 
     var camelizedName = camelize(name);
-    if (isReservedModelName(camelizedName)) {
+    if (isReservedModelName(camelizedName, client)) {
       return getClientName(client) + Helpers.capitalize(camelizedName);
     }
 
@@ -476,7 +476,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
   public String toModelName(String name) {
     var sanitizedName = this.sanitizeName(name);
     var camelizedName = camelize(sanitizedName);
-    if (isReservedModelName(camelizedName)) {
+    if (isReservedModelName(camelizedName, getClientName(CLIENT))) {
       return prefixReservedModelName(camelizedName, CLIENT);
     }
 
@@ -486,7 +486,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
   @Override
   public String toParamName(String name) {
     var trimmedName = camelize(name.replaceFirst(getClientName(CLIENT), ""), LOWERCASE_FIRST_LETTER);
-    if (isReservedModelName(trimmedName)) {
+    if (isReservedModelName(trimmedName, getClientName(CLIENT))) {
       return trimmedName;
     }
 

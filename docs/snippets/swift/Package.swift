@@ -34,6 +34,10 @@ let package = Package(
                     package: "algoliasearch-client-swift"
                 ),
                 .product(
+                    name: "Composition",
+                    package: "algoliasearch-client-swift"
+                ),
+                .product(
                     name: "Ingestion",
                     package: "algoliasearch-client-swift"
                 ),
