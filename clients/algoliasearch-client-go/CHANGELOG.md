@@ -1,3 +1,61 @@
+## [4.15.5](https://github.com/algolia/algoliasearch-client-go/compare/4.15.4...4.15.5)
+
+- [9ea9937b3b](https://github.com/algolia/api-clients-automation/commit/9ea9937b3b) chore(specs): Prepare Composition API for GA and remove Beta wording ([#4761](https://github.com/algolia/api-clients-automation/pull/4761)) by [@e-krebs](https://github.com/e-krebs/)
+- [53ac749807](https://github.com/algolia/api-clients-automation/commit/53ac749807) chore(deps): dependencies 2025-04-28 ([#4785](https://github.com/algolia/api-clients-automation/pull/4785)) by [@algolia-bot](https://github.com/algolia-bot/)
+
+## [4.15.4](https://github.com/algolia/algoliasearch-client-go/compare/4.15.3...4.15.4)
+
+- [369c14232](https://github.com/algolia/api-clients-automation/commit/369c14232) fix(specs): condition cant be numeric filter ([#4726](https://github.com/algolia/api-clients-automation/pull/4726)) by [@kai687](https://github.com/kai687/)
+- [1911d224b](https://github.com/algolia/api-clients-automation/commit/1911d224b) fix(specs): event.status can be null ([#4727](https://github.com/algolia/api-clients-automation/pull/4727)) by [@millotp](https://github.com/millotp/)
+- [a18b555b4](https://github.com/algolia/api-clients-automation/commit/a18b555b4) fix(specs): add missing recordType collection ([#4728](https://github.com/algolia/api-clients-automation/pull/4728)) by [@millotp](https://github.com/millotp/)
+- [4570f18b8](https://github.com/algolia/api-clients-automation/commit/4570f18b8) fix(clients): correctly deserialize SearchResult ([#4756](https://github.com/algolia/api-clients-automation/pull/4756)) by [@millotp](https://github.com/millotp/)
+
+## [4.15.3](https://github.com/algolia/algoliasearch-client-go/compare/4.15.2...4.15.3)
+
+- [dbaef6696](https://github.com/algolia/api-clients-automation/commit/dbaef6696) fix(specs): userData is any type ([#4702](https://github.com/algolia/api-clients-automation/pull/4702)) by [@millotp](https://github.com/millotp/)
+- [a922dca5a](https://github.com/algolia/api-clients-automation/commit/a922dca5a) docs(partialUpdate): add note about multiple operations ([#4721](https://github.com/algolia/api-clients-automation/pull/4721)) by [@Jerska](https://github.com/Jerska/)
+- [e150cd934](https://github.com/algolia/api-clients-automation/commit/e150cd934) fix(specs): message is not required in WatchResponse ([#4723](https://github.com/algolia/api-clients-automation/pull/4723)) by [@millotp](https://github.com/millotp/)
+
+## [4.15.2](https://github.com/algolia/algoliasearch-client-go/compare/4.15.1...4.15.2)
+
+- [ac400354a9](https://github.com/algolia/api-clients-automation/commit/ac400354a9) fix(specs): make the updateAt non-null in ingestion ([#4697](https://github.com/algolia/api-clients-automation/pull/4697)) by [@millotp](https://github.com/millotp/)
+
+## [4.15.1](https://github.com/algolia/algoliasearch-client-go/compare/4.15.0...4.15.1)
+
+- [8b5413f002](https://github.com/algolia/api-clients-automation/commit/8b5413f002) chore(deps): dependencies 2025-03-31 ([#4661](https://github.com/algolia/api-clients-automation/pull/4661)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [a51683025e](https://github.com/algolia/api-clients-automation/commit/a51683025e) chore: deprecate mcm methods ([#4694](https://github.com/algolia/api-clients-automation/pull/4694)) by [@kai687](https://github.com/kai687/)
+
+## [4.15.0](https://github.com/algolia/algoliasearch-client-go/compare/4.14.0...4.15.0)
+
+- [c3addb449](https://github.com/algolia/api-clients-automation/commit/c3addb449) feat(specs): add CT Query predicate property ([#4654](https://github.com/algolia/api-clients-automation/pull/4654)) by [@morganleroi](https://github.com/morganleroi/)
+
+## [4.14.0](https://github.com/algolia/algoliasearch-client-go/compare/4.13.0...4.14.0)
+
+- [26457d0ec8](https://github.com/algolia/api-clients-automation/commit/26457d0ec8) feat(specs): add the owner attributes to ingestion resources ([#4616](https://github.com/algolia/api-clients-automation/pull/4616)) by [@millotp](https://github.com/millotp/)
+
+## [4.13.0](https://github.com/algolia/algoliasearch-client-go/compare/4.12.4...4.13.0)
+
+- [ab623194e](https://github.com/algolia/api-clients-automation/commit/ab623194e) feat(specs): add `subscriptionAction` to ingestion specs ([#4587](https://github.com/algolia/api-clients-automation/pull/4587)) by [@shortcuts](https://github.com/shortcuts/)
+- [7e5e12450](https://github.com/algolia/api-clients-automation/commit/7e5e12450) fix(clients): implement Is on custom errors ([#4588](https://github.com/algolia/api-clients-automation/pull/4588)) by [@millotp](https://github.com/millotp/)
+
+## [4.12.4](https://github.com/algolia/algoliasearch-client-go/compare/4.12.3...4.12.4)
+
+- [92bd911848](https://github.com/algolia/api-clients-automation/commit/92bd911848) chore(scripts): point jira issues to another epic ([#4505](https://github.com/algolia/api-clients-automation/pull/4505)) by [@millotp](https://github.com/millotp/)
+- [97d2722bc9](https://github.com/algolia/api-clients-automation/commit/97d2722bc9) fix(specs): Increase optionalWords visibility in docs ([#4559](https://github.com/algolia/api-clients-automation/pull/4559)) by [@gazconroy](https://github.com/gazconroy/)
+
+## [4.12.3](https://github.com/algolia/algoliasearch-client-go/compare/4.12.2...4.12.3)
+
+- [ecd6bc4fed](https://github.com/algolia/api-clients-automation/commit/ecd6bc4fed) chore(deps): dependencies 2025-02-17 ([#4459](https://github.com/algolia/api-clients-automation/pull/4459)) by [@algolia-bot](https://github.com/algolia-bot/)
+
+## [4.12.2](https://github.com/algolia/algoliasearch-client-go/compare/4.12.1...4.12.2)
+
+- [5e18968d10](https://github.com/algolia/api-clients-automation/commit/5e18968d10) chore(specs): update composition specs for the doc website ([#4450](https://github.com/algolia/api-clients-automation/pull/4450)) by [@e-krebs](https://github.com/e-krebs/)
+
+## [4.12.1](https://github.com/algolia/algoliasearch-client-go/compare/4.12.0...4.12.1)
+
+- [506b8a5636](https://github.com/algolia/api-clients-automation/commit/506b8a5636) fix(specs): responseFields description ([#4399](https://github.com/algolia/api-clients-automation/pull/4399)) by [@kai687](https://github.com/kai687/)
+- [09e657fa76](https://github.com/algolia/api-clients-automation/commit/09e657fa76) fix(specs): add a linter to assert that type is present ([#4393](https://github.com/algolia/api-clients-automation/pull/4393)) by [@millotp](https://github.com/millotp/)
+
 ## [4.12.0](https://github.com/algolia/algoliasearch-client-go/compare/4.11.0...4.12.0)
 
 - [5aa57630d6](https://github.com/algolia/api-clients-automation/commit/5aa57630d6) feat(specs): only use shortname in the source input ([#4287](https://github.com/algolia/api-clients-automation/pull/4287)) by [@millotp](https://github.com/millotp/)

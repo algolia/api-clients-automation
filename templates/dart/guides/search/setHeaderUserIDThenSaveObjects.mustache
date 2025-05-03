@@ -1,0 +1,19 @@
+{{> snippets/import}}
+
+final playlists = []; // Your records
+
+void setHeaderUserIDThenSaveObjects() async {
+  {{> snippets/init}}
+
+  for (final playlist in playlists) {
+    final playlistUserID = playlist["userID"];
+    final batchParams = BatchWriteParams(
+    requests: playlists
+        .map((record) => BatchRequest(
+          action: Action.addObject,
+          body: record,
+        ))
+    .toList());
+    await {{#dynamicSnippet}}batchChunksWithRequestOptions{{/dynamicSnippet}};
+  }
+}

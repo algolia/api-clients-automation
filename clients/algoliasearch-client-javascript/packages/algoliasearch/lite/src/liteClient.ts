@@ -24,7 +24,7 @@ import type {
 import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
 import type { SearchResponse } from '../model/searchResponse';
 
-export const apiClientVersion = '5.20.0';
+export const apiClientVersion = '5.24.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -171,7 +171,7 @@ export function createLiteClient({
       }>;
     },
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      * @param customPost - The customPost object.
      * @param customPost.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPost.parameters - Query parameters to apply to the current query.
@@ -247,7 +247,7 @@ export function createLiteClient({
     },
 
     /**
-     * Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.
+     * Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
      *
      * Required API Key ACLs:
      *  - search

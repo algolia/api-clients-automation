@@ -54,7 +54,7 @@ open class InsightsClient {
         return body
     }
 
-    // This method allow you to send requests to the Algolia REST API.
+    // This method lets you send requests to the Algolia REST API.
     //
     //
     // - parameter path: (path) Path of the endpoint, anything after \"/1\" must be specified.
@@ -119,7 +119,7 @@ open class InsightsClient {
         return body
     }
 
-    // This method allow you to send requests to the Algolia REST API.
+    // This method lets you send requests to the Algolia REST API.
     //
     //
     // - parameter path: (path) Path of the endpoint, anything after \"/1\" must be specified.
@@ -187,7 +187,7 @@ open class InsightsClient {
         return body
     }
 
-    // This method allow you to send requests to the Algolia REST API.
+    // This method lets you send requests to the Algolia REST API.
     //
     //
     // - parameter path: (path) Path of the endpoint, anything after \"/1\" must be specified.
@@ -258,7 +258,7 @@ open class InsightsClient {
         return body
     }
 
-    // This method allow you to send requests to the Algolia REST API.
+    // This method lets you send requests to the Algolia REST API.
     //
     //
     // - parameter path: (path) Path of the endpoint, anything after \"/1\" must be specified.
@@ -313,8 +313,7 @@ open class InsightsClient {
 
     /// Deletes all events related to the specified user token from events metrics and analytics. The deletion is
     /// asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user
-    /// profile`
-    /// in the Personalization API.
+    /// profile` in the Personalization API.
     ///
     ///
     /// - parameter userToken: (path) User token for which to delete all associated events.

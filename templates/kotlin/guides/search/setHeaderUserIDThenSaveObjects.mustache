@@ -1,0 +1,19 @@
+import kotlinx.serialization.json.JsonObject
+
+{{> snippets/import}}
+import com.algolia.client.model.search.*
+
+suspend fun setHeaderUserIDThenSaveObjects() {
+  val playlists: List<JsonObject> = listOf() // Your records
+
+  {{> snippets/init}}
+
+  playlists.forEach { playlist ->
+      val playlistUserID = playlist["userID"].toString()
+      try {
+        client.{{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}}
+      } catch (exception: Exception) {
+          println(exception.message)
+      }
+  }
+}

@@ -28,12 +28,14 @@ method:
         required: false
         schema:
           type: boolean
+          default: false
       - in: query
         name: batchSize
         description: The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
         required: false
         schema:
           type: integer
+          default: 1000
       - in: query
         name: requestOptions
         description: The request options to pass to the `batch` method.

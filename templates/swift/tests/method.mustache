@@ -1,4 +1,4 @@
-try {{#isAsyncMethod}}await {{/isAsyncMethod}}client.{{method}}{{^isHelper}}WithHTTPInfo{{/isHelper}}({{#hasParams}}{{#parametersWithDataType}}{{> tests/generateParams }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}{{/hasParams}}{{#hasRequestOptions}}{{#requestOptions}}, requestOptions: RequestOptions(
+try {{#isAsyncMethod}}await {{/isAsyncMethod}}client.{{method}}{{^isHelper}}{{^isGuide}}WithHTTPInfo{{/isGuide}}{{/isHelper}}({{#hasParams}}{{#parametersWithDataType}}{{> tests/generateParams }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}{{/hasParams}}{{#hasRequestOptions}}{{#requestOptions}}, requestOptions: RequestOptions(
   {{#headers}}
   headers: [{{#parametersWithDataType}}"{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}]{{#queryParameters}},{{/queryParameters}}
   {{/headers}}

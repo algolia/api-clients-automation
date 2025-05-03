@@ -19,6 +19,8 @@
   */
 package algoliasearch.ingestion
 
+import algoliasearch.ingestion.ActionType._
+
 /** API request body for updating a task.
   *
   * @param destinationID
@@ -35,6 +37,7 @@ case class TaskUpdate(
     cron: Option[String] = scala.None,
     input: Option[TaskInput] = scala.None,
     enabled: Option[Boolean] = scala.None,
+    subscriptionAction: Option[ActionType] = scala.None,
     failureThreshold: Option[Int] = scala.None,
     notifications: Option[Notifications] = scala.None,
     policies: Option[Policies] = scala.None

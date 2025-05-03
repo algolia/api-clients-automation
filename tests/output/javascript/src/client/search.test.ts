@@ -13,6 +13,30 @@ function createClient() {
   return algoliasearch(appId, apiKey, { requester: nodeEchoRequester() });
 }
 
+describe('accountCopyIndex', () => {
+  test('call accountCopyIndex without error', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6687,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    {
+      const result = await client.accountCopyIndex({
+        sourceIndexName: 'cts_e2e_account_copy_index_source_javascript',
+        destinationAppID: 'test-app-id-destination',
+        destinationApiKey: 'test-api-key-destination',
+        destinationIndexName: 'cts_e2e_account_copy_index_destination_javascript',
+      });
+    }
+  }, 25000);
+});
+
 describe('api', () => {
   test('calls api with correct read host', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {
@@ -22,7 +46,7 @@ describe('api', () => {
     const result = (await client.customGet({ path: 'test' })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('test-app-id-dsn.algolia.net');
-  }, 15000);
+  }, 25000);
 
   test('read transporter with POST method', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {
@@ -32,7 +56,7 @@ describe('api', () => {
     const result = (await client.searchSingleIndex({ indexName: 'indexName' })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('test-app-id-dsn.algolia.net');
-  }, 15000);
+  }, 25000);
 
   test('calls api with correct write host', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {
@@ -42,7 +66,7 @@ describe('api', () => {
     const result = (await client.customPost({ path: 'test' })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('test-app-id.algolia.net');
-  }, 15000);
+  }, 25000);
 
   test('tests the retry strategy', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {
@@ -71,7 +95,7 @@ describe('api', () => {
     const result = await client.customGet({ path: '1/test/retry/javascript' });
 
     expect(result).toEqual({ message: 'ok test server response' });
-  }, 15000);
+  }, 25000);
 
   test('tests the retry strategy error', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {
@@ -94,7 +118,7 @@ describe('api', () => {
         'Unreachable hosts - your application id may be incorrect. If the error persists, please reach out to the Algolia Support team: https://alg.li/support.',
       );
     }
-  }, 15000);
+  }, 25000);
 
   test('calls api with default read timeouts', async () => {
     const client = createClient();
@@ -102,7 +126,7 @@ describe('api', () => {
     const result = (await client.customGet({ path: '1/test' })) as unknown as EchoResponse;
 
     expect(result).toEqual(expect.objectContaining({ connectTimeout: 2000, responseTimeout: 5000 }));
-  }, 15000);
+  }, 25000);
 
   test('calls api with default write timeouts', async () => {
     const client = createClient();
@@ -110,7 +134,7 @@ describe('api', () => {
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
     expect(result).toEqual(expect.objectContaining({ connectTimeout: 2000, responseTimeout: 30000 }));
-  }, 15000);
+  }, 25000);
 });
 
 describe('commonApi', () => {
@@ -122,15 +146,15 @@ describe('commonApi', () => {
     expect(decodeURIComponent(result.algoliaAgent)).toMatch(
       /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Search (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/,
     );
-  }, 15000);
+  }, 25000);
 
   test('the user agent contains the latest version', async () => {
     const client = createClient();
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.20.0\).*/);
-  }, 15000);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.24.0\).*/);
+  }, 25000);
 });
 
 describe('deleteObjects', () => {
@@ -154,7 +178,7 @@ describe('deleteObjects', () => {
 
       expect(result).toEqual([{ taskID: 666, objectIDs: ['1', '2'] }]);
     }
-  }, 15000);
+  }, 25000);
 });
 
 describe('generateSecuredApiKey', () => {
@@ -171,7 +195,7 @@ describe('generateSecuredApiKey', () => {
         'NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw',
       );
     }
-  }, 15000);
+  }, 25000);
 
   test('with searchParams', async () => {
     const client = createClient();
@@ -200,7 +224,7 @@ describe('generateSecuredApiKey', () => {
         'MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw',
       );
     }
-  }, 15000);
+  }, 25000);
 
   test('with filters', async () => {
     const client = createClient();
@@ -211,7 +235,7 @@ describe('generateSecuredApiKey', () => {
         restrictions: { filters: 'user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)' },
       });
     }
-  }, 15000);
+  }, 25000);
 
   test('with visible_by filter', async () => {
     const client = createClient();
@@ -222,7 +246,7 @@ describe('generateSecuredApiKey', () => {
         restrictions: { filters: 'visible_by:group/Finance' },
       });
     }
-  }, 15000);
+  }, 25000);
 
   test('with userID', async () => {
     const client = createClient();
@@ -233,7 +257,29 @@ describe('generateSecuredApiKey', () => {
         restrictions: { userToken: 'user42' },
       });
     }
-  }, 15000);
+  }, 25000);
+
+  test('mcm with filters', async () => {
+    const client = createClient();
+
+    {
+      const result = client.generateSecuredApiKey({
+        parentApiKey: 'YourSearchOnlyApiKey',
+        restrictions: { filters: 'user:user42 AND user:public' },
+      });
+    }
+  }, 25000);
+
+  test('mcm with user token', async () => {
+    const client = createClient();
+
+    {
+      const result = client.generateSecuredApiKey({
+        parentApiKey: 'YourSearchOnlyApiKey',
+        restrictions: { userToken: 'user42' },
+      });
+    }
+  }, 25000);
 });
 
 describe('indexExists', () => {
@@ -254,7 +300,7 @@ describe('indexExists', () => {
 
       expect(result).toEqual(true);
     }
-  }, 15000);
+  }, 25000);
 
   test('indexNotExists', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {
@@ -273,7 +319,7 @@ describe('indexExists', () => {
 
       expect(result).toEqual(false);
     }
-  }, 15000);
+  }, 25000);
 
   test('indexExistsWithError', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {
@@ -294,7 +340,7 @@ describe('indexExists', () => {
     } catch (e) {
       expect((e as Error).message).toMatch('Invalid API key');
     }
-  }, 15000);
+  }, 25000);
 });
 
 describe('parameters', () => {
@@ -326,7 +372,7 @@ describe('parameters', () => {
     } catch (e) {
       expect((e as Error).message).toMatch('`apiKey` is missing.');
     }
-  }, 15000);
+  }, 25000);
 
   test('`addApiKey` throws with invalid parameters', async () => {
     const client = createClient();
@@ -338,7 +384,7 @@ describe('parameters', () => {
     } catch (e) {
       expect((e as Error).message).toMatch('Parameter `apiKey` is required when calling `addApiKey`.');
     }
-  }, 15000);
+  }, 25000);
 
   test('`addOrUpdateObject` throws with invalid parameters', async () => {
     const client = createClient();
@@ -373,7 +419,7 @@ describe('parameters', () => {
     } catch (e) {
       expect((e as Error).message).toMatch('Parameter `body` is required when calling `addOrUpdateObject`.');
     }
-  }, 15000);
+  }, 25000);
 });
 
 describe('partialUpdateObjects', () => {
@@ -401,7 +447,7 @@ describe('partialUpdateObjects', () => {
 
       expect(result).toEqual([{ taskID: 444, objectIDs: ['1', '2'] }]);
     }
-  }, 15000);
+  }, 25000);
 
   test('call partialUpdateObjects with createIfNotExists=false', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {
@@ -427,7 +473,7 @@ describe('partialUpdateObjects', () => {
 
       expect(result).toEqual([{ taskID: 555, objectIDs: ['3', '4'] }]);
     }
-  }, 15000);
+  }, 25000);
 });
 
 describe('replaceAllObjects', () => {
@@ -472,7 +518,7 @@ describe('replaceAllObjects', () => {
         moveOperationResponse: { taskID: 777, updatedAt: '2021-01-01T00:00:00.000Z' },
       });
     }
-  }, 15000);
+  }, 25000);
 
   test('call replaceAllObjects with partial scopes', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {
@@ -503,7 +549,7 @@ describe('replaceAllObjects', () => {
         moveOperationResponse: { taskID: 777, updatedAt: '2021-01-01T00:00:00.000Z' },
       });
     }
-  }, 15000);
+  }, 25000);
 
   test('replaceAllObjects should cleanup on failure', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {
@@ -530,7 +576,7 @@ describe('replaceAllObjects', () => {
     } catch (e) {
       expect((e as Error).message).toMatch('Record is too big');
     }
-  }, 15000);
+  }, 25000);
 });
 
 describe('saveObjects', () => {
@@ -557,7 +603,7 @@ describe('saveObjects', () => {
 
       expect(result).toEqual([{ taskID: 333, objectIDs: ['1', '2'] }]);
     }
-  }, 15000);
+  }, 25000);
 
   test('saveObjects should report errors', async () => {
     const client = algoliasearch('test-app-id', 'wrong-api-key', {
@@ -584,7 +630,7 @@ describe('saveObjects', () => {
     } catch (e) {
       expect((e as Error).message).toMatch('Invalid Application-ID or API key');
     }
-  }, 15000);
+  }, 25000);
 
   test('saveObjectsPlaylist', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {
@@ -612,7 +658,7 @@ describe('saveObjects', () => {
         ],
       });
     }
-  }, 15000);
+  }, 25000);
 
   test('saveObjectsPublicUser', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {
@@ -639,13 +685,37 @@ describe('saveObjects', () => {
               createdAt: '1500240452',
             },
           ],
+          waitForTasks: false,
+          batchSize: 1000,
         },
         {
           headers: { 'X-Algolia-User-ID': '*' },
         },
       );
     }
-  }, 15000);
+  }, 25000);
+});
+
+describe('searchSingleIndex', () => {
+  test('with algolia user id', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6686,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.searchSingleIndex(
+      { indexName: 'playlists', searchParams: { query: 'foo' } },
+      {
+        headers: { 'X-Algolia-User-ID': 'user1234' },
+      },
+    );
+  }, 25000);
 });
 
 describe('setClientApiKey', () => {
@@ -674,7 +744,7 @@ describe('setClientApiKey', () => {
 
       expect(result).toEqual({ headerAPIKeyValue: 'updated-api-key' });
     }
-  }, 15000);
+  }, 25000);
 });
 
 describe('waitForApiKey', () => {
@@ -703,7 +773,7 @@ describe('waitForApiKey', () => {
         createdAt: 1720094400,
       });
     }
-  }, 15000);
+  }, 25000);
 
   test('wait for api key - update', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {
@@ -744,7 +814,7 @@ describe('waitForApiKey', () => {
         createdAt: 1720094400,
       });
     }
-  }, 15000);
+  }, 25000);
 
   test('wait for api key - delete', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {
@@ -766,7 +836,7 @@ describe('waitForApiKey', () => {
 
       expect(result).toEqual(undefined);
     }
-  }, 15000);
+  }, 25000);
 });
 
 describe('waitForAppTask', () => {
@@ -787,7 +857,7 @@ describe('waitForAppTask', () => {
 
       expect(result).toEqual({ status: 'published' });
     }
-  }, 15000);
+  }, 25000);
 });
 
 describe('waitForTask', () => {
@@ -808,7 +878,7 @@ describe('waitForTask', () => {
 
       expect(result).toEqual({ status: 'published' });
     }
-  }, 15000);
+  }, 25000);
 });
 
 describe('init', () => {

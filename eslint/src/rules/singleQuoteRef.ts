@@ -1,3 +1,4 @@
+// @ts-ignore
 import { createRule } from 'eslint-plugin-yml/lib/utils';
 
 import { isBlockScalar, isPairWithKey, isScalar } from '../utils.js';

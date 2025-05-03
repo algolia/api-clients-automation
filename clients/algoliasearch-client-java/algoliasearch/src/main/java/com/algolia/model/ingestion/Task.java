@@ -28,6 +28,9 @@ public class Task {
   @JsonProperty("nextRun")
   private String nextRun;
 
+  @JsonProperty("owner")
+  private String owner;
+
   @JsonProperty("input")
   private TaskInput input;
 
@@ -39,6 +42,9 @@ public class Task {
 
   @JsonProperty("action")
   private ActionType action;
+
+  @JsonProperty("subscriptionAction")
+  private ActionType subscriptionAction;
 
   @JsonProperty("cursor")
   private String cursor;
@@ -121,6 +127,17 @@ public class Task {
     return nextRun;
   }
 
+  public Task setOwner(String owner) {
+    this.owner = owner;
+    return this;
+  }
+
+  /** Owner of the resource. */
+  @javax.annotation.Nullable
+  public String getOwner() {
+    return owner;
+  }
+
   public Task setInput(TaskInput input) {
     this.input = input;
     return this;
@@ -166,6 +183,17 @@ public class Task {
   @javax.annotation.Nullable
   public ActionType getAction() {
     return action;
+  }
+
+  public Task setSubscriptionAction(ActionType subscriptionAction) {
+    this.subscriptionAction = subscriptionAction;
+    return this;
+  }
+
+  /** Get subscriptionAction */
+  @javax.annotation.Nullable
+  public ActionType getSubscriptionAction() {
+    return subscriptionAction;
   }
 
   public Task setCursor(String cursor) {
@@ -218,7 +246,7 @@ public class Task {
   }
 
   /** Date of last update in RFC 3339 format. */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public String getUpdatedAt() {
     return updatedAt;
   }
@@ -239,10 +267,12 @@ public class Task {
       Objects.equals(this.cron, task.cron) &&
       Objects.equals(this.lastRun, task.lastRun) &&
       Objects.equals(this.nextRun, task.nextRun) &&
+      Objects.equals(this.owner, task.owner) &&
       Objects.equals(this.input, task.input) &&
       Objects.equals(this.enabled, task.enabled) &&
       Objects.equals(this.failureThreshold, task.failureThreshold) &&
       Objects.equals(this.action, task.action) &&
+      Objects.equals(this.subscriptionAction, task.subscriptionAction) &&
       Objects.equals(this.cursor, task.cursor) &&
       Objects.equals(this.notifications, task.notifications) &&
       Objects.equals(this.policies, task.policies) &&
@@ -260,10 +290,12 @@ public class Task {
       cron,
       lastRun,
       nextRun,
+      owner,
       input,
       enabled,
       failureThreshold,
       action,
+      subscriptionAction,
       cursor,
       notifications,
       policies,
@@ -282,10 +314,12 @@ public class Task {
     sb.append("    cron: ").append(toIndentedString(cron)).append("\n");
     sb.append("    lastRun: ").append(toIndentedString(lastRun)).append("\n");
     sb.append("    nextRun: ").append(toIndentedString(nextRun)).append("\n");
+    sb.append("    owner: ").append(toIndentedString(owner)).append("\n");
     sb.append("    input: ").append(toIndentedString(input)).append("\n");
     sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
     sb.append("    failureThreshold: ").append(toIndentedString(failureThreshold)).append("\n");
     sb.append("    action: ").append(toIndentedString(action)).append("\n");
+    sb.append("    subscriptionAction: ").append(toIndentedString(subscriptionAction)).append("\n");
     sb.append("    cursor: ").append(toIndentedString(cursor)).append("\n");
     sb.append("    notifications: ").append(toIndentedString(notifications)).append("\n");
     sb.append("    policies: ").append(toIndentedString(policies)).append("\n");

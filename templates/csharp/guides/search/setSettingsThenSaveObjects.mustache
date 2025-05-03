@@ -1,0 +1,45 @@
+namespace Algolia;
+
+using System;
+using System.Text.Json;
+using System.Net.Http;
+using System.Collections.Generic;
+
+{{> snippets/import}}
+
+class SetSettingsThenSaveObjects {
+
+  private static readonly List<Dictionary<string, object>> playlists = []; // Your records
+
+  private static string GetAppIdFor(string user) {
+    return ""; // Implement your own logic here
+  }
+
+  private static string GetIndexingApiKeyFor(string user) {
+    return ""; // Implement your own logic here
+  }
+
+  async Task Main(string[] args)
+  {
+
+    foreach (var playlist in playlists) {
+      // Fetch from your own data storage and with your own code
+      // the associated application ID and API key for this user
+      var appId = GetAppIdFor((playlist.GetValueOrDefault("user", "") as string)!);
+      var apiKey = GetIndexingApiKeyFor((playlist.GetValueOrDefault("user", "") as string)!);
+
+      try {
+        var client = new SearchClient(new SearchConfig(appId, apiKey));
+        var settings = new IndexSettings
+        {
+          AttributesForFaceting = ["searchable(playlistName)"]
+        };
+        {{#dynamicSnippet}}setSettings{{/dynamicSnippet}};
+
+        {{#dynamicSnippet}}saveObjectsPlaylists{{/dynamicSnippet}};
+      } catch (Exception e) {
+        Console.WriteLine(e.Message);
+      }
+    }
+  }
+}

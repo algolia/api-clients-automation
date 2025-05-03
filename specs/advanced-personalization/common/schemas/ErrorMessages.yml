@@ -1,0 +1,41 @@
+badRequest:
+  type: string
+  description: Details about the response, such as error messages.
+  enum: [Invalid request body]
+
+badUserID:
+  type: string
+  description: Details about the response, such as error messages.
+  enum: [Invalid userID format]
+
+unauthorized:
+  type: string
+  description: Details about the response, such as error messages.
+  enum: [Unauthorized]
+
+featureNotEnabled:
+  type: string
+  description: Details about the response, such as error messages.
+  enum:
+    - 'Predictive profiles are not allowed for this app. Please contact support to upgrade your plan: https://support.algolia.com/'
+    - 'Realtime Personalization is not allowed for this app. Please contact support to upgrade your plan: https://support.algolia.com/'
+
+genericNotFound:
+  type: string
+  description: Details about the response, such as error messages.
+  enum: [Not Found]
+
+genericUnprocessableEntity:
+  type: string
+  description: Details about the response, such as error messages.
+  enum: [Unprocessable Entity]
+
+invalidUserID:
+  type: string
+  description: Details about the response, such as error messages.
+  enum: [UserID must contain only alphanumeric, equal, plus, slash, hyphen, or underscore characters, and be between 1 and 129 characters long]
+
+internalServerError:
+  type: string
+  description: Details about the response, such as error messages.
+  enum: [Internal Server Error]

@@ -1,0 +1,13 @@
+{{> snippets/import}}
+import com.algolia.client.model.search.*
+
+suspend fun searchWithLogicalOr() {
+    {{> snippets/init}}
+    val query = "the query"
+    val optionalWords = listOf("the", "query");
+    val searchParams = SearchParamsObject(
+        query = query,
+        optionalWords = OptionalWords.of(optionalWords),
+    )
+    client.{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+}

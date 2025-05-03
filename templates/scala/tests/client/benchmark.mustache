@@ -1,0 +1,29 @@
+// {{generationBanner}}
+package algoliasearch.benchmark
+
+import algoliasearch.api.{{client}}
+import algoliasearch.config.*
+import algoliasearch.{EchoInterceptor, assertError}
+import algoliasearch.{{import}}.*
+import algoliasearch.exception.*
+{{#isSearchClient}}
+import algoliasearch.extension.SearchClientExtensions
+{{/isSearchClient}}
+import org.json4s.*
+import org.json4s.native.JsonParser.*
+import org.json4s.native.Serialization
+import org.json4s.native.Serialization.write
+import org.scalatest.funsuite.AnyFunSuite
+
+import java.util.concurrent.TimeUnit
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContextExecutor}
+
+class {{clientPrefix}}Test extends AnyFunSuite {
+  implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
+  implicit val formats: Formats = JsonSupport.format
+
+  {{#blocksBenchmark}}
+  {{> tests/client/tests}}
+  {{/blocksBenchmark}}
+}

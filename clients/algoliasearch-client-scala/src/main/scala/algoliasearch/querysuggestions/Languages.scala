@@ -31,11 +31,13 @@ sealed trait Languages
 object Languages {
 
   case class SeqOfString(value: Seq[String]) extends Languages
+
   case class BooleanValue(value: Boolean) extends Languages
 
   def apply(value: Seq[String]): Languages = {
     Languages.SeqOfString(value)
   }
+
   def apply(value: Boolean): Languages = {
     Languages.BooleanValue(value)
   }
@@ -47,9 +49,9 @@ object LanguagesSerializer extends Serializer[Languages] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[Languages] =>
       json match {
-        case JArray(value) if value.forall(_.isInstanceOf[JArray]) => Languages.SeqOfString(value.map(_.extract))
-        case JBool(value)                                          => Languages.BooleanValue(value)
-        case _ => throw new MappingException("Can't convert " + json + " to Languages")
+        case value: JArray => Languages.apply(Extraction.extract[Seq[String]](value))
+        case JBool(value)  => Languages.BooleanValue(value)
+        case _             => throw new MappingException("Can't convert " + json + " to Languages")
       }
   }
 

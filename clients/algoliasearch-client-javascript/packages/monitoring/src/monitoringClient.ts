@@ -31,7 +31,7 @@ import type {
   GetReachabilityProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '1.20.0';
+export const apiClientVersion = '1.24.0';
 
 function getDefaultHosts(): Host[] {
   return [{ url: 'status.algolia.com', accept: 'readWrite', protocol: 'https' }];
@@ -116,7 +116,7 @@ export function createMonitoringClient({
     },
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      * @param customDelete - The customDelete object.
      * @param customDelete.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customDelete.parameters - Query parameters to apply to the current query.
@@ -145,7 +145,7 @@ export function createMonitoringClient({
     },
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      * @param customGet - The customGet object.
      * @param customGet.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customGet.parameters - Query parameters to apply to the current query.
@@ -171,7 +171,7 @@ export function createMonitoringClient({
     },
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      * @param customPost - The customPost object.
      * @param customPost.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPost.parameters - Query parameters to apply to the current query.
@@ -202,7 +202,7 @@ export function createMonitoringClient({
     },
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      * @param customPut - The customPut object.
      * @param customPut.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPut.parameters - Query parameters to apply to the current query.

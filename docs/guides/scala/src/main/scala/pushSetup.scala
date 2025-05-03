@@ -14,7 +14,7 @@ import org.json4s.jvalue2extractable
 object PushSetup {
   def main(args: Array[String]): Unit = {
     implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-    implicit val formats: org.json4s.Formats = org.json4s.DefaultFormats
+    implicit val formats: org.json4s.Formats = JsonSupport.format
 
     val result = Source.fromFile("records.json").getLines().mkString
     val records = JsonMethods.parse(result).extract[Seq[algoliasearch.ingestion.PushTaskRecords]]

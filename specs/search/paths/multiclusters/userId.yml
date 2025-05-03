@@ -2,6 +2,7 @@ get:
   tags:
     - Clusters
   operationId: getUserId
+  deprecated: true
   x-acl:
     - admin
   summary: Retrieve user ID
@@ -32,6 +33,7 @@ delete:
   tags:
     - Clusters
   operationId: removeUserId
+  deprecated: true
   x-acl:
     - admin
   summary: Delete user ID

@@ -22,15 +22,15 @@ describe('commonApi', () => {
     expect(decodeURIComponent(result.algoliaAgent)).toMatch(
       /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Analytics (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/,
     );
-  }, 15000);
+  }, 25000);
 
   test('the user agent contains the latest version', async () => {
     const client = createClient();
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.20.0\).*/);
-  }, 15000);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.24.0\).*/);
+  }, 25000);
 });
 
 describe('parameters', () => {
@@ -45,7 +45,7 @@ describe('parameters', () => {
     const result = (await client.getAverageClickPosition({ index: 'my-index' })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('analytics.algolia.com');
-  }, 15000);
+  }, 25000);
 
   test('uses the correct region', async () => {
     const client = algoliasearch('my-app-id', 'my-api-key').initAnalytics({
@@ -58,7 +58,7 @@ describe('parameters', () => {
     const result = (await client.customPost({ path: 'test' })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('analytics.de.algolia.com');
-  }, 15000);
+  }, 25000);
 
   test('throws when incorrect region is given', async () => {
     try {
@@ -74,7 +74,7 @@ describe('parameters', () => {
     } catch (e) {
       expect((e as Error).message).toMatch('`region` must be one of the following: de, us');
     }
-  }, 15000);
+  }, 25000);
 
   test('getAverageClickPosition throws without index', async () => {
     const client = createClient();
@@ -86,7 +86,7 @@ describe('parameters', () => {
     } catch (e) {
       expect((e as Error).message).toMatch('Parameter `index` is required when calling `getClickPositions`.');
     }
-  }, 15000);
+  }, 25000);
 });
 
 describe('setClientApiKey', () => {
@@ -118,7 +118,7 @@ describe('setClientApiKey', () => {
 
       expect(result).toEqual({ headerAPIKeyValue: 'updated-api-key' });
     }
-  }, 15000);
+  }, 25000);
 });
 
 describe('init', () => {

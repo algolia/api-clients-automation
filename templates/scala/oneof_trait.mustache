@@ -1,4 +1,3 @@
-import org.json4s._
 {{#vendorExtensions.x-one-of-multi-array}}import {{package}}.{{classname}}._{{/vendorExtensions.x-one-of-multi-array}}
 
 /**
@@ -40,7 +39,15 @@ object {{classname}} {
   {{#composedSchemas.oneOf}}
   {{^isModel}}
   {{^isEnumRef}}
+  {{#isContainer}}{{^isPrimitiveType}}
   case class {{#isMap}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isMap}}{{#isArray}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isArray}}{{^isMap}}{{^isArray}}{{{datatypeWithEnum}}}Value{{/isArray}}{{/isMap}}(value: {{{datatypeWithEnum}}}) extends {{classname}}
+  {{/isPrimitiveType}}{{/isContainer}}
+  {{#isPrimitiveType}}{{^isContainer}}
+  case class {{#isMap}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isMap}}{{#isArray}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isArray}}{{^isMap}}{{^isArray}}{{{datatypeWithEnum}}}Value{{/isArray}}{{/isMap}}(value: {{{datatypeWithEnum}}}) extends {{classname}}
+  {{/isContainer}}{{/isPrimitiveType}}
+  {{#isPrimitiveType}}{{#isContainer}}
+  case class {{#isMap}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isMap}}{{#isArray}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isArray}}{{^isMap}}{{^isArray}}{{{datatypeWithEnum}}}Value{{/isArray}}{{/isMap}}(value: {{{datatypeWithEnum}}}) extends {{classname}}
+  {{/isContainer}}{{/isPrimitiveType}}
   {{/isEnumRef}}
   {{/isModel}}
   {{/composedSchemas.oneOf}}
@@ -73,9 +80,21 @@ object {{classname}} {
   {{#composedSchemas.oneOf}}
   {{^isModel}}
   {{^isEnumRef}}
+  {{#isContainer}}{{^isPrimitiveType}}
   def apply(value: {{{datatypeWithEnum}}}): {{classname}} = {
       {{classname}}.{{#isMap}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isMap}}{{#isArray}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isArray}}{{^isMap}}{{^isArray}}{{{datatypeWithEnum}}}Value{{/isArray}}{{/isMap}}(value)
   }
+  {{/isPrimitiveType}}{{/isContainer}}
+  {{#isPrimitiveType}}{{^isContainer}}
+  def apply(value: {{{datatypeWithEnum}}}): {{classname}} = {
+      {{classname}}.{{#isMap}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isMap}}{{#isArray}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isArray}}{{^isMap}}{{^isArray}}{{{datatypeWithEnum}}}Value{{/isArray}}{{/isMap}}(value)
+  }
+  {{/isContainer}}{{/isPrimitiveType}}
+  {{#isPrimitiveType}}{{#isContainer}}
+  def apply(value: {{{datatypeWithEnum}}}): {{classname}} = {
+      {{classname}}.{{#isMap}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isMap}}{{#isArray}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/isArray}}{{^isMap}}{{^isArray}}{{{datatypeWithEnum}}}Value{{/isArray}}{{/isMap}}(value)
+  }
+  {{/isContainer}}{{/isPrimitiveType}}
   {{/isEnumRef}}
   {{/isModel}}
   {{/composedSchemas.oneOf}}
@@ -99,14 +118,17 @@ object {{classname}}Serializer extends Serializer[{{classname}}] {
         {{/isEnumRef}}
         {{/isModel}}
         {{#isMap}}
-        case value: JObject => {{classname}}.apply(Extraction.extract[{{{datatypeWithEnum}}}](value))
+        {{#isContainer}}
+        case value: JObject => {{{classname}}}.apply(Extraction.extract[{{{datatypeWithEnum}}}](value))
+        {{/isContainer}}
         {{/isMap}}
         {{#isEnumRef}}
         case value: JString => Extraction.extract[{{{datatypeWithEnum}}}](value)
         {{/isEnumRef}}
         {{#isArray}}
-        case JArray(value) if value.forall(_.isInstanceOf[{{#isModel}}JObject{{/isModel}}{{#isBoolean}}JBool{{/isBoolean}}{{#isString}}JString{{/isString}}{{#isNumber}}JNumber{{/isNumber}}{{#isArray}}JArray{{/isArray}}]) => {{{classname}}}.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}(value.map(_.extract))
+        case value: JArray => {{{classname}}}.apply(Extraction.extract[{{{datatypeWithEnum}}}](value))
         {{/isArray}}
+        {{^isEnumRef}}
         {{#isInteger}}
         case JInt(value) => {{{classname}}}.{{{datatypeWithEnum}}}Value(value.toInt)
         {{/isInteger}}
@@ -122,6 +144,7 @@ object {{classname}}Serializer extends Serializer[{{classname}}] {
         {{#isString}}
         case JString(value) => {{{classname}}}.{{{datatypeWithEnum}}}Value(value)
         {{/isString}}
+        {{/isEnumRef}}
         {{/composedSchemas.oneOf}}
         case _ => throw new MappingException("Can't convert " + json + " to {{classname}}")
       }
@@ -133,6 +156,7 @@ object {{classname}}Serializer extends Serializer[{{classname}}] {
       {{#isArray}}
       case {{classname}}.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}(value) => JArray(value.map(Extraction.decompose).toList)
       {{/isArray}}
+      {{^isEnumRef}}
       {{#isInteger}}
       case {{classname}}.{{{datatypeWithEnum}}}Value(value) => JInt(value)
       {{/isInteger}}
@@ -148,9 +172,20 @@ object {{classname}}Serializer extends Serializer[{{classname}}] {
       {{#isString}}
       case {{classname}}.{{{datatypeWithEnum}}}Value(value) => JString(value)
       {{/isString}}
+      {{/isEnumRef}}
       {{#isModel}}
       case value: {{{datatypeWithEnum}}} => Extraction.decompose(value)(format - this)
       {{/isModel}}
+      {{#isMap}}
+      {{^isContainer}}
+      case value: {{{datatypeWithEnum}}} => Extraction.decompose(value)(format - this)
+      {{/isContainer}}
+      {{/isMap}}
+      {{#isMap}}
+      {{#isContainer}}
+      case {{classname}}.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}(value) => JObject(value.map(kv => JField(kv._1, Extraction.decompose(kv._2)(format))).toList)
+      {{/isContainer}}
+      {{/isMap}}
       {{#isEnumRef}}
       case value: {{{datatypeWithEnum}}} => JString(value.toString)
       {{/isEnumRef}}

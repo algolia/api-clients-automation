@@ -118,7 +118,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -317,13 +317,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customGet[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customGet[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -347,7 +347,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -546,13 +546,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customPost[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPost[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -576,7 +576,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -775,13 +775,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customPut[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPut[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -799,7 +799,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -1000,13 +1000,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customDelete[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customDelete[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1334,26 +1334,26 @@ paths:
             )
 
             // Call the API
-            val response = client.addABTests(
-              addABTestsRequest = AddABTestsRequest(
-                endAt = "2022-12-31T00:00:00.000Z",
-                name = "myABTest",
-                variants = Seq(
-                  AbTestsVariant(
-                    index = "AB_TEST_1",
-                    trafficPercentage = 30
-                  ),
-                  AbTestsVariant(
-                    index = "AB_TEST_2",
-                    trafficPercentage = 50
+            val response = Await.result(
+              client.addABTests(
+                addABTestsRequest = AddABTestsRequest(
+                  endAt = "2022-12-31T00:00:00.000Z",
+                  name = "myABTest",
+                  variants = Seq(
+                    AbTestsVariant(
+                      index = "AB_TEST_1",
+                      trafficPercentage = 30
+                    ),
+                    AbTestsVariant(
+                      index = "AB_TEST_2",
+                      trafficPercentage = 50
+                    )
                   )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1640,12 +1640,12 @@ paths:
             )
 
             // Call the API
-            val response = client.listABTests(
+            val response = Await.result(
+              client.listABTests(
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1663,13 +1663,11 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request POST \
-              --url https://analytics.us.algolia.com/2/abtests \
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/abtests?offset=0&limit=10&indexPrefix=dev_&indexSuffix=_development' \
               --header 'accept: application/json' \
-              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"name":"Custom ranking sales rank test","variants":[{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"},{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"}],"endAt":"2023-06-17T00:00:00Z"}'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/abtests/{id}:
     get:
       tags:
@@ -1883,13 +1881,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getABTest(
-              id = 42
+            val response = Await.result(
+              client.getABTest(
+                id = 42
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1904,6 +1902,14 @@ paths:
             let response = try await client.getABTest(id: 42)
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://analytics.us.algolia.com/2/abtests/224 \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     delete:
       tags:
         - abtest
@@ -1936,6 +1942,216 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new AbtestingClient(
+              new AbtestingConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            var response = await client.DeleteABTestAsync(42);
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtesting.ALGOLIA_APPLICATION_REGION
+
+            client, err := abtesting.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", abtesting.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.DeleteABTest(client.NewApiDeleteABTestRequest(
+              42))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            AbtestingClient client = new
+            AbtestingClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.deleteABTest(42);
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtesting({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.deleteABTest({ id: 42 });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.deleteABTest(
+              id = 42,
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->deleteABTest(
+                42,
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use AbtestingClient instead,
+            which exposes the exact same methods.
+
+            client = AbtestingClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.delete_ab_test(
+                id=42,
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.delete_ab_test(42)
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = AbtestingClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.deleteABTest(
+                id = 42
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.deleteABTest(id: 42)
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://analytics.us.algolia.com/2/abtests/224 \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/abtests/{id}/stop:
     post:
       tags:
@@ -2152,13 +2368,13 @@ paths:
             )
 
             // Call the API
-            val response = client.stopABTest(
-              id = 42
+            val response = Await.result(
+              client.stopABTest(
+                id = 42
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2173,6 +2389,14 @@ paths:
             let response = try await client.stopABTest(id: 42)
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://analytics.us.algolia.com/2/abtests/224/stop \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/abtests/schedule:
     post:
       tags:
@@ -2498,27 +2722,27 @@ paths:
             )
 
             // Call the API
-            val response = client.scheduleABTest(
-              scheduleABTestsRequest = ScheduleABTestsRequest(
-                endAt = "2022-12-31T00:00:00.000Z",
-                scheduledAt = "2022-11-31T00:00:00.000Z",
-                name = "myABTest",
-                variants = Seq(
-                  AbTestsVariant(
-                    index = "AB_TEST_1",
-                    trafficPercentage = 30
-                  ),
-                  AbTestsVariant(
-                    index = "AB_TEST_2",
-                    trafficPercentage = 50
+            val response = Await.result(
+              client.scheduleABTest(
+                scheduleABTestsRequest = ScheduleABTestsRequest(
+                  endAt = "2022-12-31T00:00:00.000Z",
+                  scheduledAt = "2022-11-31T00:00:00.000Z",
+                  name = "myABTest",
+                  variants = Seq(
+                    AbTestsVariant(
+                      index = "AB_TEST_1",
+                      trafficPercentage = 30
+                    ),
+                    AbTestsVariant(
+                      index = "AB_TEST_2",
+                      trafficPercentage = 50
+                    )
                   )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2915,35 +3139,35 @@ paths:
             )
 
             // Call the API
-            val response = client.estimateABTest(
-              estimateABTestRequest = EstimateABTestRequest(
-                configuration = EstimateConfiguration(
-                  emptySearch = Some(
-                    EmptySearch(
-                      exclude = Some(true)
+            val response = Await.result(
+              client.estimateABTest(
+                estimateABTestRequest = EstimateABTestRequest(
+                  configuration = EstimateConfiguration(
+                    emptySearch = Some(
+                      EmptySearch(
+                        exclude = Some(true)
+                      )
+                    ),
+                    minimumDetectableEffect = MinimumDetectableEffect(
+                      size = 0.03,
+                      metric = EffectMetric.withName("conversionRate")
                     )
                   ),
-                  minimumDetectableEffect = MinimumDetectableEffect(
-                    size = 0.03,
-                    metric = EffectMetric.withName("conversionRate")
-                  )
-                ),
-                variants = Seq(
-                  AbTestsVariant(
-                    index = "AB_TEST_1",
-                    trafficPercentage = 50
-                  ),
-                  AbTestsVariant(
-                    index = "AB_TEST_2",
-                    trafficPercentage = 50
+                  variants = Seq(
+                    AbTestsVariant(
+                      index = "AB_TEST_1",
+                      trafficPercentage = 50
+                    ),
+                    AbTestsVariant(
+                      index = "AB_TEST_2",
+                      trafficPercentage = 50
+                    )
                   )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >

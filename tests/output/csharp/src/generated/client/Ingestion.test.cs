@@ -81,8 +81,40 @@ public class IngestionClientTests
     Assert.Equal(25000, result.ResponseTimeout.TotalMilliseconds);
   }
 
-  [Fact(DisplayName = "endpoint level timeout")]
+  [Fact(DisplayName = "can leave call opened for a long time")]
   public async Task ApiTest3()
+  {
+    IngestionConfig _config = new IngestionConfig("test-app-id", "test-api-key", "us")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6676,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new IngestionClient(_config);
+
+    var res = await client.CustomGetAsync("1/long-wait");
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"message\":\"OK\"}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "endpoint level timeout")]
+  public async Task ApiTest4()
   {
     var client = new IngestionClient(new IngestionConfig("appId", "apiKey", "us"), _echo);
     await client.ValidateSourceBeforeUpdateAsync(
@@ -96,7 +128,7 @@ public class IngestionClientTests
   }
 
   [Fact(DisplayName = "can override endpoint level timeout")]
-  public async Task ApiTest4()
+  public async Task ApiTest5()
   {
     var client = new IngestionClient(new IngestionConfig("appId", "apiKey", "us"), _echo);
     await client.ValidateSourceBeforeUpdateAsync(
@@ -131,7 +163,7 @@ public class IngestionClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.13.0\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.16.5\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }

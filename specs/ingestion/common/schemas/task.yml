@@ -14,6 +14,8 @@ Task:
       $ref: '#/LastRun'
     nextRun:
       $ref: '#/NextRun'
+    owner:
+      $ref: './common.yml#/owner'
     input:
       $ref: '#/TaskInput'
     enabled:
@@ -23,6 +25,8 @@ Task:
     failureThreshold:
       $ref: '#/failureThreshold'
     action:
+      $ref: '#/ActionType'
+    subscriptionAction:
       $ref: '#/ActionType'
     cursor:
       $ref: './common.yml#/cursor'
@@ -40,6 +44,7 @@ Task:
     - destinationID
     - enabled
     - createdAt
+    - updatedAt
 
 TaskV1:
   type: object
@@ -82,6 +87,7 @@ TaskV1:
     - trigger
     - enabled
     - createdAt
+    - updatedAt
 
 Trigger:
   description: Trigger that runs the task.
@@ -101,6 +107,8 @@ TaskCreate:
     destinationID:
       $ref: './common.yml#/destinationID'
     action:
+      $ref: '#/ActionType'
+    subscriptionAction:
       $ref: '#/ActionType'
     cron:
       $ref: '#/Cron'
@@ -185,6 +193,8 @@ TaskUpdate:
     enabled:
       type: boolean
       description: Whether the task is enabled.
+    subscriptionAction:
+      $ref: '#/ActionType'
     failureThreshold:
       $ref: '#/failureThreshold'
     notifications:

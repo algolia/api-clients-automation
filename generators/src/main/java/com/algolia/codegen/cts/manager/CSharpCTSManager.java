@@ -34,6 +34,7 @@ public class CSharpCTSManager implements CTSManager {
     supportingFiles.add(new SupportingFile("snippets/.gitignore.mustache", output + "/csharp/.gitignore"));
     supportingFiles.add(new SupportingFile("snippets/Algolia.mustache", output + "/csharp/Algolia.sln"));
     supportingFiles.add(new SupportingFile("snippets/dotnet-tools.mustache", output + "/csharp/.config/dotnet-tools.json"));
+    supportingFiles.add(new SupportingFile("snippets/csharpierignore.mustache", output + "/csharp/.csharpierignore"));
 
     if (output.equals("docs/snippets")) {
       supportingFiles.add(new SupportingFile("snippets/Program.mustache", output + "/csharp/src/Program.cs"));

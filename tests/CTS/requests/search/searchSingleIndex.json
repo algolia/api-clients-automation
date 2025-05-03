@@ -159,6 +159,40 @@
     }
   },
   {
+    "testName": "filters for stores",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "ben",
+        "filters": "categories:politics AND store:Gibert Joseph Saint-Michel"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "ben",
+        "filters": "categories:politics AND store:Gibert Joseph Saint-Michel"
+      }
+    }
+  },
+  {
+    "testName": "filters boolean",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "filters": "is_available:true"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "filters": "is_available:true"
+      }
+    }
+  },
+  {
     "testName": "distinct",
     "parameters": {
       "indexName": "indexName",
@@ -263,14 +297,16 @@
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
-        "filters": "NOT _tags:non-fiction"
+        "query": "harry",
+        "filters": "_tags:non-fiction"
       }
     },
     "request": {
       "path": "/1/indexes/indexName/query",
       "method": "POST",
       "body": {
-        "filters": "NOT _tags:non-fiction"
+        "query": "harry",
+        "filters": "_tags:non-fiction"
       }
     }
   },
@@ -297,6 +333,110 @@
           [
             "author:Stephen King",
             "genre:Horror"
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "testName": "facetFiltersBook",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "facetFilters": [
+          "category:Book"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "facetFilters": [
+          "category:Book"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "facetFiltersAND",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "facetFilters": [
+          "category:Book",
+          "author:John Doe"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "facetFilters": [
+          "category:Book",
+          "author:John Doe"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "facetFiltersOR",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "facetFilters": [
+          [
+            "category:Book",
+            "author:John Doe"
+          ]
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "facetFilters": [
+          [
+            "category:Book",
+            "author:John Doe"
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "testName": "facetFiltersCombined",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "facetFilters": [
+          "author:John Doe",
+          [
+            "category:Book",
+            "category:Movie"
+          ]
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "facetFilters": [
+          "author:John Doe",
+          [
+            "category:Book",
+            "category:Movie"
           ]
         ]
       }
@@ -345,14 +485,20 @@
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
-        "facets":["author","genre"]
+        "facets": [
+          "author",
+          "genre"
+        ]
       }
     },
     "request": {
       "path": "/1/indexes/indexName/query",
       "method": "POST",
       "body": {
-        "facets":["author","genre"]
+        "facets": [
+          "author",
+          "genre"
+        ]
       }
     }
   },
@@ -361,14 +507,18 @@
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
-        "facets":["*"]
+        "facets": [
+          "*"
+        ]
       }
     },
     "request": {
       "path": "/1/indexes/indexName/query",
       "method": "POST",
       "body": {
-        "facets":["*"]
+        "facets": [
+          "*"
+        ]
       }
     }
   },
@@ -377,14 +527,14 @@
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
-        "maxValuesPerFacet":1000
+        "maxValuesPerFacet": 1000
       }
     },
     "request": {
       "path": "/1/indexes/indexName/query",
       "method": "POST",
       "body": {
-        "maxValuesPerFacet":1000
+        "maxValuesPerFacet": 1000
       }
     }
   },
@@ -731,6 +881,24 @@
     }
   },
   {
+    "testName": "userToken1234",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "userToken": "user-1234"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "userToken": "user-1234"
+      }
+    }
+  },
+  {
     "testName": "analyticsTag",
     "parameters": {
       "indexName": "indexName",
@@ -793,6 +961,1876 @@
         "analyticsTags": [
           "mens-clothing"
         ]
+      }
+    }
+  },
+  {
+    "testName": "attributesToHighlightOverride",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "attributesToHighlight": [
+          "title",
+          "content"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "attributesToHighlight": [
+          "title",
+          "content"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "disableTypoToleranceOnAttributes",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "disableTypoToleranceOnAttributes": [
+          "serial_number"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "disableTypoToleranceOnAttributes": [
+          "serial_number"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "search_a_query",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "shirt"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "shirt"
+      }
+    }
+  },
+  {
+    "testName": "search_everything",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": ""
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": ""
+      }
+    }
+  },
+  {
+    "testName": "api_filtering_range_example",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "books",
+        "filters": "price:10 TO 20"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "books",
+        "filters": "price:10 TO 20"
+      }
+    }
+  },
+  {
+    "testName": "search_a_query",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "",
+        "similarQuery": "Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen",
+        "filters": "year:1991 TO 2001"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "",
+        "similarQuery": "Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen",
+        "filters": "year:1991 TO 2001"
+      }
+    }
+  },
+  {
+    "testName": "override_retrievable_attributes",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "attributesToRetrieve": [
+          "title",
+          "content"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "attributesToRetrieve": [
+          "title",
+          "content"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "restrict_searchable_attributes",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "restrictSearchableAttributes": [
+          "title",
+          "author"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "restrictSearchableAttributes": [
+          "title",
+          "author"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "override_default_relevancy",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "relevancyStrictness": 70
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "relevancyStrictness": 70
+      }
+    }
+  },
+  {
+    "testName": "apply_filters",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "filters": "(category:Book OR category:Ebook) AND _tags:published"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "filters": "(category:Book OR category:Ebook) AND _tags:published"
+      }
+    }
+  },
+  {
+    "testName": "apply_all_filters",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "filters": "available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\"John Doe\""
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "filters": "available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\"John Doe\""
+      }
+    }
+  },
+  {
+    "testName": "escape_spaces",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "filters": "category:\"Books and Comics\""
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "filters": "category:\"Books and Comics\""
+      }
+    }
+  },
+  {
+    "testName": "escape_keywords",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "filters": "keyword:\"OR\""
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "filters": "keyword:\"OR\""
+      }
+    }
+  },
+  {
+    "testName": "escape_single_quotes",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "filters": "content:\"It's a wonderful day\""
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "filters": "content:\"It's a wonderful day\""
+      }
+    }
+  },
+  {
+    "testName": "escape_double_quotes",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "filters": "content:\"She said \"Hello World\""
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "filters": "content:\"She said \"Hello World\""
+      }
+    }
+  },
+  {
+    "testName": "apply_filters",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "optionalFilters": [
+          "category:Book",
+          "author:John Doe"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "optionalFilters": [
+          "category:Book",
+          "author:John Doe"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "apply_negative_filters",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "optionalFilters": [
+          "category:Book",
+          "author:-John Doe"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "optionalFilters": [
+          "category:Book",
+          "author:-John Doe"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "apply_negative_filters_restaurants",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "optionalFilters": [
+          "restaurant:-Bert's Inn"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "optionalFilters": [
+          "restaurant:-Bert's Inn"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "apply_numeric_filters",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "numericFilters": [
+          "price < 1000",
+          [
+            "inStock = 1",
+            "deliveryDate < 1441755506"
+          ]
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "numericFilters": [
+          "price < 1000",
+          [
+            "inStock = 1",
+            "deliveryDate < 1441755506"
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "testName": "apply_tag_filters",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "tagFilters": [
+          "SciFi",
+          [
+            "Book",
+            "Movie"
+          ]
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "tagFilters": [
+          "SciFi",
+          [
+            "Book",
+            "Movie"
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "testName": "apply_filters",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "sumOrFiltersScores": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "sumOrFiltersScores": true
+      }
+    }
+  },
+  {
+    "testName": "facets_all",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "facets": [
+          "*"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "facets": [
+          "*"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "retrieve_only_some_facets",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "facets": [
+          "category",
+          "author"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "facets": [
+          "category",
+          "author"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "override_default_max_values_per_facet",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "maxValuesPerFacet": 20
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "maxValuesPerFacet": 20
+      }
+    }
+  },
+  {
+    "testName": "enable_faceting_after_distinct",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "facetingAfterDistinct": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "facetingAfterDistinct": true
+      }
+    }
+  },
+  {
+    "testName": "sort_facet_values_alphabetically",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "sortFacetValuesBy": "count"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "sortFacetValuesBy": "count"
+      }
+    }
+  },
+  {
+    "testName": "override_attributes_to_snippet",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "attributesToSnippet": [
+          "title",
+          "content:80"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "attributesToSnippet": [
+          "title",
+          "content:80"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "override_default_highlight_pre_tag",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "highlightPreTag": "<strong>"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "highlightPreTag": "<strong>"
+      }
+    }
+  },
+  {
+    "testName": "override_default_highlight_post_tag",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "highlightPostTag": "</strong>"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "highlightPostTag": "</strong>"
+      }
+    }
+  },
+  {
+    "testName": "override_default_snippet_ellipsis_text",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "snippetEllipsisText": ""
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "snippetEllipsisText": ""
+      }
+    }
+  },
+  {
+    "testName": "enable_restrict_highlight_and_snippet_arrays",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "restrictHighlightAndSnippetArrays": false
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "restrictHighlightAndSnippetArrays": false
+      }
+    }
+  },
+  {
+    "testName": "access_page",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "page": 0
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "page": 0
+      }
+    }
+  },
+  {
+    "testName": "override_default_hits_per_page",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "hitsPerPage": 10
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "hitsPerPage": 10
+      }
+    }
+  },
+  {
+    "testName": "get_nth_hit",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "offset": 4
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "offset": 4
+      }
+    }
+  },
+  {
+    "testName": "get_n_results",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "length": 4
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "length": 4
+      }
+    }
+  },
+  {
+    "testName": "override_default_min_word_size_for_one_typo",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "minWordSizefor1Typo": 2
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "minWordSizefor1Typo": 2
+      }
+    }
+  },
+  {
+    "testName": "override_default_min_word_size_for_two_typos",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "minWordSizefor2Typos": 2
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "minWordSizefor2Typos": 2
+      }
+    }
+  },
+  {
+    "testName": "override_default_typo_tolerance_mode",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "typoTolerance": false
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "typoTolerance": false
+      }
+    }
+  },
+  {
+    "testName": "disable_typos_on_numeric_tokens_at_search_time",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "allowTyposOnNumericTokens": false
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "allowTyposOnNumericTokens": false
+      }
+    }
+  },
+  {
+    "testName": "search_around_a_position",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "aroundLatLng": "40.71, -74.01"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "aroundLatLng": "40.71, -74.01"
+      }
+    }
+  },
+  {
+    "testName": "search_around_server_ip",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "aroundLatLngViaIP": true
+      }
+    },
+    "requestOptions": {
+      "headers": {
+        "x-forwarded-for": "94.228.178.246 // should be replaced with the actual IP you would like to search around"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "aroundLatLngViaIP": true
+      },
+      "headers": {
+        "x-forwarded-for": "94.228.178.246 // should be replaced with the actual IP you would like to search around"
+      }
+    }
+  },
+  {
+    "testName": "set_around_radius",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "aroundRadius": 1000
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "aroundRadius": 1000
+      }
+    }
+  },
+  {
+    "testName": "disable_automatic_radius",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "aroundRadius": "all"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "aroundRadius": "all"
+      }
+    }
+  },
+  {
+    "testName": "set_geo_search_precision",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "aroundPrecision": 100
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "aroundPrecision": 100
+      }
+    }
+  },
+  {
+    "testName": "set_geo_search_precision_non_linear",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "aroundPrecision": [
+          {
+            "from": 0,
+            "value": 25
+          },
+          {
+            "from": 2000,
+            "value": 1000
+          }
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "aroundPrecision": [
+          {
+            "from": 0,
+            "value": 25
+          },
+          {
+            "from": 2000,
+            "value": 1000
+          }
+        ]
+      }
+    }
+  },
+  {
+    "testName": "set_minimum_geo_search_radius",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "minimumAroundRadius": 1000
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "minimumAroundRadius": 1000
+      }
+    }
+  },
+  {
+    "testName": "search_inside_rectangular_area",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "insideBoundingBox": [
+          [
+            46.650828100116044,
+            7.123046875,
+            45.17210966999772,
+            1.009765625
+          ]
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "insideBoundingBox": [
+          [
+            46.650828100116044,
+            7.123046875,
+            45.17210966999772,
+            1.009765625
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "testName": "search_inside_multiple_rectangular_areas",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "insideBoundingBox": [
+          [
+            46.650828100116044,
+            7.123046875,
+            45.17210966999772,
+            1.009765625
+          ],
+          [
+            49.62625916704081,
+            4.6181640625,
+            47.715070300900194,
+            0.482421875
+          ]
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "insideBoundingBox": [
+          [
+            46.650828100116044,
+            7.123046875,
+            45.17210966999772,
+            1.009765625
+          ],
+          [
+            49.62625916704081,
+            4.6181640625,
+            47.715070300900194,
+            0.482421875
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "testName": "search_inside_polygon_area",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "insidePolygon": [
+          [
+            46.650828100116044,
+            7.123046875,
+            45.17210966999772,
+            1.009765625,
+            49.62625916704081,
+            4.6181640625
+          ]
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "insidePolygon": [
+          [
+            46.650828100116044,
+            7.123046875,
+            45.17210966999772,
+            1.009765625,
+            49.62625916704081,
+            4.6181640625
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "testName": "search_inside_multiple_polygon_areas",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "insidePolygon": [
+          [
+            46.650828100116044,
+            7.123046875,
+            45.17210966999772,
+            1.009765625,
+            49.62625916704081,
+            4.6181640625
+          ],
+          [
+            49.62625916704081,
+            4.6181640625,
+            47.715070300900194,
+            0.482421875,
+            45.17210966999772,
+            1.009765625,
+            50.62626704081,
+            4.6181640625
+          ]
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "insidePolygon": [
+          [
+            46.650828100116044,
+            7.123046875,
+            45.17210966999772,
+            1.009765625,
+            49.62625916704081,
+            4.6181640625
+          ],
+          [
+            49.62625916704081,
+            4.6181640625,
+            47.715070300900194,
+            0.482421875,
+            45.17210966999772,
+            1.009765625,
+            50.62626704081,
+            4.6181640625
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "testName": "set_querylanguages_override",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "ignorePlurals": [
+          "ca",
+          "es"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "ignorePlurals": [
+          "ca",
+          "es"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "set_querylanguages_override",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "removeStopWords": [
+          "ca",
+          "es"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "removeStopWords": [
+          "ca",
+          "es"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "set_querylanguages_override",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "removeStopWords": [
+          "ca",
+          "es"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "removeStopWords": [
+          "ca",
+          "es"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "set_querylanguages_with_japanese_query",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "queryLanguages": [
+          "ja",
+          "en"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "queryLanguages": [
+          "ja",
+          "en"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "set_natural_languages",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "",
+        "naturalLanguages": [
+          "fr"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "",
+        "naturalLanguages": [
+          "fr"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "override_natural_languages_with_query",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "",
+        "naturalLanguages": [
+          "fr"
+        ],
+        "removeWordsIfNoResults": "firstWords"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "",
+        "naturalLanguages": [
+          "fr"
+        ],
+        "removeWordsIfNoResults": "firstWords"
+      }
+    }
+  },
+  {
+    "testName": "enable_decompound_query_search_time",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "decompoundQuery": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "decompoundQuery": true
+      }
+    }
+  },
+  {
+    "testName": "enable_rules_search_time",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "enableRules": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "enableRules": true
+      }
+    }
+  },
+  {
+    "testName": "set_rule_contexts",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "ruleContexts": [
+          "front_end",
+          "website2"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "ruleContexts": [
+          "front_end",
+          "website2"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "enable_personalization",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "enablePersonalization": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "enablePersonalization": true
+      }
+    }
+  },
+  {
+    "testName": "enable_personalization_with_user_token",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "enablePersonalization": true,
+        "userToken": "123456"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "enablePersonalization": true,
+        "userToken": "123456"
+      }
+    }
+  },
+  {
+    "testName": "personalization_impact",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "personalizationImpact": 20
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "personalizationImpact": 20
+      }
+    }
+  },
+  {
+    "testName": "set_user_token",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "userToken": "123456"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "userToken": "123456"
+      }
+    }
+  },
+  {
+    "testName": "set_user_token_with_personalization",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "enablePersonalization": true,
+        "userToken": "123456"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "enablePersonalization": true,
+        "userToken": "123456"
+      }
+    }
+  },
+  {
+    "testName": "override_default_query_type",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "queryType": "prefixAll"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "queryType": "prefixAll"
+      }
+    }
+  },
+  {
+    "testName": "override_default_remove_words_if_no_results",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "removeWordsIfNoResults": "lastWords"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "removeWordsIfNoResults": "lastWords"
+      }
+    }
+  },
+  {
+    "testName": "enable_advanced_syntax_search_time",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "advancedSyntax": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "advancedSyntax": true
+      }
+    }
+  },
+  {
+    "testName": "overide_default_optional_words",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "optionalWords": [
+          "toyota",
+          "2020 2021"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "optionalWords": [
+          "toyota",
+          "2020 2021"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "disabling_exact_for_some_attributes_search_time",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "disableExactOnAttributes": [
+          "description"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "disableExactOnAttributes": [
+          "description"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "override_default_exact_single_word_query",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "exactOnSingleWordQuery": "none"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "exactOnSingleWordQuery": "none"
+      }
+    }
+  },
+  {
+    "testName": "override_default_aternative_as_exact",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "alternativesAsExact": [
+          "multiWordsSynonym"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "alternativesAsExact": [
+          "multiWordsSynonym"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "enable_advanced_syntax_exact_phrase",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "advancedSyntax": true,
+        "advancedSyntaxFeatures": [
+          "exactPhrase"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "advancedSyntax": true,
+        "advancedSyntaxFeatures": [
+          "exactPhrase"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "enable_advanced_syntax_exclude_words",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "advancedSyntax": true,
+        "advancedSyntaxFeatures": [
+          "excludeWords"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "advancedSyntax": true,
+        "advancedSyntaxFeatures": [
+          "excludeWords"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "override_distinct",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "distinct": 0
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "distinct": 0
+      }
+    }
+  },
+  {
+    "testName": "get_ranking_info",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "getRankingInfo": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "getRankingInfo": true
+      }
+    }
+  },
+  {
+    "testName": "disable_click_analytics",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "clickAnalytics": false
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "clickAnalytics": false
+      }
+    }
+  },
+  {
+    "testName": "enable_click_analytics",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "clickAnalytics": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "clickAnalytics": true
+      }
+    }
+  },
+  {
+    "testName": "disable_analytics",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "analytics": false
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "analytics": false
+      }
+    }
+  },
+  {
+    "testName": "add_analytics_tags",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "analyticsTags": [
+          "front_end",
+          "website2"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "analyticsTags": [
+          "front_end",
+          "website2"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "disable_synonyms",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "synonyms": false
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "synonyms": false
+      }
+    }
+  },
+  {
+    "testName": "override_replace_synonyms_in_highlights",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "replaceSynonymsInHighlight": true
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "replaceSynonymsInHighlight": true
+      }
+    }
+  },
+  {
+    "testName": "override_min_proximity",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "minProximity": 2
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "minProximity": 2
+      }
+    }
+  },
+  {
+    "testName": "override_default_field",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "responseFields": [
+          "hits",
+          "facets"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "responseFields": [
+          "hits",
+          "facets"
+        ]
+      }
+    }
+  },
+  {
+    "testName": "override_percentile_computation",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "percentileComputation": false
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "percentileComputation": false
+      }
+    }
+  },
+  {
+    "testName": "set_ab_test",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "enableABTest": false
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "enableABTest": false
+      }
+    }
+  },
+  {
+    "testName": "set_enable_re_ranking",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "enableReRanking": false
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "enableReRanking": false
+      }
+    }
+  },
+  {
+    "testName": "with algolia user id",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query"
+      }
+    },
+    "requestOptions": {
+      "headers": {
+        "X-Algolia-User-ID": "user1234"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query"
+      }
+    }
+  },
+  {
+    "testName": "mcm with algolia user id",
+    "parameters": {
+      "indexName": "playlists",
+      "searchParams": {
+        "query": "peace"
+      }
+    },
+    "requestOptions": {
+      "headers": {
+        "X-Algolia-User-ID": "user42"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/playlists/query",
+      "method": "POST",
+      "body": {
+        "query": "peace"
       }
     }
   }

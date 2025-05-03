@@ -1,0 +1,33 @@
+package com.algolia;
+
+import java.util.List;
+
+{{> snippets/import}}
+
+public class useConditionlessRule {
+
+public static void main(String[] args) throws Exception {
+
+    try ({{> snippets/init}}) {
+
+        String objectID = "a-rule-id";
+
+        Rule rule = new Rule()
+          .setObjectID(objectID)
+          .setConsequence(new Consequence(/* Set relevant consequence */));
+
+        // Set validity (optional)
+        rule.setValidity(
+          List.of(
+            new TimeRange()
+              .setFrom(1688774400L)
+              .setUntil(1738972800L)
+          )
+        );
+
+        {{#dynamicSnippet}}saveRule{{/dynamicSnippet}};
+    } catch (Exception e) {
+      System.out.println("An error occurred: " + e.getMessage());
+    }
+  }
+}

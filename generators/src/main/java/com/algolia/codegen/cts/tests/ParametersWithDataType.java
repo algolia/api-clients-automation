@@ -144,12 +144,20 @@ public class ParametersWithDataType {
       isCodegenModel = spec instanceof CodegenModel;
     }
 
+    boolean hasDefaultValue = false;
+    if (spec instanceof CodegenParameter parameter) {
+      hasDefaultValue = parameter.defaultValue != null && !parameter.defaultValue.equals("null");
+    } else if (spec instanceof CodegenProperty property) {
+      hasDefaultValue = property.defaultValue != null && !property.defaultValue.equals("null");
+    }
+
     testOutput.put("key", paramName);
     testOutput.put("useAnonymousKey", !paramName.matches("(.*)_[0-9]+$") && depth != 0);
     testOutput.put("parent", parent);
     testOutput.put("isRoot", "".equals(parent));
     testOutput.put("objectName", getObjectNameForLanguage(baseType));
     testOutput.put("isParentFreeFormObject", isParentFreeFormObject);
+    testOutput.put("hasDefaultValue", hasDefaultValue);
 
     if (isRequired != null) {
       testOutput.put("required", isRequired);
@@ -161,6 +169,7 @@ public class ParametersWithDataType {
     } else if (param instanceof String && ((String) param).startsWith("$var: ")) {
       // bypass for verbatim variables used in the guides, we don't need to do any validation
       testOutput.put("isVerbatim", true);
+      testOutput.put("isString", false);
       testOutput.put("value", ((String) param).substring(6));
     } else if (spec.getIsArray()) {
       handleArray(paramName, param, testOutput, spec, depth);
@@ -180,7 +189,12 @@ public class ParametersWithDataType {
     }
 
     // for snippets, we want pretty index names, unless they are already pretty
-    if (prettyIndexName && paramName.equals("indexName") && !((String) testOutput.get("value")).startsWith("<")) {
+    if (
+      prettyIndexName &&
+      paramName.equals("indexName") &&
+      !((String) testOutput.get("value")).startsWith("<") &&
+      !((Boolean) testOutput.getOrDefault("isVerbatim", false))
+    ) {
       testOutput.put("value", "<YOUR_INDEX_NAME>");
     }
 
@@ -207,6 +221,7 @@ public class ParametersWithDataType {
     } else if (param instanceof String && ((String) param).startsWith("$var: ")) {
       // bypass for verbatim variables used in the guides, we don't need to do any validation
       testOutput.put("isVerbatim", true);
+      testOutput.put("isString", false);
       testOutput.put("value", ((String) param).substring(6));
     } else if (param instanceof List) {
       handleArray(paramName, param, testOutput, null, depth);
@@ -542,6 +557,8 @@ public class ParametersWithDataType {
             return "Array";
           case "Object":
             return "map[string]any";
+          case "range":
+            return "ModelRange"; // range is a reserved keyword
         }
         break;
       case "swift":

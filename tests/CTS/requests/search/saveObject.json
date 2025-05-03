@@ -3,16 +3,20 @@
     "parameters": {
       "indexName": "<YOUR_INDEX_NAME>",
       "body": {
-        "objectID": "id",
-        "test": "val"
+          "name": "Black T-shirt",
+          "color": "#000000||black",
+          "availableIn": "https://source.unsplash.com/100x100/?paris||Paris",
+          "objectID": "myID"
       }
     },
     "request": {
       "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E",
       "method": "POST",
       "body": {
-        "objectID": "id",
-        "test": "val"
+          "name": "Black T-shirt",
+          "color": "#000000||black",
+          "availableIn": "https://source.unsplash.com/100x100/?paris||Paris",
+          "objectID": "myID"
       }
     }
   }

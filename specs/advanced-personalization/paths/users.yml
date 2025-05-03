@@ -34,9 +34,9 @@ get:
               nextPageToken:
                 type: string
             required: [users]
-    '400':
-      $ref: '../common/responses/BadRequest.yml'
     '401':
       $ref: '../common/responses/Unauthorized.yml'
+    '422':
+      $ref: '../common/responses/GenericUnprocessableEntity.yml'
     '500':
       $ref: '../common/responses/InternalServerError.yml'

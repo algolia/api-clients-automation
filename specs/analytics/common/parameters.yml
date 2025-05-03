@@ -120,15 +120,16 @@ average:
   example: 2.3344634550185286
 
 averageClickPosition:
-  type: number
-  format: double
-  description: |
-    Average position of a clicked search result in the list of search results.
-    If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
-  nullable: true
-  minimum: 1.0
-  example: 2.035
-  default: null
+  oneOf:
+    - type: number
+      format: double
+      description: |
+        Average position of a clicked search result in the list of search results.
+        If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+      minimum: 1.0
+      example: 2.035
+      default: null
+    - type: 'null'
 
 clickPositions:
   type: array
@@ -178,16 +179,17 @@ date:
   example: '2023-06-14'
 
 clickThroughRate:
-  type: number
-  format: double
-  description: |
-    Click-through rate: calculated as the number of tracked searches with at least one click event divided by the number of tracked searches.
-    If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
-  nullable: true
-  minimum: 0
-  maximum: 1
-  default: null
-  example: 0.49
+  oneOf:
+    - type: number
+      format: double
+      description: |
+        Click-through rate: calculated as the number of tracked searches with at least one click event divided by the number of tracked searches.
+        If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+      minimum: 0
+      maximum: 1
+      default: null
+      example: 0.49
+    - type: 'null'
 
 noClickRate:
   type: number
@@ -208,16 +210,17 @@ noResultsRate:
   example: 0.49
 
 conversionRate:
-  type: number
-  format: double
-  description: |
-    Conversion rate: calculated as the number of tracked searches with at least one conversion event divided by the number of tracked searches.
-    If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
-  nullable: true
-  minimum: 0
-  maximum: 1
-  default: null
-  example: 0.05
+  oneOf:
+    - type: number
+      format: double
+      description: |
+        Conversion rate: calculated as the number of tracked searches with at least one conversion event divided by the number of tracked searches.
+        If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+      minimum: 0
+      maximum: 1
+      default: null
+      example: 0.05
+    - type: 'null'
 
 conversionCount:
   type: integer
@@ -227,16 +230,17 @@ conversionCount:
   default: 0
 
 addToCartRate:
-  type: number
-  format: double
-  description: |
-    Add-to-cart rate: calculated as the number of tracked searches with at least one add-to-cart event divided by the number of tracked searches.
-    If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
-  nullable: true
-  minimum: 0
-  maximum: 1
-  default: null
-  example: 0.1
+  oneOf:
+    - type: number
+      format: double
+      description: |
+        Add-to-cart rate: calculated as the number of tracked searches with at least one add-to-cart event divided by the number of tracked searches.
+        If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+      minimum: 0
+      maximum: 1
+      default: null
+      example: 0.1
+    - type: 'null'
 
 addToCartCount:
   type: integer
@@ -246,16 +250,17 @@ addToCartCount:
   example: 10
 
 purchaseRate:
-  type: number
-  format: double
-  description: |
-    Purchase rate: calculated as the number of tracked searches with at least one purchase event divided by the number of tracked searches.
-    If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
-  nullable: true
-  minimum: 0
-  maximum: 1
-  default: null
-  example: 0.05
+  oneOf:
+    - type: number
+      format: double
+      description: |
+        Purchase rate: calculated as the number of tracked searches with at least one purchase event divided by the number of tracked searches.
+        If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+      minimum: 0
+      maximum: 1
+      default: null
+      example: 0.05
+    - type: 'null'
 
 purchaseCount:
   type: integer

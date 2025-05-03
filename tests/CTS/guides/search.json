@@ -5,5 +5,158 @@
       "indexName": "movies_index",
       "objects": "$var: movies"
     }
+  },
+  "partialUpdatesRecords": {
+    "method": "partialUpdateObjects",
+    "parameters": {
+      "indexName": "products",
+      "objects": "$var: records",
+      "createIfNotExists": true
+    }
+  },
+  "saveObjectsChunks": {
+    "method": "saveObjects",
+    "parameters": {
+      "indexName": "actors",
+      "objects": "$var: chunk"
+    }
+  },
+  "listIndicesSimple": {
+    "method": "listIndices",
+    "parameters": {}
+  },
+  "deleteMultipleIndicesPrimary": {
+    "method": "multipleBatch",
+    "parameters": {
+      "requests": "$var: requests"
+    }
+  },
+  "deleteMultipleIndicesReplica": {
+    "method": "multipleBatch",
+    "parameters": {
+      "requests": "$var: requests"
+    }
+  },
+  "batchChunks": {
+    "method": "batch",
+    "parameters": {
+      "indexName": "chunked_index",
+      "batchWriteParams": "$var: batchParams"
+    }
+  },
+  "searchWithSearchParams": {
+    "method": "searchSingleIndex",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": "$var: searchParams"
+    }
+  },
+  "searchWithSearchParamsAndForwardedHeader": {
+    "method": "searchSingleIndex",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": "$var: searchParams"
+    },
+    "requestOptions": {
+      "headers": {
+        "X-Forwarded-For": "$var: ip"
+      }
+    }
+  },
+  "saveObjectsRecords": {
+    "method": "saveObjects",
+    "parameters": {
+      "indexName": "indexName",
+      "objects": "$var: records"
+    }
+  },
+  "saveObjectsPlaylists": {
+    "method": "saveObjects",
+    "parameters": {
+      "indexName": "indexName",
+      "objects": "$var: playlists"
+    }
+  },
+  "saveObjectsPlaylistsWithUserIDPublic": {
+    "method": "saveObjects",
+    "parameters": {
+      "indexName": "indexName",
+      "objects": "$var: playlists",
+      "waitForTasks": false,
+      "batchSize": 1000
+    },
+    "requestOptions": {
+      "headers": {
+        "X-Algolia-User-ID": "*"
+      }
+    }
+  },
+  "batchChunksWithUserIDPublic": {
+    "method": "batch",
+    "parameters": {
+      "indexName": "indexName",
+      "batchWriteParams": "$var: batchParams"
+    },
+    "requestOptions": {
+      "headers": {
+        "X-Algolia-User-ID": "*"
+      }
+    }
+  },
+  "saveObjectsPlaylistsWithRequestOptions": {
+    "method": "saveObjects",
+    "parameters": {
+      "indexName": "indexName",
+      "objects": "$var: playlists",
+      "waitForTasks": false,
+      "batchSize": 1000
+    },
+    "requestOptions": {
+      "headers": {
+        "X-Algolia-User-ID": "$var: playlistUserID"
+      }
+    }
+  },
+  "batchChunksWithRequestOptions": {
+    "method": "batch",
+    "parameters": {
+      "indexName": "indexName",
+      "batchWriteParams": "$var: batchParams"
+    },
+    "requestOptions": {
+      "headers": {
+        "X-Algolia-User-ID": "$var: playlistUserID"
+      }
+    }
+  },
+  "getSettings": {
+    "method": "getSettings",
+    "parameters": {
+      "indexName": "indexName"
+    }
+  },
+  "setSettings": {
+    "method": "setSettings",
+    "parameters": {
+      "indexName": "indexName",
+      "indexSettings": "$var: settings"
+    }
+  },
+  "searchWithIndexNameVar": {
+    "method": "searchSingleIndex",
+    "parameters": {
+      "indexName": "$var: indexName",
+      "searchParams": {
+        "query": "query"
+      }
+    }
+  },
+  "saveRule": {
+    "method": "saveRule",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "$var: objectID",
+      "rule": "$var: rule"
+    }
   }
 }

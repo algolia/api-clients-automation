@@ -156,7 +156,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -355,13 +355,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customGet[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customGet[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -385,7 +385,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -584,13 +584,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customPost[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPost[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -614,7 +614,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -813,13 +813,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customPut[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPut[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -837,7 +837,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -1038,13 +1038,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customDelete[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customDelete[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1330,13 +1330,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getTopSearches(
-              index = "index"
+            val response = Await.result(
+              client.getTopSearches(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1605,13 +1605,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getSearchesCount(
-              index = "index"
+            val response = Await.result(
+              client.getSearchesCount(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1877,13 +1877,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getSearchesNoResults(
-              index = "index"
+            val response = Await.result(
+              client.getSearchesNoResults(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2158,13 +2158,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getSearchesNoClicks(
-              index = "index"
+            val response = Await.result(
+              client.getSearchesNoClicks(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2448,13 +2448,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getNoResultsRate(
-              index = "index"
+            val response = Await.result(
+              client.getNoResultsRate(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2738,13 +2738,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getNoClickRate(
-              index = "index"
+            val response = Await.result(
+              client.getNoClickRate(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3035,13 +3035,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getTopHits(
-              index = "index"
+            val response = Await.result(
+              client.getTopHits(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3327,13 +3327,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getUsersCount(
-              index = "index"
+            val response = Await.result(
+              client.getUsersCount(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3582,13 +3582,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getTopFilterAttributes(
-              index = "index"
+            val response = Await.result(
+              client.getTopFilterAttributes(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3849,14 +3849,14 @@ paths:
             )
 
             // Call the API
-            val response = client.getTopFilterForAttribute(
-              attribute = "myAttribute",
-              index = "index"
+            val response = Await.result(
+              client.getTopFilterForAttribute(
+                attribute = "myAttribute",
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3872,6 +3872,14 @@ paths:
             "myAttribute", index: "index")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/2/filters/brand?index=ALGOLIA_INDEX_NAME&search=enable%20ab%20test&startDate=2022-09-19&endDate=2023-01-21&limit=10&offset=0&tags=device%3Amobile%2520phone' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/filters/noResults:
     get:
       tags:
@@ -4100,13 +4108,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getTopFiltersNoResults(
-              index = "index"
+            val response = Await.result(
+              client.getTopFiltersNoResults(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4371,13 +4379,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getTopCountries(
-              index = "index"
+            val response = Await.result(
+              client.getTopCountries(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4667,13 +4675,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getAverageClickPosition(
-              index = "index"
+            val response = Await.result(
+              client.getAverageClickPosition(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4933,13 +4941,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getClickPositions(
-              index = "index"
+            val response = Await.result(
+              client.getClickPositions(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5233,13 +5241,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getClickThroughRate(
-              index = "index"
+            val response = Await.result(
+              client.getClickThroughRate(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5532,13 +5540,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getConversionRate(
-              index = "index"
+            val response = Await.result(
+              client.getConversionRate(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5841,13 +5849,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getAddToCartRate(
-              index = "index"
+            val response = Await.result(
+              client.getAddToCartRate(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -6150,13 +6158,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getPurchaseRate(
-              index = "index"
+            val response = Await.result(
+              client.getPurchaseRate(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -6426,13 +6434,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getRevenue(
-              index = "index"
+            val response = Await.result(
+              client.getRevenue(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -6677,13 +6685,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getStatus(
-              index = "index"
+            val response = Await.result(
+              client.getStatus(
+                index = "index"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -6916,32 +6924,35 @@ components:
               nbHits:
                 $ref: '#/components/schemas/nbHits'
     clickThroughRate:
-      type: number
-      format: double
-      description: >
-        Click-through rate: calculated as the number of tracked searches with at
-        least one click event divided by the number of tracked searches.
+      oneOf:
+        - type: number
+          format: double
+          description: >
+            Click-through rate: calculated as the number of tracked searches
+            with at least one click event divided by the number of tracked
+            searches.
 
-        If null, Algolia didn't receive any search requests with
-        `clickAnalytics` set to true.
-      nullable: true
-      minimum: 0
-      maximum: 1
-      default: null
-      example: 0.49
+            If null, Algolia didn't receive any search requests with
+            `clickAnalytics` set to true.
+          minimum: 0
+          maximum: 1
+          default: null
+          example: 0.49
+        - type: 'null'
     averageClickPosition:
-      type: number
-      format: double
-      description: >
-        Average position of a clicked search result in the list of search
-        results.
+      oneOf:
+        - type: number
+          format: double
+          description: >
+            Average position of a clicked search result in the list of search
+            results.
 
-        If null, Algolia didn't receive any search requests with
-        `clickAnalytics` set to true.
-      nullable: true
-      minimum: 1
-      example: 2.035
-      default: null
+            If null, Algolia didn't receive any search requests with
+            `clickAnalytics` set to true.
+          minimum: 1
+          example: 2.035
+          default: null
+        - type: 'null'
     clickPositions:
       type: array
       description: >-
@@ -6979,19 +6990,21 @@ components:
             minimum: 0
             default: 0
     conversionRate:
-      type: number
-      format: double
-      description: >
-        Conversion rate: calculated as the number of tracked searches with at
-        least one conversion event divided by the number of tracked searches.
+      oneOf:
+        - type: number
+          format: double
+          description: >
+            Conversion rate: calculated as the number of tracked searches with
+            at least one conversion event divided by the number of tracked
+            searches.
 
-        If null, Algolia didn't receive any search requests with
-        `clickAnalytics` set to true.
-      nullable: true
-      minimum: 0
-      maximum: 1
-      default: null
-      example: 0.05
+            If null, Algolia didn't receive any search requests with
+            `clickAnalytics` set to true.
+          minimum: 0
+          maximum: 1
+          default: null
+          example: 0.05
+        - type: 'null'
     trackedSearchCount:
       type: integer
       example: 2
@@ -7080,19 +7093,21 @@ components:
             description: Revenue associated with this search in this currency.
             example: 999.98
     addToCartRate:
-      type: number
-      format: double
-      description: >
-        Add-to-cart rate: calculated as the number of tracked searches with at
-        least one add-to-cart event divided by the number of tracked searches.
+      oneOf:
+        - type: number
+          format: double
+          description: >
+            Add-to-cart rate: calculated as the number of tracked searches with
+            at least one add-to-cart event divided by the number of tracked
+            searches.
 
-        If null, Algolia didn't receive any search requests with
-        `clickAnalytics` set to true.
-      nullable: true
-      minimum: 0
-      maximum: 1
-      default: null
-      example: 0.1
+            If null, Algolia didn't receive any search requests with
+            `clickAnalytics` set to true.
+          minimum: 0
+          maximum: 1
+          default: null
+          example: 0.1
+        - type: 'null'
     addToCartCount:
       type: integer
       description: Number of add-to-cart events from this search.
@@ -7100,19 +7115,20 @@ components:
       default: 0
       example: 10
     purchaseRate:
-      type: number
-      format: double
-      description: >
-        Purchase rate: calculated as the number of tracked searches with at
-        least one purchase event divided by the number of tracked searches.
+      oneOf:
+        - type: number
+          format: double
+          description: >
+            Purchase rate: calculated as the number of tracked searches with at
+            least one purchase event divided by the number of tracked searches.
 
-        If null, Algolia didn't receive any search requests with
-        `clickAnalytics` set to true.
-      nullable: true
-      minimum: 0
-      maximum: 1
-      default: null
-      example: 0.05
+            If null, Algolia didn't receive any search requests with
+            `clickAnalytics` set to true.
+          minimum: 0
+          maximum: 1
+          default: null
+          example: 0.05
+        - type: 'null'
     purchaseCount:
       type: integer
       description: Number of purchase events from this search.
@@ -7456,17 +7472,18 @@ components:
         - values
       properties:
         values:
-          type: array
-          nullable: true
-          description: >
-            Filters for searches without any results.
+          oneOf:
+            - type: array
+              description: >
+                Filters for searches without any results.
 
-            If null, the search term specified with the `search` parameter isn't
-            a search without results,
+                If null, the search term specified with the `search` parameter
+                isn't a search without results,
 
-            or the `search` parameter is absent from the request.
-          items:
-            $ref: '#/components/schemas/getTopFiltersNoResultsValues'
+                or the `search` parameter is absent from the request.
+              items:
+                $ref: '#/components/schemas/getTopFiltersNoResultsValues'
+            - type: 'null'
     updatedAtNullable:
       oneOf:
         - type: string

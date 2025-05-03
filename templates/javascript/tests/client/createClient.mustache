@@ -2,6 +2,7 @@
   '{{parametersWithDataTypeMap.appId.value}}',
   '{{parametersWithDataTypeMap.apiKey.value}}'
   {{#isStandaloneClient}},
+  {{#hasRegionalHost}}'{{{parametersWithDataTypeMap.region.value}}}', {{/hasRegionalHost}}
   {
     {{#useEchoRequester}}
     requester: nodeEchoRequester(),

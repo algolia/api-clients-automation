@@ -1,0 +1,5 @@
+description: Indices are in the same application. Use operationIndex instead.
+content:
+  application/json:
+    schema:
+      $ref: '../schemas/ErrorBase.yml'

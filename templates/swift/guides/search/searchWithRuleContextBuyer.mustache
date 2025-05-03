@@ -1,0 +1,22 @@
+import Foundation
+#if os(Linux) // For linux interop
+  import FoundationNetworking
+#endif
+
+import Core
+{{> snippets/import}}
+
+let getBuyerAccountId = {""} // Implement your logic here
+
+func searchWithRuleContextBuyer() async throws {
+  {{> snippets/init}}
+
+  // get the buyer account information
+  let buyer = getBuyerAccountId();
+  let searchParams = SearchSearchParams.searchSearchParamsObject(
+    SearchSearchParamsObject(query: "<YOUR_SEARCH_QUERY>", ruleContexts: [buyer])
+  )
+
+  let response: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+  print(response)
+}

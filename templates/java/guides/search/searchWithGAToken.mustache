@@ -1,0 +1,27 @@
+package com.algolia;
+
+{{> snippets/import}}
+
+public class searchWithGAToken {
+
+  private static String getGoogleAnalyticsUserIdFromBrowserCookie(String cookieName) {
+    return ""; // Implement your logic here
+  }
+
+  public static void main(String[] args) throws Exception {
+
+    try ({{> snippets/init}}) {
+      String userToken = getGoogleAnalyticsUserIdFromBrowserCookie("_ga");
+      SearchParamsObject searchParams = new SearchParamsObject().setQuery("<YOUR_SEARCH_QUERY>").setUserToken(userToken);
+
+      {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+
+      String loggedInUser = null;
+      searchParams.setUserToken(loggedInUser != null ? loggedInUser : userToken);
+
+      {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+    } catch (Exception e) {
+      System.out.println("An error occurred: " + e.getMessage());
+    }
+  }
+}

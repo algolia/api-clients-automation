@@ -1,18 +1,14 @@
-import asyncio
 import json
 {{> snippets/import}}
 
 
-async def main():
-    # use the region matching your applicationID
-    _{{> snippets/init}}
+# use the region matching your applicationID
+_{{> snippets/init}}
 
-    with open("records.json") as f:
-        records = json.load(f)
+with open("records.json") as f:
+    records = json.load(f)
 
-        # setting `watch` to `true` will make the call synchronous
-        resp = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
+    # setting `watch` to `true` will make the call synchronous
+    resp = {{#dynamicSnippet}}pushSetup{{/dynamicSnippet}}
 
-        print(resp)
-
-asyncio.run(main())
+    print(resp)

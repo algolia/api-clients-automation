@@ -1,0 +1,18 @@
+{{> snippets/import}}
+
+def _get_all_app_id_configurations():
+    return [] # A list of your MCM AppID/ApiKey pairs
+
+playlists = [] # Your records
+
+# Fetch from your own data storage and with your own code
+# the list of application IDs and API keys to target each cluster
+configurations = _get_all_app_id_configurations()
+
+# Send the records to each cluster
+for appID, apiKey in configurations:
+  try:
+    _client = SearchClientSync(appID, apiKey)
+    {{#dynamicSnippet}}saveObjectsPlaylists{{/dynamicSnippet}}
+  except Exception as e:
+      print(f"Error: {e}")

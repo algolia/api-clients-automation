@@ -1,0 +1,10 @@
+<?php
+
+require __DIR__.'/../vendor/autoload.php';
+{{> snippets/import}}
+
+$playlists = [ /* Your records */ ];
+
+{{> snippets/init}}
+
+{{#dynamicSnippet}}saveObjectsPlaylistsWithUserIDPublic{{/dynamicSnippet}};

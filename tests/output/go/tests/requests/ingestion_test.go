@@ -71,8 +71,8 @@ func TestIngestion_CreateDestination(t *testing.T) {
 	t.Run("createDestination", func(t *testing.T) {
 		_, err := client.CreateDestination(client.NewApiCreateDestinationRequest(
 
-			ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(ingestion.DestinationIndexNameAsDestinationInput(
-				ingestion.NewEmptyDestinationIndexName().SetIndexName("full_name______"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
+			ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(
+				ingestion.NewEmptyDestinationInput().SetIndexName("full_name______")).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/destinations", echo.Path)
@@ -84,8 +84,8 @@ func TestIngestion_CreateDestination(t *testing.T) {
 	t.Run("with transformationIDs", func(t *testing.T) {
 		_, err := client.CreateDestination(client.NewApiCreateDestinationRequest(
 
-			ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(ingestion.DestinationIndexNameAsDestinationInput(
-				ingestion.NewEmptyDestinationIndexName().SetIndexName("full_name______"))).SetTransformationIDs(
+			ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(
+				ingestion.NewEmptyDestinationInput().SetIndexName("full_name______")).SetTransformationIDs(
 				[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f"})))
 		require.NoError(t, err)
 
@@ -107,14 +107,14 @@ func TestIngestion_CreateSource(t *testing.T) {
 			ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType("commercetools")).SetName("sourceName").SetInput(ingestion.SourceCommercetoolsAsSourceInput(
 				ingestion.NewEmptySourceCommercetools().SetStoreKeys(
 					[]string{"myStore"}).SetLocales(
-					[]string{"de"}).SetUrl("http://commercetools.com").SetProjectKey("keyID"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
+					[]string{"de"}).SetUrl("http://commercetools.com").SetProjectKey("keyID").SetProductQueryPredicate("masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/sources", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`)
+		ja.Assertf(*echo.Body, `{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID","productQueryPredicate":"masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`)
 	})
 	t.Run("push", func(t *testing.T) {
 		_, err := client.CreateSource(client.NewApiCreateSourceRequest(

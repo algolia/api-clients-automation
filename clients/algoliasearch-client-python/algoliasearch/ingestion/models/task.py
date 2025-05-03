@@ -30,10 +30,12 @@ _ALIASES = {
     "cron": "cron",
     "last_run": "lastRun",
     "next_run": "nextRun",
+    "owner": "owner",
     "input": "input",
     "enabled": "enabled",
     "failure_threshold": "failureThreshold",
     "action": "action",
+    "subscription_action": "subscriptionAction",
     "cursor": "cursor",
     "notifications": "notifications",
     "policies": "policies",
@@ -63,19 +65,22 @@ class Task(BaseModel):
     """ The last time the scheduled task ran in RFC 3339 format. """
     next_run: Optional[str] = None
     """ The next scheduled run of the task in RFC 3339 format. """
+    owner: Optional[str] = None
+    """ Owner of the resource. """
     input: Optional[TaskInput] = None
     enabled: bool
     """ Whether the task is enabled. """
     failure_threshold: Optional[int] = None
     """ Maximum accepted percentage of failures for a task run to finish successfully. """
     action: Optional[ActionType] = None
+    subscription_action: Optional[ActionType] = None
     cursor: Optional[str] = None
     """ Date of the last cursor in RFC 3339 format. """
     notifications: Optional[Notifications] = None
     policies: Optional[Policies] = None
     created_at: str
     """ Date of creation in RFC 3339 format. """
-    updated_at: Optional[str] = None
+    updated_at: str
     """ Date of last update in RFC 3339 format. """
 
     model_config = ConfigDict(
@@ -117,6 +122,7 @@ class Task(BaseModel):
             TaskInput.from_dict(obj["input"]) if obj.get("input") is not None else None
         )
         obj["action"] = obj.get("action")
+        obj["subscriptionAction"] = obj.get("subscriptionAction")
         obj["notifications"] = (
             Notifications.from_dict(obj["notifications"])
             if obj.get("notifications") is not None

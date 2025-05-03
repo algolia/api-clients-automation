@@ -15,12 +15,12 @@
     "test:bundle": "lerna run test:bundle --verbose --include-dependencies"
   },
   "devDependencies": {
-    "@types/node": "22.10.10",
-    "bundlewatch": "0.4.0",
+    "@types/node": "22.15.3",
+    "bundlewatch": "0.4.1",
     "execa": "9.5.2",
-    "lerna": "8.1.9",
-    "rollup": "4.30.1",
-    "typescript": "5.7.3"
+    "lerna": "8.2.2",
+    "rollup": "4.40.1",
+    "typescript": "5.8.3"
   },
   "bundlewatch": {
     "files": [

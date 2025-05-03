@@ -39,11 +39,13 @@ sealed trait AroundPrecision
 object AroundPrecision {
 
   case class IntValue(value: Int) extends AroundPrecision
+
   case class SeqOfRange(value: Seq[Range]) extends AroundPrecision
 
   def apply(value: Int): AroundPrecision = {
     AroundPrecision.IntValue(value)
   }
+
   def apply(value: Seq[Range]): AroundPrecision = {
     AroundPrecision.SeqOfRange(value)
   }
@@ -55,9 +57,9 @@ object AroundPrecisionSerializer extends Serializer[AroundPrecision] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[AroundPrecision] =>
       json match {
-        case JInt(value)                                           => AroundPrecision.IntValue(value.toInt)
-        case JArray(value) if value.forall(_.isInstanceOf[JArray]) => AroundPrecision.SeqOfRange(value.map(_.extract))
-        case _ => throw new MappingException("Can't convert " + json + " to AroundPrecision")
+        case JInt(value)   => AroundPrecision.IntValue(value.toInt)
+        case value: JArray => AroundPrecision.apply(Extraction.extract[Seq[Range]](value))
+        case _             => throw new MappingException("Can't convert " + json + " to AroundPrecision")
       }
   }
 

@@ -1,0 +1,36 @@
+namespace Algolia;
+
+using System;
+using System.Text.Json;
+using System.Net.Http;
+using System.Collections.Generic;
+
+{{> snippets/import}}
+
+class SearchWithGAToken {
+
+  private static string GetGoogleAnalyticsUserIdFromBrowserCookie(string cookieName) {
+    return ""; // Implement your logic here
+  }
+
+  async Task Main(string[] args)
+  {
+
+    {{> snippets/init}}
+    var userToken = GetGoogleAnalyticsUserIdFromBrowserCookie("_ga");
+    var searchParams = new SearchParams(
+      new SearchParamsObject
+      {
+        Query = "<YOUR_SEARCH_QUERY>",
+        UserToken = userToken
+      }
+    );
+
+    {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+
+    string? loggedInUser = null;
+    searchParams.AsSearchParamsObject().UserToken = loggedInUser ?? userToken;
+
+    {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+  }
+}

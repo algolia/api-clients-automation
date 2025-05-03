@@ -67,7 +67,14 @@ public class SnippetsGenerator extends TestsGenerator {
             if (ope == null || !(boolean) ope.vendorExtensions.getOrDefault("x-helper", false)) {
               continue;
             }
-            Snippet newSnippet = new Snippet(step.method, test.testName, step.parameters);
+
+            List<String> availableLanguages = (List<String>) ope.vendorExtensions.getOrDefault("x-available-languages", new ArrayList<>());
+
+            if (availableLanguages.size() > 0 && !availableLanguages.contains(language)) {
+              continue;
+            }
+
+            Snippet newSnippet = new Snippet(step.method, test.testName, step.parameters, step.requestOptions);
             Snippet[] existing = snippets.get(step.method);
             if (existing == null) {
               snippets.put(step.method, new Snippet[] { newSnippet });
@@ -112,6 +119,7 @@ public class SnippetsGenerator extends TestsGenerator {
         test.put("description", name);
         test.put("testIndex", i == 0 ? "" : i);
         snippet.addMethodCall(test, paramsType, ope);
+        addRequestOptions(paramsType, snippet.requestOptions, test);
         tests.add(test);
       }
       Map<String, Object> testObj = new HashMap<>();

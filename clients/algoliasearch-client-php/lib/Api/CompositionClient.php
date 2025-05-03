@@ -8,6 +8,8 @@ use Algolia\AlgoliaSearch\Algolia;
 use Algolia\AlgoliaSearch\Configuration\CompositionConfig;
 use Algolia\AlgoliaSearch\Model\Composition\RequestBody;
 use Algolia\AlgoliaSearch\Model\Composition\SearchForFacetValuesRequest;
+use Algolia\AlgoliaSearch\Model\Composition\SearchForFacetValuesResponse;
+use Algolia\AlgoliaSearch\Model\Composition\SearchResponse;
 use Algolia\AlgoliaSearch\ObjectSerializer;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
@@ -21,7 +23,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class CompositionClient
 {
-    public const VERSION = '4.13.0';
+    public const VERSION = '4.18.5';
 
     /**
      * @var ApiWrapperInterface
@@ -115,15 +117,15 @@ class CompositionClient
      * Required API Key ACLs:
      *  - search
      *
-     * @param string $compositionID Unique Composition ObjectID. (required)
-     * @param array  $requestBody   requestBody (required)
-     *                              - $requestBody['params'] => (array)
+     * @param string            $compositionID Unique Composition ObjectID. (required)
+     * @param array|RequestBody $requestBody   requestBody (required)
+     *                                         - $requestBody['params'] => (array)
      *
      * @see RequestBody
      *
      * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
-     * @return \Algolia\AlgoliaSearch\Model\Composition\SearchResponse|array<string, mixed>
+     * @return array<string, mixed>|SearchResponse
      */
     public function search($compositionID, $requestBody, $requestOptions = [])
     {
@@ -163,16 +165,16 @@ class CompositionClient
      * Required API Key ACLs:
      *  - search
      *
-     * @param string $compositionID               Unique Composition ObjectID. (required)
-     * @param string $facetName                   Facet attribute in which to search for values.  This attribute must be included in the `attributesForFaceting` index setting with the `searchable()` modifier. (required)
-     * @param array  $searchForFacetValuesRequest searchForFacetValuesRequest (optional)
-     *                                            - $searchForFacetValuesRequest['params'] => (array)
+     * @param string                            $compositionID               Unique Composition ObjectID. (required)
+     * @param string                            $facetName                   Facet attribute in which to search for values.  This attribute must be included in the `attributesForFaceting` index setting with the `searchable()` modifier. (required)
+     * @param array|SearchForFacetValuesRequest $searchForFacetValuesRequest searchForFacetValuesRequest (optional)
+     *                                                                       - $searchForFacetValuesRequest['params'] => (array)
      *
      * @see SearchForFacetValuesRequest
      *
      * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
-     * @return \Algolia\AlgoliaSearch\Model\Composition\SearchForFacetValuesResponse|array<string, mixed>
+     * @return array<string, mixed>|SearchForFacetValuesResponse
      */
     public function searchForFacetValues($compositionID, $facetName, $searchForFacetValuesRequest = null, $requestOptions = [])
     {

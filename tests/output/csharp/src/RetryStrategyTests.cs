@@ -43,12 +43,11 @@ public class RetryStrategyTests
       );
 
     // Do a simple search
-    await Assert.ThrowsAsync<AlgoliaUnreachableHostException>(
-      async () =>
-        await client.SearchSingleIndexAsync<object>(
-          "test-index",
-          new SearchParams(new SearchParamsObject { Query = "" })
-        )
+    await Assert.ThrowsAsync<AlgoliaUnreachableHostException>(async () =>
+      await client.SearchSingleIndexAsync<object>(
+        "test-index",
+        new SearchParams(new SearchParamsObject { Query = "" })
+      )
     );
 
     Assert.Equal(eligibleHosts, actualHosts);

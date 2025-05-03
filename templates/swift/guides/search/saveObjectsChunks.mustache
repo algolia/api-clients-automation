@@ -1,0 +1,24 @@
+import Foundation
+#if os(Linux) // For linux interop
+  import FoundationNetworking
+#endif
+
+import Core
+{{> snippets/import}}
+
+func saveObjectsChunks() async throws {
+  {{> snippets/init}}
+
+  let path = URL(string: #file)!.deletingLastPathComponent()
+    .appendingPathComponent("actors.json")
+  let data = try Data(contentsOf: URL(fileURLWithPath: path.absoluteString))
+  let records = try JSONDecoder().decode([AnyCodable].self, from: data)
+
+  let chunkSize = 10000
+
+  for beginIndex in stride(from: 0, to: records.count, by: chunkSize) {
+    let endIndex = min(beginIndex + chunkSize, records.count)
+    let chunk = Array(records[beginIndex..<endIndex])
+    {{#dynamicSnippet}}saveObjectsChunks{{/dynamicSnippet}}
+  }
+}

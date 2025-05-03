@@ -1,0 +1,19 @@
+{{> snippets/import}}
+from algoliasearch.search.models.search_params import SearchParams
+
+
+def _reduce_labels_to_filters(_labels):
+    # Implement your logic here
+    return []
+
+labels = [] # A list of labels
+
+_{{> snippets/init}}
+
+optional_filters = _reduce_labels_to_filters(labels)
+search_params = SearchParams(
+  query="<YOUR_SEARCH_QUERY>",
+  optional_filters=optional_filters,
+)
+
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}

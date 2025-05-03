@@ -1,0 +1,18 @@
+{{> snippets/import}}
+import type { OptionalFilters, SearchParams } from 'algoliasearch';
+
+const labels: string[] = [] // A list of labels
+
+const reduceLabelsToFilters = (_labels: string[]): OptionalFilters => {
+  return []; // Implement your logic here
+}
+
+{{> snippets/init}}
+
+const optionalFilters = reduceLabelsToFilters(labels)
+const searchParams: SearchParams = {
+  query: "<YOUR_SEARCH_QUERY>",
+  optionalFilters: optionalFilters
+};
+
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}

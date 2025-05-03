@@ -1,0 +1,24 @@
+package main
+
+import (
+  "encoding/json"
+  "fmt"
+  "net/http"
+)
+
+{{> snippets/import}}
+
+func searchWithLogicalOr() {
+    {{> snippets/init}}
+    query := "the query"
+    optionalWords := search.ArrayOfStringAsOptionalWords([]string{"the", "query"})
+    searchParams := search.SearchParamsObjectAsSearchParams(
+        search.NewSearchParamsObject().
+          SetQuery(query).
+          SetOptionalWords(optionalWords),
+    )
+  _, err = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+  if err != nil {
+    panic(err)
+  }
+}

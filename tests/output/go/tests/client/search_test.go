@@ -236,7 +236,7 @@ func TestSearchcommonApi1(t *testing.T) {
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.12.0\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.15.5\).*`), echo.Header.Get("User-Agent"))
 }
 
 // call deleteObjects without error
@@ -345,6 +345,36 @@ func TestSearchgenerateSecuredApiKey4(t *testing.T) {
 	{
 		res, err = client.GenerateSecuredApiKey(
 			"2640659426d5107b6e47d75db9cbaef8",
+			search.NewEmptySecuredApiKeyRestrictions().SetUserToken("user42"))
+		require.NoError(t, err)
+	}
+}
+
+// mcm with filters
+func TestSearchgenerateSecuredApiKey5(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	client, echo := createSearchClient(t)
+	_ = echo
+	{
+		res, err = client.GenerateSecuredApiKey(
+			"YourSearchOnlyApiKey",
+			search.NewEmptySecuredApiKeyRestrictions().SetFilters("user:user42 AND user:public"))
+		require.NoError(t, err)
+	}
+}
+
+// mcm with user token
+func TestSearchgenerateSecuredApiKey6(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	client, echo := createSearchClient(t)
+	_ = echo
+	{
+		res, err = client.GenerateSecuredApiKey(
+			"YourSearchOnlyApiKey",
 			search.NewEmptySecuredApiKeyRestrictions().SetUserToken("user42"))
 		require.NoError(t, err)
 	}
@@ -747,9 +777,34 @@ func TestSearchsaveObjects3(t *testing.T) {
 	{
 		res, err = client.SaveObjects(
 			"playlists",
-			[]map[string]any{map[string]any{"objectID": "1", "visibility": "public", "name": "Hot 100 Billboard Charts", "playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f", "createdAt": "1500240452"}}, search.WithHeaderParam("X-Algolia-User-ID", "*"))
+			[]map[string]any{map[string]any{"objectID": "1", "visibility": "public", "name": "Hot 100 Billboard Charts", "playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f", "createdAt": "1500240452"}}, search.WithWaitForTasks(false), search.WithBatchSize(1000), search.WithHeaderParam("X-Algolia-User-ID", "*"))
 		require.NoError(t, err)
 	}
+}
+
+// with algolia user id
+func TestSearchsearchSingleIndex0(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.SearchConfiguration
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6686", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err = client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+		"playlists").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetQuery("foo"))), search.WithHeaderParam("X-Algolia-User-ID", "user1234"))
+	require.NoError(t, err)
 }
 
 // switch API key

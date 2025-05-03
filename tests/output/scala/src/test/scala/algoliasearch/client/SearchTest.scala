@@ -6,6 +6,7 @@ import algoliasearch.config.*
 import algoliasearch.{EchoInterceptor, assertError}
 import algoliasearch.search.*
 import algoliasearch.exception.*
+import algoliasearch.extension.SearchClientExtensions
 import org.json4s.*
 import org.json4s.native.JsonParser.*
 import org.json4s.native.Serialization
@@ -18,7 +19,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class SearchTest extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   def testClient(appId: String = "appId", apiKey: String = "apiKey"): (SearchClient, EchoInterceptor) = {
     val echo = EchoInterceptor()
@@ -38,7 +39,6 @@ class SearchTest extends AnyFunSuite {
   test("calls api with correct read host") {
 
     val (client, echo) = testClient(appId = "test-app-id", apiKey = "test-api-key")
-
     Await.ready(
       client.customGet[JObject](
         path = "test"
@@ -51,7 +51,6 @@ class SearchTest extends AnyFunSuite {
   test("read transporter with POST method") {
 
     val (client, echo) = testClient(appId = "test-app-id", apiKey = "test-api-key")
-
     Await.ready(
       client.searchSingleIndex(
         indexName = "indexName"
@@ -64,7 +63,6 @@ class SearchTest extends AnyFunSuite {
   test("calls api with correct write host") {
 
     val (client, echo) = testClient(appId = "test-app-id", apiKey = "test-api-key")
-
     Await.ready(
       client.customPost[JObject](
         path = "test"
@@ -112,7 +110,7 @@ class SearchTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    assert(write(res) == "{\"message\":\"ok test server response\"}")
+    assert(parse(write(res)) == parse("{\"message\":\"ok test server response\"}"))
   }
 
   test("tests the retry strategy error") {
@@ -175,9 +173,9 @@ class SearchTest extends AnyFunSuite {
       Duration.Inf
     )
     assert(
-      write(
-        res
-      ) == "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this is a compressed body\"}}"
+      parse(write(res)) == parse(
+        "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this is a compressed body\"}}"
+      )
     )
   }
 
@@ -231,9 +229,256 @@ class SearchTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.13.0\).*""".r
+    val regexp = """^Algolia for Scala \(2.17.5\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
+  }
+
+  test("call deleteObjects without error") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6680)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.deleteObjects(
+          indexName = "cts_e2e_deleteObjects_scala",
+          objectIDs = Seq("1", "2")
+        ),
+        Duration.Inf
+      )
+      assert(parse(write(res)) == parse("[{\"taskID\":666,\"objectIDs\":[\"1\",\"2\"]}]"))
+    }
+  }
+
+  test("api key basic") {
+    val (client, echo) = testClient()
+
+    {
+      var res =
+        client.generateSecuredApiKey(
+          parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+          restrictions = SecuredApiKeyRestrictions(
+            validUntil = Some(2524604400L),
+            restrictIndices = Some(Seq("Movies"))
+          )
+        )
+      assert(
+        res == "NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw"
+      )
+
+    }
+  }
+
+  test("with searchParams") {
+    val (client, echo) = testClient()
+
+    {
+      var res =
+        client.generateSecuredApiKey(
+          parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+          restrictions = SecuredApiKeyRestrictions(
+            validUntil = Some(2524604400L),
+            restrictIndices = Some(Seq("Movies", "cts_e2e_settings")),
+            restrictSources = Some("192.168.1.0/24"),
+            filters = Some("category:Book OR category:Ebook AND _tags:published"),
+            userToken = Some("user123"),
+            searchParams = Some(
+              SearchParamsObject(
+                query = Some("batman"),
+                typoTolerance = Some(TypoToleranceEnum.withName("strict")),
+                aroundRadius = Some(AroundRadiusAll.withName("all")),
+                mode = Some(Mode.withName("neuralSearch")),
+                hitsPerPage = Some(10),
+                optionalWords = Some(OptionalWords(Seq("one", "two")))
+              )
+            )
+          )
+        )
+      assert(
+        res == "MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw"
+      )
+
+    }
+  }
+
+  test("with filters") {
+    val (client, echo) = testClient()
+
+    {
+      var res =
+        client.generateSecuredApiKey(
+          parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+          restrictions = SecuredApiKeyRestrictions(
+            filters = Some("user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)")
+          )
+        )
+    }
+  }
+
+  test("with visible_by filter") {
+    val (client, echo) = testClient()
+
+    {
+      var res =
+        client.generateSecuredApiKey(
+          parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+          restrictions = SecuredApiKeyRestrictions(
+            filters = Some("visible_by:group/Finance")
+          )
+        )
+    }
+  }
+
+  test("with userID") {
+    val (client, echo) = testClient()
+
+    {
+      var res =
+        client.generateSecuredApiKey(
+          parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
+          restrictions = SecuredApiKeyRestrictions(
+            userToken = Some("user42")
+          )
+        )
+    }
+  }
+
+  test("mcm with filters") {
+    val (client, echo) = testClient()
+
+    {
+      var res =
+        client.generateSecuredApiKey(
+          parentApiKey = "YourSearchOnlyApiKey",
+          restrictions = SecuredApiKeyRestrictions(
+            filters = Some("user:user42 AND user:public")
+          )
+        )
+    }
+  }
+
+  test("mcm with user token") {
+    val (client, echo) = testClient()
+
+    {
+      var res =
+        client.generateSecuredApiKey(
+          parentApiKey = "YourSearchOnlyApiKey",
+          restrictions = SecuredApiKeyRestrictions(
+            userToken = Some("user42")
+          )
+        )
+    }
+  }
+
+  test("indexExists") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6681)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.indexExists(
+          indexName = "indexExistsYES"
+        ),
+        Duration.Inf
+      )
+      assert(res == true)
+
+    }
+  }
+
+  test("indexNotExists") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6681)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.indexExists(
+          indexName = "indexExistsNO"
+        ),
+        Duration.Inf
+      )
+      assert(res == false)
+
+    }
+  }
+
+  test("indexExistsWithError") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6681)
+            )
+          )
+        )
+        .build()
+    )
+
+    assertError("Invalid API key") {
+      var res = Await.result(
+        client.indexExists(
+          indexName = "indexExistsERROR"
+        ),
+        Duration.Inf
+      )
+    }
   }
 
   test("client throws with invalid parameters") {
@@ -241,11 +486,9 @@ class SearchTest extends AnyFunSuite {
     assertError("`appId` is missing.") {
       val (client, echo) = testClient(appId = "", apiKey = "")
     }
-
     assertError("`appId` is missing.") {
       val (client, echo) = testClient(appId = "", apiKey = "my-api-key")
     }
-
     assertError("`apiKey` is missing.") {
       val (client, echo) = testClient(appId = "my-app-id", apiKey = "")
     }
@@ -277,7 +520,6 @@ class SearchTest extends AnyFunSuite {
         Duration.Inf
       )
     }
-
     assertError("Parameter `objectID` is required when calling `addOrUpdateObject`.") {
       Await.ready(
         client.addOrUpdateObject(
@@ -288,7 +530,6 @@ class SearchTest extends AnyFunSuite {
         Duration.Inf
       )
     }
-
     assertError("Parameter `body` is required when calling `addOrUpdateObject`.") {
       Await.ready(
         client.addOrUpdateObject(
@@ -299,6 +540,401 @@ class SearchTest extends AnyFunSuite {
         Duration.Inf
       )
     }
+  }
+
+  test("call partialUpdateObjects with createIfNotExists=true") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6680)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.partialUpdateObjects(
+          indexName = "cts_e2e_partialUpdateObjects_scala",
+          objects = Seq(
+            JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+            JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit"))))
+          ),
+          createIfNotExists = true
+        ),
+        Duration.Inf
+      )
+      assert(parse(write(res)) == parse("[{\"taskID\":444,\"objectIDs\":[\"1\",\"2\"]}]"))
+    }
+  }
+
+  test("call partialUpdateObjects with createIfNotExists=false") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6680)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.partialUpdateObjects(
+          indexName = "cts_e2e_partialUpdateObjects_scala",
+          objects = Seq(
+            JObject(List(JField("objectID", JString("3")), JField("name", JString("Cyril")))),
+            JObject(List(JField("objectID", JString("4")), JField("name", JString("David"))))
+          ),
+          createIfNotExists = false
+        ),
+        Duration.Inf
+      )
+      assert(parse(write(res)) == parse("[{\"taskID\":555,\"objectIDs\":[\"3\",\"4\"]}]"))
+    }
+  }
+
+  test("call replaceAllObjects without error") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6679)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.replaceAllObjects(
+          indexName = "cts_e2e_replace_all_objects_scala",
+          objects = Seq(
+            JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+            JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit")))),
+            JObject(List(JField("objectID", JString("3")), JField("name", JString("Cyril")))),
+            JObject(List(JField("objectID", JString("4")), JField("name", JString("David")))),
+            JObject(List(JField("objectID", JString("5")), JField("name", JString("Eva")))),
+            JObject(List(JField("objectID", JString("6")), JField("name", JString("Fiona")))),
+            JObject(List(JField("objectID", JString("7")), JField("name", JString("Gael")))),
+            JObject(List(JField("objectID", JString("8")), JField("name", JString("Hugo")))),
+            JObject(List(JField("objectID", JString("9")), JField("name", JString("Igor")))),
+            JObject(List(JField("objectID", JString("10")), JField("name", JString("Julia"))))
+          ),
+          batchSize = 3
+        ),
+        Duration.Inf
+      )
+      assert(
+        parse(write(res)) == parse(
+          "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"batchResponses\":[{\"taskID\":127,\"objectIDs\":[\"1\",\"2\",\"3\"]},{\"taskID\":130,\"objectIDs\":[\"4\",\"5\",\"6\"]},{\"taskID\":133,\"objectIDs\":[\"7\",\"8\",\"9\"]},{\"taskID\":134,\"objectIDs\":[\"10\"]}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}"
+        )
+      )
+    }
+  }
+
+  test("call replaceAllObjects with partial scopes") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6685)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.replaceAllObjects(
+          indexName = "cts_e2e_replace_all_objects_scopes_scala",
+          objects = Seq(
+            JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+            JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit"))))
+          ),
+          batchSize = 77,
+          scopes = Some(Seq(ScopeType.withName("settings"), ScopeType.withName("synonyms")))
+        ),
+        Duration.Inf
+      )
+      assert(
+        parse(write(res)) == parse(
+          "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"batchResponses\":[{\"taskID\":126,\"objectIDs\":[\"1\",\"2\"]}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}"
+        )
+      )
+    }
+  }
+
+  test("replaceAllObjects should cleanup on failure") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6684)
+            )
+          )
+        )
+        .build()
+    )
+
+    assertError("Record is too big") {
+      var res = Await.result(
+        client.replaceAllObjects(
+          indexName = "cts_e2e_replace_all_objects_too_big_scala",
+          objects = Seq(
+            JObject(List(JField("objectID", JString("fine")), JField("body", JString("small obj")))),
+            JObject(
+              List(JField("objectID", JString("toolarge")), JField("body", JString("something bigger than 10KB")))
+            )
+          )
+        ),
+        Duration.Inf
+      )
+    }
+  }
+
+  test("call saveObjects without error") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6680)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.saveObjects(
+          indexName = "cts_e2e_saveObjects_scala",
+          objects = Seq(
+            JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+            JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit"))))
+          )
+        ),
+        Duration.Inf
+      )
+      assert(parse(write(res)) == parse("[{\"taskID\":333,\"objectIDs\":[\"1\",\"2\"]}]"))
+    }
+  }
+
+  test("saveObjects should report errors") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "wrong-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6680)
+            )
+          )
+        )
+        .build()
+    )
+
+    assertError("Invalid Application-ID or API key") {
+      var res = Await.result(
+        client.saveObjects(
+          indexName = "cts_e2e_saveObjects_scala",
+          objects = Seq(
+            JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+            JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit"))))
+          )
+        ),
+        Duration.Inf
+      )
+    }
+  }
+
+  test("saveObjectsPlaylist") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6686)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.saveObjects(
+          indexName = "playlists",
+          objects = Seq(
+            JObject(
+              List(
+                JField("objectID", JString("1")),
+                JField("visibility", JString("public")),
+                JField("name", JString("Hot 100 Billboard Charts")),
+                JField("playlistId", JString("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f")),
+                JField("createdAt", JString("1500240452"))
+              )
+            )
+          )
+        ),
+        Duration.Inf
+      )
+    }
+  }
+
+  test("saveObjectsPublicUser") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6686)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.saveObjects(
+          indexName = "playlists",
+          objects = Seq(
+            JObject(
+              List(
+                JField("objectID", JString("1")),
+                JField("visibility", JString("public")),
+                JField("name", JString("Hot 100 Billboard Charts")),
+                JField("playlistId", JString("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f")),
+                JField("createdAt", JString("1500240452"))
+              )
+            )
+          ),
+          waitForTasks = false,
+          batchSize = 1000,
+          requestOptions = Some(
+            RequestOptions
+              .builder()
+              .withHeader("X-Algolia-User-ID", "*")
+              .build()
+          )
+        ),
+        Duration.Inf
+      )
+    }
+  }
+
+  test("with algolia user id") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6686)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.searchSingleIndex(
+        indexName = "playlists",
+        searchParams = Some(
+          SearchParamsObject(
+            query = Some("foo")
+          )
+        ),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("X-Algolia-User-ID", "user1234")
+            .build()
+        )
+      ),
+      Duration.Inf
+    )
   }
 
   test("switch API key") {
@@ -328,16 +964,14 @@ class SearchTest extends AnyFunSuite {
         ),
         Duration.Inf
       )
-      assert(write(res) == "{\"headerAPIKeyValue\":\"test-api-key\"}")
+      assert(parse(write(res)) == parse("{\"headerAPIKeyValue\":\"test-api-key\"}"))
     }
-
     {
 
       client.setClientApiKey(
         apiKey = "updated-api-key"
       )
     }
-
     {
       var res = Await.result(
         client.customGet[JObject](
@@ -345,7 +979,188 @@ class SearchTest extends AnyFunSuite {
         ),
         Duration.Inf
       )
-      assert(write(res) == "{\"headerAPIKeyValue\":\"updated-api-key\"}")
+      assert(parse(write(res)) == parse("{\"headerAPIKeyValue\":\"updated-api-key\"}"))
     }
   }
+
+  test("wait for api key helper - add") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6681)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.waitForApiKey(
+          key = "api-key-add-operation-test-scala",
+          operation = ApiKeyOperation.withName("add")
+        ),
+        Duration.Inf
+      )
+      assert(
+        parse(write(res)) == parse(
+          "{\"value\":\"api-key-add-operation-test-scala\",\"description\":\"my new api key\",\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}"
+        )
+      )
+    }
+  }
+
+  test("wait for api key - update") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6681)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.waitForApiKey(
+          key = "api-key-update-operation-test-scala",
+          operation = ApiKeyOperation.withName("update"),
+          apiKey = Some(
+            ApiKey(
+              description = Some("my updated api key"),
+              acl = Seq(Acl.withName("search"), Acl.withName("addObject"), Acl.withName("deleteObject")),
+              indexes = Some(Seq("Movies", "Books")),
+              referers = Some(Seq("*google.com", "*algolia.com")),
+              validity = Some(305),
+              maxQueriesPerIPPerHour = Some(95),
+              maxHitsPerQuery = Some(20)
+            )
+          )
+        ),
+        Duration.Inf
+      )
+      assert(
+        parse(write(res)) == parse(
+          "{\"value\":\"api-key-update-operation-test-scala\",\"description\":\"my updated api key\",\"acl\":[\"search\",\"addObject\",\"deleteObject\"],\"indexes\":[\"Movies\",\"Books\"],\"referers\":[\"*google.com\",\"*algolia.com\"],\"validity\":305,\"maxQueriesPerIPPerHour\":95,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}"
+        )
+      )
+    }
+  }
+
+  test("wait for api key - delete") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6681)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.waitForApiKey(
+          key = "api-key-delete-operation-test-scala",
+          operation = ApiKeyOperation.withName("delete")
+        ),
+        Duration.Inf
+      )
+
+      assert(res.isEmpty)
+
+    }
+  }
+
+  test("wait for an application-level task") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6681)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.waitForAppTask(
+          taskID = 123L
+        ),
+        Duration.Inf
+      )
+      assert(parse(write(res)) == parse("{\"status\":\"published\"}"))
+    }
+  }
+
+  test("wait for task") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6681)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.waitForTask(
+          indexName = "wait-task-scala",
+          taskID = 123L
+        ),
+        Duration.Inf
+      )
+      assert(parse(write(res)) == parse("{\"status\":\"published\"}"))
+    }
+  }
+
 }

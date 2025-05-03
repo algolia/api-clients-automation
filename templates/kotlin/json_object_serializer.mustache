@@ -2,7 +2,7 @@ internal object {{classname}}Serializer : KSerializer<{{classname}}> {
 
     override val descriptor: SerialDescriptor = buildClassSerialDescriptor("{{classname}}") {
         {{#vars}}
-        element<{{{datatypeWithEnum}}}>("{{{vendorExtensions.x-base-name-literal}}}"{{^required}}, isOptional = true{{/required}})
+        element<{{#isAnyType}}JsonElement{{/isAnyType}}{{^isAnyType}}{{{datatypeWithEnum}}}{{/isAnyType}}>("{{{vendorExtensions.x-base-name-literal}}}"{{^required}}, isOptional = true{{/required}})
         {{/vars}}
     }
 

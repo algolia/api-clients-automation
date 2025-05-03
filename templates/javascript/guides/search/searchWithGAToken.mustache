@@ -1,0 +1,21 @@
+{{> snippets/import}}
+import type { SearchParams } from 'algoliasearch';
+
+const getGoogleAnalyticsUserIdFromBrowserCookie = (_: string) => {
+  return ""; // Implement your logic here
+}
+
+{{> snippets/init}}
+
+const userToken = getGoogleAnalyticsUserIdFromBrowserCookie('_ga');
+let searchParams: SearchParams = {
+  query: "<YOUR_SEARCH_QUERY>",
+  userToken
+};
+
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+
+const loggedInUser: string | undefined = undefined;
+searchParams.userToken = loggedInUser ?? userToken;
+
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}

@@ -23,6 +23,9 @@ module Algolia
       # A descriptive name for your transformation of what it does.
       attr_accessor :description
 
+      # Owner of the resource.
+      attr_accessor :owner
+
       # Date of creation in RFC 3339 format.
       attr_accessor :created_at
 
@@ -37,6 +40,7 @@ module Algolia
           :code => :code,
           :name => :name,
           :description => :description,
+          :owner => :owner,
           :created_at => :createdAt,
           :updated_at => :updatedAt
         }
@@ -50,6 +54,7 @@ module Algolia
           :code => :"String",
           :name => :"String",
           :description => :"String",
+          :owner => :"String",
           :created_at => :"String",
           :updated_at => :"String"
         }
@@ -58,7 +63,9 @@ module Algolia
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new(
-          []
+          [
+            :owner
+          ]
         )
       end
 
@@ -113,6 +120,10 @@ module Algolia
           self.description = attributes[:description]
         end
 
+        if attributes.key?(:owner)
+          self.owner = attributes[:owner]
+        end
+
         if attributes.key?(:created_at)
           self.created_at = attributes[:created_at]
         else
@@ -121,6 +132,8 @@ module Algolia
 
         if attributes.key?(:updated_at)
           self.updated_at = attributes[:updated_at]
+        else
+          self.updated_at = nil
         end
       end
 
@@ -134,6 +147,7 @@ module Algolia
           code == other.code &&
           name == other.name &&
           description == other.description &&
+          owner == other.owner &&
           created_at == other.created_at &&
           updated_at == other.updated_at
       end
@@ -147,7 +161,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [transformation_id, authentication_ids, code, name, description, created_at, updated_at].hash
+        [transformation_id, authentication_ids, code, name, description, owner, created_at, updated_at].hash
       end
 
       # Builds the object from hash

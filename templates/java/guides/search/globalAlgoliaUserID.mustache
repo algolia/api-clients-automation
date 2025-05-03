@@ -1,0 +1,15 @@
+package com.algolia;
+
+{{> snippets/import}}
+
+public class globalAlgoliaUserID {
+
+  public static void main(String[] args) throws Exception {
+    SearchClient client = new SearchClient(
+      "ALGOLIA_APPLICATION_ID",
+      "ALGOLIA_API_KEY",
+      ClientOptions.builder().addDefaultHeader("X-Algolia-UserToken", "test-user-123").build()
+    );
+    client.close();
+  }
+}

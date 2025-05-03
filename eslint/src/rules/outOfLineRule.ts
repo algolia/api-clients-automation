@@ -1,4 +1,5 @@
 import type { RuleModule } from 'eslint-plugin-yml/lib/types.js';
+// @ts-ignore
 import { createRule } from 'eslint-plugin-yml/lib/utils';
 
 import { isBlockScalar, isMapping, isNullable, isPairWithKey, isScalar } from '../utils.js';

@@ -104,7 +104,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -303,13 +303,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customGet[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customGet[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -333,7 +333,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -532,13 +532,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customPost[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPost[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -562,7 +562,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -761,13 +761,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customPut[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPut[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -785,7 +785,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -986,13 +986,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customDelete[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customDelete[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1203,12 +1203,12 @@ paths:
             )
 
             // Call the API
-            val response = client.getAllConfigs(
+            val response = Await.result(
+              client.getAllConfigs(
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1581,30 +1581,30 @@ paths:
             )
 
             // Call the API
-            val response = client.createConfig(
-              configurationWithIndex = ConfigurationWithIndex(
-                indexName = "<YOUR_INDEX_NAME>",
-                sourceIndices = Seq(
-                  SourceIndex(
-                    indexName = "<YOUR_INDEX_NAME>",
-                    facets = Some(
-                      Seq(
-                        Facet(
-                          attribute = Some("test")
+            val response = Await.result(
+              client.createConfig(
+                configurationWithIndex = ConfigurationWithIndex(
+                  indexName = "<YOUR_INDEX_NAME>",
+                  sourceIndices = Seq(
+                    SourceIndex(
+                      indexName = "<YOUR_INDEX_NAME>",
+                      facets = Some(
+                        Seq(
+                          Facet(
+                            attribute = Some("test")
+                          )
                         )
-                      )
-                    ),
-                    generate = Some(Seq(Seq("facetA", "facetB"), Seq("facetC")))
-                  )
-                ),
-                languages = Some(Languages(Seq("french"))),
-                exclude = Some(Seq("test"))
-              )
+                      ),
+                      generate = Some(Seq(Seq("facetA", "facetB"), Seq("facetC")))
+                    )
+                  ),
+                  languages = Some(Languages(Seq("french"))),
+                  exclude = Some(Seq("test"))
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1632,11 +1632,13 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request GET \
+            curl --request POST \
               --url https://query-suggestions.us.algolia.com/1/configs \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"indexName":"ALGOLIA_INDEX_NAME","sourceIndices":[{"indexName":"products","replicas":false,"analyticsTags":["lorem"],"facets":[{"attribute":"category","amount":3},{"attribute":"brand","amount":2}],"minHits":5,"minLetters":4,"generate":[["color","brand"]],"external":["lorem"]}],"languages":["lorem"],"exclude":["lorem"],"enablePersonalization":false,"allowSpecialCharacters":false}'
   /1/configs/{indexName}:
     get:
       tags:
@@ -1842,13 +1844,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getConfig(
-              indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.getConfig(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1864,6 +1866,14 @@ paths:
             "<YOUR_INDEX_NAME>")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://query-suggestions.us.algolia.com/1/configs/ALGOLIA_INDEX_NAME \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     put:
       tags:
         - configurations
@@ -1899,6 +1909,377 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalError-2'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new QuerySuggestionsClient(
+              new QuerySuggestionsConfig(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
+            );
+
+            // Call the API
+            var response = await client.UpdateConfigAsync(
+              "<YOUR_INDEX_NAME>",
+              new Configuration
+              {
+                SourceIndices = new List<SourceIndex>
+                {
+                  new SourceIndex
+                  {
+                    IndexName = "<YOUR_INDEX_NAME>",
+                    Facets = new List<Facet> { new Facet { Attribute = "test" } },
+                    Generate = new List<List<string>>
+                    {
+                      new List<string> { "facetA", "facetB" },
+                      new List<string> { "facetC" },
+                    },
+                  },
+                },
+                Languages = new Languages(new List<string> { "french" }),
+                Exclude = new List<string> { "test" },
+              }
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            suggestions.ALGOLIA_APPLICATION_REGION
+
+            client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", suggestions.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.UpdateConfig(client.NewApiUpdateConfigRequest(
+              "<YOUR_INDEX_NAME>",
+              suggestions.NewEmptyConfiguration().SetSourceIndices(
+                []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("<YOUR_INDEX_NAME>").SetFacets(
+                  []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
+                  [][]string{
+                    []string{"facetA", "facetB"},
+                    []string{"facetC"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(
+                []string{"french"})).SetExclude(
+                []string{"test"})))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            QuerySuggestionsClient client = new
+            QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.updateConfig(
+              "<YOUR_INDEX_NAME>",
+              new Configuration()
+                .setSourceIndices(
+                  Arrays.asList(
+                    new SourceIndex()
+                      .setIndexName("<YOUR_INDEX_NAME>")
+                      .setFacets(Arrays.asList(new Facet().setAttribute("test")))
+                      .setGenerate(Arrays.asList(Arrays.asList("facetA", "facetB"), Arrays.asList("facetC")))
+                  )
+                )
+                .setLanguages(Languages.of(Arrays.asList("french")))
+                .setExclude(Arrays.asList("test"))
+            );
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initQuerySuggestions({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.updateConfig({
+              indexName: 'theIndexName',
+              configuration: {
+                sourceIndices: [
+                  { indexName: 'testIndex', facets: [{ attribute: 'test' }], generate: [['facetA', 'facetB'], ['facetC']] },
+                ],
+                languages: ['french'],
+                exclude: ['test'],
+              },
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId =
+            "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region =
+            "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.updateConfig(
+              indexName = "<YOUR_INDEX_NAME>",
+              configuration = Configuration(
+                sourceIndices = listOf(
+                  SourceIndex(
+                    indexName = "<YOUR_INDEX_NAME>",
+                    facets = listOf(
+                      Facet(
+                        attribute = "test",
+                      ),
+                    ),
+                    generate = listOf(listOf("facetA", "facetB"), listOf("facetC")),
+                  ),
+                ),
+                languages = Languages.of(listOf("french")),
+                exclude = listOf("test"),
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->updateConfig(
+                '<YOUR_INDEX_NAME>',
+                ['sourceIndices' => [
+                    ['indexName' => '<YOUR_INDEX_NAME>',
+                        'facets' => [
+                            ['attribute' => 'test',
+                            ],
+                        ],
+                        'generate' => [
+                            [
+                                'facetA',
+
+                                'facetB',
+                            ],
+
+                            [
+                                'facetC',
+                            ],
+                        ],
+                    ],
+                ],
+                    'languages' => [
+                        'french',
+                    ],
+                    'exclude' => [
+                        'test',
+                    ],
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use QuerySuggestionsClient
+            instead, which exposes the exact same methods.
+
+            client = QuerySuggestionsClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.update_config(
+                index_name="<YOUR_INDEX_NAME>",
+                configuration={
+                    "sourceIndices": [
+                        {
+                            "indexName": "<YOUR_INDEX_NAME>",
+                            "facets": [
+                                {
+                                    "attribute": "test",
+                                },
+                            ],
+                            "generate": [
+                                [
+                                    "facetA",
+                                    "facetB",
+                                ],
+                                [
+                                    "facetC",
+                                ],
+                            ],
+                        },
+                    ],
+                    "languages": [
+                        "french",
+                    ],
+                    "exclude": [
+                        "test",
+                    ],
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::QuerySuggestionsClient.create(
+              "ALGOLIA_APPLICATION_ID",
+              "ALGOLIA_API_KEY",
+              "ALGOLIA_APPLICATION_REGION"
+            )
+
+            # Call the API
+            response = client.update_config(
+              "<YOUR_INDEX_NAME>",
+              Algolia::QuerySuggestions::Configuration.new(
+                source_indices: [
+                  Algolia::QuerySuggestions::SourceIndex.new(
+                    index_name: "<YOUR_INDEX_NAME>",
+                    facets: [Algolia::QuerySuggestions::Facet.new(attribute: "test")],
+                    generate: [["facetA", "facetB"], ["facetC"]]
+                  )
+                ],
+                languages: ["french"],
+                exclude: ["test"]
+              )
+            )
+
+            # >LOG
+            # use the class directly
+            puts(response)
+
+            # print the JSON response
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = QuerySuggestionsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.updateConfig(
+                indexName = "<YOUR_INDEX_NAME>",
+                configuration = Configuration(
+                  sourceIndices = Seq(
+                    SourceIndex(
+                      indexName = "<YOUR_INDEX_NAME>",
+                      facets = Some(
+                        Seq(
+                          Facet(
+                            attribute = Some("test")
+                          )
+                        )
+                      ),
+                      generate = Some(Seq(Seq("facetA", "facetB"), Seq("facetC")))
+                    )
+                  ),
+                  languages = Some(Languages(Seq("french"))),
+                  exclude = Some(Seq("test"))
+                )
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try QuerySuggestionsClient(appID:
+            "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.updateConfig(
+                indexName: "<YOUR_INDEX_NAME>",
+                configuration: QuerySuggestionsConfiguration(
+                    sourceIndices: [SourceIndex(
+                        indexName: "<YOUR_INDEX_NAME>",
+                        facets: [Facet(attribute: "test")],
+                        generate: [["facetA", "facetB"], ["facetC"]]
+                    )],
+                    languages: QuerySuggestionsLanguages.arrayOfString(["french"]),
+                    exclude: ["test"]
+                )
+            )
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PUT \
+              --url https://query-suggestions.us.algolia.com/1/configs/ALGOLIA_INDEX_NAME \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"sourceIndices":[{"indexName":"products","replicas":false,"analyticsTags":["lorem"],"facets":[{"attribute":"category","amount":3},{"attribute":"brand","amount":2}],"minHits":5,"minLetters":4,"generate":[["color","brand"]],"external":["lorem"]}],"languages":["lorem"],"exclude":["lorem"],"enablePersonalization":false,"allowSpecialCharacters":false}'
     delete:
       tags:
         - configurations
@@ -1934,6 +2315,218 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalError-2'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new QuerySuggestionsClient(
+              new QuerySuggestionsConfig(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
+            );
+
+            // Call the API
+            var response = await client.DeleteConfigAsync("<YOUR_INDEX_NAME>");
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            suggestions.ALGOLIA_APPLICATION_REGION
+
+            client, err := suggestions.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", suggestions.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.DeleteConfig(client.NewApiDeleteConfigRequest(
+              "<YOUR_INDEX_NAME>"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            QuerySuggestionsClient client = new
+            QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.deleteConfig("<YOUR_INDEX_NAME>");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initQuerySuggestions({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.deleteConfig({ indexName:
+            'theIndexName' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId =
+            "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region =
+            "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.deleteConfig(
+              indexName = "<YOUR_INDEX_NAME>",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->deleteConfig(
+                '<YOUR_INDEX_NAME>',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use QuerySuggestionsClient
+            instead, which exposes the exact same methods.
+
+            client = QuerySuggestionsClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.delete_config(
+                index_name="<YOUR_INDEX_NAME>",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::QuerySuggestionsClient.create(
+              "ALGOLIA_APPLICATION_ID",
+              "ALGOLIA_API_KEY",
+              "ALGOLIA_APPLICATION_REGION"
+            )
+
+            # Call the API
+            response = client.delete_config("<YOUR_INDEX_NAME>")
+
+            # >LOG
+            # use the class directly
+            puts(response)
+
+            # print the JSON response
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = QuerySuggestionsClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.deleteConfig(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try QuerySuggestionsClient(appID:
+            "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.deleteConfig(indexName:
+            "<YOUR_INDEX_NAME>")
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://query-suggestions.us.algolia.com/1/configs/ALGOLIA_INDEX_NAME \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/configs/{indexName}/status:
     get:
       tags:
@@ -2170,13 +2763,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getConfigStatus(
-              indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.getConfigStatus(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2192,6 +2785,14 @@ paths:
             "<YOUR_INDEX_NAME>")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://query-suggestions.us.algolia.com/1/configs/ALGOLIA_INDEX_NAME/status \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/logs/{indexName}:
     get:
       tags:
@@ -2421,13 +3022,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getLogFile(
-              indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.getLogFile(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2443,6 +3044,14 @@ paths:
             "<YOUR_INDEX_NAME>")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://query-suggestions.us.algolia.com/1/logs/ALGOLIA_INDEX_NAME \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
 components:
   securitySchemes:
     appId:
@@ -2507,7 +3116,7 @@ components:
       title: indexName
       type: string
       description: Name of the Query Suggestions index (case-sensitive).
-      example: products_query_suggestions
+      example: ALGOLIA_INDEX_NAME
     AnalyticsTags:
       title: analyticsTags
       description: >

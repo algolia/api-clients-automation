@@ -78,7 +78,7 @@ class IngestionTest {
           destinationCreate = DestinationCreate(
             type = DestinationType.entries.first { it.value == "search" },
             name = "destinationName",
-            input = DestinationIndexName(
+            input = DestinationInput(
               indexName = "full_name______",
             ),
             authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -101,7 +101,7 @@ class IngestionTest {
           destinationCreate = DestinationCreate(
             type = DestinationType.entries.first { it.value == "search" },
             name = "destinationName",
-            input = DestinationIndexName(
+            input = DestinationInput(
               indexName = "full_name______",
             ),
             transformationIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
@@ -131,6 +131,7 @@ class IngestionTest {
               locales = listOf("de"),
               url = "http://commercetools.com",
               projectKey = "keyID",
+              productQueryPredicate = "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))",
             ),
             authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           ),
@@ -139,7 +140,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/1/sources".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}""", it.body)
+        assertJsonBody("""{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID","productQueryPredicate":"masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}""", it.body)
       },
     )
   }

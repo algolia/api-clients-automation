@@ -1,0 +1,22 @@
+{{> snippets/import}}
+import com.algolia.client.model.search.*
+
+suspend fun searchWithAnalyticsAndHeader() {
+  {{> snippets/init}}
+
+  /*
+  '94.228.178.246' should be replaced with your user's IP address.
+  Depending on your stack there are multiple ways to get this information.
+  */
+  val ip = "94.228.178.246"
+  val query = "query"
+
+  val searchParams =
+    SearchParamsObject(
+      query = query,
+      analytics = true
+  )
+
+  client.{{#dynamicSnippet}}searchWithSearchParamsAndForwardedHeader{{/dynamicSnippet}}
+}
+

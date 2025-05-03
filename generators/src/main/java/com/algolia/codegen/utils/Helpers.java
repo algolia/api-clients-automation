@@ -142,8 +142,7 @@ public class Helpers {
         }
 
         // This is used for hosts like `insights` that uses `.io`
-        URL url = new URL(server.url);
-        regionalHost = url.getHost();
+        regionalHost = server.url.replace("http://", "").replace("https://", "");
       }
 
       if (!hasRegionalHost) {

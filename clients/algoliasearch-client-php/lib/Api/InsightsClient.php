@@ -6,6 +6,7 @@ namespace Algolia\AlgoliaSearch\Api;
 
 use Algolia\AlgoliaSearch\Algolia;
 use Algolia\AlgoliaSearch\Configuration\InsightsConfig;
+use Algolia\AlgoliaSearch\Model\Insights\EventsResponse;
 use Algolia\AlgoliaSearch\Model\Insights\InsightsEvents;
 use Algolia\AlgoliaSearch\ObjectSerializer;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
@@ -20,7 +21,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class InsightsClient
 {
-    public const VERSION = '4.13.0';
+    public const VERSION = '4.18.5';
 
     /**
      * @var ApiWrapperInterface
@@ -109,7 +110,7 @@ class InsightsClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -148,7 +149,7 @@ class InsightsClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -187,7 +188,7 @@ class InsightsClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -227,7 +228,7 @@ class InsightsClient
     }
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      *
      * @param string $path           Path of the endpoint, anything after \"/1\" must be specified. (required)
      * @param array  $parameters     Query parameters to apply to the current query. (optional)
@@ -301,14 +302,14 @@ class InsightsClient
     /**
      * Sends a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
      *
-     * @param array $insightsEvents insightsEvents (required)
-     *                              - $insightsEvents['events'] => (array) Click and conversion events.  **All** events must be valid, otherwise the API returns an error. (required)
+     * @param array|InsightsEvents $insightsEvents insightsEvents (required)
+     *                                             - $insightsEvents['events'] => (array) Click and conversion events.  **All** events must be valid, otherwise the API returns an error. (required)
      *
      * @see InsightsEvents
      *
      * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
-     * @return \Algolia\AlgoliaSearch\Model\Insights\EventsResponse|array<string, mixed>
+     * @return array<string, mixed>|EventsResponse
      */
     public function pushEvents($insightsEvents, $requestOptions = [])
     {

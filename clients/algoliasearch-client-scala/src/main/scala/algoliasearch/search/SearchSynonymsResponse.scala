@@ -33,8 +33,7 @@
   */
 package algoliasearch.search
 
-import org.json4s.MonadicJValue.jvalueToMonadic
-import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, TypeInfo}
+import org.json4s._
 
 /** SearchSynonymsResponse
   *
@@ -64,7 +63,7 @@ class SearchSynonymsResponseSerializer extends Serializer[SearchSynonymsResponse
             case (name, _) if fields.contains(name) => true
             case _                                  => false
           }
-          additionalProperties.values match {
+          additionalProperties match {
             case JObject(fieldsList) => obj copy (additionalProperties = Some(fieldsList))
             case _                   => obj
           }
@@ -75,10 +74,11 @@ class SearchSynonymsResponseSerializer extends Serializer[SearchSynonymsResponse
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = {
     case value: SearchSynonymsResponse =>
       val formats = format - this // remove current serializer from formats to avoid stackoverflow
+      val baseObj = Extraction.decompose(value.copy(additionalProperties = None))(formats)
+
       value.additionalProperties match {
-        case Some(fields) =>
-          Extraction.decompose(value.copy(additionalProperties = None))(formats) merge JObject(fields)
-        case None => Extraction.decompose(value)(formats)
+        case Some(fields) => baseObj merge JObject(fields)
+        case None         => baseObj
       }
   }
 }

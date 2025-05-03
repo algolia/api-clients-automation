@@ -12,16 +12,18 @@ import kotlinx.serialization.json.*
  * @param destinationID Universally unique identifier (UUID) of a destination resource.
  * @param enabled Whether the task is enabled.
  * @param createdAt Date of creation in RFC 3339 format.
+ * @param updatedAt Date of last update in RFC 3339 format.
  * @param cron Cron expression for the task's schedule.
  * @param lastRun The last time the scheduled task ran in RFC 3339 format.
  * @param nextRun The next scheduled run of the task in RFC 3339 format.
+ * @param owner Owner of the resource.
  * @param input
  * @param failureThreshold Maximum accepted percentage of failures for a task run to finish successfully.
  * @param action
+ * @param subscriptionAction
  * @param cursor Date of the last cursor in RFC 3339 format.
  * @param notifications
  * @param policies
- * @param updatedAt Date of last update in RFC 3339 format.
  */
 @Serializable
 public data class Task(
@@ -41,6 +43,9 @@ public data class Task(
   /** Date of creation in RFC 3339 format. */
   @SerialName(value = "createdAt") val createdAt: String,
 
+  /** Date of last update in RFC 3339 format. */
+  @SerialName(value = "updatedAt") val updatedAt: String,
+
   /** Cron expression for the task's schedule. */
   @SerialName(value = "cron") val cron: String? = null,
 
@@ -50,6 +55,9 @@ public data class Task(
   /** The next scheduled run of the task in RFC 3339 format. */
   @SerialName(value = "nextRun") val nextRun: String? = null,
 
+  /** Owner of the resource. */
+  @SerialName(value = "owner") val owner: String? = null,
+
   @SerialName(value = "input") val input: TaskInput? = null,
 
   /** Maximum accepted percentage of failures for a task run to finish successfully. */
@@ -57,13 +65,12 @@ public data class Task(
 
   @SerialName(value = "action") val action: ActionType? = null,
 
+  @SerialName(value = "subscriptionAction") val subscriptionAction: ActionType? = null,
+
   /** Date of the last cursor in RFC 3339 format. */
   @SerialName(value = "cursor") val cursor: String? = null,
 
   @SerialName(value = "notifications") val notifications: Notifications? = null,
 
   @SerialName(value = "policies") val policies: Policies? = null,
-
-  /** Date of last update in RFC 3339 format. */
-  @SerialName(value = "updatedAt") val updatedAt: String? = null,
 )

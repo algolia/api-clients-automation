@@ -108,8 +108,8 @@ public abstract class TestsGenerator {
 
   protected void addRequestOptions(ParametersWithDataType paramsType, RequestOptions req, Map<String, Object> output)
     throws JsonMappingException, JsonProcessingException {
+    output.put("hasRequestOptions", req != null);
     if (req != null) {
-      output.put("hasRequestOptions", true);
       Map<String, Object> requestOptions = new HashMap<>();
       if (req.queryParameters != null) {
         Map<String, Object> queryParameters = new HashMap<>();

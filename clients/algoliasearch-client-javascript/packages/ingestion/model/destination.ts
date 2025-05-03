@@ -19,6 +19,11 @@ export type Destination = {
    */
   name: string;
 
+  /**
+   * Owner of the resource.
+   */
+  owner?: string | null;
+
   input: DestinationInput;
 
   /**
@@ -29,7 +34,7 @@ export type Destination = {
   /**
    * Date of last update in RFC 3339 format.
    */
-  updatedAt?: string;
+  updatedAt: string;
 
   /**
    * Universally unique identifier (UUID) of an authentication resource.

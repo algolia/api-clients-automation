@@ -18,7 +18,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class IngestionTest extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   def testClient(
       appId: String = "appId",
@@ -97,6 +97,36 @@ class IngestionTest extends AnyFunSuite {
     assert(echo.lastResponse.get.responseTimeout == 25000)
   }
 
+  test("can leave call opened for a long time") {
+
+    val client = IngestionClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      region = "us",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6676)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.customGet[JObject](
+        path = "1/long-wait"
+      ),
+      Duration.Inf
+    )
+    assert(parse(write(res)) == parse("{\"message\":\"OK\"}"))
+  }
+
   test("endpoint level timeout") {
     val (client, echo) = testClient()
 
@@ -159,7 +189,7 @@ class IngestionTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.13.0\).*""".r
+    val regexp = """^Algolia for Scala \(2.17.5\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }
@@ -167,7 +197,6 @@ class IngestionTest extends AnyFunSuite {
   test("uses the correct region") {
 
     val (client, echo) = testClient(appId = "my-app-id", apiKey = "my-api-key", region = "us")
-
     Await.ready(
       client.getSource(
         sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
@@ -212,16 +241,14 @@ class IngestionTest extends AnyFunSuite {
         ),
         Duration.Inf
       )
-      assert(write(res) == "{\"headerAPIKeyValue\":\"test-api-key\"}")
+      assert(parse(write(res)) == parse("{\"headerAPIKeyValue\":\"test-api-key\"}"))
     }
-
     {
 
       client.setClientApiKey(
         apiKey = "updated-api-key"
       )
     }
-
     {
       var res = Await.result(
         client.customGet[JObject](
@@ -229,7 +256,8 @@ class IngestionTest extends AnyFunSuite {
         ),
         Duration.Inf
       )
-      assert(write(res) == "{\"headerAPIKeyValue\":\"updated-api-key\"}")
+      assert(parse(write(res)) == parse("{\"headerAPIKeyValue\":\"updated-api-key\"}"))
     }
   }
+
 }

@@ -34,6 +34,7 @@ compositionRankingInfo:
       type: object
       additionalProperties:
         title: compositionIdRankingInfo
+        x-additionalPropertiesName: composition-id
         type: object
         properties:
           index:

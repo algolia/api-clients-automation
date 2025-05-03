@@ -52,7 +52,7 @@ function addRoutes(app: Express): void {
     }),
   );
 
-  app.post('/1/indexes/*/queries', (req, res) => {
+  app.post('/1/indexes/\\*/queries', (req, res) => {
     const lang = req.body.requests[0].indexName.replace('cts_e2e_benchmark_search_', '');
     if (!benchmarkStatus[lang]) {
       benchmarkStatus[lang] = { requestTimes: [] };

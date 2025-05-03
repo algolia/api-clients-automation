@@ -41,7 +41,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -91,7 +91,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -141,7 +141,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -185,7 +185,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -289,6 +289,16 @@ paths:
             // use typed response
 
             console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/compositions/lorem/run \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"params":{"query":"","filters":"(category:Book OR category:Ebook) AND _tags:published","page":0,"getRankingInfo":true,"relevancyStrictness":42,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"hitsPerPage":20,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"queryLanguages":["es"],"naturalLanguages":[],"enableRules":true,"ruleContexts":["mobile"],"userToken":"test-user-123","clickAnalytics":false,"analytics":true,"analyticsTags":[],"enableABTest":true,"enableReRanking":true}}'
   /1/compositions/{compositionID}/facets/{facetName}/query:
     post:
       tags:
@@ -380,6 +390,16 @@ paths:
             // use typed response
 
             console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/compositions/lorem/facets/lorem/query \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"params":{"query":"","maxFacetHits":10,"searchQuery":{"query":"","filters":"(category:Book OR category:Ebook) AND _tags:published","page":0,"getRankingInfo":true,"relevancyStrictness":42,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"hitsPerPage":20,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"queryLanguages":["es"],"naturalLanguages":[],"enableRules":true,"ruleContexts":["mobile"],"userToken":"test-user-123","clickAnalytics":false,"analytics":true,"analyticsTags":[],"enableABTest":true,"enableReRanking":true}}}'
   /1/compositions/{compositionID}:
     get:
       tags:
@@ -431,6 +451,14 @@ paths:
             // use typed response
 
             console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/compositions/lorem \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/compositions/*/batch:
     post:
       tags:
@@ -590,6 +618,14 @@ paths:
             // use typed response
 
             console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/compositions/lorem/rules/lorem \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/compositions/{compositionID}/rules/batch:
     post:
       tags:
@@ -685,6 +721,16 @@ paths:
             // use typed response
 
             console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/compositions/lorem/rules/batch \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"requests":[{"action":"upsert","body":{"objectID":"test-record-123","conditions":[{"pattern":"{facet:genre}","anchoring":"is","alternatives":false,"context":"mobile","filters":"genre:comedy"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"attributesToRetrieve":["author","title","content"],"restrictSearchableAttributes":["title","author"],"filters":"(category:Book OR category:Ebook) AND _tags:published","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"sumOrFiltersScores":false,"facets":["*"],"maxValuesPerFacet":100,"facetingAfterDistinct":false,"sortFacetValuesBy":"count","attributesToHighlight":["author","title","conten","content"],"attributesToSnippet":["content:80","description"],"highlightPreTag":"<em>","highlightPostTag":"</em>","snippetEllipsisText":"…","restrictHighlightAndSnippetArrays":false,"hitsPerPage":20,"length":0,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"typoTolerance":true,"allowTyposOnNumericTokens":true,"disableTypoToleranceOnAttributes":["sku"],"ignorePlurals":["ca","es"],"removeStopWords":["ca","es"],"queryLanguages":["es"],"naturalLanguages":[],"decompoundQuery":true,"enableRules":true,"ruleContexts":["mobile"],"enablePersonalization":false,"personalizationImpact":100,"queryType":"prefixLast","removeWordsIfNoResults":"firstWords","advancedSyntax":false,"optionalWords":["blue","iphone case"],"disableExactOnAttributes":["description"],"exactOnSingleWordQuery":"attribute","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"distinct":1,"getRankingInfo":true,"clickAnalytics":false,"analytics":true,"analyticsTags":[],"synonyms":true,"replaceSynonymsInHighlight":false,"minProximity":1,"responseFields":["*"],"maxFacetHits":10,"percentileComputation":true,"attributeCriteriaComputedByMinProximity":false,"enableABTest":true,"enableReRanking":true}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"attributesToRetrieve":["author","title","content"],"restrictSearchableAttributes":["title","author"],"filters":"(category:Book OR category:Ebook) AND _tags:published","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"attributesToHighlight":["author","title","conten","content"],"attributesToSnippet":["content:80","description"],"highlightPreTag":"<em>","highlightPostTag":"</em>","snippetEllipsisText":"…","restrictHighlightAndSnippetArrays":false,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"typoTolerance":true,"allowTyposOnNumericTokens":true,"disableTypoToleranceOnAttributes":["sku"],"ignorePlurals":["ca","es"],"removeStopWords":["ca","es"],"queryLanguages":["es"],"naturalLanguages":[],"decompoundQuery":true,"enableRules":true,"ruleContexts":["mobile"],"enablePersonalization":false,"personalizationImpact":100,"queryType":"prefixLast","removeWordsIfNoResults":"firstWords","advancedSyntax":false,"optionalWords":"lorem","disableExactOnAttributes":["description"],"exactOnSingleWordQuery":"attribute","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"distinct":1,"getRankingInfo":true,"clickAnalytics":false,"analytics":true,"analyticsTags":[],"synonyms":true,"replaceSynonymsInHighlight":false,"minProximity":1,"responseFields":["*"],"maxFacetHits":10,"percentileComputation":true,"attributeCriteriaComputedByMinProximity":false,"enableABTest":true,"enableReRanking":true}}},"position":0,"length":0}]}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}]}}]}'
   /1/compositions/{compositionID}/rules/search:
     post:
       tags:
@@ -792,6 +838,16 @@ paths:
             // use typed response
 
             console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/compositions/lorem/rules/search \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"query":"","anchoring":"is","context":"mobile","page":0,"hitsPerPage":20,"enabled":true}'
   /1/compositions/{compositionID}/task/{taskID}:
     get:
       tags:
@@ -854,6 +910,14 @@ paths:
             // use typed response
 
             console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/compositions/lorem/task/1506303845001 \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/compositions:
     get:
       tags:
@@ -908,13 +972,11 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request POST \
-              --url https://algolia_application_id.algolia.net/1/compositions/lorem/run \
+            curl --request GET \
+              --url 'https://algolia_application_id.algolia.net/1/compositions?page=0&hitsPerPage=100' \
               --header 'accept: application/json' \
-              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"params":{"query":"","filters":"(category:Book OR category:Ebook) AND _tags:published","page":0,"getRankingInfo":true,"relevancyStrictness":42,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"hitsPerPage":20,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"queryLanguages":["es"],"naturalLanguages":[],"enableRules":true,"ruleContexts":["mobile"],"userToken":"test-user-123","clickAnalytics":false,"analytics":true,"analyticsTags":[],"enableABTest":true,"enableReRanking":true}}'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
 components:
   securitySchemes:
     appId:
@@ -1814,7 +1876,6 @@ components:
       x-categories:
         - Advanced
     userData:
-      type: object
       example:
         settingID: f2a7b51e3503acc6a39b3784ffb84300
         pluginVersion: 1.6.0
@@ -2237,6 +2298,7 @@ components:
           type: object
           additionalProperties:
             title: compositionIdRankingInfo
+            x-additionalPropertiesName: composition-id
             type: object
             properties:
               index:
@@ -2326,6 +2388,7 @@ components:
           type: object
           additionalProperties:
             title: resultsCompositionInfoResponse
+            x-additionalPropertiesName: composition-id
             type: object
             properties:
               injectedItems:
@@ -3395,6 +3458,13 @@ components:
       example:
         - blue
         - iphone case
+      description: >-
+        List of [optional
+        words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
+      default: []
+      x-categories:
+        - Query strategy
+    optionalWords:
       description: >
         Words that should be considered optional when found in the query.
 
@@ -3432,10 +3502,6 @@ components:
 
         For more information, see [Optional
         words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
-      default: []
-      x-categories:
-        - Query strategy
-    optionalWords:
       oneOf:
         - type: string
         - type: 'null'

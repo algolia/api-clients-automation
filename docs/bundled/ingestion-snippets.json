@@ -8,11 +8,11 @@
       "createAuthenticationAlgolia": "var response = await client.CreateAuthenticationAsync(\n  new AuthenticationCreate\n  {\n    Type = Enum.Parse<AuthenticationType>(\"Algolia\"),\n    Name = \"authName\",\n    Input = new AuthInput(\n      new AuthAlgolia { AppID = \"ALGOLIA_APPLICATION_ID\", ApiKey = \"ALGOLIA_API_KEY\" }\n    ),\n  }\n);"
     },
     "createDestination": {
-      "createDestination": "var response = await client.CreateDestinationAsync(\n  new DestinationCreate\n  {\n    Type = Enum.Parse<DestinationType>(\"Search\"),\n    Name = \"destinationName\",\n    Input = new DestinationInput(new DestinationIndexName { IndexName = \"<YOUR_INDEX_NAME>\" }),\n    AuthenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  }\n);",
-      "with transformationIDs": "var response = await client.CreateDestinationAsync(\n  new DestinationCreate\n  {\n    Type = Enum.Parse<DestinationType>(\"Search\"),\n    Name = \"destinationName\",\n    Input = new DestinationInput(new DestinationIndexName { IndexName = \"<YOUR_INDEX_NAME>\" }),\n    TransformationIDs = new List<string> { \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\" },\n  }\n);"
+      "createDestination": "var response = await client.CreateDestinationAsync(\n  new DestinationCreate\n  {\n    Type = Enum.Parse<DestinationType>(\"Search\"),\n    Name = \"destinationName\",\n    Input = new DestinationInput { IndexName = \"<YOUR_INDEX_NAME>\" },\n    AuthenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  }\n);",
+      "with transformationIDs": "var response = await client.CreateDestinationAsync(\n  new DestinationCreate\n  {\n    Type = Enum.Parse<DestinationType>(\"Search\"),\n    Name = \"destinationName\",\n    Input = new DestinationInput { IndexName = \"<YOUR_INDEX_NAME>\" },\n    TransformationIDs = new List<string> { \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\" },\n  }\n);"
     },
     "createSource": {
-      "createSource": "var response = await client.CreateSourceAsync(\n  new SourceCreate\n  {\n    Type = Enum.Parse<SourceType>(\"Commercetools\"),\n    Name = \"sourceName\",\n    Input = new SourceInput(\n      new SourceCommercetools\n      {\n        StoreKeys = new List<string> { \"myStore\" },\n        Locales = new List<string> { \"de\" },\n        Url = \"http://commercetools.com\",\n        ProjectKey = \"keyID\",\n      }\n    ),\n    AuthenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  }\n);",
+      "createSource": "var response = await client.CreateSourceAsync(\n  new SourceCreate\n  {\n    Type = Enum.Parse<SourceType>(\"Commercetools\"),\n    Name = \"sourceName\",\n    Input = new SourceInput(\n      new SourceCommercetools\n      {\n        StoreKeys = new List<string> { \"myStore\" },\n        Locales = new List<string> { \"de\" },\n        Url = \"http://commercetools.com\",\n        ProjectKey = \"keyID\",\n        ProductQueryPredicate =\n          \"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\",\n      }\n    ),\n    AuthenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  }\n);",
       "push": "var response = await client.CreateSourceAsync(\n  new SourceCreate { Type = Enum.Parse<SourceType>(\"Push\"), Name = \"pushezpourentrer\" }\n);"
     },
     "createTask": {
@@ -217,11 +217,11 @@
       "createAuthenticationAlgolia": "response, err := client.CreateAuthentication(client.NewApiCreateAuthenticationRequest(\n\n  ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType(\"algolia\")).SetName(\"authName\").SetInput(ingestion.AuthAlgoliaAsAuthInput(\n    ingestion.NewEmptyAuthAlgolia().SetAppID(\"ALGOLIA_APPLICATION_ID\").SetApiKey(\"ALGOLIA_API_KEY\")))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "createDestination": {
-      "createDestination": "response, err := client.CreateDestination(client.NewApiCreateDestinationRequest(\n\n  ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType(\"search\")).SetName(\"destinationName\").SetInput(ingestion.DestinationIndexNameAsDestinationInput(\n    ingestion.NewEmptyDestinationIndexName().SetIndexName(\"<YOUR_INDEX_NAME>\"))).SetAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "with transformationIDs": "response, err := client.CreateDestination(client.NewApiCreateDestinationRequest(\n\n  ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType(\"search\")).SetName(\"destinationName\").SetInput(ingestion.DestinationIndexNameAsDestinationInput(\n    ingestion.NewEmptyDestinationIndexName().SetIndexName(\"<YOUR_INDEX_NAME>\"))).SetTransformationIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "createDestination": "response, err := client.CreateDestination(client.NewApiCreateDestinationRequest(\n\n  ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType(\"search\")).SetName(\"destinationName\").SetInput(\n    ingestion.NewEmptyDestinationInput().SetIndexName(\"<YOUR_INDEX_NAME>\")).SetAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "with transformationIDs": "response, err := client.CreateDestination(client.NewApiCreateDestinationRequest(\n\n  ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType(\"search\")).SetName(\"destinationName\").SetInput(\n    ingestion.NewEmptyDestinationInput().SetIndexName(\"<YOUR_INDEX_NAME>\")).SetTransformationIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "createSource": {
-      "createSource": "response, err := client.CreateSource(client.NewApiCreateSourceRequest(\n\n  ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType(\"commercetools\")).SetName(\"sourceName\").SetInput(ingestion.SourceCommercetoolsAsSourceInput(\n    ingestion.NewEmptySourceCommercetools().SetStoreKeys(\n      []string{\"myStore\"}).SetLocales(\n      []string{\"de\"}).SetUrl(\"http://commercetools.com\").SetProjectKey(\"keyID\"))).SetAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "createSource": "response, err := client.CreateSource(client.NewApiCreateSourceRequest(\n\n  ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType(\"commercetools\")).SetName(\"sourceName\").SetInput(ingestion.SourceCommercetoolsAsSourceInput(\n    ingestion.NewEmptySourceCommercetools().SetStoreKeys(\n      []string{\"myStore\"}).SetLocales(\n      []string{\"de\"}).SetUrl(\"http://commercetools.com\").SetProjectKey(\"keyID\").SetProductQueryPredicate(\"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\"))).SetAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "push": "response, err := client.CreateSource(client.NewApiCreateSourceRequest(\n\n  ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType(\"push\")).SetName(\"pushezpourentrer\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "createTask": {
@@ -425,11 +425,11 @@
       "createAuthenticationAlgolia": "client.createAuthentication(\n  new AuthenticationCreate()\n    .setType(AuthenticationType.ALGOLIA)\n    .setName(\"authName\")\n    .setInput(new AuthAlgolia().setAppID(\"ALGOLIA_APPLICATION_ID\").setApiKey(\"ALGOLIA_API_KEY\"))\n);"
     },
     "createDestination": {
-      "createDestination": "client.createDestination(\n  new DestinationCreate()\n    .setType(DestinationType.SEARCH)\n    .setName(\"destinationName\")\n    .setInput(new DestinationIndexName().setIndexName(\"<YOUR_INDEX_NAME>\"))\n    .setAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n);",
-      "with transformationIDs": "client.createDestination(\n  new DestinationCreate()\n    .setType(DestinationType.SEARCH)\n    .setName(\"destinationName\")\n    .setInput(new DestinationIndexName().setIndexName(\"<YOUR_INDEX_NAME>\"))\n    .setTransformationIDs(Arrays.asList(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\n);"
+      "createDestination": "client.createDestination(\n  new DestinationCreate()\n    .setType(DestinationType.SEARCH)\n    .setName(\"destinationName\")\n    .setInput(new DestinationInput().setIndexName(\"<YOUR_INDEX_NAME>\"))\n    .setAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n);",
+      "with transformationIDs": "client.createDestination(\n  new DestinationCreate()\n    .setType(DestinationType.SEARCH)\n    .setName(\"destinationName\")\n    .setInput(new DestinationInput().setIndexName(\"<YOUR_INDEX_NAME>\"))\n    .setTransformationIDs(Arrays.asList(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\n);"
     },
     "createSource": {
-      "createSource": "client.createSource(\n  new SourceCreate()\n    .setType(SourceType.COMMERCETOOLS)\n    .setName(\"sourceName\")\n    .setInput(\n      new SourceCommercetools()\n        .setStoreKeys(Arrays.asList(\"myStore\"))\n        .setLocales(Arrays.asList(\"de\"))\n        .setUrl(\"http://commercetools.com\")\n        .setProjectKey(\"keyID\")\n    )\n    .setAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n);",
+      "createSource": "client.createSource(\n  new SourceCreate()\n    .setType(SourceType.COMMERCETOOLS)\n    .setName(\"sourceName\")\n    .setInput(\n      new SourceCommercetools()\n        .setStoreKeys(Arrays.asList(\"myStore\"))\n        .setLocales(Arrays.asList(\"de\"))\n        .setUrl(\"http://commercetools.com\")\n        .setProjectKey(\"keyID\")\n        .setProductQueryPredicate(\"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\")\n    )\n    .setAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n);",
       "push": "client.createSource(new SourceCreate().setType(SourceType.PUSH).setName(\"pushezpourentrer\"));"
     },
     "createTask": {
@@ -637,7 +637,7 @@
       "with transformationIDs": "const response = await client.createDestination({\n  type: 'search',\n  name: 'destinationName',\n  input: { indexName: 'full_name______' },\n  transformationIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f'],\n});"
     },
     "createSource": {
-      "createSource": "const response = await client.createSource({\n  type: 'commercetools',\n  name: 'sourceName',\n  input: { storeKeys: ['myStore'], locales: ['de'], url: 'http://commercetools.com', projectKey: 'keyID' },\n  authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});",
+      "createSource": "const response = await client.createSource({\n  type: 'commercetools',\n  name: 'sourceName',\n  input: {\n    storeKeys: ['myStore'],\n    locales: ['de'],\n    url: 'http://commercetools.com',\n    projectKey: 'keyID',\n    productQueryPredicate: 'masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))',\n  },\n  authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});",
       "push": "const response = await client.createSource({ type: 'push', name: 'pushezpourentrer' });"
     },
     "createTask": {
@@ -841,11 +841,11 @@
       "createAuthenticationAlgolia": "var response = client.createAuthentication(\n  authenticationCreate = AuthenticationCreate(\n    type = AuthenticationType.entries.first { it.value == \"algolia\" },\n    name = \"authName\",\n    input = AuthAlgolia(\n      appID = \"ALGOLIA_APPLICATION_ID\",\n      apiKey = \"ALGOLIA_API_KEY\",\n    ),\n  ),\n)"
     },
     "createDestination": {
-      "createDestination": "var response = client.createDestination(\n  destinationCreate = DestinationCreate(\n    type = DestinationType.entries.first { it.value == \"search\" },\n    name = \"destinationName\",\n    input = DestinationIndexName(\n      indexName = \"<YOUR_INDEX_NAME>\",\n    ),\n    authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ),\n)",
-      "with transformationIDs": "var response = client.createDestination(\n  destinationCreate = DestinationCreate(\n    type = DestinationType.entries.first { it.value == \"search\" },\n    name = \"destinationName\",\n    input = DestinationIndexName(\n      indexName = \"<YOUR_INDEX_NAME>\",\n    ),\n    transformationIDs = listOf(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"),\n  ),\n)"
+      "createDestination": "var response = client.createDestination(\n  destinationCreate = DestinationCreate(\n    type = DestinationType.entries.first { it.value == \"search\" },\n    name = \"destinationName\",\n    input = DestinationInput(\n      indexName = \"<YOUR_INDEX_NAME>\",\n    ),\n    authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ),\n)",
+      "with transformationIDs": "var response = client.createDestination(\n  destinationCreate = DestinationCreate(\n    type = DestinationType.entries.first { it.value == \"search\" },\n    name = \"destinationName\",\n    input = DestinationInput(\n      indexName = \"<YOUR_INDEX_NAME>\",\n    ),\n    transformationIDs = listOf(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"),\n  ),\n)"
     },
     "createSource": {
-      "createSource": "var response = client.createSource(\n  sourceCreate = SourceCreate(\n    type = SourceType.entries.first { it.value == \"commercetools\" },\n    name = \"sourceName\",\n    input = SourceCommercetools(\n      storeKeys = listOf(\"myStore\"),\n      locales = listOf(\"de\"),\n      url = \"http://commercetools.com\",\n      projectKey = \"keyID\",\n    ),\n    authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ),\n)",
+      "createSource": "var response = client.createSource(\n  sourceCreate = SourceCreate(\n    type = SourceType.entries.first { it.value == \"commercetools\" },\n    name = \"sourceName\",\n    input = SourceCommercetools(\n      storeKeys = listOf(\"myStore\"),\n      locales = listOf(\"de\"),\n      url = \"http://commercetools.com\",\n      projectKey = \"keyID\",\n      productQueryPredicate = \"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\",\n    ),\n    authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ),\n)",
       "push": "var response = client.createSource(\n  sourceCreate = SourceCreate(\n    type = SourceType.entries.first { it.value == \"push\" },\n    name = \"pushezpourentrer\",\n  ),\n)"
     },
     "createTask": {
@@ -1053,7 +1053,7 @@
       "with transformationIDs": "$response = $client->createDestination(\n    ['type' => 'search',\n        'name' => 'destinationName',\n        'input' => ['indexName' => '<YOUR_INDEX_NAME>',\n        ],\n        'transformationIDs' => [\n            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n        ],\n    ],\n);"
     },
     "createSource": {
-      "createSource": "$response = $client->createSource(\n    ['type' => 'commercetools',\n        'name' => 'sourceName',\n        'input' => ['storeKeys' => [\n            'myStore',\n        ],\n            'locales' => [\n                'de',\n            ],\n            'url' => 'http://commercetools.com',\n            'projectKey' => 'keyID',\n        ],\n        'authenticationID' => '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ],\n);",
+      "createSource": "$response = $client->createSource(\n    ['type' => 'commercetools',\n        'name' => 'sourceName',\n        'input' => ['storeKeys' => [\n            'myStore',\n        ],\n            'locales' => [\n                'de',\n            ],\n            'url' => 'http://commercetools.com',\n            'projectKey' => 'keyID',\n            'productQueryPredicate' => 'masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))',\n        ],\n        'authenticationID' => '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ],\n);",
       "push": "$response = $client->createSource(\n    ['type' => 'push',\n        'name' => 'pushezpourentrer',\n    ],\n);"
     },
     "createTask": {
@@ -1261,7 +1261,7 @@
       "with transformationIDs": "response = client.create_destination(\n    destination_create={\n        \"type\": \"search\",\n        \"name\": \"destinationName\",\n        \"input\": {\n            \"indexName\": \"<YOUR_INDEX_NAME>\",\n        },\n        \"transformationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n        ],\n    },\n)"
     },
     "createSource": {
-      "createSource": "response = client.create_source(\n    source_create={\n        \"type\": \"commercetools\",\n        \"name\": \"sourceName\",\n        \"input\": {\n            \"storeKeys\": [\n                \"myStore\",\n            ],\n            \"locales\": [\n                \"de\",\n            ],\n            \"url\": \"http://commercetools.com\",\n            \"projectKey\": \"keyID\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)",
+      "createSource": "response = client.create_source(\n    source_create={\n        \"type\": \"commercetools\",\n        \"name\": \"sourceName\",\n        \"input\": {\n            \"storeKeys\": [\n                \"myStore\",\n            ],\n            \"locales\": [\n                \"de\",\n            ],\n            \"url\": \"http://commercetools.com\",\n            \"projectKey\": \"keyID\",\n            \"productQueryPredicate\": 'masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))',\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)",
       "push": "response = client.create_source(\n    source_create={\n        \"type\": \"push\",\n        \"name\": \"pushezpourentrer\",\n    },\n)"
     },
     "createTask": {
@@ -1465,11 +1465,11 @@
       "createAuthenticationAlgolia": "response = client.create_authentication(\n  Algolia::Ingestion::AuthenticationCreate.new(\n    type: \"algolia\",\n    name: \"authName\",\n    input: Algolia::Ingestion::AuthAlgolia.new(app_id: \"ALGOLIA_APPLICATION_ID\", api_key: \"ALGOLIA_API_KEY\")\n  )\n)"
     },
     "createDestination": {
-      "createDestination": "response = client.create_destination(\n  Algolia::Ingestion::DestinationCreate.new(\n    type: \"search\",\n    name: \"destinationName\",\n    input: Algolia::Ingestion::DestinationIndexName.new(index_name: \"<YOUR_INDEX_NAME>\"),\n    authentication_id: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  )\n)",
-      "with transformationIDs": "response = client.create_destination(\n  Algolia::Ingestion::DestinationCreate.new(\n    type: \"search\",\n    name: \"destinationName\",\n    input: Algolia::Ingestion::DestinationIndexName.new(index_name: \"<YOUR_INDEX_NAME>\"),\n    transformation_ids: [\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"]\n  )\n)"
+      "createDestination": "response = client.create_destination(\n  Algolia::Ingestion::DestinationCreate.new(\n    type: \"search\",\n    name: \"destinationName\",\n    input: Algolia::Ingestion::DestinationInput.new(index_name: \"<YOUR_INDEX_NAME>\"),\n    authentication_id: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  )\n)",
+      "with transformationIDs": "response = client.create_destination(\n  Algolia::Ingestion::DestinationCreate.new(\n    type: \"search\",\n    name: \"destinationName\",\n    input: Algolia::Ingestion::DestinationInput.new(index_name: \"<YOUR_INDEX_NAME>\"),\n    transformation_ids: [\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"]\n  )\n)"
     },
     "createSource": {
-      "createSource": "response = client.create_source(\n  Algolia::Ingestion::SourceCreate.new(\n    type: \"commercetools\",\n    name: \"sourceName\",\n    input: Algolia::Ingestion::SourceCommercetools.new(\n      store_keys: [\"myStore\"],\n      locales: [\"de\"],\n      url: \"http://commercetools.com\",\n      project_key: \"keyID\"\n    ),\n    authentication_id: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  )\n)",
+      "createSource": "response = client.create_source(\n  Algolia::Ingestion::SourceCreate.new(\n    type: \"commercetools\",\n    name: \"sourceName\",\n    input: Algolia::Ingestion::SourceCommercetools.new(\n      store_keys: [\"myStore\"],\n      locales: [\"de\"],\n      url: \"http://commercetools.com\",\n      project_key: \"keyID\",\n      product_query_predicate: \"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\"\n    ),\n    authentication_id: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  )\n)",
       "push": "response = client.create_source(Algolia::Ingestion::SourceCreate.new(type: \"push\", name: \"pushezpourentrer\"))"
     },
     "createTask": {
@@ -1493,15 +1493,15 @@
     "customGet": {
       "allow get method for a custom path with minimal parameters": "response = client.custom_get(\"test/minimal\")",
       "allow get method for a custom path with all parameters": "response = client.custom_get(\"test/all\", {query: \"parameters with space\"})",
-      "requestOptions should be escaped too": "response = client.custom_get(\n  \"test/all\",\n  {query: \"to be overriden\"},\n  {\n    :header_params => JSON.parse(\"{\\\"x-header-1\\\":\\\"spaces are left alone\\\"}\", :symbolize_names => true),\n    :query_params => JSON.parse(\n      \"{\\\"query\\\":\\\"parameters with space\\\",\\\"and an array\\\":[\\\"array\\\",\\\"with spaces\\\"]}\",\n      :symbolize_names => true\n    )\n  }\n)"
+      "requestOptions should be escaped too": "response = client.custom_get(\n  \"test/all\",\n  {query: \"to be overriden\"},\n  {\n    :header_params => {\"x-header-1\" => \"spaces are left alone\"},\n    :query_params => JSON.parse(\n      \"{\\\"query\\\":\\\"parameters with space\\\",\\\"and an array\\\":[\\\"array\\\",\\\"with spaces\\\"]}\",\n      :symbolize_names => true\n    )\n  }\n)"
     },
     "customPost": {
       "allow post method for a custom path with minimal parameters": "response = client.custom_post(\"test/minimal\")",
       "allow post method for a custom path with all parameters": "response = client.custom_post(\"test/all\", {query: \"parameters\"}, {body: \"parameters\"})",
       "requestOptions can override default query parameters": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"query\\\":\\\"myQueryParameter\\\"}\", :symbolize_names => true)}\n)",
       "requestOptions merges query parameters with default ones": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"query2\\\":\\\"myQueryParameter\\\"}\", :symbolize_names => true)}\n)",
-      "requestOptions can override default headers": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:header_params => JSON.parse(\"{\\\"x-algolia-api-key\\\":\\\"ALGOLIA_API_KEY\\\"}\", :symbolize_names => true)}\n)",
-      "requestOptions merges headers with default ones": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:header_params => JSON.parse(\"{\\\"x-algolia-api-key\\\":\\\"ALGOLIA_API_KEY\\\"}\", :symbolize_names => true)}\n)",
+      "requestOptions can override default headers": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:header_params => {\"x-algolia-api-key\" => \"ALGOLIA_API_KEY\"}}\n)",
+      "requestOptions merges headers with default ones": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:header_params => {\"x-algolia-api-key\" => \"ALGOLIA_API_KEY\"}}\n)",
       "requestOptions queryParameters accepts booleans": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"isItWorking\\\":true}\", :symbolize_names => true)}\n)",
       "requestOptions queryParameters accepts integers": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"myParam\\\":2}\", :symbolize_names => true)}\n)",
       "requestOptions queryParameters accepts list of string": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"myParam\\\":[\\\"b and c\\\",\\\"d\\\"]}\", :symbolize_names => true)}\n)",
@@ -1669,201 +1669,204 @@
       "default": "import algoliasearch.api.IngestionClient\nimport algoliasearch.config.*"
     },
     "createAuthentication": {
-      "createAuthenticationOAuth": "val response = client.createAuthentication(\n  authenticationCreate = AuthenticationCreate(\n    `type` = AuthenticationType.withName(\"oauth\"),\n    name = \"authName\",\n    input = AuthOAuth(\n      url = \"http://test.oauth\",\n      client_id = \"myID\",\n      client_secret = \"mySecret\"\n    )\n  )\n)",
-      "createAuthenticationAlgolia": "val response = client.createAuthentication(\n  authenticationCreate = AuthenticationCreate(\n    `type` = AuthenticationType.withName(\"algolia\"),\n    name = \"authName\",\n    input = AuthAlgolia(\n      appID = \"ALGOLIA_APPLICATION_ID\",\n      apiKey = \"ALGOLIA_API_KEY\"\n    )\n  )\n)"
+      "createAuthenticationOAuth": "val response = Await.result(\n  client.createAuthentication(\n    authenticationCreate = AuthenticationCreate(\n      `type` = AuthenticationType.withName(\"oauth\"),\n      name = \"authName\",\n      input = AuthOAuth(\n        url = \"http://test.oauth\",\n        clientId = \"myID\",\n        clientSecret = \"mySecret\"\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "createAuthenticationAlgolia": "val response = Await.result(\n  client.createAuthentication(\n    authenticationCreate = AuthenticationCreate(\n      `type` = AuthenticationType.withName(\"algolia\"),\n      name = \"authName\",\n      input = AuthAlgolia(\n        appID = \"ALGOLIA_APPLICATION_ID\",\n        apiKey = \"ALGOLIA_API_KEY\"\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "createDestination": {
-      "createDestination": "val response = client.createDestination(\n  destinationCreate = DestinationCreate(\n    `type` = DestinationType.withName(\"search\"),\n    name = \"destinationName\",\n    input = DestinationIndexName(\n      indexName = \"<YOUR_INDEX_NAME>\"\n    ),\n    authenticationID = Some(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n  )\n)",
-      "with transformationIDs": "val response = client.createDestination(\n  destinationCreate = DestinationCreate(\n    `type` = DestinationType.withName(\"search\"),\n    name = \"destinationName\",\n    input = DestinationIndexName(\n      indexName = \"<YOUR_INDEX_NAME>\"\n    ),\n    transformationIDs = Some(Seq(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\n  )\n)"
+      "createDestination": "val response = Await.result(\n  client.createDestination(\n    destinationCreate = DestinationCreate(\n      `type` = DestinationType.withName(\"search\"),\n      name = \"destinationName\",\n      input = DestinationInput(\n        indexName = \"<YOUR_INDEX_NAME>\"\n      ),\n      authenticationID = Some(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "with transformationIDs": "val response = Await.result(\n  client.createDestination(\n    destinationCreate = DestinationCreate(\n      `type` = DestinationType.withName(\"search\"),\n      name = \"destinationName\",\n      input = DestinationInput(\n        indexName = \"<YOUR_INDEX_NAME>\"\n      ),\n      transformationIDs = Some(Seq(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "createSource": {
-      "createSource": "val response = client.createSource(\n  sourceCreate = SourceCreate(\n    `type` = SourceType.withName(\"commercetools\"),\n    name = \"sourceName\",\n    input = Some(\n      SourceCommercetools(\n        storeKeys = Some(Seq(\"myStore\")),\n        locales = Some(Seq(\"de\")),\n        url = \"http://commercetools.com\",\n        projectKey = \"keyID\"\n      )\n    ),\n    authenticationID = Some(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n  )\n)",
-      "push": "val response = client.createSource(\n  sourceCreate = SourceCreate(\n    `type` = SourceType.withName(\"push\"),\n    name = \"pushezpourentrer\"\n  )\n)"
+      "createSource": "val response = Await.result(\n  client.createSource(\n    sourceCreate = SourceCreate(\n      `type` = SourceType.withName(\"commercetools\"),\n      name = \"sourceName\",\n      input = Some(\n        SourceCommercetools(\n          storeKeys = Some(Seq(\"myStore\")),\n          locales = Some(Seq(\"de\")),\n          url = \"http://commercetools.com\",\n          projectKey = \"keyID\",\n          productQueryPredicate = Some(\"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\")\n        )\n      ),\n      authenticationID = Some(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "push": "val response = Await.result(\n  client.createSource(\n    sourceCreate = SourceCreate(\n      `type` = SourceType.withName(\"push\"),\n      name = \"pushezpourentrer\"\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "createTask": {
-      "task without cron": "val response = client.createTask(\n  taskCreate = TaskCreate(\n    sourceID = \"search\",\n    destinationID = \"destinationName\",\n    action = ActionType.withName(\"replace\")\n  )\n)",
-      "task with cron": "val response = client.createTask(\n  taskCreate = TaskCreate(\n    sourceID = \"search\",\n    destinationID = \"destinationName\",\n    cron = Some(\"* * * * *\"),\n    action = ActionType.withName(\"replace\"),\n    notifications = Some(\n      Notifications(\n        email = EmailNotifications(\n          enabled = Some(true)\n        )\n      )\n    ),\n    policies = Some(\n      Policies(\n        criticalThreshold = Some(8)\n      )\n    )\n  )\n)",
-      "task shopify": "val response = client.createTask(\n  taskCreate = TaskCreate(\n    sourceID = \"search\",\n    destinationID = \"destinationName\",\n    cron = Some(\"* * * * *\"),\n    action = ActionType.withName(\"replace\"),\n    input = Some(\n      DockerStreamsInput(\n        streams = Seq(\n          DockerStreams(\n            name = \"foo\",\n            syncMode = DockerStreamsSyncMode.withName(\"incremental\")\n          )\n        )\n      )\n    )\n  )\n)"
+      "task without cron": "val response = Await.result(\n  client.createTask(\n    taskCreate = TaskCreate(\n      sourceID = \"search\",\n      destinationID = \"destinationName\",\n      action = ActionType.withName(\"replace\")\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "task with cron": "val response = Await.result(\n  client.createTask(\n    taskCreate = TaskCreate(\n      sourceID = \"search\",\n      destinationID = \"destinationName\",\n      cron = Some(\"* * * * *\"),\n      action = ActionType.withName(\"replace\"),\n      notifications = Some(\n        Notifications(\n          email = EmailNotifications(\n            enabled = Some(true)\n          )\n        )\n      ),\n      policies = Some(\n        Policies(\n          criticalThreshold = Some(8)\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "task shopify": "val response = Await.result(\n  client.createTask(\n    taskCreate = TaskCreate(\n      sourceID = \"search\",\n      destinationID = \"destinationName\",\n      cron = Some(\"* * * * *\"),\n      action = ActionType.withName(\"replace\"),\n      input = Some(\n        DockerStreamsInput(\n          streams = Seq(\n            DockerStreams(\n              name = \"foo\",\n              syncMode = DockerStreamsSyncMode.withName(\"incremental\")\n            )\n          )\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "createTaskV1": {
-      "createTaskOnDemand": "val response = client.createTaskV1(\n  taskCreate = TaskCreateV1(\n    sourceID = \"search\",\n    destinationID = \"destinationName\",\n    trigger = OnDemandTriggerInput(\n      `type` = OnDemandTriggerType.withName(\"onDemand\")\n    ),\n    action = ActionType.withName(\"replace\")\n  )\n)",
-      "createTaskSchedule": "val response = client.createTaskV1(\n  taskCreate = TaskCreateV1(\n    sourceID = \"search\",\n    destinationID = \"destinationName\",\n    trigger = ScheduleTriggerInput(\n      `type` = ScheduleTriggerType.withName(\"schedule\"),\n      cron = \"* * * * *\"\n    ),\n    action = ActionType.withName(\"replace\")\n  )\n)",
-      "createTaskSubscription": "val response = client.createTaskV1(\n  taskCreate = TaskCreateV1(\n    sourceID = \"search\",\n    destinationID = \"destinationName\",\n    trigger = OnDemandTriggerInput(\n      `type` = OnDemandTriggerType.withName(\"onDemand\")\n    ),\n    action = ActionType.withName(\"replace\")\n  )\n)",
-      "task shopify": "val response = client.createTaskV1(\n  taskCreate = TaskCreateV1(\n    sourceID = \"search\",\n    destinationID = \"destinationName\",\n    trigger = OnDemandTriggerInput(\n      `type` = OnDemandTriggerType.withName(\"onDemand\")\n    ),\n    action = ActionType.withName(\"replace\"),\n    input = Some(\n      DockerStreamsInput(\n        streams = Seq(\n          DockerStreams(\n            name = \"foo\",\n            syncMode = DockerStreamsSyncMode.withName(\"incremental\")\n          )\n        )\n      )\n    )\n  )\n)"
+      "createTaskOnDemand": "val response = Await.result(\n  client.createTaskV1(\n    taskCreate = TaskCreateV1(\n      sourceID = \"search\",\n      destinationID = \"destinationName\",\n      trigger = OnDemandTriggerInput(\n        `type` = OnDemandTriggerType.withName(\"onDemand\")\n      ),\n      action = ActionType.withName(\"replace\")\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "createTaskSchedule": "val response = Await.result(\n  client.createTaskV1(\n    taskCreate = TaskCreateV1(\n      sourceID = \"search\",\n      destinationID = \"destinationName\",\n      trigger = ScheduleTriggerInput(\n        `type` = ScheduleTriggerType.withName(\"schedule\"),\n        cron = \"* * * * *\"\n      ),\n      action = ActionType.withName(\"replace\")\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "createTaskSubscription": "val response = Await.result(\n  client.createTaskV1(\n    taskCreate = TaskCreateV1(\n      sourceID = \"search\",\n      destinationID = \"destinationName\",\n      trigger = OnDemandTriggerInput(\n        `type` = OnDemandTriggerType.withName(\"onDemand\")\n      ),\n      action = ActionType.withName(\"replace\")\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "task shopify": "val response = Await.result(\n  client.createTaskV1(\n    taskCreate = TaskCreateV1(\n      sourceID = \"search\",\n      destinationID = \"destinationName\",\n      trigger = OnDemandTriggerInput(\n        `type` = OnDemandTriggerType.withName(\"onDemand\")\n      ),\n      action = ActionType.withName(\"replace\"),\n      input = Some(\n        DockerStreamsInput(\n          streams = Seq(\n            DockerStreams(\n              name = \"foo\",\n              syncMode = DockerStreamsSyncMode.withName(\"incremental\")\n            )\n          )\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "createTransformation": {
-      "default": "val response = client.createTransformation(\n  transformationCreate = TransformationCreate(\n    code = \"foo\",\n    name = \"bar\",\n    description = Some(\"baz\")\n  )\n)"
+      "default": "val response = Await.result(\n  client.createTransformation(\n    transformationCreate = TransformationCreate(\n      code = \"foo\",\n      name = \"bar\",\n      description = Some(\"baz\")\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "customDelete": {
-      "allow del method for a custom path with minimal parameters": "val response = client.customDelete[JObject](\n  path = \"test/minimal\"\n)",
-      "allow del method for a custom path with all parameters": "val response = client.customDelete[JObject](\n  path = \"test/all\",\n  parameters = Some(Map(\"query\" -> \"parameters\"))\n)"
+      "allow del method for a custom path with minimal parameters": "val response = Await.result(\n  client.customDelete[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "allow del method for a custom path with all parameters": "val response = Await.result(\n  client.customDelete[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"parameters\"))\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "customGet": {
-      "allow get method for a custom path with minimal parameters": "val response = client.customGet[JObject](\n  path = \"test/minimal\"\n)",
-      "allow get method for a custom path with all parameters": "val response = client.customGet[JObject](\n  path = \"test/all\",\n  parameters = Some(Map(\"query\" -> \"parameters with space\"))\n)",
-      "requestOptions should be escaped too": "val response = client.customGet[JObject](\n  path = \"test/all\",\n  parameters = Some(Map(\"query\" -> \"to be overriden\")),\n  requestOptions = Some(\n    RequestOptions\n      .builder()\n      .withQueryParameter(\"query\", \"parameters with space\")\n      .withQueryParameter(\"and an array\", Seq(\"array\", \"with spaces\"))\n      .withHeader(\"x-header-1\", \"spaces are left alone\")\n      .build()\n  )\n)"
+      "allow get method for a custom path with minimal parameters": "val response = Await.result(\n  client.customGet[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "allow get method for a custom path with all parameters": "val response = Await.result(\n  client.customGet[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"parameters with space\"))\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions should be escaped too": "val response = Await.result(\n  client.customGet[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"to be overriden\")),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"query\", \"parameters with space\")\n        .withQueryParameter(\"and an array\", Seq(\"array\", \"with spaces\"))\n        .withHeader(\"x-header-1\", \"spaces are left alone\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "customPost": {
-      "allow post method for a custom path with minimal parameters": "val response = client.customPost[JObject](\n  path = \"test/minimal\"\n)",
-      "allow post method for a custom path with all parameters": "val response = client.customPost[JObject](\n  path = \"test/all\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"body\", JString(\"parameters\")))))\n)",
-      "requestOptions can override default query parameters": "val response = client.customPost[JObject](\n  path = \"test/requestOptions\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n  requestOptions = Some(\n    RequestOptions\n      .builder()\n      .withQueryParameter(\"query\", \"myQueryParameter\")\n      .build()\n  )\n)",
-      "requestOptions merges query parameters with default ones": "val response = client.customPost[JObject](\n  path = \"test/requestOptions\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n  requestOptions = Some(\n    RequestOptions\n      .builder()\n      .withQueryParameter(\"query2\", \"myQueryParameter\")\n      .build()\n  )\n)",
-      "requestOptions can override default headers": "val response = client.customPost[JObject](\n  path = \"test/requestOptions\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n  requestOptions = Some(\n    RequestOptions\n      .builder()\n      .withHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n      .build()\n  )\n)",
-      "requestOptions merges headers with default ones": "val response = client.customPost[JObject](\n  path = \"test/requestOptions\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n  requestOptions = Some(\n    RequestOptions\n      .builder()\n      .withHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n      .build()\n  )\n)",
-      "requestOptions queryParameters accepts booleans": "val response = client.customPost[JObject](\n  path = \"test/requestOptions\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n  requestOptions = Some(\n    RequestOptions\n      .builder()\n      .withQueryParameter(\"isItWorking\", true)\n      .build()\n  )\n)",
-      "requestOptions queryParameters accepts integers": "val response = client.customPost[JObject](\n  path = \"test/requestOptions\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n  requestOptions = Some(\n    RequestOptions\n      .builder()\n      .withQueryParameter(\"myParam\", 2)\n      .build()\n  )\n)",
-      "requestOptions queryParameters accepts list of string": "val response = client.customPost[JObject](\n  path = \"test/requestOptions\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n  requestOptions = Some(\n    RequestOptions\n      .builder()\n      .withQueryParameter(\"myParam\", Seq(\"b and c\", \"d\"))\n      .build()\n  )\n)",
-      "requestOptions queryParameters accepts list of booleans": "val response = client.customPost[JObject](\n  path = \"test/requestOptions\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n  requestOptions = Some(\n    RequestOptions\n      .builder()\n      .withQueryParameter(\"myParam\", Seq(true, true, false))\n      .build()\n  )\n)",
-      "requestOptions queryParameters accepts list of integers": "val response = client.customPost[JObject](\n  path = \"test/requestOptions\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n  requestOptions = Some(\n    RequestOptions\n      .builder()\n      .withQueryParameter(\"myParam\", Seq(1, 2))\n      .build()\n  )\n)"
+      "allow post method for a custom path with minimal parameters": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "allow post method for a custom path with all parameters": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"body\", JString(\"parameters\")))))\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions can override default query parameters": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"query\", \"myQueryParameter\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions merges query parameters with default ones": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"query2\", \"myQueryParameter\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions can override default headers": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions merges headers with default ones": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts booleans": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"isItWorking\", true)\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts integers": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"myParam\", 2)\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts list of string": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"myParam\", Seq(\"b and c\", \"d\"))\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts list of booleans": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"myParam\", Seq(true, true, false))\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts list of integers": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"myParam\", Seq(1, 2))\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "customPut": {
-      "allow put method for a custom path with minimal parameters": "val response = client.customPut[JObject](\n  path = \"test/minimal\"\n)",
-      "allow put method for a custom path with all parameters": "val response = client.customPut[JObject](\n  path = \"test/all\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"body\", JString(\"parameters\")))))\n)"
+      "allow put method for a custom path with minimal parameters": "val response = Await.result(\n  client.customPut[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "allow put method for a custom path with all parameters": "val response = Await.result(\n  client.customPut[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"body\", JString(\"parameters\")))))\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "deleteAuthentication": {
-      "default": "val response = client.deleteAuthentication(\n  authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)"
+      "default": "val response = Await.result(\n  client.deleteAuthentication(\n    authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "deleteDestination": {
-      "default": "val response = client.deleteDestination(\n  destinationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)"
+      "default": "val response = Await.result(\n  client.deleteDestination(\n    destinationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "deleteSource": {
-      "default": "val response = client.deleteSource(\n  sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)"
+      "default": "val response = Await.result(\n  client.deleteSource(\n    sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "deleteTask": {
-      "default": "val response = client.deleteTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)"
+      "default": "val response = Await.result(\n  client.deleteTask(\n    taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "deleteTaskV1": {
-      "default": "val response = client.deleteTaskV1(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)"
+      "default": "val response = Await.result(\n  client.deleteTaskV1(\n    taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "deleteTransformation": {
-      "default": "val response = client.deleteTransformation(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)"
+      "default": "val response = Await.result(\n  client.deleteTransformation(\n    transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "disableTask": {
-      "default": "val response = client.disableTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)"
+      "default": "val response = Await.result(\n  client.disableTask(\n    taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "disableTaskV1": {
-      "default": "val response = client.disableTaskV1(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)"
+      "default": "val response = Await.result(\n  client.disableTaskV1(\n    taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "enableTask": {
-      "default": "val response = client.enableTask(\n  taskID = \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n)"
+      "default": "val response = Await.result(\n  client.enableTask(\n    taskID = \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "enableTaskV1": {
-      "default": "val response = client.enableTaskV1(\n  taskID = \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n)"
+      "default": "val response = Await.result(\n  client.enableTaskV1(\n    taskID = \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getAuthentication": {
-      "default": "val response = client.getAuthentication(\n  authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)"
+      "default": "val response = Await.result(\n  client.getAuthentication(\n    authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getDestination": {
-      "default": "val response = client.getDestination(\n  destinationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)"
+      "default": "val response = Await.result(\n  client.getDestination(\n    destinationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getEvent": {
-      "default": "val response = client.getEvent(\n  runID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  eventID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0c\"\n)"
+      "default": "val response = Await.result(\n  client.getEvent(\n    runID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    eventID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0c\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getRun": {
-      "default": "val response = client.getRun(\n  runID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)"
+      "default": "val response = Await.result(\n  client.getRun(\n    runID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getSource": {
-      "default": "val response = client.getSource(\n  sourceID = \"75eeb306-51d3-4e5e-a279-3c92bd8893ac\"\n)"
+      "default": "val response = Await.result(\n  client.getSource(\n    sourceID = \"75eeb306-51d3-4e5e-a279-3c92bd8893ac\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getTask": {
-      "default": "val response = client.getTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)"
+      "default": "val response = Await.result(\n  client.getTask(\n    taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getTaskV1": {
-      "default": "val response = client.getTaskV1(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)"
+      "default": "val response = Await.result(\n  client.getTaskV1(\n    taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getTransformation": {
-      "default": "val response = client.getTransformation(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)"
+      "default": "val response = Await.result(\n  client.getTransformation(\n    transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "listAuthentications": {
-      "getAuthentications": "val response = client.listAuthentications(\n)",
-      "getAuthentications with query params": "val response = client.listAuthentications(\n  itemsPerPage = Some(2),\n  page = Some(1),\n  `type` = Some(Seq(AuthenticationType.withName(\"basic\"), AuthenticationType.withName(\"algolia\"))),\n  platform = Some(Seq(PlatformNone.withName(\"none\"))),\n  sort = Some(AuthenticationSortKeys.withName(\"createdAt\")),\n  order = Some(OrderKeys.withName(\"asc\"))\n)"
+      "getAuthentications": "val response = Await.result(\n  client.listAuthentications(\n  ),\n  Duration(100, \"sec\")\n)",
+      "getAuthentications with query params": "val response = Await.result(\n  client.listAuthentications(\n    itemsPerPage = Some(2),\n    page = Some(1),\n    `type` = Some(Seq(AuthenticationType.withName(\"basic\"), AuthenticationType.withName(\"algolia\"))),\n    platform = Some(Seq(PlatformNone.withName(\"none\"))),\n    sort = Some(AuthenticationSortKeys.withName(\"createdAt\")),\n    order = Some(OrderKeys.withName(\"asc\"))\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "listDestinations": {
-      "default": "val response = client.listDestinations(\n)"
+      "default": "val response = Await.result(\n  client.listDestinations(\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "listEvents": {
-      "default": "val response = client.listEvents(\n  runID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)"
+      "default": "val response = Await.result(\n  client.listEvents(\n    runID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "listRuns": {
-      "default": "val response = client.listRuns(\n)"
+      "default": "val response = Await.result(\n  client.listRuns(\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "listSources": {
-      "default": "val response = client.listSources(\n)"
+      "default": "val response = Await.result(\n  client.listSources(\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "listTasks": {
-      "default": "val response = client.listTasks(\n)"
+      "default": "val response = Await.result(\n  client.listTasks(\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "listTasksV1": {
-      "default": "val response = client.listTasksV1(\n)"
+      "default": "val response = Await.result(\n  client.listTasksV1(\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "listTransformations": {
-      "default": "val response = client.listTransformations(\n)"
+      "default": "val response = Await.result(\n  client.listTransformations(\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "pushTask": {
-      "pushTask": "val response = client.pushTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  pushTaskPayload = PushTaskPayload(\n    action = Action.withName(\"addObject\"),\n    records = Seq(\n      PushTaskRecords(\n        objectID = \"o\",\n        additionalProperties = Some(List(JField(\"key\", JString(\"bar\")), JField(\"foo\", JString(\"1\"))))\n      ),\n      PushTaskRecords(\n        objectID = \"k\",\n        additionalProperties = Some(List(JField(\"key\", JString(\"baz\")), JField(\"foo\", JString(\"2\"))))\n      )\n    )\n  )\n)",
-      "allows for watch query parameter": "val response = client.pushTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  pushTaskPayload = PushTaskPayload(\n    action = Action.withName(\"addObject\"),\n    records = Seq(\n      PushTaskRecords(\n        objectID = \"o\",\n        additionalProperties = Some(List(JField(\"key\", JString(\"bar\")), JField(\"foo\", JString(\"1\"))))\n      ),\n      PushTaskRecords(\n        objectID = \"k\",\n        additionalProperties = Some(List(JField(\"key\", JString(\"baz\")), JField(\"foo\", JString(\"2\"))))\n      )\n    )\n  ),\n  watch = Some(true)\n)"
+      "pushTask": "val response = Await.result(\n  client.pushTask(\n    taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    pushTaskPayload = PushTaskPayload(\n      action = Action.withName(\"addObject\"),\n      records = Seq(\n        PushTaskRecords(\n          objectID = \"o\",\n          additionalProperties = Some(List(JField(\"key\", JString(\"bar\")), JField(\"foo\", JString(\"1\"))))\n        ),\n        PushTaskRecords(\n          objectID = \"k\",\n          additionalProperties = Some(List(JField(\"key\", JString(\"baz\")), JField(\"foo\", JString(\"2\"))))\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "allows for watch query parameter": "val response = Await.result(\n  client.pushTask(\n    taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    pushTaskPayload = PushTaskPayload(\n      action = Action.withName(\"addObject\"),\n      records = Seq(\n        PushTaskRecords(\n          objectID = \"o\",\n          additionalProperties = Some(List(JField(\"key\", JString(\"bar\")), JField(\"foo\", JString(\"1\"))))\n        ),\n        PushTaskRecords(\n          objectID = \"k\",\n          additionalProperties = Some(List(JField(\"key\", JString(\"baz\")), JField(\"foo\", JString(\"2\"))))\n        )\n      )\n    ),\n    watch = Some(true)\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "runSource": {
-      "default": "val response = client.runSource(\n  sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  runSourcePayload = Some(\n    RunSourcePayload(\n      indexToInclude = Some(Seq(\"products_us\", \"products eu\")),\n      entityIDs = Some(Seq(\"1234\", \"5678\")),\n      entityType = Some(EntityType.withName(\"product\"))\n    )\n  )\n)"
+      "default": "val response = Await.result(\n  client.runSource(\n    sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    runSourcePayload = Some(\n      RunSourcePayload(\n        indexToInclude = Some(Seq(\"products_us\", \"products eu\")),\n        entityIDs = Some(Seq(\"1234\", \"5678\")),\n        entityType = Some(EntityType.withName(\"product\"))\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "runTask": {
-      "default": "val response = client.runTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)"
+      "default": "val response = Await.result(\n  client.runTask(\n    taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "runTaskV1": {
-      "default": "val response = client.runTaskV1(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)"
+      "default": "val response = Await.result(\n  client.runTaskV1(\n    taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "searchAuthentications": {
-      "default": "val response = client.searchAuthentications(\n  authenticationSearch = AuthenticationSearch(\n    authenticationIDs = Seq(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\")\n  )\n)"
+      "default": "val response = Await.result(\n  client.searchAuthentications(\n    authenticationSearch = AuthenticationSearch(\n      authenticationIDs = Seq(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\")\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "searchDestinations": {
-      "default": "val response = client.searchDestinations(\n  destinationSearch = DestinationSearch(\n    destinationIDs = Seq(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\")\n  )\n)"
+      "default": "val response = Await.result(\n  client.searchDestinations(\n    destinationSearch = DestinationSearch(\n      destinationIDs = Seq(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\")\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "searchSources": {
-      "default": "val response = client.searchSources(\n  sourceSearch = SourceSearch(\n    sourceIDs = Seq(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\")\n  )\n)"
+      "default": "val response = Await.result(\n  client.searchSources(\n    sourceSearch = SourceSearch(\n      sourceIDs = Seq(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\")\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "searchTasks": {
-      "default": "val response = client.searchTasks(\n  taskSearch = TaskSearch(\n    taskIDs = Seq(\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    )\n  )\n)"
+      "default": "val response = Await.result(\n  client.searchTasks(\n    taskSearch = TaskSearch(\n      taskIDs = Seq(\n        \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n        \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "searchTasksV1": {
-      "default": "val response = client.searchTasksV1(\n  taskSearch = TaskSearch(\n    taskIDs = Seq(\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    )\n  )\n)"
+      "default": "val response = Await.result(\n  client.searchTasksV1(\n    taskSearch = TaskSearch(\n      taskIDs = Seq(\n        \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n        \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "searchTransformations": {
-      "default": "val response = client.searchTransformations(\n  transformationSearch = TransformationSearch(\n    transformationIDs = Seq(\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    )\n  )\n)"
+      "default": "val response = Await.result(\n  client.searchTransformations(\n    transformationSearch = TransformationSearch(\n      transformationIDs = Seq(\n        \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n        \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey(\n  apiKey = \"updated-api-key\"\n)"
     },
     "triggerDockerSourceDiscover": {
-      "default": "val response = client.triggerDockerSourceDiscover(\n  sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)"
+      "default": "val response = Await.result(\n  client.triggerDockerSourceDiscover(\n    sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "tryTransformation": {
-      "tryTransformation": "val response = client.tryTransformation(\n  transformationTry = TransformationTry(\n    code = \"foo\",\n    sampleRecord = JObject(List(JField(\"bar\", JString(\"baz\"))))\n  )\n)",
-      "with authentications": "val response = client.tryTransformation(\n  transformationTry = TransformationTry(\n    code = \"foo\",\n    sampleRecord = JObject(List(JField(\"bar\", JString(\"baz\")))),\n    authentications = Some(\n      Seq(\n        AuthenticationCreate(\n          `type` = AuthenticationType.withName(\"oauth\"),\n          name = \"authName\",\n          input = AuthOAuth(\n            url = \"http://test.oauth\",\n            client_id = \"myID\",\n            client_secret = \"mySecret\"\n          )\n        )\n      )\n    )\n  )\n)"
+      "tryTransformation": "val response = Await.result(\n  client.tryTransformation(\n    transformationTry = TransformationTry(\n      code = \"foo\",\n      sampleRecord = JObject(List(JField(\"bar\", JString(\"baz\"))))\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "with authentications": "val response = Await.result(\n  client.tryTransformation(\n    transformationTry = TransformationTry(\n      code = \"foo\",\n      sampleRecord = JObject(List(JField(\"bar\", JString(\"baz\")))),\n      authentications = Some(\n        Seq(\n          AuthenticationCreate(\n            `type` = AuthenticationType.withName(\"oauth\"),\n            name = \"authName\",\n            input = AuthOAuth(\n              url = \"http://test.oauth\",\n              clientId = \"myID\",\n              clientSecret = \"mySecret\"\n            )\n          )\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "tryTransformationBeforeUpdate": {
-      "tryTransformationBeforeUpdate": "val response = client.tryTransformationBeforeUpdate(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  transformationTry = TransformationTry(\n    code = \"foo\",\n    sampleRecord = JObject(List(JField(\"bar\", JString(\"baz\"))))\n  )\n)",
-      "existing with authentications": "val response = client.tryTransformationBeforeUpdate(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  transformationTry = TransformationTry(\n    code = \"foo\",\n    sampleRecord = JObject(List(JField(\"bar\", JString(\"baz\")))),\n    authentications = Some(\n      Seq(\n        AuthenticationCreate(\n          `type` = AuthenticationType.withName(\"oauth\"),\n          name = \"authName\",\n          input = AuthOAuth(\n            url = \"http://test.oauth\",\n            client_id = \"myID\",\n            client_secret = \"mySecret\"\n          )\n        )\n      )\n    )\n  )\n)"
+      "tryTransformationBeforeUpdate": "val response = Await.result(\n  client.tryTransformationBeforeUpdate(\n    transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformationTry = TransformationTry(\n      code = \"foo\",\n      sampleRecord = JObject(List(JField(\"bar\", JString(\"baz\"))))\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "existing with authentications": "val response = Await.result(\n  client.tryTransformationBeforeUpdate(\n    transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformationTry = TransformationTry(\n      code = \"foo\",\n      sampleRecord = JObject(List(JField(\"bar\", JString(\"baz\")))),\n      authentications = Some(\n        Seq(\n          AuthenticationCreate(\n            `type` = AuthenticationType.withName(\"oauth\"),\n            name = \"authName\",\n            input = AuthOAuth(\n              url = \"http://test.oauth\",\n              clientId = \"myID\",\n              clientSecret = \"mySecret\"\n            )\n          )\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "updateAuthentication": {
-      "default": "val response = client.updateAuthentication(\n  authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  authenticationUpdate = AuthenticationUpdate(\n    name = Some(\"newName\")\n  )\n)"
+      "default": "val response = Await.result(\n  client.updateAuthentication(\n    authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    authenticationUpdate = AuthenticationUpdate(\n      name = Some(\"newName\")\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "updateDestination": {
-      "default": "val response = client.updateDestination(\n  destinationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  destinationUpdate = DestinationUpdate(\n    name = Some(\"newName\")\n  )\n)"
+      "default": "val response = Await.result(\n  client.updateDestination(\n    destinationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    destinationUpdate = DestinationUpdate(\n      name = Some(\"newName\")\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "updateSource": {
-      "default": "val response = client.updateSource(\n  sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  sourceUpdate = SourceUpdate(\n    name = Some(\"newName\")\n  )\n)"
+      "default": "val response = Await.result(\n  client.updateSource(\n    sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    sourceUpdate = SourceUpdate(\n      name = Some(\"newName\")\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "updateTask": {
-      "default": "val response = client.updateTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  taskUpdate = TaskUpdate(\n    enabled = Some(false),\n    cron = Some(\"* * * * *\")\n  )\n)"
+      "default": "val response = Await.result(\n  client.updateTask(\n    taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    taskUpdate = TaskUpdate(\n      enabled = Some(false),\n      cron = Some(\"* * * * *\")\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "updateTaskV1": {
-      "default": "val response = client.updateTaskV1(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  taskUpdate = TaskUpdateV1(\n    enabled = Some(false)\n  )\n)"
+      "default": "val response = Await.result(\n  client.updateTaskV1(\n    taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    taskUpdate = TaskUpdateV1(\n      enabled = Some(false)\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "updateTransformation": {
-      "default": "val response = client.updateTransformation(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  transformationCreate = TransformationCreate(\n    code = \"foo\",\n    name = \"bar\",\n    description = Some(\"baz\")\n  )\n)"
+      "default": "val response = Await.result(\n  client.updateTransformation(\n    transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformationCreate = TransformationCreate(\n      code = \"foo\",\n      name = \"bar\",\n      description = Some(\"baz\")\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "validateSource": {
-      "default": "val response = client.validateSource(\n  sourceCreate = Some(\n    SourceCreate(\n      `type` = SourceType.withName(\"commercetools\"),\n      name = \"sourceName\",\n      input = Some(\n        SourceCommercetools(\n          storeKeys = Some(Seq(\"myStore\")),\n          locales = Some(Seq(\"de\")),\n          url = \"http://commercetools.com\",\n          projectKey = \"keyID\"\n        )\n      ),\n      authenticationID = Some(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n    )\n  )\n)"
+      "default": "val response = Await.result(\n  client.validateSource(\n    sourceCreate = Some(\n      SourceCreate(\n        `type` = SourceType.withName(\"commercetools\"),\n        name = \"sourceName\",\n        input = Some(\n          SourceCommercetools(\n            storeKeys = Some(Seq(\"myStore\")),\n            locales = Some(Seq(\"de\")),\n            url = \"http://commercetools.com\",\n            projectKey = \"keyID\"\n          )\n        ),\n        authenticationID = Some(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "validateSourceBeforeUpdate": {
-      "default": "val response = client.validateSourceBeforeUpdate(\n  sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  sourceUpdate = SourceUpdate(\n    name = Some(\"newName\")\n  )\n)"
+      "default": "val response = Await.result(\n  client.validateSourceBeforeUpdate(\n    sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    sourceUpdate = SourceUpdate(\n      name = Some(\"newName\")\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "init": {
       "default": "val client = IngestionClient(\n  appId = \"ALGOLIA_APPLICATION_ID\",\n  apiKey = \"ALGOLIA_API_KEY\",\n  region = \"ALGOLIA_APPLICATION_REGION\"\n)"
@@ -1878,11 +1881,11 @@
       "createAuthenticationAlgolia": "let response = try await client.createAuthentication(authenticationCreate: AuthenticationCreate(\n    type: AuthenticationType.algolia,\n    name: \"authName\",\n    input: AuthInput.authAlgolia(AuthAlgolia(appID: \"ALGOLIA_APPLICATION_ID\", apiKey: \"ALGOLIA_API_KEY\"))\n))"
     },
     "createDestination": {
-      "createDestination": "let response = try await client.createDestination(destinationCreate: DestinationCreate(\n    type: DestinationType.search,\n    name: \"destinationName\",\n    input: DestinationInput.destinationIndexName(DestinationIndexName(indexName: \"<YOUR_INDEX_NAME>\")),\n    authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n))",
-      "with transformationIDs": "let response = try await client.createDestination(destinationCreate: DestinationCreate(\n    type: DestinationType.search,\n    name: \"destinationName\",\n    input: DestinationInput.destinationIndexName(DestinationIndexName(indexName: \"<YOUR_INDEX_NAME>\")),\n    transformationIDs: [\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"]\n))"
+      "createDestination": "let response = try await client.createDestination(destinationCreate: DestinationCreate(\n    type: DestinationType.search,\n    name: \"destinationName\",\n    input: DestinationInput(indexName: \"<YOUR_INDEX_NAME>\"),\n    authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n))",
+      "with transformationIDs": "let response = try await client.createDestination(destinationCreate: DestinationCreate(\n    type: DestinationType.search,\n    name: \"destinationName\",\n    input: DestinationInput(indexName: \"<YOUR_INDEX_NAME>\"),\n    transformationIDs: [\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"]\n))"
     },
     "createSource": {
-      "createSource": "let response = try await client.createSource(sourceCreate: SourceCreate(\n    type: SourceType.commercetools,\n    name: \"sourceName\",\n    input: SourceInput.sourceCommercetools(SourceCommercetools(\n        storeKeys: [\"myStore\"],\n        locales: [\"de\"],\n        url: \"http://commercetools.com\",\n        projectKey: \"keyID\"\n    )),\n    authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n))",
+      "createSource": "let response = try await client.createSource(sourceCreate: SourceCreate(\n    type: SourceType.commercetools,\n    name: \"sourceName\",\n    input: SourceInput.sourceCommercetools(SourceCommercetools(\n        storeKeys: [\"myStore\"],\n        locales: [\"de\"],\n        url: \"http://commercetools.com\",\n        projectKey: \"keyID\",\n        productQueryPredicate: \"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\"\n    )),\n    authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n))",
       "push": "let response = try await client.createSource(sourceCreate: SourceCreate(\n    type: SourceType.push,\n    name: \"pushezpourentrer\"\n))"
     },
     "createTask": {

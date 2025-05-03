@@ -30,18 +30,6 @@ module {{moduleName}}
         region = nil
       end
 
-      if opts.nil? || opts[:connect_timeout].nil?
-        opts[:connect_timeout] = {{x-timeouts.server.connect}}
-      end
-
-      if opts.nil? || opts[:read_timeout].nil?
-        opts[:read_timeout] = {{x-timeouts.server.read}}
-      end
-
-      if opts.nil? || opts[:write_timeout].nil?
-        opts[:write_timeout] = {{x-timeouts.server.write}}
-      end
-
       {{^fallbackToAliasHost}}
       raise "`region` is required and must be one of the following: #{regions.join(', ')}" if region.nil? || !region.is_a?(String) || !regions.include?(region)
       {{/fallbackToAliasHost}}
@@ -70,6 +58,18 @@ module {{moduleName}}
     end
 
     def self.create_with_config(config)
+      if config.connect_timeout.nil?
+        config.connect_timeout = {{x-timeouts.server.connect}}
+      end
+
+      if config.read_timeout.nil?
+        config.read_timeout = {{x-timeouts.server.read}}
+      end
+
+      if config.write_timeout.nil?
+        config.write_timeout = {{x-timeouts.server.write}}
+      end
+
       new(config)
     end
 
@@ -101,6 +101,9 @@ module {{moduleName}}
     #   - {{.}}
     {{/x-acl}}
     {{/vendorExtensions}}
+    {{#isDeprecated}}
+    # THIS OPERATION IS DEPRECATED
+    {{/isDeprecated}}
 {{#allParams}}
 {{#required}}
     # @param {{paramName}} [{{{dataType}}}] {{{description}}} (required)

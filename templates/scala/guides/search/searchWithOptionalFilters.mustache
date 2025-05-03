@@ -1,0 +1,26 @@
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
+
+{{> snippets/import}}
+import algoliasearch.search.OptionalFilters.SeqOfOptionalFilters
+import algoliasearch.search.SearchParamsObject
+
+val labels: List[String] = List() // A list of labels
+
+val reduceLabelsToFilters: Seq[String] => SeqOfOptionalFilters = _ => {
+  SeqOfOptionalFilters(Seq()) // Implement your logic here
+}
+
+def searchWithOptionalFilters(): Future[Unit] = {
+  {{> snippets/init}}
+
+  val optionalFilters = reduceLabelsToFilters(labels)
+  val searchParams = SearchParamsObject(query = Some("<YOUR_SEARCH_QUERY>"), optionalFilters = Some(optionalFilters))
+
+  Await.result(
+    {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}.map(_ => Future.unit),
+    Duration(5, "sec")
+  )
+}

@@ -31,8 +31,8 @@ package algoliasearch.ingestion
   *   a message describing the outcome of a validate run.
   */
 case class WatchResponse(
-    runID: Option[String] = scala.None,
+    runID: String,
     data: Option[Seq[Any]] = scala.None,
     events: Option[Seq[Event]] = scala.None,
-    message: String
+    message: Option[String] = scala.None
 )

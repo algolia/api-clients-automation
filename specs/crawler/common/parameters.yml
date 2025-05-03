@@ -17,7 +17,7 @@ TaskIdParameter:
 CrawlerVersionParameter:
   name: version
   in: path
-  description: The version of the targeted Crawler revision.
+  description: This crawler's version nmber.
   required: true
   schema:
     type: integer
@@ -54,7 +54,6 @@ applicationID:
   type: string
   description: |
     Algolia application ID where the crawler creates and updates indices.
-    The Crawler add-on must be enabled for this application.
 
 CrawlerID:
   type: string
@@ -88,7 +87,7 @@ UrlsCrawledGroup:
       description: Number of URLs with this status.
     readable:
       type: string
-      description: Readable representation of the reason for the status message.
+      description: Reason for this status.
   example:
     status: SKIPPED
     reason: forbidden_by_robotstxt
@@ -98,7 +97,10 @@ UrlsCrawledGroup:
 
 urlsCrawledGroupStatus:
   type: string
-  description: Status of crawling these URLs.
+  description: |
+    Crawled URL status.
+
+    For more information, see [Troubleshooting by crawl status](https://www.algolia.com/doc/tools/crawler/troubleshooting/crawl-status/).
   enum:
     - DONE
     - SKIPPED
@@ -106,7 +108,10 @@ urlsCrawledGroupStatus:
 
 urlsCrawledGroupCategory:
   type: string
-  description: Step where the status information was generated.
+  description: |
+    Step where the status information was generated.
+
+    For more information, see [Troubleshooting by crawl status](https://www.algolia.com/doc/tools/crawler/troubleshooting/crawl-status/).
   enum:
     - fetch
     - extraction

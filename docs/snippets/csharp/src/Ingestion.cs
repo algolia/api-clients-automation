@@ -88,7 +88,7 @@ public class SnippetIngestionClient
       {
         Type = Enum.Parse<DestinationType>("Search"),
         Name = "destinationName",
-        Input = new DestinationInput(new DestinationIndexName { IndexName = "<YOUR_INDEX_NAME>" }),
+        Input = new DestinationInput { IndexName = "<YOUR_INDEX_NAME>" },
         AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       }
     );
@@ -115,7 +115,7 @@ public class SnippetIngestionClient
       {
         Type = Enum.Parse<DestinationType>("Search"),
         Name = "destinationName",
-        Input = new DestinationInput(new DestinationIndexName { IndexName = "<YOUR_INDEX_NAME>" }),
+        Input = new DestinationInput { IndexName = "<YOUR_INDEX_NAME>" },
         TransformationIDs = new List<string> { "6c02aeb1-775e-418e-870b-1faccd4b2c0f" },
       }
     );
@@ -149,6 +149,8 @@ public class SnippetIngestionClient
             Locales = new List<string> { "de" },
             Url = "http://commercetools.com",
             ProjectKey = "keyID",
+            ProductQueryPredicate =
+              "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))",
           }
         ),
         AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",

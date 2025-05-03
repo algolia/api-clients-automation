@@ -72,3 +72,18 @@ status:
       type: array
       items:
         $ref: '../enums.yml#/errorCodes'
+    lastUpdatedAt:
+      type: string
+
+features:
+  type: object
+  properties:
+    realtime:
+      $ref: '#/realtime'
+
+realtime:
+  type: object
+  properties:
+    enabled:
+      type: boolean
+      description: Whether the realtime personalization feature is enabled.

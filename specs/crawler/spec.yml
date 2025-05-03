@@ -13,20 +13,18 @@ info:
     **All requests must use HTTPS.**
 
     ## Availability and authentication
-
-    Access to the Crawler API is available with the [Crawler add-on](https://www.algolia.com/pricing/).
-
+    
     To authenticate your API requests, use the **basic authentication** header:
 
     - `Authorization: Basic <credentials>`
 
-    where `<credentials>` is a base64-encoded string `<user-id>:<api-key>`.
+    Where `<credentials>` is a base64-encoded string `<user-id>:<api-key>`.
 
     - `<user-id>`. The Crawler user ID.
     - `<api-key>`. The Crawler API key.
 
-    You can find both in the [Crawler dashboard](https://crawler.algolia.com/admin/settings/).
-    The Crawler dashboard and API key are different from the regular Algolia dashboard and API keys.
+    You can find both on the [Crawler settings](https://dashboard.algolia.com/crawler/settings) page in the Algolia dashboard.
+    The Crawler credentials are different from your regular Algolia credentials.
 
     ## Request format
 
@@ -45,7 +43,8 @@ info:
     The Crawler API returns JSON responses.
     Since JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.
 
-    Successful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.
+    Successful responses return a `2xx` status. Client errors return a `4xx` status.
+    Server errors are indicated by a `5xx` status.
     Error responses have a `message` property with more information.
 
     ## Version
@@ -64,18 +63,20 @@ security:
   - BasicAuth: []
 tags:
   - name: actions
-    x-displayName: Actions
+    x-displayName: State
     description: |
-      Actions change the state of crawlers, such as pausing and unpausing crawl schedules or testing the crawler with specific URLs.
+      Change the state of crawlers, such as pausing crawl schedules or testing the crawler with specific URLs.
   - name: config
     x-displayName: Configuration
     description: |
       In the Crawler configuration, you specify which URLs to crawl, when to crawl, how to extract records from the crawl, and where to index the extracted records.
+
       The configuration is versioned, so you can always restore a previous version.
-      It's easiest to make configuration changes in the [Crawler dashboard](https://crawler.algolia.com/admin/).
+
+      It's easiest to make configuration changes on the [Crawler page](https://dashboard.algolia.com/crawler) in the Algolia dashboard.
       The editor has autocomplete and built-in validation so you can try your configuration changes before committing them.
   - name: crawlers
-    x-displayName: Crawler
+    x-displayName: Manage
     description: |
       A crawler is an object with a name and a [configuration](#tag/config).
       Use these endpoints to create, rename, and delete crawlers.
@@ -84,7 +85,7 @@ tags:
     description: List registered domains.
   - name: tasks
     x-displayName: Tasks
-    description: Tasks
+    description: Task operations.
 paths:
   /1/crawlers:
     $ref: 'paths/crawlers.yml'

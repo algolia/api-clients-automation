@@ -1,0 +1,26 @@
+namespace Algolia;
+
+using System;
+using System.Text.Json;
+using System.Net.Http;
+using System.Collections.Generic;
+
+{{> snippets/import}}
+
+class SearchFuturePublishedBooks {
+
+  async Task Main(string[] args)
+  {
+
+    {{> snippets/init}}
+    var dateTimestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+    var searchParams = new SearchParams(new SearchParamsObject
+        {
+            Query = "<YOUR_SEARCH_QUERY>",
+            Filters = $"date_timestamp > {dateTimestamp}"
+        }
+    );
+
+    {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+  }
+}

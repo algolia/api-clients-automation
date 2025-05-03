@@ -24,7 +24,6 @@ import { commitStartRelease } from './text.ts';
 async function handleSpecFiles(spec: SpecsToPush, tempGitDir: string): Promise<void> {
   const pathToSpecs = toAbsolutePath(`${tempGitDir}/${spec.output}`);
 
-  await run(`rm -rf ${pathToSpecs}/* || true`);
   await run(`cp ${toAbsolutePath('specs/bundled/README.md')} ${pathToSpecs}`);
   await run(`cp ${toAbsolutePath('specs/major-breaking-changes-rename.json')} ${pathToSpecs}`);
   await run(`cp ${toAbsolutePath('config/clients.config.json')} ${pathToSpecs}`);
@@ -47,8 +46,13 @@ async function handleGuideFiles(guide: GuidesToPush, tempGitDir: string): Promis
       `docs/guides/${language}/${getClientsConfigField(language, ['snippets', 'outputFolder'])}`,
     );
 
-    const files = await fsp.readdir(pathToGuides);
-    for (const file of files.filter((file) => guide.names.some((guideName) => guideName === file.split('.')[0]))) {
+    let files = await fsp.readdir(pathToGuides);
+
+    if (guide.names) {
+      files = files.filter((file) => guide.names?.some((guideName) => guideName === file.split('.')[0]));
+    }
+
+    for (const file of files) {
       if (!file.endsWith(extension)) {
         continue;
       }
@@ -86,6 +90,8 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
     .filter(Boolean);
 
   if (!process.env.FORCE && !lastCommitMessage.startsWith(commitStartRelease)) {
+    console.warn('FORCE not provided or not a commit release, skipping');
+
     return;
   }
 
@@ -153,6 +159,8 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
       base: config.baseBranch,
       head: task.prBranch,
     });
+
+    await run(`gh --repo ${OWNER}/${repository} pr merge ${data.number} --squash --auto`);
 
     console.log(`Pull request created on ${OWNER}/${repository}`);
     console.log(`  > ${data.url}`);
