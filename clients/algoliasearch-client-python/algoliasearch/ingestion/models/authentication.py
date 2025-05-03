@@ -27,6 +27,7 @@ _ALIASES = {
     "type": "type",
     "name": "name",
     "platform": "platform",
+    "owner": "owner",
     "input": "input",
     "created_at": "createdAt",
     "updated_at": "updatedAt",
@@ -48,10 +49,12 @@ class Authentication(BaseModel):
     name: str
     """ Descriptive name for the resource. """
     platform: Optional[Platform] = None
+    owner: Optional[str] = None
+    """ Owner of the resource. """
     input: AuthInputPartial
     created_at: str
     """ Date of creation in RFC 3339 format. """
-    updated_at: Optional[str] = None
+    updated_at: str
     """ Date of last update in RFC 3339 format. """
 
     model_config = ConfigDict(

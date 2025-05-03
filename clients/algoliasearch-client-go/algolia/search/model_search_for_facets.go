@@ -127,7 +127,7 @@ type SearchForFacets struct {
 	ReplaceSynonymsInHighlight *bool `json:"replaceSynonymsInHighlight,omitempty"`
 	// Minimum proximity score for two matching words.  This adjusts the [Proximity ranking criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity) by equally scoring matches that are farther apart.  For example, if `minProximity` is 2, neighboring matches and matches with one word between them would have the same score.
 	MinProximity *int32 `json:"minProximity,omitempty"`
-	// Properties to include in the API response of `search` and `browse` requests.  By default, all response properties are included. To reduce the response size, you can select, which attributes should be included.  You can't exclude these properties: `message`, `warning`, `cursor`, `serverUsed`, `indexUsed`, `abTestVariantID`, `parsedQuery`, or any property triggered by the `getRankingInfo` parameter.  Don't exclude properties that you might need in your search UI.
+	// Properties to include in the API response of search and browse requests.  By default, all response properties are included. To reduce the response size, you can select which properties should be included.  An empty list may lead to an empty API response (except properties you can't exclude).  You can't exclude these properties: `message`, `warning`, `cursor`, `abTestVariantID`, or any property added by setting `getRankingInfo` to true.  Your search depends on the `hits` field. If you omit this field, searches won't return any results. Your UI might also depend on other properties, for example, for pagination. Before restricting the response size, check the impact on your search experience.
 	ResponseFields []string `json:"responseFields,omitempty"`
 	// Maximum number of facet values to return for each facet.
 	MaxValuesPerFacet *int32 `json:"maxValuesPerFacet,omitempty"`
@@ -3457,21 +3457,15 @@ func (o SearchForFacets) MarshalJSON() ([]byte, error) {
 	if o.ReRankingApplyFilter != nil {
 		toSerialize["reRankingApplyFilter"] = o.ReRankingApplyFilter
 	}
-	if true {
-		toSerialize["facet"] = o.Facet
-	}
-	if true {
-		toSerialize["indexName"] = o.IndexName
-	}
+	toSerialize["facet"] = o.Facet
+	toSerialize["indexName"] = o.IndexName
 	if o.FacetQuery != nil {
 		toSerialize["facetQuery"] = o.FacetQuery
 	}
 	if o.MaxFacetHits != nil {
 		toSerialize["maxFacetHits"] = o.MaxFacetHits
 	}
-	if true {
-		toSerialize["type"] = o.Type
-	}
+	toSerialize["type"] = o.Type
 	serialized, err := json.Marshal(toSerialize)
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal SearchForFacets: %w", err)

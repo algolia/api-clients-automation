@@ -1,0 +1,24 @@
+import kotlinx.serialization.json.JsonObject
+
+{{> snippets/import}}
+import com.algolia.client.model.search.*
+
+val getAllAppIDConfigurations: () -> Map<String, String> = {
+  mapOf() // A map of your MCM AppID/ApiKey pairs
+}
+
+suspend fun saveObjectsMCM() {
+  val playlists: List<JsonObject> = listOf() // Your records
+
+  val configurations = getAllAppIDConfigurations()
+
+  configurations.map { (appID, apiKey) ->
+    val client = SearchClient(appID, apiKey)
+
+    try {
+      client.{{#dynamicSnippet}}saveObjectsPlaylists{{/dynamicSnippet}}
+    } catch (e: Exception) {
+      throw Exception("Error for appID $appID: ${e.message}")
+    }
+  }
+}

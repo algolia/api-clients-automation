@@ -350,7 +350,7 @@ describe('searchSingleIndex', () => {
 });
 
 describe('setSettings', () => {
-  test('setSettings with minimal parameters', async () => {
+  test('minimal parameters', async () => {
     await client.setSettings({
       indexName: 'cts_e2e_settings',
       indexSettings: { paginationLimitedTo: 10 },

@@ -1,0 +1,24 @@
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
+
+{{> snippets/import}}
+import algoliasearch.search.SearchParamsObject
+
+val getBuyerAccountId: () => String = () => {
+  "" // Implement your logic here
+}
+
+def searchWithRuleContextBuyer(): Future[Unit] = {
+  {{> snippets/init}}
+
+  // get the buyer account information
+  val buyer = getBuyerAccountId()
+  val searchParams = SearchParamsObject(query = Some("<YOUR_SEARCH_QUERY>"), ruleContexts = Some(Seq(buyer)))
+
+  Await.result(
+    {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}.map(_ => Future.unit),
+    Duration(5, "sec")
+  )
+}

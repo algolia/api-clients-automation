@@ -1,0 +1,16 @@
+{{> snippets/import}}
+import type { SearchParams } from 'algoliasearch';
+
+const getPlatformTag = () => {
+  return ""; // Implement your logic here
+}
+
+{{> snippets/init}}
+
+const platformTag = getPlatformTag();
+const searchParams: SearchParams = {
+  query: "<YOUR_SEARCH_QUERY>",
+  ruleContexts: [platformTag]
+};
+
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}

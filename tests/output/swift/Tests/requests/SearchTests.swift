@@ -11,8 +11,39 @@ final class SearchClientRequestsTests: XCTestCase {
     static let APPLICATION_ID = "my_application_id"
     static let API_KEY = "my_api_key"
 
-    /// addApiKey
+    /// minimal
     func testAddApiKeyTest() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.addApiKeyWithHTTPInfo(apiKey: ApiKey(
+            acl: [Acl.search, Acl.addObject],
+            description: "my new api key"
+        ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"acl\":[\"search\",\"addObject\"],\"description\":\"my new api key\"}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/keys")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// all
+    func testAddApiKeyTest1() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -107,7 +138,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// assignUserId
+    /// simple
     func testAssignUserIdTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -117,8 +148,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.assignUserIdWithHTTPInfo(
-            xAlgoliaUserID: "userID",
-            assignUserIdParams: AssignUserIdParams(cluster: "theCluster")
+            xAlgoliaUserID: "user42",
+            assignUserIdParams: AssignUserIdParams(cluster: "d4242-eu")
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -126,7 +157,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"cluster\":\"theCluster\"}".data(using: .utf8)
+        let expectedBodyData = "{\"cluster\":\"d4242-eu\"}".data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -136,7 +167,7 @@ final class SearchClientRequestsTests: XCTestCase {
 
         XCTAssertNil(echoResponse.queryParameters)
 
-        let expectedHeaders = try XCTUnwrap("{\"x-algolia-user-id\":\"userID\"}".data(using: .utf8))
+        let expectedHeaders = try XCTUnwrap("{\"x-algolia-user-id\":\"user42\"}".data(using: .utf8))
         let expectedHeadersMap = try CodableHelper.jsonDecoder.decode([String: String?].self, from: expectedHeaders)
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
@@ -240,8 +271,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"requests\":[{\"action\":\"clear\",\"body\":{\"key\":\"value\"}}]}"
-            .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"action\":\"clear\",\"body\":{\"key\":\"value\"}}]}".data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -1207,10 +1237,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters = try XCTUnwrap(
-            "{\"query\":\"parameters\",\"myParam\":\"2\"}"
-                .data(using: .utf8)
-        )
+        let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"2\"}".data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1752,10 +1779,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/uniqueID")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters = try XCTUnwrap(
-            "{\"attributesToRetrieve\":\"attr1%2Cattr2\"}"
-                .data(using: .utf8)
-        )
+        let expectedQueryParameters = try XCTUnwrap("{\"attributesToRetrieve\":\"attr1%2Cattr2\"}".data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1785,8 +1809,73 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// getObjects
+    /// by ID
     func testGetObjectsTest() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<GetObjectsResponse<Hit>> = try await client
+            .getObjectsWithHTTPInfo(getObjectsParams: GetObjectsParams(requests: [GetObjectsRequest(
+                objectID: "uniqueID",
+                indexName: "theIndexName"
+            )]))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"requests\":[{\"objectID\":\"uniqueID\",\"indexName\":\"theIndexName\"}]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/*/objects")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// multiple IDs
+    func testGetObjectsTest1() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<GetObjectsResponse<Hit>> = try await client
+            .getObjectsWithHTTPInfo(getObjectsParams: GetObjectsParams(requests: [
+                GetObjectsRequest(objectID: "uniqueID1", indexName: "theIndexName1"),
+                GetObjectsRequest(objectID: "uniqueID2", indexName: "theIndexName2"),
+            ]))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"requests\":[{\"objectID\":\"uniqueID1\",\"indexName\":\"theIndexName1\"},{\"objectID\":\"uniqueID2\",\"indexName\":\"theIndexName2\"}]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/*/objects")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// with attributesToRetrieve
+    func testGetObjectsTest2() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2445,6 +2534,102 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// with visible_by filter
+    func testPartialUpdateObjectTest5() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.partialUpdateObjectWithHTTPInfo(
+            indexName: "theIndexName",
+            objectID: "uniqueID",
+            attributesToUpdate: ["visible_by": ["Angela", "group/Finance", "group/Shareholders"]]
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"visible_by\":[\"Angela\",\"group/Finance\",\"group/Shareholders\"]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/uniqueID/partial")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// add men pant
+    func testPartialUpdateObjectTest6() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.partialUpdateObjectWithHTTPInfo(
+            indexName: "theIndexName",
+            objectID: "productId",
+            attributesToUpdate: ["categoryPageId": ["_operation": "Add", "value": "men-clothing-pants"]]
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"categoryPageId\":{\"_operation\":\"Add\",\"value\":\"men-clothing-pants\"}}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/productId/partial")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// remove men pant
+    func testPartialUpdateObjectTest7() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.partialUpdateObjectWithHTTPInfo(
+            indexName: "theIndexName",
+            objectID: "productId",
+            attributesToUpdate: ["categoryPageId": ["_operation": "Remove", "value": "men-clothing-pants"]]
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"categoryPageId\":{\"_operation\":\"Remove\",\"value\":\"men-clothing-pants\"}}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/productId/partial")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// removeUserId
     func testRemoveUserIdTest() async throws {
         let configuration = try SearchClientConfiguration(
@@ -2530,7 +2715,12 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let response = try await client.saveObjectWithHTTPInfo(
             indexName: "<YOUR_INDEX_NAME>",
-            body: ["objectID": "id", "test": "val"]
+            body: [
+                "name": "Black T-shirt",
+                "color": "#000000||black",
+                "availableIn": "https://source.unsplash.com/100x100/?paris||Paris",
+                "objectID": "myID",
+            ]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -2538,7 +2728,9 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"objectID\":\"id\",\"test\":\"val\"}".data(using: .utf8)
+        let expectedBodyData =
+            "{\"name\":\"Black T-shirt\",\"color\":\"#000000||black\",\"availableIn\":\"https://source.unsplash.com/100x100/?paris||Paris\",\"objectID\":\"myID\"}"
+                .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -2660,6 +2852,835 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
+    /// b2b catalog
+    func testSaveRuleTest2() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRuleWithHTTPInfo(
+            indexName: "indexName",
+            objectID: "article-rule",
+            rule: Rule(
+                objectID: "article-rule",
+                conditions: [SearchCondition(pattern: "article", anchoring: SearchAnchoring.startsWith)],
+                consequence: SearchConsequence(params: SearchConsequenceParams(
+                    restrictSearchableAttributes: ["title", "book_id"],
+                    query: SearchConsequenceQuery
+                        .searchConsequenceQueryObject(SearchConsequenceQueryObject(edits: [SearchEdit(
+                            type: SearchEditType.remove,
+                            delete: "article"
+                        )]))
+                ))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"objectID\":\"article-rule\",\"conditions\":[{\"pattern\":\"article\",\"anchoring\":\"startsWith\"}],\"consequence\":{\"params\":{\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"article\"}]},\"restrictSearchableAttributes\":[\"title\",\"book_id\"]}}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/article-rule")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// merchandising and promoting
+    func testSaveRuleTest3() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRuleWithHTTPInfo(
+            indexName: "indexName",
+            objectID: "director-rule",
+            rule: Rule(
+                objectID: "director-rule",
+                conditions: [SearchCondition(
+                    pattern: "{facet:director} director",
+                    anchoring: SearchAnchoring.contains
+                )],
+                consequence: SearchConsequence(params: SearchConsequenceParams(
+                    restrictSearchableAttributes: ["title", "book_id"],
+                    query: SearchConsequenceQuery
+                        .searchConsequenceQueryObject(SearchConsequenceQueryObject(edits: [SearchEdit(
+                            type: SearchEditType.remove,
+                            delete: "director"
+                        )])),
+                    automaticFacetFilters: SearchAutomaticFacetFilters
+                        .arrayOfSearchAutomaticFacetFilter([SearchAutomaticFacetFilter(facet: "director")])
+                ))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"objectID\":\"director-rule\",\"conditions\":[{\"pattern\":\"{facet:director} director\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"restrictSearchableAttributes\":[\"title\",\"book_id\"],\"automaticFacetFilters\":[{\"facet\":\"director\"}],\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"director\"}]}}}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/director-rule")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// harry potter
+    func testSaveRuleTest4() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRuleWithHTTPInfo(
+            indexName: "indexName",
+            objectID: "harry-potter-rule",
+            rule: Rule(
+                objectID: "harry-potter-rule",
+                conditions: [SearchCondition(pattern: "harry potter", anchoring: SearchAnchoring.contains)],
+                consequence: SearchConsequence(userData: ["promo_content": "20% OFF on all Harry Potter books!"])
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"objectID\":\"harry-potter-rule\",\"conditions\":[{\"pattern\":\"harry potter\",\"anchoring\":\"contains\"}],\"consequence\":{\"userData\":{\"promo_content\":\"20% OFF on all Harry Potter books!\"}}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/harry-potter-rule")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// merchandising empty query
+    func testSaveRuleTest5() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRuleWithHTTPInfo(
+            indexName: "indexName",
+            objectID: "clearance-category-filter",
+            rule: Rule(
+                objectID: "clearance-category-filter",
+                conditions: [SearchCondition(pattern: "", anchoring: SearchAnchoring.`is`, context: "landing")],
+                consequence: SearchConsequence(params: SearchConsequenceParams(
+                    optionalFilters: SearchOptionalFilters
+                        .string("clearance:true")
+                ))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"objectID\":\"clearance-category-filter\",\"conditions\":[{\"pattern\":\"\",\"anchoring\":\"is\",\"context\":\"landing\"}],\"consequence\":{\"params\":{\"optionalFilters\":\"clearance:true\"}}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/clearance-category-filter")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// redirect
+    func testSaveRuleTest6() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRuleWithHTTPInfo(
+            indexName: "indexName",
+            objectID: "redirect-help-rule",
+            rule: Rule(
+                objectID: "redirect-help-rule",
+                conditions: [SearchCondition(pattern: "help", anchoring: SearchAnchoring.contains)],
+                consequence: SearchConsequence(userData: ["redirect": "https://www.algolia.com/support"])
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"objectID\":\"redirect-help-rule\",\"conditions\":[{\"pattern\":\"help\",\"anchoring\":\"contains\"}],\"consequence\":{\"userData\":{\"redirect\":\"https://www.algolia.com/support\"}}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/redirect-help-rule")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// promote some results over others
+    func testSaveRuleTest7() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRuleWithHTTPInfo(
+            indexName: "indexName",
+            objectID: "tomato-fruit",
+            rule: Rule(
+                objectID: "tomato-fruit",
+                conditions: [SearchCondition(pattern: "tomato", anchoring: SearchAnchoring.contains)],
+                consequence: SearchConsequence(params: SearchConsequenceParams(
+                    optionalFilters: SearchOptionalFilters
+                        .string("food_group:fruit")
+                ))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"objectID\":\"tomato-fruit\",\"conditions\":[{\"pattern\":\"tomato\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"optionalFilters\":\"food_group:fruit\"}}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/tomato-fruit")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// promote several hits
+    func testSaveRuleTest8() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRuleWithHTTPInfo(
+            indexName: "indexName",
+            objectID: "Promote-Apple-Newest",
+            rule: Rule(
+                objectID: "Promote-Apple-Newest",
+                conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.`is`)],
+                consequence: SearchConsequence(promote: [SearchPromote.searchPromoteObjectIDs(SearchPromoteObjectIDs(
+                    objectIDs: ["iPhone-12345", "watch-123"],
+                    position: 0
+                ))])
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"objectID\":\"Promote-Apple-Newest\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"is\"}],\"consequence\":{\"promote\":[{\"objectIDs\":[\"iPhone-12345\",\"watch-123\"],\"position\":0}]}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/Promote-Apple-Newest")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// promote newest release
+    func testSaveRuleTest9() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRuleWithHTTPInfo(
+            indexName: "indexName",
+            objectID: "Promote-iPhone-X",
+            rule: Rule(
+                objectID: "Promote-iPhone-X",
+                conditions: [SearchCondition(pattern: "iPhone", anchoring: SearchAnchoring.contains)],
+                consequence: SearchConsequence(promote: [SearchPromote.searchPromoteObjectID(SearchPromoteObjectID(
+                    objectID: "iPhone-12345",
+                    position: 0
+                ))])
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"objectID\":\"Promote-iPhone-X\",\"conditions\":[{\"pattern\":\"iPhone\",\"anchoring\":\"contains\"}],\"consequence\":{\"promote\":[{\"objectID\":\"iPhone-12345\",\"position\":0}]}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/Promote-iPhone-X")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// promote single item
+    func testSaveRuleTest10() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRuleWithHTTPInfo(
+            indexName: "indexName",
+            objectID: "promote-harry-potter-box-set",
+            rule: Rule(
+                objectID: "promote-harry-potter-box-set",
+                conditions: [SearchCondition(pattern: "Harry Potter", anchoring: SearchAnchoring.contains)],
+                consequence: SearchConsequence(promote: [SearchPromote.searchPromoteObjectID(SearchPromoteObjectID(
+                    objectID: "HP-12345",
+                    position: 0
+                ))])
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"objectID\":\"promote-harry-potter-box-set\",\"conditions\":[{\"pattern\":\"Harry Potter\",\"anchoring\":\"contains\"}],\"consequence\":{\"promote\":[{\"objectID\":\"HP-12345\",\"position\":0}]}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/promote-harry-potter-box-set")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// limit search results
+    func testSaveRuleTest11() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRuleWithHTTPInfo(
+            indexName: "indexName",
+            objectID: "article-rule",
+            rule: Rule(
+                objectID: "article-rule",
+                conditions: [SearchCondition(pattern: "article", anchoring: SearchAnchoring.startsWith)],
+                consequence: SearchConsequence(params: SearchConsequenceParams(
+                    restrictSearchableAttributes: ["title", "book_id"],
+                    query: SearchConsequenceQuery
+                        .searchConsequenceQueryObject(SearchConsequenceQueryObject(edits: [SearchEdit(
+                            type: SearchEditType.remove,
+                            delete: "article"
+                        )]))
+                ))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"objectID\":\"article-rule\",\"conditions\":[{\"pattern\":\"article\",\"anchoring\":\"startsWith\"}],\"consequence\":{\"params\":{\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"article\"}]},\"restrictSearchableAttributes\":[\"title\",\"book_id\"]}}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/article-rule")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// query match
+    func testSaveRuleTest12() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRuleWithHTTPInfo(
+            indexName: "indexName",
+            objectID: "tagged-brand-rule",
+            rule: Rule(
+                objectID: "tagged-brand-rule",
+                conditions: [SearchCondition(
+                    pattern: "brand: {facet:brand}",
+                    anchoring: SearchAnchoring.contains,
+                    alternatives: false
+                )],
+                consequence: SearchConsequence(params: SearchConsequenceParams(
+                    query: SearchConsequenceQuery.searchConsequenceQueryObject(SearchConsequenceQueryObject(remove: [
+                        "brand:",
+                        "{facet:brand}",
+                    ])),
+                    automaticFacetFilters: SearchAutomaticFacetFilters
+                        .arrayOfSearchAutomaticFacetFilter([SearchAutomaticFacetFilter(facet: "brand")])
+                )),
+                description: "filter on brand: {brand}"
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"conditions\":[{\"pattern\":\"brand: {facet:brand}\",\"anchoring\":\"contains\",\"alternatives\":false}],\"consequence\":{\"params\":{\"automaticFacetFilters\":[{\"facet\":\"brand\"}],\"query\":{\"remove\":[\"brand:\",\"{facet:brand}\"]}}},\"description\":\"filter on brand: {brand}\",\"objectID\":\"tagged-brand-rule\"}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/tagged-brand-rule")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// dynamic filtering
+    func testSaveRuleTest13() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRuleWithHTTPInfo(
+            indexName: "indexName",
+            objectID: "color-facets",
+            rule: Rule(
+                objectID: "color-facets",
+                conditions: [SearchCondition(pattern: "{facet:color}")],
+                consequence: SearchConsequence(
+                    params: SearchConsequenceParams(
+                        automaticFacetFilters: SearchAutomaticFacetFilters
+                            .arrayOfSearchAutomaticFacetFilter([SearchAutomaticFacetFilter(facet: "color")])
+                    )
+                )
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"objectID\":\"color-facets\",\"conditions\":[{\"pattern\":\"{facet:color}\"}],\"consequence\":{\"params\":{\"automaticFacetFilters\":[{\"facet\":\"color\"}]}}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/color-facets")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// hide hits
+    func testSaveRuleTest14() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRuleWithHTTPInfo(
+            indexName: "indexName",
+            objectID: "hide-12345",
+            rule: Rule(
+                objectID: "hide-12345",
+                conditions: [SearchCondition(pattern: "cheap", anchoring: SearchAnchoring.contains)],
+                consequence: SearchConsequence(hide: [SearchConsequenceHide(objectID: "to-hide-12345")])
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"objectID\":\"hide-12345\",\"conditions\":[{\"pattern\":\"cheap\",\"anchoring\":\"contains\"}],\"consequence\":{\"hide\":[{\"objectID\":\"to-hide-12345\"}]}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/hide-12345")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// one rule per facet
+    func testSaveRuleTest15() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRuleWithHTTPInfo(
+            indexName: "indexName",
+            objectID: "red-color",
+            rule: Rule(
+                objectID: "red-color",
+                conditions: [SearchCondition(pattern: "red", anchoring: SearchAnchoring.contains)],
+                consequence: SearchConsequence(params: SearchConsequenceParams(
+                    filters: "color:red",
+                    query: SearchConsequenceQuery
+                        .searchConsequenceQueryObject(SearchConsequenceQueryObject(remove: ["red"]))
+                ))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"objectID\":\"red-color\",\"conditions\":[{\"pattern\":\"red\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"red\"]},\"filters\":\"color:red\"}}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/red-color")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// numerical filters
+    func testSaveRuleTest16() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRuleWithHTTPInfo(
+            indexName: "indexName",
+            objectID: "cheap",
+            rule: Rule(
+                objectID: "cheap",
+                conditions: [SearchCondition(pattern: "cheap", anchoring: SearchAnchoring.contains)],
+                consequence: SearchConsequence(params: SearchConsequenceParams(
+                    filters: "price < 10",
+                    query: SearchConsequenceQuery
+                        .searchConsequenceQueryObject(SearchConsequenceQueryObject(remove: ["cheap"]))
+                ))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"objectID\":\"cheap\",\"conditions\":[{\"pattern\":\"cheap\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"cheap\"]},\"filters\":\"price < 10\"}}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/cheap")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// negative filters
+    func testSaveRuleTest17() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRuleWithHTTPInfo(
+            indexName: "indexName",
+            objectID: "gluten-free-rule",
+            rule: Rule(
+                objectID: "gluten-free-rule",
+                conditions: [SearchCondition(pattern: "gluten-free", anchoring: SearchAnchoring.contains)],
+                consequence: SearchConsequence(params: SearchConsequenceParams(
+                    filters: "NOT allergens:gluten",
+                    query: SearchConsequenceQuery
+                        .searchConsequenceQueryObject(SearchConsequenceQueryObject(edits: [SearchEdit(
+                            type: SearchEditType.remove,
+                            delete: "gluten-free"
+                        )]))
+                ))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"objectID\":\"gluten-free-rule\",\"conditions\":[{\"pattern\":\"gluten-free\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"NOT allergens:gluten\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"gluten-free\"}]}}}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/gluten-free-rule")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// positive filters
+    func testSaveRuleTest18() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRuleWithHTTPInfo(
+            indexName: "indexName",
+            objectID: "diet-rule",
+            rule: Rule(
+                objectID: "diet-rule",
+                conditions: [SearchCondition(pattern: "diet", anchoring: SearchAnchoring.contains)],
+                consequence: SearchConsequence(params: SearchConsequenceParams(
+                    filters: "'low-carb' OR 'low-fat'",
+                    query: SearchConsequenceQuery
+                        .searchConsequenceQueryObject(SearchConsequenceQueryObject(edits: [SearchEdit(
+                            type: SearchEditType.remove,
+                            delete: "diet"
+                        )]))
+                ))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"objectID\":\"diet-rule\",\"conditions\":[{\"pattern\":\"diet\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"'low-carb' OR 'low-fat'\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"diet\"}]}}}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/diet-rule")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// conditionless
+    func testSaveRuleTest19() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRuleWithHTTPInfo(
+            indexName: "indexName",
+            objectID: "diet-rule",
+            rule: Rule(
+                objectID: "diet-rule",
+                consequence: SearchConsequence(params: SearchConsequenceParams(
+                    filters: "'low-carb' OR 'low-fat'",
+                    query: SearchConsequenceQuery
+                        .searchConsequenceQueryObject(SearchConsequenceQueryObject(edits: [SearchEdit(
+                            type: SearchEditType.remove,
+                            delete: "diet"
+                        )]))
+                ))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"objectID\":\"diet-rule\",\"consequence\":{\"params\":{\"filters\":\"'low-carb' OR 'low-fat'\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"diet\"}]}}}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/diet-rule")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// contextual
+    func testSaveRuleTest20() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRuleWithHTTPInfo(
+            indexName: "indexName",
+            objectID: "a-rule-id",
+            rule: Rule(
+                objectID: "a-rule-id",
+                conditions: [SearchCondition(context: "mobile")],
+                consequence: SearchConsequence(params: SearchConsequenceParams(filters: "release_date >= 1577836800"))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"objectID\":\"a-rule-id\",\"conditions\":[{\"context\":\"mobile\"}],\"consequence\":{\"params\":{\"filters\":\"release_date >= 1577836800\"}}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/a-rule-id")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// saveRule always active rule
+    func testSaveRuleTest21() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRuleWithHTTPInfo(
+            indexName: "indexName",
+            objectID: "a-rule-id",
+            rule: Rule(
+                objectID: "a-rule-id",
+                consequence: SearchConsequence(params: SearchConsequenceParams(
+                    aroundRadius: SearchAroundRadius
+                        .int(1000)
+                )),
+                validity: [SearchTimeRange(from: Int64(1_577_836_800), until: Int64(1_577_836_800))]
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"objectID\":\"a-rule-id\",\"consequence\":{\"params\":{\"aroundRadius\":1000}},\"validity\":[{\"from\":1577836800,\"until\":1577836800}]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/a-rule-id")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// saveRules with minimal parameters
     func testSaveRulesTest() async throws {
         let configuration = try SearchClientConfiguration(
@@ -2702,8 +3723,10 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters =
-            try XCTUnwrap("{\"forwardToReplicas\":\"false\",\"clearExistingRules\":\"true\"}".data(using: .utf8))
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"forwardToReplicas\":\"false\",\"clearExistingRules\":\"true\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -2777,14 +3800,110 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters =
-            try XCTUnwrap("{\"forwardToReplicas\":\"true\",\"clearExistingRules\":\"true\"}".data(using: .utf8))
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"forwardToReplicas\":\"true\",\"clearExistingRules\":\"true\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
         )
 
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
+    /// dynamic filtering
+    func testSaveRulesTest2() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRulesWithHTTPInfo(
+            indexName: "<YOUR_INDEX_NAME>",
+            rules: [
+                Rule(
+                    objectID: "toaster",
+                    conditions: [SearchCondition(pattern: "toaster", anchoring: SearchAnchoring.contains)],
+                    consequence: SearchConsequence(params: SearchConsequenceParams(
+                        filters: "product_type:toaster",
+                        query: SearchConsequenceQuery
+                            .searchConsequenceQueryObject(SearchConsequenceQueryObject(remove: ["toaster"]))
+                    ))
+                ),
+                Rule(
+                    objectID: "cheap",
+                    conditions: [SearchCondition(pattern: "cheap", anchoring: SearchAnchoring.contains)],
+                    consequence: SearchConsequence(params: SearchConsequenceParams(
+                        filters: "price < 15",
+                        query: SearchConsequenceQuery
+                            .searchConsequenceQueryObject(SearchConsequenceQueryObject(remove: ["cheap"]))
+                    ))
+                ),
+            ]
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "[{\"objectID\":\"toaster\",\"conditions\":[{\"pattern\":\"toaster\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"toaster\"]},\"filters\":\"product_type:toaster\"}}},{\"objectID\":\"cheap\",\"conditions\":[{\"pattern\":\"cheap\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"cheap\"]},\"filters\":\"price < 15\"}}}]"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// enhance search results
+    func testSaveRulesTest3() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRulesWithHTTPInfo(
+            indexName: "<YOUR_INDEX_NAME>",
+            rules: [
+                Rule(
+                    objectID: "country",
+                    conditions: [SearchCondition(pattern: "{facet:country}", anchoring: SearchAnchoring.contains)],
+                    consequence: SearchConsequence(params: SearchConsequenceParams(aroundLatLngViaIP: false))
+                ),
+                Rule(
+                    objectID: "city",
+                    conditions: [SearchCondition(pattern: "{facet:city}", anchoring: SearchAnchoring.contains)],
+                    consequence: SearchConsequence(params: SearchConsequenceParams(aroundLatLngViaIP: false))
+                ),
+            ]
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "[{\"objectID\":\"country\",\"conditions\":[{\"pattern\":\"{facet:country}\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"aroundLatLngViaIP\":false}}},{\"objectID\":\"city\",\"conditions\":[{\"pattern\":\"{facet:city}\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"aroundLatLngViaIP\":false}}}]"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
     }
 
     /// saveSynonym
@@ -2867,10 +3986,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"forwardToReplicas\":\"true\",\"replaceExistingSynonyms\":\"true\"}"
-                    .data(using: .utf8)
-            )
+            try XCTUnwrap("{\"forwardToReplicas\":\"true\",\"replaceExistingSynonyms\":\"true\"}".data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -3678,8 +4794,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"query\":\"foo\",\"page\":4,\"hitsPerPage\":2,\"language\":\"fr\"}"
-            .data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"foo\",\"page\":4,\"hitsPerPage\":2,\"language\":\"fr\"}".data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3749,6 +4864,37 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/facets/facetName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// facetName and facetQuery
+    func testSearchForFacetValuesTest2() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.searchForFacetValuesWithHTTPInfo(
+            indexName: "indexName",
+            facetName: "author",
+            searchForFacetValuesRequest: SearchForFacetValuesRequest(facetQuery: "stephen")
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"facetQuery\":\"stephen\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/facets/author/query")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
@@ -3904,6 +5050,4389 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/indexes/cts_e2e_browse/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// query
+    func testSearchSingleIndexTest4() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(query: "phone"))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"phone\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// filters
+    func testSearchSingleIndexTest5() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams
+                .searchSearchParamsObject(SearchSearchParamsObject(filters: "country:US AND price.gross < 2.0"))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"filters\":\"country:US AND price.gross < 2.0\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// filters for stores
+    func testSearchSingleIndexTest6() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "ben",
+                filters: "categories:politics AND store:Gibert Joseph Saint-Michel"
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"query\":\"ben\",\"filters\":\"categories:politics AND store:Gibert Joseph Saint-Michel\"}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// filters boolean
+    func testSearchSingleIndexTest7() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams
+                .searchSearchParamsObject(SearchSearchParamsObject(filters: "is_available:true"))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"filters\":\"is_available:true\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// distinct
+    func testSearchSingleIndexTest8() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams
+                .searchSearchParamsObject(SearchSearchParamsObject(distinct: SearchDistinct.bool(true)))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"distinct\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// filtersNumeric
+    func testSearchSingleIndexTest9() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(filters: "price < 10"))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"filters\":\"price < 10\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// filtersTimestamp
+    func testSearchSingleIndexTest10() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams
+                .searchSearchParamsObject(
+                    SearchSearchParamsObject(filters: "NOT date_timestamp:1514764800 TO 1546300799")
+                )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"filters\":\"NOT date_timestamp:1514764800 TO 1546300799\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// filtersSumOrFiltersScoresFalse
+    func testSearchSingleIndexTest11() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                filters: "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+                sumOrFiltersScores: false
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"filters\":\"(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)\",\"sumOrFiltersScores\":false}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// filtersSumOrFiltersScoresTrue
+    func testSearchSingleIndexTest12() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                filters: "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
+                sumOrFiltersScores: true
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"filters\":\"(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)\",\"sumOrFiltersScores\":true}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// filtersStephenKing
+    func testSearchSingleIndexTest13() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams
+                .searchSearchParamsObject(SearchSearchParamsObject(filters: "author:\"Stephen King\""))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"filters\":\"author:\\\"Stephen King\\\"\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// filtersNotTags
+    func testSearchSingleIndexTest14() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "harry",
+                filters: "_tags:non-fiction"
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"harry\",\"filters\":\"_tags:non-fiction\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// facetFiltersList
+    func testSearchSingleIndexTest15() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams
+                .searchSearchParamsObject(SearchSearchParamsObject(
+                    facetFilters: SearchFacetFilters
+                        .arrayOfSearchFacetFilters([
+                            SearchFacetFilters.string("publisher:Penguin"),
+                            SearchFacetFilters.arrayOfSearchFacetFilters([
+                                SearchFacetFilters.string("author:Stephen King"),
+                                SearchFacetFilters.string("genre:Horror"),
+                            ]),
+                        ])
+                ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"facetFilters\":[\"publisher:Penguin\",[\"author:Stephen King\",\"genre:Horror\"]]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// facetFiltersBook
+    func testSearchSingleIndexTest16() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string("category:Book")])
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"facetFilters\":[\"category:Book\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// facetFiltersAND
+    func testSearchSingleIndexTest17() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([
+                    SearchFacetFilters.string("category:Book"),
+                    SearchFacetFilters.string("author:John Doe"),
+                ])
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"facetFilters\":[\"category:Book\",\"author:John Doe\"]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// facetFiltersOR
+    func testSearchSingleIndexTest18() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                facetFilters: SearchFacetFilters
+                    .arrayOfSearchFacetFilters([SearchFacetFilters.arrayOfSearchFacetFilters([
+                        SearchFacetFilters.string("category:Book"),
+                        SearchFacetFilters.string("author:John Doe"),
+                    ])])
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"facetFilters\":[[\"category:Book\",\"author:John Doe\"]]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// facetFiltersCombined
+    func testSearchSingleIndexTest19() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([
+                    SearchFacetFilters.string("author:John Doe"),
+                    SearchFacetFilters.arrayOfSearchFacetFilters([
+                        SearchFacetFilters.string("category:Book"),
+                        SearchFacetFilters.string("category:Movie"),
+                    ]),
+                ])
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"query\":\"query\",\"facetFilters\":[\"author:John Doe\",[\"category:Book\",\"category:Movie\"]]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// facetFiltersNeg
+    func testSearchSingleIndexTest20() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams
+                .searchSearchParamsObject(SearchSearchParamsObject(
+                    facetFilters: SearchFacetFilters
+                        .string("category:-Ebook")
+                ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"facetFilters\":\"category:-Ebook\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// filtersAndFacetFilters
+    func testSearchSingleIndexTest21() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                filters: "(author:\"Stephen King\" OR genre:\"Horror\")",
+                facetFilters: SearchFacetFilters
+                    .arrayOfSearchFacetFilters([SearchFacetFilters.string("publisher:Penguin")])
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"filters\":\"(author:\\\"Stephen King\\\" OR genre:\\\"Horror\\\")\",\"facetFilters\":[\"publisher:Penguin\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// facet author genre
+    func testSearchSingleIndexTest22() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(facets: [
+                "author",
+                "genre",
+            ]))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"facets\":[\"author\",\"genre\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// facet wildcard
+    func testSearchSingleIndexTest23() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(facets: ["*"]))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"facets\":[\"*\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// maxValuesPerFacet
+    func testSearchSingleIndexTest24() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(maxValuesPerFacet: 1000))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"maxValuesPerFacet\":1000}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// aroundLatLng
+    func testSearchSingleIndexTest25() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams
+                .searchSearchParamsObject(SearchSearchParamsObject(aroundLatLng: "40.71, -74.01"))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"aroundLatLng\":\"40.71, -74.01\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// aroundLatLngViaIP
+    func testSearchSingleIndexTest26() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(aroundLatLngViaIP: true))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"aroundLatLngViaIP\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// aroundRadius
+    func testSearchSingleIndexTest27() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                aroundLatLng: "40.71, -74.01",
+                aroundRadius: SearchAroundRadius.int(1_000_000)
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"aroundLatLng\":\"40.71, -74.01\",\"aroundRadius\":1000000}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// insideBoundingBox
+    func testSearchSingleIndexTest28() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams
+                .searchSearchParamsObject(SearchSearchParamsObject(
+                    insideBoundingBox: SearchInsideBoundingBox
+                        .arrayOfArrayOfDouble([[
+                            49.067996905313834,
+                            65.73828125,
+                            25.905859247243498,
+                            128.8046875,
+                        ]])
+                ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"insideBoundingBox\":[[49.067996905313834,65.73828125,25.905859247243498,128.8046875]]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// insidePolygon
+    func testSearchSingleIndexTest29() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(insidePolygon: [[
+                42.01,
+                -124.31,
+                48.835509470063045,
+                -124.40453125000005,
+                45.01082951668149,
+                -65.95726562500005,
+                31.247243545293433,
+                -81.06578125000004,
+                25.924152577235226,
+                -97.68234374999997,
+                32.300311895879545,
+                -117.54828125,
+            ]]))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"insidePolygon\":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// insidePolygon
+    func testSearchSingleIndexTest30() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(insidePolygon: [[
+                42.01,
+                -124.31,
+                48.835509470063045,
+                -124.40453125000005,
+                45.01082951668149,
+                -65.95726562500005,
+                31.247243545293433,
+                -81.06578125000004,
+                25.924152577235226,
+                -97.68234374999997,
+                32.300311895879545,
+                -117.54828125,
+            ]]))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"insidePolygon\":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// optionalFilters
+    func testSearchSingleIndexTest31() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams
+                .searchSearchParamsObject(SearchSearchParamsObject(
+                    optionalFilters: SearchOptionalFilters
+                        .arrayOfSearchOptionalFilters([SearchOptionalFilters.string("can_deliver_quickly:true")])
+                ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"optionalFilters\":[\"can_deliver_quickly:true\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// optionalFiltersMany
+    func testSearchSingleIndexTest32() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams
+                .searchSearchParamsObject(SearchSearchParamsObject(
+                    optionalFilters: SearchOptionalFilters
+                        .arrayOfSearchOptionalFilters([
+                            SearchOptionalFilters.string("brand:Apple<score=3>"),
+                            SearchOptionalFilters.string("brand:Samsung<score=2>"),
+                            SearchOptionalFilters.string("brand:-Huawei"),
+                        ])
+                ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"optionalFilters\":[\"brand:Apple<score=3>\",\"brand:Samsung<score=2>\",\"brand:-Huawei\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// optionalFiltersSimple
+    func testSearchSingleIndexTest33() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams
+                .searchSearchParamsObject(SearchSearchParamsObject(
+                    optionalFilters: SearchOptionalFilters
+                        .arrayOfSearchOptionalFilters([
+                            SearchOptionalFilters.string("brand:Apple<score=2>"),
+                            SearchOptionalFilters.string("type:tablet"),
+                        ])
+                ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"optionalFilters\":[\"brand:Apple<score=2>\",\"type:tablet\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// restrictSearchableAttributes
+    func testSearchSingleIndexTest34() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams
+                .searchSearchParamsObject(SearchSearchParamsObject(restrictSearchableAttributes: ["title_fr"]))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"restrictSearchableAttributes\":[\"title_fr\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// getRankingInfo
+    func testSearchSingleIndexTest35() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(getRankingInfo: true))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"getRankingInfo\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// clickAnalytics
+    func testSearchSingleIndexTest36() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(clickAnalytics: true))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"clickAnalytics\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// clickAnalyticsUserToken
+    func testSearchSingleIndexTest37() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                userToken: "user-1",
+                clickAnalytics: true
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"clickAnalytics\":true,\"userToken\":\"user-1\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// enablePersonalization
+    func testSearchSingleIndexTest38() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                userToken: "user-1",
+                enablePersonalization: true
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"enablePersonalization\":true,\"userToken\":\"user-1\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// userToken
+    func testSearchSingleIndexTest39() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(userToken: "user-1"))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"userToken\":\"user-1\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// userToken1234
+    func testSearchSingleIndexTest40() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                userToken: "user-1234"
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"userToken\":\"user-1234\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// analyticsTag
+    func testSearchSingleIndexTest41() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams
+                .searchSearchParamsObject(SearchSearchParamsObject(analyticsTags: ["YOUR_ANALYTICS_TAG"]))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"analyticsTags\":[\"YOUR_ANALYTICS_TAG\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// facetFiltersUsers
+    func testSearchSingleIndexTest42() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams
+                .searchSearchParamsObject(SearchSearchParamsObject(
+                    facetFilters: SearchFacetFilters
+                        .arrayOfSearchFacetFilters([
+                            SearchFacetFilters.string("user:user42"),
+                            SearchFacetFilters.string("user:public"),
+                        ])
+                ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"facetFilters\":[\"user:user42\",\"user:public\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// buildTheQuery
+    func testSearchSingleIndexTest43() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                filters: "categoryPageId: Men's Clothing",
+                analyticsTags: ["mens-clothing"],
+                hitsPerPage: 50
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"filters\":\"categoryPageId: Men's Clothing\",\"hitsPerPage\":50,\"analyticsTags\":[\"mens-clothing\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// attributesToHighlightOverride
+    func testSearchSingleIndexTest44() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                attributesToHighlight: ["title", "content"]
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"attributesToHighlight\":[\"title\",\"content\"]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// disableTypoToleranceOnAttributes
+    func testSearchSingleIndexTest45() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                disableTypoToleranceOnAttributes: ["serial_number"]
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"disableTypoToleranceOnAttributes\":[\"serial_number\"]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// search_a_query
+    func testSearchSingleIndexTest46() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(query: "shirt"))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"shirt\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// search_everything
+    func testSearchSingleIndexTest47() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(query: ""))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// api_filtering_range_example
+    func testSearchSingleIndexTest48() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "books",
+                filters: "price:10 TO 20"
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"books\",\"filters\":\"price:10 TO 20\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// search_a_query
+    func testSearchSingleIndexTest49() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "",
+                similarQuery: "Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen",
+                filters: "year:1991 TO 2001"
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"query\":\"\",\"similarQuery\":\"Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen\",\"filters\":\"year:1991 TO 2001\"}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// override_retrievable_attributes
+    func testSearchSingleIndexTest50() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                attributesToRetrieve: ["title", "content"]
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"attributesToRetrieve\":[\"title\",\"content\"]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// restrict_searchable_attributes
+    func testSearchSingleIndexTest51() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                restrictSearchableAttributes: ["title", "author"]
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"restrictSearchableAttributes\":[\"title\",\"author\"]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// override_default_relevancy
+    func testSearchSingleIndexTest52() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                relevancyStrictness: 70
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"relevancyStrictness\":70}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// apply_filters
+    func testSearchSingleIndexTest53() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                filters: "(category:Book OR category:Ebook) AND _tags:published"
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"query\":\"query\",\"filters\":\"(category:Book OR category:Ebook) AND _tags:published\"}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// apply_all_filters
+    func testSearchSingleIndexTest54() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                filters: "available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\"John Doe\""
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"query\":\"query\",\"filters\":\"available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\\\"John Doe\\\"\"}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// escape_spaces
+    func testSearchSingleIndexTest55() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                filters: "category:\"Books and Comics\""
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"filters\":\"category:\\\"Books and Comics\\\"\"}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// escape_keywords
+    func testSearchSingleIndexTest56() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                filters: "keyword:\"OR\""
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"filters\":\"keyword:\\\"OR\\\"\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// escape_single_quotes
+    func testSearchSingleIndexTest57() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                filters: "content:\"It's a wonderful day\""
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"filters\":\"content:\\\"It's a wonderful day\\\"\"}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// escape_double_quotes
+    func testSearchSingleIndexTest58() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                filters: "content:\"She said \"Hello World\""
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"filters\":\"content:\\\"She said \\\"Hello World\\\"\"}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// apply_filters
+    func testSearchSingleIndexTest59() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                optionalFilters: SearchOptionalFilters.arrayOfSearchOptionalFilters([
+                    SearchOptionalFilters.string("category:Book"),
+                    SearchOptionalFilters.string("author:John Doe"),
+                ])
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"optionalFilters\":[\"category:Book\",\"author:John Doe\"]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// apply_negative_filters
+    func testSearchSingleIndexTest60() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                optionalFilters: SearchOptionalFilters.arrayOfSearchOptionalFilters([
+                    SearchOptionalFilters.string("category:Book"),
+                    SearchOptionalFilters.string("author:-John Doe"),
+                ])
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"optionalFilters\":[\"category:Book\",\"author:-John Doe\"]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// apply_negative_filters_restaurants
+    func testSearchSingleIndexTest61() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                optionalFilters: SearchOptionalFilters
+                    .arrayOfSearchOptionalFilters([SearchOptionalFilters.string("restaurant:-Bert's Inn")])
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"optionalFilters\":[\"restaurant:-Bert's Inn\"]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// apply_numeric_filters
+    func testSearchSingleIndexTest62() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                numericFilters: SearchNumericFilters.arrayOfSearchNumericFilters([
+                    SearchNumericFilters.string("price < 1000"),
+                    SearchNumericFilters.arrayOfSearchNumericFilters([
+                        SearchNumericFilters.string("inStock = 1"),
+                        SearchNumericFilters.string("deliveryDate < 1441755506"),
+                    ]),
+                ])
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"query\":\"query\",\"numericFilters\":[\"price < 1000\",[\"inStock = 1\",\"deliveryDate < 1441755506\"]]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// apply_tag_filters
+    func testSearchSingleIndexTest63() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                tagFilters: SearchTagFilters.arrayOfSearchTagFilters([
+                    SearchTagFilters.string("SciFi"),
+                    SearchTagFilters.arrayOfSearchTagFilters([
+                        SearchTagFilters.string("Book"),
+                        SearchTagFilters.string("Movie"),
+                    ]),
+                ])
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"tagFilters\":[\"SciFi\",[\"Book\",\"Movie\"]]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// apply_filters
+    func testSearchSingleIndexTest64() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                sumOrFiltersScores: true
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"sumOrFiltersScores\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// facets_all
+    func testSearchSingleIndexTest65() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                facets: ["*"]
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"facets\":[\"*\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// retrieve_only_some_facets
+    func testSearchSingleIndexTest66() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                facets: ["category", "author"]
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"facets\":[\"category\",\"author\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// override_default_max_values_per_facet
+    func testSearchSingleIndexTest67() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                maxValuesPerFacet: 20
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"maxValuesPerFacet\":20}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// enable_faceting_after_distinct
+    func testSearchSingleIndexTest68() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                facetingAfterDistinct: true
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"facetingAfterDistinct\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// sort_facet_values_alphabetically
+    func testSearchSingleIndexTest69() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                sortFacetValuesBy: "count"
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"sortFacetValuesBy\":\"count\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// override_attributes_to_snippet
+    func testSearchSingleIndexTest70() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                attributesToSnippet: ["title", "content:80"]
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"attributesToSnippet\":[\"title\",\"content:80\"]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// override_default_highlight_pre_tag
+    func testSearchSingleIndexTest71() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                highlightPreTag: "<strong>"
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"highlightPreTag\":\"<strong>\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// override_default_highlight_post_tag
+    func testSearchSingleIndexTest72() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                highlightPostTag: "</strong>"
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"highlightPostTag\":\"</strong>\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// override_default_snippet_ellipsis_text
+    func testSearchSingleIndexTest73() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                snippetEllipsisText: ""
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"snippetEllipsisText\":\"\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// enable_restrict_highlight_and_snippet_arrays
+    func testSearchSingleIndexTest74() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                restrictHighlightAndSnippetArrays: false
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"restrictHighlightAndSnippetArrays\":false}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// access_page
+    func testSearchSingleIndexTest75() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(query: "query", page: 0))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"page\":0}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// override_default_hits_per_page
+    func testSearchSingleIndexTest76() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                hitsPerPage: 10
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"hitsPerPage\":10}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// get_nth_hit
+    func testSearchSingleIndexTest77() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                offset: 4
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"offset\":4}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// get_n_results
+    func testSearchSingleIndexTest78() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                length: 4
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"length\":4}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// override_default_min_word_size_for_one_typo
+    func testSearchSingleIndexTest79() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                minWordSizefor1Typo: 2
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"minWordSizefor1Typo\":2}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// override_default_min_word_size_for_two_typos
+    func testSearchSingleIndexTest80() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                minWordSizefor2Typos: 2
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"minWordSizefor2Typos\":2}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// override_default_typo_tolerance_mode
+    func testSearchSingleIndexTest81() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                typoTolerance: SearchTypoTolerance.bool(false)
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"typoTolerance\":false}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// disable_typos_on_numeric_tokens_at_search_time
+    func testSearchSingleIndexTest82() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                allowTyposOnNumericTokens: false
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"allowTyposOnNumericTokens\":false}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// search_around_a_position
+    func testSearchSingleIndexTest83() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                aroundLatLng: "40.71, -74.01"
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"aroundLatLng\":\"40.71, -74.01\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// search_around_server_ip
+    func testSearchSingleIndexTest84() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                aroundLatLngViaIP: true
+            )),
+            requestOptions: RequestOptions(
+                headers: [
+                    "x-forwarded-for": "94.228.178.246 // should be replaced with the actual IP you would like to search around",
+                ]
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"aroundLatLngViaIP\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+
+        let expectedHeaders =
+            try XCTUnwrap(
+                "{\"x-forwarded-for\":\"94.228.178.246 // should be replaced with the actual IP you would like to search around\"}"
+                    .data(using: .utf8)
+            )
+        let expectedHeadersMap = try CodableHelper.jsonDecoder.decode([String: String?].self, from: expectedHeaders)
+
+        let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
+        for header in expectedHeadersMap {
+            XCTAssertEqual(echoResponseHeaders[header.key.capitalized], header.value)
+        }
+    }
+
+    /// set_around_radius
+    func testSearchSingleIndexTest85() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                aroundRadius: SearchAroundRadius.int(1000)
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"aroundRadius\":1000}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// disable_automatic_radius
+    func testSearchSingleIndexTest86() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                aroundRadius: SearchAroundRadius.searchAroundRadiusAll(SearchAroundRadiusAll.all)
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"aroundRadius\":\"all\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_geo_search_precision
+    func testSearchSingleIndexTest87() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                aroundPrecision: SearchAroundPrecision.int(100)
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"aroundPrecision\":100}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_geo_search_precision_non_linear
+    func testSearchSingleIndexTest88() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                aroundPrecision: SearchAroundPrecision.arrayOfSearchRange([
+                    SearchRange(from: 0, value: 25),
+                    SearchRange(from: 2000, value: 1000),
+                ])
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"query\":\"query\",\"aroundPrecision\":[{\"from\":0,\"value\":25},{\"from\":2000,\"value\":1000}]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_minimum_geo_search_radius
+    func testSearchSingleIndexTest89() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                minimumAroundRadius: 1000
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"minimumAroundRadius\":1000}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// search_inside_rectangular_area
+    func testSearchSingleIndexTest90() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                insideBoundingBox: SearchInsideBoundingBox.arrayOfArrayOfDouble([[
+                    46.650828100116044,
+                    7.123046875,
+                    45.17210966999772,
+                    1.009765625,
+                ]])
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"query\":\"query\",\"insideBoundingBox\":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625]]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// search_inside_multiple_rectangular_areas
+    func testSearchSingleIndexTest91() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                insideBoundingBox: SearchInsideBoundingBox.arrayOfArrayOfDouble([
+                    [46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625],
+                    [49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875],
+                ])
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"query\":\"query\",\"insideBoundingBox\":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875]]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// search_inside_polygon_area
+    func testSearchSingleIndexTest92() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                insidePolygon: [[
+                    46.650828100116044,
+                    7.123046875,
+                    45.17210966999772,
+                    1.009765625,
+                    49.62625916704081,
+                    4.6181640625,
+                ]]
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"query\":\"query\",\"insidePolygon\":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625]]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// search_inside_multiple_polygon_areas
+    func testSearchSingleIndexTest93() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                insidePolygon: [
+                    [46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625, 49.62625916704081, 4.6181640625],
+                    [
+                        49.62625916704081,
+                        4.6181640625,
+                        47.715070300900194,
+                        0.482421875,
+                        45.17210966999772,
+                        1.009765625,
+                        50.62626704081,
+                        4.6181640625,
+                    ],
+                ]
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"query\":\"query\",\"insidePolygon\":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875,45.17210966999772,1.009765625,50.62626704081,4.6181640625]]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_querylanguages_override
+    func testSearchSingleIndexTest94() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                ignorePlurals: SearchIgnorePlurals.arrayOfSearchSupportedLanguage([
+                    SearchSupportedLanguage.ca,
+                    SearchSupportedLanguage.es,
+                ])
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"ignorePlurals\":[\"ca\",\"es\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_querylanguages_override
+    func testSearchSingleIndexTest95() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                removeStopWords: SearchRemoveStopWords.arrayOfSearchSupportedLanguage([
+                    SearchSupportedLanguage.ca,
+                    SearchSupportedLanguage.es,
+                ])
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"removeStopWords\":[\"ca\",\"es\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_querylanguages_override
+    func testSearchSingleIndexTest96() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                removeStopWords: SearchRemoveStopWords.arrayOfSearchSupportedLanguage([
+                    SearchSupportedLanguage.ca,
+                    SearchSupportedLanguage.es,
+                ])
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"removeStopWords\":[\"ca\",\"es\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_querylanguages_with_japanese_query
+    func testSearchSingleIndexTest97() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                queryLanguages: [SearchSupportedLanguage.ja, SearchSupportedLanguage.en]
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"queryLanguages\":[\"ja\",\"en\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_natural_languages
+    func testSearchSingleIndexTest98() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "",
+                naturalLanguages: [SearchSupportedLanguage.fr]
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"\",\"naturalLanguages\":[\"fr\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// override_natural_languages_with_query
+    func testSearchSingleIndexTest99() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "",
+                naturalLanguages: [SearchSupportedLanguage.fr],
+                removeWordsIfNoResults: SearchRemoveWordsIfNoResults.firstWords
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"query\":\"\",\"naturalLanguages\":[\"fr\"],\"removeWordsIfNoResults\":\"firstWords\"}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// enable_decompound_query_search_time
+    func testSearchSingleIndexTest100() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                decompoundQuery: true
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"decompoundQuery\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// enable_rules_search_time
+    func testSearchSingleIndexTest101() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                enableRules: true
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"enableRules\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_rule_contexts
+    func testSearchSingleIndexTest102() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                ruleContexts: ["front_end", "website2"]
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"ruleContexts\":[\"front_end\",\"website2\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// enable_personalization
+    func testSearchSingleIndexTest103() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                enablePersonalization: true
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"enablePersonalization\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// enable_personalization_with_user_token
+    func testSearchSingleIndexTest104() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                userToken: "123456",
+                enablePersonalization: true
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"enablePersonalization\":true,\"userToken\":\"123456\"}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// personalization_impact
+    func testSearchSingleIndexTest105() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                personalizationImpact: 20
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"personalizationImpact\":20}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_user_token
+    func testSearchSingleIndexTest106() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                userToken: "123456"
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"userToken\":\"123456\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_user_token_with_personalization
+    func testSearchSingleIndexTest107() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                userToken: "123456",
+                enablePersonalization: true
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"enablePersonalization\":true,\"userToken\":\"123456\"}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// override_default_query_type
+    func testSearchSingleIndexTest108() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                queryType: SearchQueryType.prefixAll
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"queryType\":\"prefixAll\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// override_default_remove_words_if_no_results
+    func testSearchSingleIndexTest109() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                removeWordsIfNoResults: SearchRemoveWordsIfNoResults.lastWords
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"removeWordsIfNoResults\":\"lastWords\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// enable_advanced_syntax_search_time
+    func testSearchSingleIndexTest110() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                advancedSyntax: true
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"advancedSyntax\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// overide_default_optional_words
+    func testSearchSingleIndexTest111() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                optionalWords: SearchOptionalWords.arrayOfString(["toyota", "2020 2021"])
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"optionalWords\":[\"toyota\",\"2020 2021\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// disabling_exact_for_some_attributes_search_time
+    func testSearchSingleIndexTest112() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                disableExactOnAttributes: ["description"]
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"disableExactOnAttributes\":[\"description\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// override_default_exact_single_word_query
+    func testSearchSingleIndexTest113() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                exactOnSingleWordQuery: SearchExactOnSingleWordQuery.`none`
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"exactOnSingleWordQuery\":\"none\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// override_default_aternative_as_exact
+    func testSearchSingleIndexTest114() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                alternativesAsExact: [SearchAlternativesAsExact.multiWordsSynonym]
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"alternativesAsExact\":[\"multiWordsSynonym\"]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// enable_advanced_syntax_exact_phrase
+    func testSearchSingleIndexTest115() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                advancedSyntax: true,
+                advancedSyntaxFeatures: [SearchAdvancedSyntaxFeatures.exactPhrase]
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"query\":\"query\",\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// enable_advanced_syntax_exclude_words
+    func testSearchSingleIndexTest116() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                advancedSyntax: true,
+                advancedSyntaxFeatures: [SearchAdvancedSyntaxFeatures.excludeWords]
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"query\":\"query\",\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"excludeWords\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// override_distinct
+    func testSearchSingleIndexTest117() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                distinct: SearchDistinct.int(0)
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"distinct\":0}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// get_ranking_info
+    func testSearchSingleIndexTest118() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                getRankingInfo: true
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"getRankingInfo\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// disable_click_analytics
+    func testSearchSingleIndexTest119() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                clickAnalytics: false
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"clickAnalytics\":false}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// enable_click_analytics
+    func testSearchSingleIndexTest120() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                clickAnalytics: true
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"clickAnalytics\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// disable_analytics
+    func testSearchSingleIndexTest121() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                analytics: false
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"analytics\":false}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// add_analytics_tags
+    func testSearchSingleIndexTest122() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                analyticsTags: ["front_end", "website2"]
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"analyticsTags\":[\"front_end\",\"website2\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// disable_synonyms
+    func testSearchSingleIndexTest123() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                synonyms: false
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"synonyms\":false}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// override_replace_synonyms_in_highlights
+    func testSearchSingleIndexTest124() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                replaceSynonymsInHighlight: true
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"replaceSynonymsInHighlight\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// override_min_proximity
+    func testSearchSingleIndexTest125() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                minProximity: 2
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"minProximity\":2}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// override_default_field
+    func testSearchSingleIndexTest126() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                responseFields: ["hits", "facets"]
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"responseFields\":[\"hits\",\"facets\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// override_percentile_computation
+    func testSearchSingleIndexTest127() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                percentileComputation: false
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"percentileComputation\":false}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_ab_test
+    func testSearchSingleIndexTest128() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                enableABTest: false
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"enableABTest\":false}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_enable_re_ranking
+    func testSearchSingleIndexTest129() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                query: "query",
+                enableReRanking: false
+            ))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\",\"enableReRanking\":false}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// with algolia user id
+    func testSearchSingleIndexTest130() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "indexName",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(query: "query")),
+            requestOptions: RequestOptions(
+                headers: ["X-Algolia-User-ID": "user1234"]
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"query\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// mcm with algolia user id
+    func testSearchSingleIndexTest131() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "playlists",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(query: "peace")),
+            requestOptions: RequestOptions(
+                headers: ["X-Algolia-User-ID": "user42"]
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"query\":\"peace\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/playlists/query")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
@@ -4076,44 +9605,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// setSettingsAttributesForFaceting
+    /// minimal parameters
     func testSetSettingsTest() async throws {
-        let configuration = try SearchClientConfiguration(
-            appID: SearchClientRequestsTests.APPLICATION_ID,
-            apiKey: SearchClientRequestsTests.API_KEY
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = SearchClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client.setSettingsWithHTTPInfo(
-            indexName: "<YOUR_INDEX_NAME>",
-            indexSettings: IndexSettings(attributesForFaceting: [
-                "actor",
-                "filterOnly(category)",
-                "searchable(publisher)",
-            ])
-        )
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
-
-        let expectedBodyData =
-            "{\"attributesForFaceting\":[\"actor\",\"filterOnly(category)\",\"searchable(publisher)\"]}"
-                .data(using: .utf8)
-        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
-
-        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
-
-        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings")
-        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
-
-        XCTAssertNil(echoResponse.queryParameters)
-    }
-
-    /// setSettings with minimal parameters
-    func testSetSettingsTest1() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -4149,8 +9642,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow boolean `typoTolerance`
-    func testSetSettingsTest2() async throws {
+    /// boolean typoTolerance
+    func testSetSettingsTest1() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -4186,8 +9679,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow enum `typoTolerance`
-    func testSetSettingsTest3() async throws {
+    /// enum typoTolerance
+    func testSetSettingsTest2() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -4226,8 +9719,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow boolean `ignorePlurals`
-    func testSetSettingsTest4() async throws {
+    /// ignorePlurals
+    func testSetSettingsTest3() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -4263,8 +9756,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow list of string `ignorePlurals`
-    func testSetSettingsTest5() async throws {
+    /// list of string ignorePlurals
+    func testSetSettingsTest4() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -4303,8 +9796,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow boolean `removeStopWords`
-    func testSetSettingsTest6() async throws {
+    /// removeStopWords boolean
+    func testSetSettingsTest5() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -4340,8 +9833,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow list of string `removeStopWords`
-    func testSetSettingsTest7() async throws {
+    /// removeStopWords list of string
+    func testSetSettingsTest6() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -4380,8 +9873,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow boolean `distinct`
-    func testSetSettingsTest8() async throws {
+    /// boolean distinct
+    func testSetSettingsTest7() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -4417,8 +9910,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow integers for `distinct`
-    func testSetSettingsTest9() async throws {
+    /// integer distinct
+    func testSetSettingsTest8() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -4454,8 +9947,1423 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow all `indexSettings`
+    /// distinct company
+    func testSetSettingsTest9() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(attributeForDistinct: "company", distinct: SearchDistinct.bool(true))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributeForDistinct\":\"company\",\"distinct\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// distinct design
     func testSetSettingsTest10() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(attributeForDistinct: "design", distinct: SearchDistinct.bool(true))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributeForDistinct\":\"design\",\"distinct\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// distinct true
+    func testSetSettingsTest11() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(distinct: SearchDistinct.bool(true))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"distinct\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// distinct section
+    func testSetSettingsTest12() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(attributeForDistinct: "section", distinct: SearchDistinct.bool(true))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributeForDistinct\":\"section\",\"distinct\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// attributesForFaceting allergens
+    func testSetSettingsTest13() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(attributesForFaceting: ["allergens"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributesForFaceting\":[\"allergens\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// attributesForFaceting availableIn
+    func testSetSettingsTest14() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(attributesForFaceting: ["color", "availableIn"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributesForFaceting\":[\"color\",\"availableIn\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// api_attributes_for_faceting
+    func testSetSettingsTest15() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(attributesForFaceting: ["genre", "author"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributesForFaceting\":[\"genre\",\"author\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// api_attributes_for_faceting_searchable
+    func testSetSettingsTest16() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(attributesForFaceting: ["genre", "searchable(author)"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributesForFaceting\":[\"genre\",\"searchable(author)\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// api_attributes_for_filter_only
+    func testSetSettingsTest17() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(attributesForFaceting: ["filterOnly(genre)", "author"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributesForFaceting\":[\"filterOnly(genre)\",\"author\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// attributesForFaceting categoryPageId
+    func testSetSettingsTest18() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(attributesForFaceting: ["searchable(categoryPageId)"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributesForFaceting\":[\"searchable(categoryPageId)\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// unretrievableAttributes
+    func testSetSettingsTest19() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(unretrievableAttributes: ["visible_by"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"unretrievableAttributes\":[\"visible_by\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// attributesForFaceting user restricted data
+    func testSetSettingsTest20() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(attributesForFaceting: ["filterOnly(visible_by)"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributesForFaceting\":[\"filterOnly(visible_by)\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// attributesForFaceting optional filters
+    func testSetSettingsTest21() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(attributesForFaceting: ["can_deliver_quickly", "restaurant"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributesForFaceting\":[\"can_deliver_quickly\",\"restaurant\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// attributesForFaceting redirect index
+    func testSetSettingsTest22() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(attributesForFaceting: ["query_terms"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributesForFaceting\":[\"query_terms\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// attributesForFaceting multiple consequences
+    func testSetSettingsTest23() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(attributesForFaceting: ["director"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributesForFaceting\":[\"director\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// attributesForFaceting in-depth optional filters
+    func testSetSettingsTest24() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(attributesForFaceting: ["filterOnly(brand)"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributesForFaceting\":[\"filterOnly(brand)\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// mode neuralSearch
+    func testSetSettingsTest25() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(mode: SearchMode.neuralSearch)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"mode\":\"neuralSearch\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// mode keywordSearch
+    func testSetSettingsTest26() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(mode: SearchMode.keywordSearch)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"mode\":\"keywordSearch\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// searchableAttributes same priority
+    func testSetSettingsTest27() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(searchableAttributes: ["title,comments", "ingredients"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"searchableAttributes\":[\"title,comments\",\"ingredients\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// searchableAttributes higher priority
+    func testSetSettingsTest28() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(searchableAttributes: ["title", "ingredients"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"searchableAttributes\":[\"title\",\"ingredients\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// customRanking retweets
+    func testSetSettingsTest29() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(customRanking: ["desc(retweets)", "desc(likes)"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"customRanking\":[\"desc(retweets)\",\"desc(likes)\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// customRanking boosted
+    func testSetSettingsTest30() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(customRanking: ["desc(boosted)"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"customRanking\":[\"desc(boosted)\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// customRanking pageviews
+    func testSetSettingsTest31() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(customRanking: ["desc(pageviews)", "desc(comments)"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"customRanking\":[\"desc(pageviews)\",\"desc(comments)\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// customRanking applying search parameters for a specific query
+    func testSetSettingsTest32() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(
+                attributesForFaceting: ["city, country"],
+                customRanking: ["desc(nb_airline_liaisons)"]
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"customRanking\":[\"desc(nb_airline_liaisons)\"],\"attributesForFaceting\":[\"city, country\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// customRanking rounded pageviews
+    func testSetSettingsTest33() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(customRanking: ["desc(rounded_pageviews)", "desc(comments)"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"customRanking\":[\"desc(rounded_pageviews)\",\"desc(comments)\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// customRanking price
+    func testSetSettingsTest34() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(customRanking: ["desc(price)"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"customRanking\":[\"desc(price)\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// ranking exhaustive (price)
+    func testSetSettingsTest35() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(ranking: [
+                "desc(price)",
+                "typo",
+                "geo",
+                "words",
+                "filters",
+                "proximity",
+                "attribute",
+                "exact",
+                "custom",
+            ])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"ranking\":[\"desc(price)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// ranking exhaustive (is_popular)
+    func testSetSettingsTest36() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(ranking: [
+                "desc(is_popular)",
+                "typo",
+                "geo",
+                "words",
+                "filters",
+                "proximity",
+                "attribute",
+                "exact",
+                "custom",
+            ])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"ranking\":[\"desc(is_popular)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// ranking standard replica
+    func testSetSettingsTest37() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(ranking: ["desc(post_date_timestamp)"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"ranking\":[\"desc(post_date_timestamp)\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// ranking virtual replica
+    func testSetSettingsTest38() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(customRanking: ["desc(post_date_timestamp)"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"customRanking\":[\"desc(post_date_timestamp)\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// customRanking and ranking sort alphabetically
+    func testSetSettingsTest39() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(
+                customRanking: ["asc(textual_attribute)"],
+                ranking: ["custom", "typo", "geo", "words", "filters", "proximity", "attribute", "exact"]
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"customRanking\":[\"asc(textual_attribute)\"],\"ranking\":[\"custom\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// relevancyStrictness
+    func testSetSettingsTest40() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(customRanking: ["asc(textual_attribute)"], relevancyStrictness: 0)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"customRanking\":[\"asc(textual_attribute)\"],\"relevancyStrictness\":0}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// create replica index
+    func testSetSettingsTest41() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(replicas: ["products_price_desc"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"replicas\":[\"products_price_desc\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// create replica index articles
+    func testSetSettingsTest42() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(replicas: ["articles_date_desc"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"replicas\":[\"articles_date_desc\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// create virtual replica index
+    func testSetSettingsTest43() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(replicas: ["virtual(products_price_desc)"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"replicas\":[\"virtual(products_price_desc)\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// unlink replica index
+    func testSetSettingsTest44() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(replicas: [""])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"replicas\":[\"\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// forwardToReplicas
+    func testSetSettingsTest45() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(searchableAttributes: ["name", "description"]),
+            forwardToReplicas: true
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"searchableAttributes\":[\"name\",\"description\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        let expectedQueryParameters = try XCTUnwrap("{\"forwardToReplicas\":\"true\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
+    /// maxValuesPerFacet
+    func testSetSettingsTest46() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(maxValuesPerFacet: 1000)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"maxValuesPerFacet\":1000}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// maxFacetHits
+    func testSetSettingsTest47() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(maxFacetHits: 100)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"maxFacetHits\":100}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// attributesForFaceting complex
+    func testSetSettingsTest48() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(attributesForFaceting: [
+                "actor",
+                "filterOnly(category)",
+                "searchable(publisher)",
+            ])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"attributesForFaceting\":[\"actor\",\"filterOnly(category)\",\"searchable(publisher)\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// ranking closest dates
+    func testSetSettingsTest49() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(ranking: [
+                "asc(date_timestamp)",
+                "typo",
+                "geo",
+                "words",
+                "filters",
+                "proximity",
+                "attribute",
+                "exact",
+                "custom",
+            ])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"ranking\":[\"asc(date_timestamp)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// searchableAttributes item variation
+    func testSetSettingsTest50() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(searchableAttributes: ["design", "type", "color"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"searchableAttributes\":[\"design\",\"type\",\"color\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// searchableAttributes around location
+    func testSetSettingsTest51() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(
+                searchableAttributes: ["name", "country", "city", "iata_code"],
+                customRanking: ["desc(links_count)"]
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"searchableAttributes\":[\"name\",\"country\",\"city\",\"iata_code\"],\"customRanking\":[\"desc(links_count)\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// attributesToHighlight
+    func testSetSettingsTest52() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(attributesToHighlight: ["author", "title", "content"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributesToHighlight\":[\"author\",\"title\",\"content\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// attributesToHighlightStar
+    func testSetSettingsTest53() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(attributesToHighlight: ["*"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributesToHighlight\":[\"*\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// everything
+    func testSetSettingsTest54() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -4540,6 +11448,2269 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let expectedBodyData =
             "{\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"],\"allowCompressionOfIntegerArray\":true,\"allowTyposOnNumericTokens\":true,\"alternativesAsExact\":[\"singleWordSynonym\"],\"attributeCriteriaComputedByMinProximity\":true,\"attributeForDistinct\":\"test\",\"attributesForFaceting\":[\"algolia\"],\"attributesToHighlight\":[\"algolia\"],\"attributesToRetrieve\":[\"algolia\"],\"attributesToSnippet\":[\"algolia\"],\"attributesToTransliterate\":[\"algolia\"],\"camelCaseAttributes\":[\"algolia\"],\"customNormalization\":{\"algolia\":{\"aloglia\":\"aglolia\"}},\"customRanking\":[\"algolia\"],\"decompoundQuery\":false,\"decompoundedAttributes\":{\"algolia\":\"aloglia\"},\"disableExactOnAttributes\":[\"algolia\"],\"disablePrefixOnAttributes\":[\"algolia\"],\"disableTypoToleranceOnAttributes\":[\"algolia\"],\"disableTypoToleranceOnWords\":[\"algolia\"],\"distinct\":3,\"enablePersonalization\":true,\"enableReRanking\":false,\"enableRules\":true,\"exactOnSingleWordQuery\":\"attribute\",\"highlightPreTag\":\"<span>\",\"highlightPostTag\":\"</span>\",\"hitsPerPage\":10,\"ignorePlurals\":false,\"indexLanguages\":[\"fr\"],\"keepDiacriticsOnCharacters\":\"abc\",\"maxFacetHits\":20,\"maxValuesPerFacet\":30,\"minProximity\":6,\"minWordSizefor1Typo\":5,\"minWordSizefor2Typos\":11,\"mode\":\"neuralSearch\",\"numericAttributesForFiltering\":[\"algolia\"],\"optionalWords\":[\"myspace\"],\"paginationLimitedTo\":0,\"queryLanguages\":[\"fr\"],\"queryType\":\"prefixLast\",\"ranking\":[\"geo\"],\"reRankingApplyFilter\":\"mySearch:filters\",\"relevancyStrictness\":10,\"removeStopWords\":false,\"removeWordsIfNoResults\":\"lastWords\",\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"a\",\"b\"]},\"values\":{\"a\":{\"order\":[\"b\"],\"sortRemainingBy\":\"count\"}}}},\"replaceSynonymsInHighlight\":true,\"replicas\":[\"\"],\"responseFields\":[\"algolia\"],\"restrictHighlightAndSnippetArrays\":true,\"searchableAttributes\":[\"foo\"],\"semanticSearch\":{\"eventSources\":[\"foo\"]},\"separatorsToIndex\":\"bar\",\"snippetEllipsisText\":\"---\",\"sortFacetValuesBy\":\"date\",\"typoTolerance\":false,\"unretrievableAttributes\":[\"foo\"],\"userData\":{\"user\":\"data\"}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// searchableAttributesWithCustomRankingsAndAttributesForFaceting
+    func testSetSettingsTest55() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(
+                attributesForFaceting: ["searchable(brand)", "type", "categories", "price"],
+                searchableAttributes: ["brand", "name", "categories", "unordered(description)"],
+                customRanking: ["desc(popularity)"]
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"searchableAttributes\":[\"brand\",\"name\",\"categories\",\"unordered(description)\"],\"customRanking\":[\"desc(popularity)\"],\"attributesForFaceting\":[\"searchable(brand)\",\"type\",\"categories\",\"price\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// searchableAttributesOrdering
+    func testSetSettingsTest56() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(searchableAttributes: ["unordered(title)", "cast"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"searchableAttributes\":[\"unordered(title)\",\"cast\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// searchableAttributesProductReferenceSuffixes
+    func testSetSettingsTest57() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(searchableAttributes: [
+                "name",
+                "product_reference",
+                "product_reference_suffixes",
+            ])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"searchableAttributes\":[\"name\",\"product_reference\",\"product_reference_suffixes\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// queryLanguageAndIgnorePlurals
+    func testSetSettingsTest58() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(
+                ignorePlurals: SearchIgnorePlurals.bool(true),
+                queryLanguages: [SearchSupportedLanguage.en]
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"queryLanguages\":[\"en\"],\"ignorePlurals\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// searchableAttributesInMovies
+    func testSetSettingsTest59() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "movies",
+            indexSettings: IndexSettings(searchableAttributes: ["title_eng", "title_fr", "title_es"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"searchableAttributes\":[\"title_eng\",\"title_fr\",\"title_es\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/movies/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// disablePrefixOnAttributes
+    func testSetSettingsTest60() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(disablePrefixOnAttributes: ["serial_number"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"disablePrefixOnAttributes\":[\"serial_number\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// disableTypoToleranceOnAttributes
+    func testSetSettingsTest61() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(disableTypoToleranceOnAttributes: ["serial_number"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"disableTypoToleranceOnAttributes\":[\"serial_number\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// searchableAttributesSimpleExample
+    func testSetSettingsTest62() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(searchableAttributes: ["serial_number"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"searchableAttributes\":[\"serial_number\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// searchableAttributesSimpleExampleAlt
+    func testSetSettingsTest63() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(searchableAttributes: ["serial_number", "serial_number_suffixes"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"searchableAttributes\":[\"serial_number\",\"serial_number_suffixes\"]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_searchable_attributes
+    func testSetSettingsTest64() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(searchableAttributes: [
+                "title,alternative_title",
+                "author",
+                "unordered(text)",
+                "emails.personal",
+            ])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"searchableAttributes\":[\"title,alternative_title\",\"author\",\"unordered(text)\",\"emails.personal\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_searchable_attributes
+    func testSetSettingsTest65() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(attributesForFaceting: [
+                "author",
+                "filterOnly(isbn)",
+                "searchable(edition)",
+                "afterDistinct(category)",
+                "afterDistinct(searchable(publisher))",
+            ])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"attributesForFaceting\":[\"author\",\"filterOnly(isbn)\",\"searchable(edition)\",\"afterDistinct(category)\",\"afterDistinct(searchable(publisher))\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// unretrievable_attributes
+    func testSetSettingsTest66() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(unretrievableAttributes: ["total_number_of_sales"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"unretrievableAttributes\":[\"total_number_of_sales\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_retrievable_attributes
+    func testSetSettingsTest67() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(attributesToRetrieve: ["author", "title", "content"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributesToRetrieve\":[\"author\",\"title\",\"content\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_all_attributes_as_retrievable
+    func testSetSettingsTest68() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(attributesToRetrieve: ["*"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributesToRetrieve\":[\"*\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// specify_attributes_not_to_retrieve
+    func testSetSettingsTest69() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(attributesToRetrieve: ["*", "-SKU", "-internal_desc"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributesToRetrieve\":[\"*\",\"-SKU\",\"-internal_desc\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// neural_search
+    func testSetSettingsTest70() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(mode: SearchMode.neuralSearch)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"mode\":\"neuralSearch\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// keyword_search
+    func testSetSettingsTest71() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(mode: SearchMode.keywordSearch)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"mode\":\"keywordSearch\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_default_ranking
+    func testSetSettingsTest72() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(ranking: [
+                "typo",
+                "geo",
+                "words",
+                "filters",
+                "attribute",
+                "proximity",
+                "exact",
+                "custom",
+            ])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"ranking\":[\"typo\",\"geo\",\"words\",\"filters\",\"attribute\",\"proximity\",\"exact\",\"custom\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_ranking_by_attribute_asc
+    func testSetSettingsTest73() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(ranking: [
+                "asc(price)",
+                "typo",
+                "geo",
+                "words",
+                "filters",
+                "proximity",
+                "attribute",
+                "exact",
+                "custom",
+            ])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"ranking\":[\"asc(price)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_ranking_by_attribute_desc
+    func testSetSettingsTest74() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(ranking: [
+                "desc(price)",
+                "typo",
+                "geo",
+                "words",
+                "filters",
+                "proximity",
+                "attribute",
+                "exact",
+                "custom",
+            ])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"ranking\":[\"desc(price)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// restrict_searchable_attributes
+    func testSetSettingsTest75() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(customRanking: ["desc(popularity)", "asc(price)"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"customRanking\":[\"desc(popularity)\",\"asc(price)\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_default_relevancy
+    func testSetSettingsTest76() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(relevancyStrictness: 90)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"relevancyStrictness\":90}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_replicas
+    func testSetSettingsTest77() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(replicas: ["name_of_replica_index1", "name_of_replica_index2"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"replicas\":[\"name_of_replica_index1\",\"name_of_replica_index2\"]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_default_max_values_per_facet
+    func testSetSettingsTest78() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(maxValuesPerFacet: 100)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"maxValuesPerFacet\":100}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_default_sort_facet_values_by
+    func testSetSettingsTest79() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(sortFacetValuesBy: "alpha")
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"sortFacetValuesBy\":\"alpha\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_attributes_to_snippet
+    func testSetSettingsTest80() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(attributesToSnippet: ["content:80", "description"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributesToSnippet\":[\"content:80\",\"description\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_all_attributes_to_snippet
+    func testSetSettingsTest81() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(attributesToSnippet: ["*:80"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributesToSnippet\":[\"*:80\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_default_highlight_pre_tag
+    func testSetSettingsTest82() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(highlightPreTag: "<em>")
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"highlightPreTag\":\"<em>\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_default_highlight_post_tag
+    func testSetSettingsTest83() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(highlightPostTag: "</em>")
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"highlightPostTag\":\"</em>\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_default_snippet_ellipsis_text
+    func testSetSettingsTest84() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(snippetEllipsisText: "…")
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"snippetEllipsisText\":\"…\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// enable_restrict_highlight_and_snippet_arrays_by_default
+    func testSetSettingsTest85() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(restrictHighlightAndSnippetArrays: true)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"restrictHighlightAndSnippetArrays\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_default_hits_per_page
+    func testSetSettingsTest86() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(hitsPerPage: 20)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"hitsPerPage\":20}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_pagination_limit
+    func testSetSettingsTest87() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(paginationLimitedTo: 1000)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"paginationLimitedTo\":1000}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_default_min_word_size_for_one_typo
+    func testSetSettingsTest88() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(minWordSizefor1Typo: 4)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"minWordSizefor1Typo\":4}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_default_min_word_size_for_two_typos
+    func testSetSettingsTest89() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(minWordSizefor2Typos: 4)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"minWordSizefor2Typos\":4}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_default_typo_tolerance_mode
+    func testSetSettingsTest90() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(typoTolerance: SearchTypoTolerance.bool(true))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"typoTolerance\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// disable_typos_on_numeric_tokens_by_default
+    func testSetSettingsTest91() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(allowTyposOnNumericTokens: false)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"allowTyposOnNumericTokens\":false}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// disable_typo_tolerance_for_words
+    func testSetSettingsTest92() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(disableTypoToleranceOnWords: ["wheel", "1X2BCD"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"disableTypoToleranceOnWords\":[\"wheel\",\"1X2BCD\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_separators_to_index
+    func testSetSettingsTest93() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(separatorsToIndex: "+#")
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"separatorsToIndex\":\"+#\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_languages_using_querylanguages
+    func testSetSettingsTest94() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(
+                ignorePlurals: SearchIgnorePlurals.bool(true),
+                queryLanguages: [SearchSupportedLanguage.es]
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"queryLanguages\":[\"es\"],\"ignorePlurals\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_attributes_to_transliterate
+    func testSetSettingsTest95() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(
+                attributesToTransliterate: ["name", "description"],
+                indexLanguages: [SearchSupportedLanguage.ja]
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"indexLanguages\":[\"ja\"],\"attributesToTransliterate\":[\"name\",\"description\"]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_languages_using_querylanguages
+    func testSetSettingsTest96() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(
+                removeStopWords: SearchRemoveStopWords.bool(true),
+                queryLanguages: [SearchSupportedLanguage.es]
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"queryLanguages\":[\"es\"],\"removeStopWords\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_camel_case_attributes
+    func testSetSettingsTest97() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(camelCaseAttributes: ["description"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"camelCaseAttributes\":[\"description\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_decompounded_attributes
+    func testSetSettingsTest98() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(decompoundedAttributes: ["de": ["name"]])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"decompoundedAttributes\":{\"de\":[\"name\"]}}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_decompounded_multiple_attributes
+    func testSetSettingsTest99() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(decompoundedAttributes: [
+                "de": ["name_de", "description_de"],
+                "fi": ["name_fi", "description_fi"],
+            ])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"decompoundedAttributes\":{\"de\":[\"name_de\",\"description_de\"],\"fi\":[\"name_fi\",\"description_fi\"]}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_keep_diacritics_on_characters
+    func testSetSettingsTest100() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(keepDiacriticsOnCharacters: "øé")
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"keepDiacriticsOnCharacters\":\"øé\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_custom_normalization
+    func testSetSettingsTest101() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(customNormalization: ["default": ["ä": "ae"]])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"customNormalization\":{\"default\":{\"ä\":\"ae\"}}}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_languages_using_querylanguages
+    func testSetSettingsTest102() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(
+                ignorePlurals: SearchIgnorePlurals.bool(true),
+                removeStopWords: SearchRemoveStopWords.bool(true),
+                queryLanguages: [SearchSupportedLanguage.es]
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"queryLanguages\":[\"es\"],\"removeStopWords\":true,\"ignorePlurals\":true}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_indexlanguages
+    func testSetSettingsTest103() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(indexLanguages: [SearchSupportedLanguage.ja])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"indexLanguages\":[\"ja\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// enable_decompound_query_by_default
+    func testSetSettingsTest104() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(decompoundQuery: true)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"decompoundQuery\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// enable_rules_syntax_by_default
+    func testSetSettingsTest105() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(enableRules: true)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"enableRules\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// enable_personalization_settings
+    func testSetSettingsTest106() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(enablePersonalization: true)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"enablePersonalization\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_default_query_type
+    func testSetSettingsTest107() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(queryType: SearchQueryType.prefixLast)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"queryType\":\"prefixLast\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_default_remove_words_if_no_result
+    func testSetSettingsTest108() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(removeWordsIfNoResults: SearchRemoveWordsIfNoResults.`none`)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"removeWordsIfNoResults\":\"none\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// enable_advanced_syntax_by_default
+    func testSetSettingsTest109() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(advancedSyntax: true)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"advancedSyntax\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_default_optional_words
+    func testSetSettingsTest110() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(optionalWords: SearchOptionalWords.arrayOfString(["blue", "iphone case"]))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"optionalWords\":[\"blue\",\"iphone case\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// disabling_prefix_search_for_some_attributes_by_default
+    func testSetSettingsTest111() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(disablePrefixOnAttributes: ["sku"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"disablePrefixOnAttributes\":[\"sku\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// disabling_exact_for_some_attributes_by_default
+    func testSetSettingsTest112() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(disableExactOnAttributes: ["description"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"disableExactOnAttributes\":[\"description\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_default_exact_single_word_query
+    func testSetSettingsTest113() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(exactOnSingleWordQuery: SearchExactOnSingleWordQuery.attribute)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"exactOnSingleWordQuery\":\"attribute\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_default_aternative_as_exact
+    func testSetSettingsTest114() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(alternativesAsExact: [
+                SearchAlternativesAsExact.ignorePlurals,
+                SearchAlternativesAsExact.singleWordSynonym,
+            ])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"alternativesAsExact\":[\"ignorePlurals\",\"singleWordSynonym\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// enable_advanced_syntax_by_default
+    func testSetSettingsTest115() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(advancedSyntax: true)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"advancedSyntax\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_numeric_attributes_for_filtering
+    func testSetSettingsTest116() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(numericAttributesForFiltering: ["quantity", "popularity"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"numericAttributesForFiltering\":[\"quantity\",\"popularity\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// enable_compression_of_integer_array
+    func testSetSettingsTest117() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(allowCompressionOfIntegerArray: true)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"allowCompressionOfIntegerArray\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_attributes_for_distinct
+    func testSetSettingsTest118() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(attributeForDistinct: "url")
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributeForDistinct\":\"url\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_distinct
+    func testSetSettingsTest119() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(attributeForDistinct: "url", distinct: SearchDistinct.int(1))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"distinct\":1,\"attributeForDistinct\":\"url\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_replace_synonyms_in_highlights
+    func testSetSettingsTest120() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(replaceSynonymsInHighlight: false)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"replaceSynonymsInHighlight\":false}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_min_proximity
+    func testSetSettingsTest121() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(minProximity: 1)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"minProximity\":1}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_default_field
+    func testSetSettingsTest122() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(responseFields: ["hits", "hitsPerPage", "nbPages", "page"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"responseFields\":[\"hits\",\"hitsPerPage\",\"nbPages\",\"page\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_max_facet_hits
+    func testSetSettingsTest123() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(maxFacetHits: 10)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"maxFacetHits\":10}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_attribute_criteria_computed_by_min_proximity
+    func testSetSettingsTest124() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(attributeCriteriaComputedByMinProximity: true)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributeCriteriaComputedByMinProximity\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_user_data
+    func testSetSettingsTest125() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(
+                userData: ["extraData": "This is the custom data that you want to store in your index"]
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"userData\":{\"extraData\":\"This is the custom data that you want to store in your index\"}}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// set_rendering_content
+    func testSetSettingsTest126() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(renderingContent: SearchRenderingContent(facetOrdering: SearchFacetOrdering(
+                facets: SearchFacets(order: ["size", "brand"]),
+                values: [
+                    "brand": SearchValue(order: ["uniqlo"], sortRemainingBy: SearchSortRemainingBy.count,
+                                         hide: ["muji"]),
+                    "size": SearchValue(order: ["S", "M", "L"], sortRemainingBy: SearchSortRemainingBy.hidden),
+                ]
+            )))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"size\",\"brand\"]},\"values\":{\"brand\":{\"order\":[\"uniqlo\"],\"hide\":[\"muji\"],\"sortRemainingBy\":\"count\"},\"size\":{\"order\":[\"S\",\"M\",\"L\"],\"sortRemainingBy\":\"hidden\"}}}}}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 

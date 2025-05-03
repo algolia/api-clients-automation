@@ -18,7 +18,7 @@ class SnippetAnalyticsClient
      */
     public function snippetForCustomDelete(): void
     {
-        // >SEPARATOR customDelete default
+        // >SEPARATOR customDelete allow del method for a custom path with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -34,13 +34,37 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the CustomDelete method.
+     *
+     * allow del method for a custom path with all parameters
+     */
+    public function snippetForCustomDelete1(): void
+    {
+        // >SEPARATOR customDelete allow del method for a custom path with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customDelete(
+            'test/all',
+            ['query' => 'parameters',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the CustomGet method.
      *
      * allow get method for a custom path with minimal parameters
      */
     public function snippetForCustomGet(): void
     {
-        // >SEPARATOR customGet default
+        // >SEPARATOR customGet allow get method for a custom path with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -56,13 +80,71 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the CustomGet method.
+     *
+     * allow get method for a custom path with all parameters
+     */
+    public function snippetForCustomGet1(): void
+    {
+        // >SEPARATOR customGet allow get method for a custom path with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customGet(
+            'test/all',
+            ['query' => 'parameters with space',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomGet method.
+     *
+     * requestOptions should be escaped too
+     */
+    public function snippetForCustomGet2(): void
+    {
+        // >SEPARATOR customGet requestOptions should be escaped too
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customGet(
+            'test/all',
+            ['query' => 'to be overriden',
+            ],
+            [
+                'queryParameters' => [
+                    'query' => 'parameters with space',
+                    'and an array' => ['array', 'with spaces',
+                    ],
+                ],
+                'headers' => [
+                    'x-header-1' => 'spaces are left alone',
+                ],
+            ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the CustomPost method.
      *
      * allow post method for a custom path with minimal parameters
      */
     public function snippetForCustomPost(): void
     {
-        // >SEPARATOR customPost default
+        // >SEPARATOR customPost allow post method for a custom path with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -78,13 +160,314 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the CustomPost method.
+     *
+     * allow post method for a custom path with all parameters
+     */
+    public function snippetForCustomPost1(): void
+    {
+        // >SEPARATOR customPost allow post method for a custom path with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/all',
+            ['query' => 'parameters',
+            ],
+            ['body' => 'parameters',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions can override default query parameters
+     */
+    public function snippetForCustomPost2(): void
+    {
+        // >SEPARATOR customPost requestOptions can override default query parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'query' => 'myQueryParameter',
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions merges query parameters with default ones
+     */
+    public function snippetForCustomPost3(): void
+    {
+        // >SEPARATOR customPost requestOptions merges query parameters with default ones
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'query2' => 'myQueryParameter',
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions can override default headers
+     */
+    public function snippetForCustomPost4(): void
+    {
+        // >SEPARATOR customPost requestOptions can override default headers
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'headers' => [
+                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
+                ],
+            ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions merges headers with default ones
+     */
+    public function snippetForCustomPost5(): void
+    {
+        // >SEPARATOR customPost requestOptions merges headers with default ones
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'headers' => [
+                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
+                ],
+            ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions queryParameters accepts booleans
+     */
+    public function snippetForCustomPost6(): void
+    {
+        // >SEPARATOR customPost requestOptions queryParameters accepts booleans
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'isItWorking' => true,
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions queryParameters accepts integers
+     */
+    public function snippetForCustomPost7(): void
+    {
+        // >SEPARATOR customPost requestOptions queryParameters accepts integers
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'myParam' => 2,
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions queryParameters accepts list of string
+     */
+    public function snippetForCustomPost8(): void
+    {
+        // >SEPARATOR customPost requestOptions queryParameters accepts list of string
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'myParam' => ['b and c', 'd',
+                    ],
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions queryParameters accepts list of booleans
+     */
+    public function snippetForCustomPost9(): void
+    {
+        // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'myParam' => [true, true, false,
+                    ],
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions queryParameters accepts list of integers
+     */
+    public function snippetForCustomPost10(): void
+    {
+        // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'myParam' => [1, 2,
+                    ],
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the CustomPut method.
      *
      * allow put method for a custom path with minimal parameters
      */
     public function snippetForCustomPut(): void
     {
-        // >SEPARATOR customPut default
+        // >SEPARATOR customPut allow put method for a custom path with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -100,13 +483,39 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the CustomPut method.
+     *
+     * allow put method for a custom path with all parameters
+     */
+    public function snippetForCustomPut1(): void
+    {
+        // >SEPARATOR customPut allow put method for a custom path with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->customPut(
+            'test/all',
+            ['query' => 'parameters',
+            ],
+            ['body' => 'parameters',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetAddToCartRate method.
      *
      * get getAddToCartRate with minimal parameters
      */
     public function snippetForGetAddToCartRate(): void
     {
-        // >SEPARATOR getAddToCartRate default
+        // >SEPARATOR getAddToCartRate get getAddToCartRate with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -122,13 +531,38 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the GetAddToCartRate method.
+     *
+     * get getAddToCartRate with all parameters
+     */
+    public function snippetForGetAddToCartRate1(): void
+    {
+        // >SEPARATOR getAddToCartRate get getAddToCartRate with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getAddToCartRate(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetAverageClickPosition method.
      *
      * get getAverageClickPosition with minimal parameters
      */
     public function snippetForGetAverageClickPosition(): void
     {
-        // >SEPARATOR getAverageClickPosition default
+        // >SEPARATOR getAverageClickPosition get getAverageClickPosition with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -144,13 +578,38 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the GetAverageClickPosition method.
+     *
+     * get getAverageClickPosition with all parameters
+     */
+    public function snippetForGetAverageClickPosition1(): void
+    {
+        // >SEPARATOR getAverageClickPosition get getAverageClickPosition with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getAverageClickPosition(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetClickPositions method.
      *
      * get getClickPositions with minimal parameters
      */
     public function snippetForGetClickPositions(): void
     {
-        // >SEPARATOR getClickPositions default
+        // >SEPARATOR getClickPositions get getClickPositions with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -166,13 +625,38 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the GetClickPositions method.
+     *
+     * get getClickPositions with all parameters
+     */
+    public function snippetForGetClickPositions1(): void
+    {
+        // >SEPARATOR getClickPositions get getClickPositions with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getClickPositions(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetClickThroughRate method.
      *
      * get getClickThroughRate with minimal parameters
      */
     public function snippetForGetClickThroughRate(): void
     {
-        // >SEPARATOR getClickThroughRate default
+        // >SEPARATOR getClickThroughRate get getClickThroughRate with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -188,13 +672,38 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the GetClickThroughRate method.
+     *
+     * get getClickThroughRate with all parameters
+     */
+    public function snippetForGetClickThroughRate1(): void
+    {
+        // >SEPARATOR getClickThroughRate get getClickThroughRate with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getClickThroughRate(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetConversionRate method.
      *
      * get getConversationRate with minimal parameters
      */
     public function snippetForGetConversionRate(): void
     {
-        // >SEPARATOR getConversionRate default
+        // >SEPARATOR getConversionRate get getConversationRate with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -210,13 +719,38 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the GetConversionRate method.
+     *
+     * get getConversationRate with all parameters
+     */
+    public function snippetForGetConversionRate1(): void
+    {
+        // >SEPARATOR getConversionRate get getConversationRate with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getConversionRate(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetNoClickRate method.
      *
      * get getNoClickRate with minimal parameters
      */
     public function snippetForGetNoClickRate(): void
     {
-        // >SEPARATOR getNoClickRate default
+        // >SEPARATOR getNoClickRate get getNoClickRate with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -232,13 +766,38 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the GetNoClickRate method.
+     *
+     * get getNoClickRate with all parameters
+     */
+    public function snippetForGetNoClickRate1(): void
+    {
+        // >SEPARATOR getNoClickRate get getNoClickRate with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getNoClickRate(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetNoResultsRate method.
      *
      * get getNoResultsRate with minimal parameters
      */
     public function snippetForGetNoResultsRate(): void
     {
-        // >SEPARATOR getNoResultsRate default
+        // >SEPARATOR getNoResultsRate get getNoResultsRate with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -254,13 +813,38 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the GetNoResultsRate method.
+     *
+     * get getNoResultsRate with all parameters
+     */
+    public function snippetForGetNoResultsRate1(): void
+    {
+        // >SEPARATOR getNoResultsRate get getNoResultsRate with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getNoResultsRate(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetPurchaseRate method.
      *
      * get getPurchaseRate with minimal parameters
      */
     public function snippetForGetPurchaseRate(): void
     {
-        // >SEPARATOR getPurchaseRate default
+        // >SEPARATOR getPurchaseRate get getPurchaseRate with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -276,13 +860,38 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the GetPurchaseRate method.
+     *
+     * get getPurchaseRate with all parameters
+     */
+    public function snippetForGetPurchaseRate1(): void
+    {
+        // >SEPARATOR getPurchaseRate get getPurchaseRate with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getPurchaseRate(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetRevenue method.
      *
      * get getRevenue with minimal parameters
      */
     public function snippetForGetRevenue(): void
     {
-        // >SEPARATOR getRevenue default
+        // >SEPARATOR getRevenue get getRevenue with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -298,13 +907,38 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the GetRevenue method.
+     *
+     * get getRevenue with all parameters
+     */
+    public function snippetForGetRevenue1(): void
+    {
+        // >SEPARATOR getRevenue get getRevenue with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getRevenue(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetSearchesCount method.
      *
      * get getSearchesCount with minimal parameters
      */
     public function snippetForGetSearchesCount(): void
     {
-        // >SEPARATOR getSearchesCount default
+        // >SEPARATOR getSearchesCount get getSearchesCount with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -320,13 +954,38 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the GetSearchesCount method.
+     *
+     * get getSearchesCount with all parameters
+     */
+    public function snippetForGetSearchesCount1(): void
+    {
+        // >SEPARATOR getSearchesCount get getSearchesCount with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getSearchesCount(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetSearchesNoClicks method.
      *
      * get getSearchesNoClicks with minimal parameters
      */
     public function snippetForGetSearchesNoClicks(): void
     {
-        // >SEPARATOR getSearchesNoClicks default
+        // >SEPARATOR getSearchesNoClicks get getSearchesNoClicks with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -342,19 +1001,73 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the GetSearchesNoClicks method.
+     *
+     * get getSearchesNoClicks with all parameters
+     */
+    public function snippetForGetSearchesNoClicks1(): void
+    {
+        // >SEPARATOR getSearchesNoClicks get getSearchesNoClicks with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getSearchesNoClicks(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            21,
+            42,
+            'tag',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetSearchesNoResults method.
      *
      * get getSearchesNoResults with minimal parameters
      */
     public function snippetForGetSearchesNoResults(): void
     {
-        // >SEPARATOR getSearchesNoResults default
+        // >SEPARATOR getSearchesNoResults get getSearchesNoResults with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getSearchesNoResults(
             'index',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetSearchesNoResults method.
+     *
+     * get getSearchesNoResults with all parameters
+     */
+    public function snippetForGetSearchesNoResults1(): void
+    {
+        // >SEPARATOR getSearchesNoResults get getSearchesNoResults with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getSearchesNoResults(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            21,
+            42,
+            'tag',
         );
 
         // >LOG
@@ -392,7 +1105,7 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetTopCountries(): void
     {
-        // >SEPARATOR getTopCountries default
+        // >SEPARATOR getTopCountries get getTopCountries with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -408,13 +1121,40 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the GetTopCountries method.
+     *
+     * get getTopCountries with all parameters
+     */
+    public function snippetForGetTopCountries1(): void
+    {
+        // >SEPARATOR getTopCountries get getTopCountries with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getTopCountries(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            21,
+            42,
+            'tag',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetTopFilterAttributes method.
      *
      * get getTopFilterAttributes with minimal parameters
      */
     public function snippetForGetTopFilterAttributes(): void
     {
-        // >SEPARATOR getTopFilterAttributes default
+        // >SEPARATOR getTopFilterAttributes get getTopFilterAttributes with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -430,13 +1170,41 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the GetTopFilterAttributes method.
+     *
+     * get getTopFilterAttributes with all parameters
+     */
+    public function snippetForGetTopFilterAttributes1(): void
+    {
+        // >SEPARATOR getTopFilterAttributes get getTopFilterAttributes with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getTopFilterAttributes(
+            'index',
+            'mySearch',
+            '1999-09-19',
+            '2001-01-01',
+            21,
+            42,
+            'tag',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetTopFilterForAttribute method.
      *
      * get getTopFilterForAttribute with minimal parameters
      */
     public function snippetForGetTopFilterForAttribute(): void
     {
-        // >SEPARATOR getTopFilterForAttribute default
+        // >SEPARATOR getTopFilterForAttribute get getTopFilterForAttribute with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -453,13 +1221,94 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the GetTopFilterForAttribute method.
+     *
+     * get getTopFilterForAttribute with minimal parameters and multiple attributes
+     */
+    public function snippetForGetTopFilterForAttribute1(): void
+    {
+        // >SEPARATOR getTopFilterForAttribute get getTopFilterForAttribute with minimal parameters and multiple attributes
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getTopFilterForAttribute(
+            'myAttribute1,myAttribute2',
+            'index',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetTopFilterForAttribute method.
+     *
+     * get getTopFilterForAttribute with all parameters
+     */
+    public function snippetForGetTopFilterForAttribute2(): void
+    {
+        // >SEPARATOR getTopFilterForAttribute get getTopFilterForAttribute with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getTopFilterForAttribute(
+            'myAttribute',
+            'index',
+            'mySearch',
+            '1999-09-19',
+            '2001-01-01',
+            21,
+            42,
+            'tag',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetTopFilterForAttribute method.
+     *
+     * get getTopFilterForAttribute with all parameters and multiple attributes
+     */
+    public function snippetForGetTopFilterForAttribute3(): void
+    {
+        // >SEPARATOR getTopFilterForAttribute get getTopFilterForAttribute with all parameters and multiple attributes
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getTopFilterForAttribute(
+            'myAttribute1,myAttribute2',
+            'index',
+            'mySearch',
+            '1999-09-19',
+            '2001-01-01',
+            21,
+            42,
+            'tag',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetTopFiltersNoResults method.
      *
      * get getTopFiltersNoResults with minimal parameters
      */
     public function snippetForGetTopFiltersNoResults(): void
     {
-        // >SEPARATOR getTopFiltersNoResults default
+        // >SEPARATOR getTopFiltersNoResults get getTopFiltersNoResults with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -475,13 +1324,41 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the GetTopFiltersNoResults method.
+     *
+     * get getTopFiltersNoResults with all parameters
+     */
+    public function snippetForGetTopFiltersNoResults1(): void
+    {
+        // >SEPARATOR getTopFiltersNoResults get getTopFiltersNoResults with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getTopFiltersNoResults(
+            'index',
+            'mySearch',
+            '1999-09-19',
+            '2001-01-01',
+            21,
+            42,
+            'tag',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetTopHits method.
      *
      * get getTopHits with minimal parameters
      */
     public function snippetForGetTopHits(): void
     {
-        // >SEPARATOR getTopHits default
+        // >SEPARATOR getTopHits get getTopHits with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -497,13 +1374,43 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the GetTopHits method.
+     *
+     * get getTopHits with all parameters
+     */
+    public function snippetForGetTopHits1(): void
+    {
+        // >SEPARATOR getTopHits get getTopHits with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getTopHits(
+            'index',
+            'mySearch',
+            true,
+            true,
+            '1999-09-19',
+            '2001-01-01',
+            21,
+            42,
+            'tag',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetTopSearches method.
      *
      * get getTopSearches with minimal parameters
      */
     public function snippetForGetTopSearches(): void
     {
-        // >SEPARATOR getTopSearches default
+        // >SEPARATOR getTopSearches get getTopSearches with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -519,19 +1426,75 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the GetTopSearches method.
+     *
+     * get getTopSearches with all parameters
+     */
+    public function snippetForGetTopSearches1(): void
+    {
+        // >SEPARATOR getTopSearches get getTopSearches with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getTopSearches(
+            'index',
+            true,
+            true,
+            '1999-09-19',
+            '2001-01-01',
+            'searchCount',
+            'asc',
+            21,
+            42,
+            'tag',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetUsersCount method.
      *
      * get getUsersCount with minimal parameters
      */
     public function snippetForGetUsersCount(): void
     {
-        // >SEPARATOR getUsersCount default
+        // >SEPARATOR getUsersCount get getUsersCount with minimal parameters
         // Initialize the client
         $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getUsersCount(
             'index',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetUsersCount method.
+     *
+     * get getUsersCount with all parameters
+     */
+    public function snippetForGetUsersCount1(): void
+    {
+        // >SEPARATOR getUsersCount get getUsersCount with all parameters
+        // Initialize the client
+        $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getUsersCount(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag',
         );
 
         // >LOG

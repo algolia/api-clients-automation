@@ -25,15 +25,15 @@ describe('commonApi', () => {
     expect(decodeURIComponent(result.algoliaAgent)).toMatch(
       /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; QuerySuggestions (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/,
     );
-  }, 15000);
+  }, 25000);
 
   test('the user agent contains the latest version', async () => {
     const client = createClient();
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.19.0\).*/);
-  }, 15000);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.24.0\).*/);
+  }, 25000);
 });
 
 describe('parameters', () => {
@@ -51,7 +51,7 @@ describe('parameters', () => {
     } catch (e) {
       expect((e as Error).message).toMatch('`region` is required and must be one of the following: eu, us');
     }
-  }, 15000);
+  }, 25000);
 
   test('throws when incorrect region is given', async () => {
     try {
@@ -67,7 +67,7 @@ describe('parameters', () => {
     } catch (e) {
       expect((e as Error).message).toMatch('`region` is required and must be one of the following: eu, us');
     }
-  }, 15000);
+  }, 25000);
 
   test('does not throw when region is given', async () => {
     const client = algoliasearch('my-app-id', 'my-api-key').initQuerySuggestions({
@@ -77,7 +77,7 @@ describe('parameters', () => {
       // @ts-ignore
       region: 'us',
     });
-  }, 15000);
+  }, 25000);
 });
 
 describe('setClientApiKey', () => {
@@ -109,7 +109,7 @@ describe('setClientApiKey', () => {
 
       expect(result).toEqual({ headerAPIKeyValue: 'updated-api-key' });
     }
-  }, 15000);
+  }, 25000);
 });
 
 describe('init', () => {

@@ -6,7 +6,6 @@ import com.algolia.model.search.*;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 class Actor extends Hit {
 
@@ -47,6 +46,7 @@ public class Search {
 
     singleSearch(client, indexName, query);
     multiSearch(indexName, query, client);
+    multiSearchHits(indexName, query, client);
     client.close();
   }
 
@@ -73,13 +73,27 @@ public class Search {
     searchMethodParams.setRequests(requests);
 
     var responses = client.search(searchMethodParams, Actor.class);
-    var results = responses.getResults();
     System.out.println("-> Multi Index Search:");
-    for (var result : results) {
-      var response = (SearchResponse) result;
-      for (var hit : response.getHits()) {
-        var record = (Map) hit;
-        System.out.println("> " + record.get("name"));
+    for (var result : responses.getResults()) {
+      for (var hit : ((SearchResponse<Actor>) result).getHits()) {
+        System.out.println("> " + hit.name);
+      }
+    }
+  }
+
+  private static void multiSearchHits(String indexName, String query, SearchClient client) {
+    var searchQuery = new SearchForHits()
+      .setIndexName(indexName)
+      .setQuery(query)
+      .addAttributesToSnippet("title")
+      .addAttributesToSnippet("alternative_titles");
+    List<SearchForHits> requests = List.of(searchQuery);
+    // with searchForHits, all the types are known, no need to cast
+    var responses = client.searchForHits(requests, Actor.class);
+    System.out.println("-> Multi Index SearchForHits:");
+    for (var result : responses) {
+      for (var hit : result.getHits()) {
+        System.out.println("> " + hit.name);
       }
     }
   }

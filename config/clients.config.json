@@ -1,8 +1,10 @@
 {
+  "$schema": "./clients.schema.json",
   "csharp": {
     "clients": [
       "abtesting",
       "analytics",
+      "composition",
       "ingestion",
       "insights",
       "monitoring",
@@ -13,7 +15,7 @@
     ],
     "folder": "clients/algoliasearch-client-csharp",
     "gitRepoId": "algoliasearch-client-csharp",
-    "packageVersion": "7.12.0",
+    "packageVersion": "7.16.5",
     "modelFolder": "algoliasearch/Models",
     "apiFolder": "algoliasearch/Clients",
     "dockerImage": "apic_base",
@@ -33,6 +35,10 @@
         "output": "clients/algoliasearch-client-dart/packages/algoliasearch"
       },
       {
+        "name": "composition",
+        "output": "clients/algoliasearch-client-dart/packages/client_composition"
+      },
+      {
         "name": "insights",
         "output": "clients/algoliasearch-client-dart/packages/client_insights"
       },
@@ -47,7 +53,7 @@
     ],
     "folder": "clients/algoliasearch-client-dart",
     "gitRepoId": "algoliasearch-client-dart",
-    "packageVersion": "1.29.0",
+    "packageVersion": "1.31.3",
     "modelFolder": "lib/src/model",
     "apiFolder": "lib/src/api",
     "dockerImage": "apic_base",
@@ -64,6 +70,7 @@
     "clients": [
       "abtesting",
       "analytics",
+      "composition",
       "ingestion",
       "insights",
       "monitoring",
@@ -74,7 +81,7 @@
     ],
     "folder": "clients/algoliasearch-client-go",
     "gitRepoId": "algoliasearch-client-go",
-    "packageVersion": "4.11.0",
+    "packageVersion": "4.15.5",
     "modelFolder": "algolia",
     "apiFolder": "algolia",
     "dockerImage": "apic_base",
@@ -91,6 +98,7 @@
     "clients": [
       "abtesting",
       "analytics",
+      "composition",
       "ingestion",
       "insights",
       "monitoring",
@@ -101,7 +109,7 @@
     ],
     "folder": "clients/algoliasearch-client-java",
     "gitRepoId": "algoliasearch-client-java",
-    "packageVersion": "4.11.0",
+    "packageVersion": "4.15.5",
     "modelFolder": "algoliasearch/src/main/java/com/algolia/model",
     "apiFolder": "algoliasearch/src/main/java/com/algolia/api",
     "dockerImage": "apic_base",
@@ -135,6 +143,11 @@
         "output": "clients/algoliasearch-client-javascript/packages/client-analytics"
       },
       {
+        "name": "composition",
+        "output": "clients/algoliasearch-client-javascript/packages/composition",
+        "isStandaloneClient": true
+      },
+      {
         "name": "ingestion",
         "output": "clients/algoliasearch-client-javascript/packages/ingestion"
       },
@@ -163,13 +176,15 @@
         "output": "clients/algoliasearch-client-javascript/packages/client-search"
       },
       {
-        "name": "composition",
-        "output": "clients/algoliasearch-client-javascript/packages/client-composition"
+        "name": "composition-full",
+        "output": "clients/algoliasearch-client-javascript/packages/client-composition",
+        "isStandaloneClient": true,
+        "clientName": "composition"
       }
     ],
     "folder": "clients/algoliasearch-client-javascript",
     "gitRepoId": "algoliasearch-client-javascript",
-    "packageVersion": "5.19.0",
+    "packageVersion": "5.24.0",
     "modelFolder": "model",
     "apiFolder": "src",
     "tests": {
@@ -185,6 +200,7 @@
     "clients": [
       "abtesting",
       "analytics",
+      "composition",
       "ingestion",
       "insights",
       "monitoring",
@@ -195,7 +211,7 @@
     ],
     "folder": "clients/algoliasearch-client-kotlin",
     "gitRepoId": "algoliasearch-client-kotlin",
-    "packageVersion": "3.13.0",
+    "packageVersion": "3.18.5",
     "modelFolder": "client/src/commonMain/kotlin/com/algolia/client/model",
     "apiFolder": "client/src/commonMain/kotlin/com/algolia/client/api",
     "dockerImage": "apic_base",
@@ -212,6 +228,7 @@
     "clients": [
       "abtesting",
       "analytics",
+      "composition",
       "ingestion",
       "insights",
       "monitoring",
@@ -222,7 +239,7 @@
     ],
     "folder": "clients/algoliasearch-client-php",
     "gitRepoId": "algoliasearch-client-php",
-    "packageVersion": "4.12.0",
+    "packageVersion": "4.18.5",
     "modelFolder": "lib/Model",
     "apiFolder": "lib/Api",
     "dockerImage": "apic_base",
@@ -239,6 +256,7 @@
     "clients": [
       "abtesting",
       "analytics",
+      "composition",
       "ingestion",
       "insights",
       "monitoring",
@@ -249,7 +267,7 @@
     ],
     "folder": "clients/algoliasearch-client-python",
     "gitRepoId": "algoliasearch-client-python",
-    "packageVersion": "4.12.0",
+    "packageVersion": "4.16.5",
     "modelFolder": "algoliasearch",
     "apiFolder": "algoliasearch",
     "dockerImage": "apic_base",
@@ -273,6 +291,7 @@
     "clients": [
       "abtesting",
       "analytics",
+      "composition",
       "ingestion",
       "insights",
       "monitoring",
@@ -283,7 +302,7 @@
     ],
     "folder": "clients/algoliasearch-client-ruby",
     "gitRepoId": "algoliasearch-client-ruby",
-    "packageVersion": "3.11.0",
+    "packageVersion": "3.15.5",
     "modelFolder": "lib/algolia/models",
     "apiFolder": "lib/algolia/api",
     "dockerImage": "apic_ruby",
@@ -300,6 +319,7 @@
     "clients": [
       "abtesting",
       "analytics",
+      "composition",
       "ingestion",
       "insights",
       "monitoring",
@@ -310,7 +330,7 @@
     ],
     "folder": "clients/algoliasearch-client-scala",
     "gitRepoId": "algoliasearch-client-scala",
-    "packageVersion": "2.12.0",
+    "packageVersion": "2.17.5",
     "modelFolder": "src/main/scala/algoliasearch",
     "apiFolder": "src/main/scala/algoliasearch/api",
     "dockerImage": "apic_base",
@@ -327,6 +347,7 @@
     "clients": [
       "abtesting",
       "analytics",
+      "composition",
       "ingestion",
       "insights",
       "monitoring",
@@ -337,7 +358,7 @@
     ],
     "folder": "clients/algoliasearch-client-swift",
     "gitRepoId": "algoliasearch-client-swift",
-    "packageVersion": "9.13.0",
+    "packageVersion": "9.18.5",
     "modelFolder": "Sources",
     "apiFolder": "Sources",
     "dockerImage": "apic_swift",

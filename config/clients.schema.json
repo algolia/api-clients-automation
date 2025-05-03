@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "clients": {
+        "oneOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "abtesting",
+                "analytics",
+                "composition",
+                "ingestion",
+                "insights",
+                "monitoring",
+                "personalization",
+                "query-suggestions",
+                "recommend",
+                "search"
+              ]
+            }
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "enum": [
+                    "algoliasearch",
+                    "abtesting",
+                    "analytics",
+                    "composition",
+                    "composition-full",
+                    "ingestion",
+                    "insights",
+                    "monitoring",
+                    "personalization",
+                    "query-suggestions",
+                    "recommend",
+                    "search"
+                  ]
+                },
+                "output": { "type": "string" },
+                "isStandaloneClient": { "type": "boolean", "description": "this property only matters for the javascript client, when `true`, your package will be built as a standalone client and not be part of `algoliasearch` directly. This is recommended for non stable APIs." },
+                "clientName": { "type": "string", "description": "when defined, the name of the generated instance of the client will be hardcoded, otherwise it defaults to the `spec` name, e.g. search -> searchClient" }
+              },
+              "required": ["name", "output"],
+              "additionalProperties": false
+            }
+          }
+        ]
+      },
+      "folder": { "type": "string", "description": "the output folder of your client, usually matching the github repository name, e.g. clients/algoliasearch-client-dart" },
+      "gitRepoId": { "type": "string", "description": "the github repository name, without the organization or username that owns it, e.g. algoliasearch-client-php"},
+      "packageVersion": { "type": "string", "description": "the version to publish the packages with, it must be semver compatible, e.g. 1.2.3" },
+      "modelFolder": { "type": "string", "description": "the models folder, e.g. algoliasearch/models"},
+      "apiFolder": { "type": "string", "description": "the api folder, e.g. lib/src"},
+      "dockerImage": { 
+        "type": "string",
+        "description": "whether your client requires a custom docker image with specific needs, most clients require 'apic_base'",
+        "enum": [
+          "apic_base",
+          "apic_ruby",
+          "apic_swift"
+        ]
+      },
+      "tests": {
+        "type": "object",
+        "properties": {
+          "extension": { "type": "string", "description": "the test file extension, e.g. .test.ts" },
+          "outputFolder": { "type": "string", "description": "the test output folder, e.g. src/generated" }
+        },
+        "required": ["extension", "outputFolder"],
+        "additionalProperties": false
+      },
+      "snippets": {
+        "type": "object",
+        "properties": {
+          "extension": { "type": "string", "description": "the snippet file extension, e.g. .cs" },
+          "outputFolder": { "type": "string", "description": "the snippet output folder, e.g. src" }
+        },
+        "required": ["extension", "outputFolder"],
+        "additionalProperties": false
+      },
+      "supportedVersions": {
+        "type": "array",
+        "description": "hints the CI on what matrix to generate for this client, this must be language specific versions, e.g. versions of node",
+        "items": { "type": "string" }
+      }
+    },
+    "required": ["clients", "folder", "gitRepoId", "packageVersion", "modelFolder", "apiFolder", "tests", "snippets"],
+    "additionalProperties": false
+  }
+}

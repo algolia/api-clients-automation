@@ -24,7 +24,7 @@ public class TrendingFacetsQuery implements RecommendationsRequest {
   private RecommendSearchParams queryParameters;
 
   @JsonProperty("facetName")
-  private Object facetName;
+  private String facetName;
 
   @JsonProperty("model")
   private TrendingFacetsModel model;
@@ -66,7 +66,7 @@ public class TrendingFacetsQuery implements RecommendationsRequest {
    * Maximum number of recommendations to retrieve. By default, all recommendations are returned and
    * no fallback request is made. Depending on the available recommendations and the other request
    * parameters, the actual number of recommendations may be lower than this value. minimum: 1
-   * maximum: 1000
+   * maximum: 30
    */
   @javax.annotation.Nullable
   public Integer getMaxRecommendations() {
@@ -84,14 +84,14 @@ public class TrendingFacetsQuery implements RecommendationsRequest {
     return queryParameters;
   }
 
-  public TrendingFacetsQuery setFacetName(Object facetName) {
+  public TrendingFacetsQuery setFacetName(String facetName) {
     this.facetName = facetName;
     return this;
   }
 
   /** Facet attribute for which to retrieve trending facet values. */
-  @javax.annotation.Nullable
-  public Object getFacetName() {
+  @javax.annotation.Nonnull
+  public String getFacetName() {
     return facetName;
   }
 

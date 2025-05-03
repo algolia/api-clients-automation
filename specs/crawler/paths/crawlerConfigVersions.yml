@@ -3,7 +3,7 @@ get:
   summary: List configuration versions
   description: |
     Lists previous versions of the specified crawler's configuration, including who authored the change.
-    Every time you [update the configuration](#tag/config/operation/patchConfig) of a crawler,
+    Every time you update a crawler's [configuration](#tag/config/operation/patchConfig),
     a new version is added.
   tags:
     - config

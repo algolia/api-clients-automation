@@ -175,12 +175,9 @@ tags:
     description: |
       Multi-cluster operations.
 
-      Algolia no longer offers multi-cluster management.
-    externalDocs:
-      url: >-
-        https://www.algolia.com/doc/guides/scaling/managing-multiple-clusters-mcm/
-      description: |
-        Related guide: Multi-cluster management.
+      Multi-cluster operations are **deprecated**.
+      If you have issues with your Algolia infrastructure
+      due to large volumes of data, contact the Algolia support team.
   - name: Dictionaries
     description: >
       Manage your dictionaries.
@@ -276,7 +273,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -339,9 +336,7 @@ paths:
             // Call the API
 
             response, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -489,16 +484,14 @@ paths:
 
             // Call the API
 
-            val response = client.customGet[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customGet[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -522,7 +515,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -585,9 +578,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -735,16 +726,14 @@ paths:
 
             // Call the API
 
-            val response = client.customPost[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPost[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -768,7 +757,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -831,9 +820,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -981,16 +968,14 @@ paths:
 
             // Call the API
 
-            val response = client.customPut[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPut[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1008,7 +993,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -1072,9 +1057,7 @@ paths:
 
             response, err :=
             client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1223,16 +1206,14 @@ paths:
 
             // Call the API
 
-            val response = client.customDelete[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customDelete[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1300,18 +1281,8 @@ paths:
 
             // Call the API
 
-            var response = await client.SearchSingleIndexAsync<Hit>(
-              "<YOUR_INDEX_NAME>",
-              new SearchParams(
-                new SearchParamsObject
-                {
-                  Query = "myQuery",
-                  FacetFilters = new FacetFilters(
-                    new List<FacetFilters> { new FacetFilters("tags:algolia") }
-                  ),
-                }
-              )
-            );
+            var response = await
+            client.SearchSingleIndexAsync<Hit>("<YOUR_INDEX_NAME>");
 
             // >LOG
         - lang: dart
@@ -1324,12 +1295,6 @@ paths:
             // Call the API
             final response = await client.searchSingleIndex(
               indexName: "<YOUR_INDEX_NAME>",
-              searchParams: SearchParamsObject(
-                query: "myQuery",
-                facetFilters: [
-                  "tags:algolia",
-                ],
-              ),
             );
             // >LOG
         - lang: go
@@ -1350,10 +1315,7 @@ paths:
 
             response, err :=
             client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-              "<YOUR_INDEX_NAME>",
-            ).WithSearchParams(search.SearchParamsObjectAsSearchParams(
-              search.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
-                []search.FacetFilters{*search.StringAsFacetFilters("tags:algolia")})))))
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1376,11 +1338,7 @@ paths:
 
             // Call the API
 
-            client.searchSingleIndex(
-              "<YOUR_INDEX_NAME>",
-              new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("tags:algolia")))),
-              Hit.class
-            );
+            client.searchSingleIndex("<YOUR_INDEX_NAME>", Hit.class);
 
             // >LOG
         - lang: javascript
@@ -1396,10 +1354,8 @@ paths:
 
             // Call the API
 
-            const response = await client.searchSingleIndex({
-              indexName: 'indexName',
-              searchParams: { query: 'myQuery', facetFilters: ['tags:algolia'] },
-            });
+            const response = await client.searchSingleIndex({ indexName:
+            'indexName' });
 
 
             // >LOG
@@ -1420,10 +1376,6 @@ paths:
 
             var response = client.searchSingleIndex(
               indexName = "<YOUR_INDEX_NAME>",
-              searchParams = SearchParamsObject(
-                query = "myQuery",
-                facetFilters = FacetFilters.of(listOf(FacetFilters.of("tags:algolia"))),
-              ),
             )
 
 
@@ -1445,11 +1397,6 @@ paths:
 
             $response = $client->searchSingleIndex(
                 '<YOUR_INDEX_NAME>',
-                ['query' => 'myQuery',
-                    'facetFilters' => [
-                        'tags:algolia',
-                    ],
-                ],
             );
 
 
@@ -1474,12 +1421,6 @@ paths:
 
             response = client.search_single_index(
                 index_name="<YOUR_INDEX_NAME>",
-                search_params={
-                    "query": "myQuery",
-                    "facetFilters": [
-                        "tags:algolia",
-                    ],
-                },
             )
 
 
@@ -1499,10 +1440,7 @@ paths:
 
             # Call the API
 
-            response = client.search_single_index(
-              "<YOUR_INDEX_NAME>",
-              Algolia::Search::SearchParamsObject.new(query: "myQuery", facet_filters: ["tags:algolia"])
-            )
+            response = client.search_single_index("<YOUR_INDEX_NAME>")
 
 
             # >LOG
@@ -1526,22 +1464,14 @@ paths:
 
             // Call the API
 
-            val response = client.searchSingleIndex(
-              indexName = "<YOUR_INDEX_NAME>",
-              searchParams = Some(
-                SearchParamsObject(
-                  query = Some("myQuery"),
-                  facetFilters = Some(FacetFilters(Seq(FacetFilters("tags:algolia"))))
-                )
-              )
+            val response = Await.result(
+              client.searchSingleIndex(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1554,13 +1484,7 @@ paths:
             // Call the API
 
             let response: SearchResponse<Hit> = try await
-            client.searchSingleIndex(
-                indexName: "<YOUR_INDEX_NAME>",
-                searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
-                    query: "myQuery",
-                    facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string("tags:algolia")])
-                ))
-            )
+            client.searchSingleIndex(indexName: "<YOUR_INDEX_NAME>")
 
             // >LOG
         - lang: cURL
@@ -1596,6 +1520,11 @@ paths:
 
         - Multiple searches to the same index—for example, with different
         filters.
+
+
+        Use the helper `searchForHits` or `searchForFacets` to get the results
+        in a more convenient format, if you already know the return type you
+        want.
       requestBody:
         required: true
         description: >-
@@ -1710,9 +1639,7 @@ paths:
 
               search.NewEmptySearchMethodParams().SetRequests(
                 []search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-                  search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetHitsPerPage(50))}),
-            ))
-
+                  search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetHitsPerPage(50))})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1894,24 +1821,22 @@ paths:
 
             // Call the API
 
-            val response = client.search(
-              searchMethodParams = SearchMethodParams(
-                requests = Seq(
-                  SearchForHits(
-                    indexName = "<YOUR_INDEX_NAME>",
-                    query = Some("<YOUR_QUERY>"),
-                    hitsPerPage = Some(50)
+            val response = Await.result(
+              client.search(
+                searchMethodParams = SearchMethodParams(
+                  requests = Seq(
+                    SearchForHits(
+                      indexName = "<YOUR_INDEX_NAME>",
+                      query = Some("<YOUR_QUERY>"),
+                      hitsPerPage = Some(50)
+                    )
                   )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2047,9 +1972,7 @@ paths:
 
             response, err :=
             client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(
-              "<YOUR_INDEX_NAME>", "facetName",
-            ))
-
+              "<YOUR_INDEX_NAME>", "facetName"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2202,17 +2125,15 @@ paths:
 
             // Call the API
 
-            val response = client.searchForFacetValues(
-              indexName = "<YOUR_INDEX_NAME>",
-              facetName = "facetName"
+            val response = Await.result(
+              client.searchForFacetValues(
+                indexName = "<YOUR_INDEX_NAME>",
+                facetName = "facetName"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2228,6 +2149,16 @@ paths:
             "<YOUR_INDEX_NAME>", facetName: "facetName")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/facets/lorem/query \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"params":"hitsPerPage=2&getRankingInfo=1","facetQuery":"george","maxFacetHits":10}'
   /1/indexes/{indexName}/browse:
     post:
       tags:
@@ -2352,9 +2283,7 @@ paths:
             // Call the API
 
             response, err := client.Browse(client.NewApiBrowseRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2503,16 +2432,14 @@ paths:
 
             // Call the API
 
-            val response = client.browse(
-              indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.browse(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2624,7 +2551,13 @@ paths:
 
             var response = await client.SaveObjectAsync(
               "<YOUR_INDEX_NAME>",
-              new Dictionary<string, string> { { "objectID", "id" }, { "test", "val" } }
+              new Dictionary<string, string>
+              {
+                { "name", "Black T-shirt" },
+                { "color", "#000000||black" },
+                { "availableIn", "https://source.unsplash.com/100x100/?paris||Paris" },
+                { "objectID", "myID" },
+              }
             );
 
             // >LOG
@@ -2639,8 +2572,10 @@ paths:
             final response = await client.saveObject(
               indexName: "<YOUR_INDEX_NAME>",
               body: {
-                'objectID': "id",
-                'test': "val",
+                'name': "Black T-shirt",
+                'color': "#000000||black",
+                'availableIn': "https://source.unsplash.com/100x100/?paris||Paris",
+                'objectID': "myID",
               },
             );
             // >LOG
@@ -2661,9 +2596,7 @@ paths:
             // Call the API
 
             response, err := client.SaveObject(client.NewApiSaveObjectRequest(
-              "<YOUR_INDEX_NAME>", map[string]any{"objectID": "id", "test": "val"},
-            ))
-
+              "<YOUR_INDEX_NAME>", map[string]any{"name": "Black T-shirt", "color": "#000000||black", "availableIn": "https://source.unsplash.com/100x100/?paris||Paris", "objectID": "myID"}))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2690,8 +2623,10 @@ paths:
               "<YOUR_INDEX_NAME>",
               new HashMap() {
                 {
-                  put("objectID", "id");
-                  put("test", "val");
+                  put("name", "Black T-shirt");
+                  put("color", "#000000||black");
+                  put("availableIn", "https://source.unsplash.com/100x100/?paris||Paris");
+                  put("objectID", "myID");
                 }
               }
             );
@@ -2710,8 +2645,15 @@ paths:
 
             // Call the API
 
-            const response = await client.saveObject({ indexName:
-            '<YOUR_INDEX_NAME>', body: { objectID: 'id', test: 'val' } });
+            const response = await client.saveObject({
+              indexName: '<YOUR_INDEX_NAME>',
+              body: {
+                name: 'Black T-shirt',
+                color: '#000000||black',
+                availableIn: 'https://source.unsplash.com/100x100/?paris||Paris',
+                objectID: 'myID',
+              },
+            });
 
 
             // >LOG
@@ -2734,12 +2676,20 @@ paths:
               indexName = "<YOUR_INDEX_NAME>",
               body = buildJsonObject {
                 put(
-                  "objectID",
-                  JsonPrimitive("id"),
+                  "name",
+                  JsonPrimitive("Black T-shirt"),
                 )
                 put(
-                  "test",
-                  JsonPrimitive("val"),
+                  "color",
+                  JsonPrimitive("#000000||black"),
+                )
+                put(
+                  "availableIn",
+                  JsonPrimitive("https://source.unsplash.com/100x100/?paris||Paris"),
+                )
+                put(
+                  "objectID",
+                  JsonPrimitive("myID"),
                 )
               },
             )
@@ -2763,8 +2713,10 @@ paths:
 
             $response = $client->saveObject(
                 '<YOUR_INDEX_NAME>',
-                ['objectID' => 'id',
-                    'test' => 'val',
+                ['name' => 'Black T-shirt',
+                    'color' => '#000000||black',
+                    'availableIn' => 'https://source.unsplash.com/100x100/?paris||Paris',
+                    'objectID' => 'myID',
                 ],
             );
 
@@ -2791,8 +2743,10 @@ paths:
             response = client.save_object(
                 index_name="<YOUR_INDEX_NAME>",
                 body={
-                    "objectID": "id",
-                    "test": "val",
+                    "name": "Black T-shirt",
+                    "color": "#000000||black",
+                    "availableIn": "https://source.unsplash.com/100x100/?paris||Paris",
+                    "objectID": "myID",
                 },
             )
 
@@ -2813,8 +2767,15 @@ paths:
 
             # Call the API
 
-            response = client.save_object("<YOUR_INDEX_NAME>", {objectID: "id",
-            test: "val"})
+            response = client.save_object(
+              "<YOUR_INDEX_NAME>",
+              {
+                name: "Black T-shirt",
+                color: "#000000||black",
+                availableIn: "https://source.unsplash.com/100x100/?paris||Paris",
+                objectID: "myID"
+              }
+            )
 
 
             # >LOG
@@ -2838,17 +2799,22 @@ paths:
 
             // Call the API
 
-            val response = client.saveObject(
-              indexName = "<YOUR_INDEX_NAME>",
-              body = JObject(List(JField("objectID", JString("id")), JField("test", JString("val"))))
+            val response = Await.result(
+              client.saveObject(
+                indexName = "<YOUR_INDEX_NAME>",
+                body = JObject(
+                  List(
+                    JField("name", JString("Black T-shirt")),
+                    JField("color", JString("#000000||black")),
+                    JField("availableIn", JString("https://source.unsplash.com/100x100/?paris||Paris")),
+                    JField("objectID", JString("myID"))
+                  )
+                )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2862,7 +2828,12 @@ paths:
 
             let response = try await client.saveObject(
                 indexName: "<YOUR_INDEX_NAME>",
-                body: ["objectID": "id", "test": "val"]
+                body: [
+                    "name": "Black T-shirt",
+                    "color": "#000000||black",
+                    "availableIn": "https://source.unsplash.com/100x100/?paris||Paris",
+                    "objectID": "myID",
+                ]
             )
 
             // >LOG
@@ -2870,12 +2841,12 @@ paths:
           label: curl
           source: |-
             curl --request POST \
-              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/query \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME \
               --header 'accept: application/json' \
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"params":"hitsPerPage=2&getRankingInfo=1"}'
+              --data '{}'
     delete:
       tags:
         - Indices
@@ -2960,9 +2931,7 @@ paths:
             // Call the API
 
             response, err := client.DeleteIndex(client.NewApiDeleteIndexRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -3111,16 +3080,14 @@ paths:
 
             // Call the API
 
-            val response = client.deleteIndex(
-              indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.deleteIndex(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3139,13 +3106,11 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request POST \
-              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/query \
+            curl --request DELETE \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME \
               --header 'accept: application/json' \
-              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"params":"hitsPerPage=2&getRankingInfo=1"}'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/indexes/{indexName}/{objectID}:
     get:
       tags:
@@ -3253,8 +3218,7 @@ paths:
             // Call the API
 
             response, err := client.GetObject(client.NewApiGetObjectRequest(
-              "<YOUR_INDEX_NAME>", "uniqueID",
-            ).WithAttributesToRetrieve(
+              "<YOUR_INDEX_NAME>", "uniqueID").WithAttributesToRetrieve(
               []string{"attr1", "attr2"}))
             if err != nil {
               // handle the eventual error
@@ -3422,18 +3386,16 @@ paths:
 
             // Call the API
 
-            val response = client.getObject(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "uniqueID",
-              attributesToRetrieve = Some(Seq("attr1", "attr2"))
+            val response = Await.result(
+              client.getObject(
+                indexName = "<YOUR_INDEX_NAME>",
+                objectID = "uniqueID",
+                attributesToRetrieve = Some(Seq("attr1", "attr2"))
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3452,6 +3414,14 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/test-record-123?attributesToRetrieve=lorem' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     put:
       tags:
         - Records
@@ -3497,6 +3467,272 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new SearchClient(new
+            SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.AddOrUpdateObjectAsync(
+              "<YOUR_INDEX_NAME>",
+              "uniqueID",
+              new Dictionary<string, string> { { "key", "value" } }
+            );
+
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client =
+                SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+            // Call the API
+            final response = await client.addOrUpdateObject(
+              indexName: "<YOUR_INDEX_NAME>",
+              objectID: "uniqueID",
+              body: {
+                'key': "value",
+              },
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client
+
+            client, err := search.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
+              "<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"key": "value"}))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY");
+
+
+            // Call the API
+
+            client.addOrUpdateObject(
+              "<YOUR_INDEX_NAME>",
+              "uniqueID",
+              new HashMap() {
+                {
+                  put("key", "value");
+                }
+              }
+            );
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.addOrUpdateObject({
+              indexName: 'indexName',
+              objectID: 'uniqueID',
+              body: { key: 'value' },
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            var response = client.addOrUpdateObject(
+              indexName = "<YOUR_INDEX_NAME>",
+              objectID = "uniqueID",
+              body = buildJsonObject {
+                put(
+                  "key",
+                  JsonPrimitive("value"),
+                )
+              },
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = SearchClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            $response = $client->addOrUpdateObject(
+                '<YOUR_INDEX_NAME>',
+                'uniqueID',
+                ['key' => 'value',
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.add_or_update_object(
+                index_name="<YOUR_INDEX_NAME>",
+                object_id="uniqueID",
+                body={
+                    "key": "value",
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.add_or_update_object("<YOUR_INDEX_NAME>",
+            "uniqueID", {key: "value"})
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            val response = Await.result(
+              client.addOrUpdateObject(
+                indexName = "<YOUR_INDEX_NAME>",
+                objectID = "uniqueID",
+                body = JObject(List(JField("key", JString("value"))))
+              ),
+              Duration(100, "sec")
+            )
+
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            let response = try await client.addOrUpdateObject(
+                indexName: "<YOUR_INDEX_NAME>",
+                objectID: "uniqueID",
+                body: ["key": "value"]
+            )
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PUT \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/test-record-123 \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{}'
     delete:
       tags:
         - Records
@@ -3527,6 +3763,237 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new SearchClient(new
+            SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.DeleteObjectAsync("<YOUR_INDEX_NAME>",
+            "uniqueID");
+
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client =
+                SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+            // Call the API
+            final response = await client.deleteObject(
+              indexName: "<YOUR_INDEX_NAME>",
+              objectID: "uniqueID",
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client
+
+            client, err := search.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.DeleteObject(client.NewApiDeleteObjectRequest(
+              "<YOUR_INDEX_NAME>", "uniqueID"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY");
+
+
+            // Call the API
+
+            client.deleteObject("<YOUR_INDEX_NAME>", "uniqueID");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.deleteObject({ indexName:
+            '<YOUR_INDEX_NAME>', objectID: 'uniqueID' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            var response = client.deleteObject(
+              indexName = "<YOUR_INDEX_NAME>",
+              objectID = "uniqueID",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = SearchClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            $response = $client->deleteObject(
+                '<YOUR_INDEX_NAME>',
+                'uniqueID',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.delete_object(
+                index_name="<YOUR_INDEX_NAME>",
+                object_id="uniqueID",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.delete_object("<YOUR_INDEX_NAME>", "uniqueID")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            val response = Await.result(
+              client.deleteObject(
+                indexName = "<YOUR_INDEX_NAME>",
+                objectID = "uniqueID"
+              ),
+              Duration(100, "sec")
+            )
+
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            let response = try await client.deleteObject(indexName:
+            "<YOUR_INDEX_NAME>", objectID: "uniqueID")
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/test-record-123 \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/indexes/{indexName}/deleteByQuery:
     post:
       tags:
@@ -3627,9 +4094,7 @@ paths:
 
             response, err := client.DeleteBy(client.NewApiDeleteByRequest(
               "<YOUR_INDEX_NAME>",
-              search.NewEmptyDeleteByParams().SetFilters("brand:brandName"),
-            ))
-
+              search.NewEmptyDeleteByParams().SetFilters("brand:brandName")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -3788,19 +4253,17 @@ paths:
 
             // Call the API
 
-            val response = client.deleteBy(
-              indexName = "<YOUR_INDEX_NAME>",
-              deleteByParams = DeleteByParams(
-                filters = Some("brand:brandName")
-              )
+            val response = Await.result(
+              client.deleteBy(
+                indexName = "<YOUR_INDEX_NAME>",
+                deleteByParams = DeleteByParams(
+                  filters = Some("brand:brandName")
+                )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3900,9 +4363,7 @@ paths:
 
             response, err :=
             client.ClearObjects(client.NewApiClearObjectsRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4051,16 +4512,14 @@ paths:
 
             // Call the API
 
-            val response = client.clearObjects(
-              indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.clearObjects(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4150,6 +4609,11 @@ paths:
         increment or decrement step, value to add or remove.
 
 
+        When updating multiple attributes or using multiple operations targeting
+        the same record, you should use a single partial update for faster
+        processing.
+
+
         This operation is subject to [indexing rate
         limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       parameters:
@@ -4233,9 +4697,7 @@ paths:
 
             response, err :=
             client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
-              "<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"attributeId": "new value"},
-            ))
-
+              "<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"attributeId": "new value"}))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4410,18 +4872,16 @@ paths:
 
             // Call the API
 
-            val response = client.partialUpdateObject(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "uniqueID",
-              attributesToUpdate = JObject(List(JField("attributeId", JString("new value"))))
+            val response = Await.result(
+              client.partialUpdateObject(
+                indexName = "<YOUR_INDEX_NAME>",
+                objectID = "uniqueID",
+                attributesToUpdate = JObject(List(JField("attributeId", JString("new value"))))
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4440,6 +4900,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url 'https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/test-record-123/partial?createIfNotExists=true' \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{}'
   /1/indexes/{indexName}/batch:
     post:
       tags:
@@ -4568,9 +5038,7 @@ paths:
             response, err := client.Batch(client.NewApiBatchRequest(
               "<YOUR_INDEX_NAME>",
               search.NewEmptyBatchWriteParams().SetRequests(
-                []search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "bar", "foo": "1"}), *search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "baz", "foo": "2"})}),
-            ))
-
+                []search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "bar", "foo": "1"}), *search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "baz", "foo": "2"})})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4823,28 +5291,26 @@ paths:
 
             // Call the API
 
-            val response = client.batch(
-              indexName = "<YOUR_INDEX_NAME>",
-              batchWriteParams = BatchWriteParams(
-                requests = Seq(
-                  BatchRequest(
-                    action = Action.withName("addObject"),
-                    body = JObject(List(JField("key", JString("bar")), JField("foo", JString("1"))))
-                  ),
-                  BatchRequest(
-                    action = Action.withName("addObject"),
-                    body = JObject(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+            val response = Await.result(
+              client.batch(
+                indexName = "<YOUR_INDEX_NAME>",
+                batchWriteParams = BatchWriteParams(
+                  requests = Seq(
+                    BatchRequest(
+                      action = Action.withName("addObject"),
+                      body = JObject(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+                    ),
+                    BatchRequest(
+                      action = Action.withName("addObject"),
+                      body = JObject(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+                    )
                   )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4874,7 +5340,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"batch":{"summary":"Batch indexing request","value":{"requests":[{"action":"addObject","body":{"name":"Betty Jane McCamey","company":"Vita Foods Inc.","email":"betty@mccamey.com"}},{"action":"addObject","body":{"name":"Gayla geimer","company":"Ortman McCain Co.","email":"gayla@geimer.com"}}]}}}'
+              --data '{"requests":[{"action":"addObject","body":{"name":"Betty Jane McCamey","company":"Vita Foods Inc.","email":"betty@mccamey.com"}},{"action":"addObject","body":{"name":"Gayla geimer","company":"Ortman McCain Co.","email":"gayla@geimer.com"}}]}'
   /1/indexes/*/batch:
     post:
       tags:
@@ -5038,9 +5504,7 @@ paths:
             client.MultipleBatch(client.NewApiMultipleBatchRequest(
 
               search.NewEmptyBatchParams().SetRequests(
-                []search.MultipleBatchRequest{*search.NewEmptyMultipleBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "value"}).SetIndexName("<YOUR_INDEX_NAME>")}),
-            ))
-
+                []search.MultipleBatchRequest{*search.NewEmptyMultipleBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "value"}).SetIndexName("<YOUR_INDEX_NAME>")})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5246,24 +5710,22 @@ paths:
 
             // Call the API
 
-            val response = client.multipleBatch(
-              batchParams = BatchParams(
-                requests = Seq(
-                  MultipleBatchRequest(
-                    action = Action.withName("addObject"),
-                    body = Some(JObject(List(JField("key", JString("value"))))),
-                    indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.multipleBatch(
+                batchParams = BatchParams(
+                  requests = Seq(
+                    MultipleBatchRequest(
+                      action = Action.withName("addObject"),
+                      body = Some(JObject(List(JField("key", JString("value"))))),
+                      indexName = "<YOUR_INDEX_NAME>"
+                    )
                   )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5400,12 +5862,7 @@ paths:
               {
                 Requests = new List<GetObjectsRequest>
                 {
-                  new GetObjectsRequest
-                  {
-                    AttributesToRetrieve = new List<string> { "attr1", "attr2" },
-                    ObjectID = "uniqueID",
-                    IndexName = "<YOUR_INDEX_NAME>",
-                  },
+                  new GetObjectsRequest { ObjectID = "uniqueID", IndexName = "<YOUR_INDEX_NAME>" },
                 },
               }
             );
@@ -5423,10 +5880,6 @@ paths:
               getObjectsParams: GetObjectsParams(
                 requests: [
                   GetObjectsRequest(
-                    attributesToRetrieve: [
-                      "attr1",
-                      "attr2",
-                    ],
                     objectID: "uniqueID",
                     indexName: "<YOUR_INDEX_NAME>",
                   ),
@@ -5453,10 +5906,7 @@ paths:
             response, err := client.GetObjects(client.NewApiGetObjectsRequest(
 
               search.NewEmptyGetObjectsParams().SetRequests(
-                []search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetAttributesToRetrieve(
-                  []string{"attr1", "attr2"}).SetObjectID("uniqueID").SetIndexName("<YOUR_INDEX_NAME>")}),
-            ))
-
+                []search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetObjectID("uniqueID").SetIndexName("<YOUR_INDEX_NAME>")})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5480,15 +5930,7 @@ paths:
             // Call the API
 
             client.getObjects(
-              new GetObjectsParams()
-                .setRequests(
-                  Arrays.asList(
-                    new GetObjectsRequest()
-                      .setAttributesToRetrieve(Arrays.asList("attr1", "attr2"))
-                      .setObjectID("uniqueID")
-                      .setIndexName("<YOUR_INDEX_NAME>")
-                  )
-                ),
+              new GetObjectsParams().setRequests(Arrays.asList(new GetObjectsRequest().setObjectID("uniqueID").setIndexName("<YOUR_INDEX_NAME>"))),
               Hit.class
             );
 
@@ -5506,9 +5948,8 @@ paths:
 
             // Call the API
 
-            const response = await client.getObjects({
-              requests: [{ attributesToRetrieve: ['attr1', 'attr2'], objectID: 'uniqueID', indexName: 'theIndexName' }],
-            });
+            const response = await client.getObjects({ requests: [{ objectID:
+            'uniqueID', indexName: 'theIndexName' }] });
 
 
             // >LOG
@@ -5531,7 +5972,6 @@ paths:
               getObjectsParams = GetObjectsParams(
                 requests = listOf(
                   GetObjectsRequest(
-                    attributesToRetrieve = listOf("attr1", "attr2"),
                     objectID = "uniqueID",
                     indexName = "<YOUR_INDEX_NAME>",
                   ),
@@ -5558,12 +5998,7 @@ paths:
 
             $response = $client->getObjects(
                 ['requests' => [
-                    ['attributesToRetrieve' => [
-                        'attr1',
-
-                        'attr2',
-                    ],
-                        'objectID' => 'uniqueID',
+                    ['objectID' => 'uniqueID',
                         'indexName' => '<YOUR_INDEX_NAME>',
                     ],
                 ],
@@ -5594,10 +6029,6 @@ paths:
                 get_objects_params={
                     "requests": [
                         {
-                            "attributesToRetrieve": [
-                                "attr1",
-                                "attr2",
-                            ],
                             "objectID": "uniqueID",
                             "indexName": "<YOUR_INDEX_NAME>",
                         },
@@ -5624,13 +6055,7 @@ paths:
 
             response = client.get_objects(
               Algolia::Search::GetObjectsParams.new(
-                requests: [
-                  Algolia::Search::GetObjectsRequest.new(
-                    attributes_to_retrieve: ["attr1", "attr2"],
-                    object_id: "uniqueID",
-                    index_name: "<YOUR_INDEX_NAME>"
-                  )
-                ]
+                requests: [Algolia::Search::GetObjectsRequest.new(algolia_object_id: "uniqueID", index_name: "<YOUR_INDEX_NAME>")]
               )
             )
 
@@ -5656,24 +6081,21 @@ paths:
 
             // Call the API
 
-            val response = client.getObjects(
-              getObjectsParams = GetObjectsParams(
-                requests = Seq(
-                  GetObjectsRequest(
-                    attributesToRetrieve = Some(Seq("attr1", "attr2")),
-                    objectID = "uniqueID",
-                    indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.getObjects(
+                getObjectsParams = GetObjectsParams(
+                  requests = Seq(
+                    GetObjectsRequest(
+                      objectID = "uniqueID",
+                      indexName = "<YOUR_INDEX_NAME>"
+                    )
                   )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5687,7 +6109,6 @@ paths:
 
             let response: GetObjectsResponse<Hit> = try await client
                 .getObjects(getObjectsParams: GetObjectsParams(requests: [GetObjectsRequest(
-                    attributesToRetrieve: ["attr1", "attr2"],
                     objectID: "uniqueID",
                     indexName: "<YOUR_INDEX_NAME>"
                 )]))
@@ -5772,9 +6193,7 @@ paths:
             // Call the API
 
             response, err := client.GetSettings(client.NewApiGetSettingsRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5923,16 +6342,14 @@ paths:
 
             // Call the API
 
-            val response = client.getSettings(
-              indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.getSettings(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -6008,15 +6425,8 @@ paths:
 
             var response = await client.SetSettingsAsync(
               "<YOUR_INDEX_NAME>",
-              new IndexSettings
-              {
-                AttributesForFaceting = new List<string>
-                {
-                  "actor",
-                  "filterOnly(category)",
-                  "searchable(publisher)",
-                },
-              }
+              new IndexSettings { PaginationLimitedTo = 10 },
+              true
             );
 
             // >LOG
@@ -6031,12 +6441,9 @@ paths:
             final response = await client.setSettings(
               indexName: "<YOUR_INDEX_NAME>",
               indexSettings: IndexSettings(
-                attributesForFaceting: [
-                  "actor",
-                  "filterOnly(category)",
-                  "searchable(publisher)",
-                ],
+                paginationLimitedTo: 10,
               ),
+              forwardToReplicas: true,
             );
             // >LOG
         - lang: go
@@ -6057,10 +6464,7 @@ paths:
 
             response, err := client.SetSettings(client.NewApiSetSettingsRequest(
               "<YOUR_INDEX_NAME>",
-              search.NewEmptyIndexSettings().SetAttributesForFaceting(
-                []string{"actor", "filterOnly(category)", "searchable(publisher)"}),
-            ))
-
+              search.NewEmptyIndexSettings().SetPaginationLimitedTo(10)).WithForwardToReplicas(true))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6083,10 +6487,8 @@ paths:
 
             // Call the API
 
-            client.setSettings(
-              "<YOUR_INDEX_NAME>",
-              new IndexSettings().setAttributesForFaceting(Arrays.asList("actor", "filterOnly(category)", "searchable(publisher)"))
-            );
+            client.setSettings("<YOUR_INDEX_NAME>", new
+            IndexSettings().setPaginationLimitedTo(10), true);
 
             // >LOG
         - lang: javascript
@@ -6103,8 +6505,9 @@ paths:
             // Call the API
 
             const response = await client.setSettings({
-              indexName: '<YOUR_INDEX_NAME>',
-              indexSettings: { attributesForFaceting: ['actor', 'filterOnly(category)', 'searchable(publisher)'] },
+              indexName: 'cts_e2e_settings',
+              indexSettings: { paginationLimitedTo: 10 },
+              forwardToReplicas: true,
             });
 
 
@@ -6127,8 +6530,9 @@ paths:
             var response = client.setSettings(
               indexName = "<YOUR_INDEX_NAME>",
               indexSettings = IndexSettings(
-                attributesForFaceting = listOf("actor", "filterOnly(category)", "searchable(publisher)"),
+                paginationLimitedTo = 10,
               ),
+              forwardToReplicas = true,
             )
 
 
@@ -6150,14 +6554,9 @@ paths:
 
             $response = $client->setSettings(
                 '<YOUR_INDEX_NAME>',
-                ['attributesForFaceting' => [
-                    'actor',
-
-                    'filterOnly(category)',
-
-                    'searchable(publisher)',
+                ['paginationLimitedTo' => 10,
                 ],
-                ],
+                true,
             );
 
 
@@ -6183,12 +6582,9 @@ paths:
             response = client.set_settings(
                 index_name="<YOUR_INDEX_NAME>",
                 index_settings={
-                    "attributesForFaceting": [
-                        "actor",
-                        "filterOnly(category)",
-                        "searchable(publisher)",
-                    ],
+                    "paginationLimitedTo": 10,
                 },
+                forward_to_replicas=True,
             )
 
 
@@ -6210,9 +6606,8 @@ paths:
 
             response = client.set_settings(
               "<YOUR_INDEX_NAME>",
-              Algolia::Search::IndexSettings.new(
-                attributes_for_faceting: ["actor", "filterOnly(category)", "searchable(publisher)"]
-              )
+              Algolia::Search::IndexSettings.new(pagination_limited_to: 10),
+              true
             )
 
 
@@ -6237,19 +6632,18 @@ paths:
 
             // Call the API
 
-            val response = client.setSettings(
-              indexName = "<YOUR_INDEX_NAME>",
-              indexSettings = IndexSettings(
-                attributesForFaceting = Some(Seq("actor", "filterOnly(category)", "searchable(publisher)"))
-              )
+            val response = Await.result(
+              client.setSettings(
+                indexName = "<YOUR_INDEX_NAME>",
+                indexSettings = IndexSettings(
+                  paginationLimitedTo = Some(10)
+                ),
+                forwardToReplicas = Some(true)
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -6263,22 +6657,21 @@ paths:
 
             let response = try await client.setSettings(
                 indexName: "<YOUR_INDEX_NAME>",
-                indexSettings: IndexSettings(attributesForFaceting: [
-                    "actor",
-                    "filterOnly(category)",
-                    "searchable(publisher)",
-                ])
+                indexSettings: IndexSettings(paginationLimitedTo: 10),
+                forwardToReplicas: true
             )
 
             // >LOG
         - lang: cURL
           label: curl
           source: |-
-            curl --request GET \
-              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/settings \
+            curl --request PUT \
+              --url 'https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/settings?forwardToReplicas=true' \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"attributesForFaceting":["author","filterOnly(isbn)","searchable(edition)","afterDistinct(category)","afterDistinct(searchable(publisher))"],"replicas":["virtual(prod_products_price_asc)","dev_products_replica"],"paginationLimitedTo":100,"unretrievableAttributes":["total_sales"],"disableTypoToleranceOnWords":["wheel","1X2BCD"],"attributesToTransliterate":["name","description"],"camelCaseAttributes":["description"],"decompoundedAttributes":{"de":["name"]},"indexLanguages":["ja"],"disablePrefixOnAttributes":["sku"],"allowCompressionOfIntegerArray":false,"numericAttributesForFiltering":["equalOnly(quantity)","popularity"],"separatorsToIndex":"+#","searchableAttributes":["title,alternative_title","author","unordered(text)","emails.personal"],"userData":{"settingID":"f2a7b51e3503acc6a39b3784ffb84300","pluginVersion":"1.6.0"},"customNormalization":{"default":{"ä":"ae","ü":"ue"}},"attributeForDistinct":"url","maxFacetHits":10,"keepDiacriticsOnCharacters":"øé","customRanking":["desc(popularity)","asc(price)"],"attributesToRetrieve":["author","title","content"],"ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"relevancyStrictness":90,"attributesToHighlight":["author","title","conten","content"],"attributesToSnippet":["content:80","description"],"highlightPreTag":"<em>","highlightPostTag":"</em>","snippetEllipsisText":"…","restrictHighlightAndSnippetArrays":false,"hitsPerPage":20,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"typoTolerance":true,"allowTyposOnNumericTokens":true,"disableTypoToleranceOnAttributes":["sku"],"ignorePlurals":["ca","es"],"removeStopWords":["ca","es"],"queryLanguages":["es"],"decompoundQuery":true,"enableRules":true,"enablePersonalization":false,"queryType":"prefixLast","removeWordsIfNoResults":"firstWords","mode":"keywordSearch","semanticSearch":{"eventSources":["lorem"]},"advancedSyntax":false,"optionalWords":"lorem","disableExactOnAttributes":["description"],"exactOnSingleWordQuery":"attribute","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"distinct":1,"replaceSynonymsInHighlight":false,"minProximity":1,"responseFields":["*"],"maxValuesPerFacet":100,"sortFacetValuesBy":"count","attributeCriteriaComputedByMinProximity":false,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"enableReRanking":true,"reRankingApplyFilter":[[]]}'
   /1/indexes/{indexName}/synonyms/{objectID}:
     get:
       tags:
@@ -6355,9 +6748,7 @@ paths:
             // Call the API
 
             response, err := client.GetSynonym(client.NewApiGetSynonymRequest(
-              "<YOUR_INDEX_NAME>", "id1",
-            ))
-
+              "<YOUR_INDEX_NAME>", "id1"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6509,17 +6900,15 @@ paths:
 
             // Call the API
 
-            val response = client.getSynonym(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "id1"
+            val response = Await.result(
+              client.getSynonym(
+                indexName = "<YOUR_INDEX_NAME>",
+                objectID = "id1"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -6535,6 +6924,14 @@ paths:
             "<YOUR_INDEX_NAME>", objectID: "id1")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/synonyms/synonymID \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     put:
       tags:
         - Synonyms
@@ -6588,6 +6985,310 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new SearchClient(new
+            SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.SaveSynonymAsync(
+              "<YOUR_INDEX_NAME>",
+              "id1",
+              new SynonymHit
+              {
+                ObjectID = "id1",
+                Type = Enum.Parse<SynonymType>("Synonym"),
+                Synonyms = new List<string> { "car", "vehicule", "auto" },
+              },
+              true
+            );
+
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client =
+                SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+            // Call the API
+            final response = await client.saveSynonym(
+              indexName: "<YOUR_INDEX_NAME>",
+              objectID: "id1",
+              synonymHit: SynonymHit(
+                objectID: "id1",
+                type: SynonymType.fromJson("synonym"),
+                synonyms: [
+                  "car",
+                  "vehicule",
+                  "auto",
+                ],
+              ),
+              forwardToReplicas: true,
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client
+
+            client, err := search.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.SaveSynonym(client.NewApiSaveSynonymRequest(
+              "<YOUR_INDEX_NAME>", "id1",
+              search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SynonymType("synonym")).SetSynonyms(
+                []string{"car", "vehicule", "auto"})).WithForwardToReplicas(true))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY");
+
+
+            // Call the API
+
+            client.saveSynonym(
+              "<YOUR_INDEX_NAME>",
+              "id1",
+              new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(Arrays.asList("car", "vehicule", "auto")),
+              true
+            );
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.saveSynonym({
+              indexName: 'indexName',
+              objectID: 'id1',
+              synonymHit: { objectID: 'id1', type: 'synonym', synonyms: ['car', 'vehicule', 'auto'] },
+              forwardToReplicas: true,
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            var response = client.saveSynonym(
+              indexName = "<YOUR_INDEX_NAME>",
+              objectID = "id1",
+              synonymHit = SynonymHit(
+                objectID = "id1",
+                type = SynonymType.entries.first { it.value == "synonym" },
+                synonyms = listOf("car", "vehicule", "auto"),
+              ),
+              forwardToReplicas = true,
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = SearchClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            $response = $client->saveSynonym(
+                '<YOUR_INDEX_NAME>',
+                'id1',
+                ['objectID' => 'id1',
+                    'type' => 'synonym',
+                    'synonyms' => [
+                        'car',
+
+                        'vehicule',
+
+                        'auto',
+                    ],
+                ],
+                true,
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.save_synonym(
+                index_name="<YOUR_INDEX_NAME>",
+                object_id="id1",
+                synonym_hit={
+                    "objectID": "id1",
+                    "type": "synonym",
+                    "synonyms": [
+                        "car",
+                        "vehicule",
+                        "auto",
+                    ],
+                },
+                forward_to_replicas=True,
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.save_synonym(
+              "<YOUR_INDEX_NAME>",
+              "id1",
+              Algolia::Search::SynonymHit.new(algolia_object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
+              true
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            val response = Await.result(
+              client.saveSynonym(
+                indexName = "<YOUR_INDEX_NAME>",
+                objectID = "id1",
+                synonymHit = SynonymHit(
+                  objectID = "id1",
+                  `type` = SynonymType.withName("synonym"),
+                  synonyms = Some(Seq("car", "vehicule", "auto"))
+                ),
+                forwardToReplicas = Some(true)
+              ),
+              Duration(100, "sec")
+            )
+
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            let response = try await client.saveSynonym(
+                indexName: "<YOUR_INDEX_NAME>",
+                objectID: "id1",
+                synonymHit: SynonymHit(objectID: "id1", type: SynonymType.synonym, synonyms: ["car", "vehicule", "auto"]),
+                forwardToReplicas: true
+            )
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PUT \
+              --url 'https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/synonyms/synonymID?forwardToReplicas=true' \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"objectID":"synonymID","type":"onewaysynonym","synonyms":["vehicle","auto"],"input":"car","word":"car","corrections":["vehicle","auto"],"placeholder":"<Street>","replacements":["street","st"]}'
     delete:
       tags:
         - Synonyms
@@ -6615,6 +7316,237 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new SearchClient(new
+            SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.DeleteSynonymAsync("<YOUR_INDEX_NAME>",
+            "id1");
+
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client =
+                SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+            // Call the API
+            final response = await client.deleteSynonym(
+              indexName: "<YOUR_INDEX_NAME>",
+              objectID: "id1",
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client
+
+            client, err := search.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.DeleteSynonym(client.NewApiDeleteSynonymRequest(
+              "<YOUR_INDEX_NAME>", "id1"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY");
+
+
+            // Call the API
+
+            client.deleteSynonym("<YOUR_INDEX_NAME>", "id1");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.deleteSynonym({ indexName:
+            'indexName', objectID: 'id1' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            var response = client.deleteSynonym(
+              indexName = "<YOUR_INDEX_NAME>",
+              objectID = "id1",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = SearchClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            $response = $client->deleteSynonym(
+                '<YOUR_INDEX_NAME>',
+                'id1',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.delete_synonym(
+                index_name="<YOUR_INDEX_NAME>",
+                object_id="id1",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.delete_synonym("<YOUR_INDEX_NAME>", "id1")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            val response = Await.result(
+              client.deleteSynonym(
+                indexName = "<YOUR_INDEX_NAME>",
+                objectID = "id1"
+              ),
+              Duration(100, "sec")
+            )
+
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            let response = try await client.deleteSynonym(indexName:
+            "<YOUR_INDEX_NAME>", objectID: "id1")
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url 'https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/synonyms/synonymID?forwardToReplicas=true' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/indexes/{indexName}/synonyms/batch:
     post:
       tags:
@@ -6743,9 +7675,7 @@ paths:
               "<YOUR_INDEX_NAME>",
               []search.SynonymHit{*search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SynonymType("synonym")).SetSynonyms(
                 []string{"car", "vehicule", "auto"}), *search.NewEmptySynonymHit().SetObjectID("id2").SetType(search.SynonymType("onewaysynonym")).SetInput("iphone").SetSynonyms(
-                []string{"ephone", "aphone", "yphone"})},
-            ).WithForwardToReplicas(true).WithReplaceExistingSynonyms(true))
-
+                []string{"ephone", "aphone", "yphone"})}).WithForwardToReplicas(true).WithReplaceExistingSynonyms(true))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6956,9 +7886,9 @@ paths:
             response = client.save_synonyms(
               "<YOUR_INDEX_NAME>",
               [
-                Algolia::Search::SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
+                Algolia::Search::SynonymHit.new(algolia_object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
                 Algolia::Search::SynonymHit.new(
-                  object_id: "id2",
+                  algolia_object_id: "id2",
                   type: "onewaysynonym",
                   input: "iphone",
                   synonyms: ["ephone", "aphone", "yphone"]
@@ -6990,31 +7920,29 @@ paths:
 
             // Call the API
 
-            val response = client.saveSynonyms(
-              indexName = "<YOUR_INDEX_NAME>",
-              synonymHit = Seq(
-                SynonymHit(
-                  objectID = "id1",
-                  `type` = SynonymType.withName("synonym"),
-                  synonyms = Some(Seq("car", "vehicule", "auto"))
+            val response = Await.result(
+              client.saveSynonyms(
+                indexName = "<YOUR_INDEX_NAME>",
+                synonymHit = Seq(
+                  SynonymHit(
+                    objectID = "id1",
+                    `type` = SynonymType.withName("synonym"),
+                    synonyms = Some(Seq("car", "vehicule", "auto"))
+                  ),
+                  SynonymHit(
+                    objectID = "id2",
+                    `type` = SynonymType.withName("onewaysynonym"),
+                    input = Some("iphone"),
+                    synonyms = Some(Seq("ephone", "aphone", "yphone"))
+                  )
                 ),
-                SynonymHit(
-                  objectID = "id2",
-                  `type` = SynonymType.withName("onewaysynonym"),
-                  input = Some("iphone"),
-                  synonyms = Some(Seq("ephone", "aphone", "yphone"))
-                )
+                forwardToReplicas = Some(true),
+                replaceExistingSynonyms = Some(true)
               ),
-              forwardToReplicas = Some(true),
-              replaceExistingSynonyms = Some(true)
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -7120,9 +8048,7 @@ paths:
 
             response, err :=
             client.ClearSynonyms(client.NewApiClearSynonymsRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -7271,16 +8197,14 @@ paths:
 
             // Call the API
 
-            val response = client.clearSynonyms(
-              indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.clearSynonyms(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -7395,9 +8319,7 @@ paths:
 
             response, err :=
             client.SearchSynonyms(client.NewApiSearchSynonymsRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -7546,16 +8468,14 @@ paths:
 
             // Call the API
 
-            val response = client.searchSynonyms(
-              indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.searchSynonyms(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -7801,16 +8721,13 @@ paths:
 
             // Call the API
 
-            val response = client.listApiKeys(
-
+            val response = Await.result(
+              client.listApiKeys(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -7879,9 +8796,6 @@ paths:
               {
                 Acl = new List<Acl> { Enum.Parse<Acl>("Search"), Enum.Parse<Acl>("AddObject") },
                 Description = "my new api key",
-                Validity = 300,
-                MaxQueriesPerIPPerHour = 100,
-                MaxHitsPerQuery = 20,
               }
             );
 
@@ -7901,9 +8815,6 @@ paths:
                   Acl.fromJson("addObject"),
                 ],
                 description: "my new api key",
-                validity: 300,
-                maxQueriesPerIPPerHour: 100,
-                maxHitsPerQuery: 20,
               ),
             );
             // >LOG
@@ -7926,9 +8837,7 @@ paths:
             response, err := client.AddApiKey(client.NewApiAddApiKeyRequest(
 
               search.NewEmptyApiKey().SetAcl(
-                []search.Acl{search.Acl("search"), search.Acl("addObject")}).SetDescription("my new api key").SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20),
-            ))
-
+                []search.Acl{search.Acl("search"), search.Acl("addObject")}).SetDescription("my new api key")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -7951,14 +8860,8 @@ paths:
 
             // Call the API
 
-            client.addApiKey(
-              new ApiKey()
-                .setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT))
-                .setDescription("my new api key")
-                .setValidity(300)
-                .setMaxQueriesPerIPPerHour(100)
-                .setMaxHitsPerQuery(20)
-            );
+            client.addApiKey(new ApiKey().setAcl(Arrays.asList(Acl.SEARCH,
+            Acl.ADD_OBJECT)).setDescription("my new api key"));
 
             // >LOG
         - lang: javascript
@@ -7974,13 +8877,8 @@ paths:
 
             // Call the API
 
-            const response = await client.addApiKey({
-              acl: ['search', 'addObject'],
-              description: 'my new api key',
-              validity: 300,
-              maxQueriesPerIPPerHour: 100,
-              maxHitsPerQuery: 20,
-            });
+            const response = await client.addApiKey({ acl: ['search',
+            'addObject'], description: 'my new api key' });
 
 
             // >LOG
@@ -8003,9 +8901,6 @@ paths:
               apiKey = ApiKey(
                 acl = listOf(Acl.entries.first { it.value == "search" }, Acl.entries.first { it.value == "addObject" }),
                 description = "my new api key",
-                validity = 300,
-                maxQueriesPerIPPerHour = 100,
-                maxHitsPerQuery = 20,
               ),
             )
 
@@ -8033,9 +8928,6 @@ paths:
                     'addObject',
                 ],
                     'description' => 'my new api key',
-                    'validity' => 300,
-                    'maxQueriesPerIPPerHour' => 100,
-                    'maxHitsPerQuery' => 20,
                 ],
             );
 
@@ -8066,9 +8958,6 @@ paths:
                         "addObject",
                     ],
                     "description": "my new api key",
-                    "validity": 300,
-                    "maxQueriesPerIPPerHour": 100,
-                    "maxHitsPerQuery": 20,
                 },
             )
 
@@ -8090,13 +8979,7 @@ paths:
             # Call the API
 
             response = client.add_api_key(
-              Algolia::Search::ApiKey.new(
-                acl: ["search", "addObject"],
-                description: "my new api key",
-                validity: 300,
-                max_queries_per_ip_per_hour: 100,
-                max_hits_per_query: 20
-              )
+              Algolia::Search::ApiKey.new(acl: ["search", "addObject"], description: "my new api key")
             )
 
 
@@ -8121,22 +9004,17 @@ paths:
 
             // Call the API
 
-            val response = client.addApiKey(
-              apiKey = ApiKey(
-                acl = Seq(Acl.withName("search"), Acl.withName("addObject")),
-                description = Some("my new api key"),
-                validity = Some(300),
-                maxQueriesPerIPPerHour = Some(100),
-                maxHitsPerQuery = Some(20)
-              )
+            val response = Await.result(
+              client.addApiKey(
+                apiKey = ApiKey(
+                  acl = Seq(Acl.withName("search"), Acl.withName("addObject")),
+                  description = Some("my new api key")
+                )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -8150,21 +9028,20 @@ paths:
 
             let response = try await client.addApiKey(apiKey: ApiKey(
                 acl: [Acl.search, Acl.addObject],
-                description: "my new api key",
-                maxHitsPerQuery: 20,
-                maxQueriesPerIPPerHour: 100,
-                validity: 300
+                description: "my new api key"
             ))
 
             // >LOG
         - lang: cURL
           label: curl
           source: |-
-            curl --request GET \
+            curl --request POST \
               --url https://algolia_application_id.algolia.net/1/keys \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"acl":["search","addObject"],"description":"Used for indexing by the CLI","indexes":["dev_*","prod_en_products"],"maxHitsPerQuery":0,"maxQueriesPerIPPerHour":0,"queryParameters":"typoTolerance=strict&restrictSources=192.168.1.0/24","referers":["*algolia.com*"],"validity":86400}'
   /1/keys/{key}:
     get:
       tags:
@@ -8243,9 +9120,7 @@ paths:
             // Call the API
 
             response, err := client.GetApiKey(client.NewApiGetApiKeyRequest(
-              "myTestApiKey",
-            ))
-
+              "myTestApiKey"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -8393,16 +9268,14 @@ paths:
 
             // Call the API
 
-            val response = client.getApiKey(
-              key = "myTestApiKey"
+            val response = Await.result(
+              client.getApiKey(
+                key = "myTestApiKey"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -8417,6 +9290,14 @@ paths:
             let response = try await client.getApiKey(key: "myTestApiKey")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/keys/ALGOLIA_API_KEY \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     put:
       tags:
         - Api Keys
@@ -8461,6 +9342,303 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new SearchClient(new
+            SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.UpdateApiKeyAsync(
+              "ALGOLIA_API_KEY",
+              new ApiKey
+              {
+                Acl = new List<Acl> { Enum.Parse<Acl>("Search"), Enum.Parse<Acl>("AddObject") },
+                Validity = 300,
+                MaxQueriesPerIPPerHour = 100,
+                MaxHitsPerQuery = 20,
+              }
+            );
+
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client =
+                SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+            // Call the API
+            final response = await client.updateApiKey(
+              key: "ALGOLIA_API_KEY",
+              apiKey: ApiKey(
+                acl: [
+                  Acl.fromJson("search"),
+                  Acl.fromJson("addObject"),
+                ],
+                validity: 300,
+                maxQueriesPerIPPerHour: 100,
+                maxHitsPerQuery: 20,
+              ),
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client
+
+            client, err := search.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.UpdateApiKey(client.NewApiUpdateApiKeyRequest(
+              "ALGOLIA_API_KEY",
+              search.NewEmptyApiKey().SetAcl(
+                []search.Acl{search.Acl("search"), search.Acl("addObject")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20)))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY");
+
+
+            // Call the API
+
+            client.updateApiKey(
+              "ALGOLIA_API_KEY",
+              new ApiKey().setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT)).setValidity(300).setMaxQueriesPerIPPerHour(100).setMaxHitsPerQuery(20)
+            );
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.updateApiKey({
+              key: 'ALGOLIA_API_KEY',
+              apiKey: { acl: ['search', 'addObject'], validity: 300, maxQueriesPerIPPerHour: 100, maxHitsPerQuery: 20 },
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            var response = client.updateApiKey(
+              key = "ALGOLIA_API_KEY",
+              apiKey = ApiKey(
+                acl = listOf(Acl.entries.first { it.value == "search" }, Acl.entries.first { it.value == "addObject" }),
+                validity = 300,
+                maxQueriesPerIPPerHour = 100,
+                maxHitsPerQuery = 20,
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = SearchClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            $response = $client->updateApiKey(
+                'ALGOLIA_API_KEY',
+                ['acl' => [
+                    'search',
+
+                    'addObject',
+                ],
+                    'validity' => 300,
+                    'maxQueriesPerIPPerHour' => 100,
+                    'maxHitsPerQuery' => 20,
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.update_api_key(
+                key="ALGOLIA_API_KEY",
+                api_key={
+                    "acl": [
+                        "search",
+                        "addObject",
+                    ],
+                    "validity": 300,
+                    "maxQueriesPerIPPerHour": 100,
+                    "maxHitsPerQuery": 20,
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.update_api_key(
+              "ALGOLIA_API_KEY",
+              Algolia::Search::ApiKey.new(
+                acl: ["search", "addObject"],
+                validity: 300,
+                max_queries_per_ip_per_hour: 100,
+                max_hits_per_query: 20
+              )
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            val response = Await.result(
+              client.updateApiKey(
+                key = "ALGOLIA_API_KEY",
+                apiKey = ApiKey(
+                  acl = Seq(Acl.withName("search"), Acl.withName("addObject")),
+                  validity = Some(300),
+                  maxQueriesPerIPPerHour = Some(100),
+                  maxHitsPerQuery = Some(20)
+                )
+              ),
+              Duration(100, "sec")
+            )
+
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            let response = try await client.updateApiKey(
+                key: "ALGOLIA_API_KEY",
+                apiKey: ApiKey(
+                    acl: [Acl.search, Acl.addObject],
+                    maxHitsPerQuery: 20,
+                    maxQueriesPerIPPerHour: 100,
+                    validity: 300
+                )
+            )
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PUT \
+              --url https://algolia_application_id.algolia.net/1/keys/ALGOLIA_API_KEY \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"acl":["search","addObject"],"description":"Used for indexing by the CLI","indexes":["dev_*","prod_en_products"],"maxHitsPerQuery":0,"maxQueriesPerIPPerHour":0,"queryParameters":"typoTolerance=strict&restrictSources=192.168.1.0/24","referers":["*algolia.com*"],"validity":86400}'
     delete:
       tags:
         - Api Keys
@@ -8493,6 +9671,229 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new SearchClient(new
+            SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.DeleteApiKeyAsync("myTestApiKey");
+
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client =
+                SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+            // Call the API
+            final response = await client.deleteApiKey(
+              key: "myTestApiKey",
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client
+
+            client, err := search.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.DeleteApiKey(client.NewApiDeleteApiKeyRequest(
+              "myTestApiKey"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY");
+
+
+            // Call the API
+
+            client.deleteApiKey("myTestApiKey");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.deleteApiKey({ key: 'myTestApiKey' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            var response = client.deleteApiKey(
+              key = "myTestApiKey",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = SearchClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            $response = $client->deleteApiKey(
+                'myTestApiKey',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.delete_api_key(
+                key="myTestApiKey",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.delete_api_key("myTestApiKey")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            val response = Await.result(
+              client.deleteApiKey(
+                key = "myTestApiKey"
+              ),
+              Duration(100, "sec")
+            )
+
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            let response = try await client.deleteApiKey(key: "myTestApiKey")
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://algolia_application_id.algolia.net/1/keys/ALGOLIA_API_KEY \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/keys/{key}/restore:
     post:
       tags:
@@ -8574,9 +9975,7 @@ paths:
 
             response, err :=
             client.RestoreApiKey(client.NewApiRestoreApiKeyRequest(
-              "ALGOLIA_API_KEY",
-            ))
-
+              "ALGOLIA_API_KEY"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -8725,16 +10124,14 @@ paths:
 
             // Call the API
 
-            val response = client.restoreApiKey(
-              key = "ALGOLIA_API_KEY"
+            val response = Await.result(
+              client.restoreApiKey(
+                key = "ALGOLIA_API_KEY"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -8750,6 +10147,14 @@ paths:
             "ALGOLIA_API_KEY")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/keys/ALGOLIA_API_KEY/restore \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/indexes/{indexName}/rules/{objectID}:
     get:
       tags:
@@ -8827,9 +10232,7 @@ paths:
             // Call the API
 
             response, err := client.GetRule(client.NewApiGetRuleRequest(
-              "<YOUR_INDEX_NAME>", "qr-1725004648916",
-            ))
-
+              "<YOUR_INDEX_NAME>", "qr-1725004648916"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -8981,17 +10384,15 @@ paths:
 
             // Call the API
 
-            val response = client.getRule(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "qr-1725004648916"
+            val response = Await.result(
+              client.getRule(
+                indexName = "<YOUR_INDEX_NAME>",
+                objectID = "qr-1725004648916"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -9007,6 +10408,14 @@ paths:
             "<YOUR_INDEX_NAME>", objectID: "qr-1725004648916")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/rules/lorem \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     put:
       tags:
         - Rules
@@ -9043,6 +10452,357 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new SearchClient(new
+            SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.SaveRuleAsync(
+              "<YOUR_INDEX_NAME>",
+              "id1",
+              new Rule
+              {
+                ObjectID = "id1",
+                Conditions = new List<Condition>
+                {
+                  new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains") },
+                },
+                Consequence = new Consequence
+                {
+                  Params = new ConsequenceParams { Filters = "brand:xiaomi" },
+                },
+              }
+            );
+
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client =
+                SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+            // Call the API
+            final response = await client.saveRule(
+              indexName: "<YOUR_INDEX_NAME>",
+              objectID: "id1",
+              rule: Rule(
+                objectID: "id1",
+                conditions: [
+                  Condition(
+                    pattern: "apple",
+                    anchoring: Anchoring.fromJson("contains"),
+                  ),
+                ],
+                consequence: Consequence(
+                  params: ConsequenceParams(
+                    filters: "brand:xiaomi",
+                  ),
+                ),
+              ),
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client
+
+            client, err := search.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.SaveRule(client.NewApiSaveRuleRequest(
+              "<YOUR_INDEX_NAME>", "id1",
+              search.NewEmptyRule().SetObjectID("id1").SetConditions(
+                []search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+                search.NewEmptyConsequence().SetParams(
+                  search.NewEmptyConsequenceParams().SetFilters("brand:xiaomi")))))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY");
+
+
+            // Call the API
+
+            client.saveRule(
+              "<YOUR_INDEX_NAME>",
+              "id1",
+              new Rule()
+                .setObjectID("id1")
+                .setConditions(Arrays.asList(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
+                .setConsequence(new Consequence().setParams(new ConsequenceParams().setFilters("brand:xiaomi")))
+            );
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.saveRule({
+              indexName: 'indexName',
+              objectID: 'id1',
+              rule: {
+                objectID: 'id1',
+                conditions: [{ pattern: 'apple', anchoring: 'contains' }],
+                consequence: { params: { filters: 'brand:xiaomi' } },
+              },
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            var response = client.saveRule(
+              indexName = "<YOUR_INDEX_NAME>",
+              objectID = "id1",
+              rule = Rule(
+                objectID = "id1",
+                conditions = listOf(
+                  Condition(
+                    pattern = "apple",
+                    anchoring = Anchoring.entries.first { it.value == "contains" },
+                  ),
+                ),
+                consequence = Consequence(
+                  params = ConsequenceParams(
+                    filters = "brand:xiaomi",
+                  ),
+                ),
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = SearchClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            $response = $client->saveRule(
+                '<YOUR_INDEX_NAME>',
+                'id1',
+                ['objectID' => 'id1',
+                    'conditions' => [
+                        ['pattern' => 'apple',
+                            'anchoring' => 'contains',
+                        ],
+                    ],
+                    'consequence' => ['params' => ['filters' => 'brand:xiaomi',
+                    ],
+                    ],
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.save_rule(
+                index_name="<YOUR_INDEX_NAME>",
+                object_id="id1",
+                rule={
+                    "objectID": "id1",
+                    "conditions": [
+                        {
+                            "pattern": "apple",
+                            "anchoring": "contains",
+                        },
+                    ],
+                    "consequence": {
+                        "params": {
+                            "filters": "brand:xiaomi",
+                        },
+                    },
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.save_rule(
+              "<YOUR_INDEX_NAME>",
+              "id1",
+              Algolia::Search::Rule.new(
+                algolia_object_id: "id1",
+                conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")],
+                consequence: Algolia::Search::Consequence.new(
+                  params: Algolia::Search::ConsequenceParams.new(filters: "brand:xiaomi")
+                )
+              )
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            val response = Await.result(
+              client.saveRule(
+                indexName = "<YOUR_INDEX_NAME>",
+                objectID = "id1",
+                rule = Rule(
+                  objectID = "id1",
+                  conditions = Some(
+                    Seq(
+                      Condition(
+                        pattern = Some("apple"),
+                        anchoring = Some(Anchoring.withName("contains"))
+                      )
+                    )
+                  ),
+                  consequence = Consequence(
+                    params = Some(
+                      ConsequenceParams(
+                        filters = Some("brand:xiaomi")
+                      )
+                    )
+                  )
+                )
+              ),
+              Duration(100, "sec")
+            )
+
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            let response = try await client.saveRule(
+                indexName: "<YOUR_INDEX_NAME>",
+                objectID: "id1",
+                rule: Rule(
+                    objectID: "id1",
+                    conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)],
+                    consequence: SearchConsequence(params: SearchConsequenceParams(filters: "brand:xiaomi"))
+                )
+            )
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PUT \
+              --url 'https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/rules/lorem?forwardToReplicas=true' \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"objectID":"lorem","conditions":[{"pattern":"{facet:genre}","anchoring":"is","alternatives":false,"context":"mobile","filters":"genre:comedy"}],"consequence":{"params":{"similarQuery":"comedy drama crime Macy Buscemi","filters":"(category:Book OR category:Ebook) AND _tags:published","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"tagFilters":[["Book","Movie"],"SciFi"],"sumOrFiltersScores":false,"restrictSearchableAttributes":["title","author"],"facets":["*"],"facetingAfterDistinct":false,"page":0,"offset":42,"length":0,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"naturalLanguages":[],"ruleContexts":["mobile"],"personalizationImpact":100,"userToken":"test-user-123","getRankingInfo":false,"synonyms":true,"clickAnalytics":false,"analytics":true,"analyticsTags":[],"percentileComputation":true,"enableABTest":true,"attributesToRetrieve":["author","title","content"],"ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"relevancyStrictness":90,"attributesToHighlight":["author","title","conten","content"],"attributesToSnippet":["content:80","description"],"highlightPreTag":"<em>","highlightPostTag":"</em>","snippetEllipsisText":"…","restrictHighlightAndSnippetArrays":false,"hitsPerPage":20,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"typoTolerance":true,"allowTyposOnNumericTokens":true,"disableTypoToleranceOnAttributes":["sku"],"ignorePlurals":["ca","es"],"removeStopWords":["ca","es"],"queryLanguages":["es"],"decompoundQuery":true,"enableRules":true,"enablePersonalization":false,"queryType":"prefixLast","removeWordsIfNoResults":"firstWords","mode":"keywordSearch","semanticSearch":{"eventSources":["lorem"]},"advancedSyntax":false,"optionalWords":"lorem","disableExactOnAttributes":["description"],"exactOnSingleWordQuery":"attribute","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"distinct":1,"replaceSynonymsInHighlight":false,"minProximity":1,"responseFields":["*"],"maxValuesPerFacet":100,"sortFacetValuesBy":"count","attributeCriteriaComputedByMinProximity":false,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"enableReRanking":true,"reRankingApplyFilter":[[]],"query":{"remove":["lorem"],"edits":[{"type":"remove","delete":"lorem","insert":"lorem"}]},"automaticFacetFilters":[{"facet":"lorem","score":1,"disjunctive":false}],"automaticOptionalFacetFilters":[{"facet":"lorem","score":1,"disjunctive":false}]},"promote":[{"objectIDs":["test-record-123"],"position":0}],"filterPromotes":false,"hide":[{"objectID":"test-record-123"}],"userData":{"settingID":"f2a7b51e3503acc6a39b3784ffb84300","pluginVersion":"1.6.0"}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}]}'
     delete:
       tags:
         - Rules
@@ -9069,6 +10829,236 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new SearchClient(new
+            SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.DeleteRuleAsync("<YOUR_INDEX_NAME>",
+            "id1");
+
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client =
+                SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+            // Call the API
+            final response = await client.deleteRule(
+              indexName: "<YOUR_INDEX_NAME>",
+              objectID: "id1",
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client
+
+            client, err := search.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.DeleteRule(client.NewApiDeleteRuleRequest(
+              "<YOUR_INDEX_NAME>", "id1"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY");
+
+
+            // Call the API
+
+            client.deleteRule("<YOUR_INDEX_NAME>", "id1");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.deleteRule({ indexName: 'indexName',
+            objectID: 'id1' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            var response = client.deleteRule(
+              indexName = "<YOUR_INDEX_NAME>",
+              objectID = "id1",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = SearchClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            $response = $client->deleteRule(
+                '<YOUR_INDEX_NAME>',
+                'id1',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.delete_rule(
+                index_name="<YOUR_INDEX_NAME>",
+                object_id="id1",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.delete_rule("<YOUR_INDEX_NAME>", "id1")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            val response = Await.result(
+              client.deleteRule(
+                indexName = "<YOUR_INDEX_NAME>",
+                objectID = "id1"
+              ),
+              Duration(100, "sec")
+            )
+
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            let response = try await client.deleteRule(indexName:
+            "<YOUR_INDEX_NAME>", objectID: "id1")
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url 'https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/rules/lorem?forwardToReplicas=true' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/indexes/{indexName}/rules/batch:
     post:
       tags:
@@ -9228,9 +11218,7 @@ paths:
                   search.NewEmptyConsequenceParams().SetFilters("brand:apple"))), *search.NewEmptyRule().SetObjectID("a-second-rule-id").SetConditions(
                 []search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
                 search.NewEmptyConsequence().SetParams(
-                  search.NewEmptyConsequenceParams().SetFilters("brand:samsung")))},
-            ).WithForwardToReplicas(false).WithClearExistingRules(true))
-
+                  search.NewEmptyConsequenceParams().SetFilters("brand:samsung")))}).WithForwardToReplicas(false).WithClearExistingRules(true))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -9477,14 +11465,14 @@ paths:
               "<YOUR_INDEX_NAME>",
               [
                 Algolia::Search::Rule.new(
-                  object_id: "a-rule-id",
+                  algolia_object_id: "a-rule-id",
                   conditions: [Algolia::Search::Condition.new(pattern: "smartphone", anchoring: "contains")],
                   consequence: Algolia::Search::Consequence.new(
                     params: Algolia::Search::ConsequenceParams.new(filters: "brand:apple")
                   )
                 ),
                 Algolia::Search::Rule.new(
-                  object_id: "a-second-rule-id",
+                  algolia_object_id: "a-second-rule-id",
                   conditions: [Algolia::Search::Condition.new(pattern: "apple", anchoring: "contains")],
                   consequence: Algolia::Search::Consequence.new(
                     params: Algolia::Search::ConsequenceParams.new(filters: "brand:samsung")
@@ -9517,56 +11505,54 @@ paths:
 
             // Call the API
 
-            val response = client.saveRules(
-              indexName = "<YOUR_INDEX_NAME>",
-              rules = Seq(
-                Rule(
-                  objectID = "a-rule-id",
-                  conditions = Some(
-                    Seq(
-                      Condition(
-                        pattern = Some("smartphone"),
-                        anchoring = Some(Anchoring.withName("contains"))
+            val response = Await.result(
+              client.saveRules(
+                indexName = "<YOUR_INDEX_NAME>",
+                rules = Seq(
+                  Rule(
+                    objectID = "a-rule-id",
+                    conditions = Some(
+                      Seq(
+                        Condition(
+                          pattern = Some("smartphone"),
+                          anchoring = Some(Anchoring.withName("contains"))
+                        )
+                      )
+                    ),
+                    consequence = Consequence(
+                      params = Some(
+                        ConsequenceParams(
+                          filters = Some("brand:apple")
+                        )
                       )
                     )
                   ),
-                  consequence = Consequence(
-                    params = Some(
-                      ConsequenceParams(
-                        filters = Some("brand:apple")
+                  Rule(
+                    objectID = "a-second-rule-id",
+                    conditions = Some(
+                      Seq(
+                        Condition(
+                          pattern = Some("apple"),
+                          anchoring = Some(Anchoring.withName("contains"))
+                        )
+                      )
+                    ),
+                    consequence = Consequence(
+                      params = Some(
+                        ConsequenceParams(
+                          filters = Some("brand:samsung")
+                        )
                       )
                     )
                   )
                 ),
-                Rule(
-                  objectID = "a-second-rule-id",
-                  conditions = Some(
-                    Seq(
-                      Condition(
-                        pattern = Some("apple"),
-                        anchoring = Some(Anchoring.withName("contains"))
-                      )
-                    )
-                  ),
-                  consequence = Consequence(
-                    params = Some(
-                      ConsequenceParams(
-                        filters = Some("brand:samsung")
-                      )
-                    )
-                  )
-                )
+                forwardToReplicas = Some(false),
+                clearExistingRules = Some(true)
               ),
-              forwardToReplicas = Some(false),
-              clearExistingRules = Some(true)
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -9674,9 +11660,7 @@ paths:
             // Call the API
 
             response, err := client.ClearRules(client.NewApiClearRulesRequest(
-              "<YOUR_INDEX_NAME>",
-            ))
-
+              "<YOUR_INDEX_NAME>"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -9825,16 +11809,14 @@ paths:
 
             // Call the API
 
-            val response = client.clearRules(
-              indexName = "<YOUR_INDEX_NAME>"
+            val response = Await.result(
+              client.clearRules(
+                indexName = "<YOUR_INDEX_NAME>"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -9988,8 +11970,7 @@ paths:
             // Call the API
 
             response, err := client.SearchRules(client.NewApiSearchRulesRequest(
-              "<YOUR_INDEX_NAME>",
-            ).WithSearchRulesParams(
+              "<YOUR_INDEX_NAME>").WithSearchRulesParams(
               search.NewEmptySearchRulesParams().SetQuery("zorro")))
             if err != nil {
               // handle the eventual error
@@ -10149,21 +12130,19 @@ paths:
 
             // Call the API
 
-            val response = client.searchRules(
-              indexName = "<YOUR_INDEX_NAME>",
-              searchRulesParams = Some(
-                SearchRulesParams(
-                  query = Some("zorro")
+            val response = Await.result(
+              client.searchRules(
+                indexName = "<YOUR_INDEX_NAME>",
+                searchRulesParams = Some(
+                  SearchRulesParams(
+                    query = Some("zorro")
+                  )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -10342,9 +12321,7 @@ paths:
                 []search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
                   search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetWord("fancy").SetWords(
                     []string{"believe", "algolia"}).SetDecomposition(
-                    []string{"trust", "algolia"}).SetState(search.DictionaryEntryState("enabled")))}),
-            ))
-
+                    []string{"trust", "algolia"}).SetState(search.DictionaryEntryState("enabled")))})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -10572,7 +12549,7 @@ paths:
                   Algolia::Search::BatchDictionaryEntriesRequest.new(
                     action: "addEntry",
                     body: Algolia::Search::DictionaryEntry.new(
-                      object_id: "1",
+                      algolia_object_id: "1",
                       language: "en",
                       word: "fancy",
                       words: ["believe", "algolia"],
@@ -10606,32 +12583,30 @@ paths:
 
             // Call the API
 
-            val response = client.batchDictionaryEntries(
-              dictionaryName = DictionaryType.withName("plurals"),
-              batchDictionaryEntriesParams = BatchDictionaryEntriesParams(
-                clearExistingDictionaryEntries = Some(true),
-                requests = Seq(
-                  BatchDictionaryEntriesRequest(
-                    action = DictionaryAction.withName("addEntry"),
-                    body = DictionaryEntry(
-                      objectID = "1",
-                      language = Some(SupportedLanguage.withName("en")),
-                      word = Some("fancy"),
-                      words = Some(Seq("believe", "algolia")),
-                      decomposition = Some(Seq("trust", "algolia")),
-                      state = Some(DictionaryEntryState.withName("enabled"))
+            val response = Await.result(
+              client.batchDictionaryEntries(
+                dictionaryName = DictionaryType.withName("plurals"),
+                batchDictionaryEntriesParams = BatchDictionaryEntriesParams(
+                  clearExistingDictionaryEntries = Some(true),
+                  requests = Seq(
+                    BatchDictionaryEntriesRequest(
+                      action = DictionaryAction.withName("addEntry"),
+                      body = DictionaryEntry(
+                        objectID = "1",
+                        language = Some(SupportedLanguage.withName("en")),
+                        word = Some("fancy"),
+                        words = Some(Seq("believe", "algolia")),
+                        decomposition = Some(Seq("trust", "algolia")),
+                        state = Some(DictionaryEntryState.withName("enabled"))
+                      )
                     )
                   )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -10662,6 +12637,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/dictionaries/plurals/batch \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"clearExistingDictionaryEntries":false,"requests":[{"action":"addEntry","body":{"objectID":"828afd405e1f4fe950b6b98c2c43c032","language":"af","word":"the","words":["cheval","cheveaux"],"decomposition":["kopf","schmerz","tablette"],"state":"enabled","type":"custom"}}]}'
   /1/dictionaries/{dictionaryName}/search:
     post:
       tags:
@@ -10762,9 +12747,7 @@ paths:
             response, err :=
             client.SearchDictionaryEntries(client.NewApiSearchDictionaryEntriesRequest(
               search.DictionaryType("stopwords"),
-              search.NewEmptySearchDictionaryEntriesParams().SetQuery("about"),
-            ))
-
+              search.NewEmptySearchDictionaryEntriesParams().SetQuery("about")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -10779,6 +12762,8 @@ paths:
         - lang: java
           label: Java
           source: >
+            // parameters
+
             // Initialize the client
 
             SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
@@ -10927,19 +12912,17 @@ paths:
 
             // Call the API
 
-            val response = client.searchDictionaryEntries(
-              dictionaryName = DictionaryType.withName("stopwords"),
-              searchDictionaryEntriesParams = SearchDictionaryEntriesParams(
-                query = "about"
-              )
+            val response = Await.result(
+              client.searchDictionaryEntries(
+                dictionaryName = DictionaryType.withName("stopwords"),
+                searchDictionaryEntriesParams = SearchDictionaryEntriesParams(
+                  query = "about"
+                )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -10957,6 +12940,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/dictionaries/plurals/search \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"query":"","page":0,"hitsPerPage":20,"language":"af"}'
   /1/dictionaries/*/settings:
     get:
       tags:
@@ -11174,16 +13167,13 @@ paths:
 
             // Call the API
 
-            val response = client.getDictionarySettings(
-
+            val response = Await.result(
+              client.getDictionarySettings(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -11311,9 +13301,7 @@ paths:
             client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(
 
               search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(
-                search.NewEmptyStandardEntries().SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true})),
-            ))
-
+                search.NewEmptyStandardEntries().SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true}))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -11498,20 +13486,18 @@ paths:
 
             // Call the API
 
-            val response = client.setDictionarySettings(
-              dictionarySettingsParams = DictionarySettingsParams(
-                disableStandardEntries = StandardEntries(
-                  plurals = Some(Map("fr" -> false, "en" -> false, "ru" -> true))
+            val response = Await.result(
+              client.setDictionarySettings(
+                dictionarySettingsParams = DictionarySettingsParams(
+                  disableStandardEntries = StandardEntries(
+                    plurals = Some(Map("fr" -> false, "en" -> false, "ru" -> true))
+                  )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -11535,11 +13521,13 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request GET \
+            curl --request PUT \
               --url 'https://algolia_application_id.algolia.net/1/dictionaries/*/settings' \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"disableStandardEntries":{"plurals":{"fr":false},"stopwords":{"fr":false},"compounds":{"fr":false}}}'
   /1/dictionaries/*/languages:
     get:
       tags:
@@ -11758,16 +13746,13 @@ paths:
 
             // Call the API
 
-            val response = client.getDictionaryLanguages(
-
+            val response = Await.result(
+              client.getDictionaryLanguages(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -11795,6 +13780,7 @@ paths:
       tags:
         - Clusters
       operationId: assignUserId
+      deprecated: true
       x-acl:
         - admin
       summary: Assign or move a user ID
@@ -11844,8 +13830,8 @@ paths:
             // Call the API
 
             var response = await client.AssignUserIdAsync(
-              "userID",
-              new AssignUserIdParams { Cluster = "theCluster" }
+              "user42",
+              new AssignUserIdParams { Cluster = "d4242-eu" }
             );
 
             // >LOG
@@ -11858,9 +13844,9 @@ paths:
 
             // Call the API
             final response = await client.assignUserId(
-              xAlgoliaUserID: "userID",
+              xAlgoliaUserID: "user42",
               assignUserIdParams: AssignUserIdParams(
-                cluster: "theCluster",
+                cluster: "d4242-eu",
               ),
             );
             // >LOG
@@ -11882,10 +13868,8 @@ paths:
 
             response, err :=
             client.AssignUserId(client.NewApiAssignUserIdRequest(
-              "userID",
-              search.NewEmptyAssignUserIdParams().SetCluster("theCluster"),
-            ))
-
+              "user42",
+              search.NewEmptyAssignUserIdParams().SetCluster("d4242-eu")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -11908,8 +13892,8 @@ paths:
 
             // Call the API
 
-            client.assignUserId("userID", new
-            AssignUserIdParams().setCluster("theCluster"));
+            client.assignUserId("user42", new
+            AssignUserIdParams().setCluster("d4242-eu"));
 
             // >LOG
         - lang: javascript
@@ -11925,10 +13909,8 @@ paths:
 
             // Call the API
 
-            const response = await client.assignUserId({
-              xAlgoliaUserID: 'userID',
-              assignUserIdParams: { cluster: 'theCluster' },
-            });
+            const response = await client.assignUserId({ xAlgoliaUserID:
+            'user42', assignUserIdParams: { cluster: 'd4242-eu' } });
 
 
             // >LOG
@@ -11948,9 +13930,9 @@ paths:
             // Call the API
 
             var response = client.assignUserId(
-              xAlgoliaUserID = "userID",
+              xAlgoliaUserID = "user42",
               assignUserIdParams = AssignUserIdParams(
-                cluster = "theCluster",
+                cluster = "d4242-eu",
               ),
             )
 
@@ -11972,8 +13954,8 @@ paths:
             // Call the API
 
             $response = $client->assignUserId(
-                'userID',
-                ['cluster' => 'theCluster',
+                'user42',
+                ['cluster' => 'd4242-eu',
                 ],
             );
 
@@ -11998,9 +13980,9 @@ paths:
             # Call the API
 
             response = client.assign_user_id(
-                x_algolia_user_id="userID",
+                x_algolia_user_id="user42",
                 assign_user_id_params={
-                    "cluster": "theCluster",
+                    "cluster": "d4242-eu",
                 },
             )
 
@@ -12021,8 +14003,8 @@ paths:
 
             # Call the API
 
-            response = client.assign_user_id("userID",
-            Algolia::Search::AssignUserIdParams.new(cluster: "theCluster"))
+            response = client.assign_user_id("user42",
+            Algolia::Search::AssignUserIdParams.new(cluster: "d4242-eu"))
 
 
             # >LOG
@@ -12046,19 +14028,17 @@ paths:
 
             // Call the API
 
-            val response = client.assignUserId(
-              xAlgoliaUserID = "userID",
-              assignUserIdParams = AssignUserIdParams(
-                cluster = "theCluster"
-              )
+            val response = Await.result(
+              client.assignUserId(
+                xAlgoliaUserID = "user42",
+                assignUserIdParams = AssignUserIdParams(
+                  cluster = "d4242-eu"
+                )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -12071,8 +14051,8 @@ paths:
             // Call the API
 
             let response = try await client.assignUserId(
-                xAlgoliaUserID: "userID",
-                assignUserIdParams: AssignUserIdParams(cluster: "theCluster")
+                xAlgoliaUserID: "user42",
+                assignUserIdParams: AssignUserIdParams(cluster: "d4242-eu")
             )
 
             // >LOG
@@ -12091,6 +14071,7 @@ paths:
       tags:
         - Clusters
       operationId: listUserIds
+      deprecated: true
       x-acl:
         - admin
       summary: List user IDs
@@ -12315,16 +14296,13 @@ paths:
 
             // Call the API
 
-            val response = client.listUserIds(
-
+            val response = Await.result(
+              client.listUserIds(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -12342,19 +14320,17 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request POST \
-              --url https://algolia_application_id.algolia.net/1/clusters/mapping \
+            curl --request GET \
+              --url 'https://algolia_application_id.algolia.net/1/clusters/mapping?page=0&hitsPerPage=100' \
               --header 'accept: application/json' \
-              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --header 'x-algolia-user-id: user1' \
-              --data '{"cluster":"c11-test"}'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/clusters/mapping/batch:
     post:
       tags:
         - Clusters
       operationId: batchAssignUserIds
+      deprecated: true
       x-acl:
         - admin
       summary: Assign multiple userIDs
@@ -12460,9 +14436,7 @@ paths:
             client.BatchAssignUserIds(client.NewApiBatchAssignUserIdsRequest(
               "userID",
               search.NewEmptyBatchAssignUserIdsParams().SetCluster("theCluster").SetUsers(
-                []string{"user1", "user2"}),
-            ))
-
+                []string{"user1", "user2"})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -12636,20 +14610,18 @@ paths:
 
             // Call the API
 
-            val response = client.batchAssignUserIds(
-              xAlgoliaUserID = "userID",
-              batchAssignUserIdsParams = BatchAssignUserIdsParams(
-                cluster = "theCluster",
-                users = Seq("user1", "user2")
-              )
+            val response = Await.result(
+              client.batchAssignUserIds(
+                xAlgoliaUserID = "userID",
+                batchAssignUserIdsParams = BatchAssignUserIdsParams(
+                  cluster = "theCluster",
+                  users = Seq("user1", "user2")
+                )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -12683,6 +14655,7 @@ paths:
       tags:
         - Clusters
       operationId: getTopUserIds
+      deprecated: true
       x-acl:
         - admin
       summary: Get top user IDs
@@ -12912,16 +14885,13 @@ paths:
 
             // Call the API
 
-            val response = client.getTopUserIds(
-
+            val response = Await.result(
+              client.getTopUserIds(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -12949,6 +14919,7 @@ paths:
       tags:
         - Clusters
       operationId: getUserId
+      deprecated: true
       x-acl:
         - admin
       summary: Retrieve user ID
@@ -13021,9 +14992,7 @@ paths:
             // Call the API
 
             response, err := client.GetUserId(client.NewApiGetUserIdRequest(
-              "uniqueID",
-            ))
-
+              "uniqueID"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -13171,16 +15140,14 @@ paths:
 
             // Call the API
 
-            val response = client.getUserId(
-              userID = "uniqueID"
+            val response = Await.result(
+              client.getUserId(
+                userID = "uniqueID"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -13195,10 +15162,19 @@ paths:
             let response = try await client.getUserId(userID: "uniqueID")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/clusters/mapping/top \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     delete:
       tags:
         - Clusters
       operationId: removeUserId
+      deprecated: true
       x-acl:
         - admin
       summary: Delete user ID
@@ -13227,11 +15203,235 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new SearchClient(new
+            SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.RemoveUserIdAsync("uniqueID");
+
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client =
+                SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+            // Call the API
+            final response = await client.removeUserId(
+              userID: "uniqueID",
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client
+
+            client, err := search.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.RemoveUserId(client.NewApiRemoveUserIdRequest(
+              "uniqueID"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY");
+
+
+            // Call the API
+
+            client.removeUserId("uniqueID");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.removeUserId({ userID: 'uniqueID' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            var response = client.removeUserId(
+              userID = "uniqueID",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = SearchClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            $response = $client->removeUserId(
+                'uniqueID',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use SearchClient instead,
+            which exposes the exact same methods.
+
+            client = SearchClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.remove_user_id(
+                user_id="uniqueID",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.remove_user_id("uniqueID")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
+            "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            val response = Await.result(
+              client.removeUserId(
+                userID = "uniqueID"
+              ),
+              Duration(100, "sec")
+            )
+
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            let response = try await client.removeUserId(userID: "uniqueID")
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://algolia_application_id.algolia.net/1/clusters/mapping/user1 \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/clusters:
     get:
       tags:
         - Clusters
       operationId: listClusters
+      deprecated: true
       x-acl:
         - admin
       summary: List clusters
@@ -13448,16 +15648,13 @@ paths:
 
             // Call the API
 
-            val response = client.listClusters(
-
+            val response = Await.result(
+              client.listClusters(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -13475,19 +15672,17 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request POST \
-              --url https://algolia_application_id.algolia.net/1/clusters/mapping \
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/clusters \
               --header 'accept: application/json' \
-              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --header 'x-algolia-user-id: user1' \
-              --data '{"cluster":"c11-test"}'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/clusters/mapping/search:
     post:
       tags:
         - Clusters
       operationId: searchUserIds
+      deprecated: true
       x-use-read-transporter: true
       x-cacheable: true
       x-acl:
@@ -13656,9 +15851,7 @@ paths:
             response, err :=
             client.SearchUserIds(client.NewApiSearchUserIdsRequest(
 
-              search.NewEmptySearchUserIdsParams().SetQuery("test").SetClusterName("theClusterName").SetPage(5).SetHitsPerPage(10),
-            ))
-
+              search.NewEmptySearchUserIdsParams().SetQuery("test").SetClusterName("theClusterName").SetPage(5).SetHitsPerPage(10)))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -13828,21 +16021,19 @@ paths:
 
             // Call the API
 
-            val response = client.searchUserIds(
-              searchUserIdsParams = SearchUserIdsParams(
-                query = "test",
-                clusterName = Some("theClusterName"),
-                page = Some(5),
-                hitsPerPage = Some(10)
-              )
+            val response = Await.result(
+              client.searchUserIds(
+                searchUserIdsParams = SearchUserIdsParams(
+                  query = "test",
+                  clusterName = Some("theClusterName"),
+                  page = Some(5),
+                  hitsPerPage = Some(10)
+                )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -13878,6 +16069,7 @@ paths:
       tags:
         - Clusters
       operationId: hasPendingMappings
+      deprecated: true
       x-acl:
         - admin
       summary: Get migration and user mapping status
@@ -14112,16 +16304,13 @@ paths:
 
             // Call the API
 
-            val response = client.hasPendingMappings(
-
+            val response = Await.result(
+              client.hasPendingMappings(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -14352,16 +16541,13 @@ paths:
 
             // Call the API
 
-            val response = client.getSources(
-
+            val response = Await.result(
+              client.getSources(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -14477,9 +16663,7 @@ paths:
             response, err :=
             client.ReplaceSources(client.NewApiReplaceSourcesRequest(
 
-              []search.Source{*search.NewEmptySource().SetSource("theSource").SetDescription("theDescription")},
-            ))
-
+              []search.Source{*search.NewEmptySource().SetSource("theSource").SetDescription("theDescription")}))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -14645,21 +16829,19 @@ paths:
 
             // Call the API
 
-            val response = client.replaceSources(
-              source = Seq(
-                Source(
-                  source = "theSource",
-                  description = Some("theDescription")
+            val response = Await.result(
+              client.replaceSources(
+                source = Seq(
+                  Source(
+                    source = "theSource",
+                    description = Some("theDescription")
+                  )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -14681,11 +16863,13 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request GET \
+            curl --request PUT \
               --url https://algolia_application_id.algolia.net/1/security/sources \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '[{"source":"10.0.0.1/32","description":"Server subnet"}]'
   /1/security/sources/append:
     post:
       tags:
@@ -14764,9 +16948,7 @@ paths:
             response, err :=
             client.AppendSource(client.NewApiAppendSourceRequest(
 
-              search.NewEmptySource().SetSource("theSource").SetDescription("theDescription"),
-            ))
-
+              search.NewEmptySource().SetSource("theSource").SetDescription("theDescription")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -14925,19 +17107,17 @@ paths:
 
             // Call the API
 
-            val response = client.appendSource(
-              source = Source(
-                source = "theSource",
-                description = Some("theDescription")
-              )
+            val response = Await.result(
+              client.appendSource(
+                source = Source(
+                  source = "theSource",
+                  description = Some("theDescription")
+                )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -15049,9 +17229,7 @@ paths:
 
             response, err :=
             client.DeleteSource(client.NewApiDeleteSourceRequest(
-              "theSource",
-            ))
-
+              "theSource"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -15199,16 +17377,14 @@ paths:
 
             // Call the API
 
-            val response = client.deleteSource(
-              source = "theSource"
+            val response = Await.result(
+              client.deleteSource(
+                source = "theSource"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -15223,6 +17399,14 @@ paths:
             let response = try await client.deleteSource(source: "theSource")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://algolia_application_id.algolia.net/1/security/sources/10.0.0.1%2F32 \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/logs:
     get:
       tags:
@@ -15322,30 +17506,22 @@ paths:
                           maxLength: 1000
                           description: Response body.
                           example: >
-                            'n{\n \"results\": [\n  {\n   \"hits\": [\n   
-                            {\n     \"name\": \"Amazon - Fire TV Stick\",\n    
-                            \"description\": \"Amazon Fire TV Stick connects to
+                            'n{\n "results": [\n  {\n   "hits": [\n    {\n    
+                            "name": "Amazon - Fire TV Stick",\n    
+                            "description": "Amazon Fire TV Stick connects to
                             your TV's HDMI port. Just grab and go to enjoy
                             Netflix, Prime Instant Video, Hulu Plus,
-                            YouTube.com, music, and much more.\",\n    
-                            \"brand\": \"Amazon\",\n     \"categories\":
-                            [\n      \"TV & Home Theater\",\n      \"Streaming
-                            Media Players\"\n     ],\n    
-                            \"hierarchicalCategories\": {\n      \"lvl0\": \"TV
-                            & Home Theater\",\n      \"lvl1\": \"TV & Home
-                            Theater > Streaming Media Players\"\n     },\n    
-                            \"type\": \"Streaming media plyr\",\n     \"price\":
-                            39.99,\n     \"price_range\": \"1 - 50\",\n    
-                            \"image\":
-                            \"https:\/\/cdn-demo.algolia.com\/bestbuy\/9999119_sb.jpg\",\n    
-                            \"url\":
-                            \"http:\/\/www.bestbuy.com\/site\/amazon-fire-tv-stick\/9999119.p?id=1219460752591&skuId=9999119&cmp=RMX&ky=1uWSHMdQqBeVJB9cXgEke60s5EjfS6M1W\",\n    
-                            \"free_shipping\": false,\n     \"popularity\":
-                            9843,\n     \"rating\": 4,\n     \"objectID\":
-                            \"9999119\"\n'
+                            YouTube.com, music, and much more.",\n     "brand":
+                            "Amazon",\n     "categories": [\n      "TV & Home
+                            Theater",\n      "Streaming Media Players"\n    
+                            ],\n     "hierarchicalCategories": {\n      "lvl0":
+                            "TV & Home Theater",\n      "lvl1": "TV & Home
+                            Theater > Streaming Media Players"\n     },\n    
+                            "type": "Streaming media player",\n     "price":
+                            39.99,\n     "price_range": "1 }\n   ]\n  }\n ]\n}'
                         url:
                           type: string
-                          format: uri
+                          format: uri-reference
                           description: URL of the API endpoint.
                           example: /1/indexes
                         ip:
@@ -15613,16 +17789,13 @@ paths:
 
             // Call the API
 
-            val response = client.getLogs(
-
+            val response = Await.result(
+              client.getLogs(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -15721,9 +17894,7 @@ paths:
             // Call the API
 
             response, err := client.GetAppTask(client.NewApiGetAppTaskRequest(
-              123,
-            ))
-
+              123))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -15871,16 +18042,14 @@ paths:
 
             // Call the API
 
-            val response = client.getAppTask(
-              taskID = 123L
+            val response = Await.result(
+              client.getAppTask(
+                taskID = 123L
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -15895,6 +18064,14 @@ paths:
             let response = try await client.getAppTask(taskID: Int64(123))
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/task/1506303845001 \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/indexes/{indexName}/task/{taskID}:
     get:
       tags:
@@ -15987,9 +18164,7 @@ paths:
             // Call the API
 
             response, err := client.GetTask(client.NewApiGetTaskRequest(
-              "<YOUR_INDEX_NAME>", 123,
-            ))
-
+              "<YOUR_INDEX_NAME>", 123))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -16141,17 +18316,15 @@ paths:
 
             // Call the API
 
-            val response = client.getTask(
-              indexName = "<YOUR_INDEX_NAME>",
-              taskID = 123L
+            val response = Await.result(
+              client.getTask(
+                indexName = "<YOUR_INDEX_NAME>",
+                taskID = 123L
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -16167,6 +18340,14 @@ paths:
             "<YOUR_INDEX_NAME>", taskID: Int64(123))
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/task/1506303845001 \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/indexes/{indexName}/operation:
     post:
       tags:
@@ -16334,9 +18515,7 @@ paths:
             client.OperationIndex(client.NewApiOperationIndexRequest(
               "<SOURCE_INDEX_NAME>",
               search.NewEmptyOperationIndexParams().SetOperation(search.OperationType("move")).SetDestination("<DESTINATION_INDEX_NAME>").SetScope(
-                []search.ScopeType{search.ScopeType("rules"), search.ScopeType("settings")}),
-            ))
-
+                []search.ScopeType{search.ScopeType("rules"), search.ScopeType("settings")})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -16521,21 +18700,19 @@ paths:
 
             // Call the API
 
-            val response = client.operationIndex(
-              indexName = "<SOURCE_INDEX_NAME>",
-              operationIndexParams = OperationIndexParams(
-                operation = OperationType.withName("move"),
-                destination = "<DESTINATION_INDEX_NAME>",
-                scope = Some(Seq(ScopeType.withName("rules"), ScopeType.withName("settings")))
-              )
+            val response = Await.result(
+              client.operationIndex(
+                indexName = "<SOURCE_INDEX_NAME>",
+                operationIndexParams = OperationIndexParams(
+                  operation = OperationType.withName("move"),
+                  destination = "<DESTINATION_INDEX_NAME>",
+                  scope = Some(Seq(ScopeType.withName("rules"), ScopeType.withName("settings")))
+                )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -16784,16 +18961,13 @@ paths:
 
             // Call the API
 
-            val response = client.listIndices(
-
+            val response = Await.result(
+              client.listIndices(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -16811,13 +18985,11 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request POST \
-              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/query \
+            curl --request GET \
+              --url 'https://algolia_application_id.algolia.net/1/indexes?page=0&hitsPerPage=100' \
               --header 'accept: application/json' \
-              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"params":"hitsPerPage=2&getRankingInfo=1"}'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
 components:
   securitySchemes:
     appId:
@@ -17772,6 +19944,13 @@ components:
       example:
         - blue
         - iphone case
+      description: >-
+        List of [optional
+        words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
+      default: []
+      x-categories:
+        - Query strategy
+    optionalWords:
       description: >
         Words that should be considered optional when found in the query.
 
@@ -17809,10 +19988,6 @@ components:
 
         For more information, see [Optional
         words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
-      default: []
-      x-categories:
-        - Query strategy
-    optionalWords:
       oneOf:
         - type: string
         - type: 'null'
@@ -18535,25 +20710,35 @@ components:
           items:
             type: string
           description: >
-            Properties to include in the API response of `search` and `browse`
+            Properties to include in the API response of search and browse
             requests.
 
 
             By default, all response properties are included.
 
-            To reduce the response size, you can select, which attributes should
+            To reduce the response size, you can select which properties should
             be included.
+
+
+            An empty list may lead to an empty API response (except properties
+            you can't exclude).
 
 
             You can't exclude these properties:
 
-            `message`, `warning`, `cursor`, `serverUsed`, `indexUsed`,
+            `message`, `warning`, `cursor`, `abTestVariantID`,
 
-            `abTestVariantID`, `parsedQuery`, or any property triggered by the
-            `getRankingInfo` parameter.
+            or any property added by setting `getRankingInfo` to true.
 
 
-            Don't exclude properties that you might need in your search UI.
+            Your search depends on the `hits` field. If you omit this field,
+            searches won't return any results.
+
+            Your UI might also depend on other properties, for example, for
+            pagination.
+
+            Before restricting the response size, check the impact on your
+            search experience.
           default:
             - '*'
           x-categories:
@@ -18669,7 +20854,6 @@ components:
         - dest
         - source
     userData:
-      type: object
       example:
         settingID: f2a7b51e3503acc6a39b3784ffb84300
         pluginVersion: 1.6.0
@@ -19411,20 +21595,17 @@ components:
       required:
         - requests
       example:
-        batch:
-          summary: Batch indexing request
-          value:
-            requests:
-              - action: addObject
-                body:
-                  name: Betty Jane McCamey
-                  company: Vita Foods Inc.
-                  email: betty@mccamey.com
-              - action: addObject
-                body:
-                  name: Gayla geimer
-                  company: Ortman McCain Co.
-                  email: gayla@geimer.com
+        requests:
+          - action: addObject
+            body:
+              name: Betty Jane McCamey
+              company: Vita Foods Inc.
+              email: betty@mccamey.com
+          - action: addObject
+            body:
+              name: Gayla geimer
+              company: Ortman McCain Co.
+              email: gayla@geimer.com
     objectIDs:
       type: array
       items:
@@ -20257,11 +22438,14 @@ components:
             Filters that trigger the rule.
 
 
-            You can add add filters using the syntax `facet:value` so that the
-            rule is triggered, when the specific filter is selected.
+            You can add filters using the syntax `facet:value` so that the rule
+            is triggered, when the specific filter is selected.
 
             You can use `filters` on its own or combine it with the `pattern`
             parameter.
+
+            You can't combine multiple filters with `OR` and you can't use
+            numeric filters.
           example: genre:comedy
     editType:
       description: Type of edit.
@@ -20486,6 +22670,7 @@ components:
             required:
               - objectID
         userData:
+          type: object
           description: >
             A JSON object with custom data that will be appended to the
             `userData` array in the response.
@@ -20702,6 +22887,7 @@ components:
             type: boolean
         - type: 'null'
     standardEntries:
+      type: object
       description: >
         Key-value pairs of [supported language ISO
         codes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/)
@@ -20783,6 +22969,7 @@ components:
       description: Data size taken by all the users assigned to the cluster.
       example: 481
     source:
+      type: object
       description: Source.
       required:
         - source
@@ -21253,6 +23440,18 @@ components:
             properties:
               createdAt:
                 $ref: '#/components/schemas/createdAt'
+    IndexInSameApp:
+      description: Indices are in the same application. Use operationIndex instead.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    IndexAlreadyExists:
+      description: Destination index already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
 x-tagGroups:
   - name: Search and indexing
     tags:

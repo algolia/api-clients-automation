@@ -1,0 +1,24 @@
+package com.algolia;
+
+import java.util.List;
+
+{{> snippets/import}}
+
+public class searchWithRuleContexts {
+
+  private static String getPlatformTag() {
+    return ""; // Implement your logic here
+  }
+
+  public static void main(String[] args) throws Exception {
+
+    try ({{> snippets/init}}) {
+      String platformTag = getPlatformTag();
+      SearchParams searchParams = new SearchParamsObject().setQuery("<YOUR_SEARCH_QUERY>").setRuleContexts(List.of(platformTag));
+
+      {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+    } catch (Exception e) {
+      System.out.println("An error occurred: " + e.getMessage());
+    }
+  }
+}

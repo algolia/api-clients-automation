@@ -8,7 +8,7 @@ import { algoliasearch } from 'algoliasearch';
 //
 // createAuthenticationOAuth
 export async function snippetForCreateAuthentication(): Promise<void> {
-  // >SEPARATOR createAuthentication default
+  // >SEPARATOR createAuthentication createAuthenticationOAuth
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
@@ -26,11 +26,33 @@ export async function snippetForCreateAuthentication(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the createAuthentication method.
+//
+// createAuthenticationAlgolia
+export async function snippetForCreateAuthentication1(): Promise<void> {
+  // >SEPARATOR createAuthentication createAuthenticationAlgolia
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.createAuthentication({
+    type: 'algolia',
+    name: 'authName',
+    input: { appID: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY' },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the createDestination method.
 //
 // createDestination
 export async function snippetForCreateDestination(): Promise<void> {
-  // >SEPARATOR createDestination default
+  // >SEPARATOR createDestination createDestination
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
@@ -49,11 +71,34 @@ export async function snippetForCreateDestination(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the createDestination method.
+//
+// with transformationIDs
+export async function snippetForCreateDestination1(): Promise<void> {
+  // >SEPARATOR createDestination with transformationIDs
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.createDestination({
+    type: 'search',
+    name: 'destinationName',
+    input: { indexName: 'full_name______' },
+    transformationIDs: ['6c02aeb1-775e-418e-870b-1faccd4b2c0f'],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the createSource method.
 //
 // createSource
 export async function snippetForCreateSource(): Promise<void> {
-  // >SEPARATOR createSource default
+  // >SEPARATOR createSource createSource
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
@@ -62,9 +107,33 @@ export async function snippetForCreateSource(): Promise<void> {
   const response = await client.createSource({
     type: 'commercetools',
     name: 'sourceName',
-    input: { storeKeys: ['myStore'], locales: ['de'], url: 'http://commercetools.com', projectKey: 'keyID' },
+    input: {
+      storeKeys: ['myStore'],
+      locales: ['de'],
+      url: 'http://commercetools.com',
+      projectKey: 'keyID',
+      productQueryPredicate: 'masterVariant(attributes(name="Brand" and value="Algolia"))',
+    },
     authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
   });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the createSource method.
+//
+// push
+export async function snippetForCreateSource1(): Promise<void> {
+  // >SEPARATOR createSource push
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.createSource({ type: 'push', name: 'pushezpourentrer' });
 
   // >LOG
   // use typed response
@@ -76,7 +145,7 @@ export async function snippetForCreateSource(): Promise<void> {
 //
 // task without cron
 export async function snippetForCreateTask(): Promise<void> {
-  // >SEPARATOR createTask default
+  // >SEPARATOR createTask task without cron
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
@@ -90,11 +159,60 @@ export async function snippetForCreateTask(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the createTask method.
+//
+// task with cron
+export async function snippetForCreateTask1(): Promise<void> {
+  // >SEPARATOR createTask task with cron
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.createTask({
+    sourceID: 'search',
+    destinationID: 'destinationName',
+    cron: '* * * * *',
+    action: 'replace',
+    notifications: { email: { enabled: true } },
+    policies: { criticalThreshold: 8 },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the createTask method.
+//
+// task shopify
+export async function snippetForCreateTask2(): Promise<void> {
+  // >SEPARATOR createTask task shopify
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.createTask({
+    sourceID: 'search',
+    destinationID: 'destinationName',
+    cron: '* * * * *',
+    action: 'replace',
+    input: { streams: [{ name: 'foo', syncMode: 'incremental' }] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the createTaskV1 method.
 //
 // createTaskOnDemand
 export async function snippetForCreateTaskV1(): Promise<void> {
-  // >SEPARATOR createTaskV1 default
+  // >SEPARATOR createTaskV1 createTaskOnDemand
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
@@ -105,6 +223,76 @@ export async function snippetForCreateTaskV1(): Promise<void> {
     destinationID: 'destinationName',
     trigger: { type: 'onDemand' },
     action: 'replace',
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the createTaskV1 method.
+//
+// createTaskSchedule
+export async function snippetForCreateTaskV11(): Promise<void> {
+  // >SEPARATOR createTaskV1 createTaskSchedule
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.createTaskV1({
+    sourceID: 'search',
+    destinationID: 'destinationName',
+    trigger: { type: 'schedule', cron: '* * * * *' },
+    action: 'replace',
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the createTaskV1 method.
+//
+// createTaskSubscription
+export async function snippetForCreateTaskV12(): Promise<void> {
+  // >SEPARATOR createTaskV1 createTaskSubscription
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.createTaskV1({
+    sourceID: 'search',
+    destinationID: 'destinationName',
+    trigger: { type: 'onDemand' },
+    action: 'replace',
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the createTaskV1 method.
+//
+// task shopify
+export async function snippetForCreateTaskV13(): Promise<void> {
+  // >SEPARATOR createTaskV1 task shopify
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.createTaskV1({
+    sourceID: 'search',
+    destinationID: 'destinationName',
+    trigger: { type: 'onDemand' },
+    action: 'replace',
+    input: { streams: [{ name: 'foo', syncMode: 'incremental' }] },
   });
 
   // >LOG
@@ -135,7 +323,7 @@ export async function snippetForCreateTransformation(): Promise<void> {
 //
 // allow del method for a custom path with minimal parameters
 export async function snippetForCustomDelete(): Promise<void> {
-  // >SEPARATOR customDelete default
+  // >SEPARATOR customDelete allow del method for a custom path with minimal parameters
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
@@ -149,11 +337,29 @@ export async function snippetForCustomDelete(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the customDelete method.
+//
+// allow del method for a custom path with all parameters
+export async function snippetForCustomDelete1(): Promise<void> {
+  // >SEPARATOR customDelete allow del method for a custom path with all parameters
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.customDelete({ path: 'test/all', parameters: { query: 'parameters' } });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the customGet method.
 //
 // allow get method for a custom path with minimal parameters
 export async function snippetForCustomGet(): Promise<void> {
-  // >SEPARATOR customGet default
+  // >SEPARATOR customGet allow get method for a custom path with minimal parameters
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
@@ -167,11 +373,53 @@ export async function snippetForCustomGet(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the customGet method.
+//
+// allow get method for a custom path with all parameters
+export async function snippetForCustomGet1(): Promise<void> {
+  // >SEPARATOR customGet allow get method for a custom path with all parameters
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.customGet({ path: 'test/all', parameters: { query: 'parameters with space' } });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customGet method.
+//
+// requestOptions should be escaped too
+export async function snippetForCustomGet2(): Promise<void> {
+  // >SEPARATOR customGet requestOptions should be escaped too
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.customGet(
+    { path: 'test/all', parameters: { query: 'to be overriden' } },
+    {
+      queryParameters: { query: 'parameters with space', 'and an array': ['array', 'with spaces'] },
+      headers: { 'x-header-1': 'spaces are left alone' },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the customPost method.
 //
 // allow post method for a custom path with minimal parameters
 export async function snippetForCustomPost(): Promise<void> {
-  // >SEPARATOR customPost default
+  // >SEPARATOR customPost allow post method for a custom path with minimal parameters
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
@@ -185,17 +433,268 @@ export async function snippetForCustomPost(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the customPost method.
+//
+// allow post method for a custom path with all parameters
+export async function snippetForCustomPost1(): Promise<void> {
+  // >SEPARATOR customPost allow post method for a custom path with all parameters
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.customPost({
+    path: 'test/all',
+    parameters: { query: 'parameters' },
+    body: { body: 'parameters' },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions can override default query parameters
+export async function snippetForCustomPost2(): Promise<void> {
+  // >SEPARATOR customPost requestOptions can override default query parameters
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { query: 'myQueryParameter' },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions merges query parameters with default ones
+export async function snippetForCustomPost3(): Promise<void> {
+  // >SEPARATOR customPost requestOptions merges query parameters with default ones
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { query2: 'myQueryParameter' },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions can override default headers
+export async function snippetForCustomPost4(): Promise<void> {
+  // >SEPARATOR customPost requestOptions can override default headers
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions merges headers with default ones
+export async function snippetForCustomPost5(): Promise<void> {
+  // >SEPARATOR customPost requestOptions merges headers with default ones
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts booleans
+export async function snippetForCustomPost6(): Promise<void> {
+  // >SEPARATOR customPost requestOptions queryParameters accepts booleans
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { isItWorking: true },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts integers
+export async function snippetForCustomPost7(): Promise<void> {
+  // >SEPARATOR customPost requestOptions queryParameters accepts integers
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { myParam: 2 },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of string
+export async function snippetForCustomPost8(): Promise<void> {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of string
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { myParam: ['b and c', 'd'] },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of booleans
+export async function snippetForCustomPost9(): Promise<void> {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { myParam: [true, true, false] },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of integers
+export async function snippetForCustomPost10(): Promise<void> {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.customPost(
+    { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },
+    {
+      queryParameters: { myParam: [1, 2] },
+    },
+  );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the customPut method.
 //
 // allow put method for a custom path with minimal parameters
 export async function snippetForCustomPut(): Promise<void> {
-  // >SEPARATOR customPut default
+  // >SEPARATOR customPut allow put method for a custom path with minimal parameters
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
 
   // Call the API
   const response = await client.customPut({ path: 'test/minimal' });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the customPut method.
+//
+// allow put method for a custom path with all parameters
+export async function snippetForCustomPut1(): Promise<void> {
+  // >SEPARATOR customPut allow put method for a custom path with all parameters
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.customPut({
+    path: 'test/all',
+    parameters: { query: 'parameters' },
+    body: { body: 'parameters' },
+  });
 
   // >LOG
   // use typed response
@@ -534,13 +1033,38 @@ export async function snippetForGetTransformation(): Promise<void> {
 //
 // getAuthentications
 export async function snippetForListAuthentications(): Promise<void> {
-  // >SEPARATOR listAuthentications default
+  // >SEPARATOR listAuthentications getAuthentications
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
 
   // Call the API
   const response = await client.listAuthentications();
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the listAuthentications method.
+//
+// getAuthentications with query params
+export async function snippetForListAuthentications1(): Promise<void> {
+  // >SEPARATOR listAuthentications getAuthentications with query params
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.listAuthentications({
+    itemsPerPage: 2,
+    page: 1,
+    type: ['basic', 'algolia'],
+    platform: ['none'],
+    sort: 'createdAt',
+    order: 'asc',
+  });
 
   // >LOG
   // use typed response
@@ -678,7 +1202,7 @@ export async function snippetForListTransformations(): Promise<void> {
 //
 // pushTask
 export async function snippetForPushTask(): Promise<void> {
-  // >SEPARATOR pushTask default
+  // >SEPARATOR pushTask pushTask
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
@@ -693,6 +1217,34 @@ export async function snippetForPushTask(): Promise<void> {
         { key: 'baz', foo: '2', objectID: 'k' },
       ],
     },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the pushTask method.
+//
+// allows for watch query parameter
+export async function snippetForPushTask1(): Promise<void> {
+  // >SEPARATOR pushTask allows for watch query parameter
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.pushTask({
+    taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    pushTaskPayload: {
+      action: 'addObject',
+      records: [
+        { key: 'bar', foo: '1', objectID: 'o' },
+        { key: 'baz', foo: '2', objectID: 'k' },
+      ],
+    },
+    watch: true,
   });
 
   // >LOG
@@ -932,7 +1484,7 @@ export async function snippetForTriggerDockerSourceDiscover(): Promise<void> {
 //
 // tryTransformation
 export async function snippetForTryTransformation(): Promise<void> {
-  // >SEPARATOR tryTransformation default
+  // >SEPARATOR tryTransformation tryTransformation
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
@@ -946,11 +1498,39 @@ export async function snippetForTryTransformation(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the tryTransformation method.
+//
+// with authentications
+export async function snippetForTryTransformation1(): Promise<void> {
+  // >SEPARATOR tryTransformation with authentications
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.tryTransformation({
+    code: 'foo',
+    sampleRecord: { bar: 'baz' },
+    authentications: [
+      {
+        type: 'oauth',
+        name: 'authName',
+        input: { url: 'http://test.oauth', client_id: 'myID', client_secret: 'mySecret' },
+      },
+    ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the tryTransformationBeforeUpdate method.
 //
 // tryTransformationBeforeUpdate
 export async function snippetForTryTransformationBeforeUpdate(): Promise<void> {
-  // >SEPARATOR tryTransformationBeforeUpdate default
+  // >SEPARATOR tryTransformationBeforeUpdate tryTransformationBeforeUpdate
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
@@ -959,6 +1539,37 @@ export async function snippetForTryTransformationBeforeUpdate(): Promise<void> {
   const response = await client.tryTransformationBeforeUpdate({
     transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     transformationTry: { code: 'foo', sampleRecord: { bar: 'baz' } },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the tryTransformationBeforeUpdate method.
+//
+// existing with authentications
+export async function snippetForTryTransformationBeforeUpdate1(): Promise<void> {
+  // >SEPARATOR tryTransformationBeforeUpdate existing with authentications
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.tryTransformationBeforeUpdate({
+    transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    transformationTry: {
+      code: 'foo',
+      sampleRecord: { bar: 'baz' },
+      authentications: [
+        {
+          type: 'oauth',
+          name: 'authName',
+          input: { url: 'http://test.oauth', client_id: 'myID', client_secret: 'mySecret' },
+        },
+      ],
+    },
   });
 
   // >LOG

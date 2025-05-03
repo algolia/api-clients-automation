@@ -228,6 +228,8 @@ class SearchClient(
     * Required API Key ACLs:
     *   - admin
     *
+    * @deprecated
+    *
     * @param xAlgoliaUserID
     *   Unique identifier of the user who makes the search request.
     */
@@ -276,6 +278,8 @@ class SearchClient(
     *
     * Required API Key ACLs:
     *   - admin
+    *
+    * @deprecated
     *
     * @param xAlgoliaUserID
     *   Unique identifier of the user who makes the search request.
@@ -437,7 +441,7 @@ class SearchClient(
     execute[UpdatedAtResponse](request, requestOptions)
   }
 
-  /** This method allow you to send requests to the Algolia REST API.
+  /** This method lets you send requests to the Algolia REST API.
     *
     * @param path
     *   Path of the endpoint, anything after \"/1\" must be specified.
@@ -460,7 +464,7 @@ class SearchClient(
     execute[T](request, requestOptions)
   }
 
-  /** This method allow you to send requests to the Algolia REST API.
+  /** This method lets you send requests to the Algolia REST API.
     *
     * @param path
     *   Path of the endpoint, anything after \"/1\" must be specified.
@@ -483,7 +487,7 @@ class SearchClient(
     execute[T](request, requestOptions)
   }
 
-  /** This method allow you to send requests to the Algolia REST API.
+  /** This method lets you send requests to the Algolia REST API.
     *
     * @param path
     *   Path of the endpoint, anything after \"/1\" must be specified.
@@ -510,7 +514,7 @@ class SearchClient(
     execute[T](request, requestOptions)
   }
 
-  /** This method allow you to send requests to the Algolia REST API.
+  /** This method lets you send requests to the Algolia REST API.
     *
     * @param path
     *   Path of the endpoint, anything after \"/1\" must be specified.
@@ -1008,6 +1012,8 @@ class SearchClient(
     *
     * Required API Key ACLs:
     *   - admin
+    *
+    * @deprecated
     */
   def getTopUserIds(
       requestOptions: Option[RequestOptions] = None
@@ -1026,6 +1032,8 @@ class SearchClient(
     *
     * Required API Key ACLs:
     *   - admin
+    *
+    * @deprecated
     *
     * @param userID
     *   Unique identifier of the user who makes the search request.
@@ -1048,6 +1056,8 @@ class SearchClient(
     *
     * Required API Key ACLs:
     *   - admin
+    *
+    * @deprecated
     *
     * @param getClusters
     *   Whether to include the cluster's pending mapping state in the response.
@@ -1086,6 +1096,8 @@ class SearchClient(
     *
     * Required API Key ACLs:
     *   - admin
+    *
+    * @deprecated
     */
   def listClusters(
       requestOptions: Option[RequestOptions] = None
@@ -1131,6 +1143,8 @@ class SearchClient(
     *
     * Required API Key ACLs:
     *   - admin
+    *
+    * @deprecated
     *
     * @param page
     *   Requested page of the API response. If `null`, the API response is not paginated.
@@ -1231,8 +1245,9 @@ class SearchClient(
     * the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater
     * than 0. You can specify an operation by providing an object with the attribute to update as the key and its value
     * being an object with the following properties: - _operation: the operation to apply on the attribute - value: the
-    * right-hand side argument to the operation, for example, increment or decrement step, value to add or remove. This
-    * operation is subject to [indexing rate
+    * right-hand side argument to the operation, for example, increment or decrement step, value to add or remove. When
+    * updating multiple attributes or using multiple operations targeting the same record, you should use a single
+    * partial update for faster processing. This operation is subject to [indexing rate
     * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     *
     * Required API Key ACLs:
@@ -1272,6 +1287,8 @@ class SearchClient(
     *
     * Required API Key ACLs:
     *   - admin
+    *
+    * @deprecated
     *
     * @param userID
     *   Unique identifier of the user who makes the search request.
@@ -1506,7 +1523,8 @@ class SearchClient(
 
   /** Sends multiple search requests to one or more indices. This can be useful in these cases: - Different indices for
     * different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the
-    * same index—for example, with different filters.
+    * same index—for example, with different filters. Use the helper `searchForHits` or `searchForFacets` to get the
+    * results in a more convenient format, if you already know the return type you want.
     *
     * Required API Key ACLs:
     *   - search
@@ -1676,6 +1694,8 @@ class SearchClient(
     *
     * Required API Key ACLs:
     *   - admin
+    *
+    * @deprecated
     */
   def searchUserIds(searchUserIdsParams: SearchUserIdsParams, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext

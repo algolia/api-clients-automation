@@ -77,7 +77,7 @@ class TestRecommendClient < Test::Unit::TestCase
       "test/all",
       {query: "to be overriden"},
       {
-        :header_params => JSON.parse("{\"x-header-1\":\"spaces are left alone\"}", :symbolize_names => true),
+        :header_params => {"x-header-1" => "spaces are left alone"},
         :query_params => JSON.parse(
           "{\"query\":\"parameters with space\",\"and an array\":[\"array\",\"with spaces\"]}",
           :symbolize_names => true
@@ -159,7 +159,7 @@ class TestRecommendClient < Test::Unit::TestCase
       "test/requestOptions",
       {query: "parameters"},
       {facet: "filters"},
-      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
+      {:header_params => {"x-algolia-api-key" => "ALGOLIA_API_KEY"}}
     )
 
     assert_equal(:post, req.method)
@@ -178,7 +178,7 @@ class TestRecommendClient < Test::Unit::TestCase
       "test/requestOptions",
       {query: "parameters"},
       {facet: "filters"},
-      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
+      {:header_params => {"x-algolia-api-key" => "ALGOLIA_API_KEY"}}
     )
 
     assert_equal(:post, req.method)
@@ -336,7 +336,7 @@ class TestRecommendClient < Test::Unit::TestCase
         requests: [
           Algolia::Recommend::RelatedQuery.new(
             index_name: "indexName",
-            object_id: "objectID",
+            algolia_object_id: "objectID",
             model: "related-products",
             threshold: 42.1
           )
@@ -363,7 +363,7 @@ class TestRecommendClient < Test::Unit::TestCase
         requests: [
           Algolia::Recommend::RelatedQuery.new(
             index_name: "cts_e2e_browse",
-            object_id: "Æon Flux",
+            algolia_object_id: "Æon Flux",
             model: "related-products",
             threshold: 20.0,
             max_recommendations: 2
@@ -391,7 +391,7 @@ class TestRecommendClient < Test::Unit::TestCase
         requests: [
           Algolia::Recommend::RelatedQuery.new(
             index_name: "indexName",
-            object_id: "objectID",
+            algolia_object_id: "objectID",
             model: "related-products",
             threshold: 42.1,
             max_recommendations: 10,
@@ -480,13 +480,13 @@ class TestRecommendClient < Test::Unit::TestCase
         requests: [
           Algolia::Recommend::RelatedQuery.new(
             index_name: "indexName1",
-            object_id: "objectID1",
+            algolia_object_id: "objectID1",
             model: "related-products",
             threshold: 21.7
           ),
           Algolia::Recommend::RelatedQuery.new(
             index_name: "indexName2",
-            object_id: "objectID2",
+            algolia_object_id: "objectID2",
             model: "related-products",
             threshold: 21.7
           )
@@ -513,7 +513,7 @@ class TestRecommendClient < Test::Unit::TestCase
         requests: [
           Algolia::Recommend::RelatedQuery.new(
             index_name: "indexName1",
-            object_id: "objectID1",
+            algolia_object_id: "objectID1",
             model: "related-products",
             threshold: 21.7,
             max_recommendations: 10,
@@ -522,7 +522,7 @@ class TestRecommendClient < Test::Unit::TestCase
           ),
           Algolia::Recommend::RelatedQuery.new(
             index_name: "indexName2",
-            object_id: "objectID2",
+            algolia_object_id: "objectID2",
             model: "related-products",
             threshold: 21.7,
             max_recommendations: 10,
@@ -552,7 +552,7 @@ class TestRecommendClient < Test::Unit::TestCase
         requests: [
           Algolia::Recommend::BoughtTogetherQuery.new(
             index_name: "indexName1",
-            object_id: "objectID1",
+            algolia_object_id: "objectID1",
             model: "bought-together",
             threshold: 42.7
           )

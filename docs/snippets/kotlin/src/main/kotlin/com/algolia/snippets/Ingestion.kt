@@ -3,6 +3,8 @@ package com.algolia.snippets
 
 // >IMPORT
 import com.algolia.client.api.IngestionClient
+import com.algolia.client.configuration.*
+import com.algolia.client.transport.*
 
 // IMPORT<
 import com.algolia.client.model.ingestion.*
@@ -11,7 +13,7 @@ import kotlin.system.exitProcess
 
 class SnippetIngestionClient {
   suspend fun snippetForCreateAuthentication() {
-    // >SEPARATOR createAuthentication default
+    // >SEPARATOR createAuthentication createAuthenticationOAuth
     // Initialize the client
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -36,8 +38,33 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForCreateAuthentication1() {
+    // >SEPARATOR createAuthentication createAuthenticationAlgolia
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.createAuthentication(
+      authenticationCreate = AuthenticationCreate(
+        type = AuthenticationType.entries.first { it.value == "algolia" },
+        name = "authName",
+        input = AuthAlgolia(
+          appID = "ALGOLIA_APPLICATION_ID",
+          apiKey = "ALGOLIA_API_KEY",
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForCreateDestination() {
-    // >SEPARATOR createDestination default
+    // >SEPARATOR createDestination createDestination
     // Initialize the client
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -46,7 +73,7 @@ class SnippetIngestionClient {
       destinationCreate = DestinationCreate(
         type = DestinationType.entries.first { it.value == "search" },
         name = "destinationName",
-        input = DestinationIndexName(
+        input = DestinationInput(
           indexName = "<YOUR_INDEX_NAME>",
         ),
         authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -61,8 +88,33 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForCreateDestination1() {
+    // >SEPARATOR createDestination with transformationIDs
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.createDestination(
+      destinationCreate = DestinationCreate(
+        type = DestinationType.entries.first { it.value == "search" },
+        name = "destinationName",
+        input = DestinationInput(
+          indexName = "<YOUR_INDEX_NAME>",
+        ),
+        transformationIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForCreateSource() {
-    // >SEPARATOR createSource default
+    // >SEPARATOR createSource createSource
     // Initialize the client
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -76,6 +128,7 @@ class SnippetIngestionClient {
           locales = listOf("de"),
           url = "http://commercetools.com",
           projectKey = "keyID",
+          productQueryPredicate = "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))",
         ),
         authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       ),
@@ -89,8 +142,29 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForCreateSource1() {
+    // >SEPARATOR createSource push
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.createSource(
+      sourceCreate = SourceCreate(
+        type = SourceType.entries.first { it.value == "push" },
+        name = "pushezpourentrer",
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForCreateTask() {
-    // >SEPARATOR createTask default
+    // >SEPARATOR createTask task without cron
     // Initialize the client
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -111,8 +185,70 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForCreateTask1() {
+    // >SEPARATOR createTask task with cron
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.createTask(
+      taskCreate = TaskCreate(
+        sourceID = "search",
+        destinationID = "destinationName",
+        cron = "* * * * *",
+        action = ActionType.entries.first { it.value == "replace" },
+        notifications = Notifications(
+          email = EmailNotifications(
+            enabled = true,
+          ),
+        ),
+        policies = Policies(
+          criticalThreshold = 8,
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCreateTask2() {
+    // >SEPARATOR createTask task shopify
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.createTask(
+      taskCreate = TaskCreate(
+        sourceID = "search",
+        destinationID = "destinationName",
+        cron = "* * * * *",
+        action = ActionType.entries.first { it.value == "replace" },
+        input = DockerStreamsInput(
+          streams = listOf(
+            DockerStreams(
+              name = "foo",
+              syncMode = DockerStreamsSyncMode.entries.first { it.value == "incremental" },
+            ),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForCreateTaskV1() {
-    // >SEPARATOR createTaskV1 default
+    // >SEPARATOR createTaskV1 createTaskOnDemand
     // Initialize the client
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -125,6 +261,90 @@ class SnippetIngestionClient {
           type = OnDemandTriggerType.entries.first { it.value == "onDemand" },
         ),
         action = ActionType.entries.first { it.value == "replace" },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCreateTaskV11() {
+    // >SEPARATOR createTaskV1 createTaskSchedule
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.createTaskV1(
+      taskCreate = TaskCreateV1(
+        sourceID = "search",
+        destinationID = "destinationName",
+        trigger = ScheduleTriggerInput(
+          type = ScheduleTriggerType.entries.first { it.value == "schedule" },
+          cron = "* * * * *",
+        ),
+        action = ActionType.entries.first { it.value == "replace" },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCreateTaskV12() {
+    // >SEPARATOR createTaskV1 createTaskSubscription
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.createTaskV1(
+      taskCreate = TaskCreateV1(
+        sourceID = "search",
+        destinationID = "destinationName",
+        trigger = OnDemandTriggerInput(
+          type = OnDemandTriggerType.entries.first { it.value == "onDemand" },
+        ),
+        action = ActionType.entries.first { it.value == "replace" },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCreateTaskV13() {
+    // >SEPARATOR createTaskV1 task shopify
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.createTaskV1(
+      taskCreate = TaskCreateV1(
+        sourceID = "search",
+        destinationID = "destinationName",
+        trigger = OnDemandTriggerInput(
+          type = OnDemandTriggerType.entries.first { it.value == "onDemand" },
+        ),
+        action = ActionType.entries.first { it.value == "replace" },
+        input = DockerStreamsInput(
+          streams = listOf(
+            DockerStreams(
+              name = "foo",
+              syncMode = DockerStreamsSyncMode.entries.first { it.value == "incremental" },
+            ),
+          ),
+        ),
       ),
     )
 
@@ -159,7 +379,7 @@ class SnippetIngestionClient {
   }
 
   suspend fun snippetForCustomDelete() {
-    // >SEPARATOR customDelete default
+    // >SEPARATOR customDelete allow del method for a custom path with minimal parameters
     // Initialize the client
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -176,8 +396,27 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForCustomDelete1() {
+    // >SEPARATOR customDelete allow del method for a custom path with all parameters
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customDelete(
+      path = "test/all",
+      parameters = mapOf("query" to "parameters"),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForCustomGet() {
-    // >SEPARATOR customGet default
+    // >SEPARATOR customGet allow get method for a custom path with minimal parameters
     // Initialize the client
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -194,8 +433,55 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForCustomGet1() {
+    // >SEPARATOR customGet allow get method for a custom path with all parameters
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customGet(
+      path = "test/all",
+      parameters = mapOf("query" to "parameters with space"),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomGet2() {
+    // >SEPARATOR customGet requestOptions should be escaped too
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customGet(
+      path = "test/all",
+      parameters = mapOf("query" to "to be overriden"),
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("query", "parameters with space")
+          put("and an array", listOf("array", "with spaces"))
+        },
+        headers = buildMap {
+          put("x-header-1", "spaces are left alone")
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForCustomPost() {
-    // >SEPARATOR customPost default
+    // >SEPARATOR customPost allow post method for a custom path with minimal parameters
     // Initialize the client
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -212,14 +498,334 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForCustomPost1() {
+    // >SEPARATOR customPost allow post method for a custom path with all parameters
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/all",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "body",
+          JsonPrimitive("parameters"),
+        )
+      },
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost2() {
+    // >SEPARATOR customPost requestOptions can override default query parameters
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("query", "myQueryParameter")
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost3() {
+    // >SEPARATOR customPost requestOptions merges query parameters with default ones
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("query2", "myQueryParameter")
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost4() {
+    // >SEPARATOR customPost requestOptions can override default headers
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        headers = buildMap {
+          put("x-algolia-api-key", "ALGOLIA_API_KEY")
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost5() {
+    // >SEPARATOR customPost requestOptions merges headers with default ones
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        headers = buildMap {
+          put("x-algolia-api-key", "ALGOLIA_API_KEY")
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost6() {
+    // >SEPARATOR customPost requestOptions queryParameters accepts booleans
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("isItWorking", true)
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost7() {
+    // >SEPARATOR customPost requestOptions queryParameters accepts integers
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("myParam", 2)
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost8() {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of string
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("myParam", listOf("b and c", "d"))
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost9() {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("myParam", listOf(true, true, false))
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPost10() {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPost(
+      path = "test/requestOptions",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "facet",
+          JsonPrimitive("filters"),
+        )
+      },
+      requestOptions = RequestOptions(
+        urlParameters = buildMap {
+          put("myParam", listOf(1, 2))
+        },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForCustomPut() {
-    // >SEPARATOR customPut default
+    // >SEPARATOR customPut allow put method for a custom path with minimal parameters
     // Initialize the client
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.customPut(
       path = "test/minimal",
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCustomPut1() {
+    // >SEPARATOR customPut allow put method for a custom path with all parameters
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.customPut(
+      path = "test/all",
+      parameters = mapOf("query" to "parameters"),
+      body = buildJsonObject {
+        put(
+          "body",
+          JsonPrimitive("parameters"),
+        )
+      },
     )
 
     // >LOG
@@ -556,12 +1162,35 @@ class SnippetIngestionClient {
   }
 
   suspend fun snippetForListAuthentications() {
-    // >SEPARATOR listAuthentications default
+    // >SEPARATOR listAuthentications getAuthentications
     // Initialize the client
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.listAuthentications()
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForListAuthentications1() {
+    // >SEPARATOR listAuthentications getAuthentications with query params
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.listAuthentications(
+      itemsPerPage = 2,
+      page = 1,
+      type = listOf(AuthenticationType.entries.first { it.value == "basic" }, AuthenticationType.entries.first { it.value == "algolia" }),
+      platform = listOf(PlatformNone.entries.first { it.value == "none" }),
+      sort = AuthenticationSortKeys.entries.first { it.value == "createdAt" },
+      order = OrderKeys.entries.first { it.value == "asc" },
+    )
 
     // >LOG
     // Use the response
@@ -686,7 +1315,7 @@ class SnippetIngestionClient {
   }
 
   suspend fun snippetForPushTask() {
-    // >SEPARATOR pushTask default
+    // >SEPARATOR pushTask pushTask
     // Initialize the client
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -712,6 +1341,44 @@ class SnippetIngestionClient {
           ),
         ),
       ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForPushTask1() {
+    // >SEPARATOR pushTask allows for watch query parameter
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.pushTask(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      pushTaskPayload = PushTaskPayload(
+        action = Action.entries.first { it.value == "addObject" },
+        records = listOf(
+          PushTaskRecords(
+            objectID = "o",
+            additionalProperties = mapOf(
+              "key" to JsonPrimitive("bar"),
+              "foo" to JsonPrimitive("1"),
+            ),
+          ),
+          PushTaskRecords(
+            objectID = "k",
+            additionalProperties = mapOf(
+              "key" to JsonPrimitive("baz"),
+              "foo" to JsonPrimitive("2"),
+            ),
+          ),
+        ),
+      ),
+      watch = true,
     )
 
     // >LOG
@@ -936,7 +1603,7 @@ class SnippetIngestionClient {
   }
 
   suspend fun snippetForTryTransformation() {
-    // >SEPARATOR tryTransformation default
+    // >SEPARATOR tryTransformation tryTransformation
     // Initialize the client
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -961,8 +1628,45 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForTryTransformation1() {
+    // >SEPARATOR tryTransformation with authentications
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.tryTransformation(
+      transformationTry = TransformationTry(
+        code = "foo",
+        sampleRecord = buildJsonObject {
+          put(
+            "bar",
+            JsonPrimitive("baz"),
+          )
+        },
+        authentications = listOf(
+          AuthenticationCreate(
+            type = AuthenticationType.entries.first { it.value == "oauth" },
+            name = "authName",
+            input = AuthOAuth(
+              url = "http://test.oauth",
+              clientId = "myID",
+              clientSecret = "mySecret",
+            ),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForTryTransformationBeforeUpdate() {
-    // >SEPARATOR tryTransformationBeforeUpdate default
+    // >SEPARATOR tryTransformationBeforeUpdate tryTransformationBeforeUpdate
     // Initialize the client
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
@@ -977,6 +1681,44 @@ class SnippetIngestionClient {
             JsonPrimitive("baz"),
           )
         },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForTryTransformationBeforeUpdate1() {
+    // >SEPARATOR tryTransformationBeforeUpdate existing with authentications
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.tryTransformationBeforeUpdate(
+      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      transformationTry = TransformationTry(
+        code = "foo",
+        sampleRecord = buildJsonObject {
+          put(
+            "bar",
+            JsonPrimitive("baz"),
+          )
+        },
+        authentications = listOf(
+          AuthenticationCreate(
+            type = AuthenticationType.entries.first { it.value == "oauth" },
+            name = "authName",
+            input = AuthOAuth(
+              url = "http://test.oauth",
+              clientId = "myID",
+              clientSecret = "mySecret",
+            ),
+          ),
+        ),
       ),
     )
 

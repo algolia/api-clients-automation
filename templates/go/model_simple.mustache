@@ -274,16 +274,26 @@ func (o {{classname}}) MarshalJSON() ([]byte, error) {
 	}
 	{{/vendorExtensions.x-golang-is-container}}
 	{{^vendorExtensions.x-golang-is-container}}
-	if {{#required}}true{{/required}}{{^required}}o.{{name}}.IsSet(){{/required}} {
+  {{#required}}
+  toSerialize["{{baseName}}"] = o.{{name}}.Get()
+  {{/required}}
+  {{^required}}
+  if o.{{name}}.IsSet() {
 		toSerialize["{{baseName}}"] = o.{{name}}.Get()
 	}
+  {{/required}}
 	{{/vendorExtensions.x-golang-is-container}}
 	{{/isNullable}}
 	{{! if argument is not nullable, don't set it if it is nil}}
 	{{^isNullable}}
-	if {{#required}}true{{/required}}{{^required}}o.{{name}} != nil{{/required}} {
+  {{#required}}
+  toSerialize["{{baseName}}"] = o.{{name}}
+  {{/required}}
+  {{^required}}
+  if o.{{name}} != nil {
 		toSerialize["{{baseName}}"] = o.{{name}}
 	}
+  {{/required}}
 	{{/isNullable}}
 	{{/vars}}
 	{{#isAdditionalPropertiesTrue}}

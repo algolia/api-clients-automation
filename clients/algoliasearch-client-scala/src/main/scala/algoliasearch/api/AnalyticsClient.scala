@@ -105,7 +105,7 @@ class AnalyticsClient(
       options = clientOptions
     ) {
 
-  /** This method allow you to send requests to the Algolia REST API.
+  /** This method lets you send requests to the Algolia REST API.
     *
     * @param path
     *   Path of the endpoint, anything after \"/1\" must be specified.
@@ -128,7 +128,7 @@ class AnalyticsClient(
     execute[T](request, requestOptions)
   }
 
-  /** This method allow you to send requests to the Algolia REST API.
+  /** This method lets you send requests to the Algolia REST API.
     *
     * @param path
     *   Path of the endpoint, anything after \"/1\" must be specified.
@@ -151,7 +151,7 @@ class AnalyticsClient(
     execute[T](request, requestOptions)
   }
 
-  /** This method allow you to send requests to the Algolia REST API.
+  /** This method lets you send requests to the Algolia REST API.
     *
     * @param path
     *   Path of the endpoint, anything after \"/1\" must be specified.
@@ -178,7 +178,7 @@ class AnalyticsClient(
     execute[T](request, requestOptions)
   }
 
-  /** This method allow you to send requests to the Algolia REST API.
+  /** This method lets you send requests to the Algolia REST API.
     *
     * @param path
     *   Path of the endpoint, anything after \"/1\" must be specified.

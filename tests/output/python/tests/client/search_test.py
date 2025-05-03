@@ -176,7 +176,7 @@ class TestSearchClient:
         _req = await _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.12.0\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.16.5\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     async def test_delete_objects_0(self):
@@ -214,7 +214,7 @@ class TestSearchClient:
 
     async def test_generate_secured_api_key_0(self):
         """
-        generate secured api key basic
+        api key basic
         """
         _client = self.create_client()
 
@@ -234,7 +234,7 @@ class TestSearchClient:
 
     async def test_generate_secured_api_key_1(self):
         """
-        generate secured api key with searchParams
+        with searchParams
         """
         _client = self.create_client()
 
@@ -267,6 +267,71 @@ class TestSearchClient:
             == "MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw"
         )
 
+    async def test_generate_secured_api_key_2(self):
+        """
+        with filters
+        """
+        _client = self.create_client()
+
+        _req = await _client.generate_secured_api_key(
+            parent_api_key="2640659426d5107b6e47d75db9cbaef8",
+            restrictions={
+                "filters": "user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)",
+            },
+        )
+
+    async def test_generate_secured_api_key_3(self):
+        """
+        with visible_by filter
+        """
+        _client = self.create_client()
+
+        _req = await _client.generate_secured_api_key(
+            parent_api_key="2640659426d5107b6e47d75db9cbaef8",
+            restrictions={
+                "filters": "visible_by:group/Finance",
+            },
+        )
+
+    async def test_generate_secured_api_key_4(self):
+        """
+        with userID
+        """
+        _client = self.create_client()
+
+        _req = await _client.generate_secured_api_key(
+            parent_api_key="2640659426d5107b6e47d75db9cbaef8",
+            restrictions={
+                "userToken": "user42",
+            },
+        )
+
+    async def test_generate_secured_api_key_5(self):
+        """
+        mcm with filters
+        """
+        _client = self.create_client()
+
+        _req = await _client.generate_secured_api_key(
+            parent_api_key="YourSearchOnlyApiKey",
+            restrictions={
+                "filters": "user:user42 AND user:public",
+            },
+        )
+
+    async def test_generate_secured_api_key_6(self):
+        """
+        mcm with user token
+        """
+        _client = self.create_client()
+
+        _req = await _client.generate_secured_api_key(
+            parent_api_key="YourSearchOnlyApiKey",
+            restrictions={
+                "userToken": "user42",
+            },
+        )
+
     async def test_index_exists_0(self):
         """
         indexExists
@@ -288,7 +353,7 @@ class TestSearchClient:
         _req = await _client.index_exists(
             index_name="indexExistsYES",
         )
-        assert _req is True
+        assert _req
 
     async def test_index_exists_1(self):
         """
@@ -311,7 +376,7 @@ class TestSearchClient:
         _req = await _client.index_exists(
             index_name="indexExistsNO",
         )
-        assert _req is False
+        assert not _req
 
     async def test_index_exists_2(self):
         """
@@ -739,6 +804,101 @@ class TestSearchClient:
         except (ValueError, Exception) as e:
             assert str(e) == "Invalid Application-ID or API key"
 
+    async def test_save_objects_2(self):
+        """
+        saveObjectsPlaylist
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.save_objects(
+            index_name="playlists",
+            objects=[
+                {
+                    "objectID": "1",
+                    "visibility": "public",
+                    "name": "Hot 100 Billboard Charts",
+                    "playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
+                    "createdAt": "1500240452",
+                },
+            ],
+        )
+
+    async def test_save_objects_3(self):
+        """
+        saveObjectsPublicUser
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.save_objects(
+            index_name="playlists",
+            objects=[
+                {
+                    "objectID": "1",
+                    "visibility": "public",
+                    "name": "Hot 100 Billboard Charts",
+                    "playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
+                    "createdAt": "1500240452",
+                },
+            ],
+            wait_for_tasks=False,
+            batch_size=1000,
+            request_options={
+                "headers": loads("""{"X-Algolia-User-ID":"*"}"""),
+            },
+        )
+
+    async def test_search_single_index_0(self):
+        """
+        with algolia user id
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.search_single_index(
+            index_name="playlists",
+            search_params={
+                "query": "foo",
+            },
+            request_options={
+                "headers": loads("""{"X-Algolia-User-ID":"user1234"}"""),
+            },
+        )
+
     async def test_set_client_api_key_0(self):
         """
         switch API key
@@ -1113,7 +1273,7 @@ class TestSearchClientSync:
         _req = _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.12.0\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.16.5\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     def test_delete_objects_0(self):
@@ -1151,7 +1311,7 @@ class TestSearchClientSync:
 
     def test_generate_secured_api_key_0(self):
         """
-        generate secured api key basic
+        api key basic
         """
         _client = self.create_client()
 
@@ -1171,7 +1331,7 @@ class TestSearchClientSync:
 
     def test_generate_secured_api_key_1(self):
         """
-        generate secured api key with searchParams
+        with searchParams
         """
         _client = self.create_client()
 
@@ -1204,6 +1364,71 @@ class TestSearchClientSync:
             == "MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw"
         )
 
+    def test_generate_secured_api_key_2(self):
+        """
+        with filters
+        """
+        _client = self.create_client()
+
+        _req = _client.generate_secured_api_key(
+            parent_api_key="2640659426d5107b6e47d75db9cbaef8",
+            restrictions={
+                "filters": "user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)",
+            },
+        )
+
+    def test_generate_secured_api_key_3(self):
+        """
+        with visible_by filter
+        """
+        _client = self.create_client()
+
+        _req = _client.generate_secured_api_key(
+            parent_api_key="2640659426d5107b6e47d75db9cbaef8",
+            restrictions={
+                "filters": "visible_by:group/Finance",
+            },
+        )
+
+    def test_generate_secured_api_key_4(self):
+        """
+        with userID
+        """
+        _client = self.create_client()
+
+        _req = _client.generate_secured_api_key(
+            parent_api_key="2640659426d5107b6e47d75db9cbaef8",
+            restrictions={
+                "userToken": "user42",
+            },
+        )
+
+    def test_generate_secured_api_key_5(self):
+        """
+        mcm with filters
+        """
+        _client = self.create_client()
+
+        _req = _client.generate_secured_api_key(
+            parent_api_key="YourSearchOnlyApiKey",
+            restrictions={
+                "filters": "user:user42 AND user:public",
+            },
+        )
+
+    def test_generate_secured_api_key_6(self):
+        """
+        mcm with user token
+        """
+        _client = self.create_client()
+
+        _req = _client.generate_secured_api_key(
+            parent_api_key="YourSearchOnlyApiKey",
+            restrictions={
+                "userToken": "user42",
+            },
+        )
+
     def test_index_exists_0(self):
         """
         indexExists
@@ -1225,7 +1450,7 @@ class TestSearchClientSync:
         _req = _client.index_exists(
             index_name="indexExistsYES",
         )
-        assert _req is True
+        assert _req
 
     def test_index_exists_1(self):
         """
@@ -1248,7 +1473,7 @@ class TestSearchClientSync:
         _req = _client.index_exists(
             index_name="indexExistsNO",
         )
-        assert _req is False
+        assert not _req
 
     def test_index_exists_2(self):
         """
@@ -1675,6 +1900,101 @@ class TestSearchClientSync:
             assert False
         except (ValueError, Exception) as e:
             assert str(e) == "Invalid Application-ID or API key"
+
+    def test_save_objects_2(self):
+        """
+        saveObjectsPlaylist
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.save_objects(
+            index_name="playlists",
+            objects=[
+                {
+                    "objectID": "1",
+                    "visibility": "public",
+                    "name": "Hot 100 Billboard Charts",
+                    "playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
+                    "createdAt": "1500240452",
+                },
+            ],
+        )
+
+    def test_save_objects_3(self):
+        """
+        saveObjectsPublicUser
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.save_objects(
+            index_name="playlists",
+            objects=[
+                {
+                    "objectID": "1",
+                    "visibility": "public",
+                    "name": "Hot 100 Billboard Charts",
+                    "playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
+                    "createdAt": "1500240452",
+                },
+            ],
+            wait_for_tasks=False,
+            batch_size=1000,
+            request_options={
+                "headers": loads("""{"X-Algolia-User-ID":"*"}"""),
+            },
+        )
+
+    def test_search_single_index_0(self):
+        """
+        with algolia user id
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.search_single_index(
+            index_name="playlists",
+            search_params={
+                "query": "foo",
+            },
+            request_options={
+                "headers": loads("""{"X-Algolia-User-ID":"user1234"}"""),
+            },
+        )
 
     def test_set_client_api_key_0(self):
         """

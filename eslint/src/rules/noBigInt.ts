@@ -1,3 +1,4 @@
+// @ts-ignore
 import { createRule } from 'eslint-plugin-yml/lib/utils';
 
 import { isPairWithKey, isScalar } from '../utils.js';
@@ -34,7 +35,11 @@ export const noBigInt = createRule('noBigInt', {
 
         // check the format next to the type
         node.parent.pairs.find((pair) => {
-          if (isPairWithKey(pair, 'format') && isScalar(pair.value) && (pair.value.value === 'int32' || pair.value.value === 'int64')) {
+          if (
+            isPairWithKey(pair, 'format') &&
+            isScalar(pair.value) &&
+            (pair.value.value === 'int32' || pair.value.value === 'int64')
+          ) {
             context.report({
               node: pair.value as any,
               messageId: 'noBigInt',

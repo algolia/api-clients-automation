@@ -1,17 +1,13 @@
-import asyncio
 import requests
 {{> snippets/import}}
 
 
-async def main():
-    # Fetch sample dataset
-    url = "https://dashboard.algolia.com/sample_datasets/movie.json"
-    movies = requests.get(url).json()
+# Fetch sample dataset
+url = "https://dashboard.algolia.com/api/1/sample_datasets?type=movie"
+movies = requests.get(url).json()
 
-    # Connect and authenticate with your Algolia app
-    _{{> snippets/init}}
+# Connect and authenticate with your Algolia app
+_{{> snippets/init}}
 
-    # Save records in Algolia index
-    {{#dynamicSnippet}}saveObjectsMovies{{/dynamicSnippet}}
-
-asyncio.run(main())
+# Save records in Algolia index
+{{#dynamicSnippet}}saveObjectsMovies{{/dynamicSnippet}}

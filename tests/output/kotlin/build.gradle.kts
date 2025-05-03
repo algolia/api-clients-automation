@@ -42,7 +42,7 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
                 implementation(libs.coroutines.test)
                 implementation(libs.kotlinx.serialization.json)
-                implementation("io.github.cdimascio:dotenv-kotlin:6.4.2")
+                implementation("io.github.cdimascio:dotenv-kotlin:6.5.1")
                 implementation("org.skyscreamer:jsonassert:1.5.3")
             }
         }

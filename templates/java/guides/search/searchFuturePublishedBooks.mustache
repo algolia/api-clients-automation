@@ -1,0 +1,20 @@
+package com.algolia;
+
+{{> snippets/import}}
+
+public class searchFuturePublishedBooks {
+
+  public static void main(String[] args) throws Exception {
+
+    try ({{> snippets/init}}) {
+      long dateTimestamp = System.currentTimeMillis();
+      SearchParams searchParams = new SearchParamsObject()
+        .setQuery("<YOUR_SEARCH_QUERY>")
+        .setFilters("date_timestamp > " + dateTimestamp);
+
+      {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+    } catch (Exception e) {
+      System.out.println("An error occurred: " + e.getMessage());
+    }
+  }
+}

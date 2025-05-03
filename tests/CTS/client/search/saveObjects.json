@@ -88,7 +88,83 @@
             "php": "Invalid Application-ID or API key",
             "python": "Invalid Application-ID or API key",
             "ruby": "403: Invalid Application-ID or API key",
+            "scala": "Invalid Application-ID or API key",
             "swift": "HTTP error: Status code: 403 Message: Invalid Application-ID or API key"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "saveObjectsPlaylist",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "port": 6686
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "saveObjects",
+        "parameters": {
+          "indexName": "playlists",
+          "objects": [
+            {
+              "objectID": "1",
+              "visibility": "public",
+              "name": "Hot 100 Billboard Charts",
+              "playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
+              "createdAt": "1500240452"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "testName": "saveObjectsPublicUser",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "port": 6686
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "saveObjects",
+        "parameters": {
+          "indexName": "playlists",
+          "objects": [
+            {
+              "objectID": "1",
+              "visibility": "public",
+              "name": "Hot 100 Billboard Charts",
+              "playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
+              "createdAt": "1500240452"
+            }
+          ],
+          "waitForTasks": false,
+          "batchSize": 1000
+        },
+        "requestOptions": {
+          "headers": {
+            "X-Algolia-User-ID": "*"
           }
         }
       }

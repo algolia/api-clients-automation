@@ -46,7 +46,7 @@ final class SearchClient implements ApiClient {
     _retryStrategy.requester.setClientApiKey(apiKey);
   }
 
-  /// This method allow you to send requests to the Algolia REST API.
+  /// This method lets you send requests to the Algolia REST API.
   ///
   /// Parameters:
   /// * [path] Path of the endpoint, anything after \"/1\" must be specified.
@@ -111,7 +111,7 @@ final class SearchClient implements ApiClient {
     );
   }
 
-  /// Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.
+  /// Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
   ///
   /// Required API Key ACLs:
   ///   - search

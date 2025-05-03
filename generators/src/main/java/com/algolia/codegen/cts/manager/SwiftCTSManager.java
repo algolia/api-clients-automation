@@ -1,7 +1,10 @@
 package com.algolia.codegen.cts.manager;
 
+import com.algolia.codegen.AlgoliaSwiftGenerator;
+import com.algolia.codegen.cts.lambda.SwiftPrefixLambda;
 import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.Helpers;
+import com.samskivert.mustache.Mustache.Lambda;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -50,5 +53,11 @@ public class SwiftCTSManager implements CTSManager {
     } else if (output.equals("docs/guides")) {
       supportingFiles.add(new SupportingFile("guides/Package.mustache", output + "/swift", "Package.swift"));
     }
+  }
+
+  @Override
+  public void addMustacheLambdas(Map<String, Lambda> lambdas) {
+    lambdas.put("identifier", (fragment, writer) -> writer.write(AlgoliaSwiftGenerator.formatIdentifier(fragment.execute())));
+    lambdas.put("prefix", new SwiftPrefixLambda(client));
   }
 }

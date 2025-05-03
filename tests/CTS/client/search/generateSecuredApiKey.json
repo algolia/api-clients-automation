@@ -1,6 +1,6 @@
 [
   {
-    "testName": "generate secured api key basic",
+    "testName": "api key basic",
     "steps": [
       {
         "type": "method",
@@ -22,7 +22,7 @@
     ]
   },
   {
-    "testName": "generate secured api key with searchParams",
+    "testName": "with searchParams",
     "steps": [
       {
         "type": "method",
@@ -54,6 +54,81 @@
         "expected": {
           "type": "response",
           "match": "MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw"
+        }
+      }
+    ]
+  },
+  {
+    "testName": "with filters",
+    "steps": [
+      {
+        "type": "method",
+        "method": "generateSecuredApiKey",
+        "parameters": {
+          "parentApiKey": "2640659426d5107b6e47d75db9cbaef8",
+          "restrictions": {
+            "filters": "user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "with visible_by filter",
+    "steps": [
+      {
+        "type": "method",
+        "method": "generateSecuredApiKey",
+        "parameters": {
+          "parentApiKey": "2640659426d5107b6e47d75db9cbaef8",
+          "restrictions": {
+            "filters": "visible_by:group/Finance"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "with userID",
+    "steps": [
+      {
+        "type": "method",
+        "method": "generateSecuredApiKey",
+        "parameters": {
+          "parentApiKey": "2640659426d5107b6e47d75db9cbaef8",
+          "restrictions": {
+            "userToken": "user42"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "mcm with filters",
+    "steps": [
+      {
+        "type": "method",
+        "method": "generateSecuredApiKey",
+        "parameters": {
+          "parentApiKey": "YourSearchOnlyApiKey",
+          "restrictions": {
+            "filters": "user:user42 AND user:public"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "mcm with user token",
+    "steps": [
+      {
+        "type": "method",
+        "method": "generateSecuredApiKey",
+        "parameters": {
+          "parentApiKey": "YourSearchOnlyApiKey",
+          "restrictions": {
+            "userToken": "user42"
+          }
         }
       }
     ]

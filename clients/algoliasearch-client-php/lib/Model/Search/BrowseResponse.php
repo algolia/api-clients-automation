@@ -43,7 +43,7 @@ class BrowseResponse extends AbstractModel implements ModelInterface, \ArrayAcce
         'renderingContent' => '\Algolia\AlgoliaSearch\Model\Search\RenderingContent',
         'serverTimeMS' => 'int',
         'serverUsed' => 'string',
-        'userData' => 'object',
+        'userData' => 'mixed',
         'queryID' => 'string',
         'automaticInsights' => 'bool',
         'page' => 'int',
@@ -685,7 +685,7 @@ class BrowseResponse extends AbstractModel implements ModelInterface, \ArrayAcce
     /**
      * Gets facetsStats.
      *
-     * @return null|array<string,\Algolia\AlgoliaSearch\Model\Search\FacetStats>
+     * @return null|array<string,FacetStats>
      */
     public function getFacetsStats()
     {
@@ -695,7 +695,7 @@ class BrowseResponse extends AbstractModel implements ModelInterface, \ArrayAcce
     /**
      * Sets facetsStats.
      *
-     * @param null|array<string,\Algolia\AlgoliaSearch\Model\Search\FacetStats> $facetsStats statistics for numerical facets
+     * @param null|array<string,FacetStats> $facetsStats statistics for numerical facets
      *
      * @return self
      */
@@ -997,7 +997,7 @@ class BrowseResponse extends AbstractModel implements ModelInterface, \ArrayAcce
     /**
      * Gets userData.
      *
-     * @return null|object
+     * @return null|mixed
      */
     public function getUserData()
     {
@@ -1007,7 +1007,7 @@ class BrowseResponse extends AbstractModel implements ModelInterface, \ArrayAcce
     /**
      * Sets userData.
      *
-     * @param null|object $userData An object with custom data.  You can store up to 32kB as custom data.
+     * @param null|mixed $userData An object with custom data.  You can store up to 32kB as custom data.
      *
      * @return self
      */
@@ -1165,7 +1165,7 @@ class BrowseResponse extends AbstractModel implements ModelInterface, \ArrayAcce
     /**
      * Gets hits.
      *
-     * @return \Algolia\AlgoliaSearch\Model\Search\Hit[]
+     * @return Hit[]
      */
     public function getHits()
     {
@@ -1175,7 +1175,7 @@ class BrowseResponse extends AbstractModel implements ModelInterface, \ArrayAcce
     /**
      * Sets hits.
      *
-     * @param \Algolia\AlgoliaSearch\Model\Search\Hit[] $hits Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
+     * @param Hit[] $hits Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
      *
      * @return self
      */

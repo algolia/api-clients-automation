@@ -13,7 +13,7 @@ func SnippetForCustomDeleteOfMonitoring() {
 	   allow del method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customDelete default
+	// >SEPARATOR customDelete allow del method for a custom path with minimal parameters
 	// Initialize the client
 	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -23,8 +23,35 @@ func SnippetForCustomDeleteOfMonitoring() {
 
 	// Call the API
 	response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomDeleteOfMonitoring1() {
+	/*
+	   Snippet for the customDelete method.
+
+	   allow del method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customDelete allow del method for a custom path with all parameters
+	// Initialize the client
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters"}))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -42,7 +69,7 @@ func SnippetForCustomGetOfMonitoring() {
 	   allow get method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customGet default
+	// >SEPARATOR customGet allow get method for a custom path with minimal parameters
 	// Initialize the client
 	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -52,8 +79,64 @@ func SnippetForCustomGetOfMonitoring() {
 
 	// Call the API
 	response, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomGetOfMonitoring1() {
+	/*
+	   Snippet for the customGet method.
+
+	   allow get method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customGet allow get method for a custom path with all parameters
+	// Initialize the client
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomGet(client.NewApiCustomGetRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters with space"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomGetOfMonitoring2() {
+	/*
+	   Snippet for the customGet method.
+
+	   requestOptions should be escaped too
+	*/
+
+	// >SEPARATOR customGet requestOptions should be escaped too
+	// Initialize the client
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomGet(client.NewApiCustomGetRequest(
+		"test/all").WithParameters(map[string]any{"query": "to be overriden"}), monitoring.WithQueryParam("query", "parameters with space"), monitoring.WithQueryParam("and an array",
+		[]string{"array", "with spaces"}), monitoring.WithHeaderParam("x-header-1", "spaces are left alone"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -71,7 +154,7 @@ func SnippetForCustomPostOfMonitoring() {
 	   allow post method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customPost default
+	// >SEPARATOR customPost allow post method for a custom path with minimal parameters
 	// Initialize the client
 	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -81,8 +164,290 @@ func SnippetForCustomPostOfMonitoring() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfMonitoring1() {
+	/*
+	   Snippet for the customPost method.
+
+	   allow post method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customPost allow post method for a custom path with all parameters
+	// Initialize the client
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfMonitoring2() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions can override default query parameters
+	*/
+
+	// >SEPARATOR customPost requestOptions can override default query parameters
+	// Initialize the client
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("query", "myQueryParameter"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfMonitoring3() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions merges query parameters with default ones
+	*/
+
+	// >SEPARATOR customPost requestOptions merges query parameters with default ones
+	// Initialize the client
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("query2", "myQueryParameter"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfMonitoring4() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions can override default headers
+	*/
+
+	// >SEPARATOR customPost requestOptions can override default headers
+	// Initialize the client
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfMonitoring5() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions merges headers with default ones
+	*/
+
+	// >SEPARATOR customPost requestOptions merges headers with default ones
+	// Initialize the client
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfMonitoring6() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts booleans
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts booleans
+	// Initialize the client
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("isItWorking", true))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfMonitoring7() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts integers
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts integers
+	// Initialize the client
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("myParam", 2))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfMonitoring8() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts list of string
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts list of string
+	// Initialize the client
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("myParam",
+		[]string{"b and c", "d"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfMonitoring9() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts list of booleans
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+	// Initialize the client
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("myParam",
+		[]bool{true, true, false}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfMonitoring10() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts list of integers
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+	// Initialize the client
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("myParam",
+		[]int32{1, 2}))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -100,7 +465,7 @@ func SnippetForCustomPutOfMonitoring() {
 	   allow put method for a custom path with minimal parameters
 	*/
 
-	// >SEPARATOR customPut default
+	// >SEPARATOR customPut allow put method for a custom path with minimal parameters
 	// Initialize the client
 	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -110,8 +475,35 @@ func SnippetForCustomPutOfMonitoring() {
 
 	// Call the API
 	response, err := client.CustomPut(client.NewApiCustomPutRequest(
-		"test/minimal",
-	))
+		"test/minimal"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPutOfMonitoring1() {
+	/*
+	   Snippet for the customPut method.
+
+	   allow put method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customPut allow put method for a custom path with all parameters
+	// Initialize the client
+	client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPut(client.NewApiCustomPutRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -139,8 +531,7 @@ func SnippetForGetClusterIncidentsOfMonitoring() {
 
 	// Call the API
 	response, err := client.GetClusterIncidents(client.NewApiGetClusterIncidentsRequest(
-		"c1-de",
-	))
+		"c1-de"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -168,8 +559,7 @@ func SnippetForGetClusterStatusOfMonitoring() {
 
 	// Call the API
 	response, err := client.GetClusterStatus(client.NewApiGetClusterStatusRequest(
-		"c1-de",
-	))
+		"c1-de"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -224,8 +614,7 @@ func SnippetForGetIndexingTimeOfMonitoring() {
 
 	// Call the API
 	response, err := client.GetIndexingTime(client.NewApiGetIndexingTimeRequest(
-		"c1-de",
-	))
+		"c1-de"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -253,8 +642,7 @@ func SnippetForGetLatencyOfMonitoring() {
 
 	// Call the API
 	response, err := client.GetLatency(client.NewApiGetLatencyRequest(
-		"c1-de",
-	))
+		"c1-de"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -282,8 +670,7 @@ func SnippetForGetMetricsOfMonitoring() {
 
 	// Call the API
 	response, err := client.GetMetrics(client.NewApiGetMetricsRequest(
-		monitoring.Metric("avg_build_time"), monitoring.Period("minute"),
-	))
+		monitoring.Metric("avg_build_time"), monitoring.Period("minute")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -311,8 +698,7 @@ func SnippetForGetReachabilityOfMonitoring() {
 
 	// Call the API
 	response, err := client.GetReachability(client.NewApiGetReachabilityRequest(
-		"c1-de",
-	))
+		"c1-de"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -394,8 +780,7 @@ func SnippetForSetClientApiKeyOfMonitoring() {
 
 	// Call the API
 	err = client.SetClientApiKey(
-		"updated-api-key",
-	)
+		"updated-api-key")
 	if err != nil {
 		// handle the eventual error
 		panic(err)

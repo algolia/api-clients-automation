@@ -1,0 +1,51 @@
+openapi: 3.0.2
+info:
+  title: Realtime Personalization API
+  description: TODO
+  version: 0.0.1
+externalDocs:
+  # TODO: Update the URL
+  url: https://www.algolia.com/doc/guides/personalization/what-is-personalization/
+  description: |
+    Related guide: Algolia Realtime Personalization.
+components:
+  securitySchemes:
+    appId:
+      $ref: '../common/securitySchemes.yml#/appId'
+    apiKey:
+      $ref: '../common/securitySchemes.yml#/apiKey'
+servers:
+  - url: https://ai-personalization.{region}.algolia.com
+    variables:
+      region:
+        description: |
+          Use the URL that matches your [analytics region](https://dashboard.algolia.com/account/infrastructure/analytics).
+        enum: [eu, us]
+        default: eu
+security:
+  - appId: []
+    apiKey: []
+tags:
+  - name: users
+    x-displayName: Users
+    description: |
+      User profiles contains the search filters each user has for the different facets in your index.
+x-tagGroups:
+  - name: General
+    tags:
+      - filters
+paths:
+  # ######################
+  # ### Custom request ###
+  # ######################
+  /{path}:
+    $ref: '../common/paths/customRequest.yml'
+
+  # ###############
+  # ### Helpers ###
+  # ###############
+  /setClientApiKey:
+    $ref: '../common/helpers/setClientApiKey.yml#/method'
+
+  /2/realtime/users/{userToken}:
+    $ref: 'paths/getUser.yml'

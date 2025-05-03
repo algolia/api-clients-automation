@@ -106,7 +106,7 @@ info:
     `/1/` in each endpoint's URL.
   version: 1.0.0
 servers:
-  - url: https://{appId}.algolianet.com
+  - url: https://{appId}.algolia.net
     variables:
       appId:
         default: ALGOLIA_APPLICATION_ID
@@ -122,7 +122,7 @@ servers:
     variables:
       appId:
         default: ALGOLIA_APPLICATION_ID
-  - url: https://{appId}-dsn.algolianet.com
+  - url: https://{appId}-dsn.algolia.net
     variables:
       appId:
         default: ALGOLIA_APPLICATION_ID
@@ -151,7 +151,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -181,7 +181,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -211,7 +211,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -235,7 +235,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -561,7 +561,6 @@ paths:
               title: rules
               type: array
               description: Recommend rules.
-              additionalProperties: false
               items:
                 $ref: '#/components/schemas/RecommendRule'
       responses:
@@ -1371,7 +1370,6 @@ components:
         query:
           $ref: '#/components/schemas/query'
     userData:
-      type: object
       example:
         settingID: f2a7b51e3503acc6a39b3784ffb84300
         pluginVersion: 1.6.0
@@ -2330,6 +2328,13 @@ components:
       example:
         - blue
         - iphone case
+      description: >-
+        List of [optional
+        words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
+      default: []
+      x-categories:
+        - Query strategy
+    optionalWords:
       description: >
         Words that should be considered optional when found in the query.
 
@@ -2367,10 +2372,6 @@ components:
 
         For more information, see [Optional
         words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
-      default: []
-      x-categories:
-        - Query strategy
-    optionalWords:
       oneOf:
         - type: string
         - type: 'null'
@@ -2592,25 +2593,34 @@ components:
       items:
         type: string
       description: >
-        Properties to include in the API response of `search` and `browse`
-        requests.
+        Properties to include in the API response of search and browse requests.
 
 
         By default, all response properties are included.
 
-        To reduce the response size, you can select, which attributes should be
+        To reduce the response size, you can select which properties should be
         included.
+
+
+        An empty list may lead to an empty API response (except properties you
+        can't exclude).
 
 
         You can't exclude these properties:
 
-        `message`, `warning`, `cursor`, `serverUsed`, `indexUsed`,
+        `message`, `warning`, `cursor`, `abTestVariantID`,
 
-        `abTestVariantID`, `parsedQuery`, or any property triggered by the
-        `getRankingInfo` parameter.
+        or any property added by setting `getRankingInfo` to true.
 
 
-        Don't exclude properties that you might need in your search UI.
+        Your search depends on the `hits` field. If you omit this field,
+        searches won't return any results.
+
+        Your UI might also depend on other properties, for example, for
+        pagination.
+
+        Before restricting the response size, check the impact on your search
+        experience.
       default:
         - '*'
       x-categories:
@@ -2938,7 +2948,7 @@ components:
         maxRecommendations:
           type: integer
           minimum: 1
-          maximum: 1000
+          maximum: 30
           default: 30
           description: >
             Maximum number of recommendations to retrieve.
@@ -3077,6 +3087,7 @@ components:
       type: object
       properties:
         facetName:
+          type: string
           description: Facet attribute for which to retrieve trending facet values.
         model:
           $ref: '#/components/schemas/trendingFacetsModel'

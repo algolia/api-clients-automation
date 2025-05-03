@@ -105,6 +105,32 @@ simple:
       `,
         errors: [{ messageId: 'oneOfNotOutOfLine' }],
       },
+      {
+        code: `
+simple:
+  type: object
+  properties:
+    name:
+      oneOf:
+        - type: string
+          description: bla bla bla
+        - type: 'null'
+          description: bla bla bla
+      `,
+        errors: [{ messageId: 'nullDescription' }],
+      },
+      {
+        code: `
+root:
+  oneOf:
+    oneOf:
+      - type: string
+        description: bla bla bla
+      - type: 'null'
+        description: bla bla bla
+      `,
+        errors: [{ messageId: 'nullDescription' }],
+      },
     ],
   },
   {

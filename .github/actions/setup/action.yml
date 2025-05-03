@@ -19,7 +19,7 @@ runs:
     # Java for code generation
     - name: Install Java
       if: inputs.type != 'minimal'
-      uses: actions/setup-java@v4.6.0
+      uses: actions/setup-java@v4.7.1
       with:
         distribution: zulu
         java-version-file: config/.java-version
@@ -34,7 +34,7 @@ runs:
     - name: Download Java formatter
       if: inputs.type != 'minimal'
       shell: bash
-      run: curl --retry 3 -L "https://github.com/google/google-java-format/releases/download/v1.25.2/google-java-format-1.25.2-all-deps.jar" > /tmp/java-formatter.jar
+      run: curl --retry 3 -L "https://github.com/google/google-java-format/releases/download/v1.26.0/google-java-format-1.26.0-all-deps.jar" > /tmp/java-formatter.jar
 
     # JavaScript for monorepo and tooling
     - name: Install Node
@@ -46,6 +46,48 @@ runs:
     - name: Install JavaScript dependencies
       shell: bash
       run: YARN_ENABLE_HARDENED_MODE=0 YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
+
+    # Csharp
+    - name: Install dotnet
+      if: ${{ inputs.language == 'csharp' }}
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ inputs.version }}
+
+    # Dart
+    - name: Install dart
+      if: ${{ inputs.language == 'dart' }}
+      uses: dart-lang/setup-dart@v1
+      with:
+        sdk: ${{ inputs.version }}
+
+    - name: Setup dart tools
+      if: ${{ inputs.language == 'dart' }}
+      shell: bash
+      run: dart pub global activate melos
+
+    # Golang
+    - name: Install golang
+      if: ${{ inputs.language == 'go' }}
+      uses: actions/setup-go@v5
+      with:
+        cache-dependency-path: clients/algoliasearch-client-go/go.sum
+        go-version: ${{ inputs.version }}
+
+    - name: Install golangci-lint
+      if: ${{ inputs.language == 'go' }}
+      shell: bash
+      run: |
+        curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.60.3
+        echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+        go install golang.org/x/tools/cmd/goimports@v0.22.0
+
+    - name: Cache golangci-lint analysis
+      if: ${{ inputs.language == 'go' }}
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/golangci-lint
+        key: golangci-lint-${{ inputs.version }}-${{ hashFiles('clients/algoliasearch-client-go/go.sum') }}
 
     # JavaScript client deps
     - name: Get yarn js-client cache directory path
@@ -73,6 +115,14 @@ runs:
       shell: bash
       run: cd clients/algoliasearch-client-javascript && YARN_ENABLE_HARDENED_MODE=0 YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
 
+    # Kotlin
+    - name: Cache spotless
+      if: ${{ inputs.language == 'kotlin' }}
+      uses: actions/cache@v4
+      with:
+        path: clients/algoliasearch-client-kotlin/client/build/spotless
+        key: spotless-${{ hashFiles('clients/algoliasearch-client-kotlin/build.gradle.kts') }}
+
     # PHP
     - name: Install PHP
       if: ${{ inputs.language == 'php' }}
@@ -87,49 +137,6 @@ runs:
       run: |
         composer install --working-dir=clients/algoliasearch-client-php
         composer dump-autoload --working-dir=clients/algoliasearch-client-php
-
-    # Golang
-    - name: Install golang
-      if: ${{ inputs.language == 'go' }}
-      uses: actions/setup-go@v5
-      with:
-        cache-dependency-path: clients/algoliasearch-client-go/go.sum
-        go-version: ${{ inputs.version }}
-
-    - name: Install golangci-lint
-      if: ${{ inputs.language == 'go' }}
-      shell: bash
-      run: |
-        curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.60.3
-        echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
-        go install golang.org/x/tools/cmd/goimports@v0.22.0
-
-    - name: Cache golangci-lint analysis
-      if: ${{ inputs.language == 'go' }}
-      uses: actions/cache@v4
-      with:
-        path: ~/.cache/golangci-lint
-        key: golangci-lint-${{ inputs.version }}-${{ hashFiles('clients/algoliasearch-client-go/go.sum') }}
-
-    # Kotlin
-    - name: Cache spotless
-      if: ${{ inputs.language == 'kotlin' }}
-      uses: actions/cache@v4
-      with:
-        path: clients/algoliasearch-client-kotlin/client/build/spotless
-        key: spotless-${{ hashFiles('clients/algoliasearch-client-kotlin/build.gradle.kts') }}
-
-    # Dart
-    - name: Install dart
-      if: ${{ inputs.language == 'dart' }}
-      uses: dart-lang/setup-dart@v1
-      with:
-        sdk: ${{ inputs.version }}
-
-    - name: Setup dart tools
-      if: ${{ inputs.language == 'dart' }}
-      shell: bash
-      run: dart pub global activate melos
 
     # Python
     - name: Install poetry
@@ -165,12 +172,10 @@ runs:
         mv tmp/releases/v0.10.0-Linux/rubyfmt /usr/local/bin
         rm -rf rubyfmt.tar.gz tmp
 
-    # Csharp
-    - name: Install dotnet
-      if: ${{ inputs.language == 'csharp' }}
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: ${{ inputs.version }}
+    # Scala
+    - name: Install sbt
+      if: ${{ inputs.language == 'scala' }}
+      uses: sbt/setup-sbt@v1
 
     # Swift deps
     - name: Install swift
@@ -197,7 +202,7 @@ runs:
       if: ${{ inputs.language == 'swift' }}
       id: swiftformat-version
       shell: bash
-      run: echo "SWIFTFORMAT_VERSION=0.54.5" >> $GITHUB_OUTPUT
+      run: echo "SWIFTFORMAT_VERSION=0.55.5" >> $GITHUB_OUTPUT
 
     - name: Checkout swiftformat
       if: ${{ inputs.language == 'swift' }}

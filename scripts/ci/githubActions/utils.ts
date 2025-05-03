@@ -62,7 +62,7 @@ export const DEPENDENCIES = {
   WEBSITE_CHANGED: ['website', 'scripts/website', 'package.json', 'netlify.toml'],
 };
 
-function getVersionFileForLanguage(lang: Language): string {
+export function getVersionFileForLanguage(lang: Language): string {
   // js rely on the nvmrc of the repo
   if (lang === 'javascript') {
     return '.nvmrc';

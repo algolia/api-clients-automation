@@ -35,8 +35,7 @@ func TestIngestionE2E_EnableTask(t *testing.T) {
 	t.Run("enableTask", func(t *testing.T) {
 		client := createE2EIngestionClient(t)
 		res, err := client.EnableTask(client.NewApiEnableTaskRequest(
-			"76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-		))
+			"76ab4c2a-ce17-496f-b7a6-506dc59ee498"))
 		require.NoError(t, err)
 		_ = res
 
@@ -64,8 +63,7 @@ func TestIngestionE2E_EnableTaskV1(t *testing.T) {
 	t.Run("enableTaskV1", func(t *testing.T) {
 		client := createE2EIngestionClient(t)
 		res, err := client.EnableTaskV1(client.NewApiEnableTaskV1Request(
-			"76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-		))
+			"76ab4c2a-ce17-496f-b7a6-506dc59ee498"))
 		require.NoError(t, err)
 		_ = res
 
@@ -93,8 +91,7 @@ func TestIngestionE2E_GetSource(t *testing.T) {
 	t.Run("getSource", func(t *testing.T) {
 		client := createE2EIngestionClient(t)
 		res, err := client.GetSource(client.NewApiGetSourceRequest(
-			"75eeb306-51d3-4e5e-a279-3c92bd8893ac",
-		))
+			"75eeb306-51d3-4e5e-a279-3c92bd8893ac"))
 		require.NoError(t, err)
 		_ = res
 
@@ -153,8 +150,7 @@ func TestIngestionE2E_SearchTasks(t *testing.T) {
 		res, err := client.SearchTasks(client.NewApiSearchTasksRequest(
 
 			ingestion.NewEmptyTaskSearch().SetTaskIDs(
-				[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"}),
-		))
+				[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"})))
 		require.NoError(t, err)
 		_ = res
 
@@ -184,8 +180,7 @@ func TestIngestionE2E_SearchTasksV1(t *testing.T) {
 		res, err := client.SearchTasksV1(client.NewApiSearchTasksV1Request(
 
 			ingestion.NewEmptyTaskSearch().SetTaskIDs(
-				[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"}),
-		))
+				[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"})))
 		require.NoError(t, err)
 		_ = res
 

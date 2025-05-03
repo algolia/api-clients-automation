@@ -93,7 +93,13 @@ describe('createSource', () => {
     const req = (await client.createSource({
       type: 'commercetools',
       name: 'sourceName',
-      input: { storeKeys: ['myStore'], locales: ['de'], url: 'http://commercetools.com', projectKey: 'keyID' },
+      input: {
+        storeKeys: ['myStore'],
+        locales: ['de'],
+        url: 'http://commercetools.com',
+        projectKey: 'keyID',
+        productQueryPredicate: 'masterVariant(attributes(name="Brand" and value="Algolia"))',
+      },
       authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     })) as unknown as EchoResponse;
 
@@ -102,7 +108,13 @@ describe('createSource', () => {
     expect(req.data).toEqual({
       type: 'commercetools',
       name: 'sourceName',
-      input: { storeKeys: ['myStore'], locales: ['de'], url: 'http://commercetools.com', projectKey: 'keyID' },
+      input: {
+        storeKeys: ['myStore'],
+        locales: ['de'],
+        url: 'http://commercetools.com',
+        projectKey: 'keyID',
+        productQueryPredicate: 'masterVariant(attributes(name="Brand" and value="Algolia"))',
+      },
       authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     });
     expect(req.searchParams).toStrictEqual(undefined);

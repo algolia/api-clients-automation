@@ -1,0 +1,15 @@
+{{> snippets/import}}
+import com.algolia.client.model.search.*
+
+suspend fun searchInReplicaIndex() {
+  {{> snippets/init}}
+
+  // 1. Change the sort dynamically based on the UI events
+  val sortByPrice = false
+
+  // 2. Get the index name based on sortByPrice
+  val indexName = if (sortByPrice) "products_price_desc" else "products"
+
+  // 3. Search on dynamic index name (primary or replica)
+  client.{{#dynamicSnippet}}searchWithIndexNameVar{{/dynamicSnippet}}
+}

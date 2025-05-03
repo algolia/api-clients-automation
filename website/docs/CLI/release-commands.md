@@ -22,12 +22,12 @@ apic release <language... | all>
 
 ### Available options
 
-| Option         | Command               | Description                                                                                      |
-| -------------- | :-------------------- | :----------------------------------------------------------------------------------------------- |
-| verbose        | -v, --verbose         | Make the process verbose, display logs from third party tools                                    |
-| dry run        | -d, --dry-run         | Locally generate a new release but do not push to GitHub                                         |
-| generate graph | -gg, --generate-graph | Generates the SLA graph for the given parameters                                                 |
-| releaseType    | -rt, --releaseType    | Forces the release script to create a release for the given client list of the given releaseType |
+| Option          | Command                  | Description                                                                                      |
+| --------------- | :----------------------- | :----------------------------------------------------------------------------------------------- |
+| verbose         | -v, --verbose            | Make the process verbose, display logs from third party tools                                    |
+| dry run         | -d, --dry-run            | Locally generate a new release but do not push to GitHub                                         |
+| version history | --vh, --versions-history | Generates versions-history policy for SLA                                                        |
+| releaseType     | --rt, --release-type     | Forces the release script to create a release for the given client list of the given releaseType |
 
 ## Release
 

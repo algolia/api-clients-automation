@@ -1,0 +1,19 @@
+import Foundation
+#if os(Linux) // For linux interop
+  import FoundationNetworking
+#endif
+
+import Core
+{{> snippets/import}}
+
+func searchFuturePublishedBooks() async throws {
+  {{> snippets/init}}
+
+  let dateTimestamp = Int(Date().timeIntervalSince1970)
+  let searchParams = SearchSearchParams.searchSearchParamsObject(
+    SearchSearchParamsObject(query: "<YOUR_SEARCH_QUERY>", filters: "date_timestamp > \(dateTimestamp)")
+  )
+
+  let response: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+  print(response)
+}

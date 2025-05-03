@@ -8,6 +8,8 @@ Source:
       $ref: '#/SourceType'
     name:
       type: string
+    owner:
+      $ref: './common.yml#/owner'
     input:
       $ref: '#/SourceInput'
     authenticationID:
@@ -21,6 +23,7 @@ Source:
     - type
     - name
     - createdAt
+    - updatedAt
 
 SourceCreate:
   type: object
@@ -133,6 +136,10 @@ SourceCommercetools:
       default: true
       description: |
         Whether a fallback value is stored in the Algolia record if there's no inventory information about the product.
+    productQueryPredicate:
+      type: string
+      description: |
+        Predicate to filter out specific products when indexing. For more information, see [Query Predicate](https://docs.commercetools.com/api/predicates/query).
     customFields:
       $ref: '#/CommercetoolsCustomFields'
   required:
@@ -345,7 +352,7 @@ SourceDocker:
   properties:
     image:
       type: string
-      description: Shortname of the image, as returned by the referential.
+      description: Name of the connector.
       example: zendesk
     configuration:
       type: object
@@ -403,6 +410,10 @@ SourceUpdateCommercetools:
       type: boolean
       description: |
         Whether a fallback value is stored in the Algolia record if there's no inventory information about the product.
+    productQueryPredicate:
+      type: string
+      description: |
+        Predicate to filter out specific products when indexing. For more information, see [Query Predicate](https://docs.commercetools.com/api/predicates/query).
     customFields:
       $ref: '#/CommercetoolsCustomFields'
 

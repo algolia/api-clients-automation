@@ -2,6 +2,7 @@ get:
   tags:
     - Clusters
   operationId: hasPendingMappings
+  deprecated: true
   x-acl:
     - admin
   summary: Get migration and user mapping status

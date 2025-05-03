@@ -55,7 +55,7 @@ class {{client}}RequestsTests {
         assertEquals("{{{path}}}", req.path);
         assertEquals("{{{method}}}", req.method);
         {{#body}}
-        assertDoesNotThrow(() -> JSONAssert.assertEquals("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}", req.body, JSONCompareMode.STRICT));
+        assertDoesNotThrow(() -> JSONAssert.assertEquals("{{#lambda.escapeJSON}}{{{body}}}{{/lambda.escapeJSON}}", req.body, JSONCompareMode.STRICT));
         {{/body}}
         {{^body}}
         {{#assertNullBody}}

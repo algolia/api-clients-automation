@@ -51,10 +51,15 @@ public abstract class TestsGenerator {
 
     Map<String, T> cts = new TreeMap<>();
 
-    for (File f : allTests) {
+    skipFile: for (File f : allTests) {
       String json = new String(Files.readAllBytes(Paths.get(f.getAbsolutePath())));
       json = injectVariables(json);
-      cts.put(f.getName().replace(".json", ""), Json.mapper().readValue(json, jsonType));
+      String key = f.getName().replace(".json", "");
+      // some clients don't have custom methods
+      if (clientName.equals("composition") && (key.equals("commonApi") || key.equals("setClientApiKey"))) {
+        continue skipFile;
+      }
+      cts.put(key, Json.mapper().readValue(json, jsonType));
     }
     return cts;
   }
@@ -103,8 +108,8 @@ public abstract class TestsGenerator {
 
   protected void addRequestOptions(ParametersWithDataType paramsType, RequestOptions req, Map<String, Object> output)
     throws JsonMappingException, JsonProcessingException {
+    output.put("hasRequestOptions", req != null);
     if (req != null) {
-      output.put("hasRequestOptions", true);
       Map<String, Object> requestOptions = new HashMap<>();
       if (req.queryParameters != null) {
         Map<String, Object> queryParameters = new HashMap<>();

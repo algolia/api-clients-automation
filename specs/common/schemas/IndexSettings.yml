@@ -671,16 +671,20 @@ indexSettingsAsSearchParams:
       items:
         type: string
       description: |
-        Properties to include in the API response of `search` and `browse` requests.
+        Properties to include in the API response of search and browse requests.
 
         By default, all response properties are included.
-        To reduce the response size, you can select, which attributes should be included.
+        To reduce the response size, you can select which properties should be included.
+
+        An empty list may lead to an empty API response (except properties you can't exclude).
 
         You can't exclude these properties:
-        `message`, `warning`, `cursor`, `serverUsed`, `indexUsed`,
-        `abTestVariantID`, `parsedQuery`, or any property triggered by the `getRankingInfo` parameter.
+        `message`, `warning`, `cursor`, `abTestVariantID`,
+        or any property added by setting `getRankingInfo` to true.
 
-        Don't exclude properties that you might need in your search UI.
+        Your search depends on the `hits` field. If you omit this field, searches won't return any results.
+        Your UI might also depend on other properties, for example, for pagination.
+        Before restricting the response size, check the impact on your search experience.
       default: ['*']
       x-categories:
         - Advanced
@@ -764,7 +768,6 @@ hitsPerPage:
     - Pagination
 
 userData:
-  type: object
   example:
     settingID: f2a7b51e3503acc6a39b3784ffb84300
     pluginVersion: 1.6.0
@@ -1214,18 +1217,6 @@ booleanString:
     - 'false'
 
 optionalWords:
-  oneOf:
-    - type: string
-    - type: 'null'
-    - $ref: '#/optionalWordsArray'
-
-optionalWordsArray:
-  type: array
-  items:
-    type: string
-  example:
-    - blue
-    - iphone case
   description: |
     Words that should be considered optional when found in the query.
 
@@ -1244,6 +1235,19 @@ optionalWordsArray:
       For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.
 
     For more information, see [Optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
+  oneOf:
+    - type: string
+    - type: 'null'
+    - $ref: '#/optionalWordsArray'
+
+optionalWordsArray:
+  type: array
+  items:
+    type: string
+  example:
+    - blue
+    - iphone case
+  description: List of [optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
   default: []
   x-categories:
     - Query strategy

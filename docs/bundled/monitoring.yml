@@ -86,7 +86,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -134,9 +134,7 @@ paths:
             // Call the API
 
             response, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -284,16 +282,14 @@ paths:
 
             // Call the API
 
-            val response = client.customGet[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customGet[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -317,7 +313,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -365,9 +361,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -515,16 +509,14 @@ paths:
 
             // Call the API
 
-            val response = client.customPost[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPost[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -548,7 +540,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -596,9 +588,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -746,16 +736,14 @@ paths:
 
             // Call the API
 
-            val response = client.customPut[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPut[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -773,7 +761,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -822,9 +810,7 @@ paths:
 
             response, err :=
             client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -973,16 +959,14 @@ paths:
 
             // Call the API
 
-            val response = client.customDelete[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customDelete[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1181,16 +1165,13 @@ paths:
 
             // Call the API
 
-            val response = client.getStatus(
-
+            val response = Await.result(
+              client.getStatus(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1258,9 +1239,7 @@ paths:
 
             response, err :=
             client.GetClusterStatus(client.NewApiGetClusterStatusRequest(
-              "c1-de",
-            ))
-
+              "c1-de"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1409,16 +1388,14 @@ paths:
 
             // Call the API
 
-            val response = client.getClusterStatus(
-              clusters = "c1-de"
+            val response = Await.result(
+              client.getClusterStatus(
+                clusters = "c1-de"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1433,6 +1410,12 @@ paths:
             let response = try await client.getClusterStatus(clusters: "c1-de")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://status.algolia.com/1/status/c1-de%2Cc2-de%2Cc3-de \
+              --header 'accept: application/json'
   /1/incidents:
     get:
       summary: Retrieve all incidents
@@ -1617,16 +1600,13 @@ paths:
 
             // Call the API
 
-            val response = client.getIncidents(
-
+            val response = Await.result(
+              client.getIncidents(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1694,9 +1674,7 @@ paths:
 
             response, err :=
             client.GetClusterIncidents(client.NewApiGetClusterIncidentsRequest(
-              "c1-de",
-            ))
-
+              "c1-de"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1845,16 +1823,14 @@ paths:
 
             // Call the API
 
-            val response = client.getClusterIncidents(
-              clusters = "c1-de"
+            val response = Await.result(
+              client.getClusterIncidents(
+                clusters = "c1-de"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1870,6 +1846,12 @@ paths:
             "c1-de")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://status.algolia.com/1/incidents/c1-de%2Cc2-de%2Cc3-de \
+              --header 'accept: application/json'
   /1/inventory/servers:
     get:
       summary: Retrieve servers
@@ -2065,16 +2047,13 @@ paths:
 
             // Call the API
 
-            val response = client.getServers(
-
+            val response = Await.result(
+              client.getServers(
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2140,9 +2119,7 @@ paths:
             // Call the API
 
             response, err := client.GetLatency(client.NewApiGetLatencyRequest(
-              "c1-de",
-            ))
-
+              "c1-de"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2290,16 +2267,14 @@ paths:
 
             // Call the API
 
-            val response = client.getLatency(
-              clusters = "c1-de"
+            val response = Await.result(
+              client.getLatency(
+                clusters = "c1-de"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2314,6 +2289,12 @@ paths:
             let response = try await client.getLatency(clusters: "c1-de")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://status.algolia.com/1/latency/c1-de%2Cc2-de%2Cc3-de \
+              --header 'accept: application/json'
   /1/indexing/{clusters}:
     get:
       summary: Retrieve indexing times
@@ -2359,9 +2340,7 @@ paths:
 
             response, err :=
             client.GetIndexingTime(client.NewApiGetIndexingTimeRequest(
-              "c1-de",
-            ))
-
+              "c1-de"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2510,16 +2489,14 @@ paths:
 
             // Call the API
 
-            val response = client.getIndexingTime(
-              clusters = "c1-de"
+            val response = Await.result(
+              client.getIndexingTime(
+                clusters = "c1-de"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2534,6 +2511,12 @@ paths:
             let response = try await client.getIndexingTime(clusters: "c1-de")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://status.algolia.com/1/indexing/c1-de%2Cc2-de%2Cc3-de \
+              --header 'accept: application/json'
   /1/reachability/{clusters}/probes:
     get:
       summary: Test the reachability of clusters
@@ -2579,9 +2562,7 @@ paths:
 
             response, err :=
             client.GetReachability(client.NewApiGetReachabilityRequest(
-              "c1-de",
-            ))
-
+              "c1-de"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2730,16 +2711,14 @@ paths:
 
             // Call the API
 
-            val response = client.getReachability(
-              clusters = "c1-de"
+            val response = Await.result(
+              client.getReachability(
+                clusters = "c1-de"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2754,6 +2733,12 @@ paths:
             let response = try await client.getReachability(clusters: "c1-de")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://status.algolia.com/1/reachability/c1-de%2Cc2-de%2Cc3-de/probes \
+              --header 'accept: application/json'
   /1/infrastructure/{metric}/period/{period}:
     get:
       summary: Retrieve metrics
@@ -2810,9 +2795,7 @@ paths:
             // Call the API
 
             response, err := client.GetMetrics(client.NewApiGetMetricsRequest(
-              monitoring.Metric("avg_build_time"), monitoring.Period("minute"),
-            ))
-
+              monitoring.Metric("avg_build_time"), monitoring.Period("minute")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2964,17 +2947,15 @@ paths:
 
             // Call the API
 
-            val response = client.getMetrics(
-              metric = Metric.withName("avg_build_time"),
-              period = Period.withName("minute")
+            val response = Await.result(
+              client.getMetrics(
+                metric = Metric.withName("avg_build_time"),
+                period = Period.withName("minute")
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2990,6 +2971,12 @@ paths:
             Metric.avgBuildTime, period: Period.minute)
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://status.algolia.com/1/infrastructure/%2A/period/week \
+              --header 'accept: application/json'
 components:
   securitySchemes:
     appId:
@@ -3134,6 +3121,7 @@ components:
         - cluster
     Server:
       title: server
+      type: object
       additionalProperties: false
       properties:
         name:

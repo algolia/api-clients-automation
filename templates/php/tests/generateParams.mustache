@@ -3,10 +3,10 @@
   null,
 {{/isNull}}
 {{#isVerbatim}}
-  {{{value}}}
+  ${{{value}}},
 {{/isVerbatim}}
 {{#isString}}
-  "{{#lambda.escapeSlash}}{{{value}}}{{/lambda.escapeSlash}}",
+  "{{#lambda.escapeJSON}}{{{value}}}{{/lambda.escapeJSON}}",
 {{/isString}}
 {{#isEnum}}
   "{{{value}}}",

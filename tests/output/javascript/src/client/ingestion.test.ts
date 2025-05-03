@@ -36,7 +36,7 @@ describe('api', () => {
     } catch (e) {
       expect((e as Error).message).toMatch('Too Many Requests');
     }
-  }, 15000);
+  }, 25000);
 
   test('calls api with default read timeouts', async () => {
     const client = createClient();
@@ -44,7 +44,7 @@ describe('api', () => {
     const result = (await client.customGet({ path: '1/test' })) as unknown as EchoResponse;
 
     expect(result).toEqual(expect.objectContaining({ connectTimeout: 25000, responseTimeout: 25000 }));
-  }, 15000);
+  }, 25000);
 
   test('calls api with default write timeouts', async () => {
     const client = createClient();
@@ -52,7 +52,27 @@ describe('api', () => {
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
     expect(result).toEqual(expect.objectContaining({ connectTimeout: 25000, responseTimeout: 25000 }));
-  }, 15000);
+  }, 25000);
+
+  test('can leave call opened for a long time', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key').initIngestion({
+      options: {
+        hosts: [
+          {
+            url: 'localhost',
+            port: 6676,
+            accept: 'readWrite',
+            protocol: 'http',
+          },
+        ],
+      },
+      // @ts-ignore
+      region: 'us',
+    });
+    const result = await client.customGet({ path: '1/long-wait' });
+
+    expect(result).toEqual({ message: 'OK' });
+  }, 25000);
 
   test('endpoint level timeout', async () => {
     const client = createClient();
@@ -63,7 +83,7 @@ describe('api', () => {
     })) as unknown as EchoResponse;
 
     expect(result).toEqual(expect.objectContaining({ connectTimeout: 180000, responseTimeout: 180000 }));
-  }, 15000);
+  }, 25000);
 
   test('can override endpoint level timeout', async () => {
     const client = createClient();
@@ -76,7 +96,7 @@ describe('api', () => {
     )) as unknown as EchoResponse;
 
     expect(result).toEqual(expect.objectContaining({ connectTimeout: 180000, responseTimeout: 3456 }));
-  }, 15000);
+  }, 25000);
 });
 
 describe('commonApi', () => {
@@ -88,15 +108,15 @@ describe('commonApi', () => {
     expect(decodeURIComponent(result.algoliaAgent)).toMatch(
       /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Ingestion (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/,
     );
-  }, 15000);
+  }, 25000);
 
   test('the user agent contains the latest version', async () => {
     const client = createClient();
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.19.0\).*/);
-  }, 15000);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.24.0\).*/);
+  }, 25000);
 });
 
 describe('parameters', () => {
@@ -113,7 +133,7 @@ describe('parameters', () => {
     })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('data.us.algolia.com');
-  }, 15000);
+  }, 25000);
 
   test('throws when incorrect region is given', async () => {
     try {
@@ -129,7 +149,7 @@ describe('parameters', () => {
     } catch (e) {
       expect((e as Error).message).toMatch('`region` is required and must be one of the following: eu, us');
     }
-  }, 15000);
+  }, 25000);
 });
 
 describe('setClientApiKey', () => {
@@ -161,7 +181,7 @@ describe('setClientApiKey', () => {
 
       expect(result).toEqual({ headerAPIKeyValue: 'updated-api-key' });
     }
-  }, 15000);
+  }, 25000);
 });
 
 describe('init', () => {

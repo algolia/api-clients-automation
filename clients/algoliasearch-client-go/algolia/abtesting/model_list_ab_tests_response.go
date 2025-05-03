@@ -8,7 +8,7 @@ import (
 
 // ListABTestsResponse struct for ListABTestsResponse.
 type ListABTestsResponse struct {
-	// A/B tests.
+	// The list of A/B tests, null if no A/B tests are configured for this application.
 	Abtests []ABTest `json:"abtests"`
 	// Number of A/B tests.
 	Count int32 `json:"count"`
@@ -115,12 +115,8 @@ func (o ListABTestsResponse) MarshalJSON() ([]byte, error) {
 	if o.Abtests != nil {
 		toSerialize["abtests"] = o.Abtests
 	}
-	if true {
-		toSerialize["count"] = o.Count
-	}
-	if true {
-		toSerialize["total"] = o.Total
-	}
+	toSerialize["count"] = o.Count
+	toSerialize["total"] = o.Total
 	serialized, err := json.Marshal(toSerialize)
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal ListABTestsResponse: %w", err)

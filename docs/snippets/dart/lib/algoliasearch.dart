@@ -7,7 +7,7 @@ import 'package:algoliasearch/algoliasearch_lite.dart';
 //
 // allow post method for a custom path with minimal parameters
 void snippetForcustomPost() async {
-  // >SEPARATOR customPost default
+  // >SEPARATOR customPost allow post method for a custom path with minimal parameters
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -20,11 +20,296 @@ void snippetForcustomPost() async {
   // SEPARATOR<
 }
 
+// Snippet for the customPost method.
+//
+// allow post method for a custom path with all parameters
+void snippetForcustomPost1() async {
+  // >SEPARATOR customPost allow post method for a custom path with all parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/all",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'body': "parameters",
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions can override default query parameters
+void snippetForcustomPost2() async {
+  // >SEPARATOR customPost requestOptions can override default query parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'query': "myQueryParameter",
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions merges query parameters with default ones
+void snippetForcustomPost3() async {
+  // >SEPARATOR customPost requestOptions merges query parameters with default ones
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'query2': "myQueryParameter",
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions can override default headers
+void snippetForcustomPost4() async {
+  // >SEPARATOR customPost requestOptions can override default headers
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      headers: {
+        'x-algolia-api-key': 'ALGOLIA_API_KEY',
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions merges headers with default ones
+void snippetForcustomPost5() async {
+  // >SEPARATOR customPost requestOptions merges headers with default ones
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      headers: {
+        'x-algolia-api-key': 'ALGOLIA_API_KEY',
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts booleans
+void snippetForcustomPost6() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts booleans
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'isItWorking': true,
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts integers
+void snippetForcustomPost7() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts integers
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'myParam': 2,
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of string
+void snippetForcustomPost8() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of string
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'myParam': [
+          "b and c",
+          "d",
+        ],
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of booleans
+void snippetForcustomPost9() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'myParam': [
+          true,
+          true,
+          false,
+        ],
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of integers
+void snippetForcustomPost10() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'myParam': [
+          1,
+          2,
+        ],
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the getRecommendations method.
 //
 // get recommendations for recommend model with minimal parameters
 void snippetForgetRecommendations() async {
-  // >SEPARATOR getRecommendations default
+  // >SEPARATOR getRecommendations get recommendations for recommend model with minimal parameters
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -38,6 +323,255 @@ void snippetForgetRecommendations() async {
           objectID: "objectID",
           model: RelatedModel.fromJson("related-products"),
           threshold: 42.1,
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendations method.
+//
+// get recommendations with e2e to check oneOf model
+void snippetForgetRecommendations1() async {
+  // >SEPARATOR getRecommendations get recommendations with e2e to check oneOf model
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getRecommendations(
+    getRecommendationsParams: GetRecommendationsParams(
+      requests: [
+        RelatedQuery(
+          indexName: "<YOUR_INDEX_NAME>",
+          objectID: "Æon Flux",
+          model: RelatedModel.fromJson("related-products"),
+          threshold: 20.0,
+          maxRecommendations: 2,
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendations method.
+//
+// get recommendations for recommend model with all parameters
+void snippetForgetRecommendations2() async {
+  // >SEPARATOR getRecommendations get recommendations for recommend model with all parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getRecommendations(
+    getRecommendationsParams: GetRecommendationsParams(
+      requests: [
+        RelatedQuery(
+          indexName: "<YOUR_INDEX_NAME>",
+          objectID: "objectID",
+          model: RelatedModel.fromJson("related-products"),
+          threshold: 42.1,
+          maxRecommendations: 10,
+          queryParameters: RecommendSearchParams(
+            query: "myQuery",
+            facetFilters: [
+              "query",
+            ],
+          ),
+          fallbackParameters: FallbackParams(
+            query: "myQuery",
+            facetFilters: [
+              "fallback",
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendations method.
+//
+// get recommendations for trending model with minimal parameters
+void snippetForgetRecommendations3() async {
+  // >SEPARATOR getRecommendations get recommendations for trending model with minimal parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getRecommendations(
+    getRecommendationsParams: GetRecommendationsParams(
+      requests: [
+        TrendingItemsQuery(
+          indexName: "<YOUR_INDEX_NAME>",
+          model: TrendingItemsModel.fromJson("trending-items"),
+          threshold: 42.1,
+          facetName: "facet",
+          facetValue: "value",
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendations method.
+//
+// get recommendations for trending model with all parameters
+void snippetForgetRecommendations4() async {
+  // >SEPARATOR getRecommendations get recommendations for trending model with all parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getRecommendations(
+    getRecommendationsParams: GetRecommendationsParams(
+      requests: [
+        TrendingItemsQuery(
+          indexName: "<YOUR_INDEX_NAME>",
+          model: TrendingItemsModel.fromJson("trending-items"),
+          threshold: 42.1,
+          maxRecommendations: 10,
+          facetName: "myFacetName",
+          facetValue: "myFacetValue",
+          queryParameters: RecommendSearchParams(
+            query: "myQuery",
+            facetFilters: [
+              "query",
+            ],
+          ),
+          fallbackParameters: FallbackParams(
+            query: "myQuery",
+            facetFilters: [
+              "fallback",
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendations method.
+//
+// get multiple recommendations with minimal parameters
+void snippetForgetRecommendations5() async {
+  // >SEPARATOR getRecommendations get multiple recommendations with minimal parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getRecommendations(
+    getRecommendationsParams: GetRecommendationsParams(
+      requests: [
+        RelatedQuery(
+          indexName: "<YOUR_INDEX_NAME>",
+          objectID: "objectID1",
+          model: RelatedModel.fromJson("related-products"),
+          threshold: 21.7,
+        ),
+        RelatedQuery(
+          indexName: "<YOUR_INDEX_NAME>",
+          objectID: "objectID2",
+          model: RelatedModel.fromJson("related-products"),
+          threshold: 21.7,
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendations method.
+//
+// get multiple recommendations with all parameters
+void snippetForgetRecommendations6() async {
+  // >SEPARATOR getRecommendations get multiple recommendations with all parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getRecommendations(
+    getRecommendationsParams: GetRecommendationsParams(
+      requests: [
+        RelatedQuery(
+          indexName: "<YOUR_INDEX_NAME>",
+          objectID: "objectID1",
+          model: RelatedModel.fromJson("related-products"),
+          threshold: 21.7,
+          maxRecommendations: 10,
+          queryParameters: RecommendSearchParams(
+            query: "myQuery",
+            facetFilters: [
+              "query1",
+            ],
+          ),
+          fallbackParameters: FallbackParams(
+            query: "myQuery",
+            facetFilters: [
+              "fallback1",
+            ],
+          ),
+        ),
+        RelatedQuery(
+          indexName: "<YOUR_INDEX_NAME>",
+          objectID: "objectID2",
+          model: RelatedModel.fromJson("related-products"),
+          threshold: 21.7,
+          maxRecommendations: 10,
+          queryParameters: RecommendSearchParams(
+            query: "myQuery",
+            facetFilters: [
+              "query2",
+            ],
+          ),
+          fallbackParameters: FallbackParams(
+            query: "myQuery",
+            facetFilters: [
+              "fallback2",
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendations method.
+//
+// get frequently bought together recommendations
+void snippetForgetRecommendations7() async {
+  // >SEPARATOR getRecommendations get frequently bought together recommendations
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getRecommendations(
+    getRecommendationsParams: GetRecommendationsParams(
+      requests: [
+        BoughtTogetherQuery(
+          indexName: "<YOUR_INDEX_NAME>",
+          objectID: "objectID1",
+          model: FbtModel.fromJson("bought-together"),
+          threshold: 42.7,
         ),
       ],
     ),
@@ -148,8 +682,64 @@ void snippetForsearch3() async {
 
 // Snippet for the search method.
 //
-// retrieveFacets
+// search for a single hits request with minimal parameters
 void snippetForsearch4() async {
+  // >SEPARATOR search search for a single hits request with minimal parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    searchMethodParams: SearchMethodParams(
+      requests: [
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search with highlight and snippet results
+void snippetForsearch5() async {
+  // >SEPARATOR search search with highlight and snippet results
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    searchMethodParams: SearchMethodParams(
+      requests: [
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+          query: "vim",
+          attributesToSnippet: [
+            "*:20",
+          ],
+          attributesToHighlight: [
+            "*",
+          ],
+          attributesToRetrieve: [
+            "*",
+          ],
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// retrieveFacets
+void snippetForsearch6() async {
   // >SEPARATOR search retrieveFacets
   // Initialize the client
   final client =
@@ -177,7 +767,7 @@ void snippetForsearch4() async {
 // Snippet for the search method.
 //
 // retrieveFacetsWildcard
-void snippetForsearch5() async {
+void snippetForsearch7() async {
   // >SEPARATOR search retrieveFacetsWildcard
   // Initialize the client
   final client =
@@ -193,6 +783,456 @@ void snippetForsearch5() async {
           facets: [
             "*",
           ],
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search for a single facet request with minimal parameters
+void snippetForsearch8() async {
+  // >SEPARATOR search search for a single facet request with minimal parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    searchMethodParams: SearchMethodParams(
+      requests: [
+        SearchForFacets(
+          indexName: "<YOUR_INDEX_NAME>",
+          type: SearchTypeFacet.fromJson("facet"),
+          facet: "editor",
+        ),
+      ],
+      strategy: SearchStrategy.fromJson("stopIfEnoughMatches"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search for a single hits request with all parameters
+void snippetForsearch9() async {
+  // >SEPARATOR search search for a single hits request with all parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    searchMethodParams: SearchMethodParams(
+      requests: [
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+          query: "myQuery",
+          hitsPerPage: 50,
+          type: SearchTypeDefault.fromJson("default"),
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search for a single facet request with all parameters
+void snippetForsearch10() async {
+  // >SEPARATOR search search for a single facet request with all parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    searchMethodParams: SearchMethodParams(
+      requests: [
+        SearchForFacets(
+          indexName: "<YOUR_INDEX_NAME>",
+          type: SearchTypeFacet.fromJson("facet"),
+          facet: "theFacet",
+          facetQuery: "theFacetQuery",
+          query: "theQuery",
+          maxFacetHits: 50,
+        ),
+      ],
+      strategy: SearchStrategy.fromJson("stopIfEnoughMatches"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search for multiple mixed requests in multiple indices with minimal parameters
+void snippetForsearch11() async {
+  // >SEPARATOR search search for multiple mixed requests in multiple indices with minimal parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    searchMethodParams: SearchMethodParams(
+      requests: [
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+        ),
+        SearchForFacets(
+          indexName: "<YOUR_INDEX_NAME>",
+          type: SearchTypeFacet.fromJson("facet"),
+          facet: "theFacet",
+        ),
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+          type: SearchTypeDefault.fromJson("default"),
+        ),
+      ],
+      strategy: SearchStrategy.fromJson("stopIfEnoughMatches"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search for multiple mixed requests in multiple indices with all parameters
+void snippetForsearch12() async {
+  // >SEPARATOR search search for multiple mixed requests in multiple indices with all parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    searchMethodParams: SearchMethodParams(
+      requests: [
+        SearchForFacets(
+          indexName: "<YOUR_INDEX_NAME>",
+          type: SearchTypeFacet.fromJson("facet"),
+          facet: "theFacet",
+          facetQuery: "theFacetQuery",
+          query: "theQuery",
+          maxFacetHits: 50,
+        ),
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+          query: "myQuery",
+          hitsPerPage: 50,
+          type: SearchTypeDefault.fromJson("default"),
+        ),
+      ],
+      strategy: SearchStrategy.fromJson("stopIfEnoughMatches"),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search filters accept all of the possible shapes
+void snippetForsearch13() async {
+  // >SEPARATOR search search filters accept all of the possible shapes
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    searchMethodParams: SearchMethodParams(
+      requests: [
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+          facetFilters: "mySearch:filters",
+          reRankingApplyFilter: "mySearch:filters",
+          tagFilters: "mySearch:filters",
+          numericFilters: "mySearch:filters",
+          optionalFilters: "mySearch:filters",
+        ),
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+          facetFilters: [
+            "mySearch:filters",
+            [
+              "mySearch:filters",
+              [
+                "mySearch:filters",
+              ],
+            ],
+          ],
+          reRankingApplyFilter: [
+            "mySearch:filters",
+            [
+              "mySearch:filters",
+            ],
+          ],
+          tagFilters: [
+            "mySearch:filters",
+            [
+              "mySearch:filters",
+            ],
+          ],
+          numericFilters: [
+            "mySearch:filters",
+            [
+              "mySearch:filters",
+            ],
+          ],
+          optionalFilters: [
+            "mySearch:filters",
+            [
+              "mySearch:filters",
+            ],
+          ],
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search filters end to end
+void snippetForsearch14() async {
+  // >SEPARATOR search search filters end to end
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    searchMethodParams: SearchMethodParams(
+      requests: [
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+          filters: "editor:'visual studio' OR editor:neovim",
+        ),
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+          facetFilters: [
+            "editor:'visual studio'",
+            "editor:neovim",
+          ],
+        ),
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+          facetFilters: [
+            "editor:'visual studio'",
+            [
+              "editor:neovim",
+            ],
+          ],
+        ),
+        SearchForHits(
+          indexName: "<YOUR_INDEX_NAME>",
+          facetFilters: [
+            "editor:'visual studio'",
+            [
+              "editor:neovim",
+              [
+                "editor:goland",
+              ],
+            ],
+          ],
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search with all search parameters
+void snippetForsearch15() async {
+  // >SEPARATOR search search with all search parameters
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    searchMethodParams: SearchMethodParams(
+      requests: [
+        SearchForHits(
+          advancedSyntax: true,
+          advancedSyntaxFeatures: [
+            AdvancedSyntaxFeatures.fromJson("exactPhrase"),
+          ],
+          allowTyposOnNumericTokens: true,
+          alternativesAsExact: [
+            AlternativesAsExact.fromJson("multiWordsSynonym"),
+          ],
+          analytics: true,
+          analyticsTags: [
+            "",
+          ],
+          aroundLatLng: "",
+          aroundLatLngViaIP: true,
+          aroundPrecision: 0,
+          aroundRadius: AroundRadiusAll.fromJson("all"),
+          attributeCriteriaComputedByMinProximity: true,
+          attributesToHighlight: [
+            "",
+          ],
+          attributesToRetrieve: [
+            "",
+          ],
+          attributesToSnippet: [
+            "",
+          ],
+          clickAnalytics: true,
+          decompoundQuery: true,
+          disableExactOnAttributes: [
+            "",
+          ],
+          disableTypoToleranceOnAttributes: [
+            "",
+          ],
+          distinct: 0,
+          enableABTest: true,
+          enablePersonalization: true,
+          enableReRanking: true,
+          enableRules: true,
+          exactOnSingleWordQuery: ExactOnSingleWordQuery.fromJson("attribute"),
+          facetFilters: [
+            "",
+          ],
+          facetingAfterDistinct: true,
+          facets: [
+            "",
+          ],
+          filters: "",
+          getRankingInfo: true,
+          highlightPostTag: "",
+          highlightPreTag: "",
+          hitsPerPage: 1,
+          ignorePlurals: false,
+          indexName: "<YOUR_INDEX_NAME>",
+          insideBoundingBox: [
+            [
+              47.3165,
+              4.9665,
+              47.3424,
+              5.0201,
+            ],
+            [
+              40.9234,
+              2.1185,
+              38.643,
+              1.9916,
+            ],
+          ],
+          insidePolygon: [
+            [
+              47.3165,
+              4.9665,
+              47.3424,
+              5.0201,
+              47.32,
+              4.9,
+            ],
+            [
+              40.9234,
+              2.1185,
+              38.643,
+              1.9916,
+              39.2587,
+              2.0104,
+            ],
+          ],
+          length: 1,
+          maxValuesPerFacet: 0,
+          minProximity: 1,
+          minWordSizefor1Typo: 0,
+          minWordSizefor2Typos: 0,
+          minimumAroundRadius: 1,
+          naturalLanguages: [
+            SupportedLanguage.fromJson("fr"),
+          ],
+          numericFilters: [
+            "",
+          ],
+          offset: 0,
+          optionalFilters: [
+            "",
+          ],
+          optionalWords: [
+            "",
+          ],
+          page: 0,
+          percentileComputation: true,
+          personalizationImpact: 0,
+          query: "",
+          queryLanguages: [
+            SupportedLanguage.fromJson("fr"),
+          ],
+          queryType: QueryType.fromJson("prefixAll"),
+          ranking: [
+            "",
+          ],
+          reRankingApplyFilter: [
+            "",
+          ],
+          relevancyStrictness: 0,
+          removeStopWords: true,
+          removeWordsIfNoResults:
+              RemoveWordsIfNoResults.fromJson("allOptional"),
+          renderingContent: RenderingContent(
+            facetOrdering: FacetOrdering(
+              facets: IndexSettingsFacets(
+                order: [
+                  "a",
+                  "b",
+                ],
+              ),
+              values: {
+                'a': Value(
+                  order: [
+                    "b",
+                  ],
+                  sortRemainingBy: SortRemainingBy.fromJson("count"),
+                ),
+              },
+            ),
+          ),
+          replaceSynonymsInHighlight: true,
+          responseFields: [
+            "",
+          ],
+          restrictHighlightAndSnippetArrays: true,
+          restrictSearchableAttributes: [
+            "",
+          ],
+          ruleContexts: [
+            "",
+          ],
+          similarQuery: "",
+          snippetEllipsisText: "",
+          sortFacetValuesBy: "",
+          sumOrFiltersScores: true,
+          synonyms: true,
+          tagFilters: [
+            "",
+          ],
+          type: SearchTypeDefault.fromJson("default"),
+          typoTolerance: TypoToleranceEnum.fromJson("min"),
+          userToken: "",
         ),
       ],
     ),

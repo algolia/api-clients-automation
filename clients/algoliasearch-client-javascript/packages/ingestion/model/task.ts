@@ -36,6 +36,11 @@ export type Task = {
    */
   nextRun?: string;
 
+  /**
+   * Owner of the resource.
+   */
+  owner?: string | null;
+
   input?: TaskInput;
 
   /**
@@ -49,6 +54,8 @@ export type Task = {
   failureThreshold?: number;
 
   action?: ActionType;
+
+  subscriptionAction?: ActionType;
 
   /**
    * Date of the last cursor in RFC 3339 format.
@@ -67,5 +74,5 @@ export type Task = {
   /**
    * Date of last update in RFC 3339 format.
    */
-  updatedAt?: string;
+  updatedAt: string;
 };

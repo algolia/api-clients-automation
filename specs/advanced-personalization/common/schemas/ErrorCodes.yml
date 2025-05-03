@@ -1,0 +1,29 @@
+badRequest:
+  type: integer
+  description: HTTP status code for a bad request error.
+  enum: [400]
+
+unauthorized:
+  type: integer
+  description: HTTP status code for an authorization error.
+  enum: [401]
+
+paymentRequired:
+  type: integer
+  description: HTTP status code for a payment required error.
+  enum: [402]
+
+notFound:
+  type: integer
+  description: HTTP status code for a not found error.
+  enum: [404]
+
+unprocessableEntity:
+  type: integer
+  description: HTTP status code for an unprocessable entity error.
+  enum: [422]
+
+internalServerError:
+  type: integer
+  description: HTTP status code for an internal server error.
+  enum: [500]

@@ -2,7 +2,7 @@
   null
 {{/isNull}}
 {{#isString}}
-  "{{{value}}}"
+  "{{#lambda.escapeQuotes}}{{{value}}}{{/lambda.escapeQuotes}}"
 {{/isString}}
 {{#isInteger}}
   {{{value}}}

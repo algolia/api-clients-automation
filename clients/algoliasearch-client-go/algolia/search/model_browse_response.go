@@ -55,7 +55,7 @@ type BrowseResponse struct {
 	// Host name of the server that processed the request.
 	ServerUsed *string `json:"serverUsed,omitempty"`
 	// An object with custom data.  You can store up to 32kB as custom data.
-	UserData map[string]any `json:"userData,omitempty"`
+	UserData any `json:"userData,omitempty"`
 	// Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
 	QueryID *string `json:"queryID,omitempty"`
 	// Whether automatic events collection is enabled for the application.
@@ -212,7 +212,7 @@ func WithBrowseResponseServerUsed(val string) BrowseResponseOption {
 	}
 }
 
-func WithBrowseResponseUserData(val map[string]any) BrowseResponseOption {
+func WithBrowseResponseUserData(val any) BrowseResponseOption {
 	return func(f *BrowseResponse) {
 		f.UserData = val
 	}
@@ -1041,10 +1041,10 @@ func (o *BrowseResponse) SetServerUsed(v string) *BrowseResponse {
 	return o
 }
 
-// GetUserData returns the UserData field value if set, zero value otherwise.
-func (o *BrowseResponse) GetUserData() map[string]any {
-	if o == nil || o.UserData == nil {
-		var ret map[string]any
+// GetUserData returns the UserData field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BrowseResponse) GetUserData() any {
+	if o == nil {
+		var ret any
 		return ret
 	}
 	return o.UserData
@@ -1052,11 +1052,12 @@ func (o *BrowseResponse) GetUserData() map[string]any {
 
 // GetUserDataOk returns a tuple with the UserData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BrowseResponse) GetUserDataOk() (map[string]any, bool) {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned.
+func (o *BrowseResponse) GetUserDataOk() (*any, bool) {
 	if o == nil || o.UserData == nil {
 		return nil, false
 	}
-	return o.UserData, true
+	return &o.UserData, true
 }
 
 // HasUserData returns a boolean if a field has been set.
@@ -1068,8 +1069,8 @@ func (o *BrowseResponse) HasUserData() bool {
 	return false
 }
 
-// SetUserData gets a reference to the given map[string]any and assigns it to the UserData field.
-func (o *BrowseResponse) SetUserData(v map[string]any) *BrowseResponse {
+// SetUserData gets a reference to the given any and assigns it to the UserData field.
+func (o *BrowseResponse) SetUserData(v any) *BrowseResponse {
 	o.UserData = v
 	return o
 }
@@ -1430,9 +1431,7 @@ func (o BrowseResponse) MarshalJSON() ([]byte, error) {
 	if o.ParsedQuery != nil {
 		toSerialize["parsedQuery"] = o.ParsedQuery
 	}
-	if true {
-		toSerialize["processingTimeMS"] = o.ProcessingTimeMS
-	}
+	toSerialize["processingTimeMS"] = o.ProcessingTimeMS
 	if o.ProcessingTimingsMS != nil {
 		toSerialize["processingTimingsMS"] = o.ProcessingTimingsMS
 	}
@@ -1472,15 +1471,9 @@ func (o BrowseResponse) MarshalJSON() ([]byte, error) {
 	if o.HitsPerPage != nil {
 		toSerialize["hitsPerPage"] = o.HitsPerPage
 	}
-	if true {
-		toSerialize["hits"] = o.Hits
-	}
-	if true {
-		toSerialize["query"] = o.Query
-	}
-	if true {
-		toSerialize["params"] = o.Params
-	}
+	toSerialize["hits"] = o.Hits
+	toSerialize["query"] = o.Query
+	toSerialize["params"] = o.Params
 	if o.Cursor != nil {
 		toSerialize["cursor"] = o.Cursor
 	}

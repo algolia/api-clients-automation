@@ -39,8 +39,7 @@ func TestInsightscommonApi0(t *testing.T) {
 	client, echo := createInsightsClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"1/test",
-	))
+		"1/test"))
 	require.NoError(t, err)
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Insights (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
@@ -53,10 +52,9 @@ func TestInsightscommonApi1(t *testing.T) {
 	client, echo := createInsightsClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"1/test",
-	))
+		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.11.0\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.15.5\).*`), echo.Header.Get("User-Agent"))
 }
 
 // fallbacks to the alias when region is not given
@@ -84,8 +82,7 @@ func TestInsightsparameters0(t *testing.T) {
 			[]insights.EventsItems{*insights.ClickedObjectIDsAfterSearchAsEventsItems(
 				insights.NewEmptyClickedObjectIDsAfterSearch().SetEventType(insights.ClickEvent("click")).SetEventName("Product Clicked").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1641290601962).SetObjectIDs(
 					[]string{"9780545139700", "9780439784542"}).SetQueryID("43b15df305339e827f0ac0bdc5ebcaa7").SetPositions(
-					[]int32{7, 6}))}),
-	))
+					[]int32{7, 6}))})))
 	require.NoError(t, err)
 	require.Equal(t, "insights.algolia.io", echo.Host)
 }
@@ -111,8 +108,7 @@ func TestInsightsparameters1(t *testing.T) {
 	client, err = insights.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	res, err = client.CustomDelete(client.NewApiCustomDeleteRequest(
-		"test",
-	))
+		"test"))
 	require.NoError(t, err)
 	require.Equal(t, "insights.us.algolia.io", echo.Host)
 }
@@ -161,8 +157,7 @@ func TestInsightssetClientApiKey0(t *testing.T) {
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(
-			"check-api-key/1",
-		))
+			"check-api-key/1"))
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
@@ -170,14 +165,12 @@ func TestInsightssetClientApiKey0(t *testing.T) {
 	}
 	{
 		err = client.SetClientApiKey(
-			"updated-api-key",
-		)
+			"updated-api-key")
 		require.NoError(t, err)
 	}
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(
-			"check-api-key/2",
-		))
+			"check-api-key/2"))
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)

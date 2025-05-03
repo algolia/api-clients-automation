@@ -13,13 +13,13 @@
             {{#dynamicTemplate}}{{/dynamicTemplate}}
             assert False
         except (ValueError, Exception) as e:
-            assert str(e) == {{#lambda.codeSnakeCase}}"{{{expectedError}}}"{{/lambda.codeSnakeCase}}
+            assert str(e) == {{#lambda.codeIdentifier}}"{{{expectedError}}}"{{/lambda.codeIdentifier}}
         {{/isError}}
         {{^isError}}
         {{#times}}for _ in range(0, {{.}}):
           {{/times}}{{#dynamicTemplate}}{{/dynamicTemplate}}
         {{#testUserAgent}}
-        regex_user_agent = compile("{{#lambda.escapeSlash}}{{{match.value}}}{{/lambda.escapeSlash}}")
+        regex_user_agent = compile("{{#lambda.escapeJSON}}{{{match.value}}}{{/lambda.escapeJSON}}")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
         {{/testUserAgent}}
         {{#testTimeouts}}

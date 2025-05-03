@@ -1,0 +1,43 @@
+{{> snippets/import}}
+from algoliasearch.search.models.browse_response import BrowseResponse
+from algoliasearch.search.models.index_settings import IndexSettings
+
+def _get_image_labels(image_url, object_id, score_limit):
+    # Implement your image classification logic here
+    return {"objectID": "", "imageURL": "", "objects": []}
+
+_{{> snippets/init}}
+
+records = []
+
+def _aggregator(res: BrowseResponse):
+  for hit in res.hits:
+    props = hit.to_dict()
+    image_url = props['imageURL']
+    records.append(_get_image_labels(image_url, hit.object_id, 0.5))
+
+_client.browse_objects('<YOUR_INDEX_NAME>', aggregator=_aggregator)
+
+{{#dynamicSnippet}}partialUpdatesRecords{{/dynamicSnippet}}
+
+facets = []
+attributes = []
+
+for record in records:
+    for obj in record["objects"]:
+        for key, values in obj.items():
+            if isinstance(values, list):
+                facets.extend([
+                    f"searchable(objects.{key}.label)",
+                    f"searchable(objects.{key}.score)"
+                ])
+                attributes.append(f"objects.{key}.label)")
+
+current_settings = {{#dynamicSnippet}}getSettings{{/dynamicSnippet}}
+
+settings = IndexSettings(
+  searchable_attributes=(current_settings.searchable_attributes or []) + attributes,
+  attributes_for_faceting=(current_settings.attributes_for_faceting or []) + facets
+)
+
+{{#dynamicSnippet}}setSettings{{/dynamicSnippet}}

@@ -112,7 +112,7 @@ class QuerySuggestionsClient(
     execute[BaseResponse](request, requestOptions)
   }
 
-  /** This method allow you to send requests to the Algolia REST API.
+  /** This method lets you send requests to the Algolia REST API.
     *
     * @param path
     *   Path of the endpoint, anything after \"/1\" must be specified.
@@ -135,7 +135,7 @@ class QuerySuggestionsClient(
     execute[T](request, requestOptions)
   }
 
-  /** This method allow you to send requests to the Algolia REST API.
+  /** This method lets you send requests to the Algolia REST API.
     *
     * @param path
     *   Path of the endpoint, anything after \"/1\" must be specified.
@@ -158,7 +158,7 @@ class QuerySuggestionsClient(
     execute[T](request, requestOptions)
   }
 
-  /** This method allow you to send requests to the Algolia REST API.
+  /** This method lets you send requests to the Algolia REST API.
     *
     * @param path
     *   Path of the endpoint, anything after \"/1\" must be specified.
@@ -185,7 +185,7 @@ class QuerySuggestionsClient(
     execute[T](request, requestOptions)
   }
 
-  /** This method allow you to send requests to the Algolia REST API.
+  /** This method lets you send requests to the Algolia REST API.
     *
     * @param path
     *   Path of the endpoint, anything after \"/1\" must be specified.

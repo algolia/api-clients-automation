@@ -1,0 +1,20 @@
+{{> snippets/import}}
+
+void searchWithAnalyticsAndHeader() async {
+  {{> snippets/init}}
+
+  /*
+  '94.228.178.246' should be replaced with your user's IP address.
+  Depending on your stack there are multiple ways to get this information.
+  */
+  final ip = "94.228.178.246";
+  final query = "query";
+
+  final searchParams = SearchParamsObject(
+      query: query,
+      analytics: true
+  );
+
+  await {{#dynamicSnippet}}searchWithSearchParamsAndForwardedHeader{{/dynamicSnippet}};
+}
+

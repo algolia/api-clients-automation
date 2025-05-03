@@ -106,7 +106,7 @@ info:
     `/1/` in each endpoint's URL.
   version: 1.0.0
 servers:
-  - url: https://{appId}.algolianet.com
+  - url: https://{appId}.algolia.net
     variables:
       appId:
         default: ALGOLIA_APPLICATION_ID
@@ -122,7 +122,7 @@ servers:
     variables:
       appId:
         default: ALGOLIA_APPLICATION_ID
-  - url: https://{appId}-dsn.algolianet.com
+  - url: https://{appId}-dsn.algolia.net
     variables:
       appId:
         default: ALGOLIA_APPLICATION_ID
@@ -151,7 +151,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -211,9 +211,7 @@ paths:
             // Call the API
 
             response, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -361,16 +359,14 @@ paths:
 
             // Call the API
 
-            val response = client.customGet[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customGet[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -394,7 +390,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -454,9 +450,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -604,16 +598,14 @@ paths:
 
             // Call the API
 
-            val response = client.customPost[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPost[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -637,7 +629,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -697,9 +689,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -847,16 +837,14 @@ paths:
 
             // Call the API
 
-            val response = client.customPut[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPut[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -874,7 +862,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -935,9 +923,7 @@ paths:
 
             response, err :=
             client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1086,16 +1072,14 @@ paths:
 
             // Call the API
 
-            val response = client.customDelete[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customDelete[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1236,9 +1220,7 @@ paths:
 
               recommend.NewEmptyGetRecommendationsParams().SetRequests(
                 []recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
-                  recommend.NewEmptyRelatedQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1))}),
-            ))
-
+                  recommend.NewEmptyRelatedQuery().SetIndexName("<YOUR_INDEX_NAME>").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1))})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1405,7 +1387,7 @@ paths:
                 requests: [
                   Algolia::Recommend::RelatedQuery.new(
                     index_name: "<YOUR_INDEX_NAME>",
-                    object_id: "objectID",
+                    algolia_object_id: "objectID",
                     model: "related-products",
                     threshold: 42.1
                   )
@@ -1435,25 +1417,23 @@ paths:
 
             // Call the API
 
-            val response = client.getRecommendations(
-              getRecommendationsParams = GetRecommendationsParams(
-                requests = Seq(
-                  RelatedQuery(
-                    indexName = "<YOUR_INDEX_NAME>",
-                    objectID = "objectID",
-                    model = RelatedModel.withName("related-products"),
-                    threshold = 42.1
+            val response = Await.result(
+              client.getRecommendations(
+                getRecommendationsParams = GetRecommendationsParams(
+                  requests = Seq(
+                    RelatedQuery(
+                      indexName = "<YOUR_INDEX_NAME>",
+                      objectID = "objectID",
+                      model = RelatedModel.withName("related-products"),
+                      threshold = 42.1
+                    )
                   )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1480,7 +1460,7 @@ paths:
           label: curl
           source: |-
             curl --request POST \
-              --url 'https://algolia_application_id.algolianet.com/1/indexes/*/recommendations' \
+              --url 'https://algolia_application_id.algolia.net/1/indexes/*/recommendations' \
               --header 'accept: application/json' \
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
@@ -1564,9 +1544,7 @@ paths:
 
             response, err :=
             client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(
-              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID",
-            ))
-
+              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1726,18 +1704,16 @@ paths:
 
             // Call the API
 
-            val response = client.getRecommendRule(
-              indexName = "<YOUR_INDEX_NAME>",
-              model = RecommendModels.withName("related-products"),
-              objectID = "objectID"
+            val response = Await.result(
+              client.getRecommendRule(
+                indexName = "<YOUR_INDEX_NAME>",
+                model = RecommendModels.withName("related-products"),
+                objectID = "objectID"
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1756,6 +1732,14 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/related-products/recommend/rules/test-record-123 \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     delete:
       tags:
         - rules
@@ -1779,6 +1763,250 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new RecommendClient(
+              new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+            );
+
+            // Call the API
+            var response = await client.DeleteRecommendRuleAsync(
+              "<YOUR_INDEX_NAME>",
+              Enum.Parse<RecommendModels>("RelatedProducts"),
+              "objectID"
+            );
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client = RecommendClient(
+                appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+            // Call the API
+            final response = await client.deleteRecommendRule(
+              indexName: "<YOUR_INDEX_NAME>",
+              model: RecommendModels.fromJson("related-products"),
+              objectID: "objectID",
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client
+
+            client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.DeleteRecommendRule(client.NewApiDeleteRecommendRuleRequest(
+              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            RecommendClient client = new
+            RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+
+            // Call the API
+
+            client.deleteRecommendRule("<YOUR_INDEX_NAME>",
+            RecommendModels.RELATED_PRODUCTS, "objectID");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            //
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initRecommend();
+
+
+            // Call the API
+
+            const response = await client.deleteRecommendRule({
+              indexName: 'indexName',
+              model: 'related-products',
+              objectID: 'objectID',
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            var response = client.deleteRecommendRule(
+              indexName = "<YOUR_INDEX_NAME>",
+              model = RecommendModels.entries.first { it.value == "related-products" },
+              objectID = "objectID",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            $response = $client->deleteRecommendRule(
+                '<YOUR_INDEX_NAME>',
+                'related-products',
+                'objectID',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use RecommendClient instead,
+            which exposes the exact same methods.
+
+            client = RecommendClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.delete_recommend_rule(
+                index_name="<YOUR_INDEX_NAME>",
+                model="related-products",
+                object_id="objectID",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.delete_recommend_rule("<YOUR_INDEX_NAME>",
+            "related-products", "objectID")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            val response = Await.result(
+              client.deleteRecommendRule(
+                indexName = "<YOUR_INDEX_NAME>",
+                model = RecommendModels.withName("related-products"),
+                objectID = "objectID"
+              ),
+              Duration(100, "sec")
+            )
+
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            let response = try await client.deleteRecommendRule(
+                indexName: "<YOUR_INDEX_NAME>",
+                model: RecommendModels.relatedProducts,
+                objectID: "objectID"
+            )
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/related-products/recommend/rules/test-record-123 \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/indexes/{indexName}/{model}/task/{taskID}:
     get:
       tags:
@@ -1877,9 +2105,7 @@ paths:
 
             response, err :=
             client.GetRecommendStatus(client.NewApiGetRecommendStatusRequest(
-              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), 12345,
-            ))
-
+              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), 12345))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2039,18 +2265,16 @@ paths:
 
             // Call the API
 
-            val response = client.getRecommendStatus(
-              indexName = "<YOUR_INDEX_NAME>",
-              model = RecommendModels.withName("related-products"),
-              taskID = 12345L
+            val response = Await.result(
+              client.getRecommendStatus(
+                indexName = "<YOUR_INDEX_NAME>",
+                model = RecommendModels.withName("related-products"),
+                taskID = 12345L
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2069,6 +2293,14 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/related-products/task/1514562690001 \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/indexes/{indexName}/{model}/recommend/rules/search:
     post:
       tags:
@@ -2215,9 +2447,7 @@ paths:
 
             response, err :=
             client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(
-              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"),
-            ))
-
+              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2371,17 +2601,15 @@ paths:
 
             // Call the API
 
-            val response = client.searchRecommendRules(
-              indexName = "<YOUR_INDEX_NAME>",
-              model = RecommendModels.withName("related-products")
+            val response = Await.result(
+              client.searchRecommendRules(
+                indexName = "<YOUR_INDEX_NAME>",
+                model = RecommendModels.withName("related-products")
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2399,6 +2627,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/related-products/recommend/rules/search \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"query":"","context":"mobile","page":0,"hitsPerPage":20,"enabled":true,"filters":"objectID:rr-123456","facets":["*"],"maxValuesPerFacet":1}'
   /1/indexes/{indexName}/{model}/recommend/rules/batch:
     post:
       tags:
@@ -2445,7 +2683,6 @@ paths:
               title: rules
               type: array
               description: Recommend rules.
-              additionalProperties: false
               items:
                 $ref: '#/components/schemas/RecommendRule'
       responses:
@@ -2499,9 +2736,7 @@ paths:
 
             response, err :=
             client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(
-              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"),
-            ))
-
+              "<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2655,17 +2890,15 @@ paths:
 
             // Call the API
 
-            val response = client.batchRecommendRules(
-              indexName = "<YOUR_INDEX_NAME>",
-              model = RecommendModels.withName("related-products")
+            val response = Await.result(
+              client.batchRecommendRules(
+                indexName = "<YOUR_INDEX_NAME>",
+                model = RecommendModels.withName("related-products")
+              ),
+              Duration(100, "sec")
             )
 
-
             // >LOG
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2683,6 +2916,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/related-products/recommend/rules/batch \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '[{"_metadata":{"lastUpdate":"2023-07-04T12:49:15Z"},"objectID":"lorem","condition":{"filters":"(category:Book OR category:Ebook) AND _tags:published","context":"mobile"},"consequence":{"hide":[{"objectID":"test-record-123"}],"promote":[{"objectID":"test-record-123","position":0}],"params":{"automaticFacetFilters":[{"facet":"lorem","negative":true}],"filters":"(category:Book OR category:Ebook) AND _tags:published","optionalFilters":["category:books<score=1>","category:-movies<score=1>"]}},"description":"Boost on-sale items","enabled":true,"validity":[{"from":42,"until":42}]}]'
 components:
   securitySchemes:
     appId:
@@ -3465,7 +3708,6 @@ components:
         query:
           $ref: '#/components/schemas/query'
     userData:
-      type: object
       example:
         settingID: f2a7b51e3503acc6a39b3784ffb84300
         pluginVersion: 1.6.0
@@ -4424,6 +4666,13 @@ components:
       example:
         - blue
         - iphone case
+      description: >-
+        List of [optional
+        words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
+      default: []
+      x-categories:
+        - Query strategy
+    optionalWords:
       description: >
         Words that should be considered optional when found in the query.
 
@@ -4461,10 +4710,6 @@ components:
 
         For more information, see [Optional
         words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
-      default: []
-      x-categories:
-        - Query strategy
-    optionalWords:
       oneOf:
         - type: string
         - type: 'null'
@@ -4686,25 +4931,34 @@ components:
       items:
         type: string
       description: >
-        Properties to include in the API response of `search` and `browse`
-        requests.
+        Properties to include in the API response of search and browse requests.
 
 
         By default, all response properties are included.
 
-        To reduce the response size, you can select, which attributes should be
+        To reduce the response size, you can select which properties should be
         included.
+
+
+        An empty list may lead to an empty API response (except properties you
+        can't exclude).
 
 
         You can't exclude these properties:
 
-        `message`, `warning`, `cursor`, `serverUsed`, `indexUsed`,
+        `message`, `warning`, `cursor`, `abTestVariantID`,
 
-        `abTestVariantID`, `parsedQuery`, or any property triggered by the
-        `getRankingInfo` parameter.
+        or any property added by setting `getRankingInfo` to true.
 
 
-        Don't exclude properties that you might need in your search UI.
+        Your search depends on the `hits` field. If you omit this field,
+        searches won't return any results.
+
+        Your UI might also depend on other properties, for example, for
+        pagination.
+
+        Before restricting the response size, check the impact on your search
+        experience.
       default:
         - '*'
       x-categories:
@@ -5032,7 +5286,7 @@ components:
         maxRecommendations:
           type: integer
           minimum: 1
-          maximum: 1000
+          maximum: 30
           default: 30
           description: >
             Maximum number of recommendations to retrieve.
@@ -5171,6 +5425,7 @@ components:
       type: object
       properties:
         facetName:
+          type: string
           description: Facet attribute for which to retrieve trending facet values.
         model:
           $ref: '#/components/schemas/trendingFacetsModel'

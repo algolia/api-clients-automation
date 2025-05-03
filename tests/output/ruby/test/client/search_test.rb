@@ -3,6 +3,7 @@ require "algolia"
 require "test/unit"
 
 class TestClientSearchClient < Test::Unit::TestCase
+
   # calls api with correct read host
   def test_api0
 
@@ -182,7 +183,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.11.0\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.15.5\).*/))
   end
 
   # call deleteObjects without error
@@ -206,7 +207,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     assert_equal([{:"taskID" => 666, :"objectIDs" => ["1", "2"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
-  # generate secured api key basic
+  # api key basic
   def test_generate_secured_api_key0
     client = Algolia::SearchClient.create(
       "APP_ID",
@@ -224,7 +225,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
   end
 
-  # generate secured api key with searchParams
+  # with searchParams
   def test_generate_secured_api_key1
     client = Algolia::SearchClient.create(
       "APP_ID",
@@ -253,6 +254,78 @@ class TestClientSearchClient < Test::Unit::TestCase
     assert_equal(
       "MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw",
       req
+    )
+  end
+
+  # with filters
+  def test_generate_secured_api_key2
+    client = Algolia::SearchClient.create(
+      "APP_ID",
+      "API_KEY",
+
+      {requester: Algolia::Transport::EchoRequester.new}
+    )
+    req = client.generate_secured_api_key(
+      "2640659426d5107b6e47d75db9cbaef8",
+      Algolia::Search::SecuredApiKeyRestrictions.new(
+        filters: "user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)"
+      )
+    )
+  end
+
+  # with visible_by filter
+  def test_generate_secured_api_key3
+    client = Algolia::SearchClient.create(
+      "APP_ID",
+      "API_KEY",
+
+      {requester: Algolia::Transport::EchoRequester.new}
+    )
+    req = client.generate_secured_api_key(
+      "2640659426d5107b6e47d75db9cbaef8",
+      Algolia::Search::SecuredApiKeyRestrictions.new(filters: "visible_by:group/Finance")
+    )
+  end
+
+  # with userID
+  def test_generate_secured_api_key4
+    client = Algolia::SearchClient.create(
+      "APP_ID",
+      "API_KEY",
+
+      {requester: Algolia::Transport::EchoRequester.new}
+    )
+    req = client.generate_secured_api_key(
+      "2640659426d5107b6e47d75db9cbaef8",
+      Algolia::Search::SecuredApiKeyRestrictions.new(user_token: "user42")
+    )
+  end
+
+  # mcm with filters
+  def test_generate_secured_api_key5
+    client = Algolia::SearchClient.create(
+      "APP_ID",
+      "API_KEY",
+
+      {requester: Algolia::Transport::EchoRequester.new}
+    )
+    req = client.generate_secured_api_key(
+      "YourSearchOnlyApiKey",
+      Algolia::Search::SecuredApiKeyRestrictions.new(filters: "user:user42 AND user:public")
+    )
+  end
+
+  # mcm with user token
+  def test_generate_secured_api_key6
+    client = Algolia::SearchClient.create(
+      "APP_ID",
+      "API_KEY",
+
+      {requester: Algolia::Transport::EchoRequester.new}
+    )
+    req = client.generate_secured_api_key(
+      "YourSearchOnlyApiKey",
+      Algolia::Search::SecuredApiKeyRestrictions.new(user_token: "user42")
     )
   end
 
@@ -428,7 +501,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       assert(false, "An error should have been raised")
     rescue => e
       assert_equal(
-        "Parameter `object_id` is required when calling `add_or_update_object`.".sub(
+        "Parameter `algolia_object_id` is required when calling `add_or_update_object`.".sub(
           "%localhost%",
           ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
         ),
@@ -671,6 +744,95 @@ class TestClientSearchClient < Test::Unit::TestCase
         e.message
       )
     end
+  end
+
+  # saveObjectsPlaylist
+  def test_save_objects2
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6686,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    req = client.save_objects(
+      "playlists",
+      [
+        {
+          objectID: "1",
+          visibility: "public",
+          name: "Hot 100 Billboard Charts",
+          playlistId: "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
+          createdAt: "1500240452"
+        }
+      ]
+    )
+  end
+
+  # saveObjectsPublicUser
+  def test_save_objects3
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6686,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    req = client.save_objects(
+      "playlists",
+      [
+        {
+          objectID: "1",
+          visibility: "public",
+          name: "Hot 100 Billboard Charts",
+          playlistId: "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
+          createdAt: "1500240452"
+        }
+      ],
+      false,
+      1000,
+      {:header_params => {"X-Algolia-User-ID" => "*"}}
+    )
+  end
+
+  # with algolia user id
+  def test_search_single_index0
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6686,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    req = client.search_single_index(
+      "playlists",
+      Algolia::Search::SearchParamsObject.new(query: "foo"),
+      {:header_params => {"X-Algolia-User-ID" => "user1234"}}
+    )
   end
 
   # switch API key

@@ -5,7 +5,7 @@
   {{{value}}}
 {{/isVerbatim}}
 {{#isString}}
-  "{{#lambda.escapeQuotes}}{{#lambda.escapeSlash}}{{{value}}}{{/lambda.escapeSlash}}{{/lambda.escapeQuotes}}"
+  "{{#lambda.escapeJSON}}{{{value}}}{{/lambda.escapeJSON}}"
 {{/isString}}
 {{#isInteger}}
   {{{value}}}
@@ -28,7 +28,7 @@
 {{#isObject}}
   {{#oneOfModel}}new {{{parentClassName}}}({{/oneOfModel}}new {{{objectName}}}{
     {{#value}}
-      {{^isAdditionalProperty}}{{#lambda.pascalcase}}{{#lambda.csharpIdentifier}}{{&key}}{{/lambda.csharpIdentifier}}{{/lambda.pascalcase}} = {{> tests/generateParams}},{{/isAdditionalProperty}}{{/value}}
+      {{^isAdditionalProperty}}{{#lambda.pascalcase}}{{#lambda.identifier}}{{key}}{{/lambda.identifier}}{{/lambda.pascalcase}} = {{> tests/generateParams}},{{/isAdditionalProperty}}{{/value}}
     {{#hasAdditionalProperties}}
     AdditionalProperties = new Dictionary<string, object>{
     {{#value}}

@@ -82,6 +82,12 @@ name:
   type: string
   description: Descriptive name for the resource.
 
+owner:
+  oneOf:
+    - type: string
+      description: Owner of the resource.
+    - type: 'null'
+
 Window:
   type: object
   additionalProperties: false
@@ -117,4 +123,4 @@ WatchResponse:
       description: a message describing the outcome of a validate run.
       type: string
   required:
-    - message
+    - runID

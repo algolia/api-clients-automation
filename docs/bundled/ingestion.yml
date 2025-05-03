@@ -123,7 +123,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -172,9 +172,7 @@ paths:
             // Call the API
 
             response, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -324,13 +322,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customGet[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customGet[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -354,7 +352,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -403,9 +401,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -555,13 +551,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customPost[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPost[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -585,7 +581,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -634,9 +630,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -786,13 +780,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customPut[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPut[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -810,7 +804,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -860,9 +854,7 @@ paths:
 
             response, err :=
             client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1013,13 +1005,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customDelete[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customDelete[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1248,12 +1240,12 @@ paths:
             )
 
             // Call the API
-            val response = client.listAuthentications(
+            val response = Await.result(
+              client.listAuthentications(
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1349,9 +1341,7 @@ paths:
             client.CreateAuthentication(client.NewApiCreateAuthenticationRequest(
 
               ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("oauth")).SetName("authName").SetInput(ingestion.AuthOAuthAsAuthInput(
-                ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret"))),
-            ))
-
+                ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret")))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1538,21 +1528,21 @@ paths:
             )
 
             // Call the API
-            val response = client.createAuthentication(
-              authenticationCreate = AuthenticationCreate(
-                `type` = AuthenticationType.withName("oauth"),
-                name = "authName",
-                input = AuthOAuth(
-                  url = "http://test.oauth",
-                  client_id = "myID",
-                  client_secret = "mySecret"
+            val response = Await.result(
+              client.createAuthentication(
+                authenticationCreate = AuthenticationCreate(
+                  `type` = AuthenticationType.withName("oauth"),
+                  name = "authName",
+                  input = AuthOAuth(
+                    url = "http://test.oauth",
+                    clientId = "myID",
+                    clientSecret = "mySecret"
+                  )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1576,11 +1566,13 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request GET \
-              --url 'https://data.us.algolia.com/1/authentications?itemsPerPage=10&page=1&type=basic%2Coauth&platform=commercetools%2Cnone&sort=createdAt&order=desc' \
+            curl --request POST \
+              --url https://data.us.algolia.com/1/authentications \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"type":"googleServiceAccount","name":"lorem","platform":"bigcommerce","input":{"clientEmail":"service-account-name@project-id.iam.gserviceaccount.com","privateKey":"lorem"}}'
   /1/authentications/search:
     post:
       tags:
@@ -1652,9 +1644,7 @@ paths:
             client.SearchAuthentications(client.NewApiSearchAuthenticationsRequest(
 
               ingestion.NewEmptyAuthenticationSearch().SetAuthenticationIDs(
-                []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"}),
-            ))
-
+                []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1825,15 +1815,15 @@ paths:
             )
 
             // Call the API
-            val response = client.searchAuthentications(
-              authenticationSearch = AuthenticationSearch(
-                authenticationIDs = Seq("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
-              )
+            val response = Await.result(
+              client.searchAuthentications(
+                authenticationSearch = AuthenticationSearch(
+                  authenticationIDs = Seq("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1919,9 +1909,7 @@ paths:
 
             response, err :=
             client.GetAuthentication(client.NewApiGetAuthenticationRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            ))
-
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2073,13 +2061,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getAuthentication(
-              authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.getAuthentication(
+                authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2095,6 +2083,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://data.us.algolia.com/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     patch:
       tags:
         - authentications
@@ -2122,6 +2118,243 @@ paths:
                 $ref: '#/components/schemas/AuthenticationUpdateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            var response = await client.UpdateAuthenticationAsync(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new AuthenticationUpdate { Name = "newName" }
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.UpdateAuthentication(client.NewApiUpdateAuthenticationRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ingestion.NewEmptyAuthenticationUpdate().SetName("newName")))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.updateAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            new AuthenticationUpdate().setName("newName"));
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.updateAuthentication({
+              authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+              authenticationUpdate: { name: 'newName' },
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.updateAuthentication(
+              authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              authenticationUpdate = AuthenticationUpdate(
+                name = "newName",
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->updateAuthentication(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                ['name' => 'newName',
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.update_authentication(
+                authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                authentication_update={
+                    "name": "newName",
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.update_authentication(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              Algolia::Ingestion::AuthenticationUpdate.new(name: "newName")
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.updateAuthentication(
+                authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                authenticationUpdate = AuthenticationUpdate(
+                  name = Some("newName")
+                )
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.updateAuthentication(
+                authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                authenticationUpdate: AuthenticationUpdate(name: "newName")
+            )
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PATCH \
+              --url https://data.us.algolia.com/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"type":"googleServiceAccount","name":"lorem","platform":"bigcommerce","input":{"clientEmail":"service-account-name@project-id.iam.gserviceaccount.com","privateKey":"lorem"}}'
     delete:
       tags:
         - authentications
@@ -2145,6 +2378,225 @@ paths:
                 $ref: '#/components/schemas/DeleteResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+
+            // Call the API
+
+            var response = await
+            client.DeleteAuthenticationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.DeleteAuthentication(client.NewApiDeleteAuthenticationRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.deleteAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.deleteAuthentication({
+            authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.deleteAuthentication(
+              authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->deleteAuthentication(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.delete_authentication(
+                authentication_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response =
+            client.delete_authentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.deleteAuthentication(
+                authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await
+            client.deleteAuthentication(authenticationID:
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://data.us.algolia.com/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/destinations:
     get:
       tags:
@@ -2360,12 +2812,12 @@ paths:
             )
 
             // Call the API
-            val response = client.listDestinations(
+            val response = Await.result(
+              client.listDestinations(
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2429,7 +2881,7 @@ paths:
               {
                 Type = Enum.Parse<DestinationType>("Search"),
                 Name = "destinationName",
-                Input = new DestinationInput(new DestinationIndexName { IndexName = "<YOUR_INDEX_NAME>" }),
+                Input = new DestinationInput { IndexName = "<YOUR_INDEX_NAME>" },
                 AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               }
             );
@@ -2454,10 +2906,8 @@ paths:
             response, err :=
             client.CreateDestination(client.NewApiCreateDestinationRequest(
 
-              ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(ingestion.DestinationIndexNameAsDestinationInput(
-                ingestion.NewEmptyDestinationIndexName().SetIndexName("<YOUR_INDEX_NAME>"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
-            ))
-
+              ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(
+                ingestion.NewEmptyDestinationInput().SetIndexName("<YOUR_INDEX_NAME>")).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2485,7 +2935,7 @@ paths:
               new DestinationCreate()
                 .setType(DestinationType.SEARCH)
                 .setName("destinationName")
-                .setInput(new DestinationIndexName().setIndexName("<YOUR_INDEX_NAME>"))
+                .setInput(new DestinationInput().setIndexName("<YOUR_INDEX_NAME>"))
                 .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
             );
 
@@ -2531,7 +2981,7 @@ paths:
               destinationCreate = DestinationCreate(
                 type = DestinationType.entries.first { it.value == "search" },
                 name = "destinationName",
-                input = DestinationIndexName(
+                input = DestinationInput(
                   indexName = "<YOUR_INDEX_NAME>",
                 ),
                 authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -2617,7 +3067,7 @@ paths:
               Algolia::Ingestion::DestinationCreate.new(
                 type: "search",
                 name: "destinationName",
-                input: Algolia::Ingestion::DestinationIndexName.new(index_name: "<YOUR_INDEX_NAME>"),
+                input: Algolia::Ingestion::DestinationInput.new(index_name: "<YOUR_INDEX_NAME>"),
                 authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
               )
             )
@@ -2644,20 +3094,20 @@ paths:
             )
 
             // Call the API
-            val response = client.createDestination(
-              destinationCreate = DestinationCreate(
-                `type` = DestinationType.withName("search"),
-                name = "destinationName",
-                input = DestinationIndexName(
-                  indexName = "<YOUR_INDEX_NAME>"
-                ),
-                authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-              )
+            val response = Await.result(
+              client.createDestination(
+                destinationCreate = DestinationCreate(
+                  `type` = DestinationType.withName("search"),
+                  name = "destinationName",
+                  input = DestinationInput(
+                    indexName = "<YOUR_INDEX_NAME>"
+                  ),
+                  authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2673,7 +3123,7 @@ paths:
             DestinationCreate(
                 type: DestinationType.search,
                 name: "destinationName",
-                input: DestinationInput.destinationIndexName(DestinationIndexName(indexName: "<YOUR_INDEX_NAME>")),
+                input: DestinationInput(indexName: "<YOUR_INDEX_NAME>"),
                 authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
             ))
 
@@ -2681,11 +3131,13 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request GET \
-              --url 'https://data.us.algolia.com/1/destinations?itemsPerPage=10&page=1&type=search&authenticationID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&transformationID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&sort=type&order=desc' \
+            curl --request POST \
+              --url https://data.us.algolia.com/1/destinations \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"type":"search","name":"lorem","input":{"indexName":"lorem","recordType":"product","attributesToExclude":["lorem"]},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'
   /1/destinations/search:
     post:
       tags:
@@ -2757,9 +3209,7 @@ paths:
             client.SearchDestinations(client.NewApiSearchDestinationsRequest(
 
               ingestion.NewEmptyDestinationSearch().SetDestinationIDs(
-                []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"}),
-            ))
-
+                []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2930,15 +3380,15 @@ paths:
             )
 
             // Call the API
-            val response = client.searchDestinations(
-              destinationSearch = DestinationSearch(
-                destinationIDs = Seq("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
-              )
+            val response = Await.result(
+              client.searchDestinations(
+                destinationSearch = DestinationSearch(
+                  destinationIDs = Seq("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3026,9 +3476,7 @@ paths:
 
             response, err :=
             client.GetDestination(client.NewApiGetDestinationRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            ))
-
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -3180,13 +3628,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getDestination(
-              destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.getDestination(
+                destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3202,6 +3650,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://data.us.algolia.com/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     patch:
       tags:
         - destinations
@@ -3229,6 +3685,243 @@ paths:
                 $ref: '#/components/schemas/DestinationUpdateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            var response = await client.UpdateDestinationAsync(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new DestinationUpdate { Name = "newName" }
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.UpdateDestination(client.NewApiUpdateDestinationRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ingestion.NewEmptyDestinationUpdate().SetName("newName")))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.updateDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new
+            DestinationUpdate().setName("newName"));
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.updateDestination({
+              destinationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+              destinationUpdate: { name: 'newName' },
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.updateDestination(
+              destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              destinationUpdate = DestinationUpdate(
+                name = "newName",
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->updateDestination(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                ['name' => 'newName',
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.update_destination(
+                destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                destination_update={
+                    "name": "newName",
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.update_destination(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              Algolia::Ingestion::DestinationUpdate.new(name: "newName")
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.updateDestination(
+                destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                destinationUpdate = DestinationUpdate(
+                  name = Some("newName")
+                )
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.updateDestination(
+                destinationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                destinationUpdate: DestinationUpdate(name: "newName")
+            )
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PATCH \
+              --url https://data.us.algolia.com/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"type":"search","name":"lorem","input":{"indexName":"lorem","recordType":"product","attributesToExclude":["lorem"]},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'
     delete:
       tags:
         - destinations
@@ -3252,6 +3945,224 @@ paths:
                 $ref: '#/components/schemas/DeleteResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+
+            // Call the API
+
+            var response = await
+            client.DeleteDestinationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.DeleteDestination(client.NewApiDeleteDestinationRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.deleteDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.deleteDestination({ destinationID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.deleteDestination(
+              destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->deleteDestination(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.delete_destination(
+                destination_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response =
+            client.delete_destination("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.deleteDestination(
+                destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.deleteDestination(destinationID:
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://data.us.algolia.com/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/sources:
     get:
       tags:
@@ -3466,12 +4377,12 @@ paths:
             )
 
             // Call the API
-            val response = client.listSources(
+            val response = Await.result(
+              client.listSources(
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3542,6 +4453,8 @@ paths:
                     Locales = new List<string> { "de" },
                     Url = "http://commercetools.com",
                     ProjectKey = "keyID",
+                    ProductQueryPredicate =
+                      "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))",
                   }
                 ),
                 AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -3571,9 +4484,7 @@ paths:
               ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType("commercetools")).SetName("sourceName").SetInput(ingestion.SourceCommercetoolsAsSourceInput(
                 ingestion.NewEmptySourceCommercetools().SetStoreKeys(
                   []string{"myStore"}).SetLocales(
-                  []string{"de"}).SetUrl("http://commercetools.com").SetProjectKey("keyID"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
-            ))
-
+                  []string{"de"}).SetUrl("http://commercetools.com").SetProjectKey("keyID").SetProductQueryPredicate("masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -3607,6 +4518,7 @@ paths:
                     .setLocales(Arrays.asList("de"))
                     .setUrl("http://commercetools.com")
                     .setProjectKey("keyID")
+                    .setProductQueryPredicate("masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))")
                 )
                 .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
             );
@@ -3628,7 +4540,13 @@ paths:
             const response = await client.createSource({
               type: 'commercetools',
               name: 'sourceName',
-              input: { storeKeys: ['myStore'], locales: ['de'], url: 'http://commercetools.com', projectKey: 'keyID' },
+              input: {
+                storeKeys: ['myStore'],
+                locales: ['de'],
+                url: 'http://commercetools.com',
+                projectKey: 'keyID',
+                productQueryPredicate: 'masterVariant(attributes(name="Brand" and value="Algolia"))',
+              },
               authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
             });
 
@@ -3658,6 +4576,7 @@ paths:
                   locales = listOf("de"),
                   url = "http://commercetools.com",
                   projectKey = "keyID",
+                  productQueryPredicate = "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))",
                 ),
                 authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               ),
@@ -3691,6 +4610,7 @@ paths:
                         ],
                         'url' => 'http://commercetools.com',
                         'projectKey' => 'keyID',
+                        'productQueryPredicate' => 'masterVariant(attributes(name="Brand" and value="Algolia"))',
                     ],
                     'authenticationID' => '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
                 ],
@@ -3730,6 +4650,7 @@ paths:
                         ],
                         "url": "http://commercetools.com",
                         "projectKey": "keyID",
+                        "productQueryPredicate": 'masterVariant(attributes(name="Brand" and value="Algolia"))',
                     },
                     "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 },
@@ -3760,7 +4681,8 @@ paths:
                   store_keys: ["myStore"],
                   locales: ["de"],
                   url: "http://commercetools.com",
-                  project_key: "keyID"
+                  project_key: "keyID",
+                  product_query_predicate: "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"
                 ),
                 authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
               )
@@ -3788,25 +4710,26 @@ paths:
             )
 
             // Call the API
-            val response = client.createSource(
-              sourceCreate = SourceCreate(
-                `type` = SourceType.withName("commercetools"),
-                name = "sourceName",
-                input = Some(
-                  SourceCommercetools(
-                    storeKeys = Some(Seq("myStore")),
-                    locales = Some(Seq("de")),
-                    url = "http://commercetools.com",
-                    projectKey = "keyID"
-                  )
-                ),
-                authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-              )
+            val response = Await.result(
+              client.createSource(
+                sourceCreate = SourceCreate(
+                  `type` = SourceType.withName("commercetools"),
+                  name = "sourceName",
+                  input = Some(
+                    SourceCommercetools(
+                      storeKeys = Some(Seq("myStore")),
+                      locales = Some(Seq("de")),
+                      url = "http://commercetools.com",
+                      projectKey = "keyID",
+                      productQueryPredicate = Some("masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))")
+                    )
+                  ),
+                  authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3826,7 +4749,8 @@ paths:
                     storeKeys: ["myStore"],
                     locales: ["de"],
                     url: "http://commercetools.com",
-                    projectKey: "keyID"
+                    projectKey: "keyID",
+                    productQueryPredicate: "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"
                 )),
                 authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
             ))
@@ -3835,11 +4759,13 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request GET \
-              --url 'https://data.us.algolia.com/1/sources?itemsPerPage=10&page=1&type=commercetools%2Cbigcommerce&authenticationID=10000000-0a75-4000-a000-000000000001%2Cnone&sort=createdAt&order=desc' \
+            curl --request POST \
+              --url https://data.us.algolia.com/1/sources \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"type":"bigcommerce","name":"lorem","input":{"storeKeys":["lorem"],"locales":["fr-FR"],"url":"lorem","projectKey":"lorem","fallbackIsInStockValue":true,"productQueryPredicate":"lorem","customFields":{"inventory":["lorem"],"price":["lorem"],"category":["lorem"]}},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'
   /1/sources/validate:
     post:
       tags:
@@ -4137,27 +5063,27 @@ paths:
             )
 
             // Call the API
-            val response = client.validateSource(
-              sourceCreate = Some(
-                SourceCreate(
-                  `type` = SourceType.withName("commercetools"),
-                  name = "sourceName",
-                  input = Some(
-                    SourceCommercetools(
-                      storeKeys = Some(Seq("myStore")),
-                      locales = Some(Seq("de")),
-                      url = "http://commercetools.com",
-                      projectKey = "keyID"
-                    )
-                  ),
-                  authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+            val response = Await.result(
+              client.validateSource(
+                sourceCreate = Some(
+                  SourceCreate(
+                    `type` = SourceType.withName("commercetools"),
+                    name = "sourceName",
+                    input = Some(
+                      SourceCommercetools(
+                        storeKeys = Some(Seq("myStore")),
+                        locales = Some(Seq("de")),
+                        url = "http://commercetools.com",
+                        projectKey = "keyID"
+                      )
+                    ),
+                    authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+                  )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4192,7 +5118,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"type":"bigcommerce","name":"lorem","input":{"storeKeys":["lorem"],"locales":["fr-FR"],"url":"lorem","projectKey":"lorem","fallbackIsInStockValue":true,"customFields":{"inventory":["lorem"],"price":["lorem"],"category":["lorem"]}},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'
+              --data '{"type":"bigcommerce","name":"lorem","input":{"storeKeys":["lorem"],"locales":["fr-FR"],"url":"lorem","projectKey":"lorem","fallbackIsInStockValue":true,"productQueryPredicate":"lorem","customFields":{"inventory":["lorem"],"price":["lorem"],"category":["lorem"]}},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'
   /1/sources/search:
     post:
       tags:
@@ -4264,9 +5190,7 @@ paths:
             client.SearchSources(client.NewApiSearchSourcesRequest(
 
               ingestion.NewEmptySourceSearch().SetSourceIDs(
-                []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"}),
-            ))
-
+                []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4436,15 +5360,15 @@ paths:
             )
 
             // Call the API
-            val response = client.searchSources(
-              sourceSearch = SourceSearch(
-                sourceIDs = Seq("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
-              )
+            val response = Await.result(
+              client.searchSources(
+                sourceSearch = SourceSearch(
+                  sourceIDs = Seq("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4530,9 +5454,7 @@ paths:
             // Call the API
 
             response, err := client.GetSource(client.NewApiGetSourceRequest(
-              "75eeb306-51d3-4e5e-a279-3c92bd8893ac",
-            ))
-
+              "75eeb306-51d3-4e5e-a279-3c92bd8893ac"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4683,13 +5605,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getSource(
-              sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac"
+            val response = Await.result(
+              client.getSource(
+                sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4705,6 +5627,14 @@ paths:
             "75eeb306-51d3-4e5e-a279-3c92bd8893ac")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://data.us.algolia.com/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     patch:
       tags:
         - sources
@@ -4732,6 +5662,243 @@ paths:
                 $ref: '#/components/schemas/SourceUpdateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            var response = await client.UpdateSourceAsync(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new SourceUpdate { Name = "newName" }
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.UpdateSource(client.NewApiUpdateSourceRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ingestion.NewEmptySourceUpdate().SetName("newName")))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.updateSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new
+            SourceUpdate().setName("newName"));
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.updateSource({
+              sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+              sourceUpdate: { name: 'newName' },
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.updateSource(
+              sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              sourceUpdate = SourceUpdate(
+                name = "newName",
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->updateSource(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                ['name' => 'newName',
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.update_source(
+                source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                source_update={
+                    "name": "newName",
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.update_source(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              Algolia::Ingestion::SourceUpdate.new(name: "newName")
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.updateSource(
+                sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                sourceUpdate = SourceUpdate(
+                  name = Some("newName")
+                )
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.updateSource(
+                sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                sourceUpdate: SourceUpdate(name: "newName")
+            )
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PATCH \
+              --url https://data.us.algolia.com/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"name":"lorem","input":{"storeKeys":["lorem"],"locales":["fr-FR"],"url":"lorem","fallbackIsInStockValue":true,"productQueryPredicate":"lorem","customFields":{"inventory":["lorem"],"price":["lorem"],"category":["lorem"]}},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'
     delete:
       tags:
         - sources
@@ -4755,6 +5922,224 @@ paths:
                 $ref: '#/components/schemas/DeleteResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+
+            // Call the API
+
+            var response = await
+            client.DeleteSourceAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.DeleteSource(client.NewApiDeleteSourceRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.deleteSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.deleteSource({ sourceID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.deleteSource(
+              sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->deleteSource(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.delete_source(
+                source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response =
+            client.delete_source("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.deleteSource(
+                sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.deleteSource(sourceID:
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://data.us.algolia.com/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/sources/{sourceID}/validate:
     post:
       tags:
@@ -4824,9 +6209,7 @@ paths:
             response, err :=
             client.ValidateSourceBeforeUpdate(client.NewApiValidateSourceBeforeUpdateRequest(
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              ingestion.NewEmptySourceUpdate().SetName("newName"),
-            ))
-
+              ingestion.NewEmptySourceUpdate().SetName("newName")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4991,16 +6374,16 @@ paths:
             )
 
             // Call the API
-            val response = client.validateSourceBeforeUpdate(
-              sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              sourceUpdate = SourceUpdate(
-                name = Some("newName")
-              )
+            val response = Await.result(
+              client.validateSourceBeforeUpdate(
+                sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                sourceUpdate = SourceUpdate(
+                  name = Some("newName")
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5018,6 +6401,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://data.us.algolia.com/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/validate \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"name":"lorem","input":{"storeKeys":["lorem"],"locales":["fr-FR"],"url":"lorem","fallbackIsInStockValue":true,"productQueryPredicate":"lorem","customFields":{"inventory":["lorem"],"price":["lorem"],"category":["lorem"]}},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'
   /1/sources/{sourceID}/discover:
     post:
       tags:
@@ -5081,9 +6474,7 @@ paths:
 
             response, err :=
             client.TriggerDockerSourceDiscover(client.NewApiTriggerDockerSourceDiscoverRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            ))
-
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5235,13 +6626,13 @@ paths:
             )
 
             // Call the API
-            val response = client.triggerDockerSourceDiscover(
-              sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.triggerDockerSourceDiscover(
+                sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5258,6 +6649,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://data.us.algolia.com/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/sources/{sourceID}/run:
     post:
       tags:
@@ -5340,8 +6739,7 @@ paths:
             // Call the API
 
             response, err := client.RunSource(client.NewApiRunSourceRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            ).WithRunSourcePayload(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f").WithRunSourcePayload(
               ingestion.NewEmptyRunSourcePayload().SetIndexToInclude(
                 []string{"products_us", "products eu"}).SetEntityIDs(
                 []string{"1234", "5678"}).SetEntityType(ingestion.EntityType("product"))))
@@ -5542,20 +6940,20 @@ paths:
             )
 
             // Call the API
-            val response = client.runSource(
-              sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              runSourcePayload = Some(
-                RunSourcePayload(
-                  indexToInclude = Some(Seq("products_us", "products eu")),
-                  entityIDs = Some(Seq("1234", "5678")),
-                  entityType = Some(EntityType.withName("product"))
+            val response = Await.result(
+              client.runSource(
+                sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                runSourcePayload = Some(
+                  RunSourcePayload(
+                    indexToInclude = Some(Seq("products_us", "products eu")),
+                    entityIDs = Some(Seq("1234", "5678")),
+                    entityType = Some(EntityType.withName("product"))
+                  )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5577,6 +6975,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://data.us.algolia.com/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"indexToInclude":["lorem"],"indexToExclude":["lorem"],"entityIDs":["lorem"],"entityType":"product"}'
   /2/tasks:
     get:
       tags:
@@ -5796,12 +7204,12 @@ paths:
             )
 
             // Call the API
-            val response = client.listTasks(
+            val response = Await.result(
+              client.listTasks(
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5884,9 +7292,7 @@ paths:
 
             response, err := client.CreateTask(client.NewApiCreateTaskRequest(
 
-              ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetAction(ingestion.ActionType("replace")),
-            ))
-
+              ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetAction(ingestion.ActionType("replace"))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6051,17 +7457,17 @@ paths:
             )
 
             // Call the API
-            val response = client.createTask(
-              taskCreate = TaskCreate(
-                sourceID = "search",
-                destinationID = "destinationName",
-                action = ActionType.withName("replace")
-              )
+            val response = Await.result(
+              client.createTask(
+                taskCreate = TaskCreate(
+                  sourceID = "search",
+                  destinationID = "destinationName",
+                  action = ActionType.withName("replace")
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -6083,11 +7489,13 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request GET \
-              --url 'https://data.us.algolia.com/2/tasks?itemsPerPage=10&page=1&action=save%2Creplace%2Cpartial%2Cappend&enabled=true&sourceID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&sourceType=json%2Ccommercetools&destinationID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&triggerType=onDemand%2Cschedule%2Csubscription%2Cstreaming&withEmailNotifications=true&sort=createdAt&order=desc' \
+            curl --request POST \
+              --url https://data.us.algolia.com/2/tasks \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"sourceID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","destinationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","action":"replace","subscriptionAction":"replace","cron":"* * 1 * *","enabled":true,"failureThreshold":0,"input":{"mapping":{"format":"mappingkit/v1","actions":[{"id":"lorem","enabled":true,"trigger":"lorem","fieldDirectives":[{"fieldKey":"lorem","value":{}}]}]}},"cursor":"lorem","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":1}}'
   /2/tasks/search:
     post:
       tags:
@@ -6159,9 +7567,7 @@ paths:
             response, err := client.SearchTasks(client.NewApiSearchTasksRequest(
 
               ingestion.NewEmptyTaskSearch().SetTaskIDs(
-                []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"}),
-            ))
-
+                []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6349,19 +7755,19 @@ paths:
             )
 
             // Call the API
-            val response = client.searchTasks(
-              taskSearch = TaskSearch(
-                taskIDs = Seq(
-                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                  "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+            val response = Await.result(
+              client.searchTasks(
+                taskSearch = TaskSearch(
+                  taskIDs = Seq(
+                    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                    "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                    "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+                  )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -6448,9 +7854,7 @@ paths:
             // Call the API
 
             response, err := client.GetTask(client.NewApiGetTaskRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            ))
-
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6601,13 +8005,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getTask(
-              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.getTask(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -6623,6 +8027,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://data.us.algolia.com/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     patch:
       tags:
         - tasks
@@ -6646,6 +8058,246 @@ paths:
                 $ref: '#/components/schemas/TaskUpdateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            var response = await client.UpdateTaskAsync(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new TaskUpdate { Enabled = false, Cron = "* * * * *" }
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.UpdateTask(client.NewApiUpdateTaskRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ingestion.NewEmptyTaskUpdate().SetEnabled(false).SetCron("* * * * *")))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.updateTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new
+            TaskUpdate().setEnabled(false).setCron("* * * * *"));
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.updateTask({
+              taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+              taskUpdate: { enabled: false, cron: '* * * * *' },
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.updateTask(
+              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              taskUpdate = TaskUpdate(
+                enabled = false,
+                cron = "* * * * *",
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->updateTask(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                ['enabled' => false,
+                    'cron' => '* * * * *',
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.update_task(
+                task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                task_update={
+                    "enabled": False,
+                    "cron": "* * * * *",
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.update_task(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              Algolia::Ingestion::TaskUpdate.new(enabled: false, cron: "* * * * *")
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.updateTask(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                taskUpdate = TaskUpdate(
+                  enabled = Some(false),
+                  cron = Some("* * * * *")
+                )
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.updateTask(
+                taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                taskUpdate: TaskUpdate(cron: "* * * * *", enabled: false)
+            )
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PATCH \
+              --url https://data.us.algolia.com/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"destinationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","cron":"* * 1 * *","input":{"mapping":{"format":"mappingkit/v1","actions":[{"id":"lorem","enabled":true,"trigger":"lorem","fieldDirectives":[{"fieldKey":"lorem","value":{}}]}]}},"enabled":true,"subscriptionAction":"replace","failureThreshold":0,"notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":1}}'
     delete:
       tags:
         - tasks
@@ -6663,6 +8315,223 @@ paths:
                 $ref: '#/components/schemas/DeleteResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+
+            // Call the API
+
+            var response = await
+            client.DeleteTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.DeleteTask(client.NewApiDeleteTaskRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.deleteTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.deleteTask({ taskID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.deleteTask(
+              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->deleteTask(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.delete_task(
+                task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response =
+            client.delete_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.deleteTask(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.deleteTask(taskID:
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://data.us.algolia.com/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/tasks/{taskID}/run:
     post:
       tags:
@@ -6722,9 +8591,7 @@ paths:
             // Call the API
 
             response, err := client.RunTask(client.NewApiRunTaskRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            ))
-
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6875,13 +8742,13 @@ paths:
             )
 
             // Call the API
-            val response = client.runTask(
-              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.runTask(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -6897,6 +8764,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://data.us.algolia.com/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/tasks/{taskID}/push:
     post:
       tags:
@@ -7019,9 +8894,7 @@ paths:
             response, err := client.PushTask(client.NewApiPushTaskRequest(
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
-                []ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")}),
-            ))
-
+                []ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -7218,8 +9091,8 @@ paths:
               Algolia::Ingestion::PushTaskPayload.new(
                 action: "addObject",
                 records: [
-                  Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", object_id: "o"),
-                  Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", object_id: "k")
+                  Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", algolia_object_id: "o"),
+                  Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", algolia_object_id: "k")
                 ]
               )
             )
@@ -7246,26 +9119,26 @@ paths:
             )
 
             // Call the API
-            val response = client.pushTask(
-              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              pushTaskPayload = PushTaskPayload(
-                action = Action.withName("addObject"),
-                records = Seq(
-                  PushTaskRecords(
-                    objectID = "o",
-                    additionalProperties = Some(List(JField("key", JString("bar")), JField("foo", JString("1"))))
-                  ),
-                  PushTaskRecords(
-                    objectID = "k",
-                    additionalProperties = Some(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+            val response = Await.result(
+              client.pushTask(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                pushTaskPayload = PushTaskPayload(
+                  action = Action.withName("addObject"),
+                  records = Seq(
+                    PushTaskRecords(
+                      objectID = "o",
+                      additionalProperties = Some(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+                    ),
+                    PushTaskRecords(
+                      objectID = "k",
+                      additionalProperties = Some(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+                    )
                   )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -7297,6 +9170,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url 'https://data.us.algolia.com/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push?watch=true' \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"action":"addObject","records":[{"objectID":"test-record-123"}]}'
   /2/tasks/{taskID}/enable:
     put:
       tags:
@@ -7354,9 +9237,7 @@ paths:
             // Call the API
 
             response, err := client.EnableTask(client.NewApiEnableTaskRequest(
-              "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-            ))
-
+              "76ab4c2a-ce17-496f-b7a6-506dc59ee498"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -7508,13 +9389,13 @@ paths:
             )
 
             // Call the API
-            val response = client.enableTask(
-              taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+            val response = Await.result(
+              client.enableTask(
+                taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -7530,6 +9411,14 @@ paths:
             "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PUT \
+              --url https://data.us.algolia.com/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/enable \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/tasks/{taskID}/disable:
     put:
       tags:
@@ -7587,9 +9476,7 @@ paths:
             // Call the API
 
             response, err := client.DisableTask(client.NewApiDisableTaskRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            ))
-
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -7741,13 +9628,13 @@ paths:
             )
 
             // Call the API
-            val response = client.disableTask(
-              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.disableTask(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -7763,6 +9650,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PUT \
+              --url https://data.us.algolia.com/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/tasks:
     get:
       tags:
@@ -7984,12 +9879,12 @@ paths:
             )
 
             // Call the API
-            val response = client.listTasksV1(
+            val response = Await.result(
+              client.listTasksV1(
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -8081,9 +9976,7 @@ paths:
             client.CreateTaskV1(client.NewApiCreateTaskV1Request(
 
               ingestion.NewEmptyTaskCreateV1().SetSourceID("search").SetDestinationID("destinationName").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
-                ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType("onDemand")))).SetAction(ingestion.ActionType("replace")),
-            ))
-
+                ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType("onDemand")))).SetAction(ingestion.ActionType("replace"))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -8270,20 +10163,20 @@ paths:
             )
 
             // Call the API
-            val response = client.createTaskV1(
-              taskCreate = TaskCreateV1(
-                sourceID = "search",
-                destinationID = "destinationName",
-                trigger = OnDemandTriggerInput(
-                  `type` = OnDemandTriggerType.withName("onDemand")
-                ),
-                action = ActionType.withName("replace")
-              )
+            val response = Await.result(
+              client.createTaskV1(
+                taskCreate = TaskCreateV1(
+                  sourceID = "search",
+                  destinationID = "destinationName",
+                  trigger = OnDemandTriggerInput(
+                    `type` = OnDemandTriggerType.withName("onDemand")
+                  ),
+                  action = ActionType.withName("replace")
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -8307,11 +10200,13 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request GET \
-              --url 'https://data.us.algolia.com/1/tasks?itemsPerPage=10&page=1&action=save%2Creplace%2Cpartial%2Cappend&enabled=true&sourceID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&destinationID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&triggerType=onDemand%2Cschedule%2Csubscription%2Cstreaming&sort=createdAt&order=desc' \
+            curl --request POST \
+              --url https://data.us.algolia.com/1/tasks \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"sourceID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","destinationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","trigger":{"type":"onDemand"},"action":"replace","enabled":true,"failureThreshold":0,"input":{"mapping":{"format":"mappingkit/v1","actions":[{"id":"lorem","enabled":true,"trigger":"lorem","fieldDirectives":[{"fieldKey":"lorem","value":{}}]}]}},"cursor":"lorem"}'
   /1/tasks/search:
     post:
       tags:
@@ -8387,9 +10282,7 @@ paths:
             client.SearchTasksV1(client.NewApiSearchTasksV1Request(
 
               ingestion.NewEmptyTaskSearch().SetTaskIDs(
-                []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"}),
-            ))
-
+                []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -8577,19 +10470,19 @@ paths:
             )
 
             // Call the API
-            val response = client.searchTasksV1(
-              taskSearch = TaskSearch(
-                taskIDs = Seq(
-                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                  "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+            val response = Await.result(
+              client.searchTasksV1(
+                taskSearch = TaskSearch(
+                  taskIDs = Seq(
+                    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                    "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                    "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+                  )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -8679,9 +10572,7 @@ paths:
             // Call the API
 
             response, err := client.GetTaskV1(client.NewApiGetTaskV1Request(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            ))
-
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -8833,13 +10724,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getTaskV1(
-              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.getTaskV1(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -8855,6 +10746,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://data.us.algolia.com/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     patch:
       tags:
         - tasks
@@ -8882,6 +10781,243 @@ paths:
                 $ref: '#/components/schemas/TaskUpdateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            var response = await client.UpdateTaskV1Async(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new TaskUpdateV1 { Enabled = false }
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.UpdateTaskV1(client.NewApiUpdateTaskV1Request(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ingestion.NewEmptyTaskUpdateV1().SetEnabled(false)))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.updateTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new
+            TaskUpdateV1().setEnabled(false));
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.updateTaskV1({
+              taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+              taskUpdate: { enabled: false },
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.updateTaskV1(
+              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              taskUpdate = TaskUpdateV1(
+                enabled = false,
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->updateTaskV1(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                ['enabled' => false,
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.update_task_v1(
+                task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                task_update={
+                    "enabled": False,
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.update_task_v1(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              Algolia::Ingestion::TaskUpdateV1.new(enabled: false)
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.updateTaskV1(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                taskUpdate = TaskUpdateV1(
+                  enabled = Some(false)
+                )
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.updateTaskV1(
+                taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                taskUpdate: TaskUpdateV1(enabled: false)
+            )
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PATCH \
+              --url https://data.us.algolia.com/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"destinationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","trigger":{"cron":"* * 1 * *"},"input":{"mapping":{"format":"mappingkit/v1","actions":[{"id":"lorem","enabled":true,"trigger":"lorem","fieldDirectives":[{"fieldKey":"lorem","value":{}}]}]}},"enabled":true,"failureThreshold":0}'
     delete:
       tags:
         - tasks
@@ -8902,6 +11038,224 @@ paths:
                 $ref: '#/components/schemas/DeleteResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+
+            // Call the API
+
+            var response = await
+            client.DeleteTaskV1Async("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.DeleteTaskV1(client.NewApiDeleteTaskV1Request(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.deleteTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.deleteTaskV1({ taskID:
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.deleteTaskV1(
+              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->deleteTaskV1(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.delete_task_v1(
+                task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response =
+            client.delete_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.deleteTaskV1(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.deleteTaskV1(taskID:
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://data.us.algolia.com/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/tasks/{taskID}/run:
     post:
       tags:
@@ -8962,9 +11316,7 @@ paths:
             // Call the API
 
             response, err := client.RunTaskV1(client.NewApiRunTaskV1Request(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            ))
-
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -9116,13 +11468,13 @@ paths:
             )
 
             // Call the API
-            val response = client.runTaskV1(
-              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.runTaskV1(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -9138,6 +11490,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://data.us.algolia.com/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/tasks/{taskID}/enable:
     put:
       tags:
@@ -9197,9 +11557,7 @@ paths:
 
             response, err :=
             client.EnableTaskV1(client.NewApiEnableTaskV1Request(
-              "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-            ))
-
+              "76ab4c2a-ce17-496f-b7a6-506dc59ee498"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -9351,13 +11709,13 @@ paths:
             )
 
             // Call the API
-            val response = client.enableTaskV1(
-              taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+            val response = Await.result(
+              client.enableTaskV1(
+                taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -9373,6 +11731,14 @@ paths:
             "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PUT \
+              --url https://data.us.algolia.com/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/enable \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/tasks/{taskID}/disable:
     put:
       tags:
@@ -9432,9 +11798,7 @@ paths:
 
             response, err :=
             client.DisableTaskV1(client.NewApiDisableTaskV1Request(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            ))
-
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -9586,13 +11950,13 @@ paths:
             )
 
             // Call the API
-            val response = client.disableTaskV1(
-              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.disableTaskV1(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -9608,6 +11972,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PUT \
+              --url https://data.us.algolia.com/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/transformations:
     get:
       tags:
@@ -9821,12 +12193,12 @@ paths:
             )
 
             // Call the API
-            val response = client.listTransformations(
+            val response = Await.result(
+              client.listTransformations(
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -9910,9 +12282,7 @@ paths:
             response, err :=
             client.CreateTransformation(client.NewApiCreateTransformationRequest(
 
-              ingestion.NewEmptyTransformationCreate().SetCode("foo").SetName("bar").SetDescription("baz"),
-            ))
-
+              ingestion.NewEmptyTransformationCreate().SetCode("foo").SetName("bar").SetDescription("baz")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -10077,17 +12447,17 @@ paths:
             )
 
             // Call the API
-            val response = client.createTransformation(
-              transformationCreate = TransformationCreate(
-                code = "foo",
-                name = "bar",
-                description = Some("baz")
-              )
+            val response = Await.result(
+              client.createTransformation(
+                transformationCreate = TransformationCreate(
+                  code = "foo",
+                  name = "bar",
+                  description = Some("baz")
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -10111,11 +12481,13 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request GET \
-              --url 'https://data.us.algolia.com/1/transformations?itemsPerPage=10&page=1&sort=createdAt&order=desc' \
+            curl --request POST \
+              --url https://data.us.algolia.com/1/transformations \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"code":"lorem","name":"lorem","description":"lorem","authenticationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'
   /1/transformations/try:
     post:
       tags:
@@ -10180,9 +12552,7 @@ paths:
             response, err :=
             client.TryTransformation(client.NewApiTryTransformationRequest(
 
-              ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}),
-            ))
-
+              ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -10361,16 +12731,16 @@ paths:
             )
 
             // Call the API
-            val response = client.tryTransformation(
-              transformationTry = TransformationTry(
-                code = "foo",
-                sampleRecord = JObject(List(JField("bar", JString("baz"))))
-              )
+            val response = Await.result(
+              client.tryTransformation(
+                transformationTry = TransformationTry(
+                  code = "foo",
+                  sampleRecord = JObject(List(JField("bar", JString("baz"))))
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -10471,9 +12841,7 @@ paths:
             client.SearchTransformations(client.NewApiSearchTransformationsRequest(
 
               ingestion.NewEmptyTransformationSearch().SetTransformationIDs(
-                []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"}),
-            ))
-
+                []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -10661,19 +13029,19 @@ paths:
             )
 
             // Call the API
-            val response = client.searchTransformations(
-              transformationSearch = TransformationSearch(
-                transformationIDs = Seq(
-                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                  "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+            val response = Await.result(
+              client.searchTransformations(
+                transformationSearch = TransformationSearch(
+                  transformationIDs = Seq(
+                    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                    "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                    "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+                  )
                 )
-              )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -10760,9 +13128,7 @@ paths:
 
             response, err :=
             client.GetTransformation(client.NewApiGetTransformationRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            ))
-
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -10914,13 +13280,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getTransformation(
-              transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.getTransformation(
+                transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -10936,6 +13302,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://data.us.algolia.com/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     put:
       tags:
         - transformations
@@ -10959,6 +13333,258 @@ paths:
                 $ref: '#/components/schemas/TransformationUpdateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            var response = await client.UpdateTransformationAsync(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new TransformationCreate
+              {
+                Code = "foo",
+                Name = "bar",
+                Description = "baz",
+              }
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.UpdateTransformation(client.NewApiUpdateTransformationRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ingestion.NewEmptyTransformationCreate().SetCode("foo").SetName("bar").SetDescription("baz")))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.updateTransformation(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new TransformationCreate().setCode("foo").setName("bar").setDescription("baz")
+            );
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.updateTransformation({
+              transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+              transformationCreate: { code: 'foo', name: 'bar', description: 'baz' },
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.updateTransformation(
+              transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              transformationCreate = TransformationCreate(
+                code = "foo",
+                name = "bar",
+                description = "baz",
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->updateTransformation(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                ['code' => 'foo',
+                    'name' => 'bar',
+                    'description' => 'baz',
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.update_transformation(
+                transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                transformation_create={
+                    "code": "foo",
+                    "name": "bar",
+                    "description": "baz",
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.update_transformation(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              Algolia::Ingestion::TransformationCreate.new(code: "foo", name: "bar", description: "baz")
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.updateTransformation(
+                transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                transformationCreate = TransformationCreate(
+                  code = "foo",
+                  name = "bar",
+                  description = Some("baz")
+                )
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.updateTransformation(
+                transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                transformationCreate: TransformationCreate(code: "foo", name: "bar", description: "baz")
+            )
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PUT \
+              --url https://data.us.algolia.com/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"code":"lorem","name":"lorem","description":"lorem","authenticationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'
     delete:
       tags:
         - transformations
@@ -10976,6 +13602,225 @@ paths:
                 $ref: '#/components/schemas/DeleteResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+
+            // Call the API
+
+            var response = await
+            client.DeleteTransformationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.DeleteTransformation(client.NewApiDeleteTransformationRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.deleteTransformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.deleteTransformation({
+            transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.deleteTransformation(
+              transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->deleteTransformation(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.delete_transformation(
+                transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response =
+            client.delete_transformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.deleteTransformation(
+                transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await
+            client.deleteTransformation(transformationID:
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://data.us.algolia.com/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/transformations/{transformationID}/try:
     post:
       tags:
@@ -11043,9 +13888,7 @@ paths:
             response, err :=
             client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}),
-            ))
-
+              ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -11231,17 +14074,17 @@ paths:
             )
 
             // Call the API
-            val response = client.tryTransformationBeforeUpdate(
-              transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              transformationTry = TransformationTry(
-                code = "foo",
-                sampleRecord = JObject(List(JField("bar", JString("baz"))))
-              )
+            val response = Await.result(
+              client.tryTransformationBeforeUpdate(
+                transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                transformationTry = TransformationTry(
+                  code = "foo",
+                  sampleRecord = JObject(List(JField("bar", JString("baz"))))
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -11259,6 +14102,16 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://data.us.algolia.com/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"code":"lorem","sampleRecord":{},"authentications":[{"type":"googleServiceAccount","name":"lorem","platform":"bigcommerce","input":{"clientEmail":"service-account-name@project-id.iam.gserviceaccount.com","privateKey":"lorem"}}]}'
   /1/runs:
     get:
       tags:
@@ -11475,12 +14328,12 @@ paths:
             )
 
             // Call the API
-            val response = client.listRuns(
+            val response = Await.result(
+              client.listRuns(
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -11560,9 +14413,7 @@ paths:
             // Call the API
 
             response, err := client.GetRun(client.NewApiGetRunRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            ))
-
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -11713,13 +14564,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getRun(
-              runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.getRun(
+                runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -11735,6 +14586,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://data.us.algolia.com/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/runs/{runID}/events:
     get:
       tags:
@@ -11827,9 +14686,7 @@ paths:
             // Call the API
 
             response, err := client.ListEvents(client.NewApiListEventsRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            ))
-
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -11981,13 +14838,13 @@ paths:
             )
 
             // Call the API
-            val response = client.listEvents(
-              runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = Await.result(
+              client.listEvents(
+                runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -12003,6 +14860,14 @@ paths:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://data.us.algolia.com/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events?itemsPerPage=10&page=1&status=created&type=fetch&sort=status&order=desc&startDate=lorem&endDate=lorem' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/runs/{runID}/events/{eventID}:
     get:
       tags:
@@ -12059,9 +14924,7 @@ paths:
             // Call the API
 
             response, err := client.GetEvent(client.NewApiGetEventRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "6c02aeb1-775e-418e-870b-1faccd4b2c0c",
-            ))
-
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "6c02aeb1-775e-418e-870b-1faccd4b2c0c"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -12219,14 +15082,14 @@ paths:
             )
 
             // Call the API
-            val response = client.getEvent(
-              runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              eventID = "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
+            val response = Await.result(
+              client.getEvent(
+                runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                eventID = "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -12244,6 +15107,14 @@ paths:
             )
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://data.us.algolia.com/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
 components:
   securitySchemes:
     appId:
@@ -12676,6 +15547,11 @@ components:
     name:
       type: string
       description: Descriptive name for the resource.
+    owner:
+      oneOf:
+        - type: string
+          description: Owner of the resource.
+        - type: 'null'
     AuthGoogleServiceAccountPartial:
       type: object
       description: >-
@@ -12800,6 +15676,8 @@ components:
           $ref: '#/components/schemas/name'
         platform:
           $ref: '#/components/schemas/Platform'
+        owner:
+          $ref: '#/components/schemas/owner'
         input:
           $ref: '#/components/schemas/AuthInputPartial'
         createdAt:
@@ -12812,6 +15690,7 @@ components:
         - name
         - input
         - createdAt
+        - updatedAt
     Pagination:
       type: object
       description: Paginated API response.
@@ -13069,6 +15948,7 @@ components:
       enum:
         - product
         - variant
+        - collection
     AttributesToExclude:
       type: array
       description: >
@@ -13091,7 +15971,7 @@ components:
           Use `*` as wildcard: `foo.[*].bar` excludes `bar` from all elements of the `foo` array.
       items:
         type: string
-    DestinationIndexName:
+    DestinationInput:
       type: object
       additionalProperties: false
       properties:
@@ -13104,9 +15984,6 @@ components:
           $ref: '#/components/schemas/AttributesToExclude'
       required:
         - indexName
-    DestinationInput:
-      oneOf:
-        - $ref: '#/components/schemas/DestinationIndexName'
     transformationIDs:
       type: array
       items:
@@ -13122,6 +15999,8 @@ components:
           $ref: '#/components/schemas/DestinationType'
         name:
           $ref: '#/components/schemas/name'
+        owner:
+          $ref: '#/components/schemas/owner'
         input:
           $ref: '#/components/schemas/DestinationInput'
         createdAt:
@@ -13138,6 +16017,7 @@ components:
         - name
         - input
         - createdAt
+        - updatedAt
     DestinationCreate:
       type: object
       additionalProperties: false
@@ -13298,6 +16178,12 @@ components:
           description: >
             Whether a fallback value is stored in the Algolia record if there's
             no inventory information about the product.
+        productQueryPredicate:
+          type: string
+          description: >
+            Predicate to filter out specific products when indexing. For more
+            information, see [Query
+            Predicate](https://docs.commercetools.com/api/predicates/query).
         customFields:
           $ref: '#/components/schemas/CommercetoolsCustomFields'
       required:
@@ -13483,7 +16369,7 @@ components:
       properties:
         image:
           type: string
-          description: Shortname of the image, as returned by the referential.
+          description: Name of the connector.
           example: zendesk
         configuration:
           type: object
@@ -13537,6 +16423,8 @@ components:
           $ref: '#/components/schemas/SourceType'
         name:
           type: string
+        owner:
+          $ref: '#/components/schemas/owner'
         input:
           $ref: '#/components/schemas/SourceInput'
         authenticationID:
@@ -13550,6 +16438,7 @@ components:
         - type
         - name
         - createdAt
+        - updatedAt
     SourceCreate:
       type: object
       additionalProperties: false
@@ -13590,14 +16479,16 @@ components:
       description: Universally unique identifier (UUID) of an event.
       example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     EventStatus:
-      type: string
-      enum:
-        - created
-        - started
-        - retried
-        - failed
-        - succeeded
-        - critical
+      oneOf:
+        - type: string
+          enum:
+            - created
+            - started
+            - retried
+            - failed
+            - succeeded
+            - critical
+        - type: 'null'
     EventType:
       type: string
       enum:
@@ -13628,8 +16519,10 @@ components:
           minimum: 0
           multipleOf: 1
         data:
-          type: object
-          additionalProperties: true
+          oneOf:
+            - type: object
+              additionalProperties: true
+            - type: 'null'
         publishedAt:
           $ref: '#/components/schemas/publishedAt'
       required:
@@ -13663,7 +16556,7 @@ components:
           description: a message describing the outcome of a validate run.
           type: string
       required:
-        - message
+        - runID
     SourceSearch:
       type: object
       additionalProperties: false
@@ -13700,6 +16593,12 @@ components:
           description: >
             Whether a fallback value is stored in the Algolia record if there's
             no inventory information about the product.
+        productQueryPredicate:
+          type: string
+          description: >
+            Predicate to filter out specific products when indexing. For more
+            information, see [Query
+            Predicate](https://docs.commercetools.com/api/predicates/query).
         customFields:
           $ref: '#/components/schemas/CommercetoolsCustomFields'
     SourceUpdateDocker:
@@ -14054,6 +16953,8 @@ components:
           $ref: '#/components/schemas/LastRun'
         nextRun:
           $ref: '#/components/schemas/NextRun'
+        owner:
+          $ref: '#/components/schemas/owner'
         input:
           $ref: '#/components/schemas/TaskInput'
         enabled:
@@ -14063,6 +16964,8 @@ components:
         failureThreshold:
           $ref: '#/components/schemas/failureThreshold'
         action:
+          $ref: '#/components/schemas/ActionType'
+        subscriptionAction:
           $ref: '#/components/schemas/ActionType'
         cursor:
           $ref: '#/components/schemas/cursor'
@@ -14080,6 +16983,7 @@ components:
         - destinationID
         - enabled
         - createdAt
+        - updatedAt
     TaskCreate:
       type: object
       additionalProperties: false
@@ -14090,6 +16994,8 @@ components:
         destinationID:
           $ref: '#/components/schemas/destinationID'
         action:
+          $ref: '#/components/schemas/ActionType'
+        subscriptionAction:
           $ref: '#/components/schemas/ActionType'
         cron:
           $ref: '#/components/schemas/Cron'
@@ -14146,6 +17052,8 @@ components:
         enabled:
           type: boolean
           description: Whether the task is enabled.
+        subscriptionAction:
+          $ref: '#/components/schemas/ActionType'
         failureThreshold:
           $ref: '#/components/schemas/failureThreshold'
         notifications:
@@ -14307,6 +17215,7 @@ components:
         - trigger
         - enabled
         - createdAt
+        - updatedAt
     OnDemandTriggerInput:
       type: object
       additionalProperties: false
@@ -14430,6 +17339,8 @@ components:
           $ref: '#/components/schemas/Name'
         description:
           $ref: '#/components/schemas/Description'
+        owner:
+          $ref: '#/components/schemas/owner'
         createdAt:
           $ref: '#/components/schemas/createdAt'
         updatedAt:
@@ -14439,6 +17350,7 @@ components:
         - code
         - name
         - createdAt
+        - updatedAt
     TransformationCreate:
       type: object
       additionalProperties: false
@@ -14489,9 +17401,11 @@ components:
       properties:
         payloads:
           type: array
-          description: The array of records returned by the transformation service.
+          description: >-
+            The array of stringified records returned by the transformation
+            service.
           items:
-            type: object
+            type: string
         error:
           title: transformationError
           type: object

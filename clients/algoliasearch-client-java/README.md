@@ -56,7 +56,7 @@ import com.algolia.model.search.*;
 SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
 // Add a new record to your Algolia index
-client.saveObject("<YOUR_INDEX_NAME>", Map.of("objectID", "id", "test", "val"));
+var response = client.saveObject("<YOUR_INDEX_NAME>", Map.of("objectID", "id", "test", "val"));
 
 // Poll the task status to know when it has been indexed
 client.waitForTask("<YOUR_INDEX_NAME>", response.getTaskID());

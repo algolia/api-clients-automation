@@ -30,9 +30,13 @@ export const ROOT_DIR = path.resolve(process.cwd(), '..');
 
 // Build `GENERATORS` from the `clients.config.json` file
 export const GENERATORS = Object.entries(clientsConfig).reduce(
-  (current, [language, { clients, folder, ...gen }]) => {
-    for (const client of clients) {
-      let output = folder;
+  (current, [language, opts]) => {
+    if (typeof opts === 'string') {
+      return current;
+    }
+
+    for (const client of opts.clients) {
+      let output = opts.folder;
       let key = '';
       let clientName = '';
 
@@ -47,7 +51,7 @@ export const GENERATORS = Object.entries(clientsConfig).reduce(
 
       current[key] = {
         additionalProperties: {},
-        ...gen,
+        ...opts,
         output,
         client: clientName,
         language: language as Language,
@@ -152,7 +156,7 @@ async function buildCustomGenerators(): Promise<void> {
   const cache = new Cache({
     folder: toAbsolutePath('generators/'),
     generatedFiles: ['build/classes'],
-    filesToCache: ['src', 'build.gradle', 'settings.gradle'],
+    filesToCache: ['src', 'build.gradle', 'settings.gradle', '../config/.java-version'],
     cacheFile: toAbsolutePath('generators/.cache'),
   });
 
@@ -269,6 +273,8 @@ export function isVerbose(): boolean {
 
 export async function callGenerator(gen: Generator): Promise<void> {
   await run(
+    // Use the following line if you want to be able to attach a debugger to the generators
+    // `JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=\*:5009" yarn openapi-generator-cli --custom-generator=generators/build/libs/algolia-java-openapi-generator-1.0.0.jar generate --generator-key ${gen.key}`,
     `yarn openapi-generator-cli --custom-generator=generators/build/libs/algolia-java-openapi-generator-1.0.0.jar generate --generator-key ${gen.key}`,
     { language: 'java' },
   );

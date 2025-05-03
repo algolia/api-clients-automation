@@ -123,7 +123,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -153,7 +153,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -183,7 +183,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -207,7 +207,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -2204,6 +2204,11 @@ components:
     name:
       type: string
       description: Descriptive name for the resource.
+    owner:
+      oneOf:
+        - type: string
+          description: Owner of the resource.
+        - type: 'null'
     AuthGoogleServiceAccountPartial:
       type: object
       description: >-
@@ -2328,6 +2333,8 @@ components:
           $ref: '#/components/schemas/name'
         platform:
           $ref: '#/components/schemas/Platform'
+        owner:
+          $ref: '#/components/schemas/owner'
         input:
           $ref: '#/components/schemas/AuthInputPartial'
         createdAt:
@@ -2340,6 +2347,7 @@ components:
         - name
         - input
         - createdAt
+        - updatedAt
     Pagination:
       type: object
       description: Paginated API response.
@@ -2597,6 +2605,7 @@ components:
       enum:
         - product
         - variant
+        - collection
     AttributesToExclude:
       type: array
       description: >
@@ -2619,7 +2628,7 @@ components:
           Use `*` as wildcard: `foo.[*].bar` excludes `bar` from all elements of the `foo` array.
       items:
         type: string
-    DestinationIndexName:
+    DestinationInput:
       type: object
       additionalProperties: false
       properties:
@@ -2632,9 +2641,6 @@ components:
           $ref: '#/components/schemas/AttributesToExclude'
       required:
         - indexName
-    DestinationInput:
-      oneOf:
-        - $ref: '#/components/schemas/DestinationIndexName'
     transformationIDs:
       type: array
       items:
@@ -2650,6 +2656,8 @@ components:
           $ref: '#/components/schemas/DestinationType'
         name:
           $ref: '#/components/schemas/name'
+        owner:
+          $ref: '#/components/schemas/owner'
         input:
           $ref: '#/components/schemas/DestinationInput'
         createdAt:
@@ -2666,6 +2674,7 @@ components:
         - name
         - input
         - createdAt
+        - updatedAt
     DestinationCreate:
       type: object
       additionalProperties: false
@@ -2826,6 +2835,12 @@ components:
           description: >
             Whether a fallback value is stored in the Algolia record if there's
             no inventory information about the product.
+        productQueryPredicate:
+          type: string
+          description: >
+            Predicate to filter out specific products when indexing. For more
+            information, see [Query
+            Predicate](https://docs.commercetools.com/api/predicates/query).
         customFields:
           $ref: '#/components/schemas/CommercetoolsCustomFields'
       required:
@@ -3011,7 +3026,7 @@ components:
       properties:
         image:
           type: string
-          description: Shortname of the image, as returned by the referential.
+          description: Name of the connector.
           example: zendesk
         configuration:
           type: object
@@ -3065,6 +3080,8 @@ components:
           $ref: '#/components/schemas/SourceType'
         name:
           type: string
+        owner:
+          $ref: '#/components/schemas/owner'
         input:
           $ref: '#/components/schemas/SourceInput'
         authenticationID:
@@ -3078,6 +3095,7 @@ components:
         - type
         - name
         - createdAt
+        - updatedAt
     SourceCreate:
       type: object
       additionalProperties: false
@@ -3118,14 +3136,16 @@ components:
       description: Universally unique identifier (UUID) of an event.
       example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     EventStatus:
-      type: string
-      enum:
-        - created
-        - started
-        - retried
-        - failed
-        - succeeded
-        - critical
+      oneOf:
+        - type: string
+          enum:
+            - created
+            - started
+            - retried
+            - failed
+            - succeeded
+            - critical
+        - type: 'null'
     EventType:
       type: string
       enum:
@@ -3156,8 +3176,10 @@ components:
           minimum: 0
           multipleOf: 1
         data:
-          type: object
-          additionalProperties: true
+          oneOf:
+            - type: object
+              additionalProperties: true
+            - type: 'null'
         publishedAt:
           $ref: '#/components/schemas/publishedAt'
       required:
@@ -3191,7 +3213,7 @@ components:
           description: a message describing the outcome of a validate run.
           type: string
       required:
-        - message
+        - runID
     SourceSearch:
       type: object
       additionalProperties: false
@@ -3228,6 +3250,12 @@ components:
           description: >
             Whether a fallback value is stored in the Algolia record if there's
             no inventory information about the product.
+        productQueryPredicate:
+          type: string
+          description: >
+            Predicate to filter out specific products when indexing. For more
+            information, see [Query
+            Predicate](https://docs.commercetools.com/api/predicates/query).
         customFields:
           $ref: '#/components/schemas/CommercetoolsCustomFields'
     SourceUpdateDocker:
@@ -3582,6 +3610,8 @@ components:
           $ref: '#/components/schemas/LastRun'
         nextRun:
           $ref: '#/components/schemas/NextRun'
+        owner:
+          $ref: '#/components/schemas/owner'
         input:
           $ref: '#/components/schemas/TaskInput'
         enabled:
@@ -3591,6 +3621,8 @@ components:
         failureThreshold:
           $ref: '#/components/schemas/failureThreshold'
         action:
+          $ref: '#/components/schemas/ActionType'
+        subscriptionAction:
           $ref: '#/components/schemas/ActionType'
         cursor:
           $ref: '#/components/schemas/cursor'
@@ -3608,6 +3640,7 @@ components:
         - destinationID
         - enabled
         - createdAt
+        - updatedAt
     TaskCreate:
       type: object
       additionalProperties: false
@@ -3618,6 +3651,8 @@ components:
         destinationID:
           $ref: '#/components/schemas/destinationID'
         action:
+          $ref: '#/components/schemas/ActionType'
+        subscriptionAction:
           $ref: '#/components/schemas/ActionType'
         cron:
           $ref: '#/components/schemas/Cron'
@@ -3674,6 +3709,8 @@ components:
         enabled:
           type: boolean
           description: Whether the task is enabled.
+        subscriptionAction:
+          $ref: '#/components/schemas/ActionType'
         failureThreshold:
           $ref: '#/components/schemas/failureThreshold'
         notifications:
@@ -3835,6 +3872,7 @@ components:
         - trigger
         - enabled
         - createdAt
+        - updatedAt
     OnDemandTriggerInput:
       type: object
       additionalProperties: false
@@ -3958,6 +3996,8 @@ components:
           $ref: '#/components/schemas/Name'
         description:
           $ref: '#/components/schemas/Description'
+        owner:
+          $ref: '#/components/schemas/owner'
         createdAt:
           $ref: '#/components/schemas/createdAt'
         updatedAt:
@@ -3967,6 +4007,7 @@ components:
         - code
         - name
         - createdAt
+        - updatedAt
     TransformationCreate:
       type: object
       additionalProperties: false
@@ -4017,9 +4058,11 @@ components:
       properties:
         payloads:
           type: array
-          description: The array of records returned by the transformation service.
+          description: >-
+            The array of stringified records returned by the transformation
+            service.
           items:
-            type: object
+            type: string
         error:
           title: transformationError
           type: object

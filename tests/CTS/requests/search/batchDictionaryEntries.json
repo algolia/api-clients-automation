@@ -1,7 +1,6 @@
 [
   {
     "testName": "replace",
-    "isSnippet": true,
     "parameters": {
       "dictionaryName": "plurals",
       "batchDictionaryEntriesParams": {
@@ -56,7 +55,6 @@
   },
   {
     "testName": "delete",
-    "isSnippet": true,
     "parameters": {
       "dictionaryName": "plurals",
       "batchDictionaryEntriesParams": {
@@ -89,7 +87,6 @@
   },
   {
     "testName": "append",
-    "isSnippet": true,
     "parameters": {
       "dictionaryName": "stopwords",
       "batchDictionaryEntriesParams": {

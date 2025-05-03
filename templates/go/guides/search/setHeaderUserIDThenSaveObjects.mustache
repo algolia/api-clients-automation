@@ -1,0 +1,24 @@
+package main
+
+import (
+  "encoding/json"
+  "fmt"
+  "net/http"
+)
+
+{{> snippets/import}}
+
+func setHeaderUserIDThenSaveObjects() {
+  playlists := []map[string]any{ { /* Your records */ } }
+
+  {{> snippets/init}}
+
+  for _, playlist := range playlists {
+    playlistUserID := playlist["userID"]
+
+    _, err := {{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}}
+    if err != nil {
+      panic(err)
+    }
+  }
+}

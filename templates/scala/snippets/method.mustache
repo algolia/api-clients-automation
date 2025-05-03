@@ -14,11 +14,10 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class Snippet{{client}} {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   {{#blocksRequests}}
   {{#snippets}}
-  {{^isHelper}} {{! Helper tests are not supported yet}}
   /** Snippet for the {{method}} method.
     *
     * {{{description}}}
@@ -29,17 +28,15 @@ class Snippet{{client}} {
     {{> snippets/init}}
 
     // Call the API
-    {{#hasResponse}}val response = {{/hasResponse}}{{> tests/method}}
-    
+    {{#hasResponse}}val response = {{/hasResponse}}{{#isAsyncMethod}}Await.result(
+      {{/isAsyncMethod}}{{> tests/method}}{{#isAsyncMethod}},
+      Duration(100, "sec")
+    )
+    {{/isAsyncMethod}}
     // >LOG
-    {{#hasResponse}}
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    {{/hasResponse}}
     // SEPARATOR<
   }
 
-  {{/isHelper}}
   {{/snippets}}
   {{/blocksRequests}}
 }

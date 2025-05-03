@@ -27,7 +27,7 @@ package algoliasearch.abtesting
 /** ListABTestsResponse
   *
   * @param abtests
-  *   A/B tests.
+  *   The list of A/B tests, null if no A/B tests are configured for this application.
   * @param count
   *   Number of A/B tests.
   * @param total

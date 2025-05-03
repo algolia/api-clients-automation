@@ -46,8 +46,7 @@ func TestSuggestions_CreateConfig(t *testing.T) {
 						[]string{"facetA", "facetB"},
 						[]string{"facetC"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(
 				[]string{"french"})).SetExclude(
-				[]string{"test"}),
-		))
+				[]string{"test"})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/configs", echo.Path)
@@ -64,8 +63,7 @@ func TestSuggestions_CustomDelete(t *testing.T) {
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"test/minimal",
-		))
+			"test/minimal"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -75,8 +73,7 @@ func TestSuggestions_CustomDelete(t *testing.T) {
 	})
 	t.Run("allow del method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"test/all",
-		).WithParameters(map[string]any{"query": "parameters"}))
+			"test/all").WithParameters(map[string]any{"query": "parameters"}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -98,8 +95,7 @@ func TestSuggestions_CustomGet(t *testing.T) {
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/minimal",
-		))
+			"test/minimal"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -109,8 +105,7 @@ func TestSuggestions_CustomGet(t *testing.T) {
 	})
 	t.Run("allow get method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/all",
-		).WithParameters(map[string]any{"query": "parameters with space"}))
+			"test/all").WithParameters(map[string]any{"query": "parameters with space"}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -126,11 +121,8 @@ func TestSuggestions_CustomGet(t *testing.T) {
 	})
 	t.Run("requestOptions should be escaped too", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/all",
-		).WithParameters(map[string]any{"query": "to be overriden"}),
-			suggestions.WithQueryParam("query", "parameters with space"), suggestions.WithQueryParam("and an array",
-				[]string{"array", "with spaces"}), suggestions.WithHeaderParam("x-header-1", "spaces are left alone"),
-		)
+			"test/all").WithParameters(map[string]any{"query": "to be overriden"}), suggestions.WithQueryParam("query", "parameters with space"), suggestions.WithQueryParam("and an array",
+			[]string{"array", "with spaces"}), suggestions.WithHeaderParam("x-header-1", "spaces are left alone"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -157,8 +149,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/minimal",
-		))
+			"test/minimal"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -169,8 +160,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 	})
 	t.Run("allow post method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/all",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+			"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -187,10 +177,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions can override default query parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.WithQueryParam("query", "myQueryParameter"),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), suggestions.WithQueryParam("query", "myQueryParameter"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -207,10 +194,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions merges query parameters with default ones", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.WithQueryParam("query2", "myQueryParameter"),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), suggestions.WithQueryParam("query2", "myQueryParameter"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -227,10 +211,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions can override default headers", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), suggestions.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -252,10 +233,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions merges headers with default ones", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), suggestions.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -277,10 +255,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions queryParameters accepts booleans", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.WithQueryParam("isItWorking", true),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), suggestions.WithQueryParam("isItWorking", true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -297,10 +272,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions queryParameters accepts integers", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.WithQueryParam("myParam", 2),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), suggestions.WithQueryParam("myParam", 2))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -317,11 +289,8 @@ func TestSuggestions_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions queryParameters accepts list of string", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.WithQueryParam("myParam",
-				[]string{"b and c", "d"}),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), suggestions.WithQueryParam("myParam",
+			[]string{"b and c", "d"}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -338,11 +307,8 @@ func TestSuggestions_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions queryParameters accepts list of booleans", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.WithQueryParam("myParam",
-				[]bool{true, true, false}),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), suggestions.WithQueryParam("myParam",
+			[]bool{true, true, false}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -359,11 +325,8 @@ func TestSuggestions_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions queryParameters accepts list of integers", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			suggestions.WithQueryParam("myParam",
-				[]int32{1, 2}),
-		)
+			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), suggestions.WithQueryParam("myParam",
+			[]int32{1, 2}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -386,8 +349,7 @@ func TestSuggestions_CustomPut(t *testing.T) {
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"test/minimal",
-		))
+			"test/minimal"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -398,8 +360,7 @@ func TestSuggestions_CustomPut(t *testing.T) {
 	})
 	t.Run("allow put method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"test/all",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+			"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -422,8 +383,7 @@ func TestSuggestions_DeleteConfig(t *testing.T) {
 
 	t.Run("deleteConfig", func(t *testing.T) {
 		_, err := client.DeleteConfig(client.NewApiDeleteConfigRequest(
-			"theIndexName",
-		))
+			"theIndexName"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/configs/theIndexName", echo.Path)
@@ -454,8 +414,7 @@ func TestSuggestions_GetConfig(t *testing.T) {
 
 	t.Run("Retrieve QS config e2e", func(t *testing.T) {
 		_, err := client.GetConfig(client.NewApiGetConfigRequest(
-			"cts_e2e_browse_query_suggestions",
-		))
+			"cts_e2e_browse_query_suggestions"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/configs/cts_e2e_browse_query_suggestions", echo.Path)
@@ -471,8 +430,7 @@ func TestSuggestions_GetConfigStatus(t *testing.T) {
 
 	t.Run("getConfigStatus", func(t *testing.T) {
 		_, err := client.GetConfigStatus(client.NewApiGetConfigStatusRequest(
-			"theIndexName",
-		))
+			"theIndexName"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/configs/theIndexName/status", echo.Path)
@@ -488,8 +446,7 @@ func TestSuggestions_GetLogFile(t *testing.T) {
 
 	t.Run("getLogFile", func(t *testing.T) {
 		_, err := client.GetLogFile(client.NewApiGetLogFileRequest(
-			"theIndexName",
-		))
+			"theIndexName"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/logs/theIndexName", echo.Path)
@@ -513,8 +470,7 @@ func TestSuggestions_UpdateConfig(t *testing.T) {
 						[]string{"facetA", "facetB"},
 						[]string{"facetC"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(
 				[]string{"french"})).SetExclude(
-				[]string{"test"}),
-		))
+				[]string{"test"})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/configs/theIndexName", echo.Path)

@@ -37,15 +37,7 @@ sealed trait RecommendationsHit
 
 trait RecommendationsHitTrait extends RecommendationsHit
 
-object RecommendationsHit {
-
-  case class RecommendHitValue(value: RecommendHit) extends RecommendationsHit
-
-  def apply(value: RecommendHit): RecommendationsHit = {
-    RecommendationsHit.RecommendHitValue(value)
-  }
-
-}
+object RecommendationsHit {}
 
 object RecommendationsHitSerializer extends Serializer[RecommendationsHit] {
   override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), RecommendationsHit] = {
@@ -62,6 +54,7 @@ object RecommendationsHitSerializer extends Serializer[RecommendationsHit] {
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: RecommendationsHit =>
     value match {
       case value: TrendingFacetHit => Extraction.decompose(value)(format - this)
+      case value: RecommendHit     => Extraction.decompose(value)(format - this)
     }
   }
 }

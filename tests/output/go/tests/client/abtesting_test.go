@@ -39,8 +39,7 @@ func TestAbtestingcommonApi0(t *testing.T) {
 	client, echo := createAbtestingClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"1/test",
-	))
+		"1/test"))
 	require.NoError(t, err)
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Abtesting (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
@@ -53,10 +52,9 @@ func TestAbtestingcommonApi1(t *testing.T) {
 	client, echo := createAbtestingClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"1/test",
-	))
+		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.11.0\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.15.5\).*`), echo.Header.Get("User-Agent"))
 }
 
 // fallbacks to the alias when region is not given
@@ -79,8 +77,7 @@ func TestAbtestingparameters0(t *testing.T) {
 	client, err = abtesting.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	res, err = client.GetABTest(client.NewApiGetABTestRequest(
-		123,
-	))
+		123))
 	require.NoError(t, err)
 	require.Equal(t, "analytics.algolia.com", echo.Host)
 }
@@ -106,8 +103,7 @@ func TestAbtestingparameters1(t *testing.T) {
 	client, err = abtesting.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	res, err = client.GetABTest(client.NewApiGetABTestRequest(
-		123,
-	))
+		123))
 	require.NoError(t, err)
 	require.Equal(t, "analytics.us.algolia.com", echo.Host)
 }
@@ -156,8 +152,7 @@ func TestAbtestingsetClientApiKey0(t *testing.T) {
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(
-			"check-api-key/1",
-		))
+			"check-api-key/1"))
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
@@ -165,14 +160,12 @@ func TestAbtestingsetClientApiKey0(t *testing.T) {
 	}
 	{
 		err = client.SetClientApiKey(
-			"updated-api-key",
-		)
+			"updated-api-key")
 		require.NoError(t, err)
 	}
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(
-			"check-api-key/2",
-		))
+			"check-api-key/2"))
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)

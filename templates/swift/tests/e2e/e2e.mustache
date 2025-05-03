@@ -61,12 +61,12 @@ final class {{client}}RequestsTestsE2E: XCTestCase {
         }
 
         {{#response}}
-          let response{{#isGeneric}}: Response<{{{returnType}}}<Hit>>{{/isGeneric}} = {{> tests/method}}
+          let response{{#isGeneric}}: Response<{{#lambda.prefix}}{{{returnType}}}{{/lambda.prefix}}<{{#lambda.prefix}}Hit{{/lambda.prefix}}>>{{/isGeneric}} = {{> tests/method}}
           {{#body}}
             let responseBody = try XCTUnwrap(response.body)
             let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
 
-            let expectedBodyData = try XCTUnwrap("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}".data(using: .utf8))
+            let expectedBodyData = try XCTUnwrap("{{#lambda.escapeJSON}}{{{body}}}{{/lambda.escapeJSON}}".data(using: .utf8))
 
             XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
           {{/body}}

@@ -5,6 +5,7 @@ import scala.concurrent.duration.Duration
 
 // >IMPORT
 import algoliasearch.api.AbtestingClient
+import algoliasearch.config.*
 
 // IMPORT<
 import algoliasearch.abtesting.*
@@ -15,7 +16,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class SnippetAbtestingClient {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   /** Snippet for the addABTests method.
     *
@@ -31,26 +32,26 @@ class SnippetAbtestingClient {
     )
 
     // Call the API
-    val response = client.addABTests(
-      addABTestsRequest = AddABTestsRequest(
-        endAt = "2022-12-31T00:00:00.000Z",
-        name = "myABTest",
-        variants = Seq(
-          AbTestsVariant(
-            index = "AB_TEST_1",
-            trafficPercentage = 30
-          ),
-          AbTestsVariant(
-            index = "AB_TEST_2",
-            trafficPercentage = 50
+    val response = Await.result(
+      client.addABTests(
+        addABTestsRequest = AddABTestsRequest(
+          endAt = "2022-12-31T00:00:00.000Z",
+          name = "myABTest",
+          variants = Seq(
+            AbTestsVariant(
+              index = "AB_TEST_1",
+              trafficPercentage = 30
+            ),
+            AbTestsVariant(
+              index = "AB_TEST_2",
+              trafficPercentage = 50
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -59,7 +60,7 @@ class SnippetAbtestingClient {
     * allow del method for a custom path with minimal parameters
     */
   def snippetForAbtestingClientCustomDelete(): Unit = {
-    // >SEPARATOR customDelete default
+    // >SEPARATOR customDelete allow del method for a custom path with minimal parameters
     // Initialize the client
     val client = AbtestingClient(
       appId = "ALGOLIA_APPLICATION_ID",
@@ -68,13 +69,38 @@ class SnippetAbtestingClient {
     )
 
     // Call the API
-    val response = client.customDelete[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customDelete[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customDelete method.
+    *
+    * allow del method for a custom path with all parameters
+    */
+  def snippetForAbtestingClientCustomDelete1(): Unit = {
+    // >SEPARATOR customDelete allow del method for a custom path with all parameters
+    // Initialize the client
+    val client = AbtestingClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
     )
 
+    // Call the API
+    val response = Await.result(
+      client.customDelete[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters"))
+      ),
+      Duration(100, "sec")
+    )
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -83,7 +109,7 @@ class SnippetAbtestingClient {
     * allow get method for a custom path with minimal parameters
     */
   def snippetForAbtestingClientCustomGet(): Unit = {
-    // >SEPARATOR customGet default
+    // >SEPARATOR customGet allow get method for a custom path with minimal parameters
     // Initialize the client
     val client = AbtestingClient(
       appId = "ALGOLIA_APPLICATION_ID",
@@ -92,13 +118,71 @@ class SnippetAbtestingClient {
     )
 
     // Call the API
-    val response = client.customGet[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customGet method.
+    *
+    * allow get method for a custom path with all parameters
+    */
+  def snippetForAbtestingClientCustomGet1(): Unit = {
+    // >SEPARATOR customGet allow get method for a custom path with all parameters
+    // Initialize the client
+    val client = AbtestingClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
     )
 
+    // Call the API
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters with space"))
+      ),
+      Duration(100, "sec")
+    )
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customGet method.
+    *
+    * requestOptions should be escaped too
+    */
+  def snippetForAbtestingClientCustomGet2(): Unit = {
+    // >SEPARATOR customGet requestOptions should be escaped too
+    // Initialize the client
+    val client = AbtestingClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "to be overriden")),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query", "parameters with space")
+            .withQueryParameter("and an array", Seq("array", "with spaces"))
+            .withHeader("x-header-1", "spaces are left alone")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 
@@ -107,7 +191,7 @@ class SnippetAbtestingClient {
     * allow post method for a custom path with minimal parameters
     */
   def snippetForAbtestingClientCustomPost(): Unit = {
-    // >SEPARATOR customPost default
+    // >SEPARATOR customPost allow post method for a custom path with minimal parameters
     // Initialize the client
     val client = AbtestingClient(
       appId = "ALGOLIA_APPLICATION_ID",
@@ -116,13 +200,327 @@ class SnippetAbtestingClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * allow post method for a custom path with all parameters
+    */
+  def snippetForAbtestingClientCustomPost1(): Unit = {
+    // >SEPARATOR customPost allow post method for a custom path with all parameters
+    // Initialize the client
+    val client = AbtestingClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
     )
 
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("body", JString("parameters")))))
+      ),
+      Duration(100, "sec")
+    )
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions can override default query parameters
+    */
+  def snippetForAbtestingClientCustomPost2(): Unit = {
+    // >SEPARATOR customPost requestOptions can override default query parameters
+    // Initialize the client
+    val client = AbtestingClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query", "myQueryParameter")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions merges query parameters with default ones
+    */
+  def snippetForAbtestingClientCustomPost3(): Unit = {
+    // >SEPARATOR customPost requestOptions merges query parameters with default ones
+    // Initialize the client
+    val client = AbtestingClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query2", "myQueryParameter")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions can override default headers
+    */
+  def snippetForAbtestingClientCustomPost4(): Unit = {
+    // >SEPARATOR customPost requestOptions can override default headers
+    // Initialize the client
+    val client = AbtestingClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions merges headers with default ones
+    */
+  def snippetForAbtestingClientCustomPost5(): Unit = {
+    // >SEPARATOR customPost requestOptions merges headers with default ones
+    // Initialize the client
+    val client = AbtestingClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions queryParameters accepts booleans
+    */
+  def snippetForAbtestingClientCustomPost6(): Unit = {
+    // >SEPARATOR customPost requestOptions queryParameters accepts booleans
+    // Initialize the client
+    val client = AbtestingClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("isItWorking", true)
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions queryParameters accepts integers
+    */
+  def snippetForAbtestingClientCustomPost7(): Unit = {
+    // >SEPARATOR customPost requestOptions queryParameters accepts integers
+    // Initialize the client
+    val client = AbtestingClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", 2)
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions queryParameters accepts list of string
+    */
+  def snippetForAbtestingClientCustomPost8(): Unit = {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of string
+    // Initialize the client
+    val client = AbtestingClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq("b and c", "d"))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions queryParameters accepts list of booleans
+    */
+  def snippetForAbtestingClientCustomPost9(): Unit = {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+    // Initialize the client
+    val client = AbtestingClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq(true, true, false))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions queryParameters accepts list of integers
+    */
+  def snippetForAbtestingClientCustomPost10(): Unit = {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+    // Initialize the client
+    val client = AbtestingClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq(1, 2))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 
@@ -131,7 +529,7 @@ class SnippetAbtestingClient {
     * allow put method for a custom path with minimal parameters
     */
   def snippetForAbtestingClientCustomPut(): Unit = {
-    // >SEPARATOR customPut default
+    // >SEPARATOR customPut allow put method for a custom path with minimal parameters
     // Initialize the client
     val client = AbtestingClient(
       appId = "ALGOLIA_APPLICATION_ID",
@@ -140,13 +538,39 @@ class SnippetAbtestingClient {
     )
 
     // Call the API
-    val response = client.customPut[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customPut[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPut method.
+    *
+    * allow put method for a custom path with all parameters
+    */
+  def snippetForAbtestingClientCustomPut1(): Unit = {
+    // >SEPARATOR customPut allow put method for a custom path with all parameters
+    // Initialize the client
+    val client = AbtestingClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
     )
 
+    // Call the API
+    val response = Await.result(
+      client.customPut[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("body", JString("parameters")))))
+      ),
+      Duration(100, "sec")
+    )
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -164,13 +588,13 @@ class SnippetAbtestingClient {
     )
 
     // Call the API
-    val response = client.deleteABTest(
-      id = 42
+    val response = Await.result(
+      client.deleteABTest(
+        id = 42
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -188,35 +612,35 @@ class SnippetAbtestingClient {
     )
 
     // Call the API
-    val response = client.estimateABTest(
-      estimateABTestRequest = EstimateABTestRequest(
-        configuration = EstimateConfiguration(
-          emptySearch = Some(
-            EmptySearch(
-              exclude = Some(true)
+    val response = Await.result(
+      client.estimateABTest(
+        estimateABTestRequest = EstimateABTestRequest(
+          configuration = EstimateConfiguration(
+            emptySearch = Some(
+              EmptySearch(
+                exclude = Some(true)
+              )
+            ),
+            minimumDetectableEffect = MinimumDetectableEffect(
+              size = 0.03,
+              metric = EffectMetric.withName("conversionRate")
             )
           ),
-          minimumDetectableEffect = MinimumDetectableEffect(
-            size = 0.03,
-            metric = EffectMetric.withName("conversionRate")
-          )
-        ),
-        variants = Seq(
-          AbTestsVariant(
-            index = "AB_TEST_1",
-            trafficPercentage = 50
-          ),
-          AbTestsVariant(
-            index = "AB_TEST_2",
-            trafficPercentage = 50
+          variants = Seq(
+            AbTestsVariant(
+              index = "AB_TEST_1",
+              trafficPercentage = 50
+            ),
+            AbTestsVariant(
+              index = "AB_TEST_2",
+              trafficPercentage = 50
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -234,13 +658,13 @@ class SnippetAbtestingClient {
     )
 
     // Call the API
-    val response = client.getABTest(
-      id = 42
+    val response = Await.result(
+      client.getABTest(
+        id = 42
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -249,7 +673,7 @@ class SnippetAbtestingClient {
     * listABTests with minimal parameters
     */
   def snippetForAbtestingClientListABTests(): Unit = {
-    // >SEPARATOR listABTests default
+    // >SEPARATOR listABTests listABTests with minimal parameters
     // Initialize the client
     val client = AbtestingClient(
       appId = "ALGOLIA_APPLICATION_ID",
@@ -258,12 +682,39 @@ class SnippetAbtestingClient {
     )
 
     // Call the API
-    val response = client.listABTests(
+    val response = Await.result(
+      client.listABTests(
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the listABTests method.
+    *
+    * listABTests with parameters
+    */
+  def snippetForAbtestingClientListABTests1(): Unit = {
+    // >SEPARATOR listABTests listABTests with parameters
+    // Initialize the client
+    val client = AbtestingClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
     )
 
+    // Call the API
+    val response = Await.result(
+      client.listABTests(
+        offset = Some(0),
+        limit = Some(21),
+        indexPrefix = Some("cts_e2e ab"),
+        indexSuffix = Some("t")
+      ),
+      Duration(100, "sec")
+    )
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -281,27 +732,47 @@ class SnippetAbtestingClient {
     )
 
     // Call the API
-    val response = client.scheduleABTest(
-      scheduleABTestsRequest = ScheduleABTestsRequest(
-        endAt = "2022-12-31T00:00:00.000Z",
-        scheduledAt = "2022-11-31T00:00:00.000Z",
-        name = "myABTest",
-        variants = Seq(
-          AbTestsVariant(
-            index = "AB_TEST_1",
-            trafficPercentage = 30
-          ),
-          AbTestsVariant(
-            index = "AB_TEST_2",
-            trafficPercentage = 50
+    val response = Await.result(
+      client.scheduleABTest(
+        scheduleABTestsRequest = ScheduleABTestsRequest(
+          endAt = "2022-12-31T00:00:00.000Z",
+          scheduledAt = "2022-11-31T00:00:00.000Z",
+          name = "myABTest",
+          variants = Seq(
+            AbTestsVariant(
+              index = "AB_TEST_1",
+              trafficPercentage = 30
+            ),
+            AbTestsVariant(
+              index = "AB_TEST_2",
+              trafficPercentage = 50
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the setClientApiKey method.
+    *
+    * switch API key
+    */
+  def snippetForAbtestingClientSetClientApiKey(): Unit = {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    val client = AbtestingClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
     )
 
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // Call the API
+    client.setClientApiKey(
+      apiKey = "updated-api-key"
+    ) // >LOG
     // SEPARATOR<
   }
 
@@ -319,13 +790,13 @@ class SnippetAbtestingClient {
     )
 
     // Call the API
-    val response = client.stopABTest(
-      id = 42
+    val response = Await.result(
+      client.stopABTest(
+        id = 42
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 

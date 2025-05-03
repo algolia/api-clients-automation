@@ -61,6 +61,27 @@ info:
     Error responses have a `message` property with more information.
 
 
+    ## Rate limiting
+
+
+    When making requests to the Personalization API, you are limited to 40 API
+    calls per second per application.
+
+
+    The following headers provide information about your current limit:
+
+
+    - `x-ratelimit-limit`: The number of requests allowed every second.
+
+    - `x-ratelimit-remaining`: The number of requests remaining in the current
+
+    second period.
+
+    - `x-ratelimit-reset`: [Unix timestamp](https://www.unixtimestamp.com/) of
+
+    the next time period.
+
+
     ## Version
 
 
@@ -104,7 +125,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -157,9 +178,7 @@ paths:
             // Call the API
 
             response, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -304,13 +323,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customGet[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customGet[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -334,7 +353,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -387,9 +406,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -534,13 +551,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customPost[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPost[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -564,7 +581,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -617,9 +634,7 @@ paths:
             // Call the API
 
             response, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -764,13 +779,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customPut[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customPut[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -788,7 +803,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -842,9 +857,7 @@ paths:
 
             response, err :=
             client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "test/minimal",
-            ))
-
+              "test/minimal"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -990,13 +1003,13 @@ paths:
             )
 
             // Call the API
-            val response = client.customDelete[JObject](
-              path = "test/minimal"
+            val response = Await.result(
+              client.customDelete[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1025,6 +1038,13 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/x-ratelimit-limit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/x-ratelimit-remaining'
+            x-ratelimit-reset:
+              $ref: '#/components/headers/x-ratelimit-reset'
           content:
             application/json:
               schema:
@@ -1096,9 +1116,7 @@ paths:
 
             response, err :=
             client.GetUserTokenProfile(client.NewApiGetUserTokenProfileRequest(
-              "UserToken",
-            ))
-
+              "UserToken"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1244,13 +1262,13 @@ paths:
             )
 
             // Call the API
-            val response = client.getUserTokenProfile(
-              userToken = "UserToken"
+            val response = Await.result(
+              client.getUserTokenProfile(
+                userToken = "UserToken"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1266,6 +1284,14 @@ paths:
             "UserToken")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://personalization.us.algolia.com/1/profiles/personalization/test-user-123 \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/profiles/{userToken}:
     delete:
       tags:
@@ -1285,6 +1311,13 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/x-ratelimit-limit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/x-ratelimit-remaining'
+            x-ratelimit-reset:
+              $ref: '#/components/headers/x-ratelimit-reset'
           content:
             application/json:
               schema:
@@ -1348,9 +1381,7 @@ paths:
 
             response, err :=
             client.DeleteUserProfile(client.NewApiDeleteUserProfileRequest(
-              "UserToken",
-            ))
-
+              "UserToken"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1496,13 +1527,13 @@ paths:
             )
 
             // Call the API
-            val response = client.deleteUserProfile(
-              userToken = "UserToken"
+            val response = Await.result(
+              client.deleteUserProfile(
+                userToken = "UserToken"
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1518,6 +1549,14 @@ paths:
             "UserToken")
 
             // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://personalization.us.algolia.com/1/profiles/test-user-123 \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/strategies/personalization:
     get:
       tags:
@@ -1530,6 +1569,13 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/x-ratelimit-limit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/x-ratelimit-remaining'
+            x-ratelimit-reset:
+              $ref: '#/components/headers/x-ratelimit-reset'
           content:
             application/json:
               schema:
@@ -1715,12 +1761,12 @@ paths:
             )
 
             // Call the API
-            val response = client.getPersonalizationStrategy(
+            val response = Await.result(
+              client.getPersonalizationStrategy(
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1837,9 +1883,7 @@ paths:
 
               personalization.NewEmptyPersonalizationStrategyParams().SetEventsScoring(
                 []personalization.EventsScoring{*personalization.NewEmptyEventsScoring().SetScore(42).SetEventName("Algolia").SetEventType(personalization.EventType("click"))}).SetFacetsScoring(
-                []personalization.FacetsScoring{*personalization.NewEmptyFacetsScoring().SetScore(42).SetFacetName("Event")}).SetPersonalizationImpact(42),
-            ))
-
+                []personalization.FacetsScoring{*personalization.NewEmptyFacetsScoring().SetScore(42).SetFacetName("Event")}).SetPersonalizationImpact(42)))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2043,28 +2087,28 @@ paths:
             )
 
             // Call the API
-            val response = client.setPersonalizationStrategy(
-              personalizationStrategyParams = PersonalizationStrategyParams(
-                eventsScoring = Seq(
-                  EventsScoring(
-                    score = 42,
-                    eventName = "Algolia",
-                    eventType = EventType.withName("click")
-                  )
-                ),
-                facetsScoring = Seq(
-                  FacetsScoring(
-                    score = 42,
-                    facetName = "Event"
-                  )
-                ),
-                personalizationImpact = 42
-              )
+            val response = Await.result(
+              client.setPersonalizationStrategy(
+                personalizationStrategyParams = PersonalizationStrategyParams(
+                  eventsScoring = Seq(
+                    EventsScoring(
+                      score = 42,
+                      eventName = "Algolia",
+                      eventType = EventType.withName("click")
+                    )
+                  ),
+                  facetsScoring = Seq(
+                    FacetsScoring(
+                      score = 42,
+                      facetName = "Event"
+                    )
+                  ),
+                  personalizationImpact = 42
+                )
+              ),
+              Duration(100, "sec")
             )
-
             // >LOG
-            // Use the response
-            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2078,11 +2122,9 @@ paths:
 
             let response = try await client
                 .setPersonalizationStrategy(personalizationStrategyParams: PersonalizationStrategyParams(
-                    eventsScoring: [EventsScoring(
-                        score: 42,
-                        eventName: "Algolia",
-                        eventType: PersonalizationEventType.click
-                    )],
+                    eventsScoring: [
+                        EventsScoring(score: 42, eventName: "Algolia", eventType: PersonalizationEventType.click),
+                    ],
                     facetsScoring: [FacetsScoring(score: 42, facetName: "Event")],
                     personalizationImpact: 42
                 ))
@@ -2090,11 +2132,13 @@ paths:
         - lang: cURL
           label: curl
           source: |-
-            curl --request GET \
+            curl --request POST \
               --url https://personalization.us.algolia.com/1/strategies/personalization \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"eventsScoring":[{"score":42,"eventName":"lorem","eventType":"click"}],"facetsScoring":[{"score":42,"facetName":"lorem"}],"personalizationImpact":0}'
 components:
   securitySchemes:
     appId:
@@ -2261,6 +2305,24 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
+  headers:
+    x-ratelimit-limit:
+      description: Number of allowed requests per one minute.
+      example: 100
+      schema:
+        type: integer
+    x-ratelimit-remaining:
+      description: Number of remaining requests in the current period.
+      example: 99
+      schema:
+        type: integer
+    x-ratelimit-reset:
+      description: >-
+        Timstamp when the rate limit will reset, measured in seconds since the
+        Unix epoch.
+      example: 1710682486
+      schema:
+        type: integer
 x-tagGroups:
   - name: General
     tags:

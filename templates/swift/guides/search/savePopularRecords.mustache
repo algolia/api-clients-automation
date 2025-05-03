@@ -1,0 +1,31 @@
+import Foundation
+#if os(Linux) // For linux interop
+  import FoundationNetworking
+#endif
+
+import Core
+{{> snippets/import}}
+
+struct Record: Codable {
+  let twitterHandle: String
+  let nbFollowers: Int
+  var isPopular: Bool = false
+}
+
+func savePopularRecords() async throws {
+  {{> snippets/init}}
+
+  var records: [Record] = []
+
+  try await client.browseObjects(indexName: "YOUR_INDEX_NAME", browseParams: BrowseParamsObject(), aggregator: { (response: BrowseResponse<Record>) in
+      records.append(contentsOf: response.hits.map {
+          $0.nbFollowers < 1_000_000 ? $0 : Record(
+              twitterHandle: $0.twitterHandle,
+              nbFollowers: $0.nbFollowers,
+              isPopular: true
+          )
+      })
+  })
+
+  {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}}
+}

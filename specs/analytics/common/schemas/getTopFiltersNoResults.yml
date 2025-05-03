@@ -5,14 +5,15 @@ getTopFiltersNoResultsResponse:
     - values
   properties:
     values:
-      type: array
-      nullable: true
-      description: |
-        Filters for searches without any results.
-        If null, the search term specified with the `search` parameter isn't a search without results,
-        or the `search` parameter is absent from the request.
-      items:
-        $ref: '#/getTopFiltersNoResultsValues'
+      oneOf:
+        - type: array
+          description: |
+            Filters for searches without any results.
+            If null, the search term specified with the `search` parameter isn't a search without results,
+            or the `search` parameter is absent from the request.
+          items:
+            $ref: '#/getTopFiltersNoResultsValues'
+        - type: 'null'
 
 getTopFiltersNoResultsValues:
   type: object

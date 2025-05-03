@@ -38,8 +38,7 @@ func TestRecommendE2E_GetRecommendations(t *testing.T) {
 
 			recommend.NewEmptyGetRecommendationsParams().SetRequests(
 				[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
-					recommend.NewEmptyRelatedQuery().SetIndexName("cts_e2e_browse").SetObjectID("Æon Flux").SetModel(recommend.RelatedModel("related-products")).SetThreshold(20.0).SetMaxRecommendations(2))}),
-		))
+					recommend.NewEmptyRelatedQuery().SetIndexName("cts_e2e_browse").SetObjectID("Æon Flux").SetModel(recommend.RelatedModel("related-products")).SetThreshold(20.0).SetMaxRecommendations(2))})))
 		require.NoError(t, err)
 		_ = res
 

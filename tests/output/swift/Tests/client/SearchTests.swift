@@ -17,6 +17,7 @@ final class SearchClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
         let response = try await client.customGetWithHTTPInfo(path: "test")
+
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -30,6 +31,7 @@ final class SearchClientClientTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
         let response: Response<SearchResponse<Hit>> = try await client
             .searchSingleIndexWithHTTPInfo(indexName: "indexName")
+
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -42,6 +44,7 @@ final class SearchClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
         let response = try await client.customPostWithHTTPInfo(path: "test")
+
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -74,6 +77,7 @@ final class SearchClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
         let response = try await client.customGetWithHTTPInfo(path: "1/test/retry/swift")
+
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
 
@@ -97,6 +101,7 @@ final class SearchClientClientTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
         do {
             let response = try await client.customGetWithHTTPInfo(path: "1/test/hang/swift")
+
             let responseBodyData = try XCTUnwrap(response.bodyData)
             let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
 
@@ -128,6 +133,7 @@ final class SearchClientClientTests: XCTestCase {
             parameters: [String: AnyCodable](),
             body: ["message": "this is a compressed body"]
         )
+
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
 
@@ -145,6 +151,7 @@ final class SearchClientClientTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.customGetWithHTTPInfo(path: "1/test")
+
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -158,6 +165,7 @@ final class SearchClientClientTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.customPostWithHTTPInfo(path: "1/test")
+
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -171,6 +179,7 @@ final class SearchClientClientTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.customPostWithHTTPInfo(path: "1/test")
+
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -189,10 +198,11 @@ final class SearchClientClientTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.customPostWithHTTPInfo(path: "1/test")
+
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let pattern = "^Algolia for Swift \\(9.13.0\\).*"
+        let pattern = "^Algolia for Swift \\(9.18.5\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
@@ -223,7 +233,7 @@ final class SearchClientClientTests: XCTestCase {
         }
     }
 
-    /// generate secured api key basic
+    /// api key basic
     func testGenerateSecuredApiKeyTest0() async throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
@@ -242,7 +252,7 @@ final class SearchClientClientTests: XCTestCase {
         }
     }
 
-    /// generate secured api key with searchParams
+    /// with searchParams
     func testGenerateSecuredApiKeyTest1() async throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
@@ -271,6 +281,78 @@ final class SearchClientClientTests: XCTestCase {
             XCTAssertEqual(
                 "MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw",
                 response
+            )
+        }
+    }
+
+    /// with filters
+    func testGenerateSecuredApiKeyTest2() async throws {
+        let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        do {
+            let response = try client.generateSecuredApiKey(
+                parentApiKey: "2640659426d5107b6e47d75db9cbaef8",
+                restrictions: SecuredApiKeyRestrictions(
+                    filters: "user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)"
+                )
+            )
+        }
+    }
+
+    /// with visible_by filter
+    func testGenerateSecuredApiKeyTest3() async throws {
+        let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        do {
+            let response = try client.generateSecuredApiKey(
+                parentApiKey: "2640659426d5107b6e47d75db9cbaef8",
+                restrictions: SecuredApiKeyRestrictions(filters: "visible_by:group/Finance")
+            )
+        }
+    }
+
+    /// with userID
+    func testGenerateSecuredApiKeyTest4() async throws {
+        let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        do {
+            let response = try client.generateSecuredApiKey(
+                parentApiKey: "2640659426d5107b6e47d75db9cbaef8",
+                restrictions: SecuredApiKeyRestrictions(userToken: "user42")
+            )
+        }
+    }
+
+    /// mcm with filters
+    func testGenerateSecuredApiKeyTest5() async throws {
+        let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        do {
+            let response = try client.generateSecuredApiKey(
+                parentApiKey: "YourSearchOnlyApiKey",
+                restrictions: SecuredApiKeyRestrictions(filters: "user:user42 AND user:public")
+            )
+        }
+    }
+
+    /// mcm with user token
+    func testGenerateSecuredApiKeyTest6() async throws {
+        let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        do {
+            let response = try client.generateSecuredApiKey(
+                parentApiKey: "YourSearchOnlyApiKey",
+                restrictions: SecuredApiKeyRestrictions(userToken: "user42")
             )
         }
     }
@@ -582,6 +664,90 @@ final class SearchClientClientTests: XCTestCase {
         }
     }
 
+    /// saveObjectsPlaylist
+    func testSaveObjectsTest2() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6686"
+            )!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        do {
+            let response = try await client.saveObjects(
+                indexName: "playlists",
+                objects: [[
+                    "objectID": "1",
+                    "visibility": "public",
+                    "name": "Hot 100 Billboard Charts",
+                    "playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
+                    "createdAt": "1500240452",
+                ]]
+            )
+        }
+    }
+
+    /// saveObjectsPublicUser
+    func testSaveObjectsTest3() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6686"
+            )!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        do {
+            let response = try await client.saveObjects(
+                indexName: "playlists",
+                objects: [[
+                    "objectID": "1",
+                    "visibility": "public",
+                    "name": "Hot 100 Billboard Charts",
+                    "playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
+                    "createdAt": "1500240452",
+                ]],
+                waitForTasks: false,
+                batchSize: 1000,
+                requestOptions: RequestOptions(
+                    headers: ["X-Algolia-User-ID": "*"]
+                )
+            )
+        }
+    }
+
+    /// with algolia user id
+    func testSearchSingleIndexTest0() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6686"
+            )!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+            indexName: "playlists",
+            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(query: "foo")),
+            requestOptions: RequestOptions(
+                headers: ["X-Algolia-User-ID": "user1234"]
+            )
+        )
+
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
+    }
+
     /// switch API key
     func testSetClientApiKeyTest0() async throws {
         let configuration = try SearchClientConfiguration(
@@ -597,6 +763,7 @@ final class SearchClientClientTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
         do {
             let response = try await client.customGetWithHTTPInfo(path: "check-api-key/1")
+
             let responseBodyData = try XCTUnwrap(response.bodyData)
             let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
 
@@ -605,10 +772,11 @@ final class SearchClientClientTests: XCTestCase {
             XCTAssertEqual(comparableJSON, responseBodyJSON)
         }
         do {
-            try client.setClientApiKey(apiKey: "updated-api-key")
+            let _ = try client.setClientApiKey(apiKey: "updated-api-key")
         }
         do {
             let response = try await client.customGetWithHTTPInfo(path: "check-api-key/2")
+
             let responseBodyData = try XCTUnwrap(response.bodyData)
             let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
 

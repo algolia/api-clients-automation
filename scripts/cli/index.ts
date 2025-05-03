@@ -137,7 +137,7 @@ buildCommand
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
   .option('-s, --skip-cache', 'skip cache checking to force building specs')
-  .option('-json, --output-json', 'outputs the spec in JSON instead of yml')
+  .option('-j, --json', 'outputs the spec in JSON instead of yml')
   .option('-d, --docs', 'generates the doc specs with the code snippets')
   .action(async (clientArg: string[], { verbose, skipCache, outputJson, docs }) => {
     const { client, clientList } = transformSelection({
@@ -163,7 +163,7 @@ ctsCommand
   .addArgument(args.language)
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .option('-lv, --language-version <version>', 'the version of the language to use')
+  .option('--lv, --language-version <version>', 'the version of the language to use')
   .action(async (langArg: LangArg, clientArg: string[], { verbose, languageVersion }) => {
     const { language, client, clientList } = transformSelection({
       langArg,
@@ -291,7 +291,7 @@ program
   .description('Releases the client')
   .option(flags.verbose.flag, flags.verbose.description)
   .option<semver.ReleaseType>(
-    '-rt --releaseType <type>',
+    '--rt --release-type <type>',
     'triggers a release for the given language list with the given releaseType',
     (value, _previous) => {
       if (semver.RELEASE_TYPES.includes(value as semver.ReleaseType)) {
@@ -302,7 +302,7 @@ program
     undefined,
   )
   .option('-d, --dry-run', 'does not push anything to GitHub')
-  .option('-vh, --versions-history', 'only generates the versions-history policy', false)
+  .option('--vh, --versions-history', 'only generates the versions-history policy', false)
   .action(async ({ verbose, releaseType, dryRun, versionsHistory }) => {
     setVerbose(Boolean(verbose));
 

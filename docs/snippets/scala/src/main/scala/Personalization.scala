@@ -5,6 +5,7 @@ import scala.concurrent.duration.Duration
 
 // >IMPORT
 import algoliasearch.api.PersonalizationClient
+import algoliasearch.config.*
 
 // IMPORT<
 import algoliasearch.personalization.*
@@ -15,14 +16,14 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class SnippetPersonalizationClient {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   /** Snippet for the customDelete method.
     *
     * allow del method for a custom path with minimal parameters
     */
   def snippetForPersonalizationClientCustomDelete(): Unit = {
-    // >SEPARATOR customDelete default
+    // >SEPARATOR customDelete allow del method for a custom path with minimal parameters
     // Initialize the client
     val client = PersonalizationClient(
       appId = "ALGOLIA_APPLICATION_ID",
@@ -31,13 +32,38 @@ class SnippetPersonalizationClient {
     )
 
     // Call the API
-    val response = client.customDelete[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customDelete[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customDelete method.
+    *
+    * allow del method for a custom path with all parameters
+    */
+  def snippetForPersonalizationClientCustomDelete1(): Unit = {
+    // >SEPARATOR customDelete allow del method for a custom path with all parameters
+    // Initialize the client
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
     )
 
+    // Call the API
+    val response = Await.result(
+      client.customDelete[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters"))
+      ),
+      Duration(100, "sec")
+    )
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -46,7 +72,7 @@ class SnippetPersonalizationClient {
     * allow get method for a custom path with minimal parameters
     */
   def snippetForPersonalizationClientCustomGet(): Unit = {
-    // >SEPARATOR customGet default
+    // >SEPARATOR customGet allow get method for a custom path with minimal parameters
     // Initialize the client
     val client = PersonalizationClient(
       appId = "ALGOLIA_APPLICATION_ID",
@@ -55,13 +81,71 @@ class SnippetPersonalizationClient {
     )
 
     // Call the API
-    val response = client.customGet[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customGet method.
+    *
+    * allow get method for a custom path with all parameters
+    */
+  def snippetForPersonalizationClientCustomGet1(): Unit = {
+    // >SEPARATOR customGet allow get method for a custom path with all parameters
+    // Initialize the client
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
     )
 
+    // Call the API
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters with space"))
+      ),
+      Duration(100, "sec")
+    )
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customGet method.
+    *
+    * requestOptions should be escaped too
+    */
+  def snippetForPersonalizationClientCustomGet2(): Unit = {
+    // >SEPARATOR customGet requestOptions should be escaped too
+    // Initialize the client
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "to be overriden")),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query", "parameters with space")
+            .withQueryParameter("and an array", Seq("array", "with spaces"))
+            .withHeader("x-header-1", "spaces are left alone")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 
@@ -70,7 +154,7 @@ class SnippetPersonalizationClient {
     * allow post method for a custom path with minimal parameters
     */
   def snippetForPersonalizationClientCustomPost(): Unit = {
-    // >SEPARATOR customPost default
+    // >SEPARATOR customPost allow post method for a custom path with minimal parameters
     // Initialize the client
     val client = PersonalizationClient(
       appId = "ALGOLIA_APPLICATION_ID",
@@ -79,13 +163,327 @@ class SnippetPersonalizationClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * allow post method for a custom path with all parameters
+    */
+  def snippetForPersonalizationClientCustomPost1(): Unit = {
+    // >SEPARATOR customPost allow post method for a custom path with all parameters
+    // Initialize the client
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
     )
 
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("body", JString("parameters")))))
+      ),
+      Duration(100, "sec")
+    )
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions can override default query parameters
+    */
+  def snippetForPersonalizationClientCustomPost2(): Unit = {
+    // >SEPARATOR customPost requestOptions can override default query parameters
+    // Initialize the client
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query", "myQueryParameter")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions merges query parameters with default ones
+    */
+  def snippetForPersonalizationClientCustomPost3(): Unit = {
+    // >SEPARATOR customPost requestOptions merges query parameters with default ones
+    // Initialize the client
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query2", "myQueryParameter")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions can override default headers
+    */
+  def snippetForPersonalizationClientCustomPost4(): Unit = {
+    // >SEPARATOR customPost requestOptions can override default headers
+    // Initialize the client
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions merges headers with default ones
+    */
+  def snippetForPersonalizationClientCustomPost5(): Unit = {
+    // >SEPARATOR customPost requestOptions merges headers with default ones
+    // Initialize the client
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions queryParameters accepts booleans
+    */
+  def snippetForPersonalizationClientCustomPost6(): Unit = {
+    // >SEPARATOR customPost requestOptions queryParameters accepts booleans
+    // Initialize the client
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("isItWorking", true)
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions queryParameters accepts integers
+    */
+  def snippetForPersonalizationClientCustomPost7(): Unit = {
+    // >SEPARATOR customPost requestOptions queryParameters accepts integers
+    // Initialize the client
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", 2)
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions queryParameters accepts list of string
+    */
+  def snippetForPersonalizationClientCustomPost8(): Unit = {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of string
+    // Initialize the client
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq("b and c", "d"))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions queryParameters accepts list of booleans
+    */
+  def snippetForPersonalizationClientCustomPost9(): Unit = {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+    // Initialize the client
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq(true, true, false))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions queryParameters accepts list of integers
+    */
+  def snippetForPersonalizationClientCustomPost10(): Unit = {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+    // Initialize the client
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq(1, 2))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 
@@ -94,7 +492,7 @@ class SnippetPersonalizationClient {
     * allow put method for a custom path with minimal parameters
     */
   def snippetForPersonalizationClientCustomPut(): Unit = {
-    // >SEPARATOR customPut default
+    // >SEPARATOR customPut allow put method for a custom path with minimal parameters
     // Initialize the client
     val client = PersonalizationClient(
       appId = "ALGOLIA_APPLICATION_ID",
@@ -103,13 +501,39 @@ class SnippetPersonalizationClient {
     )
 
     // Call the API
-    val response = client.customPut[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customPut[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPut method.
+    *
+    * allow put method for a custom path with all parameters
+    */
+  def snippetForPersonalizationClientCustomPut1(): Unit = {
+    // >SEPARATOR customPut allow put method for a custom path with all parameters
+    // Initialize the client
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
     )
 
+    // Call the API
+    val response = Await.result(
+      client.customPut[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("body", JString("parameters")))))
+      ),
+      Duration(100, "sec")
+    )
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -127,13 +551,13 @@ class SnippetPersonalizationClient {
     )
 
     // Call the API
-    val response = client.deleteUserProfile(
-      userToken = "UserToken"
+    val response = Await.result(
+      client.deleteUserProfile(
+        userToken = "UserToken"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -151,12 +575,12 @@ class SnippetPersonalizationClient {
     )
 
     // Call the API
-    val response = client.getPersonalizationStrategy(
+    val response = Await.result(
+      client.getPersonalizationStrategy(
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -174,13 +598,33 @@ class SnippetPersonalizationClient {
     )
 
     // Call the API
-    val response = client.getUserTokenProfile(
-      userToken = "UserToken"
+    val response = Await.result(
+      client.getUserTokenProfile(
+        userToken = "UserToken"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the setClientApiKey method.
+    *
+    * switch API key
+    */
+  def snippetForPersonalizationClientSetClientApiKey(): Unit = {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    val client = PersonalizationClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
     )
 
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // Call the API
+    client.setClientApiKey(
+      apiKey = "updated-api-key"
+    ) // >LOG
     // SEPARATOR<
   }
 
@@ -198,28 +642,28 @@ class SnippetPersonalizationClient {
     )
 
     // Call the API
-    val response = client.setPersonalizationStrategy(
-      personalizationStrategyParams = PersonalizationStrategyParams(
-        eventsScoring = Seq(
-          EventsScoring(
-            score = 42,
-            eventName = "Algolia",
-            eventType = EventType.withName("click")
-          )
-        ),
-        facetsScoring = Seq(
-          FacetsScoring(
-            score = 42,
-            facetName = "Event"
-          )
-        ),
-        personalizationImpact = 42
-      )
+    val response = Await.result(
+      client.setPersonalizationStrategy(
+        personalizationStrategyParams = PersonalizationStrategyParams(
+          eventsScoring = Seq(
+            EventsScoring(
+              score = 42,
+              eventName = "Algolia",
+              eventType = EventType.withName("click")
+            )
+          ),
+          facetsScoring = Seq(
+            FacetsScoring(
+              score = 42,
+              facetName = "Event"
+            )
+          ),
+          personalizationImpact = 42
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 

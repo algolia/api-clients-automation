@@ -1,22 +1,36 @@
 {
   "csharp": {
     "import": {
-      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Models.QuerySuggestions;"
+      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Http;\nusing Algolia.Search.Models.QuerySuggestions;"
     },
     "createConfig": {
       "default": "var response = await client.CreateConfigAsync(\n  new ConfigurationWithIndex\n  {\n    IndexName = \"<YOUR_INDEX_NAME>\",\n    SourceIndices = new List<SourceIndex>\n    {\n      new SourceIndex\n      {\n        IndexName = \"<YOUR_INDEX_NAME>\",\n        Facets = new List<Facet> { new Facet { Attribute = \"test\" } },\n        Generate = new List<List<string>>\n        {\n          new List<string> { \"facetA\", \"facetB\" },\n          new List<string> { \"facetC\" },\n        },\n      },\n    },\n    Languages = new Languages(new List<string> { \"french\" }),\n    Exclude = new List<string> { \"test\" },\n  }\n);"
     },
     "customDelete": {
-      "default": "var response = await client.CustomDeleteAsync(\"test/minimal\");"
+      "allow del method for a custom path with minimal parameters": "var response = await client.CustomDeleteAsync(\"test/minimal\");",
+      "allow del method for a custom path with all parameters": "var response = await client.CustomDeleteAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } }\n);"
     },
     "customGet": {
-      "default": "var response = await client.CustomGetAsync(\"test/minimal\");"
+      "allow get method for a custom path with minimal parameters": "var response = await client.CustomGetAsync(\"test/minimal\");",
+      "allow get method for a custom path with all parameters": "var response = await client.CustomGetAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"parameters with space\" } }\n);",
+      "requestOptions should be escaped too": "var response = await client.CustomGetAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"to be overriden\" } },\n  new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"query\", \"parameters with space\")\n    .AddExtraQueryParameters(\"and an array\", new List<object> { \"array\", \"with spaces\" })\n    .AddExtraHeader(\"x-header-1\", \"spaces are left alone\")\n    .Build()\n);"
     },
     "customPost": {
-      "default": "var response = await client.CustomPostAsync(\"test/minimal\");"
+      "allow post method for a custom path with minimal parameters": "var response = await client.CustomPostAsync(\"test/minimal\");",
+      "allow post method for a custom path with all parameters": "var response = await client.CustomPostAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"body\", \"parameters\" } }\n);",
+      "requestOptions can override default query parameters": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraQueryParameters(\"query\", \"myQueryParameter\").Build()\n);",
+      "requestOptions merges query parameters with default ones": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraQueryParameters(\"query2\", \"myQueryParameter\").Build()\n);",
+      "requestOptions can override default headers": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\").Build()\n);",
+      "requestOptions merges headers with default ones": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\").Build()\n);",
+      "requestOptions queryParameters accepts booleans": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraQueryParameters(\"isItWorking\", true).Build()\n);",
+      "requestOptions queryParameters accepts integers": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraQueryParameters(\"myParam\", 2).Build()\n);",
+      "requestOptions queryParameters accepts list of string": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"myParam\", new List<object> { \"b and c\", \"d\" })\n    .Build()\n);",
+      "requestOptions queryParameters accepts list of booleans": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"myParam\", new List<object> { true, true, false })\n    .Build()\n);",
+      "requestOptions queryParameters accepts list of integers": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"myParam\", new List<object> { 1, 2 })\n    .Build()\n);"
     },
     "customPut": {
-      "default": "var response = await client.CustomPutAsync(\"test/minimal\");"
+      "allow put method for a custom path with minimal parameters": "var response = await client.CustomPutAsync(\"test/minimal\");",
+      "allow put method for a custom path with all parameters": "var response = await client.CustomPutAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"body\", \"parameters\" } }\n);"
     },
     "deleteConfig": {
       "default": "var response = await client.DeleteConfigAsync(\"<YOUR_INDEX_NAME>\");"
@@ -49,40 +63,54 @@
       "default": "import suggestions \"github.com/algolia/algoliasearch-client-go/v4/algolia/query-suggestions\""
     },
     "createConfig": {
-      "default": "response, err := client.CreateConfig(client.NewApiCreateConfigRequest(\n\n  suggestions.NewEmptyConfigurationWithIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetSourceIndices(\n    []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetFacets(\n      []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute(\"test\")}).SetGenerate(\n      [][]string{\n        []string{\"facetA\", \"facetB\"},\n        []string{\"facetC\"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(\n    []string{\"french\"})).SetExclude(\n    []string{\"test\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CreateConfig(client.NewApiCreateConfigRequest(\n\n  suggestions.NewEmptyConfigurationWithIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetSourceIndices(\n    []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetFacets(\n      []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute(\"test\")}).SetGenerate(\n      [][]string{\n        []string{\"facetA\", \"facetB\"},\n        []string{\"facetC\"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(\n    []string{\"french\"})).SetExclude(\n    []string{\"test\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customDelete": {
-      "default": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "allow del method for a custom path with minimal parameters": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "allow del method for a custom path with all parameters": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customGet": {
-      "default": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "allow get method for a custom path with minimal parameters": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "allow get method for a custom path with all parameters": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters with space\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions should be escaped too": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"to be overriden\"}), suggestions.WithQueryParam(\"query\", \"parameters with space\"), suggestions.WithQueryParam(\"and an array\",\n  []string{\"array\", \"with spaces\"}), suggestions.WithHeaderParam(\"x-header-1\", \"spaces are left alone\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPost": {
-      "default": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "allow post method for a custom path with minimal parameters": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "allow post method for a custom path with all parameters": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"body\": \"parameters\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions can override default query parameters": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithQueryParam(\"query\", \"myQueryParameter\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions merges query parameters with default ones": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithQueryParam(\"query2\", \"myQueryParameter\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions can override default headers": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithHeaderParam(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions merges headers with default ones": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithHeaderParam(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts booleans": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithQueryParam(\"isItWorking\", true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts integers": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithQueryParam(\"myParam\", 2))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts list of string": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithQueryParam(\"myParam\",\n  []string{\"b and c\", \"d\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts list of booleans": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithQueryParam(\"myParam\",\n  []bool{true, true, false}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts list of integers": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithQueryParam(\"myParam\",\n  []int32{1, 2}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPut": {
-      "default": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "allow put method for a custom path with minimal parameters": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "allow put method for a custom path with all parameters": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"body\": \"parameters\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "deleteConfig": {
-      "default": "response, err := client.DeleteConfig(client.NewApiDeleteConfigRequest(\n  \"<YOUR_INDEX_NAME>\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.DeleteConfig(client.NewApiDeleteConfigRequest(\n  \"<YOUR_INDEX_NAME>\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getAllConfigs": {
       "default": "response, err := client.GetAllConfigs()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getConfig": {
-      "default": "response, err := client.GetConfig(client.NewApiGetConfigRequest(\n  \"<YOUR_INDEX_NAME>\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetConfig(client.NewApiGetConfigRequest(\n  \"<YOUR_INDEX_NAME>\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getConfigStatus": {
-      "default": "response, err := client.GetConfigStatus(client.NewApiGetConfigStatusRequest(\n  \"<YOUR_INDEX_NAME>\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetConfigStatus(client.NewApiGetConfigStatusRequest(\n  \"<YOUR_INDEX_NAME>\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getLogFile": {
-      "default": "response, err := client.GetLogFile(client.NewApiGetLogFileRequest(\n  \"<YOUR_INDEX_NAME>\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetLogFile(client.NewApiGetLogFileRequest(\n  \"<YOUR_INDEX_NAME>\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "setClientApiKey": {
-      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\",\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "updateConfig": {
-      "default": "response, err := client.UpdateConfig(client.NewApiUpdateConfigRequest(\n  \"<YOUR_INDEX_NAME>\",\n  suggestions.NewEmptyConfiguration().SetSourceIndices(\n    []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetFacets(\n      []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute(\"test\")}).SetGenerate(\n      [][]string{\n        []string{\"facetA\", \"facetB\"},\n        []string{\"facetC\"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(\n    []string{\"french\"})).SetExclude(\n    []string{\"test\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.UpdateConfig(client.NewApiUpdateConfigRequest(\n  \"<YOUR_INDEX_NAME>\",\n  suggestions.NewEmptyConfiguration().SetSourceIndices(\n    []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetFacets(\n      []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute(\"test\")}).SetGenerate(\n      [][]string{\n        []string{\"facetA\", \"facetB\"},\n        []string{\"facetC\"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(\n    []string{\"french\"})).SetExclude(\n    []string{\"test\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "init": {
       "default": "client, err := suggestions.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", suggestions.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"
@@ -90,22 +118,36 @@
   },
   "java": {
     "import": {
-      "default": "import com.algolia.api.QuerySuggestionsClient;\nimport com.algolia.model.querysuggestions.*;"
+      "default": "import com.algolia.api.QuerySuggestionsClient;\nimport com.algolia.config.*;"
     },
     "createConfig": {
       "default": "client.createConfig(\n  new ConfigurationWithIndex()\n    .setIndexName(\"<YOUR_INDEX_NAME>\")\n    .setSourceIndices(\n      Arrays.asList(\n        new SourceIndex()\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n          .setFacets(Arrays.asList(new Facet().setAttribute(\"test\")))\n          .setGenerate(Arrays.asList(Arrays.asList(\"facetA\", \"facetB\"), Arrays.asList(\"facetC\")))\n      )\n    )\n    .setLanguages(Languages.of(Arrays.asList(\"french\")))\n    .setExclude(Arrays.asList(\"test\"))\n);"
     },
     "customDelete": {
-      "default": "client.customDelete(\"test/minimal\");"
+      "allow del method for a custom path with minimal parameters": "client.customDelete(\"test/minimal\");",
+      "allow del method for a custom path with all parameters": "client.customDelete(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  }\n);"
     },
     "customGet": {
-      "default": "client.customGet(\"test/minimal\");"
+      "allow get method for a custom path with minimal parameters": "client.customGet(\"test/minimal\");",
+      "allow get method for a custom path with all parameters": "client.customGet(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters with space\");\n    }\n  }\n);",
+      "requestOptions should be escaped too": "client.customGet(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"to be overriden\");\n    }\n  },\n  new RequestOptions()\n    .addExtraQueryParameters(\"query\", \"parameters with space\")\n    .addExtraQueryParameters(\"and an array\", Arrays.asList(\"array\", \"with spaces\"))\n    .addExtraHeader(\"x-header-1\", \"spaces are left alone\")\n);"
     },
     "customPost": {
-      "default": "client.customPost(\"test/minimal\");"
+      "allow post method for a custom path with minimal parameters": "client.customPost(\"test/minimal\");",
+      "allow post method for a custom path with all parameters": "client.customPost(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"body\", \"parameters\");\n    }\n  }\n);",
+      "requestOptions can override default query parameters": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"query\", \"myQueryParameter\")\n);",
+      "requestOptions merges query parameters with default ones": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"query2\", \"myQueryParameter\")\n);",
+      "requestOptions can override default headers": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n);",
+      "requestOptions merges headers with default ones": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n);",
+      "requestOptions queryParameters accepts booleans": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"isItWorking\", true)\n);",
+      "requestOptions queryParameters accepts integers": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", 2)\n);",
+      "requestOptions queryParameters accepts list of string": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(\"b and c\", \"d\"))\n);",
+      "requestOptions queryParameters accepts list of booleans": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(true, true, false))\n);",
+      "requestOptions queryParameters accepts list of integers": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(1, 2))\n);"
     },
     "customPut": {
-      "default": "client.customPut(\"test/minimal\");"
+      "allow put method for a custom path with minimal parameters": "client.customPut(\"test/minimal\");",
+      "allow put method for a custom path with all parameters": "client.customPut(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"body\", \"parameters\");\n    }\n  }\n);"
     },
     "deleteConfig": {
       "default": "client.deleteConfig(\"<YOUR_INDEX_NAME>\");"
@@ -140,16 +182,30 @@
       "default": "const response = await client.createConfig({\n  indexName: 'theIndexName',\n  sourceIndices: [\n    { indexName: 'testIndex', facets: [{ attribute: 'test' }], generate: [['facetA', 'facetB'], ['facetC']] },\n  ],\n  languages: ['french'],\n  exclude: ['test'],\n});"
     },
     "customDelete": {
-      "default": "const response = await client.customDelete({ path: 'test/minimal' });"
+      "allow del method for a custom path with minimal parameters": "const response = await client.customDelete({ path: 'test/minimal' });",
+      "allow del method for a custom path with all parameters": "const response = await client.customDelete({ path: 'test/all', parameters: { query: 'parameters' } });"
     },
     "customGet": {
-      "default": "const response = await client.customGet({ path: 'test/minimal' });"
+      "allow get method for a custom path with minimal parameters": "const response = await client.customGet({ path: 'test/minimal' });",
+      "allow get method for a custom path with all parameters": "const response = await client.customGet({ path: 'test/all', parameters: { query: 'parameters with space' } });",
+      "requestOptions should be escaped too": "const response = await client.customGet(\n  { path: 'test/all', parameters: { query: 'to be overriden' } },\n  {\n    queryParameters: { query: 'parameters with space', 'and an array': ['array', 'with spaces'] },\n    headers: { 'x-header-1': 'spaces are left alone' },\n  },\n);"
     },
     "customPost": {
-      "default": "const response = await client.customPost({ path: 'test/minimal' });"
+      "allow post method for a custom path with minimal parameters": "const response = await client.customPost({ path: 'test/minimal' });",
+      "allow post method for a custom path with all parameters": "const response = await client.customPost({\n  path: 'test/all',\n  parameters: { query: 'parameters' },\n  body: { body: 'parameters' },\n});",
+      "requestOptions can override default query parameters": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { query: 'myQueryParameter' },\n  },\n);",
+      "requestOptions merges query parameters with default ones": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { query2: 'myQueryParameter' },\n  },\n);",
+      "requestOptions can override default headers": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },\n  },\n);",
+      "requestOptions merges headers with default ones": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },\n  },\n);",
+      "requestOptions queryParameters accepts booleans": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { isItWorking: true },\n  },\n);",
+      "requestOptions queryParameters accepts integers": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { myParam: 2 },\n  },\n);",
+      "requestOptions queryParameters accepts list of string": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { myParam: ['b and c', 'd'] },\n  },\n);",
+      "requestOptions queryParameters accepts list of booleans": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { myParam: [true, true, false] },\n  },\n);",
+      "requestOptions queryParameters accepts list of integers": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { myParam: [1, 2] },\n  },\n);"
     },
     "customPut": {
-      "default": "const response = await client.customPut({ path: 'test/minimal' });"
+      "allow put method for a custom path with minimal parameters": "const response = await client.customPut({ path: 'test/minimal' });",
+      "allow put method for a custom path with all parameters": "const response = await client.customPut({\n  path: 'test/all',\n  parameters: { query: 'parameters' },\n  body: { body: 'parameters' },\n});"
     },
     "deleteConfig": {
       "default": "const response = await client.deleteConfig({ indexName: 'theIndexName' });"
@@ -178,22 +234,36 @@
   },
   "kotlin": {
     "import": {
-      "default": "import com.algolia.client.api.QuerySuggestionsClient"
+      "default": "import com.algolia.client.api.QuerySuggestionsClient\nimport com.algolia.client.configuration.*\nimport com.algolia.client.transport.*"
     },
     "createConfig": {
       "default": "var response = client.createConfig(\n  configurationWithIndex = ConfigurationWithIndex(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    sourceIndices = listOf(\n      SourceIndex(\n        indexName = \"<YOUR_INDEX_NAME>\",\n        facets = listOf(\n          Facet(\n            attribute = \"test\",\n          ),\n        ),\n        generate = listOf(listOf(\"facetA\", \"facetB\"), listOf(\"facetC\")),\n      ),\n    ),\n    languages = Languages.of(listOf(\"french\")),\n    exclude = listOf(\"test\"),\n  ),\n)"
     },
     "customDelete": {
-      "default": "var response = client.customDelete(\n  path = \"test/minimal\",\n)"
+      "allow del method for a custom path with minimal parameters": "var response = client.customDelete(\n  path = \"test/minimal\",\n)",
+      "allow del method for a custom path with all parameters": "var response = client.customDelete(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n)"
     },
     "customGet": {
-      "default": "var response = client.customGet(\n  path = \"test/minimal\",\n)"
+      "allow get method for a custom path with minimal parameters": "var response = client.customGet(\n  path = \"test/minimal\",\n)",
+      "allow get method for a custom path with all parameters": "var response = client.customGet(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters with space\"),\n)",
+      "requestOptions should be escaped too": "var response = client.customGet(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"to be overriden\"),\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"query\", \"parameters with space\")\n      put(\"and an array\", listOf(\"array\", \"with spaces\"))\n    },\n    headers = buildMap {\n      put(\"x-header-1\", \"spaces are left alone\")\n    },\n  ),\n)"
     },
     "customPost": {
-      "default": "var response = client.customPost(\n  path = \"test/minimal\",\n)"
+      "allow post method for a custom path with minimal parameters": "var response = client.customPost(\n  path = \"test/minimal\",\n)",
+      "allow post method for a custom path with all parameters": "var response = client.customPost(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"body\",\n      JsonPrimitive(\"parameters\"),\n    )\n  },\n)",
+      "requestOptions can override default query parameters": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"query\", \"myQueryParameter\")\n    },\n  ),\n)",
+      "requestOptions merges query parameters with default ones": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"query2\", \"myQueryParameter\")\n    },\n  ),\n)",
+      "requestOptions can override default headers": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    headers = buildMap {\n      put(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n    },\n  ),\n)",
+      "requestOptions merges headers with default ones": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    headers = buildMap {\n      put(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n    },\n  ),\n)",
+      "requestOptions queryParameters accepts booleans": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"isItWorking\", true)\n    },\n  ),\n)",
+      "requestOptions queryParameters accepts integers": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", 2)\n    },\n  ),\n)",
+      "requestOptions queryParameters accepts list of string": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", listOf(\"b and c\", \"d\"))\n    },\n  ),\n)",
+      "requestOptions queryParameters accepts list of booleans": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", listOf(true, true, false))\n    },\n  ),\n)",
+      "requestOptions queryParameters accepts list of integers": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", listOf(1, 2))\n    },\n  ),\n)"
     },
     "customPut": {
-      "default": "var response = client.customPut(\n  path = \"test/minimal\",\n)"
+      "allow put method for a custom path with minimal parameters": "var response = client.customPut(\n  path = \"test/minimal\",\n)",
+      "allow put method for a custom path with all parameters": "var response = client.customPut(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"body\",\n      JsonPrimitive(\"parameters\"),\n    )\n  },\n)"
     },
     "deleteConfig": {
       "default": "var response = client.deleteConfig(\n  indexName = \"<YOUR_INDEX_NAME>\",\n)"
@@ -228,16 +298,30 @@
       "default": "$response = $client->createConfig(\n    ['indexName' => '<YOUR_INDEX_NAME>',\n        'sourceIndices' => [\n            ['indexName' => '<YOUR_INDEX_NAME>',\n                'facets' => [\n                    ['attribute' => 'test',\n                    ],\n                ],\n                'generate' => [\n                    [\n                        'facetA',\n\n                        'facetB',\n                    ],\n\n                    [\n                        'facetC',\n                    ],\n                ],\n            ],\n        ],\n        'languages' => [\n            'french',\n        ],\n        'exclude' => [\n            'test',\n        ],\n    ],\n);"
     },
     "customDelete": {
-      "default": "$response = $client->customDelete(\n    'test/minimal',\n);"
+      "allow del method for a custom path with minimal parameters": "$response = $client->customDelete(\n    'test/minimal',\n);",
+      "allow del method for a custom path with all parameters": "$response = $client->customDelete(\n    'test/all',\n    ['query' => 'parameters',\n    ],\n);"
     },
     "customGet": {
-      "default": "$response = $client->customGet(\n    'test/minimal',\n);"
+      "allow get method for a custom path with minimal parameters": "$response = $client->customGet(\n    'test/minimal',\n);",
+      "allow get method for a custom path with all parameters": "$response = $client->customGet(\n    'test/all',\n    ['query' => 'parameters with space',\n    ],\n);",
+      "requestOptions should be escaped too": "$response = $client->customGet(\n    'test/all',\n    ['query' => 'to be overriden',\n    ],\n    [\n        'queryParameters' => [\n            'query' => 'parameters with space',\n            'and an array' => ['array', 'with spaces',\n            ],\n        ],\n        'headers' => [\n            'x-header-1' => 'spaces are left alone',\n        ],\n    ]\n);"
     },
     "customPost": {
-      "default": "$response = $client->customPost(\n    'test/minimal',\n);"
+      "allow post method for a custom path with minimal parameters": "$response = $client->customPost(\n    'test/minimal',\n);",
+      "allow post method for a custom path with all parameters": "$response = $client->customPost(\n    'test/all',\n    ['query' => 'parameters',\n    ],\n    ['body' => 'parameters',\n    ],\n);",
+      "requestOptions can override default query parameters": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'query' => 'myQueryParameter',\n        ], ]\n);",
+      "requestOptions merges query parameters with default ones": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'query2' => 'myQueryParameter',\n        ], ]\n);",
+      "requestOptions can override default headers": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'headers' => [\n            'x-algolia-api-key' => 'ALGOLIA_API_KEY',\n        ],\n    ]\n);",
+      "requestOptions merges headers with default ones": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'headers' => [\n            'x-algolia-api-key' => 'ALGOLIA_API_KEY',\n        ],\n    ]\n);",
+      "requestOptions queryParameters accepts booleans": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'isItWorking' => true,\n        ], ]\n);",
+      "requestOptions queryParameters accepts integers": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'myParam' => 2,\n        ], ]\n);",
+      "requestOptions queryParameters accepts list of string": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'myParam' => ['b and c', 'd',\n            ],\n        ], ]\n);",
+      "requestOptions queryParameters accepts list of booleans": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'myParam' => [true, true, false,\n            ],\n        ], ]\n);",
+      "requestOptions queryParameters accepts list of integers": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'myParam' => [1, 2,\n            ],\n        ], ]\n);"
     },
     "customPut": {
-      "default": "$response = $client->customPut(\n    'test/minimal',\n);"
+      "allow put method for a custom path with minimal parameters": "$response = $client->customPut(\n    'test/minimal',\n);",
+      "allow put method for a custom path with all parameters": "$response = $client->customPut(\n    'test/all',\n    ['query' => 'parameters',\n    ],\n    ['body' => 'parameters',\n    ],\n);"
     },
     "deleteConfig": {
       "default": "$response = $client->deleteConfig(\n    '<YOUR_INDEX_NAME>',\n);"
@@ -266,22 +350,36 @@
   },
   "python": {
     "import": {
-      "default": "from algoliasearch.query_suggestions.client import QuerySuggestionsClientSync"
+      "default": "from algoliasearch.query_suggestions.client import QuerySuggestionsClientSync\nfrom json import loads"
     },
     "createConfig": {
       "default": "response = client.create_config(\n    configuration_with_index={\n        \"indexName\": \"<YOUR_INDEX_NAME>\",\n        \"sourceIndices\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"facets\": [\n                    {\n                        \"attribute\": \"test\",\n                    },\n                ],\n                \"generate\": [\n                    [\n                        \"facetA\",\n                        \"facetB\",\n                    ],\n                    [\n                        \"facetC\",\n                    ],\n                ],\n            },\n        ],\n        \"languages\": [\n            \"french\",\n        ],\n        \"exclude\": [\n            \"test\",\n        ],\n    },\n)"
     },
     "customDelete": {
-      "default": "response = client.custom_delete(\n    path=\"test/minimal\",\n)"
+      "allow del method for a custom path with minimal parameters": "response = client.custom_delete(\n    path=\"test/minimal\",\n)",
+      "allow del method for a custom path with all parameters": "response = client.custom_delete(\n    path=\"test/all\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n)"
     },
     "customGet": {
-      "default": "response = client.custom_get(\n    path=\"test/minimal\",\n)"
+      "allow get method for a custom path with minimal parameters": "response = client.custom_get(\n    path=\"test/minimal\",\n)",
+      "allow get method for a custom path with all parameters": "response = client.custom_get(\n    path=\"test/all\",\n    parameters={\n        \"query\": \"parameters with space\",\n    },\n)",
+      "requestOptions should be escaped too": "response = client.custom_get(\n    path=\"test/all\",\n    parameters={\n        \"query\": \"to be overriden\",\n    },\n    request_options={\n        \"headers\": loads(\"\"\"{\"x-header-1\":\"spaces are left alone\"}\"\"\"),\n        \"query_parameters\": loads(\n            \"\"\"{\"query\":\"parameters with space\",\"and an array\":[\"array\",\"with spaces\"]}\"\"\"\n        ),\n    },\n)"
     },
     "customPost": {
-      "default": "response = client.custom_post(\n    path=\"test/minimal\",\n)"
+      "allow post method for a custom path with minimal parameters": "response = client.custom_post(\n    path=\"test/minimal\",\n)",
+      "allow post method for a custom path with all parameters": "response = client.custom_post(\n    path=\"test/all\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"body\": \"parameters\",\n    },\n)",
+      "requestOptions can override default query parameters": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"query\":\"myQueryParameter\"}\"\"\"),\n    },\n)",
+      "requestOptions merges query parameters with default ones": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"query2\":\"myQueryParameter\"}\"\"\"),\n    },\n)",
+      "requestOptions can override default headers": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"headers\": loads(\"\"\"{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}\"\"\"),\n    },\n)",
+      "requestOptions merges headers with default ones": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"headers\": loads(\"\"\"{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}\"\"\"),\n    },\n)",
+      "requestOptions queryParameters accepts booleans": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"isItWorking\":true}\"\"\"),\n    },\n)",
+      "requestOptions queryParameters accepts integers": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"myParam\":2}\"\"\"),\n    },\n)",
+      "requestOptions queryParameters accepts list of string": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"myParam\":[\"b and c\",\"d\"]}\"\"\"),\n    },\n)",
+      "requestOptions queryParameters accepts list of booleans": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"myParam\":[true,true,false]}\"\"\"),\n    },\n)",
+      "requestOptions queryParameters accepts list of integers": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"myParam\":[1,2]}\"\"\"),\n    },\n)"
     },
     "customPut": {
-      "default": "response = client.custom_put(\n    path=\"test/minimal\",\n)"
+      "allow put method for a custom path with minimal parameters": "response = client.custom_put(\n    path=\"test/minimal\",\n)",
+      "allow put method for a custom path with all parameters": "response = client.custom_put(\n    path=\"test/all\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"body\": \"parameters\",\n    },\n)"
     },
     "deleteConfig": {
       "default": "response = client.delete_config(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
@@ -316,16 +414,30 @@
       "default": "response = client.create_config(\n  Algolia::QuerySuggestions::ConfigurationWithIndex.new(\n    index_name: \"<YOUR_INDEX_NAME>\",\n    source_indices: [\n      Algolia::QuerySuggestions::SourceIndex.new(\n        index_name: \"<YOUR_INDEX_NAME>\",\n        facets: [Algolia::QuerySuggestions::Facet.new(attribute: \"test\")],\n        generate: [[\"facetA\", \"facetB\"], [\"facetC\"]]\n      )\n    ],\n    languages: [\"french\"],\n    exclude: [\"test\"]\n  )\n)"
     },
     "customDelete": {
-      "default": "response = client.custom_delete(\"test/minimal\")"
+      "allow del method for a custom path with minimal parameters": "response = client.custom_delete(\"test/minimal\")",
+      "allow del method for a custom path with all parameters": "response = client.custom_delete(\"test/all\", {query: \"parameters\"})"
     },
     "customGet": {
-      "default": "response = client.custom_get(\"test/minimal\")"
+      "allow get method for a custom path with minimal parameters": "response = client.custom_get(\"test/minimal\")",
+      "allow get method for a custom path with all parameters": "response = client.custom_get(\"test/all\", {query: \"parameters with space\"})",
+      "requestOptions should be escaped too": "response = client.custom_get(\n  \"test/all\",\n  {query: \"to be overriden\"},\n  {\n    :header_params => {\"x-header-1\" => \"spaces are left alone\"},\n    :query_params => JSON.parse(\n      \"{\\\"query\\\":\\\"parameters with space\\\",\\\"and an array\\\":[\\\"array\\\",\\\"with spaces\\\"]}\",\n      :symbolize_names => true\n    )\n  }\n)"
     },
     "customPost": {
-      "default": "response = client.custom_post(\"test/minimal\")"
+      "allow post method for a custom path with minimal parameters": "response = client.custom_post(\"test/minimal\")",
+      "allow post method for a custom path with all parameters": "response = client.custom_post(\"test/all\", {query: \"parameters\"}, {body: \"parameters\"})",
+      "requestOptions can override default query parameters": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"query\\\":\\\"myQueryParameter\\\"}\", :symbolize_names => true)}\n)",
+      "requestOptions merges query parameters with default ones": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"query2\\\":\\\"myQueryParameter\\\"}\", :symbolize_names => true)}\n)",
+      "requestOptions can override default headers": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:header_params => {\"x-algolia-api-key\" => \"ALGOLIA_API_KEY\"}}\n)",
+      "requestOptions merges headers with default ones": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:header_params => {\"x-algolia-api-key\" => \"ALGOLIA_API_KEY\"}}\n)",
+      "requestOptions queryParameters accepts booleans": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"isItWorking\\\":true}\", :symbolize_names => true)}\n)",
+      "requestOptions queryParameters accepts integers": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"myParam\\\":2}\", :symbolize_names => true)}\n)",
+      "requestOptions queryParameters accepts list of string": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"myParam\\\":[\\\"b and c\\\",\\\"d\\\"]}\", :symbolize_names => true)}\n)",
+      "requestOptions queryParameters accepts list of booleans": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"myParam\\\":[true,true,false]}\", :symbolize_names => true)}\n)",
+      "requestOptions queryParameters accepts list of integers": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"myParam\\\":[1,2]}\", :symbolize_names => true)}\n)"
     },
     "customPut": {
-      "default": "response = client.custom_put(\"test/minimal\")"
+      "allow put method for a custom path with minimal parameters": "response = client.custom_put(\"test/minimal\")",
+      "allow put method for a custom path with all parameters": "response = client.custom_put(\"test/all\", {query: \"parameters\"}, {body: \"parameters\"})"
     },
     "deleteConfig": {
       "default": "response = client.delete_config(\"<YOUR_INDEX_NAME>\")"
@@ -354,40 +466,57 @@
   },
   "scala": {
     "import": {
-      "default": "import algoliasearch.api.QuerySuggestionsClient"
+      "default": "import algoliasearch.api.QuerySuggestionsClient\nimport algoliasearch.config.*"
     },
     "createConfig": {
-      "default": "val response = client.createConfig(\n  configurationWithIndex = ConfigurationWithIndex(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    sourceIndices = Seq(\n      SourceIndex(\n        indexName = \"<YOUR_INDEX_NAME>\",\n        facets = Some(\n          Seq(\n            Facet(\n              attribute = Some(\"test\")\n            )\n          )\n        ),\n        generate = Some(Seq(Seq(\"facetA\", \"facetB\"), Seq(\"facetC\")))\n      )\n    ),\n    languages = Some(Languages(Seq(\"french\"))),\n    exclude = Some(Seq(\"test\"))\n  )\n)"
+      "default": "val response = Await.result(\n  client.createConfig(\n    configurationWithIndex = ConfigurationWithIndex(\n      indexName = \"<YOUR_INDEX_NAME>\",\n      sourceIndices = Seq(\n        SourceIndex(\n          indexName = \"<YOUR_INDEX_NAME>\",\n          facets = Some(\n            Seq(\n              Facet(\n                attribute = Some(\"test\")\n              )\n            )\n          ),\n          generate = Some(Seq(Seq(\"facetA\", \"facetB\"), Seq(\"facetC\")))\n        )\n      ),\n      languages = Some(Languages(Seq(\"french\"))),\n      exclude = Some(Seq(\"test\"))\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "customDelete": {
-      "default": "val response = client.customDelete[JObject](\n  path = \"test/minimal\"\n)"
+      "allow del method for a custom path with minimal parameters": "val response = Await.result(\n  client.customDelete[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "allow del method for a custom path with all parameters": "val response = Await.result(\n  client.customDelete[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"parameters\"))\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "customGet": {
-      "default": "val response = client.customGet[JObject](\n  path = \"test/minimal\"\n)"
+      "allow get method for a custom path with minimal parameters": "val response = Await.result(\n  client.customGet[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "allow get method for a custom path with all parameters": "val response = Await.result(\n  client.customGet[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"parameters with space\"))\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions should be escaped too": "val response = Await.result(\n  client.customGet[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"to be overriden\")),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"query\", \"parameters with space\")\n        .withQueryParameter(\"and an array\", Seq(\"array\", \"with spaces\"))\n        .withHeader(\"x-header-1\", \"spaces are left alone\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "customPost": {
-      "default": "val response = client.customPost[JObject](\n  path = \"test/minimal\"\n)"
+      "allow post method for a custom path with minimal parameters": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "allow post method for a custom path with all parameters": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"body\", JString(\"parameters\")))))\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions can override default query parameters": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"query\", \"myQueryParameter\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions merges query parameters with default ones": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"query2\", \"myQueryParameter\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions can override default headers": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions merges headers with default ones": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts booleans": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"isItWorking\", true)\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts integers": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"myParam\", 2)\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts list of string": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"myParam\", Seq(\"b and c\", \"d\"))\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts list of booleans": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"myParam\", Seq(true, true, false))\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts list of integers": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"myParam\", Seq(1, 2))\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "customPut": {
-      "default": "val response = client.customPut[JObject](\n  path = \"test/minimal\"\n)"
+      "allow put method for a custom path with minimal parameters": "val response = Await.result(\n  client.customPut[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "allow put method for a custom path with all parameters": "val response = Await.result(\n  client.customPut[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"body\", JString(\"parameters\")))))\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "deleteConfig": {
-      "default": "val response = client.deleteConfig(\n  indexName = \"<YOUR_INDEX_NAME>\"\n)"
+      "default": "val response = Await.result(\n  client.deleteConfig(\n    indexName = \"<YOUR_INDEX_NAME>\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getAllConfigs": {
-      "default": "val response = client.getAllConfigs(\n)"
+      "default": "val response = Await.result(\n  client.getAllConfigs(\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getConfig": {
-      "default": "val response = client.getConfig(\n  indexName = \"<YOUR_INDEX_NAME>\"\n)"
+      "default": "val response = Await.result(\n  client.getConfig(\n    indexName = \"<YOUR_INDEX_NAME>\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getConfigStatus": {
-      "default": "val response = client.getConfigStatus(\n  indexName = \"<YOUR_INDEX_NAME>\"\n)"
+      "default": "val response = Await.result(\n  client.getConfigStatus(\n    indexName = \"<YOUR_INDEX_NAME>\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getLogFile": {
-      "default": "val response = client.getLogFile(\n  indexName = \"<YOUR_INDEX_NAME>\"\n)"
+      "default": "val response = Await.result(\n  client.getLogFile(\n    indexName = \"<YOUR_INDEX_NAME>\"\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey(\n  apiKey = \"updated-api-key\"\n)"
     },
     "updateConfig": {
-      "default": "val response = client.updateConfig(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  configuration = Configuration(\n    sourceIndices = Seq(\n      SourceIndex(\n        indexName = \"<YOUR_INDEX_NAME>\",\n        facets = Some(\n          Seq(\n            Facet(\n              attribute = Some(\"test\")\n            )\n          )\n        ),\n        generate = Some(Seq(Seq(\"facetA\", \"facetB\"), Seq(\"facetC\")))\n      )\n    ),\n    languages = Some(Languages(Seq(\"french\"))),\n    exclude = Some(Seq(\"test\"))\n  )\n)"
+      "default": "val response = Await.result(\n  client.updateConfig(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    configuration = Configuration(\n      sourceIndices = Seq(\n        SourceIndex(\n          indexName = \"<YOUR_INDEX_NAME>\",\n          facets = Some(\n            Seq(\n              Facet(\n                attribute = Some(\"test\")\n              )\n            )\n          ),\n          generate = Some(Seq(Seq(\"facetA\", \"facetB\"), Seq(\"facetC\")))\n        )\n      ),\n      languages = Some(Languages(Seq(\"french\"))),\n      exclude = Some(Seq(\"test\"))\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "init": {
       "default": "val client = QuerySuggestionsClient(\n  appId = \"ALGOLIA_APPLICATION_ID\",\n  apiKey = \"ALGOLIA_API_KEY\",\n  region = \"ALGOLIA_APPLICATION_REGION\"\n)"
@@ -401,16 +530,30 @@
       "default": "let response = try await client.createConfig(configurationWithIndex: ConfigurationWithIndex(\n    sourceIndices: [SourceIndex(\n        indexName: \"<YOUR_INDEX_NAME>\",\n        facets: [Facet(attribute: \"test\")],\n        generate: [[\"facetA\", \"facetB\"], [\"facetC\"]]\n    )],\n    languages: QuerySuggestionsLanguages.arrayOfString([\"french\"]),\n    exclude: [\"test\"],\n    indexName: \"<YOUR_INDEX_NAME>\"\n))"
     },
     "customDelete": {
-      "default": "let response = try await client.customDelete(path: \"test/minimal\")"
+      "allow del method for a custom path with minimal parameters": "let response = try await client.customDelete(path: \"test/minimal\")",
+      "allow del method for a custom path with all parameters": "let response = try await client.customDelete(path: \"test/all\", parameters: [\"query\": AnyCodable(\"parameters\")])"
     },
     "customGet": {
-      "default": "let response = try await client.customGet(path: \"test/minimal\")"
+      "allow get method for a custom path with minimal parameters": "let response = try await client.customGet(path: \"test/minimal\")",
+      "allow get method for a custom path with all parameters": "let response = try await client.customGet(\n    path: \"test/all\",\n    parameters: [\"query\": AnyCodable(\"parameters with space\")]\n)",
+      "requestOptions should be escaped too": "let response = try await client.customGet(\n    path: \"test/all\",\n    parameters: [\"query\": AnyCodable(\"to be overriden\")],\n    requestOptions: RequestOptions(\n        headers: [\"x-header-1\": \"spaces are left alone\"],\n\n        queryParameters: [\"query\": \"parameters with space\", \"and an array\": [\"array\", \"with spaces\"]]\n    )\n)"
     },
     "customPost": {
-      "default": "let response = try await client.customPost(path: \"test/minimal\")"
+      "allow post method for a custom path with minimal parameters": "let response = try await client.customPost(path: \"test/minimal\")",
+      "allow post method for a custom path with all parameters": "let response = try await client.customPost(\n    path: \"test/all\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"body\": \"parameters\"]\n)",
+      "requestOptions can override default query parameters": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        queryParameters: [\"query\": \"myQueryParameter\"]\n    )\n)",
+      "requestOptions merges query parameters with default ones": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        queryParameters: [\"query2\": \"myQueryParameter\"]\n    )\n)",
+      "requestOptions can override default headers": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        headers: [\"x-algolia-api-key\": \"ALGOLIA_API_KEY\"]\n    )\n)",
+      "requestOptions merges headers with default ones": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        headers: [\"x-algolia-api-key\": \"ALGOLIA_API_KEY\"]\n    )\n)",
+      "requestOptions queryParameters accepts booleans": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        queryParameters: [\"isItWorking\": true]\n    )\n)",
+      "requestOptions queryParameters accepts integers": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        queryParameters: [\"myParam\": 2]\n    )\n)",
+      "requestOptions queryParameters accepts list of string": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        queryParameters: [\"myParam\": [\"b and c\", \"d\"]]\n    )\n)",
+      "requestOptions queryParameters accepts list of booleans": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        queryParameters: [\"myParam\": [true, true, false]]\n    )\n)",
+      "requestOptions queryParameters accepts list of integers": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        queryParameters: [\"myParam\": [1, 2]]\n    )\n)"
     },
     "customPut": {
-      "default": "let response = try await client.customPut(path: \"test/minimal\")"
+      "allow put method for a custom path with minimal parameters": "let response = try await client.customPut(path: \"test/minimal\")",
+      "allow put method for a custom path with all parameters": "let response = try await client.customPut(\n    path: \"test/all\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"body\": \"parameters\"]\n)"
     },
     "deleteConfig": {
       "default": "let response = try await client.deleteConfig(indexName: \"<YOUR_INDEX_NAME>\")"

@@ -100,13 +100,9 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     lambdas.put("escapeDollar", new EscapeDollarLambda());
     lambdas.put("escapeQuotes", new EscapeQuotesLambda());
     lambdas.put("escapeSlash", new EscapeSlashLambda());
+    lambdas.put("escapeJSON", new EscapeJSONLambda());
     lambdas.put("replaceBacktick", new ReplaceBacktickLambda());
-    lambdas.put("scalaIdentifier", new ScalaIdentifierLambda());
-    lambdas.put("csharpIdentifier", new CSharpIdentifierLambda());
-    lambdas.put("javaEnum", new JavaEnumLambda());
-    lambdas.put("codeSnakeCase", new CodeSnakeCaseLambda());
-    lambdas.put("escapeRubyKeywords", new EscapeRubyKeywordsLambda());
-    lambdas.put("swiftIdentifier", new SwiftIdentifierLambda());
+
     return lambdas;
   }
 
@@ -115,7 +111,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     try {
       Map<String, CodegenOperation> operations = buildOperations(objs);
 
-      Object lambda = objs.get("lambda");
+      Map<String, Lambda> lambda = new HashMap<>((Map<String, Lambda>) objs.get("lambda"));
       List<CodegenServer> servers = (List<CodegenServer>) objs.get("servers");
       CodegenServerVariable regionVariable = null;
       outerLoop: for (CodegenServer server : servers) {
@@ -148,8 +144,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
 
       // We can put whatever we want in the bundle, and it will be accessible in the template
       bundle.put("mode", mode);
-      bundle.put("is" + Helpers.capitalize(client) + "Client", true);
-      bundle.put("isStandaloneClient", client.contains("search") || client.equals("composition"));
+      bundle.put("is" + Helpers.capitalize(Helpers.camelize(client)) + "Client", true);
       bundle.put("isSearchClient", client.contains("search")); // just so algoliasearch is treated as a search client too
       bundle.put("client", Helpers.createClientName(importClientName, language) + "Client");
       bundle.put("clientPrefix", Helpers.createClientName(importClientName, language));
@@ -163,6 +158,8 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       if (new File("tests/CTS/guides/" + client + ".json").exists()) {
         bundle.put("dynamicSnippet", new DynamicSnippetLambda(this, models, operations, language, client));
       }
+      // restore the lambda from the original bundle
+      ctsManager.addMustacheLambdas(lambda);
       bundle.put("lambda", lambda);
 
       String languageVersion = ctsManager.getLanguageVersion((String) additionalProperties.getOrDefault("languageVersion", ""));

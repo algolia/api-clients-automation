@@ -1,0 +1,25 @@
+import json
+
+{{> snippets/import}}
+
+
+with open("products.json", "r", encoding="utf-8") as f:
+  products = json.load(f)
+
+  _{{> snippets/init}}
+
+  records = []
+
+  for product in products:
+    reference = product["product_reference"]
+
+    suffixes = []
+    while len(reference) > 1:
+        reference = reference[1:]
+        suffixes.append(reference)
+
+    product["product_reference_suffixes"] = suffixes
+    records.append(product)
+
+  {{#dynamicSnippet}}saveObjectsRecords{{/dynamicSnippet}}
+

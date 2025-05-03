@@ -99,8 +99,32 @@ class IngestionClientClientTests {
   }
 
   @Test
-  @DisplayName("endpoint level timeout")
+  @DisplayName("can leave call opened for a long time")
   void apiTest3() {
+    IngestionClient client = new IngestionClient(
+      "test-app-id",
+      "test-api-key",
+      "us",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6676
+          )
+        ),
+        false
+      )
+    );
+    Object res = client.customGet("1/long-wait");
+
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"message\":\"OK\"}", json.writeValueAsString(res), JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("endpoint level timeout")
+  void apiTest4() {
     IngestionClient client = createClient();
 
     client.validateSourceBeforeUpdate("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new SourceUpdate().setName("newName"));
@@ -111,7 +135,7 @@ class IngestionClientClientTests {
 
   @Test
   @DisplayName("can override endpoint level timeout")
-  void apiTest4() {
+  void apiTest5() {
     IngestionClient client = createClient();
 
     client.validateSourceBeforeUpdate(
@@ -152,7 +176,7 @@ class IngestionClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.11.0\\).*";
+      String regexp = "^Algolia for Java \\(4.15.5\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp

@@ -55,13 +55,13 @@ object SynonymType {
   case object Placeholder extends SynonymType {
     override def toString = "placeholder"
   }
-  case object OneWaySynonym extends SynonymType {
+  case object OneWaySynonymAlt extends SynonymType {
     override def toString = "oneWaySynonym"
   }
-  case object AltCorrection1 extends SynonymType {
+  case object AltCorrection1Alt extends SynonymType {
     override def toString = "altCorrection1"
   }
-  case object AltCorrection2 extends SynonymType {
+  case object AltCorrection2Alt extends SynonymType {
     override def toString = "altCorrection2"
   }
   val values: Seq[SynonymType] = Seq(
@@ -70,9 +70,9 @@ object SynonymType {
     Altcorrection1,
     Altcorrection2,
     Placeholder,
-    OneWaySynonym,
-    AltCorrection1,
-    AltCorrection2
+    OneWaySynonymAlt,
+    AltCorrection1Alt,
+    AltCorrection2Alt
   )
 
   def withName(name: String): SynonymType = SynonymType.values

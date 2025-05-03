@@ -62,7 +62,7 @@ class TestIngestionClient < Test::Unit::TestCase
       Algolia::Ingestion::DestinationCreate.new(
         type: "search",
         name: "destinationName",
-        input: Algolia::Ingestion::DestinationIndexName.new(index_name: "full_name______"),
+        input: Algolia::Ingestion::DestinationInput.new(index_name: "full_name______"),
         authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
       )
     )
@@ -85,7 +85,7 @@ class TestIngestionClient < Test::Unit::TestCase
       Algolia::Ingestion::DestinationCreate.new(
         type: "search",
         name: "destinationName",
-        input: Algolia::Ingestion::DestinationIndexName.new(index_name: "full_name______"),
+        input: Algolia::Ingestion::DestinationInput.new(index_name: "full_name______"),
         transformation_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]
       )
     )
@@ -112,7 +112,8 @@ class TestIngestionClient < Test::Unit::TestCase
           store_keys: ["myStore"],
           locales: ["de"],
           url: "http://commercetools.com",
-          project_key: "keyID"
+          project_key: "keyID",
+          product_query_predicate: "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"
         ),
         authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
       )
@@ -124,7 +125,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}"
+        "{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\",\"productQueryPredicate\":\"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}"
       ),
       JSON.parse(req.body)
     )
@@ -374,7 +375,7 @@ class TestIngestionClient < Test::Unit::TestCase
       "test/all",
       {query: "to be overriden"},
       {
-        :header_params => JSON.parse("{\"x-header-1\":\"spaces are left alone\"}", :symbolize_names => true),
+        :header_params => {"x-header-1" => "spaces are left alone"},
         :query_params => JSON.parse(
           "{\"query\":\"parameters with space\",\"and an array\":[\"array\",\"with spaces\"]}",
           :symbolize_names => true
@@ -456,7 +457,7 @@ class TestIngestionClient < Test::Unit::TestCase
       "test/requestOptions",
       {query: "parameters"},
       {facet: "filters"},
-      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
+      {:header_params => {"x-algolia-api-key" => "ALGOLIA_API_KEY"}}
     )
 
     assert_equal(:post, req.method)
@@ -475,7 +476,7 @@ class TestIngestionClient < Test::Unit::TestCase
       "test/requestOptions",
       {query: "parameters"},
       {facet: "filters"},
-      {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
+      {:header_params => {"x-algolia-api-key" => "ALGOLIA_API_KEY"}}
     )
 
     assert_equal(:post, req.method)
@@ -926,8 +927,8 @@ class TestIngestionClient < Test::Unit::TestCase
       Algolia::Ingestion::PushTaskPayload.new(
         action: "addObject",
         records: [
-          Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", object_id: "o"),
-          Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", object_id: "k")
+          Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", algolia_object_id: "o"),
+          Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", algolia_object_id: "k")
         ]
       )
     )
@@ -951,8 +952,8 @@ class TestIngestionClient < Test::Unit::TestCase
       Algolia::Ingestion::PushTaskPayload.new(
         action: "addObject",
         records: [
-          Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", object_id: "o"),
-          Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", object_id: "k")
+          Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", algolia_object_id: "o"),
+          Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", algolia_object_id: "k")
         ]
       ),
       true

@@ -78,10 +78,7 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
             return
         }
 
-        let response = try await client.getObjectWithHTTPInfo(
-            indexName: "cts_e2e_browse",
-            objectID: "Batman and Robin"
-        )
+        let response = try await client.getObjectWithHTTPInfo(indexName: "cts_e2e_browse", objectID: "Batman and Robin")
         let responseBody = try XCTUnwrap(response.body)
         let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
 
@@ -372,8 +369,8 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
         XCTAssertEqual(response.statusCode, 200)
     }
 
-    /// setSettings with minimal parameters
-    func testSetSettingsTest1() async throws {
+    /// minimal parameters
+    func testSetSettingsTest() async throws {
         guard let client = SearchClientRequestsTestsE2E.client else {
             XCTFail("E2E client is not initialized")
             return

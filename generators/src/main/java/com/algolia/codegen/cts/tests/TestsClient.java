@@ -107,8 +107,27 @@ public class TestsClient extends TestsGenerator {
             } else if (step.type.equals("method")) {
               ope = operations.get(step.method);
               if (ope == null) {
+                // some clients don't have custom methods
+                if (step.method.startsWith("custom") && client.equals("composition")) {
+                  continue skipTest;
+                }
+
                 throw new CTSException("Cannot find operation for method: " + step.method, test.testName);
               }
+
+              boolean isHelper = (boolean) ope.vendorExtensions.getOrDefault("x-helper", false);
+
+              if (isHelper) {
+                List<String> availableLanguages = (List<String>) ope.vendorExtensions.getOrDefault(
+                  "x-available-languages",
+                  new ArrayList<>()
+                );
+
+                if (availableLanguages.size() > 0 && !availableLanguages.contains(language)) {
+                  continue skipTest;
+                }
+              }
+
               stepOut.put("stepTemplate", "tests/client/method.mustache");
               stepOut.put("isMethod", true); // TODO: remove once kotlin is converted
               stepOut.put("hasParams", ope.hasParams);
@@ -118,7 +137,6 @@ public class TestsClient extends TestsGenerator {
                 stepOut.put("returnsBoolean", ope.returnType.equals("Boolean")); // ruby requires a ? for boolean functions.
               }
 
-              boolean isHelper = (boolean) ope.vendorExtensions.getOrDefault("x-helper", false);
               stepOut.put("isHelper", isHelper);
               // default to true because most api calls are asynchronous
               stepOut.put("isAsyncMethod", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
@@ -201,6 +219,8 @@ public class TestsClient extends TestsGenerator {
                 }
               }
               stepOut.put("match", paramsType.enhanceParameter(step.expected.match));
+            } else if (!step.type.equals("createClient")) {
+              stepOut.put("useEchoRequester", false);
             }
             steps.add(stepOut);
           }

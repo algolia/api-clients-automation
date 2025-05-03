@@ -10,7 +10,7 @@ import (
 
 func saveObjectsMovies() {
 	// read json file
-	url := "https://dashboard.algolia.com/sample_datasets/movie.json"
+	url := "https://dashboard.algolia.com/api/1/sample_datasets?type=movie"
 	response, err := http.Get(url)
 
 	if err != nil {
@@ -38,11 +38,9 @@ func saveObjectsMovies() {
 
 	// push data to algolia
 	result, err := client.SaveObjects(
-		"<YOUR_INDEX_NAME>", movies,
-	)
+		"<YOUR_INDEX_NAME>", movies)
 	if err != nil {
-		fmt.Println(err)
-		return
+		panic(err)
 	}
 
 	fmt.Printf("Done! Uploaded records in %d batches.", len(result))

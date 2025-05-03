@@ -125,6 +125,7 @@ class TestIngestionClient:
                     ],
                     "url": "http://commercetools.com",
                     "projectKey": "keyID",
+                    "productQueryPredicate": 'masterVariant(attributes(name="Brand" and value="Algolia"))',
                 },
                 "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             },
@@ -135,7 +136,7 @@ class TestIngestionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}"""
+            """{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID","productQueryPredicate":"masterVariant(attributes(name=\\"Brand\\" and value=\\"Algolia\\"))"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}"""
         )
 
     async def test_create_source_1(self):
@@ -1770,6 +1771,7 @@ class TestIngestionClientSync:
                     ],
                     "url": "http://commercetools.com",
                     "projectKey": "keyID",
+                    "productQueryPredicate": 'masterVariant(attributes(name="Brand" and value="Algolia"))',
                 },
                 "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             },
@@ -1780,7 +1782,7 @@ class TestIngestionClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}"""
+            """{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID","productQueryPredicate":"masterVariant(attributes(name=\\"Brand\\" and value=\\"Algolia\\"))"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}"""
         )
 
     def test_create_source_1(self):

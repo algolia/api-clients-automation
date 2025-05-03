@@ -89,8 +89,22 @@ class IngestionTest extends TestCase implements HttpClientInterface
         );
     }
 
-    #[TestDox('endpoint level timeout')]
+    #[TestDox('can leave call opened for a long time')]
     public function test3api(): void
+    {
+        $client = IngestionClient::createWithConfig(IngestionConfig::create('test-app-id', 'test-api-key', 'us')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6676']));
+
+        $res = $client->customGet(
+            '1/long-wait',
+        );
+        $this->assertEquals(
+            '{"message":"OK"}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('endpoint level timeout')]
+    public function test4api(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->validateSourceBeforeUpdate(
@@ -110,7 +124,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     #[TestDox('can override endpoint level timeout')]
-    public function test4api(): void
+    public function test5api(): void
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->validateSourceBeforeUpdate(
@@ -156,7 +170,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.12.0\).*/',
+                '/^Algolia for PHP \(4.18.5\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );

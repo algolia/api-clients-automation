@@ -1,0 +1,35 @@
+import kotlinx.serialization.json.JsonObject
+
+{{> snippets/import}}
+import com.algolia.client.model.search.*
+
+val playlists = listOf<JsonObject>() // Your records
+
+val getAppIDFor: (String) -> String = {
+    "" // Implement your own logic here
+}
+val getIndexingApiKeyFor: (String) -> String = {
+    "" // Implement your own logic here
+}
+
+suspend fun setSettingsThenSaveObjects() {
+  playlists.forEach { playlist ->
+    // Fetch from your own data storage and with your own code
+    // the associated application ID and API key for this user
+    val appID = getAppIDFor(playlist["user"].toString());
+    val apiKey = getIndexingApiKeyFor(playlist["user"].toString());
+
+    val client = SearchClient(appID, apiKey)
+    val settings = IndexSettings(
+      attributesForFaceting = listOf("filterOnly(user)")
+    )
+
+    try {
+      client.{{#dynamicSnippet}}setSettings{{/dynamicSnippet}}
+
+      client.{{#dynamicSnippet}}saveObjectsPlaylists{{/dynamicSnippet}}
+    } catch (exception: Exception) {
+      println(exception.message)
+    }
+  }
+}

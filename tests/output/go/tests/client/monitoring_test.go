@@ -38,8 +38,7 @@ func TestMonitoringcommonApi0(t *testing.T) {
 	client, echo := createMonitoringClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"1/test",
-	))
+		"1/test"))
 	require.NoError(t, err)
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Monitoring (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
@@ -52,10 +51,9 @@ func TestMonitoringcommonApi1(t *testing.T) {
 	client, echo := createMonitoringClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"1/test",
-	))
+		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.11.0\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.15.5\).*`), echo.Header.Get("User-Agent"))
 }
 
 // use the correct host
@@ -78,8 +76,7 @@ func TestMonitoringparameters0(t *testing.T) {
 	client, err = monitoring.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	res, err = client.CustomDelete(client.NewApiCustomDeleteRequest(
-		"test",
-	))
+		"test"))
 	require.NoError(t, err)
 	require.Equal(t, "status.algolia.com", echo.Host)
 }
@@ -105,8 +102,7 @@ func TestMonitoringsetClientApiKey0(t *testing.T) {
 	require.NoError(t, err)
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(
-			"check-api-key/1",
-		))
+			"check-api-key/1"))
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
@@ -114,14 +110,12 @@ func TestMonitoringsetClientApiKey0(t *testing.T) {
 	}
 	{
 		err = client.SetClientApiKey(
-			"updated-api-key",
-		)
+			"updated-api-key")
 		require.NoError(t, err)
 	}
 	{
 		res, err = client.CustomGet(client.NewApiCustomGetRequest(
-			"check-api-key/2",
-		))
+			"check-api-key/2"))
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)

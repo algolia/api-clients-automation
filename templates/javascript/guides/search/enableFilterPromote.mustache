@@ -1,0 +1,17 @@
+import { Condition, Consequence, Rule } from 'algoliasearch';
+
+const condition: Condition = {
+  anchoring: 'is',
+  pattern: '{facet:brand}',
+}
+
+const consequence: Consequence = {
+  filterPromotes: true,
+}
+
+const rule: Rule = {
+  enabled: true,
+  objectID: 'rule_with_filterPromotes',
+  conditions: [condition],
+  consequence,
+}

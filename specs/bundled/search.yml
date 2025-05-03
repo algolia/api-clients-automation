@@ -175,12 +175,9 @@ tags:
     description: |
       Multi-cluster operations.
 
-      Algolia no longer offers multi-cluster management.
-    externalDocs:
-      url: >-
-        https://www.algolia.com/doc/guides/scaling/managing-multiple-clusters-mcm/
-      description: |
-        Related guide: Multi-cluster management.
+      Multi-cluster operations are **deprecated**.
+      If you have issues with your Algolia infrastructure
+      due to large volumes of data, contact the Algolia support team.
   - name: Dictionaries
     description: >
       Manage your dictionaries.
@@ -276,7 +273,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -306,7 +303,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -336,7 +333,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -360,7 +357,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -445,6 +442,11 @@ paths:
 
         - Multiple searches to the same index—for example, with different
         filters.
+
+
+        Use the helper `searchForHits` or `searchForFacets` to get the results
+        in a more convenient format, if you already know the return type you
+        want.
       requestBody:
         required: true
         description: >-
@@ -1010,6 +1012,11 @@ paths:
 
         - value: the right-hand side argument to the operation, for example,
         increment or decrement step, value to add or remove.
+
+
+        When updating multiple attributes or using multiple operations targeting
+        the same record, you should use a single partial update for faster
+        processing.
 
 
         This operation is subject to [indexing rate
@@ -2216,6 +2223,7 @@ paths:
       tags:
         - search
       operationId: assignUserId
+      deprecated: true
       x-acl:
         - admin
       summary: Assign or move a user ID
@@ -2256,6 +2264,7 @@ paths:
       tags:
         - search
       operationId: listUserIds
+      deprecated: true
       x-acl:
         - admin
       summary: List user IDs
@@ -2300,6 +2309,7 @@ paths:
       tags:
         - search
       operationId: batchAssignUserIds
+      deprecated: true
       x-acl:
         - admin
       summary: Assign multiple userIDs
@@ -2349,6 +2359,7 @@ paths:
       tags:
         - search
       operationId: getTopUserIds
+      deprecated: true
       x-acl:
         - admin
       summary: Get top user IDs
@@ -2399,6 +2410,7 @@ paths:
       tags:
         - search
       operationId: getUserId
+      deprecated: true
       x-acl:
         - admin
       summary: Retrieve user ID
@@ -2431,6 +2443,7 @@ paths:
       tags:
         - search
       operationId: removeUserId
+      deprecated: true
       x-acl:
         - admin
       summary: Delete user ID
@@ -2464,6 +2477,7 @@ paths:
       tags:
         - search
       operationId: listClusters
+      deprecated: true
       x-acl:
         - admin
       summary: List clusters
@@ -2501,6 +2515,7 @@ paths:
       tags:
         - search
       operationId: searchUserIds
+      deprecated: true
       x-use-read-transporter: true
       x-cacheable: true
       x-acl:
@@ -2615,6 +2630,7 @@ paths:
       tags:
         - search
       operationId: hasPendingMappings
+      deprecated: true
       x-acl:
         - admin
       summary: Get migration and user mapping status
@@ -2890,30 +2906,22 @@ paths:
                           maxLength: 1000
                           description: Response body.
                           example: >
-                            'n{\n \"results\": [\n  {\n   \"hits\": [\n   
-                            {\n     \"name\": \"Amazon - Fire TV Stick\",\n    
-                            \"description\": \"Amazon Fire TV Stick connects to
+                            'n{\n "results": [\n  {\n   "hits": [\n    {\n    
+                            "name": "Amazon - Fire TV Stick",\n    
+                            "description": "Amazon Fire TV Stick connects to
                             your TV's HDMI port. Just grab and go to enjoy
                             Netflix, Prime Instant Video, Hulu Plus,
-                            YouTube.com, music, and much more.\",\n    
-                            \"brand\": \"Amazon\",\n     \"categories\":
-                            [\n      \"TV & Home Theater\",\n      \"Streaming
-                            Media Players\"\n     ],\n    
-                            \"hierarchicalCategories\": {\n      \"lvl0\": \"TV
-                            & Home Theater\",\n      \"lvl1\": \"TV & Home
-                            Theater > Streaming Media Players\"\n     },\n    
-                            \"type\": \"Streaming media plyr\",\n     \"price\":
-                            39.99,\n     \"price_range\": \"1 - 50\",\n    
-                            \"image\":
-                            \"https:\/\/cdn-demo.algolia.com\/bestbuy\/9999119_sb.jpg\",\n    
-                            \"url\":
-                            \"http:\/\/www.bestbuy.com\/site\/amazon-fire-tv-stick\/9999119.p?id=1219460752591&skuId=9999119&cmp=RMX&ky=1uWSHMdQqBeVJB9cXgEke60s5EjfS6M1W\",\n    
-                            \"free_shipping\": false,\n     \"popularity\":
-                            9843,\n     \"rating\": 4,\n     \"objectID\":
-                            \"9999119\"\n'
+                            YouTube.com, music, and much more.",\n     "brand":
+                            "Amazon",\n     "categories": [\n      "TV & Home
+                            Theater",\n      "Streaming Media Players"\n    
+                            ],\n     "hierarchicalCategories": {\n      "lvl0":
+                            "TV & Home Theater",\n      "lvl1": "TV & Home
+                            Theater > Streaming Media Players"\n     },\n    
+                            "type": "Streaming media player",\n     "price":
+                            39.99,\n     "price_range": "1 }\n   ]\n  }\n ]\n}'
                         url:
                           type: string
-                          format: uri
+                          format: uri-reference
                           description: URL of the API endpoint.
                           example: /1/indexes
                         ip:
@@ -3409,6 +3417,60 @@ paths:
                 type: string
         '400':
           $ref: '#/components/responses/IndexNotFound'
+  /accountCopyIndex:
+    get:
+      x-helper: true
+      x-available-languages:
+        - javascript
+      tags:
+        - search
+      x-acl:
+        - browse
+        - editSettings
+        - addObject
+        - settings
+        - search
+      operationId: accountCopyIndex
+      summary: >-
+        Copies the given `sourceIndexName` records, rules and synonyms to an
+        other Algolia application for the given `destinationIndexName`
+      description: >
+        Copies the given `sourceIndexName` records, rules and synonyms to an
+        other Algolia application for the given `destinationIndexName`.
+      parameters:
+        - in: query
+          name: sourceIndexName
+          description: The name of the index to copy.
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: destinationAppID
+          description: The application ID to write the index to.
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: destinationApiKey
+          description: >-
+            The API Key of the `destinationAppID` to write the index to, must
+            have write ACLs.
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: destinationIndexName
+          description: The name of the index to write the copied index to.
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          $ref: '#/components/responses/IndexInSameApp'
+        '403':
+          $ref: '#/components/responses/IndexAlreadyExists'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
   /replaceAllObjects:
     get:
       x-helper: true
@@ -3467,6 +3529,7 @@ paths:
           required: false
           schema:
             type: integer
+            default: 1000
         - in: query
           name: scopes
           description: >-
@@ -3582,6 +3645,7 @@ paths:
           required: false
           schema:
             type: boolean
+            default: false
         - in: query
           name: batchSize
           description: >-
@@ -3590,6 +3654,7 @@ paths:
           required: false
           schema:
             type: integer
+            default: 1000
         - in: query
           name: requestOptions
           description: The request options to pass to the `batch` method.
@@ -3704,6 +3769,7 @@ paths:
           required: false
           schema:
             type: boolean
+            default: false
         - in: query
           name: waitForTasks
           description: >-
@@ -3713,6 +3779,7 @@ paths:
           required: false
           schema:
             type: boolean
+            default: false
         - in: query
           name: batchSize
           description: >-
@@ -3721,6 +3788,7 @@ paths:
           required: false
           schema:
             type: integer
+            default: 1000
         - in: query
           name: requestOptions
           description: The request options to pass to the `batch` method.
@@ -4739,6 +4807,13 @@ components:
       example:
         - blue
         - iphone case
+      description: >-
+        List of [optional
+        words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
+      default: []
+      x-categories:
+        - Query strategy
+    optionalWords:
       description: >
         Words that should be considered optional when found in the query.
 
@@ -4776,10 +4851,6 @@ components:
 
         For more information, see [Optional
         words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
-      default: []
-      x-categories:
-        - Query strategy
-    optionalWords:
       oneOf:
         - type: string
         - type: 'null'
@@ -5502,25 +5573,35 @@ components:
           items:
             type: string
           description: >
-            Properties to include in the API response of `search` and `browse`
+            Properties to include in the API response of search and browse
             requests.
 
 
             By default, all response properties are included.
 
-            To reduce the response size, you can select, which attributes should
+            To reduce the response size, you can select which properties should
             be included.
+
+
+            An empty list may lead to an empty API response (except properties
+            you can't exclude).
 
 
             You can't exclude these properties:
 
-            `message`, `warning`, `cursor`, `serverUsed`, `indexUsed`,
+            `message`, `warning`, `cursor`, `abTestVariantID`,
 
-            `abTestVariantID`, `parsedQuery`, or any property triggered by the
-            `getRankingInfo` parameter.
+            or any property added by setting `getRankingInfo` to true.
 
 
-            Don't exclude properties that you might need in your search UI.
+            Your search depends on the `hits` field. If you omit this field,
+            searches won't return any results.
+
+            Your UI might also depend on other properties, for example, for
+            pagination.
+
+            Before restricting the response size, check the impact on your
+            search experience.
           default:
             - '*'
           x-categories:
@@ -5636,7 +5717,6 @@ components:
         - dest
         - source
     userData:
-      type: object
       example:
         settingID: f2a7b51e3503acc6a39b3784ffb84300
         pluginVersion: 1.6.0
@@ -6378,20 +6458,17 @@ components:
       required:
         - requests
       example:
-        batch:
-          summary: Batch indexing request
-          value:
-            requests:
-              - action: addObject
-                body:
-                  name: Betty Jane McCamey
-                  company: Vita Foods Inc.
-                  email: betty@mccamey.com
-              - action: addObject
-                body:
-                  name: Gayla geimer
-                  company: Ortman McCain Co.
-                  email: gayla@geimer.com
+        requests:
+          - action: addObject
+            body:
+              name: Betty Jane McCamey
+              company: Vita Foods Inc.
+              email: betty@mccamey.com
+          - action: addObject
+            body:
+              name: Gayla geimer
+              company: Ortman McCain Co.
+              email: gayla@geimer.com
     objectIDs:
       type: array
       items:
@@ -7224,11 +7301,14 @@ components:
             Filters that trigger the rule.
 
 
-            You can add add filters using the syntax `facet:value` so that the
-            rule is triggered, when the specific filter is selected.
+            You can add filters using the syntax `facet:value` so that the rule
+            is triggered, when the specific filter is selected.
 
             You can use `filters` on its own or combine it with the `pattern`
             parameter.
+
+            You can't combine multiple filters with `OR` and you can't use
+            numeric filters.
           example: genre:comedy
     editType:
       description: Type of edit.
@@ -7453,6 +7533,7 @@ components:
             required:
               - objectID
         userData:
+          type: object
           description: >
             A JSON object with custom data that will be appended to the
             `userData` array in the response.
@@ -7669,6 +7750,7 @@ components:
             type: boolean
         - type: 'null'
     standardEntries:
+      type: object
       description: >
         Key-value pairs of [supported language ISO
         codes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/)
@@ -7750,6 +7832,7 @@ components:
       description: Data size taken by all the users assigned to the cluster.
       example: 481
     source:
+      type: object
       description: Source.
       required:
         - source
@@ -8220,6 +8303,18 @@ components:
             properties:
               createdAt:
                 $ref: '#/components/schemas/createdAt'
+    IndexInSameApp:
+      description: Indices are in the same application. Use operationIndex instead.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    IndexAlreadyExists:
+      description: Destination index already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
 x-tagGroups:
   - name: Search and indexing
     tags:

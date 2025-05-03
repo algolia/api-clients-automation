@@ -10,6 +10,10 @@ import {{packageName}}.transport.internal.*
 import kotlinx.serialization.json.*
 import kotlin.time.Duration.Companion.milliseconds
 
+{{#isCompositionClient}}
+import {{modelPackage}}.RequestBody
+{{/isCompositionClient}}
+
 {{#operations}}
 public class {{classname}}(
   override val appId: String,
@@ -45,7 +49,7 @@ public class {{classname}}(
     require(region == null || region in allowedRegions) { "`region` must be one of the following: ${allowedRegions.joinToString()}" }
     {{/fallbackToAliasHost}}
     val url = {{#fallbackToAliasHost}}if (region == null) "{{{hostWithFallback}}}" else {{/fallbackToAliasHost}} "{{{hostForKotlin}}}"
-    listOf(Host(url)) 
+    listOf(Host(url))
   {{/hasRegionalHost}}
   {{#hostsWithoutVariables.size}}
   listOf(
@@ -66,6 +70,9 @@ public class {{classname}}(
    *   - {{.}}
    {{/x-acl}}
    {{/vendorExtensions}}
+   {{#isDeprecated}}
+   * @deprecated
+   {{/isDeprecated}}
    {{#allParams}}
    * @param {{{paramName}}} {{{description}}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
    {{/allParams}}

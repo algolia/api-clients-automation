@@ -1,0 +1,32 @@
+package main
+
+import (
+  "encoding/json"
+  "fmt"
+  "net/http"
+)
+
+{{> snippets/import}}
+
+func searchWithAnalyticsAndHeader() {
+  {{> snippets/init}}
+
+  /*
+  '94.228.178.246' should be replaced with your user's IP address.
+  Depending on your stack there are multiple ways to get this information.
+  */
+  ip := "94.228.178.246"
+  query := "query"
+
+  searchParams := search.SearchParamsObjectAsSearchParams(
+		search.NewSearchParamsObject().
+			SetQuery(query).
+			SetAnalytics(true),
+	)
+
+  _, err = {{#dynamicSnippet}}searchWithSearchParamsAndForwardedHeader{{/dynamicSnippet}}
+  if err != nil {
+    panic(err)
+  }
+}
+

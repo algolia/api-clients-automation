@@ -33,7 +33,7 @@ final class TrendingFacetsQuery {
 
   /// Maximum number of recommendations to retrieve. By default, all recommendations are returned and no fallback request is made. Depending on the available recommendations and the other request parameters, the actual number of recommendations may be lower than this value.
   // minimum: 1
-  // maximum: 1000
+  // maximum: 30
   @JsonKey(name: r'maxRecommendations')
   final int? maxRecommendations;
 
@@ -42,7 +42,7 @@ final class TrendingFacetsQuery {
 
   /// Facet attribute for which to retrieve trending facet values.
   @JsonKey(name: r'facetName')
-  final Object? facetName;
+  final String facetName;
 
   @JsonKey(name: r'model')
   final TrendingFacetsModel model;
@@ -68,7 +68,7 @@ final class TrendingFacetsQuery {
       threshold.hashCode +
       maxRecommendations.hashCode +
       queryParameters.hashCode +
-      (facetName == null ? 0 : facetName.hashCode) +
+      facetName.hashCode +
       model.hashCode +
       fallbackParameters.hashCode;
 

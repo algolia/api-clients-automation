@@ -1,0 +1,16 @@
+import datetime
+import time
+
+{{> snippets/import}}
+
+
+_{{> snippets/init}}
+
+date = datetime.datetime.now() - datetime.timedelta(days=365)
+date_timestamp = int(time.mktime(date.timetuple()))
+search_params = {
+    "query": "<YOUR_SEARCH_QUERY>",
+    "filters": f"date_timestamp > {date_timestamp}"
+}
+
+{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}

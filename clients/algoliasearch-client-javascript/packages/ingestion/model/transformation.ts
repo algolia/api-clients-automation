@@ -27,6 +27,11 @@ export type Transformation = {
   description?: string;
 
   /**
+   * Owner of the resource.
+   */
+  owner?: string | null;
+
+  /**
    * Date of creation in RFC 3339 format.
    */
   createdAt: string;
@@ -34,5 +39,5 @@ export type Transformation = {
   /**
    * Date of last update in RFC 3339 format.
    */
-  updatedAt?: string;
+  updatedAt: string;
 };

@@ -95,5 +95,68 @@
         }
       }
     }
+  },
+  {
+    "testName": "with visible_by filter",
+    "parameters": {
+      "indexName": "theIndexName",
+      "objectID": "uniqueID",
+      "attributesToUpdate": {
+        "visible_by": ["Angela", "group/Finance", "group/Shareholders" ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/uniqueID/partial",
+      "method": "POST",
+      "body": {
+        "visible_by": ["Angela", "group/Finance", "group/Shareholders" ]
+      }
+    }
+  },
+  {
+    "testName": "add men pant",
+    "parameters": {
+      "indexName": "theIndexName",
+      "objectID": "productId",
+      "attributesToUpdate": {
+        "categoryPageId": {
+          "_operation": "Add",
+          "value": "men-clothing-pants"
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/productId/partial",
+      "method": "POST",
+      "body": {
+        "categoryPageId": {
+          "_operation": "Add",
+          "value": "men-clothing-pants"
+        }
+      }
+    }
+  },
+  {
+    "testName": "remove men pant",
+    "parameters": {
+      "indexName": "theIndexName",
+      "objectID": "productId",
+      "attributesToUpdate": {
+        "categoryPageId": {
+          "_operation": "Remove",
+          "value": "men-clothing-pants"
+        }
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/productId/partial",
+      "method": "POST",
+      "body": {
+        "categoryPageId": {
+          "_operation": "Remove",
+          "value": "men-clothing-pants"
+        }
+      }
+    }
   }
 ]

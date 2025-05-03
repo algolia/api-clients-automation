@@ -1,0 +1,25 @@
+<?php
+
+require __DIR__.'/../vendor/autoload.php';
+{{> snippets/import}}
+
+$getAllAppIDConfigurations = function () {
+    return [ /* A list of your MCM AppID/ApiKey pairs */ ];
+};
+
+$playlists = [ /* Your records */ ];
+
+// Fetch from your own data storage and with your own code
+// the list of application IDs and API keys to target each cluster
+$configurations = $getAllAppIDConfigurations();
+
+// Send the records to each cluster
+foreach ($configurations as [$appID, $apiKey]) {
+    try {
+        $client = SearchClient::create($appID, $apiKey);
+
+        {{#dynamicSnippet}}saveObjectsPlaylists{{/dynamicSnippet}};
+    } catch (Exception $e) {
+        echo $e->getMessage() . PHP_EOL;
+    }
+}

@@ -1,0 +1,27 @@
+namespace Algolia;
+
+using System;
+using System.Text.Json;
+using System.Net.Http;
+using System.Collections.Generic;
+
+{{> snippets/import}}
+
+class SetHeaderUserIDThenSaveObjects {
+
+  private static readonly List<Dictionary<string, object>> playlists = []; // Your records
+
+  async Task Main(string[] args)
+  {
+
+    {{> snippets/init}}
+    foreach (var playlist in playlists) {
+      try {
+        var playlistUserID = playlist.GetValueOrDefault("userID", "") as string;
+        {{#dynamicSnippet}}saveObjectsPlaylistsWithRequestOptions{{/dynamicSnippet}};
+      } catch (Exception e) {
+        Console.WriteLine(e.Message);
+      }
+    }
+  }
+}

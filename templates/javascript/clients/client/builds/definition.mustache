@@ -1,11 +1,21 @@
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 import { createHttpRequester } from '@algolia/requester-node-http';
 import { createFetchRequester } from '@algolia/requester-fetch';
-import { createNullLogger, createMemoryCache, createFallbackableCache, createBrowserLocalStorageCache, createNullCache, serializeQueryParameters } from '@algolia/client-common';
+import { 
+  IndexNotFoundError,
+  IndicesInSameAppError,
+  IndexAlreadyExistsError,
+  createNullLogger,
+  createMemoryCache,
+  createFallbackableCache,
+  createBrowserLocalStorageCache,
+  createNullCache,
+  serializeQueryParameters
+} from '@algolia/client-common';
 
-import type { ClientOptions } from '@algolia/client-common';
+import type { RequestOptions, ClientOptions } from '@algolia/client-common';
 
-import { create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}, apiClientVersion } from '../src/{{clientName}}';
+import { create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}, apiClientVersion } from '../src/{{#isCompositionFullClient}}compositionFullClient{{/isCompositionFullClient}}{{^isCompositionFullClient}}{{clientName}}{{/isCompositionFullClient}}';
 
 {{#hasRegionalHost}}
 import { REGIONS } from '../src/{{clientName}}';
@@ -22,13 +32,22 @@ export {
   isScheduleTrigger,
   isSubscriptionTrigger,
   {{/isIngestionClient}}
-} from '../src/{{clientName}}';
+} from '../src/{{#isCompositionFullClient}}compositionFullClient{{/isCompositionFullClient}}{{^isCompositionFullClient}}{{clientName}}{{/isCompositionFullClient}}';
 
 export * from '../model';
 
 {{#isSearchClient}}
 {{^isAlgoliasearchClient}}
-import type { GenerateSecuredApiKeyOptions, GetSecuredApiKeyRemainingValidityOptions, SearchClientNodeHelpers } from '../model';
+import type { 
+  AccountCopyIndexOptions,
+  BrowseResponse,
+  GenerateSecuredApiKeyOptions,
+  GetSecuredApiKeyRemainingValidityOptions,
+  SearchClientNodeHelpers,
+  SearchRulesResponse,
+  SearchSynonymsResponse,
+  UpdatedAtResponse,
+} from '../model';
 {{/isAlgoliasearchClient}}
 {{/isSearchClient}}
 
