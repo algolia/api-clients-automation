@@ -38,16 +38,33 @@ function addRoutes(app: Express): void {
     });
   });
 
-  app.get('/1/indexes/unknownField/settings', (req, res) => {
+  app.get('/1/indexes/:indexName/settings', (req, res) => {
+    const lang = req.params.indexName.match(/^cts_e2e_unknownField_(.*)$/)?.[1] as string;
+    let unknown = {};
+    if (lang !== 'javascript' && lang !== 'python') {
+      // js and python just put the response in a map, there is no strict parsing.
+      unknown = {
+        unknownFieldNameThatWillNeverBeAddedToTheSpecIHope: 'hello',
+      };
+    }
+
     res.json({
       minWordSizefor1Typo: 12,
       minWordSizefor2Typos: 13,
       hitsPerPage: 14,
-      unknownFieldNameThatWillNeverBeAddedToTheSpecIHope: 'hello',
+      ...unknown,
     });
   });
 
-  app.get('/1/indexes/unknownFieldInOneOf/rules/:objectID', (req, res) => {
+  app.get('/1/indexes/:indexName/rules/:objectID', (req, res) => {
+    const lang = req.params.indexName.match(/^cts_e2e_unknownFieldNested_(.*)$/)?.[1] as string;
+    let unknown = {};
+    if (lang !== 'javascript' && lang !== 'python') {
+      unknown = {
+        unknownFieldNameThatWillNeverBeAddedToTheSpecIHope: 'hello',
+      };
+    }
+
     res.json({
       objectID: req.params.objectID,
       consequence: {
@@ -55,7 +72,7 @@ function addRoutes(app: Express): void {
           {
             objectID: '1',
             position: 10,
-            unknownFieldNameThatWillNeverBeAddedToTheSpecIHope: 'hello',
+            ...unknown,
           },
         ],
       },
