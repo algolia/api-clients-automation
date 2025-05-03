@@ -34,7 +34,7 @@ class ChopperRequester implements Requester {
         ) {
     _client = ChopperClient(
       client: client,
-      converter: converter ?? JsonConverter(),
+      converter: converter ?? const JsonConverter(),
       interceptors: [
         _authInterceptor,
         AgentInterceptor(
@@ -124,5 +124,13 @@ class ChopperRequester implements Requester {
       appId: _authInterceptor.appId,
       apiKey: apiKey,
     );
+  }
+
+  @override
+  Duration? get connectTimeout => options.timeout;
+
+  @override
+  void setConnectTimeout(Duration connectTimeout) {
+    // Chopper does not support setting connect timeout directly.
   }
 }
