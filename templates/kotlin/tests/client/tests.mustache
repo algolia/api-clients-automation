@@ -37,7 +37,7 @@ fun `{{#lambda.replaceBacktick}}{{{testName}}}{{/lambda.replaceBacktick}}`() = r
                 assertEquals({{#match}}{{> tests/param_value}}{{/match}}, it.url.host);
             {{/testHost}}        
           }{{/testResponse}}{{#testResponse}}
-            {{#isHelper}}response = {
+            response = {
             {{^match.isPrimitive}}
               assertNotNull(it)
               JSONAssert.assertEquals("""{{{match.value}}}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
@@ -50,11 +50,7 @@ fun `{{#lambda.replaceBacktick}}{{{testName}}}{{/lambda.replaceBacktick}}`() = r
                 assertEquals({{#match}}{{> tests/param_value}}{{/match}}, it)
               {{/match.isNull}}
             {{/match.isPrimitive}}
-            }{{/isHelper}}
-            {{^isHelper}}response = {
-                val response = Json.encodeToString(it)
-                assertEquals({{#match}}{{> tests/param_value}}{{/match}}, response)
-            }{{/isHelper}}
+            }
             {{/testResponse}}
     )
     {{/isMethod}}

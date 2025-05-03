@@ -38,11 +38,15 @@ function addRoutes(app: Express): void {
     });
   });
 
+  // languages that just put the response in a map, there is no strict parsing or types to match.
+  const isLaxLanguage = (lang: string) => {
+    return lang === 'dart' || lang === 'javascript' || lang === 'python' || lang === 'php';
+  };
+
   app.get('/1/indexes/:indexName/settings', (req, res) => {
     const lang = req.params.indexName.match(/^cts_e2e_unknownField_(.*)$/)?.[1] as string;
     let unknown = {};
-    if (lang !== 'javascript' && lang !== 'python') {
-      // js and python just put the response in a map, there is no strict parsing.
+    if (!isLaxLanguage(lang)) {
       unknown = {
         unknownFieldNameThatWillNeverBeAddedToTheSpecIHope: 'hello',
       };
@@ -59,7 +63,7 @@ function addRoutes(app: Express): void {
   app.get('/1/indexes/:indexName/rules/:objectID', (req, res) => {
     const lang = req.params.indexName.match(/^cts_e2e_unknownFieldNested_(.*)$/)?.[1] as string;
     let unknown = {};
-    if (lang !== 'javascript' && lang !== 'python') {
+    if (!isLaxLanguage(lang)) {
       unknown = {
         unknownFieldNameThatWillNeverBeAddedToTheSpecIHope: 'hello',
       };

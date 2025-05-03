@@ -56,7 +56,7 @@
           {{^isHelper}}
             let comparableData = "{{#lambda.escapeQuotes}}{{{match.value}}}{{/lambda.escapeQuotes}}".data(using: .utf8)
             let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
-            XCTAssertEqual(comparableJSON, responseBodyJSON);
+            XCTAssertEqual(comparableJSON, String(data: try CodableHelper.jsonEncoder.encode(response), encoding: .utf8)!);
           {{/isHelper}}
         {{/testResponse}}
         {{#shouldScope}}
