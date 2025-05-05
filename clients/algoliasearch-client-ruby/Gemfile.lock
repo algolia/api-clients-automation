@@ -11,7 +11,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     base64 (0.2.0)
-    connection_pool (2.5.2)
+    connection_pool (2.5.3)
     faraday (2.13.1)
       faraday-net_http (>= 2.0, < 3.5)
       json
