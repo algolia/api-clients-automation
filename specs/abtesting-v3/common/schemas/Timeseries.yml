@@ -3,9 +3,9 @@ Timeseries:
   additionalProperties: false
   properties:
     abTestID:
-      $ref: "../parameters.yml#/abTestID"
+      $ref: '../parameters.yml#/abTestID'
     variants:
-      $ref: "#/timeseriesVariants"
+      $ref: '#/timeseriesVariants'
   required:
     - abTestID
     - variants
@@ -18,18 +18,18 @@ timeseriesVariants:
     The first variant is your _control_ index, typically your production index.
     All of the additional variants are indexes with changed settings that you want to test against the control.
   items:
-    $ref: "#/timeseriesVariant"
+    $ref: '#/timeseriesVariant'
 
 timeseriesVariant:
   type: object
   properties:
     dates:
-      $ref: "#/metricDates"
+      $ref: '#/metricDates'
 
 metricDates:
   type: array
   items:
-    $ref: "#/metricDate"
+    $ref: '#/metricDate'
 
 metricDate:
   type: object
@@ -40,4 +40,4 @@ metricDate:
       format: date
       example: 2025-06-15
     metrics:
-       $ref: "Variant.yml#/metrics"
+      $ref: 'Variant.yml#/metrics'
