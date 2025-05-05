@@ -378,7 +378,7 @@ jobs:
         run: yarn cli cts generate ${{ matrix.client.language }} --language-version ${{ matrix.client.version }}
 
       - name: Run unit CTS
-        run: yarn cli cts run ${{ matrix.client.language }} --no-e2e
+        run: yarn cli cts run ${{ matrix.client.language }} --no-e2e -v
 
       - name: Run e2e CTS
         id: cts-e2e
