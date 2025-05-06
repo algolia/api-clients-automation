@@ -4134,8 +4134,11 @@ components:
           description: Number of items.
           example: 200
       required:
+        - hitsPerPage
         - items
+        - nbHits
         - nbPages
+        - page
   responses:
     BadRequest:
       description: Bad request or request arguments.
