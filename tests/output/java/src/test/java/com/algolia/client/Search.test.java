@@ -203,6 +203,64 @@ class SearchClientClientTests {
   }
 
   @Test
+  @DisplayName("can handle unknown response fields")
+  void apiTest8() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6686
+          )
+        ),
+        false
+      )
+    );
+    SettingsResponse res = client.getSettings("cts_e2e_unknownField_java");
+
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"minWordSizefor1Typo\":12,\"minWordSizefor2Typos\":13,\"hitsPerPage\":14}",
+        json.writeValueAsString(res),
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("can handle unknown response fields inside a nested oneOf")
+  void apiTest9() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6686
+          )
+        ),
+        false
+      )
+    );
+    Rule res = client.getRule("cts_e2e_unknownFieldNested_java", "ruleObjectID");
+
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"ruleObjectID\",\"consequence\":{\"promote\":[{\"objectID\":\"1\",\"position\":10}]}}",
+        json.writeValueAsString(res),
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("calls api with correct user agent")
   void commonApiTest0() {
     SearchClient client = createClient();

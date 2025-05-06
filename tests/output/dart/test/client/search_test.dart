@@ -153,6 +153,53 @@ void main() {
     }
   });
 
+  test('can handle unknown response fields', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6686',
+              scheme: 'http'),
+        ]));
+    requester.setOnRequest((request) {});
+    try {
+      final res = await client.getSettings(
+        indexName: "cts_e2e_unknownField_dart",
+      );
+      expectBody(res,
+          """{"minWordSizefor1Typo":12,"minWordSizefor2Typos":13,"hitsPerPage":14}""");
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
+  test('can handle unknown response fields inside a nested oneOf', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6686',
+              scheme: 'http'),
+        ]));
+    requester.setOnRequest((request) {});
+    try {
+      final res = await client.getRule(
+        indexName: "cts_e2e_unknownFieldNested_dart",
+        objectID: "ruleObjectID",
+      );
+      expectBody(res,
+          """{"objectID":"ruleObjectID","consequence":{"promote":[{"objectID":"1","position":10}]}}""");
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
   test('calls api with correct user agent', () async {
     final requester = RequestInterceptor();
     final client = SearchClient(

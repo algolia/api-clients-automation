@@ -11,6 +11,8 @@ import io.ktor.http.*
 import kotlinx.coroutines.test.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
+import org.skyscreamer.jsonassert.JSONAssert
+import org.skyscreamer.jsonassert.JSONCompareMode
 import kotlin.test.*
 
 class InsightsTest {
@@ -111,8 +113,8 @@ class InsightsTest {
       },
 
       response = {
-        val response = Json.encodeToString(it)
-        assertEquals("{\"headerAPIKeyValue\":\"test-api-key\"}", response)
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"headerAPIKeyValue":"test-api-key"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
     client.runTest(
@@ -132,8 +134,8 @@ class InsightsTest {
       },
 
       response = {
-        val response = Json.encodeToString(it)
-        assertEquals("{\"headerAPIKeyValue\":\"updated-api-key\"}", response)
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"headerAPIKeyValue":"updated-api-key"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
   }

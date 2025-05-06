@@ -153,6 +153,69 @@ class TestSearchClient:
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 30000
 
+    async def test_api_8(self):
+        """
+        can handle unknown response fields
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.get_settings(
+            index_name="cts_e2e_unknownField_python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"minWordSizefor1Typo":12,"minWordSizefor2Typos":13,"hitsPerPage":14}"""
+        )
+
+    async def test_api_9(self):
+        """
+        can handle unknown response fields inside a nested oneOf
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.get_rule(
+            index_name="cts_e2e_unknownFieldNested_python",
+            object_id="ruleObjectID",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"objectID":"ruleObjectID","consequence":{"promote":[{"objectID":"1","position":10}]}}"""
+        )
+
     async def test_common_api_0(self):
         """
         calls api with correct user agent
@@ -1249,6 +1312,69 @@ class TestSearchClientSync:
         )
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 30000
+
+    def test_api_8(self):
+        """
+        can handle unknown response fields
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.get_settings(
+            index_name="cts_e2e_unknownField_python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"minWordSizefor1Typo":12,"minWordSizefor2Typos":13,"hitsPerPage":14}"""
+        )
+
+    def test_api_9(self):
+        """
+        can handle unknown response fields inside a nested oneOf
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.get_rule(
+            index_name="cts_e2e_unknownFieldNested_python",
+            object_id="ruleObjectID",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"objectID":"ruleObjectID","consequence":{"promote":[{"objectID":"1","position":10}]}}"""
+        )
 
     def test_common_api_0(self):
         """

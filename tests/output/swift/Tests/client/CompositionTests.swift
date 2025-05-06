@@ -21,8 +21,7 @@ final class CompositionClientClientTests: XCTestCase {
             requestBody: CompositionRequestBody()
         )
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
         XCTAssertEqual("test-app-id-dsn.algolia.net", echoResponse.host)
     }
@@ -37,8 +36,7 @@ final class CompositionClientClientTests: XCTestCase {
             requestBody: CompositionRequestBody()
         )
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
         XCTAssertEqual("test-app-id-dsn.algolia.net", echoResponse.host)
     }

@@ -11,6 +11,8 @@ import io.ktor.http.*
 import kotlinx.coroutines.test.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
+import org.skyscreamer.jsonassert.JSONAssert
+import org.skyscreamer.jsonassert.JSONCompareMode
 import kotlin.test.*
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -69,8 +71,8 @@ class IngestionTest {
       },
 
       response = {
-        val response = Json.encodeToString(it)
-        assertEquals("{\"message\":\"OK\"}", response)
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"message":"OK"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
   }
@@ -183,8 +185,8 @@ class IngestionTest {
       },
 
       response = {
-        val response = Json.encodeToString(it)
-        assertEquals("{\"headerAPIKeyValue\":\"test-api-key\"}", response)
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"headerAPIKeyValue":"test-api-key"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
     client.runTest(
@@ -204,8 +206,8 @@ class IngestionTest {
       },
 
       response = {
-        val response = Json.encodeToString(it)
-        assertEquals("{\"headerAPIKeyValue\":\"updated-api-key\"}", response)
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"headerAPIKeyValue":"updated-api-key"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
   }
