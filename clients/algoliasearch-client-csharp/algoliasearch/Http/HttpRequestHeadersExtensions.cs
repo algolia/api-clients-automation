@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.linq;
+using System.Linq;
 using System.Net.Http.Headers;
 using Algolia.Search.Utils;
 
