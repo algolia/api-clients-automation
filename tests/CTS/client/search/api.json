@@ -224,5 +224,80 @@
         }
       }
     ]
+  },
+  {
+    "testName": "can handle unknown response fields",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "region": "us",
+          "customHosts": [
+            {
+              "port": 6686
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "getSettings",
+        "parameters": {
+          "indexName": "cts_e2e_unknownField_${{language}}"
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "minWordSizefor1Typo": 12,
+            "minWordSizefor2Typos": 13,
+            "hitsPerPage": 14
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "can handle unknown response fields inside a nested oneOf",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "region": "us",
+          "customHosts": [
+            {
+              "port": 6686
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "getRule",
+        "parameters": {
+          "indexName": "cts_e2e_unknownFieldNested_${{language}}",
+          "objectID": "ruleObjectID"
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "objectID": "ruleObjectID",
+            "consequence": {
+              "promote": [
+                {
+                  "objectID": "1",
+                  "position": 10
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
   }
 ]

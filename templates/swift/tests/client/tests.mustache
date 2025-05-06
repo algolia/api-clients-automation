@@ -41,8 +41,7 @@
         {{#testResponse}}
           {{#isHelper}}
             {{^match.isPrimitive}}
-              let comparableData = try XCTUnwrap("{{#lambda.escapeQuotes}}{{{match.value}}}{{/lambda.escapeQuotes}}".data(using: .utf8))
-              try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+              try XCTLenientAssertEqual(received: response, expected: "{{#lambda.escapeQuotes}}{{{match.value}}}{{/lambda.escapeQuotes}}")
             {{/match.isPrimitive}}
             {{#match.isPrimitive}}
               {{#match.isNull}}
@@ -54,9 +53,7 @@
             {{/match.isPrimitive}}
           {{/isHelper}}
           {{^isHelper}}
-            let comparableData = "{{#lambda.escapeQuotes}}{{{match.value}}}{{/lambda.escapeQuotes}}".data(using: .utf8)
-            let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
-            XCTAssertEqual(comparableJSON, responseBodyJSON);
+            XTCJSONEquals(received: response, expected: "{{#lambda.escapeQuotes}}{{{match.value}}}{{/lambda.escapeQuotes}}")
           {{/isHelper}}
         {{/testResponse}}
         {{#shouldScope}}
