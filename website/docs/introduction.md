@@ -12,8 +12,8 @@ To contribute to the repository, make sure to take a look at our guidelines and 
 
 - [Setup the repository tooling](/docs/setup-repository): to install our tooling.
   - CLI commands can be found at [CLI > build commands](/docs/CLI/build-commands), [CLI > generate commands](/docs/CLI/generate-commands) and [CLI > CTS commands](/docs/CLI/cts-commands).
-- [Add a new client](/docs/add-new-api-client): to add a new API spec to generate a client.
-- [Support a new language](/docs/add-new-language): to add a new supported language to the API clients.
+- [Add a new API](/docs/add-a-new-api/write-a-specification): to add your API specification to an existing API client.
+- [Add a new language](/docs/add-a-new-language): to add support for a new language to the API clients.
 - [Commit and Pull-request](/docs/commit-and-pull-request): to see what to commit and send pull-requests.
 - [Release process](/docs/release-process): to see how to release API clients.
 

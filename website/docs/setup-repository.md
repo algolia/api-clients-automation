@@ -49,8 +49,8 @@ docker compose down --rmi all
 
 Once you've successfully built and mounted the Docker image, you can now play with the repository! Read our guides on:
 
-- [How to add a new client](/docs/add-new-api-client)
-- [How to add a new language](/docs/add-new-language)
+- [How to add a new API to an existing client](/docs/add-a-new-api/write-a-specification)
+- [Add a new language](/docs/add-a-new-language)
 - [Use CLI specs commands](/docs/CLI/build-commands)
 - [Use CLI clients commands](/docs/CLI/generate-commands)
 - [Use CLI release commands](/docs/CLI/release-commands)

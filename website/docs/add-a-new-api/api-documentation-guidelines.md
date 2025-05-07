@@ -1,5 +1,5 @@
 ---
-title: API documentation
+title: API documentation guidelines
 description: Guidelines for writing API documentation for Algolia's APIs.
 ---
 
@@ -14,7 +14,7 @@ For more general documentation guidelines,
 see the [Google developer documentation style guide](https://developers.google.com/style).
 
 For information on how to structure spec files to support a new API client,
-see [Add a new API client](./add-new-api-client.md).
+see [Add a new API client](/docs/add-a-new-language).
 
 ## Prefer plain text
 
