@@ -52,6 +52,7 @@ servers:
   - url: https://data.{region}.algolia.com
     variables:
       region:
+        description: The region where your Algolia application is hosted.
         enum:
           - eu
           - us

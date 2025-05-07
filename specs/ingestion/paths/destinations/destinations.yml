@@ -4,6 +4,7 @@ get:
   summary: List destinations
   description: Retrieves a list of destinations.
   operationId: listDestinations
+  x-mcp-tool: true
   x-acl:
     - addObject
     - deleteIndex

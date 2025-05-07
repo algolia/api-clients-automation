@@ -161,7 +161,7 @@ jobs:
           type: minimal
 
       - name: Building specs
-        run: yarn cli build specs
+        run: yarn cli build specs -s
 
       - name: Store bundled specs
         uses: actions/upload-artifact@v4
@@ -545,7 +545,7 @@ jobs:
           type: minimal
 
       - name: Generate documentation specs with code snippets
-        run: yarn cli build specs --docs
+        run: yarn cli build specs --docs -s
 
       - name: Read benchmark results
         id: benchmark

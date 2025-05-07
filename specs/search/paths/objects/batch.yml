@@ -2,6 +2,7 @@ post:
   tags:
     - Records
   operationId: batch
+  x-mcp-tool: true
   summary: Batch indexing operations on one index
   description: |
     Adds, updates, or deletes records in one index with a single API request.

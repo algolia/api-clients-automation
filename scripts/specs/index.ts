@@ -19,15 +19,14 @@ const ALGOLIASEARCH_LITE_OPERATIONS = ['search', 'customPost', 'getRecommendatio
 async function buildLiteSpec({
   spec,
   bundledPath,
+  outputFormat,
   docs,
   useCache,
-}: {
+}: BaseBuildSpecsOptions & {
   spec: string;
   bundledPath: string;
-  docs: boolean;
-  useCache: boolean;
 }): Promise<void> {
-  await buildSpec({ spec: 'recommend', outputFormat: 'yml', docs, useCache });
+  await buildSpec({ spec: 'recommend', outputFormat: outputFormat, docs, useCache });
 
   const base = yaml.load(await fsp.readFile(toAbsolutePath(bundledPath), 'utf8')) as Spec;
   const recommend = yaml.load(
@@ -51,7 +50,7 @@ async function buildLiteSpec({
   await fsp.writeFile(bundledPath, yaml.dump(lite));
 
   // remove unused components for the outputted light spec
-  await run(`yarn openapi bundle ${bundledPath} -o ${bundledPath} --ext yml --remove-unused-components`);
+  await run(`yarn redocly bundle ${bundledPath} -o ${bundledPath} --ext ${outputFormat} --remove-unused-components`);
 
   await bundleSpecsForClient(bundledPath, spec);
 }
@@ -73,7 +72,7 @@ async function buildSpec({
 
   // In case of lite we use a the `search` spec as a base because only its bundled form exists.
   const specBase = isLiteSpec ? 'search' : spec;
-  const logSuffix = docs ? 'doc spec' : 'spec';
+  const logSuffix = `${outputFormat} ${docs ? 'doc spec' : 'spec'}`;
   const basePath = docs ? 'docs/' : 'specs/';
   const deps = isLiteSpec ? ['search', 'recommend'] : [spec];
   const cache = new Cache({
@@ -102,7 +101,7 @@ async function buildSpec({
 
   // Then bundle the file
   const bundledPath = toAbsolutePath(`${basePath}/bundled/${spec}.${outputFormat}`);
-  await run(`yarn openapi bundle specs/${specBase}/spec.yml -o ${bundledPath} --ext ${outputFormat}`);
+  await run(`yarn redocly bundle specs/${specBase}/spec.yml -o ${bundledPath} --ext ${outputFormat} `);
 
   if (!(await exists(bundledPath))) {
     throw new Error(`Bundled file not found ${bundledPath}.`);
@@ -115,13 +114,14 @@ async function buildSpec({
     await buildLiteSpec({
       spec,
       bundledPath: toAbsolutePath(bundledPath),
+      outputFormat,
       docs,
       useCache,
     });
   }
 
   spinner.text = `validating '${spec}' ${logSuffix}`;
-  await run(`yarn openapi lint ${bundledPath}`);
+  await run(`yarn redocly lint ${bundledPath}`);
 
   spinner.text = `linting '${spec}' ${logSuffix}`;
   await run(`yarn specs:fix ${basePath}/bundled/${spec}.${outputFormat}`);

@@ -2,6 +2,7 @@ post:
   tags:
     - Synonyms
   operationId: searchSynonyms
+  x-mcp-tool: true
   x-use-read-transporter: true
   x-cacheable: true
   x-acl:

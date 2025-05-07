@@ -2,6 +2,7 @@ post:
   tags:
     - Records
   operationId: saveObject
+  x-mcp-tool: true
   x-acl:
     - addObject
   description: |

@@ -2,6 +2,7 @@ post:
   tags:
     - Records
   operationId: deleteBy
+  x-mcp-tool: true
   x-acl:
     - deleteIndex
   summary: Delete records matching a filter

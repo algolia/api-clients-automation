@@ -2,6 +2,7 @@ get:
   tags:
     - logs
   operationId: getLogFile
+  x-mcp-tool: true
   x-acl:
     - settings
   summary: Retrieve logs

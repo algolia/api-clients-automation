@@ -56,6 +56,7 @@ servers:
       If you connect to the wrong region, the API returns an error with the status `401` and the message: "The log processing region does not match".
     variables:
       region:
+        description: The region where your Algolia application is hosted.
         enum:
           - us
           - eu

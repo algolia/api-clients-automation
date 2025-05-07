@@ -2,6 +2,7 @@ get:
   tags:
     - Indices
   operationId: listIndices
+  x-mcp-tool: true
   x-acl:
     - listIndexes
   summary: List indices

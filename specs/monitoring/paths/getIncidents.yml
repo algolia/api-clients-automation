@@ -2,6 +2,7 @@ get:
   summary: Retrieve all incidents
   description: Retrieves known incidents for all clusters.
   operationId: getIncidents
+  x-mcp-tool: true
   security: []
   tags:
     - incidents

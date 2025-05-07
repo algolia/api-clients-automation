@@ -2,6 +2,7 @@ post:
   tags:
     - Records
   operationId: multipleBatch
+  x-mcp-tool: true
   description: |
     Adds, updates, or deletes records in multiple indices with a single API request.
 

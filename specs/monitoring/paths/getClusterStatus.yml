@@ -2,6 +2,7 @@ get:
   summary: Retrieve cluster status
   description: Retrieves the status of selected clusters.
   operationId: getClusterStatus
+  x-mcp-tool: true
   tags:
     - status
   security: []
