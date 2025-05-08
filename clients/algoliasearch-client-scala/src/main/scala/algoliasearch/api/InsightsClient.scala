@@ -189,6 +189,9 @@ class InsightsClient(
     * asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user profile`
     * in the Personalization API.
     *
+    * Required API Key ACLs:
+    *   - deleteObject
+    *
     * @param userToken
     *   User token for which to delete all associated events.
     */
@@ -207,6 +210,9 @@ class InsightsClient(
 
   /** Sends a list of events to the Insights API. You can include up to 1,000 events in a single request, but the
     * request body must be smaller than 2&nbsp;MB.
+    *
+    * Required API Key ACLs:
+    *   - search
     */
   def pushEvents(insightsEvents: InsightsEvents, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
