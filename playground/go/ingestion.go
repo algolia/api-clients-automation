@@ -13,14 +13,14 @@ func testIngestion(appID, apiKey string) int {
 	}
 
 	// another example to generate payload for a request.
-	_, payload, err := ingestionClient.ListTasksWithHTTPInfo(ingestionClient.NewApiListTasksRequest())
+	res, err := ingestionClient.ListTasks(nil)
 	if err != nil {
 		fmt.Printf("request error: %v\n", err)
 
 		return 1
 	}
 
-	fmt.Println(string(payload))
+	fmt.Println(res)
 
 	return 0
 }
