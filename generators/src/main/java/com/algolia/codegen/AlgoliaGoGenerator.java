@@ -11,6 +11,7 @@ import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
 import java.util.*;
+import java.util.stream.Collectors;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.GoClientCodegen;
 import org.openapitools.codegen.model.ModelMap;
@@ -78,6 +79,10 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     super.processOpenAPI(openAPI);
     Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
     Timeouts.enrichBundle(openAPI, additionalProperties);
+    additionalProperties.put(
+      "appDescription",
+      Arrays.stream(openAPI.getInfo().getDescription().split("\n")).map(line -> "// " + line).collect(Collectors.joining("\n")).trim()
+    );
   }
 
   @Override
@@ -140,7 +145,127 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
   @Override
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
     OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
-    ModelPruner.removeOrphanModelFiles(this, operations, models);
+
+    // Flatten body params to remove the wrapping object
+    for (CodegenOperation ope : operations.getOperations().getOperation()) {
+      // clean up the description
+      String[] lines = ope.unescapedNotes.split("\n");
+      ope.notes = (lines[0] + "\n" + Arrays.stream(lines).skip(1).map(line -> "// " + line).collect(Collectors.joining("\n"))).trim();
+
+      for (CodegenParameter param : ope.optionalParams) {
+        param.nameInPascalCase = Helpers.capitalize(param.baseName);
+      }
+
+      CodegenParameter bodyParam = ope.bodyParam;
+      if (bodyParam == null) {
+        continue;
+      }
+      bodyParam.nameInPascalCase = Helpers.capitalize(bodyParam.baseName);
+      if (!bodyParam.isModel) {
+        continue;
+      }
+
+      // check for colision with other params
+      boolean hasCollision = false;
+      for (CodegenProperty prop : bodyParam.getVars()) {
+        for (CodegenParameter param : ope.allParams) {
+          if (param.paramName.equals(prop.baseName)) {
+            hasCollision = true;
+            break;
+          }
+        }
+      }
+      if (hasCollision) {
+        System.out.println("Operation " + ope.operationId + " has a body param with the same name as another param, skipping flattening");
+        continue;
+      }
+
+      if (ope.operationId.equals("Browse")) {
+        System.out.println(
+          ope.allParams.size() +
+          " params   " +
+          ope.requiredParams.size() +
+          " required params " +
+          ope.optionalParams.size() +
+          " optional params"
+        );
+      }
+
+      bodyParam.vendorExtensions.put("x-flat-body", bodyParam.getVars().size() > 0);
+
+      if (bodyParam.getVars().size() > 0) {
+        ope.allParams.removeIf(param -> param.isBodyParam);
+        ope.requiredParams.removeIf(param -> param.isBodyParam);
+        ope.optionalParams.removeIf(param -> param.isBodyParam);
+      }
+
+      for (CodegenProperty prop : bodyParam.getVars()) {
+        // there is no easy way to convert a prop to a param, we need to copy all the fields
+        CodegenParameter param = new CodegenParameter();
+
+        prop.nameInLowerCase = toParamName(prop.baseName);
+        param.nameInPascalCase = Helpers.capitalize(prop.baseName);
+        param.paramName = toParamName(prop.baseName);
+        param.baseName = prop.baseName;
+        param.baseType = prop.baseType;
+        param.dataType = prop.dataType;
+        param.datatypeWithEnum = prop.datatypeWithEnum;
+        param.description = prop.description;
+        param.example = prop.example;
+        param.isModel = prop.isModel;
+        param.isArray = prop.isArray;
+        param.isContainer = prop.isContainer;
+        param.isMap = prop.isMap;
+        param.isEnum = prop.isEnum;
+        param.isEnumRef = prop.isEnumRef;
+        param.isPrimitiveType = prop.isPrimitiveType;
+        param.isString = prop.isString;
+        param.isNumeric = prop.isNumeric;
+        param.isBoolean = prop.isBoolean;
+        param.isDate = prop.isDate;
+        param.isDateTime = prop.isDateTime;
+        param.isFreeFormObject = prop.isFreeFormObject;
+        param.isNullable = prop.isNullable;
+        param.jsonSchema = prop.jsonSchema;
+        param.required = prop.required;
+        param.vendorExtensions = prop.vendorExtensions;
+        param.allowableValues = prop.allowableValues;
+
+        if (prop.required) {
+          ope.requiredParams.add(param);
+          ope.hasRequiredParams = true;
+        } else {
+          ope.optionalParams.add(param);
+          ope.hasOptionalParams = true;
+        }
+        ope.allParams.add(param);
+      }
+
+      System.out.println(
+        ope.operationId +
+        "  has " +
+        ope.requiredParams.size() +
+        " required params and " +
+        ope.optionalParams.size() +
+        " optional params   " +
+        bodyParam.getVars().size() +
+        " body params  "
+      );
+
+      // If the optional param struct only has 1 param, we can remove the wrapper
+      if (ope.optionalParams.size() == 1) {
+        CodegenParameter param = ope.optionalParams.get(0);
+
+        // move it to required, it's easier to handle im mustache
+        ope.hasOptionalParams = false;
+        ope.optionalParams.clear();
+
+        ope.hasRequiredParams = true;
+        ope.requiredParams.add(param);
+      }
+    }
+
+    ModelPruner.removeOrphans(this, operations, models);
     Helpers.removeHelpers(operations);
     GenericPropagator.propagateGenericsToOperations(operations, models);
     return operations;

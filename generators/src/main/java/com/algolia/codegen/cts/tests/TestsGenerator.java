@@ -11,9 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import org.apache.commons.lang3.ArrayUtils;
-import org.openapitools.codegen.CodegenModel;
-import org.openapitools.codegen.CodegenOperation;
-import org.openapitools.codegen.SupportingFile;
+import org.openapitools.codegen.*;
 
 public abstract class TestsGenerator {
 
@@ -129,5 +127,31 @@ public abstract class TestsGenerator {
       requestOptions.put("timeouts", timeouts);
       output.put("requestOptions", requestOptions);
     }
+  }
+
+  public static void setOptionalParameters(CodegenOperation ope, Map<String, Object> test) {
+    long bodyPropsOptional = 0;
+    if (ope.bodyParam != null) {
+      if (ope.bodyParam.isModel && ope.bodyParam.required) {
+        // check for colision with other params
+        boolean hasCollision = false;
+        for (CodegenProperty prop : ope.bodyParam.getVars()) {
+          for (CodegenParameter param : ope.allParams) {
+            if (param.paramName.equals(prop.baseName)) {
+              hasCollision = true;
+              break;
+            }
+          }
+        }
+
+        if (!hasCollision) {
+          bodyPropsOptional = ope.bodyParam.getVars().stream().filter(prop -> !prop.required).count();
+        }
+      }
+    }
+
+    // hasOptionalWrapper if there is more that one optional param, after the body has been
+    // flattened, only relevant for go
+    test.put("hasOptionalWrapper", ope.optionalParams.size() + bodyPropsOptional > 1);
   }
 }

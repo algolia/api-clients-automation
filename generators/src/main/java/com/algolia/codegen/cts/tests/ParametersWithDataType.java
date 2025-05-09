@@ -60,7 +60,7 @@ public class ParametersWithDataType {
     IJsonSchemaValidationProperties spec = null;
     String paramName = null;
     // special case if there is only bodyParam which is not an array
-    if (operation != null && operation.allParams.size() == 1 && operation.bodyParams.size() == 1 && !operation.bodyParam.isArray) {
+    if (operation != null && operation.allParams.size() == 1 && operation.bodyParam != null && !operation.bodyParam.isArray) {
       spec = operation.bodyParam;
       paramName = operation.bodyParam.paramName;
     }
@@ -71,7 +71,7 @@ public class ParametersWithDataType {
     if (paramName == null) {
       if (parameters != null) {
         for (Entry<String, Object> param : parameters.entrySet()) {
-          CodegenParameter specParam = null;
+          IJsonSchemaValidationProperties specParam = null;
           if (operation != null) {
             for (CodegenParameter sp : operation.allParams) {
               if (sp.paramName.equals(param.getKey())) {
@@ -83,9 +83,42 @@ public class ParametersWithDataType {
               throw new CTSException("Parameter " + param.getKey() + " not found in the root parameter");
             }
           }
-          Map<String, Object> paramWithType = traverseParams(param.getKey(), param.getValue(), specParam, "", 0, false);
-          parametersWithDataType.add(paramWithType);
-          parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
+          // for go, we flatten the body params
+          if (
+            language.equals("go") &&
+            specParam != null &&
+            ((CodegenParameter) specParam).isBodyParam &&
+            operation != null &&
+            operation.bodyParam != null &&
+            operation.bodyParam.isModel &&
+            operation.bodyParam.required
+          ) {
+            // check for colision with other params
+            boolean hasCollision = false;
+            for (CodegenProperty prop : operation.bodyParam.getVars()) {
+              for (CodegenParameter otherParam : operation.allParams) {
+                if (otherParam.paramName.equals(prop.baseName)) {
+                  hasCollision = true;
+                  break;
+                }
+              }
+            }
+            if (!hasCollision) {
+              // flatten the body params by skipping one level
+              Map<String, Object> bodyParams = (Map<String, Object>) param.getValue();
+              for (CodegenProperty prop : operation.bodyParam.getVars()) {
+                Object nestedParam = bodyParams.get(prop.baseName);
+
+                Map<String, Object> paramWithType = traverseParams(prop.baseName, nestedParam, prop, "", 0, false);
+                parametersWithDataType.add(paramWithType);
+                parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
+              }
+            }
+          } else {
+            Map<String, Object> paramWithType = traverseParams(param.getKey(), param.getValue(), specParam, "", 0, false);
+            parametersWithDataType.add(paramWithType);
+            parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
+          }
         }
       }
     } else {

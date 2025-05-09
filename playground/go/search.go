@@ -24,28 +24,15 @@ func testSearch(appID, apiKey string) int {
 		panic(err)
 	}
 
-	// config := search.SearchConfiguration{
-	// 	Configuration: transport.Configuration{
-	// 		AppID:  appID,
-	// 		ApiKey: apiKey,
-	// 	},
-	// }
-	//
-	// config.WithTransformation("eu")
-	//
-	// fmt.Println(config.Transformation.Region)
-	//
-	// searchClient, err := search.NewClientWithConfig(config)
-	// if err != nil {
-	// 	panic(err)
-	// }
-	//
-	// watchResponse, err := searchClient.SaveObjectsWithTransformation("foo", []map[string]any{{"objectID": "foobarbaz"}}, search.WithWaitForTasks(true))
-	// if err != nil {
-	// 	panic(err)
-	// }
-	//
-	// fmt.Printf("%#v\n", watchResponse)
+	// old way
+	//searchClient.Search(searchClient.NewApiSearchRequest(search.NewSearchMethodParams([]search.SearchQuery{
+	//	*search.SearchForHitsAsSearchQuery(search.NewSearchForHits("indexName", search.WithSearchForHitsQuery("foo"))),
+	//})))
+
+	// new way
+	//searchClient.Search([]search.SearchQuery{
+	//	search.NewSearchForHits("indexName").WithQuery("foo"),
+	//}, nil)
 
 	/*
 		response, err := searchClient.AddOrUpdateObject(

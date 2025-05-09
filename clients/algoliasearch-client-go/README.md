@@ -46,30 +46,25 @@ import "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
 client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 
 // Add a new record to your Algolia index
-response, err := client.SaveObject(client.NewApiSaveObjectRequest(
-  "<YOUR_INDEX_NAME>", map[string]any{"objectID": "id", "test": "val"},
-))
+saveResponse, err := client.SaveObject("<YOUR_INDEX_NAME>", map[string]any{"objectID": "id", "test": "val"})
 if err != nil {
   // handle the eventual error
   panic(err)
 }
 
 // use the model directly
-print(response)
+print(saveResponse)
 
 // Poll the task status to know when it has been indexed
-taskResponse, err := searchClient.WaitForTask("<YOUR_INDEX_NAME>", response.TaskID, nil, nil, nil)
+_, err = client.WaitForTask("<YOUR_INDEX_NAME>", saveResponse.TaskID)
 if err != nil {
   panic(err)
 }
 
 // Fetch search results, with typo tolerance
-response, err := client.Search(client.NewApiSearchRequest(
-
-  search.NewEmptySearchMethodParams().SetRequests(
-    []search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-      search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetHitsPerPage(50))}),
-))
+response, err := client.Search([]search.SearchQuery{
+  *search.SearchForHitsAsSearchQuery(search.NewSearchForHits("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetHitsPerPage(50)),
+}, nil)
 if err != nil {
   // handle the eventual error
   panic(err)
@@ -77,6 +72,8 @@ if err != nil {
 
 // use the model directly
 print(response)
+
+return 0
 ```
 
 For full documentation, visit the **[Algolia Go API Client](https://www.algolia.com/doc/libraries/go/)**.

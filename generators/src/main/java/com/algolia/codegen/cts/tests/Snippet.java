@@ -86,6 +86,8 @@ public class Snippet {
         }
       }
 
+      TestsGenerator.setOptionalParameters(ope, context);
+
       paramsType.enhanceParameters(parameters, context, ope);
     } catch (CTSException e) {
       e.setTestName((String) context.get("testName"));
