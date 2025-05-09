@@ -150,6 +150,21 @@ public abstract class TestsGenerator {
       }
     }
 
+    System.out.println(
+      ope.operationId +
+      " has " +
+      ope.allParams.size() +
+      " params   " +
+      ope.requiredParams.size() +
+      " required params " +
+      ope.optionalParams.size() +
+      " optional params " +
+      bodyPropsOptional +
+      " bodyPropsOptional " +
+      (ope.optionalParams.size() + bodyPropsOptional > 1) +
+      " hasOptionalWrapper "
+    );
+
     // hasOptionalWrapper if there is more that one optional param, after the body has been
     // flattened, only relevant for go
     test.put("hasOptionalWrapper", ope.optionalParams.size() + bodyPropsOptional > 1);

@@ -152,105 +152,15 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
       String[] lines = ope.unescapedNotes.split("\n");
       ope.notes = (lines[0] + "\n" + Arrays.stream(lines).skip(1).map(line -> "// " + line).collect(Collectors.joining("\n"))).trim();
 
+      // enrich the params
       for (CodegenParameter param : ope.optionalParams) {
         param.nameInPascalCase = Helpers.capitalize(param.baseName);
       }
 
       CodegenParameter bodyParam = ope.bodyParam;
-      if (bodyParam == null) {
-        continue;
+      if (bodyParam != null) {
+        flattenBody(ope);
       }
-      bodyParam.nameInPascalCase = Helpers.capitalize(bodyParam.baseName);
-      if (!bodyParam.isModel) {
-        continue;
-      }
-
-      // check for colision with other params
-      boolean hasCollision = false;
-      for (CodegenProperty prop : bodyParam.getVars()) {
-        for (CodegenParameter param : ope.allParams) {
-          if (param.paramName.equals(prop.baseName)) {
-            hasCollision = true;
-            break;
-          }
-        }
-      }
-      if (hasCollision) {
-        System.out.println("Operation " + ope.operationId + " has a body param with the same name as another param, skipping flattening");
-        continue;
-      }
-
-      if (ope.operationId.equals("Browse")) {
-        System.out.println(
-          ope.allParams.size() +
-          " params   " +
-          ope.requiredParams.size() +
-          " required params " +
-          ope.optionalParams.size() +
-          " optional params"
-        );
-      }
-
-      bodyParam.vendorExtensions.put("x-flat-body", bodyParam.getVars().size() > 0);
-
-      if (bodyParam.getVars().size() > 0) {
-        ope.allParams.removeIf(param -> param.isBodyParam);
-        ope.requiredParams.removeIf(param -> param.isBodyParam);
-        ope.optionalParams.removeIf(param -> param.isBodyParam);
-      }
-
-      for (CodegenProperty prop : bodyParam.getVars()) {
-        // there is no easy way to convert a prop to a param, we need to copy all the fields
-        CodegenParameter param = new CodegenParameter();
-
-        prop.nameInLowerCase = toParamName(prop.baseName);
-        param.nameInPascalCase = Helpers.capitalize(prop.baseName);
-        param.paramName = toParamName(prop.baseName);
-        param.baseName = prop.baseName;
-        param.baseType = prop.baseType;
-        param.dataType = prop.dataType;
-        param.datatypeWithEnum = prop.datatypeWithEnum;
-        param.description = prop.description;
-        param.example = prop.example;
-        param.isModel = prop.isModel;
-        param.isArray = prop.isArray;
-        param.isContainer = prop.isContainer;
-        param.isMap = prop.isMap;
-        param.isEnum = prop.isEnum;
-        param.isEnumRef = prop.isEnumRef;
-        param.isPrimitiveType = prop.isPrimitiveType;
-        param.isString = prop.isString;
-        param.isNumeric = prop.isNumeric;
-        param.isBoolean = prop.isBoolean;
-        param.isDate = prop.isDate;
-        param.isDateTime = prop.isDateTime;
-        param.isFreeFormObject = prop.isFreeFormObject;
-        param.isNullable = prop.isNullable;
-        param.jsonSchema = prop.jsonSchema;
-        param.required = prop.required;
-        param.vendorExtensions = prop.vendorExtensions;
-        param.allowableValues = prop.allowableValues;
-
-        if (prop.required) {
-          ope.requiredParams.add(param);
-          ope.hasRequiredParams = true;
-        } else {
-          ope.optionalParams.add(param);
-          ope.hasOptionalParams = true;
-        }
-        ope.allParams.add(param);
-      }
-
-      System.out.println(
-        ope.operationId +
-        "  has " +
-        ope.requiredParams.size() +
-        " required params and " +
-        ope.optionalParams.size() +
-        " optional params   " +
-        bodyParam.getVars().size() +
-        " body params  "
-      );
 
       // If the optional param struct only has 1 param, we can remove the wrapper
       if (ope.optionalParams.size() == 1) {
@@ -269,5 +179,81 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     Helpers.removeHelpers(operations);
     GenericPropagator.propagateGenericsToOperations(operations, models);
     return operations;
+  }
+
+  private void flattenBody(CodegenOperation ope) {
+    CodegenParameter bodyParam = ope.bodyParam;
+    bodyParam.nameInPascalCase = Helpers.capitalize(bodyParam.baseName);
+    if (!bodyParam.isModel) {
+      return;
+    }
+
+    // check for colision with other params
+    for (CodegenProperty prop : bodyParam.getVars()) {
+      for (CodegenParameter param : ope.allParams) {
+        if (param.paramName.equals(prop.baseName)) {
+          System.out.println(
+            "Operation " +
+            ope.operationId +
+            " has body param " +
+            bodyParam.paramName +
+            " in colision with param " +
+            param.paramName +
+            ", skipping flattening"
+          );
+          return;
+        }
+      }
+    }
+
+    bodyParam.vendorExtensions.put("x-flat-body", bodyParam.getVars().size() > 0);
+
+    if (bodyParam.getVars().size() > 0) {
+      ope.allParams.removeIf(param -> param.isBodyParam);
+      ope.requiredParams.removeIf(param -> param.isBodyParam);
+      ope.optionalParams.removeIf(param -> param.isBodyParam);
+    }
+
+    for (CodegenProperty prop : bodyParam.getVars()) {
+      // there is no easy way to convert a prop to a param, we need to copy all the fields
+      CodegenParameter param = new CodegenParameter();
+
+      prop.nameInLowerCase = toParamName(prop.baseName);
+      param.nameInPascalCase = Helpers.capitalize(prop.baseName);
+      param.paramName = toParamName(prop.baseName);
+      param.baseName = prop.baseName;
+      param.baseType = prop.baseType;
+      param.dataType = prop.dataType;
+      param.datatypeWithEnum = prop.datatypeWithEnum;
+      param.description = prop.description;
+      param.example = prop.example;
+      param.isModel = prop.isModel;
+      param.isArray = prop.isArray;
+      param.isContainer = prop.isContainer;
+      param.isMap = prop.isMap;
+      param.isEnum = prop.isEnum;
+      param.isEnumRef = prop.isEnumRef;
+      param.isPrimitiveType = prop.isPrimitiveType;
+      param.isString = prop.isString;
+      param.isNumeric = prop.isNumeric;
+      param.isBoolean = prop.isBoolean;
+      param.isDate = prop.isDate;
+      param.isDateTime = prop.isDateTime;
+      param.isFreeFormObject = prop.isFreeFormObject;
+      param.isNullable = prop.isNullable;
+      param.jsonSchema = prop.jsonSchema;
+      param.required = prop.required;
+      param.vendorExtensions = prop.vendorExtensions;
+      param.allowableValues = prop.allowableValues;
+
+      if (prop.required) {
+        ope.requiredParams.add(param);
+        ope.hasRequiredParams = true;
+      } else {
+        ope.optionalParams.add(param);
+        ope.hasOptionalParams = true;
+      }
+      ope.allParams.add(param);
+    }
   }
 }

@@ -360,7 +360,7 @@ func (o *{{operationId}}Options) With{{#lambda.titlecase}}{{baseName}}{{/lambda.
 //
 // Deprecated: {{operationId}} is deprecated
   {{/isDeprecated}}
-func (c *APIClient) {{nickname}}({{#requiredParams}}{{paramName}} {{#required}}{{#isModel}}*{{/isModel}}{{/required}}{{^required}}*{{/required}}{{{dataType}}}, {{/requiredParams}}{{#hasOptionalParams}}optionalParams *{{operationId}}Options, {{/hasOptionalParams}}opts ...RequestOption) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
+func (c *APIClient) {{nickname}}({{#requiredParams}}{{paramName}} {{#required}}{{#isModel}}*{{/isModel}}{{/required}}{{^required}}{{^isMap}}*{{/isMap}}{{/required}}{{{dataType}}}, {{/requiredParams}}{{#hasOptionalParams}}optionalParams *{{operationId}}Options, {{/hasOptionalParams}}opts ...RequestOption) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
   {{#returnType}}
   var returnValue {{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}
   {{/returnType}}
@@ -411,7 +411,7 @@ func (c *APIClient) {{nickname}}({{#requiredParams}}{{paramName}} {{#required}}{
 //
 // Deprecated: {{operationId}} is deprecated
   {{/isDeprecated}}
-func (c *APIClient) {{nickname}}WithHTTPInfo({{#requiredParams}}{{paramName}} {{#required}}{{#isModel}}*{{/isModel}}{{/required}}{{^required}}*{{/required}}{{{dataType}}}, {{/requiredParams}}{{#hasOptionalParams}}optionalParams *{{operationId}}Options, {{/hasOptionalParams}}opts ...RequestOption) (*http.Response, []byte, error) {
+func (c *APIClient) {{nickname}}WithHTTPInfo({{#requiredParams}}{{paramName}} {{#required}}{{#isModel}}*{{/isModel}}{{/required}}{{^required}}{{^isMap}}*{{/isMap}}{{/required}}{{{dataType}}}, {{/requiredParams}}{{#hasOptionalParams}}optionalParams *{{operationId}}Options, {{/hasOptionalParams}}opts ...RequestOption) (*http.Response, []byte, error) {
   {{#vendorExtensions}}
   requestPath := "{{{path}}}"{{#pathParams}}
   requestPath = strings.ReplaceAll(requestPath, {{=<% %>=}}"{<%baseName%>}"<%={{ }}=%>, {{#x-is-custom-request}}utils.ParameterToString({{paramName}}){{/x-is-custom-request}}{{^x-is-custom-request}}url.PathEscape(utils.ParameterToString({{paramName}})){{/x-is-custom-request}}){{/pathParams}}
