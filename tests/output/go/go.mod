@@ -2,7 +2,7 @@ module gotests
 
 go 1.22
 
-toolchain go1.23.7
+toolchain go1.24.3
 
 replace github.com/algolia/algoliasearch-client-go/v4 => ../../../clients/algoliasearch-client-go
 
