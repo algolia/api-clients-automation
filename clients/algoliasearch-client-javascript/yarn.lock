@@ -2315,7 +2315,7 @@ __metadata:
   dependencies:
     "@types/node": "npm:22.15.17"
     bundlewatch: "npm:0.4.1"
-    execa: "npm:9.5.2"
+    execa: "npm:9.5.3"
     lerna: "npm:8.2.2"
     rollup: "npm:4.40.1"
     typescript: "npm:5.8.3"
@@ -3916,9 +3916,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"execa@npm:9.5.2":
-  version: 9.5.2
-  resolution: "execa@npm:9.5.2"
+"execa@npm:9.5.3":
+  version: 9.5.3
+  resolution: "execa@npm:9.5.3"
   dependencies:
     "@sindresorhus/merge-streams": "npm:^4.0.0"
     cross-spawn: "npm:^7.0.3"
@@ -3932,7 +3932,7 @@ __metadata:
     signal-exit: "npm:^4.1.0"
     strip-final-newline: "npm:^4.0.0"
     yoctocolors: "npm:^2.0.0"
-  checksum: 10/652fa492e7e1052becba12275aafd1c3d249967a4400f798877aa6c21fafcd8182ee3ce09a54f0379785635f32a4adeef77b2edb83d7e8a55b06819ed102ff2a
+  checksum: 10/ed4c598eca9b0587b24b15b30fdc621f01aa54204a3dc005ce783857e0dd773802d5eddabd9b296bdff8edb2ee9e7d1981decce0c5649be4a76ca18a3ec6e3cb
   languageName: node
   linkType: hard
 
