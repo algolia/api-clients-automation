@@ -36,7 +36,7 @@
     "commander": "13.1.0",
     "crc": "4.3.2",
     "dotenv": "16.5.0",
-    "esbuild": "0.25.3",
+    "esbuild": "0.25.4",
     "execa": "9.5.2",
     "express": "5.1.0",
     "folder-hash": "4.1.1",
