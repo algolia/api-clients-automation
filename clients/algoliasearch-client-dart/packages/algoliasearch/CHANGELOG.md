@@ -1,3 +1,8 @@
+## [1.32.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.31.3...1.32.0)
+
+- [bebb56e0b9](https://github.com/algolia/api-clients-automation/commit/bebb56e0b9) fix(specs): add x-acl to insights endpoints ([#4822](https://github.com/algolia/api-clients-automation/pull/4822)) by [@kai687](https://github.com/kai687/)
+- [7e226c4559](https://github.com/algolia/api-clients-automation/commit/7e226c4559) feat(scripts): add push to mcp-node on release ([#4784](https://github.com/algolia/api-clients-automation/pull/4784)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [1.31.3](https://github.com/algolia/algoliasearch-client-dart/compare/1.31.2...1.31.3)
 
 - [369c14232](https://github.com/algolia/api-clients-automation/commit/369c14232) fix(specs): condition cant be numeric filter ([#4726](https://github.com/algolia/api-clients-automation/pull/4726)) by [@kai687](https://github.com/kai687/)
