@@ -24,8 +24,11 @@ listCompositionsResponse:
       description: Number of items.
       example: 200
   required:
+    - hitsPerPage
     - items
+    - nbHits
     - nbPages
+    - page
 
 composition:
   type: object
