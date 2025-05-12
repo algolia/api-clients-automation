@@ -159,8 +159,6 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
       continue;
     }
 
-    console.log(`Pushing to '${task.prBranch}`);
-
     await configureGitHubAuthor(tempGitDir);
 
     await run('git add .', { cwd: tempGitDir });
