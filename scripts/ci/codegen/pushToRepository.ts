@@ -35,11 +35,6 @@ async function handleSpecFiles(spec: SpecsToPush, tempGitDir: string): Promise<v
     await run(`cp ${toAbsolutePath('docs/versions-history-with-sla-and-support-policy.json')} ${output}`);
   }
 
-  // adblock extensions ban words like `analytics` so we use a different file name just so the doc dans render it
-  if (spec.ext === 'yml') {
-    await run(`mv ${output}/analytics.yml ${output}/searchstats.yml`);
-  }
-
   for (const client of CLIENTS) {
     const pathToBundledSpec = toAbsolutePath(`docs/bundled/${client}.${spec.ext}`);
 
@@ -55,11 +50,16 @@ async function handleSpecFiles(spec: SpecsToPush, tempGitDir: string): Promise<v
       let file = await fsp.readFile(outputFile, 'utf8');
 
       for (const [k, v] of Object.entries(spec.placeholderVariables)) {
-        file = file.replace(k, v);
+        file = file.replaceAll(k, v);
       }
 
       await fsp.writeFile(outputFile, file);
     }
+  }
+
+  // adblock extensions ban words like `analytics` so we use a different file name just so the doc dans render it
+  if (spec.ext === 'yml') {
+    await run(`mv ${output}/analytics.yml ${output}/searchstats.yml`);
   }
 }
 
@@ -130,21 +130,27 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
   await run(`gh repo clone ${OWNER}/${repository} ${tempGitDir}`);
 
   for (const task of config.tasks) {
+    console.log(`Handling '${task.files.type}' file(s)`);
+
     await run(`git checkout ${config.baseBranch}`, { cwd: tempGitDir });
     await run(`git pull origin ${config.baseBranch}`, { cwd: tempGitDir });
-
-    if (await gitBranchExists(task.prBranch, tempGitDir)) {
-      await run(`git fetch origin ${task.prBranch}`, { cwd: tempGitDir });
-      await run(`git push -d origin ${task.prBranch}`, { cwd: tempGitDir });
-    }
     await run(`git checkout -B ${task.prBranch}`, { cwd: tempGitDir });
-
-    console.log(`Handling '${task.files.type}' file(s)`);
 
     if (task.files.type === 'specs') {
       await handleSpecFiles(task.files, tempGitDir);
     } else {
       await handleGuideFiles(task.files, tempGitDir);
+    }
+
+    if (process.env.DRYRUN) {
+      console.log(`asked for a dry run, stopping before push and PR for '${repository}' on task '${task.prBranch}'`);
+
+      continue;
+    }
+
+    if (await gitBranchExists(task.prBranch, tempGitDir)) {
+      await run(`git fetch origin ${task.prBranch}`, { cwd: tempGitDir });
+      await run(`git push -d origin ${task.prBranch}`, { cwd: tempGitDir });
     }
 
     if ((await getNbGitDiff({ head: null, cwd: tempGitDir })) === 0) {
@@ -163,12 +169,6 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
       coAuthors: [author, ...coAuthors],
       cwd: tempGitDir,
     });
-
-    if (process.env.DRYRUN) {
-      console.log(`asked for a dry run, stopping before push and PR for '${repository}' on task '${task.prBranch}'`);
-
-      continue;
-    }
 
     await run(`git push -f -u origin ${task.prBranch}`, { cwd: tempGitDir });
 
