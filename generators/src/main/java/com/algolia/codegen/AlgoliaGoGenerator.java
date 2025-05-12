@@ -1,7 +1,7 @@
 package com.algolia.codegen;
 
+import com.algolia.codegen.cts.lambda.ScreamingSnakeCaseLambda;
 import com.algolia.codegen.exceptions.*;
-import com.algolia.codegen.lambda.ScreamingSnakeCaseLambda;
 import com.algolia.codegen.utils.*;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
@@ -20,6 +20,9 @@ import org.openapitools.codegen.model.OperationsMap;
 
 public class AlgoliaGoGenerator extends GoClientCodegen {
 
+  // This is used for the CTS generation
+  private static final AlgoliaGoGenerator INSTANCE = new AlgoliaGoGenerator();
+
   @Override
   public String getName() {
     return "algolia-go";
@@ -30,7 +33,6 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     String client = (String) additionalProperties.get("client");
 
     additionalProperties.put("packageName", client.equals("query-suggestions") ? "suggestions" : Helpers.camelize(client));
-    additionalProperties.put("enumClassPrefix", true);
     additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize(client)) + "Client", true);
 
     String outputFolder = "algolia" + File.separator + client;
@@ -255,5 +257,9 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
       }
       ope.allParams.add(param);
     }
+  }
+
+  public static String toEnum(String value) {
+    return INSTANCE.toEnumVarName(value, "String");
   }
 }
