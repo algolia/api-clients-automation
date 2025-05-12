@@ -2,6 +2,7 @@ get:
   tags:
     - configurations
   operationId: getConfig
+  x-mcp-tool: true
   x-acl:
     - settings
   summary: Retrieve a configuration
@@ -26,6 +27,7 @@ put:
   tags:
     - configurations
   operationId: updateConfig
+  x-mcp-tool: true
   x-acl:
     - editSettings
   summary: Update a configuration
