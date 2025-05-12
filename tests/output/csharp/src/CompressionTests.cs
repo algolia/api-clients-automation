@@ -37,8 +37,8 @@ public class CompressionTests
     GZipStream gZipStream = new(lastResponseBodyStream, CompressionMode.Decompress);
     var reader = new StreamReader(gZipStream);
 
-    var exception = await Assert.ThrowsAsync<InvalidDataException>(
-      async () => await reader.ReadToEndAsync()
+    var exception = await Assert.ThrowsAsync<InvalidDataException>(async () =>
+      await reader.ReadToEndAsync()
     );
 
     Assert.Equal(

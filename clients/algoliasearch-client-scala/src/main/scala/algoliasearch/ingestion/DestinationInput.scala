@@ -21,29 +21,21 @@ package algoliasearch.ingestion
 
 import algoliasearch.ingestion.RecordType._
 
-import org.json4s._
-
 /** DestinationInput
+  *
+  * @param indexName
+  *   Algolia index name (case-sensitive).
+  * @param attributesToExclude
+  *   Attributes from your source to exclude from Algolia records. Not all your data attributes will be useful for
+  *   searching. Keeping your Algolia records small increases indexing and search performance. - Exclude nested
+  *   attributes with `.` notation. For example, `foo.bar` indexes the `foo` attribute and all its children **except**
+  *   the `bar` attribute. - Exclude attributes from arrays with `[i]`, where `i` is the index of the array element. For
+  *   example, `foo.[0].bar` only excludes the `bar` attribute from the first element of the `foo` array, but indexes
+  *   the complete `foo` attribute for all other elements. Use `*` as wildcard: `foo.[*].bar` excludes `bar` from all
+  *   elements of the `foo` array.
   */
-sealed trait DestinationInput
-
-trait DestinationInputTrait extends DestinationInput
-
-object DestinationInput {}
-
-object DestinationInputSerializer extends Serializer[DestinationInput] {
-  override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), DestinationInput] = {
-
-    case (TypeInfo(clazz, _), json) if clazz == classOf[DestinationInput] =>
-      json match {
-        case value: JObject => Extraction.extract[DestinationIndexName](value)
-        case _              => throw new MappingException("Can't convert " + json + " to DestinationInput")
-      }
-  }
-
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: DestinationInput =>
-    value match {
-      case value: DestinationIndexName => Extraction.decompose(value)(format - this)
-    }
-  }
-}
+case class DestinationInput(
+    indexName: String,
+    recordType: Option[RecordType] = scala.None,
+    attributesToExclude: Option[Seq[String]] = scala.None
+)

@@ -60,7 +60,6 @@ object JsonSupport {
   private def oneOfsSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
     AuthInputSerializer :+
     AuthInputPartialSerializer :+
-    DestinationInputSerializer :+
     PlatformWithNoneSerializer :+
     SourceInputSerializer :+
     SourceUpdateInputSerializer :+

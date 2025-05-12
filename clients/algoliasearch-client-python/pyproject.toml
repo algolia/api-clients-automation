@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "algoliasearch"
-version = "4.16.4"
+version = "4.16.5"
 description = "A fully-featured and blazing-fast Python API client to interact with Algolia."
 authors = ["Algolia Team"]
 license = "MIT"
@@ -23,7 +23,7 @@ async-timeout = ">= 4.0.3"
 pydantic = ">= 2"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "== 0.9.6"
+ruff = "== 0.11.7"
 pyright = "== 1.1.391"
 
 [tool.ruff]

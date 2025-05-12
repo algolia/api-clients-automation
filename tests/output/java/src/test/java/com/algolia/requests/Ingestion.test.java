@@ -94,7 +94,7 @@ class IngestionClientRequestsTests {
         new DestinationCreate()
           .setType(DestinationType.SEARCH)
           .setName("destinationName")
-          .setInput(new DestinationIndexName().setIndexName("full_name______"))
+          .setInput(new DestinationInput().setIndexName("full_name______"))
           .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       );
     });
@@ -118,7 +118,7 @@ class IngestionClientRequestsTests {
         new DestinationCreate()
           .setType(DestinationType.SEARCH)
           .setName("destinationName")
-          .setInput(new DestinationIndexName().setIndexName("full_name______"))
+          .setInput(new DestinationInput().setIndexName("full_name______"))
           .setTransformationIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
       );
     });

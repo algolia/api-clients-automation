@@ -3417,6 +3417,60 @@ paths:
                 type: string
         '400':
           $ref: '#/components/responses/IndexNotFound'
+  /accountCopyIndex:
+    get:
+      x-helper: true
+      x-available-languages:
+        - javascript
+      tags:
+        - search
+      x-acl:
+        - browse
+        - editSettings
+        - addObject
+        - settings
+        - search
+      operationId: accountCopyIndex
+      summary: >-
+        Copies the given `sourceIndexName` records, rules and synonyms to an
+        other Algolia application for the given `destinationIndexName`
+      description: >
+        Copies the given `sourceIndexName` records, rules and synonyms to an
+        other Algolia application for the given `destinationIndexName`.
+      parameters:
+        - in: query
+          name: sourceIndexName
+          description: The name of the index to copy.
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: destinationAppID
+          description: The application ID to write the index to.
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: destinationApiKey
+          description: >-
+            The API Key of the `destinationAppID` to write the index to, must
+            have write ACLs.
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: destinationIndexName
+          description: The name of the index to write the copied index to.
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          $ref: '#/components/responses/IndexInSameApp'
+        '403':
+          $ref: '#/components/responses/IndexAlreadyExists'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
   /replaceAllObjects:
     get:
       x-helper: true
@@ -8249,6 +8303,18 @@ components:
             properties:
               createdAt:
                 $ref: '#/components/schemas/createdAt'
+    IndexInSameApp:
+      description: Indices are in the same application. Use operationIndex instead.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    IndexAlreadyExists:
+      description: Destination index already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
 x-tagGroups:
   - name: Search and indexing
     tags:

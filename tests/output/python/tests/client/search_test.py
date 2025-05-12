@@ -176,7 +176,7 @@ class TestSearchClient:
         _req = await _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.16.4\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.16.5\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     async def test_delete_objects_0(self):
@@ -353,7 +353,7 @@ class TestSearchClient:
         _req = await _client.index_exists(
             index_name="indexExistsYES",
         )
-        assert _req is True
+        assert _req
 
     async def test_index_exists_1(self):
         """
@@ -376,7 +376,7 @@ class TestSearchClient:
         _req = await _client.index_exists(
             index_name="indexExistsNO",
         )
-        assert _req is False
+        assert not _req
 
     async def test_index_exists_2(self):
         """
@@ -1273,7 +1273,7 @@ class TestSearchClientSync:
         _req = _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.16.4\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.16.5\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     def test_delete_objects_0(self):
@@ -1450,7 +1450,7 @@ class TestSearchClientSync:
         _req = _client.index_exists(
             index_name="indexExistsYES",
         )
-        assert _req is True
+        assert _req
 
     def test_index_exists_1(self):
         """
@@ -1473,7 +1473,7 @@ class TestSearchClientSync:
         _req = _client.index_exists(
             index_name="indexExistsNO",
         )
-        assert _req is False
+        assert not _req
 
     def test_index_exists_2(self):
         """

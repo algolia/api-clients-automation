@@ -71,8 +71,8 @@ func TestIngestion_CreateDestination(t *testing.T) {
 	t.Run("createDestination", func(t *testing.T) {
 		_, err := client.CreateDestination(client.NewApiCreateDestinationRequest(
 
-			ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(ingestion.DestinationIndexNameAsDestinationInput(
-				ingestion.NewEmptyDestinationIndexName().SetIndexName("full_name______"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
+			ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(
+				ingestion.NewEmptyDestinationInput().SetIndexName("full_name______")).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/destinations", echo.Path)
@@ -84,8 +84,8 @@ func TestIngestion_CreateDestination(t *testing.T) {
 	t.Run("with transformationIDs", func(t *testing.T) {
 		_, err := client.CreateDestination(client.NewApiCreateDestinationRequest(
 
-			ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(ingestion.DestinationIndexNameAsDestinationInput(
-				ingestion.NewEmptyDestinationIndexName().SetIndexName("full_name______"))).SetTransformationIDs(
+			ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(
+				ingestion.NewEmptyDestinationInput().SetIndexName("full_name______")).SetTransformationIDs(
 				[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f"})))
 		require.NoError(t, err)
 

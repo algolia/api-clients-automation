@@ -60,7 +60,7 @@ class SnippetIngestionClient {
       new DestinationCreate()
         .setType(DestinationType.SEARCH)
         .setName("destinationName")
-        .setInput(new DestinationIndexName().setIndexName("<YOUR_INDEX_NAME>"))
+        .setInput(new DestinationInput().setIndexName("<YOUR_INDEX_NAME>"))
         .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
     );
     // >LOG
@@ -80,7 +80,7 @@ class SnippetIngestionClient {
       new DestinationCreate()
         .setType(DestinationType.SEARCH)
         .setName("destinationName")
-        .setInput(new DestinationIndexName().setIndexName("<YOUR_INDEX_NAME>"))
+        .setInput(new DestinationInput().setIndexName("<YOUR_INDEX_NAME>"))
         .setTransformationIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
     );
     // >LOG

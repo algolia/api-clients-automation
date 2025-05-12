@@ -5,14 +5,14 @@ export async function formatter(language: string, cwd: string): Promise<void> {
   const spinner = createSpinner(`running formatter for '${language}' in '${cwd}'`);
   switch (language) {
     case 'csharp':
-      if (cwd.includes('tests') || cwd.includes('snippets') || cwd.includes('guides')) {
-        await run('dotnet format --no-restore && dotnet tool restore && dotnet dotnet-csharpier .', {
+      await run(
+        'dotnet format --no-restore && dotnet tool restore && dotnet csharpier format . && dotnet csharpier check .',
+        {
           cwd,
           language,
-        });
-      } else {
-        await run('dotnet format', { cwd, language });
-      }
+        },
+      );
+
       break;
     case 'dart':
       if (cwd.includes('clients')) {

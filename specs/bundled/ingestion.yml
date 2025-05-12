@@ -2628,7 +2628,7 @@ components:
           Use `*` as wildcard: `foo.[*].bar` excludes `bar` from all elements of the `foo` array.
       items:
         type: string
-    DestinationIndexName:
+    DestinationInput:
       type: object
       additionalProperties: false
       properties:
@@ -2641,9 +2641,6 @@ components:
           $ref: '#/components/schemas/AttributesToExclude'
       required:
         - indexName
-    DestinationInput:
-      oneOf:
-        - $ref: '#/components/schemas/DestinationIndexName'
     transformationIDs:
       type: array
       items:

@@ -4,6 +4,29 @@
 import { algoliasearch } from 'algoliasearch';
 // IMPORT<
 
+// Snippet for the accountCopyIndex method.
+//
+// call accountCopyIndex without error
+export async function snippetForAccountCopyIndex(): Promise<void> {
+  // >SEPARATOR accountCopyIndex default
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.accountCopyIndex({
+    sourceIndexName: 'cts_e2e_account_copy_index_source_javascript',
+    destinationAppID: 'test-app-id-destination',
+    destinationApiKey: 'test-api-key-destination',
+    destinationIndexName: 'cts_e2e_account_copy_index_destination_javascript',
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the addApiKey method.
 //
 // minimal

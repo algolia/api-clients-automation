@@ -84,8 +84,8 @@ func SnippetForCreateDestinationOfIngestion() {
 	// Call the API
 	response, err := client.CreateDestination(client.NewApiCreateDestinationRequest(
 
-		ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(ingestion.DestinationIndexNameAsDestinationInput(
-			ingestion.NewEmptyDestinationIndexName().SetIndexName("<YOUR_INDEX_NAME>"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
+		ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(
+			ingestion.NewEmptyDestinationInput().SetIndexName("<YOUR_INDEX_NAME>")).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -114,8 +114,8 @@ func SnippetForCreateDestinationOfIngestion1() {
 	// Call the API
 	response, err := client.CreateDestination(client.NewApiCreateDestinationRequest(
 
-		ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(ingestion.DestinationIndexNameAsDestinationInput(
-			ingestion.NewEmptyDestinationIndexName().SetIndexName("<YOUR_INDEX_NAME>"))).SetTransformationIDs(
+		ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(
+			ingestion.NewEmptyDestinationInput().SetIndexName("<YOUR_INDEX_NAME>")).SetTransformationIDs(
 			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f"})))
 	if err != nil {
 		// handle the eventual error

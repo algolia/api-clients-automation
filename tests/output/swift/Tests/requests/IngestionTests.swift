@@ -92,7 +92,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let response = try await client.createDestinationWithHTTPInfo(destinationCreate: DestinationCreate(
             type: DestinationType.search,
             name: "destinationName",
-            input: DestinationInput.destinationIndexName(DestinationIndexName(indexName: "full_name______")),
+            input: DestinationInput(indexName: "full_name______"),
             authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
         ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -127,7 +127,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let response = try await client.createDestinationWithHTTPInfo(destinationCreate: DestinationCreate(
             type: DestinationType.search,
             name: "destinationName",
-            input: DestinationInput.destinationIndexName(DestinationIndexName(indexName: "full_name______")),
+            input: DestinationInput(indexName: "full_name______"),
             transformationIDs: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]
         ))
         let responseBodyData = try XCTUnwrap(response.bodyData)

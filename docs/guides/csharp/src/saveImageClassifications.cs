@@ -21,14 +21,13 @@ class SaveImageClassifications
   async Task<Image> GetImageLabels(string imageURL, string objectID, float scoreLimit)
   {
     // Implement your image classification logic here
-    return await Task.Run(
-      () =>
-        new Image
-        {
-          ImageUrl = "",
-          ObjectId = "",
-          Objects = [],
-        }
+    return await Task.Run(() =>
+      new Image
+      {
+        ImageUrl = "",
+        ObjectId = "",
+        Objects = [],
+      }
     );
   }
 
