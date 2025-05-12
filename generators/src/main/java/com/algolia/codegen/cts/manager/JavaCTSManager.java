@@ -52,6 +52,6 @@ public class JavaCTSManager implements CTSManager {
 
   @Override
   public void addMustacheLambdas(Map<String, Lambda> lambdas) {
-    lambdas.put("javaEnum", (fragment, writer) -> writer.write(AlgoliaJavaGenerator.toEnum(fragment.execute())));
+    lambdas.put("toEnum", (fragment, writer) -> writer.write(AlgoliaJavaGenerator.toEnum(fragment.execute())));
   }
 }

@@ -129,44 +129,55 @@ public abstract class TestsGenerator {
     }
   }
 
-  public static void setOptionalParameters(CodegenOperation ope, Map<String, Object> test) {
-    long bodyPropsOptional = 0;
-    if (ope.bodyParam != null) {
-      if (ope.bodyParam.isModel && ope.bodyParam.required) {
-        // check for colision with other params
-        boolean hasCollision = false;
-        for (CodegenProperty prop : ope.bodyParam.getVars()) {
-          for (CodegenParameter param : ope.allParams) {
-            if (param.paramName.equals(prop.baseName)) {
-              hasCollision = true;
-              break;
-            }
+  public static void setOptionalParameters(CodegenOperation ope, Map<String, Object> test, Map<String, Object> parameters) {
+    int bodyPropsOptional = 0;
+    boolean actuallyHasOptional = false;
+    if (ope.bodyParam != null && ope.bodyParam.isModel) {
+      // check for colision with other params
+      boolean hasCollision = false;
+      Map<String, Object> paramBody = (Map<String, Object>) parameters.get(ope.bodyParam.paramName);
+      if (ope.allParams.size() == 1) { // edge case where the body is already flattened
+        paramBody = parameters;
+      }
+
+      System.out.println(ope.bodyParam.paramName + " len " + ope.bodyParam.getVars().size());
+      for (CodegenProperty prop : ope.bodyParam.getVars()) {
+        for (CodegenParameter param : ope.allParams) {
+          if (param.paramName.equals(prop.baseName)) {
+            hasCollision = true;
           }
         }
 
-        if (!hasCollision) {
-          bodyPropsOptional = ope.bodyParam.getVars().stream().filter(prop -> !prop.required).count();
+        if (paramBody != null) System.out.println(
+          prop.baseName + " is required " + prop.required + " " + paramBody.containsKey(prop.baseName)
+        );
+        if (!prop.required && paramBody != null && paramBody.containsKey(prop.baseName)) {
+          actuallyHasOptional = true;
         }
+      }
+
+      if (!hasCollision) {
+        bodyPropsOptional = (int) ope.bodyParam.getVars().stream().filter(prop -> !prop.required).count();
       }
     }
 
-    System.out.println(
-      ope.operationId +
-      " has " +
-      ope.allParams.size() +
-      " params   " +
-      ope.requiredParams.size() +
-      " required params " +
-      ope.optionalParams.size() +
-      " optional params " +
-      bodyPropsOptional +
-      " bodyPropsOptional " +
-      (ope.optionalParams.size() + bodyPropsOptional > 1) +
-      " hasOptionalWrapper "
-    );
+    int totalOptional = ope.optionalParams.size() + bodyPropsOptional;
+
+    for (CodegenParameter param : ope.allParams) {
+      if (!param.required && parameters.containsKey(param.baseName)) {
+        actuallyHasOptional = true;
+        break;
+      }
+    }
 
     // hasOptionalWrapper if there is more that one optional param, after the body has been
     // flattened, only relevant for go
-    test.put("hasOptionalWrapper", ope.optionalParams.size() + bodyPropsOptional > 1);
+    test.put("hasOptionalWrapper", (totalOptional > 1) && actuallyHasOptional);
+    test.put("hasNilOptional", (totalOptional > 0) && !actuallyHasOptional);
+    test.put("hasOptionalRequired", (totalOptional == 1) && actuallyHasOptional);
+
+    System.out.println(ope.operationId + " hasOptionalWrapper: " + test.get("hasOptionalWrapper"));
+    System.out.println("hasNilOptional: " + test.get("hasNilOptional"));
+    System.out.println("hasOptionalRequired: " + test.get("hasOptionalRequired"));
   }
 }

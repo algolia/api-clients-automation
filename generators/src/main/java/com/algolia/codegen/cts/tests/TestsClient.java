@@ -158,7 +158,7 @@ public class TestsClient extends TestsGenerator {
               // default to true because most api calls are asynchronous
               testOut.put("isAsyncMethod", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
 
-              setOptionalParameters(ope, stepOut);
+              setOptionalParameters(ope, stepOut, step.parameters);
               addRequestOptions(paramsType, step.requestOptions, stepOut);
 
               methodCount++;

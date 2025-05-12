@@ -312,7 +312,7 @@ func replaceAllObjectsToChunkBatchOptions(opts []ReplaceAllObjectsOption) []Chun
 // {{operationId}}Options represents the optional params for the API call.
 type {{operationId}}Options struct {
   {{#optionalParams}}
-	{{nameInPascalCase}} {{^isPathParam}}{{^isFreeFormObject}}{{^isMap}}*{{/isMap}}{{/isFreeFormObject}}{{/isPathParam}}{{{dataType}}}
+	{{nameInPascalCase}} {{^isFreeFormObject}}{{^isMap}}*{{/isMap}}{{/isFreeFormObject}}{{{dataType}}}
   {{/optionalParams}}
 }
 
@@ -464,7 +464,7 @@ func (c *APIClient) {{nickname}}WithHTTPInfo({{#requiredParams}}{{paramName}} {{
 	{{/required}}
   {{^required}}
   if {{#hasOptionalParams}}optionalParams != nil && {{/hasOptionalParams}}!utils.IsNilOrEmpty({{> param_name}}) {
-    conf.queryParams.Set("{{baseName}}", utils.QueryParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isEnumRef}}*{{/isEnumRef}}{{/isArray}}{{/isFreeFormObject}}{{> param_name}}))
+    conf.queryParams.Set("{{baseName}}", utils.QueryParameterToString({{^isFreeFormObject}}*{{/isFreeFormObject}}{{> param_name}}))
   }
   {{/required}}
 	{{/queryParams}}
@@ -475,7 +475,7 @@ func (c *APIClient) {{nickname}}WithHTTPInfo({{#requiredParams}}{{paramName}} {{
 	{{/required}}
   {{^required}}
   if {{#hasOptionalParams}}optionalParams != nil && {{/hasOptionalParams}}!utils.IsNilOrEmpty({{> param_name}}) {
-    conf.headerParams["{{baseName}}"] = utils.ParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isEnumRef}}*{{/isEnumRef}}{{/isArray}}{{/isFreeFormObject}}{{> param_name}})
+    conf.headerParams["{{baseName}}"] = utils.ParameterToString({{^isFreeFormObject}}*{{/isFreeFormObject}}{{> param_name}})
   }
   {{/required}}
 {{/headerParams}}
@@ -487,7 +487,6 @@ func (c *APIClient) {{nickname}}WithHTTPInfo({{#requiredParams}}{{paramName}} {{
 
 {{#bodyParams}}
   // body params
-  {{#required}}
   {{#vendorExtensions.x-flat-body}}
   postBody := struct{
     {{#vars}}
@@ -498,6 +497,11 @@ func (c *APIClient) {{nickname}}WithHTTPInfo({{#requiredParams}}{{paramName}} {{
     {{#required}}
     {{name}}: {{nameInLowerCase}},
     {{/required}}
+    {{^hasOptionalParams}}
+    {{^required}}
+    {{name}}: {{nameInLowerCase}},
+    {{/required}}
+    {{/hasOptionalParams}}
     {{/vars}}
   }
   {{#hasOptionalParams}}
@@ -511,29 +515,12 @@ func (c *APIClient) {{nickname}}WithHTTPInfo({{#requiredParams}}{{paramName}} {{
   {{/hasOptionalParams}}
   {{/vendorExtensions.x-flat-body}}
   {{^vendorExtensions.x-flat-body}}
-  postBody := {{^required}}{{#hasOptionalParams}}optionalParams.{{/hasOptionalParams}}{{/required}}{{paramName}}
-  {{/vendorExtensions.x-flat-body}}
+  {{#required}}
+  postBody := {{paramName}}
   {{/required}}
   {{^required}}
-  {{#vendorExtensions.x-flat-body}}
   {{#hasOptionalParams}}
-  postBody := optionalParams
-  {{/hasOptionalParams}}
-  {{^hasOptionalParams}}
-  postBody := struct{
-    {{#vars}}
-    {{name}} {{^required}}{{^isFreeFormObject}}*{{/isFreeFormObject}}{{/required}}{{#required}}{{#isModel}}*{{/isModel}}{{/required}}{{{dataType}}} `json:"{{baseName}}{{^required}},omitempty{{/required}}"`
-    {{/vars}}
-  }{
-    {{#vars}}
-    {{name}}: {{nameInLowerCase}},
-    {{/vars}}
-  }
-  {{/hasOptionalParams}}
-  {{/vendorExtensions.x-flat-body}}
-  {{^vendorExtensions.x-flat-body}}
-  {{#hasOptionalParams}}
-  var postBody any
+  var postBody any = "{}"
   if optionalParams != nil {
     postBody = optionalParams.{{nameInPascalCase}}
   }
@@ -541,8 +528,8 @@ func (c *APIClient) {{nickname}}WithHTTPInfo({{#requiredParams}}{{paramName}} {{
   {{^hasOptionalParams}}
   postBody := {{paramName}}
   {{/hasOptionalParams}}
-  {{/vendorExtensions.x-flat-body}}
   {{/required}}
+  {{/vendorExtensions.x-flat-body}}
 {{/bodyParams}}
 	req, err := c.prepareRequest(conf.context, requestPath, http.Method{{httpMethod}}, {{^bodyParams}}nil{{/bodyParams}}{{#bodyParams}}postBody{{/bodyParams}}, conf.headerParams, conf.queryParams)
 	if err != nil {

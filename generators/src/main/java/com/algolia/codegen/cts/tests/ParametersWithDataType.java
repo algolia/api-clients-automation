@@ -91,7 +91,7 @@ public class ParametersWithDataType {
             operation != null &&
             operation.bodyParam != null &&
             operation.bodyParam.isModel &&
-            operation.bodyParam.required
+            operation.bodyParam.getVars().size() > 0
           ) {
             // check for colision with other params
             boolean hasCollision = false;
@@ -105,14 +105,19 @@ public class ParametersWithDataType {
             }
             if (!hasCollision) {
               // flatten the body params by skipping one level
+              System.out.println("Flatten the body in " + operation.operationId);
               Map<String, Object> bodyParams = (Map<String, Object>) param.getValue();
-              for (CodegenProperty prop : operation.bodyParam.getVars()) {
-                Object nestedParam = bodyParams.get(prop.baseName);
-
-                Map<String, Object> paramWithType = traverseParams(prop.baseName, nestedParam, prop, "", 0, false);
-                parametersWithDataType.add(paramWithType);
-                parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
+              for (String nestedParam : bodyParams.keySet()) {
+                for (CodegenProperty prop : operation.bodyParam.getVars()) {
+                  if (prop.baseName.equals(nestedParam)) {
+                    Map<String, Object> paramWithType = traverseParams(prop.baseName, bodyParams.get(nestedParam), prop, "", 0, false);
+                    parametersWithDataType.add(paramWithType);
+                    parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
+                    break;
+                  }
+                }
               }
+              // sortParameters(operation.bodyParam, parametersWithDataType);
             }
           } else {
             Map<String, Object> paramWithType = traverseParams(param.getKey(), param.getValue(), specParam, "", 0, false);
@@ -121,6 +126,20 @@ public class ParametersWithDataType {
           }
         }
       }
+    } else if (language.equals("go") && parameters != null) {
+      // also flatten when the body is the only parameter
+      System.out.println("Skipping unique body in " + operation.operationId);
+      for (String nestedParam : parameters.keySet()) {
+        for (CodegenProperty prop : operation.bodyParam.getVars()) {
+          if (prop.baseName.equals(nestedParam)) {
+            Map<String, Object> paramWithType = traverseParams(prop.baseName, parameters.get(nestedParam), prop, "", 0, false);
+            parametersWithDataType.add(paramWithType);
+            parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
+            break;
+          }
+        }
+      }
+      // sortParameters(operation.bodyParam, parametersWithDataType);
     } else {
       Map<String, Object> paramWithType = traverseParams(paramName, parameters, spec, "", 0, false);
       parametersWithDataType.add(paramWithType);
@@ -451,19 +470,7 @@ public class ParametersWithDataType {
     }
 
     if (language.equals("swift")) {
-      // Store ordered params from the spec
-      var orderedParams = spec
-        .getVars()
-        .stream()
-        .map(v -> v.baseName)
-        .toList();
-
-      // Create a map to store the indices of each string in orderedParams
-      Map<String, Integer> indexMap = IntStream.range(0, orderedParams.size())
-        .boxed()
-        .collect(Collectors.toMap(orderedParams::get, i -> i));
-
-      values.sort(Comparator.comparing(value -> indexMap.getOrDefault((String) value.get("key"), Integer.MAX_VALUE)));
+      sortParameters(spec, values);
     }
 
     var hasAdditionalProperties = values
@@ -794,5 +801,15 @@ public class ParametersWithDataType {
     if (!(values instanceof List)) return true;
 
     return ((List) values).contains(value);
+  }
+
+  private void sortParameters(IJsonSchemaValidationProperties spec, List<Map<String, Object>> parameters) {
+    // Store ordered params from the spec
+    var orderedParams = spec.getVars().stream().map(v -> v.baseName).toList();
+
+    // Create a map to store the indices of each string in orderedParams
+    Map<String, Integer> indexMap = IntStream.range(0, orderedParams.size()).boxed().collect(Collectors.toMap(orderedParams::get, i -> i));
+
+    parameters.sort(Comparator.comparing(param -> indexMap.getOrDefault((String) param.get("key"), Integer.MAX_VALUE)));
   }
 }

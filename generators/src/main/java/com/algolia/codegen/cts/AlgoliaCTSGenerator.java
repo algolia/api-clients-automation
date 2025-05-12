@@ -102,6 +102,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     lambdas.put("escapeSlash", new EscapeSlashLambda());
     lambdas.put("escapeJSON", new EscapeJSONLambda());
     lambdas.put("replaceBacktick", new ReplaceBacktickLambda());
+    lambdas.put("screamingSnakeCase", new ScreamingSnakeCaseLambda());
 
     return lambdas;
   }
