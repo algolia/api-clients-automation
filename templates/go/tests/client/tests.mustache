@@ -1,6 +1,8 @@
 {{#tests}}
 // {{{testName}}}
 func Test{{#lambda.titlecase}}{{clientPrefix}}{{testType}}{{/lambda.titlecase}}{{testIndex}}(t *testing.T) {
+  t.Parallel()
+  
   var err error
   var res any
   _ = res

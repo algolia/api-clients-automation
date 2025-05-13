@@ -7,13 +7,12 @@ import (
 )
 
 type Configuration struct {
-	AppID  string
-	ApiKey string
-
-	Hosts                           []StatefulHost
-	DefaultHeader                   map[string]string
-	UserAgent                       string
 	Requester                       Requester
+	DefaultHeader                   map[string]string
+	AppID                           string
+	APIKey                          string
+	UserAgent                       string
+	Hosts                           []StatefulHost
 	ReadTimeout                     time.Duration
 	WriteTimeout                    time.Duration
 	ConnectTimeout                  time.Duration
