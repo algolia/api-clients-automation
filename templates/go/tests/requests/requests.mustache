@@ -43,6 +43,9 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
 
     {{#tests}} 
     t.Run("{{{testName}}}", func(t *testing.T) {
+      // hasOptionalWrapper {{hasOptionalWrapper}}
+      // hasInlineOptional {{hasInlineOptional}}
+      // hasNilOptional {{hasNilOptional}}
       {{#hasResponse}}_, {{/hasResponse}}err := {{> tests/method}}
       require.NoError(t, err)
 

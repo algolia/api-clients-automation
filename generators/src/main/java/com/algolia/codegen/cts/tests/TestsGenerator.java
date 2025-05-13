@@ -1,5 +1,6 @@
 package com.algolia.codegen.cts.tests;
 
+import com.algolia.codegen.AlgoliaGoGenerator;
 import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
@@ -129,35 +130,28 @@ public abstract class TestsGenerator {
     }
   }
 
-  public static void setOptionalParameters(CodegenOperation ope, Map<String, Object> test, Map<String, Object> parameters) {
+  public static void setOptionalParameters(
+    CodegenOperation ope,
+    Map<String, Object> test,
+    Map<String, Object> parameters,
+    boolean isHelper
+  ) {
     int bodyPropsOptional = 0;
     boolean actuallyHasOptional = false;
-    if (ope.bodyParam != null && ope.bodyParam.isModel) {
-      // check for colision with other params
-      boolean hasCollision = false;
-      Map<String, Object> paramBody = (Map<String, Object>) parameters.get(ope.bodyParam.paramName);
-      if (ope.allParams.size() == 1) { // edge case where the body is already flattened
-        paramBody = parameters;
+
+    if (AlgoliaGoGenerator.canFlattenBody(ope)) {
+      bodyPropsOptional = (int) ope.bodyParam.getVars().stream().filter(prop -> !prop.required).count();
+
+      // edge case where the body is already flattened
+      Map<String, Object> paramBody = paramBody = parameters;
+      if (ope.allParams.size() > 1) {
+        paramBody = (Map<String, Object>) parameters.get(ope.bodyParam.paramName);
       }
 
-      System.out.println(ope.bodyParam.paramName + " len " + ope.bodyParam.getVars().size());
       for (CodegenProperty prop : ope.bodyParam.getVars()) {
-        for (CodegenParameter param : ope.allParams) {
-          if (param.paramName.equals(prop.baseName)) {
-            hasCollision = true;
-          }
-        }
-
-        if (paramBody != null) System.out.println(
-          prop.baseName + " is required " + prop.required + " " + paramBody.containsKey(prop.baseName)
-        );
         if (!prop.required && paramBody != null && paramBody.containsKey(prop.baseName)) {
           actuallyHasOptional = true;
         }
-      }
-
-      if (!hasCollision) {
-        bodyPropsOptional = (int) ope.bodyParam.getVars().stream().filter(prop -> !prop.required).count();
       }
     }
 
@@ -170,14 +164,29 @@ public abstract class TestsGenerator {
       }
     }
 
+    // I can't figure out the correct condition for this one so it's harcoded for now
+    boolean isSFFV = ope.operationId.equals("searchForFacetValues") && "composition".equals(ope.tags.get(0).getName());
+
     // hasOptionalWrapper if there is more that one optional param, after the body has been
     // flattened, only relevant for go
-    test.put("hasOptionalWrapper", (totalOptional > 1) && actuallyHasOptional);
-    test.put("hasNilOptional", (totalOptional > 0) && !actuallyHasOptional);
-    test.put("hasOptionalRequired", (totalOptional == 1) && actuallyHasOptional);
+    test.put("hasOptionalWrapper", totalOptional > 1 && actuallyHasOptional && !isSFFV);
+    test.put("hasInlineOptional", (totalOptional == 1 || isSFFV) && actuallyHasOptional);
+    test.put("hasNilOptional", totalOptional > 0 && !actuallyHasOptional && !isHelper);
 
-    System.out.println(ope.operationId + " hasOptionalWrapper: " + test.get("hasOptionalWrapper"));
-    System.out.println("hasNilOptional: " + test.get("hasNilOptional"));
-    System.out.println("hasOptionalRequired: " + test.get("hasOptionalRequired"));
+    System.out.println(
+      ope.operationId +
+      " hasOptionalWrapper: " +
+      test.get("hasOptionalWrapper") +
+      " hasNilOptional: " +
+      test.get("hasNilOptional") +
+      " hasInlineOptional: " +
+      test.get("hasInlineOptional") +
+      " totalOptional: " +
+      totalOptional +
+      " actuallyHasOptional: " +
+      actuallyHasOptional +
+      " bodyPropsOptional: " +
+      bodyPropsOptional
+    );
   }
 }
