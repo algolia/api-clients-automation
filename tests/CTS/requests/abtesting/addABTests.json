@@ -2,7 +2,6 @@
   {
     "testName": "addABTests with minimal parameters",
     "parameters": {
-      "endAt": "2022-12-31T00:00:00.000Z",
       "name": "myABTest",
       "variants": [
         {
@@ -13,13 +12,13 @@
           "index": "AB_TEST_2",
           "trafficPercentage": 50
         }
-      ]
+      ],
+      "endAt": "2022-12-31T00:00:00.000Z"
     },
     "request": {
       "path": "/2/abtests",
       "method": "POST",
       "body": {
-        "endAt": "2022-12-31T00:00:00.000Z",
         "name": "myABTest",
         "variants": [
           {
@@ -30,7 +29,8 @@
             "index": "AB_TEST_2",
             "trafficPercentage": 50
           }
-        ]
+        ],
+        "endAt": "2022-12-31T00:00:00.000Z"
       }
     }
   }

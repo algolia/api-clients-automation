@@ -190,22 +190,11 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
       return;
     }
 
-    // check for colision with other params
-    for (CodegenProperty prop : bodyParam.getVars()) {
-      for (CodegenParameter param : ope.allParams) {
-        if (param.paramName.equals(prop.baseName)) {
-          System.out.println(
-            "Operation " +
-            ope.operationId +
-            " has body param " +
-            bodyParam.paramName +
-            " in colision with param " +
-            param.paramName +
-            ", skipping flattening"
-          );
-          return;
-        }
-      }
+    if (!canFlattenBody(ope)) {
+      System.out.println(
+        "Operation " + ope.operationId + " has body param " + bodyParam.paramName + " in colision with a parameter, skipping flattening"
+      );
+      return;
     }
 
     bodyParam.vendorExtensions.put("x-flat-body", bodyParam.getVars().size() > 0);
@@ -257,6 +246,25 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
       }
       ope.allParams.add(param);
     }
+  }
+
+  public static boolean canFlattenBody(CodegenOperation ope) {
+    if (ope.bodyParam == null || !ope.bodyParam.isModel) {
+      return false;
+    }
+
+    if (ope.allParams.size() == 1) {
+      return true;
+    }
+
+    for (CodegenProperty prop : ope.bodyParam.getVars()) {
+      for (CodegenParameter param : ope.allParams) {
+        if (param.paramName.equals(prop.baseName)) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
   public static String toEnum(String value) {

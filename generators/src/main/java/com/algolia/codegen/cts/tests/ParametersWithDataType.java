@@ -1,5 +1,6 @@
 package com.algolia.codegen.cts.tests;
 
+import com.algolia.codegen.AlgoliaGoGenerator;
 import com.algolia.codegen.AlgoliaSwiftGenerator;
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
@@ -93,19 +94,8 @@ public class ParametersWithDataType {
             operation.bodyParam.isModel &&
             operation.bodyParam.getVars().size() > 0
           ) {
-            // check for colision with other params
-            boolean hasCollision = false;
-            for (CodegenProperty prop : operation.bodyParam.getVars()) {
-              for (CodegenParameter otherParam : operation.allParams) {
-                if (otherParam.paramName.equals(prop.baseName)) {
-                  hasCollision = true;
-                  break;
-                }
-              }
-            }
-            if (!hasCollision) {
+            if (AlgoliaGoGenerator.canFlattenBody(operation)) {
               // flatten the body params by skipping one level
-              System.out.println("Flatten the body in " + operation.operationId);
               Map<String, Object> bodyParams = (Map<String, Object>) param.getValue();
               for (String nestedParam : bodyParams.keySet()) {
                 for (CodegenProperty prop : operation.bodyParam.getVars()) {
@@ -117,7 +107,11 @@ public class ParametersWithDataType {
                   }
                 }
               }
-              // sortParameters(operation.bodyParam, parametersWithDataType);
+            } else {
+              // use the parameter as is
+              Map<String, Object> paramWithType = traverseParams(param.getKey(), param.getValue(), specParam, "", 0, false);
+              parametersWithDataType.add(paramWithType);
+              parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
             }
           } else {
             Map<String, Object> paramWithType = traverseParams(param.getKey(), param.getValue(), specParam, "", 0, false);
@@ -126,9 +120,8 @@ public class ParametersWithDataType {
           }
         }
       }
-    } else if (language.equals("go") && parameters != null) {
+    } else if (language.equals("go") && parameters != null && operation.bodyParam.getVars().size() > 0) {
       // also flatten when the body is the only parameter
-      System.out.println("Skipping unique body in " + operation.operationId);
       for (String nestedParam : parameters.keySet()) {
         for (CodegenProperty prop : operation.bodyParam.getVars()) {
           if (prop.baseName.equals(nestedParam)) {
@@ -139,7 +132,6 @@ public class ParametersWithDataType {
           }
         }
       }
-      // sortParameters(operation.bodyParam, parametersWithDataType);
     } else {
       Map<String, Object> paramWithType = traverseParams(paramName, parameters, spec, "", 0, false);
       parametersWithDataType.add(paramWithType);
