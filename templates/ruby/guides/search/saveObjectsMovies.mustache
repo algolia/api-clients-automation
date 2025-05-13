@@ -6,7 +6,7 @@ uri = URI('https://dashboard.algolia.com/api/1/sample_datasets?type=movie')
 response = Net::HTTP.get_response(uri)
 movies = JSON.parse(response.body)
 
-# Connect and authenticate with your Algolia app
+# Connect and authenticate with your Algolia app using your app ID and write API key
 {{> snippets/init}}
 
 # Save records in Algolia index

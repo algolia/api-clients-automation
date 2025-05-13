@@ -4,6 +4,7 @@ get:
   summary: List tasks
   description: Retrieves a list of tasks.
   operationId: listTasks
+  x-mcp-tool: true
   x-acl:
     - addObject
     - deleteIndex

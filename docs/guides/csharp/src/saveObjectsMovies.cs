@@ -21,7 +21,7 @@ class SaveObjectsMovies
     // parse json
     var movies = JsonSerializer.Deserialize<List<dynamic>>(content);
 
-    // initiate client and index
+    // initiate client and index with your app ID and write API key
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // push data to algolia

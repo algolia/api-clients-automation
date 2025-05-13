@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:algolia_client_search/algolia_client_search.dart';
 
 void main() async {
-  // initiate client
+  // initiate client with your app ID and write API key
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 

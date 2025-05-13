@@ -383,6 +383,7 @@ paths:
       tags:
         - search
       operationId: searchSingleIndex
+      x-mcp-tool: true
       x-use-read-transporter: true
       x-cacheable: true
       x-acl:
@@ -636,6 +637,7 @@ paths:
       tags:
         - search
       operationId: saveObject
+      x-mcp-tool: true
       x-acl:
         - addObject
       description: >
@@ -856,7 +858,7 @@ paths:
         To delete more than one record, use the [`batch`
         operation](#tag/Records/operation/batch).
 
-        To delete records matching a query, use the [`deleteByQuery`
+        To delete records matching a query, use the [`deleteBy`
         operation](#tag/Records/operation/deleteBy).
       parameters:
         - $ref: '#/components/parameters/IndexName'
@@ -877,6 +879,7 @@ paths:
       tags:
         - search
       operationId: deleteBy
+      x-mcp-tool: true
       x-acl:
         - deleteIndex
       summary: Delete records matching a filter
@@ -953,6 +956,7 @@ paths:
       tags:
         - search
       operationId: partialUpdateObject
+      x-mcp-tool: true
       x-acl:
         - addObject
       summary: Add or update attributes
@@ -1054,6 +1058,7 @@ paths:
       tags:
         - search
       operationId: batch
+      x-mcp-tool: true
       summary: Batch indexing operations on one index
       description: >
         Adds, updates, or deletes records in one index with a single API
@@ -1100,6 +1105,7 @@ paths:
       tags:
         - search
       operationId: multipleBatch
+      x-mcp-tool: true
       description: >
         Adds, updates, or deletes records in multiple indices with a single API
         request.
@@ -1283,6 +1289,7 @@ paths:
       tags:
         - search
       operationId: getSettings
+      x-mcp-tool: true
       x-acl:
         - search
       description: Retrieves an object with non-null index settings.
@@ -1517,6 +1524,7 @@ paths:
       tags:
         - search
       operationId: searchSynonyms
+      x-mcp-tool: true
       x-use-read-transporter: true
       x-cacheable: true
       x-acl:
@@ -1934,6 +1942,7 @@ paths:
       tags:
         - search
       operationId: searchRules
+      x-mcp-tool: true
       x-use-read-transporter: true
       x-cacheable: true
       x-acl:
@@ -3189,6 +3198,7 @@ paths:
       tags:
         - search
       operationId: listIndices
+      x-mcp-tool: true
       x-acl:
         - listIndexes
       summary: List indices
