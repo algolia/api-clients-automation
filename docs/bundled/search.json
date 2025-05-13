@@ -367,7 +367,7 @@
           "search"
         ],
         "summary": "Search multiple indices",
-        "description": "Sends multiple search requests to one or more indices.\n\nThis can be useful in these cases:\n\n- Different indices for different purposes, such as, one index for products, another one for marketing content.\n- Multiple searches to the same index—for example, with different filters.\n\nUse the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.\n",
+        "description": "Sends multiple search requests to one or more indices.\n\nThis can be useful in these cases:\n\n  - Different indices for different purposes, such as, one index for products, another one for marketing content.\n  - Multiple searches to the same index—for example, with different filters.\n\nUse the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.\n",
         "requestBody": {
           "required": true,
           "description": "Muli-search request body. Results are returned in the same order as the requests.",
@@ -520,7 +520,7 @@
           "browse"
         ],
         "summary": "Browse for records",
-        "description": "Retrieves records from an index, up to 1,000 per request.\n\nWhile searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details),\nbrowsing _just_ returns matching records.\nThis can be useful if you want to export your indices.\n\n- The Analytics API doesn't collect data when using `browse`.\n- Records are ranked by attributes and custom ranking.\n- There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.\n\nBrowse requests automatically apply these settings:\n\n- `advancedSyntax`: `false`\n- `attributesToHighlight`: `[]`\n- `attributesToSnippet`: `[]`\n- `distinct`: `false`\n- `enablePersonalization`: `false`\n- `enableRules`: `false`\n- `facets`: `[]`\n- `getRankingInfo`: `false`\n- `ignorePlurals`: `false`\n- `optionalFilters`: `[]`\n- `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)\n\nIf you send these parameters with your browse requests, they'll be ignored.\n",
+        "description": "Retrieves records from an index, up to 1,000 per request.\n\nWhile searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details),\nbrowsing _just_ returns matching records.\nThis can be useful if you want to export your indices.\n\n  - The Analytics API doesn't collect data when using `browse`.\n  - Records are ranked by attributes and custom ranking.\n  - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.\n\nBrowse requests automatically apply these settings:\n  - `advancedSyntax`: `false`\n  - `attributesToHighlight`: `[]`\n  - `attributesToSnippet`: `[]`\n  - `distinct`: `false`\n  - `enablePersonalization`: `false`\n  - `enableRules`: `false`\n  - `facets`: `[]`\n  - `getRankingInfo`: `false`\n  - `ignorePlurals`: `false`\n  - `optionalFilters`: `[]`\n  - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)\n\nIf you send these parameters with your browse requests, they'll be ignored.\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/IndexName"

@@ -42,8 +42,7 @@ func saveObjectsModified() {
 		records = append(records, record)
 	}
 
-	_, err = client.SaveObjects(
-		"<YOUR_INDEX_NAME>", records)
+	_, err = client.SaveObjects("<YOUR_INDEX_NAME>", records)
 	if err != nil {
 		panic(err)
 	}

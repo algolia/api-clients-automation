@@ -133,8 +133,8 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "test/minimal"))
+            response, err := client.CustomGet("test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -360,8 +360,8 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "test/minimal"))
+            response, err := client.CustomPost("test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -587,8 +587,8 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "test/minimal"))
+            response, err := client.CustomPut("test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -808,9 +808,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "test/minimal"))
+            response, err := client.CustomDelete("test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1238,9 +1237,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetClusterStatus(client.NewApiGetClusterStatusRequest(
-              "c1-de"))
+            response, err := client.GetClusterStatus("c1-de")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1674,9 +1672,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetClusterIncidents(client.NewApiGetClusterIncidentsRequest(
-              "c1-de"))
+            response, err := client.GetClusterIncidents("c1-de")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2120,8 +2117,8 @@ paths:
 
             // Call the API
 
-            response, err := client.GetLatency(client.NewApiGetLatencyRequest(
-              "c1-de"))
+            response, err := client.GetLatency("c1-de")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2340,9 +2337,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetIndexingTime(client.NewApiGetIndexingTimeRequest(
-              "c1-de"))
+            response, err := client.GetIndexingTime("c1-de")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2562,9 +2558,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetReachability(client.NewApiGetReachabilityRequest(
-              "c1-de"))
+            response, err := client.GetReachability("c1-de")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2796,8 +2791,9 @@ paths:
 
             // Call the API
 
-            response, err := client.GetMetrics(client.NewApiGetMetricsRequest(
-              monitoring.Metric("avg_build_time"), monitoring.Period("minute")))
+            response, err := client.GetMetrics(monitoring.METRIC_AVG_BUILD_TIME,
+            monitoring.PERIOD_MINUTE)
+
             if err != nil {
               // handle the eventual error
               panic(err)

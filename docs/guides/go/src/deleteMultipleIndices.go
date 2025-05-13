@@ -15,7 +15,7 @@ func deleteMultipleIndices() {
 	}
 
 	// List all indices
-	indices, err := client.ListIndices(client.NewApiListIndicesRequest())
+	indices, err := client.ListIndices(nil)
 	if err != nil {
 		panic(err)
 	}
@@ -43,9 +43,7 @@ func deleteMultipleIndices() {
 			})
 		}
 
-		_, err = client.MultipleBatch(client.NewApiMultipleBatchRequest(
-
-			search.NewEmptyBatchParams().SetRequests(requests)))
+		_, err = client.MultipleBatch(requests)
 		if err != nil {
 			panic(err)
 		}
@@ -64,9 +62,7 @@ func deleteMultipleIndices() {
 			})
 		}
 
-		_, err = client.MultipleBatch(client.NewApiMultipleBatchRequest(
-
-			search.NewEmptyBatchParams().SetRequests(requests)))
+		_, err = client.MultipleBatch(requests)
 		if err != nil {
 			panic(err)
 		}

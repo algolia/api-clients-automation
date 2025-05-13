@@ -29,8 +29,7 @@ func saveObjectsMCM() {
 			return
 		}
 
-		_, err = client.SaveObjects(
-			"<YOUR_INDEX_NAME>", playlists)
+		_, err = client.SaveObjects("<YOUR_INDEX_NAME>", playlists)
 		if err != nil {
 			panic(err)
 		}

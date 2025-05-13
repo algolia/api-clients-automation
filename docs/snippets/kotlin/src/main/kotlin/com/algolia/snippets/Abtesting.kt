@@ -20,7 +20,6 @@ class SnippetAbtestingClient {
     // Call the API
     var response = client.addABTests(
       addABTestsRequest = AddABTestsRequest(
-        endAt = "2022-12-31T00:00:00.000Z",
         name = "myABTest",
         variants = listOf(
           AbTestsVariant(
@@ -32,6 +31,7 @@ class SnippetAbtestingClient {
             trafficPercentage = 50,
           ),
         ),
+        endAt = "2022-12-31T00:00:00.000Z",
       ),
     )
 
@@ -620,8 +620,6 @@ class SnippetAbtestingClient {
     // Call the API
     var response = client.scheduleABTest(
       scheduleABTestsRequest = ScheduleABTestsRequest(
-        endAt = "2022-12-31T00:00:00.000Z",
-        scheduledAt = "2022-11-31T00:00:00.000Z",
         name = "myABTest",
         variants = listOf(
           AbTestsVariant(
@@ -633,6 +631,8 @@ class SnippetAbtestingClient {
             trafficPercentage = 50,
           ),
         ),
+        scheduledAt = "2022-11-31T00:00:00.000Z",
+        endAt = "2022-12-31T00:00:00.000Z",
       ),
     )
 

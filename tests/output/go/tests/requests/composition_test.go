@@ -35,10 +35,8 @@ func TestComposition_Search(t *testing.T) {
 	_ = echo
 
 	t.Run("search", func(t *testing.T) {
-		_, err := client.Search(client.NewApiSearchRequest(
-			"foo",
-			composition.NewEmptyRequestBody().SetParams(
-				composition.NewEmptyParams().SetQuery("batman"))))
+		_, err := client.Search("foo",
+			composition.NewEmptyParams().SetQuery("batman"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/foo/run", echo.Path)
@@ -54,10 +52,8 @@ func TestComposition_SearchForFacetValues(t *testing.T) {
 	_ = echo
 
 	t.Run("searchForFacetValues", func(t *testing.T) {
-		_, err := client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(
-			"foo", "brand").WithSearchForFacetValuesRequest(
-			composition.NewEmptySearchForFacetValuesRequest().SetParams(
-				composition.NewEmptySearchForFacetValuesParams().SetMaxFacetHits(10))))
+		_, err := client.SearchForFacetValues("foo", "brand",
+			composition.NewEmptySearchForFacetValuesParams().SetMaxFacetHits(10))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/foo/facets/brand/query", echo.Path)

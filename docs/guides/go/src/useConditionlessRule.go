@@ -21,8 +21,7 @@ func useConditionlessRule() {
 			},
 		)
 
-	_, err = client.SaveRule(client.NewApiSaveRuleRequest(
-		"<YOUR_INDEX_NAME>", objectID, rule))
+	_, err = client.SaveRule("<YOUR_INDEX_NAME>", objectID, rule, nil)
 	if err != nil {
 		panic(err)
 	}

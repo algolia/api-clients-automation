@@ -19,9 +19,8 @@ func searchInReplicaIndex() {
 	}
 
 	// 3. Search on dynamic index name (primary or replica)
-	_, err = client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-		indexName).WithSearchParams(search.SearchParamsObjectAsSearchParams(
-		search.NewEmptySearchParamsObject().SetQuery("query"))))
+	_, err = client.SearchSingleIndex(indexName, search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetQuery("query")))
 	if err != nil {
 		panic(err)
 	}

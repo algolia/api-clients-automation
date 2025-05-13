@@ -22,8 +22,7 @@ func searchWithAnalyticsAndHeader() {
 			SetAnalytics(true),
 	)
 
-	_, err = client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-		"<YOUR_INDEX_NAME>").WithSearchParams(searchParams), search.WithHeaderParam("X-Forwarded-For", ip))
+	_, err = client.SearchSingleIndex("<YOUR_INDEX_NAME>", searchParams, search.WithHeaderParam("X-Forwarded-For", ip))
 	if err != nil {
 		panic(err)
 	}

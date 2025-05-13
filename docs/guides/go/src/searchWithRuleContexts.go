@@ -24,8 +24,7 @@ func searchWithRuleContexts() {
 			SetRuleContexts([]string{platformTag}),
 	)
 
-	_, err = client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-		"<YOUR_INDEX_NAME>").WithSearchParams(searchParams))
+	_, err = client.SearchSingleIndex("<YOUR_INDEX_NAME>", searchParams)
 	if err != nil {
 		panic(err)
 	}

@@ -59,8 +59,7 @@ func saveImageClassificationsAndSettings() {
 		}
 	}
 
-	_, err = client.PartialUpdateObjects(
-		"<YOUR_INDEX_NAME>", records, search.WithCreateIfNotExists(true))
+	_, err = client.PartialUpdateObjects("<YOUR_INDEX_NAME>", records, search.WithCreateIfNotExists(true))
 	if err != nil {
 		panic(err)
 	}
@@ -82,8 +81,7 @@ func saveImageClassificationsAndSettings() {
 		}
 	}
 
-	currentSettings, err := client.GetSettings(client.NewApiGetSettingsRequest(
-		"<YOUR_INDEX_NAME>"))
+	currentSettings, err := client.GetSettings("<YOUR_INDEX_NAME>")
 	if err != nil {
 		panic(err)
 	}
@@ -92,8 +90,7 @@ func saveImageClassificationsAndSettings() {
 		SetSearchableAttributes(append(currentSettings.SearchableAttributes, attributes...)).
 		SetAttributesForFaceting(append(currentSettings.AttributesForFaceting, facets...))
 
-	_, err = client.SetSettings(client.NewApiSetSettingsRequest(
-		"<YOUR_INDEX_NAME>", settings))
+	_, err = client.SetSettings("<YOUR_INDEX_NAME>", settings, nil)
 	if err != nil {
 		panic(err)
 	}
