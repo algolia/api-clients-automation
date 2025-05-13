@@ -67,8 +67,8 @@ For information about documenting operations, see [Operation summaries](/docs/ad
 Each operation should include an `x-acl` property
 to document the ACL required to make the request.
 
-The `x-acl` property is an array of strings.
-For operations that require the admin API key, use `admin`.
+The `x-acl` property is an array of strings, the allowed values are: `search`, `browse`, `addObject`, `deleteObject`, `listIndexes`, `deleteIndex`, `settings`, `editSettings`, `analytics`, `recommendation`, `usage`, `logs`, `setUnretrievableAttributes`, `admin`.
+For operations that require the admin API key, use `admin`
 
 ##### Complex objects
 
