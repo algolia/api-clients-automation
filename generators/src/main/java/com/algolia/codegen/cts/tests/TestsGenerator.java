@@ -143,7 +143,8 @@ public abstract class TestsGenerator {
     int bodyPropsOptional = 0;
     boolean actuallyHasOptional = false;
     boolean isBodyTooBig = false;
-    boolean alreadyInlinedBody = ope.allParams.size() == 1 && ope.bodyParam != null && ope.bodyParam.isModel;
+    boolean isBodyRequired = (ope.bodyParam != null && ope.bodyParam.required);
+    boolean alreadyInlinedBody = ope.allParams.size() == 1 && ope.bodyParam != null && !ope.bodyParam.isArray;
 
     if (AlgoliaGoGenerator.canFlattenBody(ope)) {
       bodyPropsOptional = (int) ope.bodyParam.getVars().stream().filter(prop -> !prop.required).count();
@@ -152,7 +153,14 @@ public abstract class TestsGenerator {
       // edge case where the body is already flattened
       Map<String, Object> paramBody = paramBody = parameters;
       if (!alreadyInlinedBody) {
-        paramBody = (Map<String, Object>) parameters.get(ope.bodyParam.paramName);
+        Object paramBodyObj = parameters.get(ope.bodyParam.paramName);
+        if (paramBodyObj instanceof String) {
+          // this is a verbatim paramater, we use it as is
+          System.out.println(ope.operationId + " is a verbatim body " + paramBodyObj);
+          actuallyHasOptional = !isBodyRequired;
+        } else {
+          paramBody = (Map<String, Object>) parameters.get(ope.bodyParam.paramName);
+        }
       }
 
       for (CodegenProperty prop : ope.bodyParam.getVars()) {
@@ -171,8 +179,6 @@ public abstract class TestsGenerator {
       }
     }
 
-    boolean isBodyRequired = (ope.bodyParam != null && ope.bodyParam.required);
-
     // I can't figure out the correct condition for this one so it's harcoded for now
     boolean isSFFV = ope.operationId.equals("searchForFacetValues") && "composition".equals(ope.tags.get(0).getName());
 
@@ -182,7 +188,7 @@ public abstract class TestsGenerator {
     test.put("hasInlineOptional", ((totalOptional == 1 || isSFFV) && actuallyHasOptional) || isBodyTooBig);
     if (isBodyTooBig) {
       boolean isBodySet = alreadyInlinedBody ? parameters.size() > 0 : parameters.containsKey(ope.bodyParam.paramName);
-      System.out.println("isBodySet: " + isBodySet);
+      System.out.println(ope.operationId + " isBodySet: " + isBodySet + " isBodyRequired: " + isBodyRequired);
       test.put("hasNilOptional", isBodyRequired ? totalOptional > 0 && !actuallyHasOptional : !isBodySet);
     } else {
       test.put("hasNilOptional", totalOptional > 0 && !actuallyHasOptional && !isHelper);
