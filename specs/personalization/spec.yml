@@ -67,6 +67,7 @@ servers:
   - url: https://personalization.{region}.algolia.com
     variables:
       region:
+        description: The region where your Algolia application is hosted.
         enum:
           - us
           - eu

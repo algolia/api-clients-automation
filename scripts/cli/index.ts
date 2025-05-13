@@ -139,7 +139,7 @@ buildCommand
   .option('-s, --skip-cache', 'skip cache checking to force building specs')
   .option('-j, --json', 'outputs the spec in JSON instead of yml')
   .option('-d, --docs', 'generates the doc specs with the code snippets')
-  .action(async (clientArg: string[], { verbose, skipCache, outputJson, docs }) => {
+  .action(async (clientArg: string[], { verbose, skipCache, json, docs }) => {
     const { client, clientList } = transformSelection({
       langArg: ALL,
       clientArg,
@@ -149,10 +149,20 @@ buildCommand
 
     await buildSpecs({
       clients: client[0] === ALL ? clientList : client,
-      outputFormat: outputJson ? 'json' : 'yml',
-      docs: Boolean(docs),
+      outputFormat: json ? 'json' : 'yml',
+      docs: docs || json,
       useCache: !skipCache,
     });
+
+    // when building for the docs we generate both formats
+    if (docs && !json) {
+      await buildSpecs({
+        clients: client[0] === ALL ? clientList : client,
+        outputFormat: 'json',
+        docs: true,
+        useCache: !skipCache,
+      });
+    }
   });
 
 const ctsCommand = program.command('cts').description('Generate and run the CTS tests');

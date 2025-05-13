@@ -100,6 +100,7 @@ servers:
   - url: https://insights.{region}.algolia.io
     variables:
       region:
+        description: The region where your Algolia application is hosted.
         enum:
           - us
           - de
@@ -237,6 +238,8 @@ paths:
         - insights
       operationId: pushEvents
       summary: Send events
+      x-acl:
+        - search
       description: |
         Sends a list of events to the Insights API.
 
@@ -687,6 +690,8 @@ paths:
 
         To delete a personalization user profile, see `Delete a user profile` in
         the Personalization API.
+      x-acl:
+        - deleteObject
       parameters:
         - name: userToken
           in: path

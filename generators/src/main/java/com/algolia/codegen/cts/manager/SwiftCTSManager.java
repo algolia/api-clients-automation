@@ -1,6 +1,7 @@
 package com.algolia.codegen.cts.manager;
 
 import com.algolia.codegen.AlgoliaSwiftGenerator;
+import com.algolia.codegen.cts.lambda.SwiftPrefixLambda;
 import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.Helpers;
 import com.samskivert.mustache.Mustache.Lambda;
@@ -57,5 +58,6 @@ public class SwiftCTSManager implements CTSManager {
   @Override
   public void addMustacheLambdas(Map<String, Lambda> lambdas) {
     lambdas.put("identifier", (fragment, writer) -> writer.write(AlgoliaSwiftGenerator.formatIdentifier(fragment.execute())));
+    lambdas.put("prefix", new SwiftPrefixLambda(client));
   }
 }

@@ -6,7 +6,7 @@ import requests
 url = "https://dashboard.algolia.com/api/1/sample_datasets?type=movie"
 movies = requests.get(url).json()
 
-# Connect and authenticate with your Algolia app
+# Connect and authenticate with your Algolia app using your app ID and write API key
 _{{> snippets/init}}
 
 # Save records in Algolia index

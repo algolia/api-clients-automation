@@ -432,6 +432,24 @@ paths:
             )
 
             // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            let response: CompositionSearchResponse<CompositionHit> = try await
+            client.search(
+                compositionID: "foo",
+                requestBody: CompositionRequestBody(params: CompositionParams(query: "batman"))
+            )
+
+            // >LOG
         - lang: cURL
           label: curl
           source: |-
@@ -760,6 +778,26 @@ paths:
             )
 
             // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            let response = try await client.searchForFacetValues(
+                compositionID: "foo",
+                facetName: "brand",
+                searchForFacetValuesRequest: CompositionSearchForFacetValuesRequest(
+                    params: CompositionSearchForFacetValuesParams(maxFacetHits: 10)
+                )
+            )
+
+            // >LOG
         - lang: cURL
           label: curl
           source: |-
@@ -876,8 +914,7 @@ components:
 
         `facet:\-value`.
       example:
-        -
-          - category:Book
+        - - category:Book
           - category:-Movie
         - author:John Doe
       oneOf:
@@ -940,8 +977,7 @@ components:
 
         The same combination rules apply as for `facetFilters`.
       example:
-        -
-          - inStock = 1
+        - - inStock = 1
           - deliveryDate < 1441755506
         - price < 1000
       oneOf:
@@ -1079,13 +1115,11 @@ components:
         For more information, see [rectangular
         area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
       example:
-        -
-          - 47.3165
+        - - 47.3165
           - 4.9665
           - 47.3424
           - 5.0201
-        -
-          - 40.9234
+        - - 40.9234
           - 2.1185
           - 38.643
           - 1.9916
@@ -1119,15 +1153,13 @@ components:
 
         This parameter is ignored if you also specify `insideBoundingBox`.
       example:
-        -
-          - 47.3165
+        - - 47.3165
           - 4.9665
           - 47.3424
           - 5.0201
           - 47.32
           - 4.9
-        -
-          - 40.9234
+        - - 40.9234
           - 2.1185
           - 38.643
           - 1.9916

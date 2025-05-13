@@ -2,8 +2,8 @@ import fsp from 'fs/promises';
 import path, { resolve } from 'path';
 
 import {
+  CLIENTS,
   configureGitHubAuthor,
-  ensureGitHubToken,
   exists,
   getOctokit,
   gitBranchExists,
@@ -22,16 +22,45 @@ import { getClientsConfigField } from '../../config.ts';
 import { commitStartRelease } from './text.ts';
 
 async function handleSpecFiles(spec: SpecsToPush, tempGitDir: string): Promise<void> {
-  const pathToSpecs = toAbsolutePath(`${tempGitDir}/${spec.output}`);
+  const output = toAbsolutePath(`${tempGitDir}/${spec.output}`);
 
-  await run(`cp ${toAbsolutePath('specs/bundled/README.md')} ${pathToSpecs}`);
-  await run(`cp ${toAbsolutePath('specs/major-breaking-changes-rename.json')} ${pathToSpecs}`);
-  await run(`cp ${toAbsolutePath('config/clients.config.json')} ${pathToSpecs}`);
-  await run(`cp ${toAbsolutePath('docs/bundled/*.json')} ${pathToSpecs}`);
-  await run(`cp ${toAbsolutePath('docs/bundled/*.yml')} ${pathToSpecs}`);
-  await run(`cp ${toAbsolutePath('docs/versions-history-with-sla-and-support-policy.json')} ${pathToSpecs}`);
+  if (spec.includeSnippets) {
+    await run(`cp ${toAbsolutePath('docs/bundled/*-snippets.json')} ${output}`);
+  }
+
+  if (spec.includeSLA) {
+    await run(`cp ${toAbsolutePath('specs/bundled/README.md')} ${output}`);
+    await run(`cp ${toAbsolutePath('specs/major-breaking-changes-rename.json')} ${output}`);
+    await run(`cp ${toAbsolutePath('config/clients.config.json')} ${output}`);
+    await run(`cp ${toAbsolutePath('docs/versions-history-with-sla-and-support-policy.json')} ${output}`);
+  }
+
+  for (const client of CLIENTS) {
+    const pathToBundledSpec = toAbsolutePath(`docs/bundled/${client}.${spec.ext}`);
+
+    if (!(await exists(pathToBundledSpec))) {
+      continue;
+    }
+
+    const outputFile = `${output}/${client}.${spec.ext}`;
+
+    await run(`cp ${pathToBundledSpec} ${outputFile}`);
+
+    if (spec.placeholderVariables) {
+      let file = await fsp.readFile(outputFile, 'utf8');
+
+      for (const [k, v] of Object.entries(spec.placeholderVariables)) {
+        file = file.replaceAll(k, v);
+      }
+
+      await fsp.writeFile(outputFile, file);
+    }
+  }
+
   // adblock extensions ban words like `analytics` so we use a different file name just so the doc dans render it
-  await run(`mv ${pathToSpecs}/analytics.yml ${pathToSpecs}/searchstats.yml`);
+  if (spec.ext === 'yml') {
+    await run(`mv ${output}/analytics.yml ${output}/searchstats.yml`);
+  }
 }
 
 async function handleGuideFiles(guide: GuidesToPush, tempGitDir: string): Promise<void> {
@@ -80,8 +109,6 @@ async function handleGuideFiles(guide: GuidesToPush, tempGitDir: string): Promis
 }
 
 async function pushToRepository(repository: string, config: RepositoryConfiguration): Promise<void> {
-  const githubToken = ensureGitHubToken();
-
   const lastCommitMessage = await run('git log -1 --format="%s"');
   const author = (await run('git log -1 --format="Co-authored-by: %an <%ae>"')).trim();
   const coAuthors = (await run('git log -1 --format="%(trailers:key=Co-authored-by)"'))
@@ -100,20 +127,14 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
   const tempGitDir = resolve(process.env.RUNNER_TEMP! || toAbsolutePath('foo/local/test'), repository);
   await fsp.rm(tempGitDir, { force: true, recursive: true });
 
-  const githubURL = `https://${githubToken}:${githubToken}@github.com/${OWNER}/${repository}`;
-  await run(`git clone --depth 1 ${githubURL} ${tempGitDir}`);
+  await run(`gh repo clone ${OWNER}/${repository} ${tempGitDir}`);
 
   for (const task of config.tasks) {
+    console.log(`Handling '${task.files.type}' file(s)`);
+
     await run(`git checkout ${config.baseBranch}`, { cwd: tempGitDir });
     await run(`git pull origin ${config.baseBranch}`, { cwd: tempGitDir });
-
-    if (await gitBranchExists(task.prBranch, tempGitDir)) {
-      await run(`git fetch origin ${task.prBranch}`, { cwd: tempGitDir });
-      await run(`git push -d origin ${task.prBranch}`, { cwd: tempGitDir });
-    }
     await run(`git checkout -B ${task.prBranch}`, { cwd: tempGitDir });
-
-    console.log(`Handling '${task.files.type}' file(s)`);
 
     if (task.files.type === 'specs') {
       await handleSpecFiles(task.files, tempGitDir);
@@ -121,13 +142,22 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
       await handleGuideFiles(task.files, tempGitDir);
     }
 
+    if (process.env.DRYRUN) {
+      console.log(`asked for a dry run, stopping before push and PR for '${repository}' on task '${task.prBranch}'`);
+
+      continue;
+    }
+
+    if (await gitBranchExists(task.prBranch, tempGitDir)) {
+      await run(`git fetch origin ${task.prBranch}`, { cwd: tempGitDir });
+      await run(`git push -d origin ${task.prBranch}`, { cwd: tempGitDir });
+    }
+
     if ((await getNbGitDiff({ head: null, cwd: tempGitDir })) === 0) {
       console.log(`❎ Skipping push to ${OWNER}/${repository} because there is no change.`);
 
       continue;
     }
-
-    console.log(`Pushing to '${task.prBranch}`);
 
     await configureGitHubAuthor(tempGitDir);
 
@@ -137,12 +167,6 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
       coAuthors: [author, ...coAuthors],
       cwd: tempGitDir,
     });
-
-    if (process.env.DRYRUN) {
-      console.log(`asked for a dry run, stopping before push and PR for '${repository}' on task '${task.prBranch}'`);
-
-      continue;
-    }
 
     await run(`git push -f -u origin ${task.prBranch}`, { cwd: tempGitDir });
 

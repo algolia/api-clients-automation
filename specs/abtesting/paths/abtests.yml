@@ -57,6 +57,7 @@ get:
   tags:
     - abtest
   operationId: listABTests
+  x-mcp-tool: true
   x-acl:
     - analytics
   summary: List all A/B tests

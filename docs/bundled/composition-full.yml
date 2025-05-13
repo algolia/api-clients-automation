@@ -1143,8 +1143,7 @@ components:
 
         `facet:\-value`.
       example:
-        -
-          - category:Book
+        - - category:Book
           - category:-Movie
         - author:John Doe
       oneOf:
@@ -1207,8 +1206,7 @@ components:
 
         The same combination rules apply as for `facetFilters`.
       example:
-        -
-          - inStock = 1
+        - - inStock = 1
           - deliveryDate < 1441755506
         - price < 1000
       oneOf:
@@ -1346,13 +1344,11 @@ components:
         For more information, see [rectangular
         area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
       example:
-        -
-          - 47.3165
+        - - 47.3165
           - 4.9665
           - 47.3424
           - 5.0201
-        -
-          - 40.9234
+        - - 40.9234
           - 2.1185
           - 38.643
           - 1.9916
@@ -1386,15 +1382,13 @@ components:
 
         This parameter is ignored if you also specify `insideBoundingBox`.
       example:
-        -
-          - 47.3165
+        - - 47.3165
           - 4.9665
           - 47.3424
           - 5.0201
           - 47.32
           - 4.9
-        -
-          - 40.9234
+        - - 40.9234
           - 2.1185
           - 38.643
           - 1.9916
@@ -4461,9 +4455,24 @@ components:
           type: integer
           description: Number of pages.
           example: 100
+        page:
+          type: integer
+          description: Current page.
+          example: 0
+        hitsPerPage:
+          type: integer
+          description: Number of items per page.
+          example: 20
+        nbHits:
+          type: integer
+          description: Number of items.
+          example: 200
       required:
+        - hitsPerPage
         - items
+        - nbHits
         - nbPages
+        - page
   responses:
     BadRequest:
       description: Bad request or request arguments.

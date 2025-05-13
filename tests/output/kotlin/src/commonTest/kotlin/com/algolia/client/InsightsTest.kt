@@ -42,7 +42,7 @@ class InsightsTest {
         )
       },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.18.4\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.19.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
       },

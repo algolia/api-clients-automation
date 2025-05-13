@@ -19,7 +19,7 @@ object Main {
     val result = Source.fromURL(url).mkString
     val movies = JsonMethods.parse(result).extract[Seq[Map[String, Any]]]
 
-    // Connect and authenticate with your Algolia app
+    // Connect and authenticate with your Algolia app using your app ID and write API key
     {{> snippets/init}}
 
     // Save records in Algolia index

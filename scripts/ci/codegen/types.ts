@@ -13,8 +13,23 @@ export type GuidesToPush = {
 };
 
 export type SpecsToPush = {
+  // the type of changes to push to the repository
   type: 'specs';
+
+  // the ext of the specs to be pushed to the repository
+  ext: 'json' | 'yml';
+
+  // whether we should include code snippets or not
+  includeSnippets?: boolean;
+
+  // whether we should include SLA related informations or not
+  includeSLA?: boolean;
+
+  // the name of the directory to push the files to
   output: string;
+
+  // a key-value of the fields to replace, with the name you'd like to use instead
+  placeholderVariables?: Record<string, string>;
 };
 
 type RepositoryTask = {
@@ -35,7 +50,7 @@ export type RepositoryConfiguration = {
   tasks: Array<RepositoryTask>;
 };
 
-export const pushToRepositoryConfiguration: { [k in 'AlgoliaWeb' | 'doc']: RepositoryConfiguration } = {
+export const pushToRepositoryConfiguration: { [k in 'AlgoliaWeb' | 'doc' | 'mcp-node']: RepositoryConfiguration } = {
   AlgoliaWeb: {
     baseBranch: 'develop',
     tasks: [
@@ -72,7 +87,10 @@ export const pushToRepositoryConfiguration: { [k in 'AlgoliaWeb' | 'doc']: Repos
         commitMessage: 'feat: update specs and supported versions',
         files: {
           type: 'specs',
+          ext: 'yml',
           output: 'app_data/api/specs',
+          includeSnippets: true,
+          includeSLA: true,
         },
       },
       {
@@ -81,6 +99,21 @@ export const pushToRepositoryConfiguration: { [k in 'AlgoliaWeb' | 'doc']: Repos
         files: {
           type: 'guides',
           output: 'app_data/api/specs/guides.json',
+        },
+      },
+    ],
+  },
+  'mcp-node': {
+    baseBranch: 'main',
+    tasks: [
+      {
+        prBranch: 'feat/automated-update-for-specs',
+        commitMessage: 'feat: update specs',
+        files: {
+          type: 'specs',
+          ext: 'json',
+          output: 'src/data',
+          placeholderVariables: { appId: 'applicationId' },
         },
       },
     ],

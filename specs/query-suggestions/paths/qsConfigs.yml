@@ -2,6 +2,7 @@ get:
   tags:
     - configurations
   operationId: getAllConfigs
+  x-mcp-tool: true
   x-acl:
     - settings
   summary: List configurations
@@ -22,6 +23,7 @@ post:
   tags:
     - configurations
   operationId: createConfig
+  x-mcp-tool: true
   x-acl:
     - editSettings
   summary: Create a configuration

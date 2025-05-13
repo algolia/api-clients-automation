@@ -1,5 +1,5 @@
-{{#hasResponse}}let response{{#isGeneric}}: Response<{{{returnType}}}<Hit>>{{/isGeneric}} = {{> tests/method}}{{/hasResponse}}
-{{^hasResponse}}let _{{#isGeneric}}: Response<{{{returnType}}}<Hit>>{{/isGeneric}} = {{> tests/method}}{{/hasResponse}}
+{{#hasResponse}}let response{{#isGeneric}}: Response<{{#lambda.prefix}}{{{returnType}}}{{/lambda.prefix}}<{{#lambda.prefix}}Hit{{/lambda.prefix}}>>{{/isGeneric}} = {{> tests/method}}{{/hasResponse}}
+{{^hasResponse}}let _{{#isGeneric}}: Response<{{#lambda.prefix}}{{{returnType}}}{{/lambda.prefix}}<{{#lambda.prefix}}Hit{{/lambda.prefix}}>>{{/isGeneric}} = {{> tests/method}}{{/hasResponse}}
 {{^isHelper}}
 {{^isBenchmark}}
 let responseBodyData = try XCTUnwrap(response.bodyData)
