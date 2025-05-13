@@ -161,7 +161,7 @@ public class TestsRequest extends TestsGenerator {
           test.put("hasParams", ope.hasParams);
           test.put("isHelper", isHelper);
 
-          setOptionalParameters(ope, test, req.parameters, isHelper);
+          setOptionalParameters(language, ope, test, req.parameters, isHelper);
           addRequestOptions(paramsType, req.requestOptions, test);
 
           // Determines whether the endpoint is expected to return a response payload deserialized
