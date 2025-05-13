@@ -50,7 +50,9 @@ export type RepositoryConfiguration = {
   tasks: Array<RepositoryTask>;
 };
 
-export const pushToRepositoryConfiguration: { [k in 'AlgoliaWeb' | 'doc' | 'mcp-node']: RepositoryConfiguration } = {
+export const pushToRepositoryConfiguration: {
+  [k in 'AlgoliaWeb' | 'doc' | 'mcp-node' | 'docs-new']: RepositoryConfiguration;
+} = {
   AlgoliaWeb: {
     baseBranch: 'develop',
     tasks: [
@@ -99,6 +101,31 @@ export const pushToRepositoryConfiguration: { [k in 'AlgoliaWeb' | 'doc' | 'mcp-
         files: {
           type: 'guides',
           output: 'app_data/api/specs/guides.json',
+        },
+      },
+    ],
+  },
+  'docs-new': {
+    baseBranch: 'main',
+    tasks: [
+      {
+        prBranch: 'feat/automated-update-for-specs',
+        commitMessage: 'feat: update specs and supported versions',
+        files: {
+          type: 'specs',
+          ext: 'yml',
+          output: 'specs',
+          includeSnippets: true,
+          includeSLA: true,
+          placeholderVariables: { 'openapi: 3.0.2': 'openapi: 3.1.0' },
+        },
+      },
+      {
+        prBranch: 'feat/automated-update-for-guides',
+        commitMessage: 'feat: update generated guides',
+        files: {
+          type: 'guides',
+          output: 'specs/guides.json',
         },
       },
     ],
