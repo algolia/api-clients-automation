@@ -23,6 +23,16 @@ func testSearch(appID, apiKey string) int {
 		panic(err)
 	}
 
+	// old way
+	//searchClient.Search(searchClient.NewApiSearchRequest(search.NewSearchMethodParams([]search.SearchQuery{
+	//	*search.SearchForHitsAsSearchQuery(search.NewSearchForHits("indexName", search.WithSearchForHitsQuery("foo"))),
+	//})))
+
+	// new way
+	//searchClient.Search([]search.SearchQuery{
+	//	search.NewSearchForHits("indexName").WithQuery("foo"),
+	//}, nil)
+
 	/*
 		response, err := searchClient.AddOrUpdateObject(
 			searchClient.NewApiAddOrUpdateObjectRequest(
