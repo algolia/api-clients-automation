@@ -44,7 +44,7 @@ The `clients` field define which specification to generate and their output loca
 
 2. Generate your client
 
-With just the above changes, you can now run `yarn cli generate javascript -h` which should output a complete list of the available APIs for Javascript, `awesomeapi` should be in it.
+With just the above changes, you can now run `yarn cli generate -h` which should output a complete list of the available APIs for Javascript, `awesomeapi` should be in it.
 
 Running `yarn cli generate javascript awesomeapi` will generate the client and format it, and `yarn cli build clients javascript awesomeapi` will bundle it.
 
