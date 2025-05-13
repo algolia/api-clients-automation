@@ -3,6 +3,8 @@ package com.algolia.codegen;
 import com.algolia.codegen.cts.lambda.ScreamingSnakeCaseLambda;
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import com.samskivert.mustache.Mustache;
@@ -206,36 +208,13 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     }
 
     for (CodegenProperty prop : bodyParam.getVars()) {
-      // there is no easy way to convert a prop to a param, we need to copy all the fields
-      CodegenParameter param = new CodegenParameter();
-
       prop.nameInLowerCase = toParamName(prop.baseName);
+
+      CodegenParameter param = new ObjectMapper()
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        .convertValue(prop, CodegenParameter.class);
       param.nameInPascalCase = Helpers.capitalize(prop.baseName);
       param.paramName = toParamName(prop.baseName);
-      param.baseName = prop.baseName;
-      param.baseType = prop.baseType;
-      param.dataType = prop.dataType;
-      param.datatypeWithEnum = prop.datatypeWithEnum;
-      param.description = prop.description;
-      param.example = prop.example;
-      param.isModel = prop.isModel;
-      param.isArray = prop.isArray;
-      param.isContainer = prop.isContainer;
-      param.isMap = prop.isMap;
-      param.isEnum = prop.isEnum;
-      param.isEnumRef = prop.isEnumRef;
-      param.isPrimitiveType = prop.isPrimitiveType;
-      param.isString = prop.isString;
-      param.isNumeric = prop.isNumeric;
-      param.isBoolean = prop.isBoolean;
-      param.isDate = prop.isDate;
-      param.isDateTime = prop.isDateTime;
-      param.isFreeFormObject = prop.isFreeFormObject;
-      param.isNullable = prop.isNullable;
-      param.jsonSchema = prop.jsonSchema;
-      param.required = prop.required;
-      param.vendorExtensions = prop.vendorExtensions;
-      param.allowableValues = prop.allowableValues;
 
       if (prop.required) {
         ope.requiredParams.add(param);

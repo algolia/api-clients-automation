@@ -350,10 +350,10 @@ func (o *{{operationId}}Options) With{{#lambda.titlecase}}{{baseName}}{{/lambda.
 // Parameters:
   {{/hasParams}}
   {{#requiredParams}}
-//  - {{paramName}} {{#description}} - {{{.}}}{{/description}}
+//  - {{paramName}} {{#description}}- {{{.}}}{{/description}}
   {{/requiredParams}}
   {{#optionalParams}}
-//  - {{paramName}} {{#description}} - {{{.}}}{{/description}} (in optionalParams)
+//  - {{paramName}} {{#description}}- {{{.}}}{{/description}} (in optionalParams)
   {{/optionalParams}}
 //  - opts - Optional parameters for the API call (e.g. WithContext, WithHeaderParam...)
   {{#isDeprecated}}
@@ -401,10 +401,10 @@ func (c *APIClient) {{nickname}}({{#requiredParams}}{{paramName}} {{#required}}{
 // Parameters:
   {{/hasParams}}
   {{#requiredParams}}
-//  - {{paramName}} {{#description}} - {{{.}}}{{/description}}
+//  - {{paramName}} {{#description}}- {{{.}}}{{/description}}
   {{/requiredParams}}
   {{#optionalParams}}
-//  - {{paramName}} {{#description}} - {{{.}}}{{/description}} (in optionalParams)
+//  - {{paramName}} {{#description}}- {{{.}}}{{/description}} (in optionalParams)
   {{/optionalParams}}
 //  - opts - Optional parameters for the API call (e.g. WithContext, WithHeaderParam...)
   {{#isDeprecated}}

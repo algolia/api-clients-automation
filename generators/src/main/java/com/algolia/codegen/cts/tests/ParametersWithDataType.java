@@ -72,7 +72,7 @@ public class ParametersWithDataType {
     if (paramName == null) {
       if (parameters != null) {
         for (Entry<String, Object> param : parameters.entrySet()) {
-          IJsonSchemaValidationProperties specParam = null;
+          CodegenParameter specParam = null;
           if (operation != null) {
             for (CodegenParameter sp : operation.allParams) {
               if (sp.paramName.equals(param.getKey())) {
@@ -84,34 +84,27 @@ public class ParametersWithDataType {
               throw new CTSException("Parameter " + param.getKey() + " not found in the root parameter");
             }
           }
-          // for go, we flatten the body params
           if (
             language.equals("go") &&
             specParam != null &&
-            ((CodegenParameter) specParam).isBodyParam &&
+            specParam.isBodyParam &&
             operation != null &&
             operation.bodyParam != null &&
             operation.bodyParam.isModel &&
-            operation.bodyParam.getVars().size() > 0
+            operation.bodyParam.getVars().size() > 0 &&
+            AlgoliaGoGenerator.canFlattenBody(operation)
           ) {
-            if (AlgoliaGoGenerator.canFlattenBody(operation)) {
-              // flatten the body params by skipping one level
-              Map<String, Object> bodyParams = (Map<String, Object>) param.getValue();
-              for (String nestedParam : bodyParams.keySet()) {
-                for (CodegenProperty prop : operation.bodyParam.getVars()) {
-                  if (prop.baseName.equals(nestedParam)) {
-                    Map<String, Object> paramWithType = traverseParams(prop.baseName, bodyParams.get(nestedParam), prop, "", 0, false);
-                    parametersWithDataType.add(paramWithType);
-                    parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
-                    break;
-                  }
+            // flatten the body params by skipping one level
+            Map<String, Object> bodyParams = (Map<String, Object>) param.getValue();
+            for (String nestedParam : bodyParams.keySet()) {
+              for (CodegenProperty prop : operation.bodyParam.getVars()) {
+                if (prop.baseName.equals(nestedParam)) {
+                  Map<String, Object> paramWithType = traverseParams(prop.baseName, bodyParams.get(nestedParam), prop, "", 0, false);
+                  parametersWithDataType.add(paramWithType);
+                  parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
+                  break;
                 }
               }
-            } else {
-              // use the parameter as is
-              Map<String, Object> paramWithType = traverseParams(param.getKey(), param.getValue(), specParam, "", 0, false);
-              parametersWithDataType.add(paramWithType);
-              parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
             }
           } else {
             Map<String, Object> paramWithType = traverseParams(param.getKey(), param.getValue(), specParam, "", 0, false);
