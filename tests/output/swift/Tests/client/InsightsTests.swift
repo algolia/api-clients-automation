@@ -19,8 +19,7 @@ final class InsightsClientClientTests: XCTestCase {
 
         let response = try await client.customPostWithHTTPInfo(path: "1/test")
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
         let pattern =
             "^Algolia for Swift \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Insights (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
@@ -38,8 +37,7 @@ final class InsightsClientClientTests: XCTestCase {
 
         let response = try await client.customPostWithHTTPInfo(path: "1/test")
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
         let pattern = "^Algolia for Swift \\(9.19.0\\).*"
         XCTAssertNoThrow(
@@ -69,8 +67,7 @@ final class InsightsClientClientTests: XCTestCase {
                     )),
             ]))
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
         XCTAssertEqual("insights.algolia.io", echoResponse.host)
     }
@@ -86,8 +83,7 @@ final class InsightsClientClientTests: XCTestCase {
         let client = InsightsClient(configuration: configuration, transporter: transporter)
         let response = try await client.customDeleteWithHTTPInfo(path: "test")
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
         XCTAssertEqual("insights.us.algolia.io", echoResponse.host)
     }
@@ -124,27 +120,17 @@ final class InsightsClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration)
         let client = InsightsClient(configuration: configuration, transporter: transporter)
         do {
-            let response = try await client.customGetWithHTTPInfo(path: "check-api-key/1")
+            let response = try await client.customGet(path: "check-api-key/1")
 
-            let responseBodyData = try XCTUnwrap(response.bodyData)
-            let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
-
-            let comparableData = "{\"headerAPIKeyValue\":\"test-api-key\"}".data(using: .utf8)
-            let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
-            XCTAssertEqual(comparableJSON, responseBodyJSON)
+            XTCJSONEquals(received: response, expected: "{\"headerAPIKeyValue\":\"test-api-key\"}")
         }
         do {
             let _ = try client.setClientApiKey(apiKey: "updated-api-key")
         }
         do {
-            let response = try await client.customGetWithHTTPInfo(path: "check-api-key/2")
+            let response = try await client.customGet(path: "check-api-key/2")
 
-            let responseBodyData = try XCTUnwrap(response.bodyData)
-            let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
-
-            let comparableData = "{\"headerAPIKeyValue\":\"updated-api-key\"}".data(using: .utf8)
-            let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
-            XCTAssertEqual(comparableJSON, responseBodyJSON)
+            XTCJSONEquals(received: response, expected: "{\"headerAPIKeyValue\":\"updated-api-key\"}")
         }
     }
 }

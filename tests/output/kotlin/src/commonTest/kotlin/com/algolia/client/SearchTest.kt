@@ -73,8 +73,8 @@ class SearchTest {
       },
 
       response = {
-        val response = Json.encodeToString(it)
-        assertEquals("{\"message\":\"ok test server response\"}", response)
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"message":"ok test server response"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
   }
@@ -107,8 +107,8 @@ class SearchTest {
       },
 
       response = {
-        val response = Json.encodeToString(it)
-        assertEquals("{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this is a compressed body\"}}", response)
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"message":"ok compression test server response","body":{"message":"this is a compressed body"}}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
   }
@@ -141,6 +141,41 @@ class SearchTest {
       intercept = {
         assertEquals(2000, it.connectTimeout)
         assertEquals(30000, it.socketTimeout)
+      },
+    )
+  }
+
+  @Test
+  fun `can handle unknown response fields`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6686))))
+    client.runTest(
+      call = {
+        getSettings(
+          indexName = "cts_e2e_unknownField_kotlin",
+        )
+      },
+
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"minWordSizefor1Typo":12,"minWordSizefor2Typos":13,"hitsPerPage":14}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
+      },
+    )
+  }
+
+  @Test
+  fun `can handle unknown response fields inside a nested oneOf`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6686))))
+    client.runTest(
+      call = {
+        getRule(
+          indexName = "cts_e2e_unknownFieldNested_kotlin",
+          objectID = "ruleObjectID",
+        )
+      },
+
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"objectID":"ruleObjectID","consequence":{"promote":[{"objectID":"1","position":10}]}}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
   }
@@ -194,7 +229,6 @@ class SearchTest {
         assertNotNull(it)
         JSONAssert.assertEquals("""[{"taskID":666,"objectIDs":["1","2"]}]""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
-
     )
   }
 
@@ -215,7 +249,6 @@ class SearchTest {
       response = {
         assertEquals("NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw", it)
       },
-
     )
   }
 
@@ -247,7 +280,6 @@ class SearchTest {
       response = {
         assertEquals("MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw", it)
       },
-
     )
   }
 
@@ -349,7 +381,6 @@ class SearchTest {
       response = {
         assertEquals(true, it)
       },
-
     )
   }
 
@@ -366,7 +397,6 @@ class SearchTest {
       response = {
         assertEquals(false, it)
       },
-
     )
   }
 
@@ -468,7 +498,6 @@ class SearchTest {
         assertNotNull(it)
         JSONAssert.assertEquals("""[{"taskID":444,"objectIDs":["1","2"]}]""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
-
     )
   }
 
@@ -509,7 +538,6 @@ class SearchTest {
         assertNotNull(it)
         JSONAssert.assertEquals("""[{"taskID":555,"objectIDs":["3","4"]}]""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
-
     )
   }
 
@@ -630,7 +658,6 @@ class SearchTest {
         assertNotNull(it)
         JSONAssert.assertEquals("""{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":127,"objectIDs":["1","2","3"]},{"taskID":130,"objectIDs":["4","5","6"]},{"taskID":133,"objectIDs":["7","8","9"]},{"taskID":134,"objectIDs":["10"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
-
     )
   }
 
@@ -672,7 +699,6 @@ class SearchTest {
         assertNotNull(it)
         JSONAssert.assertEquals("""{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":126,"objectIDs":["1","2"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
-
     )
   }
 
@@ -744,7 +770,6 @@ class SearchTest {
         assertNotNull(it)
         JSONAssert.assertEquals("""[{"taskID":333,"objectIDs":["1","2"]}]""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
-
     )
   }
 
@@ -896,8 +921,8 @@ class SearchTest {
       },
 
       response = {
-        val response = Json.encodeToString(it)
-        assertEquals("{\"headerAPIKeyValue\":\"test-api-key\"}", response)
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"headerAPIKeyValue":"test-api-key"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
     client.runTest(
@@ -917,8 +942,8 @@ class SearchTest {
       },
 
       response = {
-        val response = Json.encodeToString(it)
-        assertEquals("{\"headerAPIKeyValue\":\"updated-api-key\"}", response)
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"headerAPIKeyValue":"updated-api-key"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
   }
@@ -938,7 +963,6 @@ class SearchTest {
         assertNotNull(it)
         JSONAssert.assertEquals("""{"value":"api-key-add-operation-test-kotlin","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
-
     )
   }
 
@@ -966,7 +990,6 @@ class SearchTest {
         assertNotNull(it)
         JSONAssert.assertEquals("""{"value":"api-key-update-operation-test-kotlin","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
-
     )
   }
 
@@ -984,7 +1007,6 @@ class SearchTest {
       response = {
         assertNull(it)
       },
-
     )
   }
 
@@ -1002,7 +1024,6 @@ class SearchTest {
         assertNotNull(it)
         JSONAssert.assertEquals("""{"status":"published"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
-
     )
   }
 
@@ -1021,7 +1042,6 @@ class SearchTest {
         assertNotNull(it)
         JSONAssert.assertEquals("""{"status":"published"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
-
     )
   }
 }

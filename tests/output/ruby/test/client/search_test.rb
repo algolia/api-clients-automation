@@ -158,6 +158,54 @@ class TestClientSearchClient < Test::Unit::TestCase
     assert_equal(30000, req.timeout)
   end
 
+  # can handle unknown response fields
+  def test_api8
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6686,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    req = client.get_settings("cts_e2e_unknownField_ruby")
+    assert_equal(
+      {:"minWordSizefor1Typo" => 12, :"minWordSizefor2Typos" => 13, :"hitsPerPage" => 14},
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
+  end
+
+  # can handle unknown response fields inside a nested oneOf
+  def test_api9
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6686,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    req = client.get_rule("cts_e2e_unknownFieldNested_ruby", "ruleObjectID")
+    assert_equal(
+      {:"objectID" => "ruleObjectID", :"consequence" => {:"promote" => [{:"objectID" => "1", :"position" => 10}]}},
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
+  end
+
   # calls api with correct user agent
   def test_common_api0
     client = Algolia::SearchClient.create(
