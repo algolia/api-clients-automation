@@ -131,11 +131,15 @@ public abstract class TestsGenerator {
   }
 
   public static void setOptionalParameters(
+    String language,
     CodegenOperation ope,
     Map<String, Object> test,
     Map<String, Object> parameters,
     boolean isHelper
   ) {
+    if (!language.equals("go")) {
+      return;
+    }
     int bodyPropsOptional = 0;
     boolean actuallyHasOptional = false;
     boolean isBodyTooBig = false;

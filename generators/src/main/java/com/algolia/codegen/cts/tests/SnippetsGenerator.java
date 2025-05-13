@@ -124,7 +124,7 @@ public class SnippetsGenerator extends TestsGenerator {
         test.put("testName", ops.size() > 1 ? name : "default");
         test.put("description", name);
         test.put("testIndex", i == 0 ? "" : i);
-        snippet.addMethodCall(test, paramsType, ope);
+        snippet.addMethodCall(language, test, paramsType, ope);
         addRequestOptions(paramsType, snippet.requestOptions, test);
         tests.add(test);
       }

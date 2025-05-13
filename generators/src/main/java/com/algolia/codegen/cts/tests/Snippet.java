@@ -39,7 +39,8 @@ public class Snippet {
     return sb.toString();
   }
 
-  public void addMethodCall(Map<String, Object> context, ParametersWithDataType paramsType, CodegenOperation ope) throws CTSException {
+  public void addMethodCall(String language, Map<String, Object> context, ParametersWithDataType paramsType, CodegenOperation ope)
+    throws CTSException {
     // for dynamic snippets, we need to reset the context because the order of generation is random
     context.put("method", method);
     context.put("returnType", null);
@@ -87,7 +88,7 @@ public class Snippet {
         }
       }
 
-      TestsGenerator.setOptionalParameters(ope, context, parameters, isHelper);
+      TestsGenerator.setOptionalParameters(language, ope, context, parameters, isHelper);
 
       paramsType.enhanceParameters(parameters, context, ope);
     } catch (CTSException e) {
