@@ -213,6 +213,60 @@ func TestSearchapi7(t *testing.T) {
 	require.Equal(t, int64(30000), echo.Timeout.Milliseconds())
 }
 
+// can handle unknown response fields
+func TestSearchapi8(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.SearchConfiguration
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6686", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err = client.GetSettings(client.NewApiGetSettingsRequest(
+		"cts_e2e_unknownField_go"))
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `{"minWordSizefor1Typo":12,"minWordSizefor2Typos":13,"hitsPerPage":14}`, string(rawBody))
+}
+
+// can handle unknown response fields inside a nested oneOf
+func TestSearchapi9(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.SearchConfiguration
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6686", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err = client.GetRule(client.NewApiGetRuleRequest(
+		"cts_e2e_unknownFieldNested_go", "ruleObjectID"))
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `{"objectID":"ruleObjectID","consequence":{"promote":[{"objectID":"1","position":10}]}}`, string(rawBody))
+}
+
 // calls api with correct user agent
 func TestSearchcommonApi0(t *testing.T) {
 	var err error

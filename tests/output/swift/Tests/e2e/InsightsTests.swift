@@ -77,12 +77,7 @@ final class InsightsClientRequestsTestsE2E: XCTestCase {
                 timestamp: Int64(1_747_008_000_000)
             )),
         ]))
-        let responseBody = try XCTUnwrap(response.body)
-        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
-
-        let expectedBodyData = try XCTUnwrap("{\"message\":\"OK\",\"status\":200}".data(using: .utf8))
-
-        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
+        try XCTLenientAssertEqual(received: XCTUnwrap(response.body), expected: "{\"message\":\"OK\",\"status\":200}")
 
         XCTAssertEqual(response.statusCode, 200)
     }

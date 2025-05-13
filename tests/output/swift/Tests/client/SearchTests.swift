@@ -18,8 +18,7 @@ final class SearchClientClientTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
         let response = try await client.customGetWithHTTPInfo(path: "test")
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
         XCTAssertEqual("test-app-id-dsn.algolia.net", echoResponse.host)
     }
@@ -32,8 +31,7 @@ final class SearchClientClientTests: XCTestCase {
         let response: Response<SearchResponse<Hit>> = try await client
             .searchSingleIndexWithHTTPInfo(indexName: "indexName")
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
         XCTAssertEqual("test-app-id-dsn.algolia.net", echoResponse.host)
     }
@@ -45,8 +43,7 @@ final class SearchClientClientTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
         let response = try await client.customPostWithHTTPInfo(path: "test")
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
         XCTAssertEqual("test-app-id.algolia.net", echoResponse.host)
     }
@@ -76,14 +73,9 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
-        let response = try await client.customGetWithHTTPInfo(path: "1/test/retry/swift")
+        let response = try await client.customGet(path: "1/test/retry/swift")
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
-
-        let comparableData = "{\"message\":\"ok test server response\"}".data(using: .utf8)
-        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
-        XCTAssertEqual(comparableJSON, responseBodyJSON)
+        XTCJSONEquals(received: response, expected: "{\"message\":\"ok test server response\"}")
     }
 
     /// tests the retry strategy error
@@ -100,10 +92,7 @@ final class SearchClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
         do {
-            let response = try await client.customGetWithHTTPInfo(path: "1/test/hang/swift")
-
-            let responseBodyData = try XCTUnwrap(response.bodyData)
-            let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
+            let response = try await client.customGet(path: "1/test/hang/swift")
 
             XCTFail("Expected an error to be thrown")
         } catch {
@@ -128,20 +117,16 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
-        let response = try await client.customPostWithHTTPInfo(
+        let response = try await client.customPost(
             path: "1/test/gzip",
             parameters: [String: AnyCodable](),
             body: ["message": "this is a compressed body"]
         )
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
-
-        let comparableData =
-            "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this is a compressed body\"}}"
-                .data(using: .utf8)
-        let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
-        XCTAssertEqual(comparableJSON, responseBodyJSON)
+        XTCJSONEquals(
+            received: response,
+            expected: "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this is a compressed body\"}}"
+        )
     }
 
     /// calls api with default read timeouts
@@ -152,8 +137,7 @@ final class SearchClientClientTests: XCTestCase {
 
         let response = try await client.customGetWithHTTPInfo(path: "1/test")
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
         XCTAssertEqual(TimeInterval(5000) / 1000, echoResponse.timeout)
     }
@@ -166,10 +150,51 @@ final class SearchClientClientTests: XCTestCase {
 
         let response = try await client.customPostWithHTTPInfo(path: "1/test")
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
         XCTAssertEqual(TimeInterval(30000) / 1000, echoResponse.timeout)
+    }
+
+    /// can handle unknown response fields
+    func testApiTest8() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6686"
+            )!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.getSettings(indexName: "cts_e2e_unknownField_swift")
+
+        XTCJSONEquals(
+            received: response,
+            expected: "{\"minWordSizefor1Typo\":12,\"minWordSizefor2Typos\":13,\"hitsPerPage\":14}"
+        )
+    }
+
+    /// can handle unknown response fields inside a nested oneOf
+    func testApiTest9() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6686"
+            )!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.getRule(indexName: "cts_e2e_unknownFieldNested_swift", objectID: "ruleObjectID")
+
+        XTCJSONEquals(
+            received: response,
+            expected: "{\"objectID\":\"ruleObjectID\",\"consequence\":{\"promote\":[{\"objectID\":\"1\",\"position\":10}]}}"
+        )
     }
 
     /// calls api with correct user agent
@@ -180,8 +205,7 @@ final class SearchClientClientTests: XCTestCase {
 
         let response = try await client.customPostWithHTTPInfo(path: "1/test")
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
         let pattern =
             "^Algolia for Swift \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Search (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
@@ -199,8 +223,7 @@ final class SearchClientClientTests: XCTestCase {
 
         let response = try await client.customPostWithHTTPInfo(path: "1/test")
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
         let pattern = "^Algolia for Swift \\(9.19.0\\).*"
         XCTAssertNoThrow(
@@ -228,8 +251,7 @@ final class SearchClientClientTests: XCTestCase {
                 objectIDs: ["1", "2"]
             )
 
-            let comparableData = try XCTUnwrap("[{\"taskID\":666,\"objectIDs\":[\"1\",\"2\"]}]".data(using: .utf8))
-            try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+            try XCTLenientAssertEqual(received: response, expected: "[{\"taskID\":666,\"objectIDs\":[\"1\",\"2\"]}]")
         }
     }
 
@@ -484,8 +506,7 @@ final class SearchClientClientTests: XCTestCase {
                 createIfNotExists: true
             )
 
-            let comparableData = try XCTUnwrap("[{\"taskID\":444,\"objectIDs\":[\"1\",\"2\"]}]".data(using: .utf8))
-            try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+            try XCTLenientAssertEqual(received: response, expected: "[{\"taskID\":444,\"objectIDs\":[\"1\",\"2\"]}]")
         }
     }
 
@@ -509,8 +530,7 @@ final class SearchClientClientTests: XCTestCase {
                 createIfNotExists: false
             )
 
-            let comparableData = try XCTUnwrap("[{\"taskID\":555,\"objectIDs\":[\"3\",\"4\"]}]".data(using: .utf8))
-            try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+            try XCTLenientAssertEqual(received: response, expected: "[{\"taskID\":555,\"objectIDs\":[\"3\",\"4\"]}]")
         }
     }
 
@@ -545,12 +565,10 @@ final class SearchClientClientTests: XCTestCase {
                 batchSize: 3
             )
 
-            let comparableData =
-                try XCTUnwrap(
-                    "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"batchResponses\":[{\"taskID\":127,\"objectIDs\":[\"1\",\"2\",\"3\"]},{\"taskID\":130,\"objectIDs\":[\"4\",\"5\",\"6\"]},{\"taskID\":133,\"objectIDs\":[\"7\",\"8\",\"9\"]},{\"taskID\":134,\"objectIDs\":[\"10\"]}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}"
-                        .data(using: .utf8)
-                )
-            try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+            try XCTLenientAssertEqual(
+                received: response,
+                expected: "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"batchResponses\":[{\"taskID\":127,\"objectIDs\":[\"1\",\"2\",\"3\"]},{\"taskID\":130,\"objectIDs\":[\"4\",\"5\",\"6\"]},{\"taskID\":133,\"objectIDs\":[\"7\",\"8\",\"9\"]},{\"taskID\":134,\"objectIDs\":[\"10\"]}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}"
+            )
         }
     }
 
@@ -575,12 +593,10 @@ final class SearchClientClientTests: XCTestCase {
                 scopes: [ScopeType.settings, ScopeType.synonyms]
             )
 
-            let comparableData =
-                try XCTUnwrap(
-                    "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"batchResponses\":[{\"taskID\":126,\"objectIDs\":[\"1\",\"2\"]}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}"
-                        .data(using: .utf8)
-                )
-            try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+            try XCTLenientAssertEqual(
+                received: response,
+                expected: "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"batchResponses\":[{\"taskID\":126,\"objectIDs\":[\"1\",\"2\"]}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}"
+            )
         }
     }
 
@@ -631,8 +647,7 @@ final class SearchClientClientTests: XCTestCase {
                 objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]]
             )
 
-            let comparableData = try XCTUnwrap("[{\"taskID\":333,\"objectIDs\":[\"1\",\"2\"]}]".data(using: .utf8))
-            try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+            try XCTLenientAssertEqual(received: response, expected: "[{\"taskID\":333,\"objectIDs\":[\"1\",\"2\"]}]")
         }
     }
 
@@ -736,16 +751,13 @@ final class SearchClientClientTests: XCTestCase {
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
-        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
+        let response: SearchResponse<Hit> = try await client.searchSingleIndex(
             indexName: "playlists",
             searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(query: "foo")),
             requestOptions: RequestOptions(
                 headers: ["X-Algolia-User-ID": "user1234"]
             )
         )
-
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
     }
 
     /// switch API key
@@ -762,27 +774,17 @@ final class SearchClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
         do {
-            let response = try await client.customGetWithHTTPInfo(path: "check-api-key/1")
+            let response = try await client.customGet(path: "check-api-key/1")
 
-            let responseBodyData = try XCTUnwrap(response.bodyData)
-            let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
-
-            let comparableData = "{\"headerAPIKeyValue\":\"test-api-key\"}".data(using: .utf8)
-            let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
-            XCTAssertEqual(comparableJSON, responseBodyJSON)
+            XTCJSONEquals(received: response, expected: "{\"headerAPIKeyValue\":\"test-api-key\"}")
         }
         do {
             let _ = try client.setClientApiKey(apiKey: "updated-api-key")
         }
         do {
-            let response = try await client.customGetWithHTTPInfo(path: "check-api-key/2")
+            let response = try await client.customGet(path: "check-api-key/2")
 
-            let responseBodyData = try XCTUnwrap(response.bodyData)
-            let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
-
-            let comparableData = "{\"headerAPIKeyValue\":\"updated-api-key\"}".data(using: .utf8)
-            let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
-            XCTAssertEqual(comparableJSON, responseBodyJSON)
+            XTCJSONEquals(received: response, expected: "{\"headerAPIKeyValue\":\"updated-api-key\"}")
         }
     }
 
@@ -805,12 +807,10 @@ final class SearchClientClientTests: XCTestCase {
                 operation: ApiKeyOperation.add
             )
 
-            let comparableData =
-                try XCTUnwrap(
-                    "{\"value\":\"api-key-add-operation-test-swift\",\"description\":\"my new api key\",\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}"
-                        .data(using: .utf8)
-                )
-            try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+            try XCTLenientAssertEqual(
+                received: response,
+                expected: "{\"value\":\"api-key-add-operation-test-swift\",\"description\":\"my new api key\",\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}"
+            )
         }
     }
 
@@ -842,12 +842,10 @@ final class SearchClientClientTests: XCTestCase {
                 )
             )
 
-            let comparableData =
-                try XCTUnwrap(
-                    "{\"value\":\"api-key-update-operation-test-swift\",\"description\":\"my updated api key\",\"acl\":[\"search\",\"addObject\",\"deleteObject\"],\"indexes\":[\"Movies\",\"Books\"],\"referers\":[\"*google.com\",\"*algolia.com\"],\"validity\":305,\"maxQueriesPerIPPerHour\":95,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}"
-                        .data(using: .utf8)
-                )
-            try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+            try XCTLenientAssertEqual(
+                received: response,
+                expected: "{\"value\":\"api-key-update-operation-test-swift\",\"description\":\"my updated api key\",\"acl\":[\"search\",\"addObject\",\"deleteObject\"],\"indexes\":[\"Movies\",\"Books\"],\"referers\":[\"*google.com\",\"*algolia.com\"],\"validity\":305,\"maxQueriesPerIPPerHour\":95,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}"
+            )
         }
     }
 
@@ -890,8 +888,7 @@ final class SearchClientClientTests: XCTestCase {
         do {
             let response = try await client.waitForAppTask(taskID: Int64(123))
 
-            let comparableData = try XCTUnwrap("{\"status\":\"published\"}".data(using: .utf8))
-            try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+            try XCTLenientAssertEqual(received: response, expected: "{\"status\":\"published\"}")
         }
     }
 
@@ -911,8 +908,7 @@ final class SearchClientClientTests: XCTestCase {
         do {
             let response = try await client.waitForTask(indexName: "wait-task-swift", taskID: Int64(123))
 
-            let comparableData = try XCTUnwrap("{\"status\":\"published\"}".data(using: .utf8))
-            try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+            try XCTLenientAssertEqual(received: response, expected: "{\"status\":\"published\"}")
         }
     }
 }

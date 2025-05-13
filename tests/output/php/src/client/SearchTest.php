@@ -154,6 +154,35 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('can handle unknown response fields')]
+    public function test8api(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6686']));
+
+        $res = $client->getSettings(
+            'cts_e2e_unknownField_php',
+        );
+        $this->assertEquals(
+            '{"minWordSizefor1Typo":12,"minWordSizefor2Typos":13,"hitsPerPage":14}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('can handle unknown response fields inside a nested oneOf')]
+    public function test9api(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6686']));
+
+        $res = $client->getRule(
+            'cts_e2e_unknownFieldNested_php',
+            'ruleObjectID',
+        );
+        $this->assertEquals(
+            '{"objectID":"ruleObjectID","consequence":{"promote":[{"objectID":"1","position":10}]}}',
+            json_encode($res)
+        );
+    }
+
     #[TestDox('calls api with correct user agent')]
     public function test0commonApi(): void
     {

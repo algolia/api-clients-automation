@@ -135,6 +135,43 @@ describe('api', () => {
 
     expect(result).toEqual(expect.objectContaining({ connectTimeout: 2000, responseTimeout: 30000 }));
   }, 25000);
+
+  test('can handle unknown response fields', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6686,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.getSettings({ indexName: 'cts_e2e_unknownField_javascript' });
+
+    expect(result).toEqual({ minWordSizefor1Typo: 12, minWordSizefor2Typos: 13, hitsPerPage: 14 });
+  }, 25000);
+
+  test('can handle unknown response fields inside a nested oneOf', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6686,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.getRule({
+      indexName: 'cts_e2e_unknownFieldNested_javascript',
+      objectID: 'ruleObjectID',
+    });
+
+    expect(result).toEqual({ objectID: 'ruleObjectID', consequence: { promote: [{ objectID: '1', position: 10 }] } });
+  }, 25000);
 });
 
 describe('commonApi', () => {
