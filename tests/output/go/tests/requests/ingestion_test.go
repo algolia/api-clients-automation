@@ -3,15 +3,15 @@ package requests
 
 import (
 	"encoding/json"
+	"gotests/tests"
 	"testing"
 
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
 
-	"gotests/tests"
-
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 func createIngestionClient(t *testing.T) (*ingestion.APIClient, *tests.EchoRequester) {
@@ -21,7 +21,7 @@ func createIngestionClient(t *testing.T) (*ingestion.APIClient, *tests.EchoReque
 	cfg := ingestion.IngestionConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
-			ApiKey:    "apiKey",
+			APIKey:    "apiKey",
 			Requester: echo,
 		},
 		Region: ingestion.US,
@@ -33,14 +33,14 @@ func createIngestionClient(t *testing.T) (*ingestion.APIClient, *tests.EchoReque
 }
 
 func TestIngestion_CreateAuthentication(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("createAuthenticationOAuth", func(t *testing.T) {
-		_, err := client.CreateAuthentication(client.NewApiCreateAuthenticationRequest(
-
-			ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("oauth")).SetName("authName").SetInput(ingestion.AuthOAuthAsAuthInput(
-				ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret")))))
+		_, err := client.CreateAuthentication(ingestion.AUTHENTICATION_TYPE_OAUTH, "authName", ingestion.AuthOAuthAsAuthInput(
+			ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret")), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/authentications", echo.Path)
@@ -50,10 +50,8 @@ func TestIngestion_CreateAuthentication(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}`)
 	})
 	t.Run("createAuthenticationAlgolia", func(t *testing.T) {
-		_, err := client.CreateAuthentication(client.NewApiCreateAuthenticationRequest(
-
-			ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("algolia")).SetName("authName").SetInput(ingestion.AuthAlgoliaAsAuthInput(
-				ingestion.NewEmptyAuthAlgolia().SetAppID("ALGOLIA_APPLICATION_ID").SetApiKey("ALGOLIA_API_KEY")))))
+		_, err := client.CreateAuthentication(ingestion.AUTHENTICATION_TYPE_ALGOLIA, "authName", ingestion.AuthAlgoliaAsAuthInput(
+			ingestion.NewEmptyAuthAlgolia().SetAppID("ALGOLIA_APPLICATION_ID").SetApiKey("ALGOLIA_API_KEY")), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/authentications", echo.Path)
@@ -65,61 +63,81 @@ func TestIngestion_CreateAuthentication(t *testing.T) {
 }
 
 func TestIngestion_CreateDestination(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("createDestination", func(t *testing.T) {
-		_, err := client.CreateDestination(client.NewApiCreateDestinationRequest(
-
-			ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(
-				ingestion.NewEmptyDestinationInput().SetIndexName("full_name______")).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
+		_, err := client.CreateDestination(
+			ingestion.DESTINATION_TYPE_SEARCH,
+			"destinationName",
+			ingestion.NewEmptyDestinationInput().
+				SetIndexName("full_name______"),
+			ingestion.NewCreateDestinationOptions().WithAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/destinations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"type":"search","name":"destinationName","input":{"indexName":"full_name______"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`)
+		ja.Assertf(
+			*echo.Body,
+			`{"type":"search","name":"destinationName","input":{"indexName":"full_name______"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`,
+		)
 	})
 	t.Run("with transformationIDs", func(t *testing.T) {
-		_, err := client.CreateDestination(client.NewApiCreateDestinationRequest(
-
-			ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(
-				ingestion.NewEmptyDestinationInput().SetIndexName("full_name______")).SetTransformationIDs(
-				[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f"})))
+		_, err := client.CreateDestination(ingestion.DESTINATION_TYPE_SEARCH, "destinationName",
+			ingestion.NewEmptyDestinationInput().SetIndexName("full_name______"), ingestion.NewCreateDestinationOptions().WithTransformationIDs(
+				[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/destinations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"type":"search","name":"destinationName","input":{"indexName":"full_name______"},"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}`)
+		ja.Assertf(
+			*echo.Body,
+			`{"type":"search","name":"destinationName","input":{"indexName":"full_name______"},"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}`,
+		)
 	})
 }
 
 func TestIngestion_CreateSource(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("createSource", func(t *testing.T) {
-		_, err := client.CreateSource(client.NewApiCreateSourceRequest(
-
-			ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType("commercetools")).SetName("sourceName").SetInput(ingestion.SourceCommercetoolsAsSourceInput(
+		_, err := client.CreateSource(
+			ingestion.SOURCE_TYPE_COMMERCETOOLS,
+			"sourceName",
+			ingestion.NewCreateSourceOptions().WithInput(ingestion.SourceCommercetoolsAsSourceInput(
 				ingestion.NewEmptySourceCommercetools().SetStoreKeys(
 					[]string{"myStore"}).SetLocales(
-					[]string{"de"}).SetUrl("http://commercetools.com").SetProjectKey("keyID").SetProductQueryPredicate("masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
+					[]string{
+						"de",
+					}).
+					SetUrl("http://commercetools.com").
+					SetProjectKey("keyID").
+					SetProductQueryPredicate("masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"),
+			)).WithAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/sources", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID","productQueryPredicate":"masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`)
+		ja.Assertf(
+			*echo.Body,
+			`{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID","productQueryPredicate":"masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`,
+		)
 	})
 	t.Run("push", func(t *testing.T) {
-		_, err := client.CreateSource(client.NewApiCreateSourceRequest(
-
-			ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType("push")).SetName("pushezpourentrer")))
+		_, err := client.CreateSource(ingestion.SOURCE_TYPE_PUSH, "pushezpourentrer", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/sources", echo.Path)
@@ -131,13 +149,13 @@ func TestIngestion_CreateSource(t *testing.T) {
 }
 
 func TestIngestion_CreateTask(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("task without cron", func(t *testing.T) {
-		_, err := client.CreateTask(client.NewApiCreateTaskRequest(
-
-			ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetAction(ingestion.ActionType("replace"))))
+		_, err := client.CreateTask("search", "destinationName", ingestion.ACTION_TYPE_REPLACE, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/tasks", echo.Path)
@@ -147,45 +165,60 @@ func TestIngestion_CreateTask(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","action":"replace"}`)
 	})
 	t.Run("task with cron", func(t *testing.T) {
-		_, err := client.CreateTask(client.NewApiCreateTaskRequest(
-
-			ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetNotifications(
+		_, err := client.CreateTask(
+			"search",
+			"destinationName",
+			ingestion.ACTION_TYPE_REPLACE,
+			ingestion.NewCreateTaskOptions().WithCron("* * * * *").WithNotifications(
 				ingestion.NewEmptyNotifications().SetEmail(
-					ingestion.NewEmptyEmailNotifications().SetEnabled(true))).SetPolicies(
-				ingestion.NewEmptyPolicies().SetCriticalThreshold(8))))
+					ingestion.NewEmptyEmailNotifications().SetEnabled(true))).WithPolicies(
+				ingestion.NewEmptyPolicies().SetCriticalThreshold(8)),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/tasks", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}`)
+		ja.Assertf(
+			*echo.Body,
+			`{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}`,
+		)
 	})
 	t.Run("task shopify", func(t *testing.T) {
-		_, err := client.CreateTask(client.NewApiCreateTaskRequest(
-
-			ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetInput(ingestion.DockerStreamsInputAsTaskInput(
+		_, err := client.CreateTask(
+			"search",
+			"destinationName",
+			ingestion.ACTION_TYPE_REPLACE,
+			ingestion.NewCreateTaskOptions().WithCron("* * * * *").WithInput(ingestion.DockerStreamsInputAsTaskInput(
 				ingestion.NewEmptyDockerStreamsInput().SetStreams(
-					[]ingestion.DockerStreams{*ingestion.NewEmptyDockerStreams().SetName("foo").SetSyncMode(ingestion.DockerStreamsSyncMode("incremental"))})))))
+					[]ingestion.DockerStreams{
+						*ingestion.NewEmptyDockerStreams().SetName("foo").SetSyncMode(ingestion.DOCKER_STREAMS_SYNC_MODE_INCREMENTAL),
+					}),
+			)),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/tasks", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}`)
+		ja.Assertf(
+			*echo.Body,
+			`{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}`,
+		)
 	})
 }
 
 func TestIngestion_CreateTaskV1(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("createTaskOnDemand", func(t *testing.T) {
-		_, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(
-
-			ingestion.NewEmptyTaskCreateV1().SetSourceID("search").SetDestinationID("destinationName").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
-				ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType("onDemand")))).SetAction(ingestion.ActionType("replace"))))
+		_, err := client.CreateTaskV1("search", "destinationName", ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
+			ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.ON_DEMAND_TRIGGER_TYPE_ON_DEMAND)), ingestion.ACTION_TYPE_REPLACE, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/tasks", echo.Path)
@@ -195,23 +228,25 @@ func TestIngestion_CreateTaskV1(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}`)
 	})
 	t.Run("createTaskSchedule", func(t *testing.T) {
-		_, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(
-
-			ingestion.NewEmptyTaskCreateV1().SetSourceID("search").SetDestinationID("destinationName").SetTrigger(ingestion.ScheduleTriggerInputAsTaskCreateTrigger(
-				ingestion.NewEmptyScheduleTriggerInput().SetType(ingestion.ScheduleTriggerType("schedule")).SetCron("* * * * *"))).SetAction(ingestion.ActionType("replace"))))
+		_, err := client.CreateTaskV1("search", "destinationName", ingestion.ScheduleTriggerInputAsTaskCreateTrigger(
+			ingestion.NewEmptyScheduleTriggerInput().
+				SetType(ingestion.SCHEDULE_TRIGGER_TYPE_SCHEDULE).
+				SetCron("* * * * *"),
+		), ingestion.ACTION_TYPE_REPLACE, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/tasks", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"schedule","cron":"* * * * *"},"action":"replace"}`)
+		ja.Assertf(
+			*echo.Body,
+			`{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"schedule","cron":"* * * * *"},"action":"replace"}`,
+		)
 	})
 	t.Run("createTaskSubscription", func(t *testing.T) {
-		_, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(
-
-			ingestion.NewEmptyTaskCreateV1().SetSourceID("search").SetDestinationID("destinationName").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
-				ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType("onDemand")))).SetAction(ingestion.ActionType("replace"))))
+		_, err := client.CreateTaskV1("search", "destinationName", ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
+			ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.ON_DEMAND_TRIGGER_TYPE_ON_DEMAND)), ingestion.ACTION_TYPE_REPLACE, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/tasks", echo.Path)
@@ -221,30 +256,36 @@ func TestIngestion_CreateTaskV1(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}`)
 	})
 	t.Run("task shopify", func(t *testing.T) {
-		_, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(
-
-			ingestion.NewEmptyTaskCreateV1().SetSourceID("search").SetDestinationID("destinationName").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
-				ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType("onDemand")))).SetAction(ingestion.ActionType("replace")).SetInput(ingestion.DockerStreamsInputAsTaskInput(
-				ingestion.NewEmptyDockerStreamsInput().SetStreams(
-					[]ingestion.DockerStreams{*ingestion.NewEmptyDockerStreams().SetName("foo").SetSyncMode(ingestion.DockerStreamsSyncMode("incremental"))})))))
+		_, err := client.CreateTaskV1("search", "destinationName", ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
+			ingestion.NewEmptyOnDemandTriggerInput().
+				SetType(ingestion.ON_DEMAND_TRIGGER_TYPE_ON_DEMAND),
+		), ingestion.ACTION_TYPE_REPLACE, ingestion.NewCreateTaskV1Options().WithInput(ingestion.DockerStreamsInputAsTaskInput(
+			ingestion.NewEmptyDockerStreamsInput().SetStreams(
+				[]ingestion.DockerStreams{
+					*ingestion.NewEmptyDockerStreams().SetName("foo").SetSyncMode(ingestion.DOCKER_STREAMS_SYNC_MODE_INCREMENTAL),
+				}),
+		)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/tasks", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}`)
+		ja.Assertf(
+			*echo.Body,
+			`{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}`,
+		)
 	})
 }
 
 func TestIngestion_CreateTransformation(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("createTransformation", func(t *testing.T) {
-		_, err := client.CreateTransformation(client.NewApiCreateTransformationRequest(
-
-			ingestion.NewEmptyTransformationCreate().SetCode("foo").SetName("bar").SetDescription("baz")))
+		_, err := client.CreateTransformation("foo", "bar", ingestion.NewCreateTransformationOptions().WithDescription("baz"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/transformations", echo.Path)
@@ -256,12 +297,13 @@ func TestIngestion_CreateTransformation(t *testing.T) {
 }
 
 func TestIngestion_CustomDelete(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"test/minimal"))
+		_, err := client.CustomDelete("test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -270,17 +312,18 @@ func TestIngestion_CustomDelete(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("allow del method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters"}))
+		_, err := client.CustomDelete("test/all", map[string]any{"query": "parameters"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -288,12 +331,13 @@ func TestIngestion_CustomDelete(t *testing.T) {
 }
 
 func TestIngestion_CustomGet(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/minimal"))
+		_, err := client.CustomGet("test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -302,39 +346,49 @@ func TestIngestion_CustomGet(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("allow get method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters with space"}))
+		_, err := client.CustomGet("test/all", map[string]any{"query": "parameters with space"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters%20with%20space"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions should be escaped too", func(t *testing.T) {
-		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/all").WithParameters(map[string]any{"query": "to be overriden"}), ingestion.WithQueryParam("query", "parameters with space"), ingestion.WithQueryParam("and an array",
-			[]string{"array", "with spaces"}), ingestion.WithHeaderParam("x-header-1", "spaces are left alone"))
+		_, err := client.CustomGet(
+			"test/all",
+			map[string]any{"query": "to be overridden"},
+			ingestion.WithQueryParam("query", "parameters with space"),
+			ingestion.WithQueryParam("and an array",
+				[]string{"array", "with spaces"}),
+			ingestion.WithHeaderParam("x-header-1", "spaces are left alone"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
+
 		headers := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"x-header-1":"spaces are left alone"}`), &headers))
+
 		for k, v := range headers {
 			require.Equal(t, v, echo.Header.Get(k))
 		}
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -342,12 +396,13 @@ func TestIngestion_CustomGet(t *testing.T) {
 }
 
 func TestIngestion_CustomPost(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/minimal"))
+		_, err := client.CustomPost("test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -357,8 +412,10 @@ func TestIngestion_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("allow post method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+		_, err := client.CustomPost(
+			"test/all",
+			ingestion.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -366,16 +423,21 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions can override default query parameters", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("query", "myQueryParameter"))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			ingestion.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			ingestion.WithQueryParam("query", "myQueryParameter"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -383,16 +445,21 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"myQueryParameter"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions merges query parameters with default ones", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("query2", "myQueryParameter"))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			ingestion.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			ingestion.WithQueryParam("query2", "myQueryParameter"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -400,16 +467,21 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","query2":"myQueryParameter"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions can override default headers", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			ingestion.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			ingestion.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -417,21 +489,28 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		headers := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"ALGOLIA_API_KEY"}`), &headers))
+
 		for k, v := range headers {
 			require.Equal(t, v, echo.Header.Get(k))
 		}
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions merges headers with default ones", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			ingestion.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			ingestion.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -439,21 +518,28 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		headers := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"ALGOLIA_API_KEY"}`), &headers))
+
 		for k, v := range headers {
 			require.Equal(t, v, echo.Header.Get(k))
 		}
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts booleans", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("isItWorking", true))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			ingestion.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			ingestion.WithQueryParam("isItWorking", true),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -461,16 +547,21 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","isItWorking":"true"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts integers", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("myParam", 2))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			ingestion.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			ingestion.WithQueryParam("myParam", 2),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -478,17 +569,22 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"2"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of string", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("myParam",
-			[]string{"b and c", "d"}))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			ingestion.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			ingestion.WithQueryParam("myParam",
+				[]string{"b and c", "d"}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -496,17 +592,22 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"b%20and%20c%2Cd"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of booleans", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("myParam",
-			[]bool{true, true, false}))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			ingestion.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			ingestion.WithQueryParam("myParam",
+				[]bool{true, true, false}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -514,17 +615,22 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of integers", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("myParam",
-			[]int32{1, 2}))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			ingestion.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			ingestion.WithQueryParam("myParam",
+				[]int32{1, 2}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -532,9 +638,11 @@ func TestIngestion_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"1%2C2"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -542,12 +650,13 @@ func TestIngestion_CustomPost(t *testing.T) {
 }
 
 func TestIngestion_CustomPut(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"test/minimal"))
+		_, err := client.CustomPut("test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -557,8 +666,10 @@ func TestIngestion_CustomPut(t *testing.T) {
 		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("allow put method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+		_, err := client.CustomPut(
+			"test/all",
+			ingestion.NewCustomPutOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -566,9 +677,11 @@ func TestIngestion_CustomPut(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -576,12 +689,13 @@ func TestIngestion_CustomPut(t *testing.T) {
 }
 
 func TestIngestion_DeleteAuthentication(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("deleteAuthentication", func(t *testing.T) {
-		_, err := client.DeleteAuthentication(client.NewApiDeleteAuthenticationRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+		_, err := client.DeleteAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
@@ -592,12 +706,13 @@ func TestIngestion_DeleteAuthentication(t *testing.T) {
 }
 
 func TestIngestion_DeleteDestination(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("deleteDestination", func(t *testing.T) {
-		_, err := client.DeleteDestination(client.NewApiDeleteDestinationRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+		_, err := client.DeleteDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
@@ -608,12 +723,13 @@ func TestIngestion_DeleteDestination(t *testing.T) {
 }
 
 func TestIngestion_DeleteSource(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("deleteSource", func(t *testing.T) {
-		_, err := client.DeleteSource(client.NewApiDeleteSourceRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+		_, err := client.DeleteSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
@@ -624,12 +740,13 @@ func TestIngestion_DeleteSource(t *testing.T) {
 }
 
 func TestIngestion_DeleteTask(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("deleteTask", func(t *testing.T) {
-		_, err := client.DeleteTask(client.NewApiDeleteTaskRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+		_, err := client.DeleteTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
@@ -640,12 +757,13 @@ func TestIngestion_DeleteTask(t *testing.T) {
 }
 
 func TestIngestion_DeleteTaskV1(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("deleteTaskV1", func(t *testing.T) {
-		_, err := client.DeleteTaskV1(client.NewApiDeleteTaskV1Request(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+		_, err := client.DeleteTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
@@ -656,12 +774,13 @@ func TestIngestion_DeleteTaskV1(t *testing.T) {
 }
 
 func TestIngestion_DeleteTransformation(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("deleteTransformation", func(t *testing.T) {
-		_, err := client.DeleteTransformation(client.NewApiDeleteTransformationRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+		_, err := client.DeleteTransformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
@@ -672,12 +791,13 @@ func TestIngestion_DeleteTransformation(t *testing.T) {
 }
 
 func TestIngestion_DisableTask(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("disableTask", func(t *testing.T) {
-		_, err := client.DisableTask(client.NewApiDisableTaskRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+		_, err := client.DisableTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable", echo.Path)
@@ -688,12 +808,13 @@ func TestIngestion_DisableTask(t *testing.T) {
 }
 
 func TestIngestion_DisableTaskV1(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("disableTaskV1", func(t *testing.T) {
-		_, err := client.DisableTaskV1(client.NewApiDisableTaskV1Request(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+		_, err := client.DisableTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable", echo.Path)
@@ -704,12 +825,13 @@ func TestIngestion_DisableTaskV1(t *testing.T) {
 }
 
 func TestIngestion_EnableTask(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("enableTask", func(t *testing.T) {
-		_, err := client.EnableTask(client.NewApiEnableTaskRequest(
-			"76ab4c2a-ce17-496f-b7a6-506dc59ee498"))
+		_, err := client.EnableTask("76ab4c2a-ce17-496f-b7a6-506dc59ee498")
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable", echo.Path)
@@ -720,12 +842,13 @@ func TestIngestion_EnableTask(t *testing.T) {
 }
 
 func TestIngestion_EnableTaskV1(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("enableTaskV1", func(t *testing.T) {
-		_, err := client.EnableTaskV1(client.NewApiEnableTaskV1Request(
-			"76ab4c2a-ce17-496f-b7a6-506dc59ee498"))
+		_, err := client.EnableTaskV1("76ab4c2a-ce17-496f-b7a6-506dc59ee498")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable", echo.Path)
@@ -736,12 +859,13 @@ func TestIngestion_EnableTaskV1(t *testing.T) {
 }
 
 func TestIngestion_GetAuthentication(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("getAuthentication", func(t *testing.T) {
-		_, err := client.GetAuthentication(client.NewApiGetAuthenticationRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+		_, err := client.GetAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
@@ -752,12 +876,13 @@ func TestIngestion_GetAuthentication(t *testing.T) {
 }
 
 func TestIngestion_GetDestination(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("getDestination", func(t *testing.T) {
-		_, err := client.GetDestination(client.NewApiGetDestinationRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+		_, err := client.GetDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
@@ -768,12 +893,13 @@ func TestIngestion_GetDestination(t *testing.T) {
 }
 
 func TestIngestion_GetEvent(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("getEvent", func(t *testing.T) {
-		_, err := client.GetEvent(client.NewApiGetEventRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "6c02aeb1-775e-418e-870b-1faccd4b2c0c"))
+		_, err := client.GetEvent("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "6c02aeb1-775e-418e-870b-1faccd4b2c0c")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c", echo.Path)
@@ -784,12 +910,13 @@ func TestIngestion_GetEvent(t *testing.T) {
 }
 
 func TestIngestion_GetRun(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("getRun", func(t *testing.T) {
-		_, err := client.GetRun(client.NewApiGetRunRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+		_, err := client.GetRun("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
@@ -800,12 +927,13 @@ func TestIngestion_GetRun(t *testing.T) {
 }
 
 func TestIngestion_GetSource(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("getSource", func(t *testing.T) {
-		_, err := client.GetSource(client.NewApiGetSourceRequest(
-			"75eeb306-51d3-4e5e-a279-3c92bd8893ac"))
+		_, err := client.GetSource("75eeb306-51d3-4e5e-a279-3c92bd8893ac")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac", echo.Path)
@@ -816,12 +944,13 @@ func TestIngestion_GetSource(t *testing.T) {
 }
 
 func TestIngestion_GetTask(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("getTask", func(t *testing.T) {
-		_, err := client.GetTask(client.NewApiGetTaskRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+		_, err := client.GetTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
@@ -832,12 +961,13 @@ func TestIngestion_GetTask(t *testing.T) {
 }
 
 func TestIngestion_GetTaskV1(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("getTaskV1", func(t *testing.T) {
-		_, err := client.GetTaskV1(client.NewApiGetTaskV1Request(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+		_, err := client.GetTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
@@ -848,12 +978,13 @@ func TestIngestion_GetTaskV1(t *testing.T) {
 }
 
 func TestIngestion_GetTransformation(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("getTransformation", func(t *testing.T) {
-		_, err := client.GetTransformation(client.NewApiGetTransformationRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+		_, err := client.GetTransformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
@@ -864,11 +995,13 @@ func TestIngestion_GetTransformation(t *testing.T) {
 }
 
 func TestIngestion_ListAuthentications(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("getAuthentications", func(t *testing.T) {
-		_, err := client.ListAuthentications(client.NewApiListAuthenticationsRequest())
+		_, err := client.ListAuthentications(nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/authentications", echo.Path)
@@ -877,18 +1010,29 @@ func TestIngestion_ListAuthentications(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("getAuthentications with query params", func(t *testing.T) {
-		_, err := client.ListAuthentications(client.NewApiListAuthenticationsRequest().WithItemsPerPage(2).WithPage(1).WithType(
-			[]ingestion.AuthenticationType{ingestion.AuthenticationType("basic"), ingestion.AuthenticationType("algolia")}).WithPlatform(
-			[]ingestion.PlatformWithNone{*ingestion.PlatformNoneAsPlatformWithNone(ingestion.PlatformNone("none"))}).WithSort(ingestion.AuthenticationSortKeys("createdAt")).WithOrder(ingestion.OrderKeys("asc")))
+		_, err := client.ListAuthentications(ingestion.NewListAuthenticationsOptions().WithItemsPerPage(2).WithPage(1).WithType(
+			[]ingestion.AuthenticationType{ingestion.AUTHENTICATION_TYPE_BASIC, ingestion.AUTHENTICATION_TYPE_ALGOLIA}).WithPlatform(
+			[]ingestion.PlatformWithNone{
+				*ingestion.PlatformNoneAsPlatformWithNone(ingestion.PLATFORM_NONE_NONE),
+			}).
+			WithSort(ingestion.AUTHENTICATION_SORT_KEYS_CREATED_AT).WithOrder(ingestion.ORDER_KEYS_ASC))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/authentications", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
+
 		queryParams := map[string]string{}
-		require.NoError(t, json.Unmarshal([]byte(`{"itemsPerPage":"2","page":"1","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"asc"}`), &queryParams))
+		require.NoError(
+			t,
+			json.Unmarshal(
+				[]byte(`{"itemsPerPage":"2","page":"1","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"asc"}`),
+				&queryParams,
+			),
+		)
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -896,11 +1040,13 @@ func TestIngestion_ListAuthentications(t *testing.T) {
 }
 
 func TestIngestion_ListDestinations(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("getDestinations", func(t *testing.T) {
-		_, err := client.ListDestinations(client.NewApiListDestinationsRequest())
+		_, err := client.ListDestinations(nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/destinations", echo.Path)
@@ -911,12 +1057,13 @@ func TestIngestion_ListDestinations(t *testing.T) {
 }
 
 func TestIngestion_ListEvents(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("getEvents", func(t *testing.T) {
-		_, err := client.ListEvents(client.NewApiListEventsRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+		_, err := client.ListEvents("6c02aeb1-775e-418e-870b-1faccd4b2c0f", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events", echo.Path)
@@ -927,11 +1074,13 @@ func TestIngestion_ListEvents(t *testing.T) {
 }
 
 func TestIngestion_ListRuns(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("listRuns", func(t *testing.T) {
-		_, err := client.ListRuns(client.NewApiListRunsRequest())
+		_, err := client.ListRuns(nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/runs", echo.Path)
@@ -942,11 +1091,13 @@ func TestIngestion_ListRuns(t *testing.T) {
 }
 
 func TestIngestion_ListSources(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("listSources", func(t *testing.T) {
-		_, err := client.ListSources(client.NewApiListSourcesRequest())
+		_, err := client.ListSources(nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/sources", echo.Path)
@@ -957,11 +1108,13 @@ func TestIngestion_ListSources(t *testing.T) {
 }
 
 func TestIngestion_ListTasks(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("listTasks", func(t *testing.T) {
-		_, err := client.ListTasks(client.NewApiListTasksRequest())
+		_, err := client.ListTasks(nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/tasks", echo.Path)
@@ -972,11 +1125,13 @@ func TestIngestion_ListTasks(t *testing.T) {
 }
 
 func TestIngestion_ListTasksV1(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("listTasksV1", func(t *testing.T) {
-		_, err := client.ListTasksV1(client.NewApiListTasksV1Request())
+		_, err := client.ListTasksV1(nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/tasks", echo.Path)
@@ -987,11 +1142,13 @@ func TestIngestion_ListTasksV1(t *testing.T) {
 }
 
 func TestIngestion_ListTransformations(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("listTransformations", func(t *testing.T) {
-		_, err := client.ListTransformations(client.NewApiListTransformationsRequest())
+		_, err := client.ListTransformations(nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/transformations", echo.Path)
@@ -1002,14 +1159,21 @@ func TestIngestion_ListTransformations(t *testing.T) {
 }
 
 func TestIngestion_PushTask(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("pushTask", func(t *testing.T) {
-		_, err := client.PushTask(client.NewApiPushTaskRequest(
+		_, err := client.PushTask(
 			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-			ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
-				[]ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})))
+			ingestion.ACTION_ADD_OBJECT,
+			[]ingestion.PushTaskRecords{
+				*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"),
+				*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k"),
+			},
+			nil,
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push", echo.Path)
@@ -1019,10 +1183,15 @@ func TestIngestion_PushTask(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}`)
 	})
 	t.Run("allows for watch query parameter", func(t *testing.T) {
-		_, err := client.PushTask(client.NewApiPushTaskRequest(
+		_, err := client.PushTask(
 			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-			ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
-				[]ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})).WithWatch(true))
+			ingestion.ACTION_ADD_OBJECT,
+			[]ingestion.PushTaskRecords{
+				*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"),
+				*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k"),
+			},
+			utils.ToPtr(true),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push", echo.Path)
@@ -1030,9 +1199,11 @@ func TestIngestion_PushTask(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"watch":"true"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -1040,15 +1211,15 @@ func TestIngestion_PushTask(t *testing.T) {
 }
 
 func TestIngestion_RunSource(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("runSource", func(t *testing.T) {
-		_, err := client.RunSource(client.NewApiRunSourceRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f").WithRunSourcePayload(
-			ingestion.NewEmptyRunSourcePayload().SetIndexToInclude(
-				[]string{"products_us", "products eu"}).SetEntityIDs(
-				[]string{"1234", "5678"}).SetEntityType(ingestion.EntityType("product"))))
+		_, err := client.RunSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f", ingestion.NewRunSourceOptions().WithIndexToInclude(
+			[]string{"products_us", "products eu"}).WithEntityIDs(
+			[]string{"1234", "5678"}).WithEntityType(ingestion.ENTITY_TYPE_PRODUCT))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", echo.Path)
@@ -1060,12 +1231,13 @@ func TestIngestion_RunSource(t *testing.T) {
 }
 
 func TestIngestion_RunTask(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("runTask", func(t *testing.T) {
-		_, err := client.RunTask(client.NewApiRunTaskRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+		_, err := client.RunTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", echo.Path)
@@ -1076,12 +1248,13 @@ func TestIngestion_RunTask(t *testing.T) {
 }
 
 func TestIngestion_RunTaskV1(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("runTaskV1", func(t *testing.T) {
-		_, err := client.RunTaskV1(client.NewApiRunTaskV1Request(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+		_, err := client.RunTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", echo.Path)
@@ -1092,14 +1265,14 @@ func TestIngestion_RunTaskV1(t *testing.T) {
 }
 
 func TestIngestion_SearchAuthentications(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("searchAuthentications", func(t *testing.T) {
-		_, err := client.SearchAuthentications(client.NewApiSearchAuthenticationsRequest(
-
-			ingestion.NewEmptyAuthenticationSearch().SetAuthenticationIDs(
-				[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"})))
+		_, err := client.SearchAuthentications(
+			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/authentications/search", echo.Path)
@@ -1111,14 +1284,14 @@ func TestIngestion_SearchAuthentications(t *testing.T) {
 }
 
 func TestIngestion_SearchDestinations(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("searchDestinations", func(t *testing.T) {
-		_, err := client.SearchDestinations(client.NewApiSearchDestinationsRequest(
-
-			ingestion.NewEmptyDestinationSearch().SetDestinationIDs(
-				[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"})))
+		_, err := client.SearchDestinations(
+			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/destinations/search", echo.Path)
@@ -1130,14 +1303,14 @@ func TestIngestion_SearchDestinations(t *testing.T) {
 }
 
 func TestIngestion_SearchSources(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("searchSources", func(t *testing.T) {
-		_, err := client.SearchSources(client.NewApiSearchSourcesRequest(
-
-			ingestion.NewEmptySourceSearch().SetSourceIDs(
-				[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"})))
+		_, err := client.SearchSources(
+			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/sources/search", echo.Path)
@@ -1149,69 +1322,79 @@ func TestIngestion_SearchSources(t *testing.T) {
 }
 
 func TestIngestion_SearchTasks(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("searchTasks", func(t *testing.T) {
-		_, err := client.SearchTasks(client.NewApiSearchTasksRequest(
-
-			ingestion.NewEmptyTaskSearch().SetTaskIDs(
-				[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"})))
+		_, err := client.SearchTasks(
+			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/tasks/search", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}`)
+		ja.Assertf(
+			*echo.Body,
+			`{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}`,
+		)
 	})
 }
 
 func TestIngestion_SearchTasksV1(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("searchTasksV1", func(t *testing.T) {
-		_, err := client.SearchTasksV1(client.NewApiSearchTasksV1Request(
-
-			ingestion.NewEmptyTaskSearch().SetTaskIDs(
-				[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"})))
+		_, err := client.SearchTasksV1(
+			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/tasks/search", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}`)
+		ja.Assertf(
+			*echo.Body,
+			`{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}`,
+		)
 	})
 }
 
 func TestIngestion_SearchTransformations(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("searchTransformations", func(t *testing.T) {
-		_, err := client.SearchTransformations(client.NewApiSearchTransformationsRequest(
-
-			ingestion.NewEmptyTransformationSearch().SetTransformationIDs(
-				[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"})))
+		_, err := client.SearchTransformations(
+			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/transformations/search", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}`)
+		ja.Assertf(
+			*echo.Body,
+			`{"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}`,
+		)
 	})
 }
 
 func TestIngestion_TriggerDockerSourceDiscover(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("triggerDockerSourceDiscover", func(t *testing.T) {
-		_, err := client.TriggerDockerSourceDiscover(client.NewApiTriggerDockerSourceDiscoverRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+		_, err := client.TriggerDockerSourceDiscover("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover", echo.Path)
@@ -1222,13 +1405,13 @@ func TestIngestion_TriggerDockerSourceDiscover(t *testing.T) {
 }
 
 func TestIngestion_TryTransformation(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("tryTransformation", func(t *testing.T) {
-		_, err := client.TryTransformation(client.NewApiTryTransformationRequest(
-
-			ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"})))
+		_, err := client.TryTransformation("foo", map[string]any{"bar": "baz"}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/transformations/try", echo.Path)
@@ -1238,29 +1421,33 @@ func TestIngestion_TryTransformation(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"code":"foo","sampleRecord":{"bar":"baz"}}`)
 	})
 	t.Run("with authentications", func(t *testing.T) {
-		_, err := client.TryTransformation(client.NewApiTryTransformationRequest(
-
-			ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}).SetAuthentications(
-				[]ingestion.AuthenticationCreate{*ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("oauth")).SetName("authName").SetInput(ingestion.AuthOAuthAsAuthInput(
-					ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret")))})))
+		_, err := client.TryTransformation("foo", map[string]any{"bar": "baz"}, utils.ToPtr(
+			[]ingestion.AuthenticationCreate{
+				*ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AUTHENTICATION_TYPE_OAUTH).SetName("authName").SetInput(ingestion.AuthOAuthAsAuthInput(
+					ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret"))),
+			},
+		))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/transformations/try", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}`)
+		ja.Assertf(
+			*echo.Body,
+			`{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}`,
+		)
 	})
 }
 
 func TestIngestion_TryTransformationBeforeUpdate(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("tryTransformationBeforeUpdate", func(t *testing.T) {
-		_, err := client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-			ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"})))
+		_, err := client.TryTransformationBeforeUpdate("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "foo", map[string]any{"bar": "baz"}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", echo.Path)
@@ -1270,29 +1457,33 @@ func TestIngestion_TryTransformationBeforeUpdate(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"code":"foo","sampleRecord":{"bar":"baz"}}`)
 	})
 	t.Run("existing with authentications", func(t *testing.T) {
-		_, err := client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-			ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}).SetAuthentications(
-				[]ingestion.AuthenticationCreate{*ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("oauth")).SetName("authName").SetInput(ingestion.AuthOAuthAsAuthInput(
-					ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret")))})))
+		_, err := client.TryTransformationBeforeUpdate("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "foo", map[string]any{"bar": "baz"}, utils.ToPtr(
+			[]ingestion.AuthenticationCreate{
+				*ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AUTHENTICATION_TYPE_OAUTH).SetName("authName").SetInput(ingestion.AuthOAuthAsAuthInput(
+					ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret"))),
+			},
+		))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}`)
+		ja.Assertf(
+			*echo.Body,
+			`{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}`,
+		)
 	})
 }
 
 func TestIngestion_UpdateAuthentication(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("updateAuthentication", func(t *testing.T) {
-		_, err := client.UpdateAuthentication(client.NewApiUpdateAuthenticationRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-			ingestion.NewEmptyAuthenticationUpdate().SetName("newName")))
+		_, err := client.UpdateAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f", ingestion.NewUpdateAuthenticationOptions().WithName("newName"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
@@ -1304,13 +1495,13 @@ func TestIngestion_UpdateAuthentication(t *testing.T) {
 }
 
 func TestIngestion_UpdateDestination(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("updateDestination", func(t *testing.T) {
-		_, err := client.UpdateDestination(client.NewApiUpdateDestinationRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-			ingestion.NewEmptyDestinationUpdate().SetName("newName")))
+		_, err := client.UpdateDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f", ingestion.NewUpdateDestinationOptions().WithName("newName"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
@@ -1322,13 +1513,13 @@ func TestIngestion_UpdateDestination(t *testing.T) {
 }
 
 func TestIngestion_UpdateSource(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("updateSource", func(t *testing.T) {
-		_, err := client.UpdateSource(client.NewApiUpdateSourceRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-			ingestion.NewEmptySourceUpdate().SetName("newName")))
+		_, err := client.UpdateSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f", ingestion.NewUpdateSourceOptions().WithName("newName"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
@@ -1340,13 +1531,13 @@ func TestIngestion_UpdateSource(t *testing.T) {
 }
 
 func TestIngestion_UpdateTask(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("updateTask", func(t *testing.T) {
-		_, err := client.UpdateTask(client.NewApiUpdateTaskRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-			ingestion.NewEmptyTaskUpdate().SetEnabled(false).SetCron("* * * * *")))
+		_, err := client.UpdateTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f", ingestion.NewUpdateTaskOptions().WithEnabled(false).WithCron("* * * * *"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
@@ -1358,13 +1549,13 @@ func TestIngestion_UpdateTask(t *testing.T) {
 }
 
 func TestIngestion_UpdateTaskV1(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("updateTaskV1", func(t *testing.T) {
-		_, err := client.UpdateTaskV1(client.NewApiUpdateTaskV1Request(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-			ingestion.NewEmptyTaskUpdateV1().SetEnabled(false)))
+		_, err := client.UpdateTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f", ingestion.NewUpdateTaskV1Options().WithEnabled(false))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
@@ -1376,13 +1567,18 @@ func TestIngestion_UpdateTaskV1(t *testing.T) {
 }
 
 func TestIngestion_UpdateTransformation(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("updateTransformation", func(t *testing.T) {
-		_, err := client.UpdateTransformation(client.NewApiUpdateTransformationRequest(
+		_, err := client.UpdateTransformation(
 			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-			ingestion.NewEmptyTransformationCreate().SetCode("foo").SetName("bar").SetDescription("baz")))
+			"foo",
+			"bar",
+			ingestion.NewUpdateTransformationOptions().WithDescription("baz"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
@@ -1394,33 +1590,47 @@ func TestIngestion_UpdateTransformation(t *testing.T) {
 }
 
 func TestIngestion_ValidateSource(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("validateSource", func(t *testing.T) {
-		_, err := client.ValidateSource(client.NewApiValidateSourceRequest().WithSourceCreate(
-			ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType("commercetools")).SetName("sourceName").SetInput(ingestion.SourceCommercetoolsAsSourceInput(
+		_, err := client.ValidateSource(
+			ingestion.SOURCE_TYPE_COMMERCETOOLS,
+			"sourceName",
+			ingestion.NewValidateSourceOptions().WithInput(ingestion.SourceCommercetoolsAsSourceInput(
 				ingestion.NewEmptySourceCommercetools().SetStoreKeys(
 					[]string{"myStore"}).SetLocales(
-					[]string{"de"}).SetUrl("http://commercetools.com").SetProjectKey("keyID"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
+					[]string{
+						"de",
+					}).
+					SetUrl("http://commercetools.com").SetProjectKey("keyID"))).WithAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/sources/validate", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`)
+		ja.Assertf(
+			*echo.Body,
+			`{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`,
+		)
 	})
 }
 
 func TestIngestion_ValidateSourceBeforeUpdate(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createIngestionClient(t)
 	_ = echo
 
 	t.Run("validateSourceBeforeUpdate", func(t *testing.T) {
-		_, err := client.ValidateSourceBeforeUpdate(client.NewApiValidateSourceBeforeUpdateRequest(
+		_, err := client.ValidateSourceBeforeUpdate(
 			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-			ingestion.NewEmptySourceUpdate().SetName("newName")))
+			ingestion.NewValidateSourceBeforeUpdateOptions().WithName("newName"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/validate", echo.Path)

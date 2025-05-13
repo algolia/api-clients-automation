@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-/** An event describe a step of the task execution flow.. */
+/** An event describe a step of the task execution flow. */
 public class Event {
 
   @JsonProperty("eventID")

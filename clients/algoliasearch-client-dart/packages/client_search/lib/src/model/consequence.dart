@@ -28,7 +28,7 @@ final class Consequence {
   @JsonKey(name: r'promote')
   final Iterable<dynamic>? promote;
 
-  /// Whether promoted records must match an active filter for the consequence to be applied.  This ensures that user actions (filtering the search) are given a higher precendence. For example, if you promote a record with the `color: red` attribute, and the user filters the search for `color: blue`, the \"red\" record won't be shown.
+  /// Whether promoted records must match an active filter for the consequence to be applied.  This ensures that user actions (filtering the search) are given a higher precedence. For example, if you promote a record with the `color: red` attribute, and the user filters the search for `color: blue`, the \"red\" record won't be shown.
   @JsonKey(name: r'filterPromotes')
   final bool? filterPromotes;
 

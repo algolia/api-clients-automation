@@ -3,12 +3,11 @@ package requests
 
 import (
 	"encoding/json"
+	"gotests/tests"
 	"testing"
 
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
-
-	"gotests/tests"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/recommend"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
@@ -21,7 +20,7 @@ func createRecommendClient(t *testing.T) (*recommend.APIClient, *tests.EchoReque
 	cfg := recommend.RecommendConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
-			ApiKey:    "apiKey",
+			APIKey:    "apiKey",
 			Requester: echo,
 		},
 	}
@@ -32,12 +31,13 @@ func createRecommendClient(t *testing.T) (*recommend.APIClient, *tests.EchoReque
 }
 
 func TestRecommend_BatchRecommendRules(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createRecommendClient(t)
 	_ = echo
 
 	t.Run("batch recommend rules", func(t *testing.T) {
-		_, err := client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(
-			"indexName", recommend.RecommendModels("related-products")))
+		_, err := client.BatchRecommendRules("indexName", recommend.RECOMMEND_MODELS_RELATED_PRODUCTS, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/related-products/recommend/rules/batch", echo.Path)
@@ -49,12 +49,13 @@ func TestRecommend_BatchRecommendRules(t *testing.T) {
 }
 
 func TestRecommend_CustomDelete(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createRecommendClient(t)
 	_ = echo
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"test/minimal"))
+		_, err := client.CustomDelete("test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -63,17 +64,18 @@ func TestRecommend_CustomDelete(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("allow del method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters"}))
+		_, err := client.CustomDelete("test/all", map[string]any{"query": "parameters"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -81,12 +83,13 @@ func TestRecommend_CustomDelete(t *testing.T) {
 }
 
 func TestRecommend_CustomGet(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createRecommendClient(t)
 	_ = echo
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/minimal"))
+		_, err := client.CustomGet("test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -95,39 +98,49 @@ func TestRecommend_CustomGet(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("allow get method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters with space"}))
+		_, err := client.CustomGet("test/all", map[string]any{"query": "parameters with space"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters%20with%20space"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions should be escaped too", func(t *testing.T) {
-		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/all").WithParameters(map[string]any{"query": "to be overriden"}), recommend.WithQueryParam("query", "parameters with space"), recommend.WithQueryParam("and an array",
-			[]string{"array", "with spaces"}), recommend.WithHeaderParam("x-header-1", "spaces are left alone"))
+		_, err := client.CustomGet(
+			"test/all",
+			map[string]any{"query": "to be overridden"},
+			recommend.WithQueryParam("query", "parameters with space"),
+			recommend.WithQueryParam("and an array",
+				[]string{"array", "with spaces"}),
+			recommend.WithHeaderParam("x-header-1", "spaces are left alone"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
+
 		headers := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"x-header-1":"spaces are left alone"}`), &headers))
+
 		for k, v := range headers {
 			require.Equal(t, v, echo.Header.Get(k))
 		}
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -135,12 +148,13 @@ func TestRecommend_CustomGet(t *testing.T) {
 }
 
 func TestRecommend_CustomPost(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createRecommendClient(t)
 	_ = echo
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/minimal"))
+		_, err := client.CustomPost("test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -150,8 +164,10 @@ func TestRecommend_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("allow post method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+		_, err := client.CustomPost(
+			"test/all",
+			recommend.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -159,16 +175,21 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions can override default query parameters", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("query", "myQueryParameter"))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			recommend.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			recommend.WithQueryParam("query", "myQueryParameter"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -176,16 +197,21 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"myQueryParameter"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions merges query parameters with default ones", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("query2", "myQueryParameter"))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			recommend.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			recommend.WithQueryParam("query2", "myQueryParameter"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -193,16 +219,21 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","query2":"myQueryParameter"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions can override default headers", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			recommend.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			recommend.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -210,21 +241,28 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		headers := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"ALGOLIA_API_KEY"}`), &headers))
+
 		for k, v := range headers {
 			require.Equal(t, v, echo.Header.Get(k))
 		}
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions merges headers with default ones", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			recommend.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			recommend.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -232,21 +270,28 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		headers := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"ALGOLIA_API_KEY"}`), &headers))
+
 		for k, v := range headers {
 			require.Equal(t, v, echo.Header.Get(k))
 		}
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts booleans", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("isItWorking", true))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			recommend.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			recommend.WithQueryParam("isItWorking", true),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -254,16 +299,21 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","isItWorking":"true"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts integers", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("myParam", 2))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			recommend.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			recommend.WithQueryParam("myParam", 2),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -271,17 +321,22 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"2"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of string", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("myParam",
-			[]string{"b and c", "d"}))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			recommend.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			recommend.WithQueryParam("myParam",
+				[]string{"b and c", "d"}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -289,17 +344,22 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"b%20and%20c%2Cd"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of booleans", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("myParam",
-			[]bool{true, true, false}))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			recommend.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			recommend.WithQueryParam("myParam",
+				[]bool{true, true, false}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -307,17 +367,22 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of integers", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("myParam",
-			[]int32{1, 2}))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			recommend.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			recommend.WithQueryParam("myParam",
+				[]int32{1, 2}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -325,9 +390,11 @@ func TestRecommend_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"1%2C2"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -335,12 +402,13 @@ func TestRecommend_CustomPost(t *testing.T) {
 }
 
 func TestRecommend_CustomPut(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createRecommendClient(t)
 	_ = echo
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"test/minimal"))
+		_, err := client.CustomPut("test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -350,8 +418,10 @@ func TestRecommend_CustomPut(t *testing.T) {
 		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("allow put method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+		_, err := client.CustomPut(
+			"test/all",
+			recommend.NewCustomPutOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -359,9 +429,11 @@ func TestRecommend_CustomPut(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -369,12 +441,13 @@ func TestRecommend_CustomPut(t *testing.T) {
 }
 
 func TestRecommend_DeleteRecommendRule(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createRecommendClient(t)
 	_ = echo
 
 	t.Run("deleteRecommendRule", func(t *testing.T) {
-		_, err := client.DeleteRecommendRule(client.NewApiDeleteRecommendRuleRequest(
-			"indexName", recommend.RecommendModels("related-products"), "objectID"))
+		_, err := client.DeleteRecommendRule("indexName", recommend.RECOMMEND_MODELS_RELATED_PRODUCTS, "objectID")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/related-products/recommend/rules/objectID", echo.Path)
@@ -385,12 +458,13 @@ func TestRecommend_DeleteRecommendRule(t *testing.T) {
 }
 
 func TestRecommend_GetRecommendRule(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createRecommendClient(t)
 	_ = echo
 
 	t.Run("getRecommendRule", func(t *testing.T) {
-		_, err := client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(
-			"indexName", recommend.RecommendModels("related-products"), "objectID"))
+		_, err := client.GetRecommendRule("indexName", recommend.RECOMMEND_MODELS_RELATED_PRODUCTS, "objectID")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/related-products/recommend/rules/objectID", echo.Path)
@@ -401,12 +475,13 @@ func TestRecommend_GetRecommendRule(t *testing.T) {
 }
 
 func TestRecommend_GetRecommendStatus(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createRecommendClient(t)
 	_ = echo
 
 	t.Run("getRecommendStatus", func(t *testing.T) {
-		_, err := client.GetRecommendStatus(client.NewApiGetRecommendStatusRequest(
-			"indexName", recommend.RecommendModels("related-products"), 12345))
+		_, err := client.GetRecommendStatus("indexName", recommend.RECOMMEND_MODELS_RELATED_PRODUCTS, 12345)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/related-products/task/12345", echo.Path)
@@ -417,15 +492,15 @@ func TestRecommend_GetRecommendStatus(t *testing.T) {
 }
 
 func TestRecommend_GetRecommendations(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createRecommendClient(t)
 	_ = echo
 
 	t.Run("get recommendations for recommend model with minimal parameters", func(t *testing.T) {
-		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
-
-			recommend.NewEmptyGetRecommendationsParams().SetRequests(
-				[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
-					recommend.NewEmptyRelatedQuery().SetIndexName("indexName").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1))})))
+		_, err := client.GetRecommendations(
+			[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
+				recommend.NewEmptyRelatedQuery().SetIndexName("indexName").SetObjectID("objectID").SetModel(recommend.RELATED_MODEL_RELATED_PRODUCTS).SetThreshold(42.1))})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
@@ -435,113 +510,117 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1}]}`)
 	})
 	t.Run("get recommendations with e2e to check oneOf model", func(t *testing.T) {
-		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
-
-			recommend.NewEmptyGetRecommendationsParams().SetRequests(
-				[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
-					recommend.NewEmptyRelatedQuery().SetIndexName("cts_e2e_browse").SetObjectID("Æon Flux").SetModel(recommend.RelatedModel("related-products")).SetThreshold(20.0).SetMaxRecommendations(2))})))
+		_, err := client.GetRecommendations(
+			[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
+				recommend.NewEmptyRelatedQuery().SetIndexName("cts_e2e_browse").SetObjectID("Æon Flux").SetModel(recommend.RELATED_MODEL_RELATED_PRODUCTS).SetThreshold(20.0).SetMaxRecommendations(2))})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"cts_e2e_browse","objectID":"Æon Flux","model":"related-products","threshold":20.0,"maxRecommendations":2}]}`)
+		ja.Assertf(
+			*echo.Body,
+			`{"requests":[{"indexName":"cts_e2e_browse","objectID":"Æon Flux","model":"related-products","threshold":20.0,"maxRecommendations":2}]}`,
+		)
 	})
 	t.Run("get recommendations for recommend model with all parameters", func(t *testing.T) {
-		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
-
-			recommend.NewEmptyGetRecommendationsParams().SetRequests(
-				[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
-					recommend.NewEmptyRelatedQuery().SetIndexName("indexName").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1).SetMaxRecommendations(10).SetQueryParameters(
-						recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query")}))).SetFallbackParameters(
-						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback")}))))})))
+		_, err := client.GetRecommendations(
+			[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
+				recommend.NewEmptyRelatedQuery().SetIndexName("indexName").SetObjectID("objectID").SetModel(recommend.RELATED_MODEL_RELATED_PRODUCTS).SetThreshold(42.1).SetMaxRecommendations(10).SetQueryParameters(
+					recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query")}))).SetFallbackParameters(
+					recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback")}))))})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}`)
+		ja.Assertf(
+			*echo.Body,
+			`{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}`,
+		)
 	})
 	t.Run("get recommendations for trending model with minimal parameters", func(t *testing.T) {
-		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
-
-			recommend.NewEmptyGetRecommendationsParams().SetRequests(
-				[]recommend.RecommendationsRequest{*recommend.TrendingItemsQueryAsRecommendationsRequest(
-					recommend.NewEmptyTrendingItemsQuery().SetIndexName("indexName").SetModel(recommend.TrendingItemsModel("trending-items")).SetThreshold(42.1).SetFacetName("facet").SetFacetValue("value"))})))
+		_, err := client.GetRecommendations(
+			[]recommend.RecommendationsRequest{*recommend.TrendingItemsQueryAsRecommendationsRequest(
+				recommend.NewEmptyTrendingItemsQuery().SetIndexName("indexName").SetModel(recommend.TRENDING_ITEMS_MODEL_TRENDING_ITEMS).SetThreshold(42.1).SetFacetName("facet").SetFacetValue("value"))})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"facetName":"facet","facetValue":"value"}]}`)
+		ja.Assertf(
+			*echo.Body,
+			`{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"facetName":"facet","facetValue":"value"}]}`,
+		)
 	})
 	t.Run("get recommendations for trending model with all parameters", func(t *testing.T) {
-		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
-
-			recommend.NewEmptyGetRecommendationsParams().SetRequests(
-				[]recommend.RecommendationsRequest{*recommend.TrendingItemsQueryAsRecommendationsRequest(
-					recommend.NewEmptyTrendingItemsQuery().SetIndexName("indexName").SetModel(recommend.TrendingItemsModel("trending-items")).SetThreshold(42.1).SetMaxRecommendations(10).SetFacetName("myFacetName").SetFacetValue("myFacetValue").SetQueryParameters(
-						recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query")}))).SetFallbackParameters(
-						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback")}))))})))
+		_, err := client.GetRecommendations(
+			[]recommend.RecommendationsRequest{*recommend.TrendingItemsQueryAsRecommendationsRequest(
+				recommend.NewEmptyTrendingItemsQuery().SetIndexName("indexName").SetModel(recommend.TRENDING_ITEMS_MODEL_TRENDING_ITEMS).SetThreshold(42.1).SetMaxRecommendations(10).SetFacetName("myFacetName").SetFacetValue("myFacetValue").SetQueryParameters(
+					recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query")}))).SetFallbackParameters(
+					recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback")}))))})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}`)
+		ja.Assertf(
+			*echo.Body,
+			`{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}`,
+		)
 	})
 	t.Run("get multiple recommendations with minimal parameters", func(t *testing.T) {
-		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
-
-			recommend.NewEmptyGetRecommendationsParams().SetRequests(
-				[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
-					recommend.NewEmptyRelatedQuery().SetIndexName("indexName1").SetObjectID("objectID1").SetModel(recommend.RelatedModel("related-products")).SetThreshold(21.7)), *recommend.RelatedQueryAsRecommendationsRequest(
-					recommend.NewEmptyRelatedQuery().SetIndexName("indexName2").SetObjectID("objectID2").SetModel(recommend.RelatedModel("related-products")).SetThreshold(21.7))})))
+		_, err := client.GetRecommendations(
+			[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
+				recommend.NewEmptyRelatedQuery().SetIndexName("indexName1").SetObjectID("objectID1").SetModel(recommend.RELATED_MODEL_RELATED_PRODUCTS).SetThreshold(21.7)), *recommend.RelatedQueryAsRecommendationsRequest(
+				recommend.NewEmptyRelatedQuery().SetIndexName("indexName2").SetObjectID("objectID2").SetModel(recommend.RELATED_MODEL_RELATED_PRODUCTS).SetThreshold(21.7))})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7}]}`)
+		ja.Assertf(
+			*echo.Body,
+			`{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7}]}`,
+		)
 	})
 	t.Run("get multiple recommendations with all parameters", func(t *testing.T) {
-		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
-
-			recommend.NewEmptyGetRecommendationsParams().SetRequests(
-				[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
-					recommend.NewEmptyRelatedQuery().SetIndexName("indexName1").SetObjectID("objectID1").SetModel(recommend.RelatedModel("related-products")).SetThreshold(21.7).SetMaxRecommendations(10).SetQueryParameters(
-						recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query1")}))).SetFallbackParameters(
-						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback1")})))), *recommend.RelatedQueryAsRecommendationsRequest(
-					recommend.NewEmptyRelatedQuery().SetIndexName("indexName2").SetObjectID("objectID2").SetModel(recommend.RelatedModel("related-products")).SetThreshold(21.7).SetMaxRecommendations(10).SetQueryParameters(
-						recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query2")}))).SetFallbackParameters(
-						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
-							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback2")}))))})))
+		_, err := client.GetRecommendations(
+			[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
+				recommend.NewEmptyRelatedQuery().SetIndexName("indexName1").SetObjectID("objectID1").SetModel(recommend.RELATED_MODEL_RELATED_PRODUCTS).SetThreshold(21.7).SetMaxRecommendations(10).SetQueryParameters(
+					recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query1")}))).SetFallbackParameters(
+					recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback1")})))), *recommend.RelatedQueryAsRecommendationsRequest(
+				recommend.NewEmptyRelatedQuery().SetIndexName("indexName2").SetObjectID("objectID2").SetModel(recommend.RELATED_MODEL_RELATED_PRODUCTS).SetThreshold(21.7).SetMaxRecommendations(10).SetQueryParameters(
+					recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("query2")}))).SetFallbackParameters(
+					recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+						[]recommend.FacetFilters{*recommend.StringAsFacetFilters("fallback2")}))))})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}`)
+		ja.Assertf(
+			*echo.Body,
+			`{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}`,
+		)
 	})
 	t.Run("get frequently bought together recommendations", func(t *testing.T) {
-		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
-
-			recommend.NewEmptyGetRecommendationsParams().SetRequests(
-				[]recommend.RecommendationsRequest{*recommend.BoughtTogetherQueryAsRecommendationsRequest(
-					recommend.NewEmptyBoughtTogetherQuery().SetIndexName("indexName1").SetObjectID("objectID1").SetModel(recommend.FbtModel("bought-together")).SetThreshold(42.7))})))
+		_, err := client.GetRecommendations(
+			[]recommend.RecommendationsRequest{*recommend.BoughtTogetherQueryAsRecommendationsRequest(
+				recommend.NewEmptyBoughtTogetherQuery().SetIndexName("indexName1").SetObjectID("objectID1").SetModel(recommend.FBT_MODEL_BOUGHT_TOGETHER).SetThreshold(42.7))})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
@@ -553,12 +632,13 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 }
 
 func TestRecommend_SearchRecommendRules(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createRecommendClient(t)
 	_ = echo
 
 	t.Run("searchRecommendRules", func(t *testing.T) {
-		_, err := client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(
-			"indexName", recommend.RecommendModels("related-products")))
+		_, err := client.SearchRecommendRules("indexName", recommend.RECOMMEND_MODELS_RELATED_PRODUCTS, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/related-products/recommend/rules/search", echo.Path)

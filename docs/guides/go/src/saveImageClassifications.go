@@ -1,6 +1,8 @@
 package main
 
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+import (
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+)
 
 func saveImageClassifications() {
 	type Image struct {
@@ -9,7 +11,7 @@ func saveImageClassifications() {
 		Objects  []map[string]interface{} `json:"objects"`
 	}
 
-	getImageLabels := func(imageURL, objectID string, scoreLimit float64) Image {
+	getImageLabels := func(imageURL, objectID string, _scoreLimit float64) Image {
 		// Implement your image classification logic here
 		return Image{
 			ImageURL: imageURL,
@@ -55,8 +57,7 @@ func saveImageClassifications() {
 		}
 	}
 
-	_, err = client.PartialUpdateObjects(
-		"<YOUR_INDEX_NAME>", records, search.WithCreateIfNotExists(true))
+	_, err = client.PartialUpdateObjects("<YOUR_INDEX_NAME>", records, search.WithCreateIfNotExists(true))
 	if err != nil {
 		panic(err)
 	}

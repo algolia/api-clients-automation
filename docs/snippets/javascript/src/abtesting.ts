@@ -15,12 +15,12 @@ export async function snippetForAddABTests(): Promise<void> {
 
   // Call the API
   const response = await client.addABTests({
-    endAt: '2022-12-31T00:00:00.000Z',
     name: 'myABTest',
     variants: [
       { index: 'AB_TEST_1', trafficPercentage: 30 },
       { index: 'AB_TEST_2', trafficPercentage: 50 },
     ],
+    endAt: '2022-12-31T00:00:00.000Z',
   });
 
   // >LOG
@@ -112,7 +112,7 @@ export async function snippetForCustomGet2(): Promise<void> {
 
   // Call the API
   const response = await client.customGet(
-    { path: 'test/all', parameters: { query: 'to be overriden' } },
+    { path: 'test/all', parameters: { query: 'to be overridden' } },
     {
       queryParameters: { query: 'parameters with space', 'and an array': ['array', 'with spaces'] },
       headers: { 'x-header-1': 'spaces are left alone' },
@@ -522,13 +522,13 @@ export async function snippetForScheduleABTest(): Promise<void> {
 
   // Call the API
   const response = await client.scheduleABTest({
-    endAt: '2022-12-31T00:00:00.000Z',
-    scheduledAt: '2022-11-31T00:00:00.000Z',
     name: 'myABTest',
     variants: [
       { index: 'AB_TEST_1', trafficPercentage: 30 },
       { index: 'AB_TEST_2', trafficPercentage: 50 },
     ],
+    scheduledAt: '2022-11-31T00:00:00.000Z',
+    endAt: '2022-12-31T00:00:00.000Z',
   });
 
   // >LOG

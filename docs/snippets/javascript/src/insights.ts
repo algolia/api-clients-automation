@@ -87,7 +87,7 @@ export async function snippetForCustomGet2(): Promise<void> {
 
   // Call the API
   const response = await client.customGet(
-    { path: 'test/all', parameters: { query: 'to be overriden' } },
+    { path: 'test/all', parameters: { query: 'to be overridden' } },
     {
       queryParameters: { query: 'parameters with space', 'and an array': ['array', 'with spaces'] },
       headers: { 'x-header-1': 'spaces are left alone' },

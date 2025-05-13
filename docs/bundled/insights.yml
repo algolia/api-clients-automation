@@ -189,8 +189,8 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "test/minimal"))
+            response, err := client.CustomGet("test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -431,8 +431,8 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "test/minimal"))
+            response, err := client.CustomPost("test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -673,8 +673,8 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "test/minimal"))
+            response, err := client.CustomPut("test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -909,9 +909,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "test/minimal"))
+            response, err := client.CustomDelete("test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1610,13 +1609,11 @@ paths:
 
             // Call the API
 
-            response, err := client.PushEvents(client.NewApiPushEventsRequest(
-
-              insights.NewEmptyInsightsEvents().SetEvents(
-                []insights.EventsItems{*insights.ClickedObjectIDsAfterSearchAsEventsItems(
-                  insights.NewEmptyClickedObjectIDsAfterSearch().SetEventType(insights.ClickEvent("click")).SetEventName("Product Clicked").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1641290601962).SetObjectIDs(
-                    []string{"9780545139700", "9780439784542"}).SetQueryID("43b15df305339e827f0ac0bdc5ebcaa7").SetPositions(
-                    []int32{7, 6}))})))
+            response, err := client.PushEvents(
+              []insights.EventsItems{*insights.ClickedObjectIDsAfterSearchAsEventsItems(
+                insights.NewEmptyClickedObjectIDsAfterSearch().SetEventType(insights.CLICK_EVENT_CLICK).SetEventName("Product Clicked").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1641290601962).SetObjectIDs(
+                  []string{"9780545139700", "9780439784542"}).SetQueryID("43b15df305339e827f0ac0bdc5ebcaa7").SetPositions(
+                  []int32{7, 6}))})
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2013,13 +2010,12 @@ paths:
 
             // Call the API
 
-            err = client.DeleteUserToken(client.NewApiDeleteUserTokenRequest(
-              "test-user-1"))
+            err = client.DeleteUserToken("test-user-1")
+
             if err != nil {
               // handle the eventual error
               panic(err)
             }
-
 
             // >LOG
         - lang: java

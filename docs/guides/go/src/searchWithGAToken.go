@@ -1,8 +1,10 @@
 package main
 
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+import (
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+)
 
-func getGoogleAnalyticsUserIdFromBrowserCookie(_ string) (string, error) {
+func getGoogleAnalyticsUserIDFromBrowserCookie(_ string) (string, error) {
 	return "", nil // Implement your logic here
 }
 
@@ -13,7 +15,7 @@ func searchWithGAToken() {
 		panic(err)
 	}
 
-	userToken, err := getGoogleAnalyticsUserIdFromBrowserCookie("_ga")
+	userToken, err := getGoogleAnalyticsUserIDFromBrowserCookie("_ga")
 	if err != nil {
 		panic(err)
 	}
@@ -24,8 +26,7 @@ func searchWithGAToken() {
 			SetUserToken(userToken),
 	)
 
-	_, err = client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-		"<YOUR_INDEX_NAME>").WithSearchParams(searchParams))
+	_, err = client.SearchSingleIndex("<YOUR_INDEX_NAME>", searchParams)
 	if err != nil {
 		panic(err)
 	}
@@ -36,8 +37,7 @@ func searchWithGAToken() {
 		searchParams = search.SearchParamsObjectAsSearchParams(searchParams.SearchParamsObject.SetUserToken(*loggedInUser))
 	}
 
-	_, err = client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-		"<YOUR_INDEX_NAME>").WithSearchParams(searchParams))
+	_, err = client.SearchSingleIndex("<YOUR_INDEX_NAME>", searchParams)
 	if err != nil {
 		panic(err)
 	}

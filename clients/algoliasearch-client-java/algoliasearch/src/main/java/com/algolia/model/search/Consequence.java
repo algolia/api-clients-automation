@@ -70,8 +70,8 @@ public class Consequence {
 
   /**
    * Whether promoted records must match an active filter for the consequence to be applied. This
-   * ensures that user actions (filtering the search) are given a higher precendence. For example,
-   * if you promote a record with the `color: red` attribute, and the user filters the search for
+   * ensures that user actions (filtering the search) are given a higher precedence. For example, if
+   * you promote a record with the `color: red` attribute, and the user filters the search for
    * `color: blue`, the \"red\" record won't be shown.
    */
   @javax.annotation.Nullable

@@ -20,7 +20,6 @@ class SnippetAbtestingClient {
     // Call the API
     client.addABTests(
       new AddABTestsRequest()
-        .setEndAt("2022-12-31T00:00:00.000Z")
         .setName("myABTest")
         .setVariants(
           Arrays.asList(
@@ -28,6 +27,7 @@ class SnippetAbtestingClient {
             new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
           )
         )
+        .setEndAt("2022-12-31T00:00:00.000Z")
     );
     // >LOG
     // SEPARATOR<
@@ -116,7 +116,7 @@ class SnippetAbtestingClient {
       "test/all",
       new HashMap() {
         {
-          put("query", "to be overriden");
+          put("query", "to be overridden");
         }
       },
       new RequestOptions()
@@ -545,8 +545,6 @@ class SnippetAbtestingClient {
     // Call the API
     client.scheduleABTest(
       new ScheduleABTestsRequest()
-        .setEndAt("2022-12-31T00:00:00.000Z")
-        .setScheduledAt("2022-11-31T00:00:00.000Z")
         .setName("myABTest")
         .setVariants(
           Arrays.asList(
@@ -554,6 +552,8 @@ class SnippetAbtestingClient {
             new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
           )
         )
+        .setScheduledAt("2022-11-31T00:00:00.000Z")
+        .setEndAt("2022-12-31T00:00:00.000Z")
     );
     // >LOG
     // SEPARATOR<
