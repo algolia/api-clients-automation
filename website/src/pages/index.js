@@ -14,7 +14,7 @@ function Hero() {
     <AlgoliaHero
       id="hero"
       cta={[
-        <Button key="contribute" href="/docs/introduction" background="blue" color="white">
+        <Button key="contribute" id="button" href="/docs/introduction">
           Contribute
         </Button>,
         <iframe
@@ -22,7 +22,7 @@ function Hero() {
           width={160}
           height={30}
           title="GitHub Stars"
-        />,
+        />
       ]}
     >
       <Title />
