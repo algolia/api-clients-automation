@@ -1,4 +1,4 @@
-// {{classname}} {{{description}}}{{^description}}struct for {{{classname}}}{{/description}}
+// {{classname}} {{{description}}}{{^description}}struct for {{{classname}}}.{{/description}}
 type {{classname}} struct {
 {{#parent}}
 {{^isMap}}
@@ -15,12 +15,12 @@ type {{classname}} struct {
     // {{{.}}}
   {{/description}}
   {{#deprecated}}
-    // Deprecated
+    // Deprecated: {{name}} is deprecated.
   {{/deprecated}}
 	{{name}} {{^required}}{{^isNullable}}{{^isArray}}{{^isFreeFormObject}}*{{/isFreeFormObject}}{{/isArray}}{{/isNullable}}{{/required}}{{{dataType}}} `json:"{{baseName}}{{^required}},omitempty{{/required}}"`
 {{/vars}}
 {{#isAdditionalPropertiesTrue}}
-	AdditionalProperties map[string]any
+	AdditionalProperties map[string]any `json:"-"`
 {{/isAdditionalPropertiesTrue}}
 }
 
@@ -73,7 +73,7 @@ func NewEmpty{{classname}}() *{{classname}} {
 // If the value is explicit nil, the zero value for {{vendorExtensions.x-go-base-type}} will be returned.
 {{/isNullable}}
 {{#deprecated}}
-// Deprecated
+// Deprecated: Get{{name}} is deprecated.
 {{/deprecated}}
 func (o *{{classname}}) Get{{name}}() {{vendorExtensions.x-go-base-type}} {
 	if o == nil{{#isNullable}}{{^vendorExtensions.x-golang-is-container}} || o.{{name}}.Get() == nil{{/vendorExtensions.x-golang-is-container}}{{/isNullable}} {
@@ -100,7 +100,7 @@ func (o *{{classname}}) Get{{name}}() {{vendorExtensions.x-go-base-type}} {
 // NOTE: If the value is an explicit nil, `nil, true` will be returned.
 {{/isNullable}}
 {{#deprecated}}
-// Deprecated
+// Deprecated: Get{{name}}Ok is deprecated.
 {{/deprecated}}
 func (o *{{classname}}) Get{{name}}Ok() ({{^isArray}}{{^isFreeFormObject}}*{{/isFreeFormObject}}{{/isArray}}{{vendorExtensions.x-go-base-type}}, bool) {
 	if o == nil{{#isNullable}}{{#vendorExtensions.x-golang-is-container}} || o.{{name}} == nil{{/vendorExtensions.x-golang-is-container}}{{/isNullable}} {
@@ -121,7 +121,7 @@ func (o *{{classname}}) Get{{name}}Ok() ({{^isArray}}{{^isFreeFormObject}}*{{/is
 
 // Set{{name}} sets field value.
 {{#deprecated}}
-// Deprecated
+// Deprecated: Set{{name}} is deprecated.
 {{/deprecated}}
 func (o *{{classname}}) Set{{name}}(v {{#isModel}}{{^isArray}}{{^isFreeFormObject}}*{{/isFreeFormObject}}{{/isArray}}{{/isModel}}{{vendorExtensions.x-go-base-type}}) *{{classname}} {
 {{#isNullable}}
@@ -142,7 +142,7 @@ func (o *{{classname}}) Set{{name}}(v {{#isModel}}{{^isArray}}{{^isFreeFormObjec
 {{^required}}
 // Get{{name}} returns the {{name}} field value if set, zero value otherwise{{#isNullable}} (both if not set or set to explicit null){{/isNullable}}.
 {{#deprecated}}
-// Deprecated
+// Deprecated: Get{{name}} is deprecated.
 {{/deprecated}}
 func (o *{{classname}}) Get{{name}}() {{vendorExtensions.x-go-base-type}} {
 	if o == nil{{^isNullable}} || o.{{name}} == nil{{/isNullable}}{{#isNullable}}{{^vendorExtensions.x-golang-is-container}} || o.{{name}}.Get() == nil{{/vendorExtensions.x-golang-is-container}}{{/isNullable}} {
@@ -168,7 +168,7 @@ func (o *{{classname}}) Get{{name}}() {{vendorExtensions.x-go-base-type}} {
 // NOTE: If the value is an explicit nil, `nil, true` will be returned.
 {{/isNullable}}
 {{#deprecated}}
-// Deprecated
+// Deprecated: Get{{name}}Ok is deprecated.
 {{/deprecated}}
 func (o *{{classname}}) Get{{name}}Ok() ({{^isArray}}{{^isFreeFormObject}}*{{/isFreeFormObject}}{{/isArray}}{{vendorExtensions.x-go-base-type}}, bool) {
 	if o == nil{{^isNullable}} || o.{{name}} == nil{{/isNullable}}{{#isNullable}}{{#vendorExtensions.x-golang-is-container}} || o.{{name}} == nil{{/vendorExtensions.x-golang-is-container}}{{/isNullable}} {
@@ -198,7 +198,7 @@ func (o *{{classname}}) Has{{name}}() bool {
 
 // Set{{name}} gets a reference to the given {{dataType}} and assigns it to the {{name}} field.
 {{#deprecated}}
-// Deprecated
+// Deprecated: Set{{name}} is deprecated.
 {{/deprecated}}
 func (o *{{classname}}) Set{{name}}(v {{#isModel}}{{^isArray}}{{^isFreeFormObject}}*{{/isFreeFormObject}}{{/isArray}}{{/isModel}}{{vendorExtensions.x-go-base-type}}) *{{classname}} {
 {{#isNullable}}
@@ -216,12 +216,12 @@ func (o *{{classname}}) Set{{name}}(v {{#isModel}}{{^isArray}}{{^isFreeFormObjec
 }
 {{#isNullable}}
 {{^vendorExtensions.x-golang-is-container}}
-// Set{{name}}Nil sets the value for {{name}} to be an explicit nil
+// Set{{name}}Nil sets the value for {{name}} to be an explicit nil.
 func (o *{{classname}}) Set{{name}}Nil() {
 	o.{{name}}.Set(nil)
 }
 
-// Unset{{name}} ensures that no value is present for {{name}}, not even an explicit nil
+// Unset{{name}} ensures that no value is present for {{name}}, not even an explicit nil.
 func (o *{{classname}}) Unset{{name}}() {
 	o.{{name}}.Unset()
 }
@@ -323,7 +323,7 @@ func (o *{{{classname}}}) UnmarshalJSON(bytes []byte) error {
 		// {{{.}}}
 	{{/description}}
 	{{#deprecated}}
-		// Deprecated
+		// Deprecated: {{name}} is deprecated.
 	{{/deprecated}}
 		{{name}} {{^required}}{{^isNullable}}{{^isArray}}{{^isFreeFormObject}}*{{/isFreeFormObject}}{{/isArray}}{{/isNullable}}{{/required}}{{{dataType}}} `json:"{{baseName}}{{^required}},omitempty{{/required}}"`
 	{{/vars}}

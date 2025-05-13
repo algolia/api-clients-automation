@@ -8,14 +8,14 @@ import (
 
 {{> snippets/import}}
 
-func getGoogleAnalyticsUserIdFromBrowserCookie(_ string) (string, error) {
+func getGoogleAnalyticsUserIDFromBrowserCookie(_ string) (string, error) {
   return "", nil // Implement your logic here
 }
 
 func searchWithGAToken() {
   {{> snippets/init}}
 
-  userToken, err := getGoogleAnalyticsUserIdFromBrowserCookie("_ga")
+  userToken, err := getGoogleAnalyticsUserIDFromBrowserCookie("_ga")
 	if err != nil {
 		panic(err)
 	}

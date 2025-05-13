@@ -11,12 +11,12 @@ const (
 )
 
 type StatefulHost struct {
-	scheme     string
-	host       string
-	isDown     bool
-	retryCount int
 	lastUpdate time.Time
 	accept     func(k call.Kind) bool
+	scheme     string
+	host       string
+	retryCount int
+	isDown     bool
 }
 
 func NewStatefulHost(scheme string, host string, accept func(k call.Kind) bool) StatefulHost {

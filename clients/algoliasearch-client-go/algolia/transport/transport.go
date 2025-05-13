@@ -26,8 +26,12 @@ type Transport struct {
 
 func New(cfg Configuration) *Transport {
 	transport := &Transport{
-		requester:                       cfg.Requester,
-		retryStrategy:                   newRetryStrategy(cfg.Hosts, cfg.ReadTimeout, cfg.WriteTimeout),
+		requester: cfg.Requester,
+		retryStrategy: newRetryStrategy(
+			cfg.Hosts,
+			cfg.ReadTimeout,
+			cfg.WriteTimeout,
+		),
 		connectTimeout:                  cfg.ConnectTimeout,
 		compression:                     cfg.Compression,
 		exposeIntermediateNetworkErrors: cfg.ExposeIntermediateNetworkErrors,
@@ -44,7 +48,12 @@ func New(cfg Configuration) *Transport {
 	return transport
 }
 
-func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind, c RequestConfiguration) (*http.Response, []byte, error) {
+func (t *Transport) Request(
+	ctx context.Context,
+	req *http.Request,
+	k call.Kind,
+	c RequestConfiguration,
+) (*http.Response, []byte, error) {
 	var intermediateNetworkErrors []error
 
 	// Add Content-Encoding header, if needed
@@ -94,6 +103,7 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind,
 		// already cancelled.
 		if ctx.Err() != nil {
 			cancel()
+
 			return res, nil, err
 		}
 
@@ -101,23 +111,32 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind,
 		case Success, Failure:
 			body, errBody := io.ReadAll(res.Body)
 			errClose := res.Body.Close()
+
 			cancel()
+
 			res.Body = io.NopCloser(bytes.NewBuffer(body))
 			if errBody != nil {
-				return res, nil, fmt.Errorf("cannot read body: %v", errBody)
+				return res, nil, fmt.Errorf("cannot read body: %w", errBody)
 			}
+
 			if errClose != nil {
-				return res, nil, fmt.Errorf("cannot close response's body: %v", errClose)
+				return res, nil, fmt.Errorf("cannot close response's body: %w", errClose)
 			}
+
 			return res, body, err
 		default:
 			if err != nil {
 				intermediateNetworkErrors = append(intermediateNetworkErrors, err)
 			}
+
 			if res != nil && res.Body != nil {
 				if err = res.Body.Close(); err != nil {
 					cancel()
-					return res, nil, fmt.Errorf("cannot close response's body before retry: %w", err)
+
+					return res, nil, fmt.Errorf(
+						"cannot close response's body before retry: %w",
+						err,
+					)
 				}
 			}
 		}
@@ -132,7 +151,12 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind,
 	return nil, nil, errs.ErrNoMoreHostToTry
 }
 
-func (t *Transport) request(req *http.Request, host Host, timeout time.Duration, connectTimeout time.Duration) (*http.Response, error) {
+func (t *Transport) request(
+	req *http.Request,
+	host Host,
+	timeout time.Duration,
+	connectTimeout time.Duration,
+) (*http.Response, error) {
 	req.URL.Scheme = host.scheme
 	req.URL.Host = host.host
 
@@ -141,8 +165,15 @@ func (t *Transport) request(req *http.Request, host Host, timeout time.Duration,
 	debug.Display(res)
 
 	if err != nil {
-		msg := fmt.Sprintf("cannot perform request:\n\terror=%v\n\tmethod=%s\n\turl=%s", err, req.Method, req.URL)
+		msg := fmt.Sprintf(
+			"cannot perform request:\n\terror=%v\n\tmethod=%s\n\turl=%s",
+			err,
+			req.Method,
+			req.URL,
+		)
+
 		var nerr net.Error
+
 		if errors.As(err, &nerr) {
 			// Because net.Error and error have different meanings for the
 			// retry strategy, we cannot simply return a new error, which
@@ -154,6 +185,7 @@ func (t *Transport) request(req *http.Request, host Host, timeout time.Duration,
 		} else {
 			err = errors.New(msg)
 		}
+
 		return nil, err
 	}
 
@@ -164,5 +196,6 @@ func shouldCompress(c compression.Compression, method string, body any) bool {
 	isValidMethod := method == http.MethodPut || method == http.MethodPost
 	isCompressionEnabled := c != compression.NONE
 	isBodyNonEmpty := body != nil
+
 	return isCompressionEnabled && isValidMethod && isBodyNonEmpty
 }

@@ -58,8 +58,15 @@ func IsNilOrEmpty(i any) bool {
 	if i == nil {
 		return true
 	}
+
 	switch reflect.TypeOf(i).Kind() {
-	case reflect.Chan, reflect.Func, reflect.Map, reflect.Ptr, reflect.UnsafePointer, reflect.Interface, reflect.Slice:
+	case reflect.Chan,
+		reflect.Func,
+		reflect.Map,
+		reflect.Ptr,
+		reflect.UnsafePointer,
+		reflect.Interface,
+		reflect.Slice:
 		return reflect.ValueOf(i).IsNil()
 	case reflect.Bool:
 		return false
@@ -78,11 +85,13 @@ func ParameterToString(obj any) string {
 	objKind := reflect.TypeOf(obj).Kind()
 	if objKind == reflect.Slice {
 		var result []string
+
 		sliceValue := reflect.ValueOf(obj)
 		for i := 0; i < sliceValue.Len(); i++ {
 			element := sliceValue.Index(i).Interface()
 			result = append(result, ParameterToString(element))
 		}
+
 		return strings.Join(result, ",")
 	}
 
@@ -101,5 +110,6 @@ func ParameterToString(obj any) string {
 
 func HasKey[T any](m map[string]T, key string) bool {
 	_, ok := m[key]
+
 	return ok
 }
