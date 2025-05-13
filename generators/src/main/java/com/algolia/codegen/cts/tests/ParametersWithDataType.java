@@ -95,17 +95,7 @@ public class ParametersWithDataType {
             AlgoliaGoGenerator.canFlattenBody(operation)
           ) {
             // flatten the body params by skipping one level
-            Map<String, Object> bodyParams = (Map<String, Object>) param.getValue();
-            for (String nestedParam : bodyParams.keySet()) {
-              for (CodegenProperty prop : operation.bodyParam.getVars()) {
-                if (prop.baseName.equals(nestedParam)) {
-                  Map<String, Object> paramWithType = traverseParams(prop.baseName, bodyParams.get(nestedParam), prop, "", 0, false);
-                  parametersWithDataType.add(paramWithType);
-                  parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
-                  break;
-                }
-              }
-            }
+            flattenBodyParams((Map<String, Object>) param.getValue(), operation, parametersWithDataType);
           } else {
             Map<String, Object> paramWithType = traverseParams(param.getKey(), param.getValue(), specParam, "", 0, false);
             parametersWithDataType.add(paramWithType);
@@ -115,16 +105,7 @@ public class ParametersWithDataType {
       }
     } else if (language.equals("go") && parameters != null && operation.bodyParam.getVars().size() > 0) {
       // also flatten when the body is the only parameter
-      for (String nestedParam : parameters.keySet()) {
-        for (CodegenProperty prop : operation.bodyParam.getVars()) {
-          if (prop.baseName.equals(nestedParam)) {
-            Map<String, Object> paramWithType = traverseParams(prop.baseName, parameters.get(nestedParam), prop, "", 0, false);
-            parametersWithDataType.add(paramWithType);
-            parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
-            break;
-          }
-        }
-      }
+      flattenBodyParams(parameters, operation, parametersWithDataType);
     } else {
       Map<String, Object> paramWithType = traverseParams(paramName, parameters, spec, "", 0, false);
       parametersWithDataType.add(paramWithType);
@@ -140,6 +121,22 @@ public class ParametersWithDataType {
 
   private String toJSONWithVar(Map<String, Object> parameters) throws JsonProcessingException {
     return Json.mapper().writeValueAsString(parameters).replaceAll("\"\\$var: (.*?)\"", "$1");
+  }
+
+  private void flattenBodyParams(
+    Map<String, Object> parameters,
+    CodegenOperation operation,
+    List<Map<String, Object>> parametersWithDataType
+  ) throws CTSException {
+    for (String nestedParam : parameters.keySet()) {
+      for (CodegenProperty prop : operation.bodyParam.getVars()) {
+        if (prop.baseName.equals(nestedParam)) {
+          Map<String, Object> paramWithType = traverseParams(prop.baseName, parameters.get(nestedParam), prop, "", 0, false);
+          parametersWithDataType.add(paramWithType);
+          break;
+        }
+      }
+    }
   }
 
   private Map<String, Object> traverseParams(
