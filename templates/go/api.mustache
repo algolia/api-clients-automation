@@ -519,14 +519,16 @@ func (c *APIClient) {{nickname}}WithHTTPInfo({{#requiredParams}}{{paramName}} {{
   postBody := {{paramName}}
   {{/required}}
   {{^required}}
-  {{#hasOptionalParams}}
   var postBody any = "{}"
+  {{#hasOptionalParams}}
   if optionalParams != nil {
     postBody = optionalParams.{{nameInPascalCase}}
   }
   {{/hasOptionalParams}}
   {{^hasOptionalParams}}
-  postBody := {{paramName}}
+  if !utils.IsNilOrEmpty({{paramName}}) {
+    postBody = {{paramName}}
+  }
   {{/hasOptionalParams}}
   {{/required}}
   {{/vendorExtensions.x-flat-body}}

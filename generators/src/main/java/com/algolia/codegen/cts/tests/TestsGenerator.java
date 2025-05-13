@@ -138,13 +138,16 @@ public abstract class TestsGenerator {
   ) {
     int bodyPropsOptional = 0;
     boolean actuallyHasOptional = false;
+    boolean isBodyTooBig = false;
+    boolean alreadyInlinedBody = ope.allParams.size() == 1 && ope.bodyParam != null && ope.bodyParam.isModel;
 
     if (AlgoliaGoGenerator.canFlattenBody(ope)) {
       bodyPropsOptional = (int) ope.bodyParam.getVars().stream().filter(prop -> !prop.required).count();
+      isBodyTooBig = ope.bodyParam.getVars().size() == 0;
 
       // edge case where the body is already flattened
       Map<String, Object> paramBody = paramBody = parameters;
-      if (ope.allParams.size() > 1) {
+      if (!alreadyInlinedBody) {
         paramBody = (Map<String, Object>) parameters.get(ope.bodyParam.paramName);
       }
 
@@ -164,29 +167,21 @@ public abstract class TestsGenerator {
       }
     }
 
+    boolean isBodyRequired = (ope.bodyParam != null && ope.bodyParam.required);
+
     // I can't figure out the correct condition for this one so it's harcoded for now
     boolean isSFFV = ope.operationId.equals("searchForFacetValues") && "composition".equals(ope.tags.get(0).getName());
 
     // hasOptionalWrapper if there is more that one optional param, after the body has been
     // flattened, only relevant for go
     test.put("hasOptionalWrapper", totalOptional > 1 && actuallyHasOptional && !isSFFV);
-    test.put("hasInlineOptional", (totalOptional == 1 || isSFFV) && actuallyHasOptional);
-    test.put("hasNilOptional", totalOptional > 0 && !actuallyHasOptional && !isHelper);
-
-    System.out.println(
-      ope.operationId +
-      " hasOptionalWrapper: " +
-      test.get("hasOptionalWrapper") +
-      " hasNilOptional: " +
-      test.get("hasNilOptional") +
-      " hasInlineOptional: " +
-      test.get("hasInlineOptional") +
-      " totalOptional: " +
-      totalOptional +
-      " actuallyHasOptional: " +
-      actuallyHasOptional +
-      " bodyPropsOptional: " +
-      bodyPropsOptional
-    );
+    test.put("hasInlineOptional", ((totalOptional == 1 || isSFFV) && actuallyHasOptional) || isBodyTooBig);
+    if (isBodyTooBig) {
+      boolean isBodySet = alreadyInlinedBody ? parameters.size() > 0 : parameters.containsKey(ope.bodyParam.paramName);
+      System.out.println("isBodySet: " + isBodySet);
+      test.put("hasNilOptional", isBodyRequired ? totalOptional > 0 && !actuallyHasOptional : !isBodySet);
+    } else {
+      test.put("hasNilOptional", totalOptional > 0 && !actuallyHasOptional && !isHelper);
+    }
   }
 }
