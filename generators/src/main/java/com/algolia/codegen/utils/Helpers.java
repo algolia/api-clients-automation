@@ -175,7 +175,7 @@ public class Helpers {
   /**
    * Get the current version of the given client from the
    * `clients/algoliasearch-client-javascript/packages/${client}/package.json` file, defaults to
-   * 0.0.1 if not found
+   * 0.0.1-alpha.0 if not found
    */
   public static String getPackageJsonVersion(String client) throws ConfigException {
     try {
@@ -183,12 +183,12 @@ public class Helpers {
       String value = packageJson.get("version").asText();
 
       if (value.isEmpty()) {
-        return "0.0.1";
+        return "0.0.1-alpha.0";
       }
 
       return value;
     } catch (ConfigException e) {
-      return "0.0.1";
+      return "0.0.1-alpha.0";
     }
   }
 

@@ -1,5 +1,5 @@
 ---
-title: Support a new language
+title: Add a new language
 ---
 
 :::info
@@ -27,10 +27,6 @@ Example for the `JavaScript` client with the `typescript-node` template:
 ```bash
 apic exec java "yarn openapi-generator-cli author template -g typescript-node -o templates/javascript/"
 ```
-
-## Update the generator config
-
-Please read the [`add a new client guide`](/docs/add-new-api-client) for information on how to structure your new client and setup the configuration files.
 
 ### Algolia requirements
 
@@ -70,8 +66,6 @@ The retry strategy cannot be generated and needs to be implemented outside of th
 ### Different client hosts
 
 Some Algolia clients (search and recommend) targets the default appId host (`${appId}-dsn.algolia.net`, `${appId}.algolia.net`, etc.), while clients like `personalization` have their own regional `host` (`eu` | `us` | `de`).
-
-As the generator does not support reading `servers` in a spec file **yet**, hosts methods and variables are extracted with a custom script and create variables for you to use in the mustache templates, [read more here](/docs/add-new-api-client#2-configure-the-generator).
 
 ### User Agent
 

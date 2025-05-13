@@ -24,15 +24,20 @@ const sidebars = {
       label: 'Contributing',
       collapsed: false,
       items: [
-        'add-new-api-client',
-        'docs',
-        'add-new-language',
+        {
+          type: 'category',
+          label: 'Add a new API',
+          collapsed: false,
+          items: ['add-a-new-api/write-a-specification', 'add-a-new-api/generate-your-client', 'add-a-new-api/api-documentation-guidelines'],
+        },
+        'add-a-new-language',
         {
           type: 'category',
           label: 'Testing',
           collapsed: false,
           items: ['testing/common-test-suite', 'testing/playground'],
         },
+        'custom-helpers',
         'commit-and-pull-request',
         'release-process',
         {

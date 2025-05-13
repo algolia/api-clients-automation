@@ -139,3 +139,10 @@ html[data-theme='dark'] .header-github-link:before {
   margin: 0 calc(-1 * var(--ifm-pre-padding));
   padding: 0 var(--ifm-pre-padding);
 }
+
+#button {
+  padding: 10px;
+  border-radius: 3px;
+  margin: 0 3px 0 3px;
+  background-color: var(--nebula-500);
+}
