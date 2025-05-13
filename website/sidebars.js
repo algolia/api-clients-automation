@@ -37,6 +37,7 @@ const sidebars = {
           collapsed: false,
           items: ['testing/common-test-suite', 'testing/playground'],
         },
+        'custom-helpers',
         'commit-and-pull-request',
         'release-process',
         {
