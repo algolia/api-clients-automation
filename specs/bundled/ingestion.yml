@@ -71,6 +71,7 @@ servers:
   - url: https://data.{region}.algolia.com
     variables:
       region:
+        description: The region where your Algolia application is hosted.
         enum:
           - eu
           - us
@@ -401,6 +402,7 @@ paths:
       summary: List destinations
       description: Retrieves a list of destinations.
       operationId: listDestinations
+      x-mcp-tool: true
       x-acl:
         - addObject
         - deleteIndex
@@ -568,6 +570,7 @@ paths:
       summary: List sources
       description: Retrieves a list of sources.
       operationId: listSources
+      x-mcp-tool: true
       x-acl:
         - addObject
         - deleteIndex
@@ -874,6 +877,7 @@ paths:
       summary: List tasks
       description: Retrieves a list of tasks.
       operationId: listTasks
+      x-mcp-tool: true
       x-acl:
         - addObject
         - deleteIndex
@@ -1410,6 +1414,7 @@ paths:
       summary: List transformations
       description: Retrieves a list of transformations.
       operationId: listTransformations
+      x-mcp-tool: true
       x-acl:
         - addObject
         - deleteIndex

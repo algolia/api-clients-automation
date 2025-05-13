@@ -22,7 +22,7 @@ object Main {
     val result = Source.fromURL(url).mkString
     val movies = JsonMethods.parse(result).extract[Seq[Map[String, Any]]]
 
-    // Connect and authenticate with your Algolia app
+    // Connect and authenticate with your Algolia app using your app ID and write API key
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Save records in Algolia index

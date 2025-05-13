@@ -16,7 +16,7 @@ func saveObjectsMovies() async throws {
     #endif
     let movies = try JSONDecoder().decode([AnyCodable].self, from: data!)
 
-    // Connect and authenticate with your Algolia app
+    // Connect and authenticate with your Algolia app using your app ID and write API key
     let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
     do {

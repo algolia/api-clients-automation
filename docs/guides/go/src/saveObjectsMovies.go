@@ -29,7 +29,7 @@ func saveObjectsMovies() {
 		return
 	}
 
-	// initiate client
+	// initiate client with your app ID and write API key
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
 		// The client can fail to initialize if you pass an invalid parameter.
