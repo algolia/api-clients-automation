@@ -1,5 +1,5 @@
 ---
-title: Index
+title: Add a new language
 ---
 
 :::info

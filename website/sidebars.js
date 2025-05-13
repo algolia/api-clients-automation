@@ -30,12 +30,7 @@ const sidebars = {
           collapsed: false,
           items: ['add-a-new-api/write-a-specification', 'add-a-new-api/generate-your-client', 'add-a-new-api/api-documentation-guidelines'],
         },
-        {
-          type: 'category',
-          label: 'Add a new language',
-          collapsed: false,
-          items: ['add-a-new-language/index'],
-        },
+        'add-a-new-language',
         {
           type: 'category',
           label: 'Testing',

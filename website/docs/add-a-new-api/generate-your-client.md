@@ -2,7 +2,7 @@
 title: Generate your client
 ---
 
-:::caution
+:::info
 
 Make sure to first read the [setup the repository tooling section](/docs/setup-repository) first.
 
