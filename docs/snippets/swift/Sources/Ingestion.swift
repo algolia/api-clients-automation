@@ -1008,6 +1008,69 @@ final class IngestionClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the push method.
+    ///
+    /// global push
+    func snippetForPush() async throws {
+        // >SEPARATOR push global push
+        // Initialize the client
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.push(
+            indexName: "<YOUR_INDEX_NAME>",
+            pushTaskPayload: PushTaskPayload(
+                action: IngestionAction.addObject,
+                records: [
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("o"),
+                        "key": AnyCodable("bar"),
+                        "foo": AnyCodable("1"),
+                    ]),
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("k"),
+                        "key": AnyCodable("baz"),
+                        "foo": AnyCodable("2"),
+                    ]),
+                ]
+            )
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the push method.
+    ///
+    /// global push with watch mode
+    func snippetForPush1() async throws {
+        // >SEPARATOR push global push with watch mode
+        // Initialize the client
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.push(
+            indexName: "<YOUR_INDEX_NAME>",
+            pushTaskPayload: PushTaskPayload(
+                action: IngestionAction.addObject,
+                records: [
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("o"),
+                        "key": AnyCodable("bar"),
+                        "foo": AnyCodable("1"),
+                    ]),
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("k"),
+                        "key": AnyCodable("baz"),
+                        "foo": AnyCodable("2"),
+                    ]),
+                ]
+            ),
+            watch: true
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
     /// Snippet for the pushTask method.
     ///
     /// pushTask

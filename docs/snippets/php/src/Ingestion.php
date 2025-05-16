@@ -1499,6 +1499,77 @@ class SnippetIngestionClient
     }
 
     /**
+     * Snippet for the Push method.
+     *
+     * global push
+     */
+    public function snippetForPush(): void
+    {
+        // >SEPARATOR push global push
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->push(
+            '<YOUR_INDEX_NAME>',
+            ['action' => 'addObject',
+                'records' => [
+                    ['key' => 'bar',
+                        'foo' => '1',
+                        'objectID' => 'o',
+                    ],
+
+                    ['key' => 'baz',
+                        'foo' => '2',
+                        'objectID' => 'k',
+                    ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the Push method.
+     *
+     * global push with watch mode
+     */
+    public function snippetForPush1(): void
+    {
+        // >SEPARATOR push global push with watch mode
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->push(
+            '<YOUR_INDEX_NAME>',
+            ['action' => 'addObject',
+                'records' => [
+                    ['key' => 'bar',
+                        'foo' => '1',
+                        'objectID' => 'o',
+                    ],
+
+                    ['key' => 'baz',
+                        'foo' => '2',
+                        'objectID' => 'k',
+                    ],
+                ],
+            ],
+            true,
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the PushTask method.
      *
      * pushTask

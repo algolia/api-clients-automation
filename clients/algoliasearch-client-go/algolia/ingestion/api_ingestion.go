@@ -5480,6 +5480,172 @@ func (c *APIClient) ListTransformations(r ApiListTransformationsRequest, opts ..
 	return returnValue, nil
 }
 
+func (r *ApiPushRequest) UnmarshalJSON(b []byte) error {
+	req := map[string]json.RawMessage{}
+	err := json.Unmarshal(b, &req)
+	if err != nil {
+		return fmt.Errorf("cannot unmarshal request: %w", err)
+	}
+	if v, ok := req["indexName"]; ok {
+		err = json.Unmarshal(v, &r.indexName)
+		if err != nil {
+			err = json.Unmarshal(b, &r.indexName)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal indexName: %w", err)
+			}
+		}
+	}
+	if v, ok := req["pushTaskPayload"]; ok {
+		err = json.Unmarshal(v, &r.pushTaskPayload)
+		if err != nil {
+			err = json.Unmarshal(b, &r.pushTaskPayload)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal pushTaskPayload: %w", err)
+			}
+		}
+	} else {
+		err = json.Unmarshal(b, &r.pushTaskPayload)
+		if err != nil {
+			return fmt.Errorf("cannot unmarshal body parameter pushTaskPayload: %w", err)
+		}
+	}
+	if v, ok := req["watch"]; ok {
+		err = json.Unmarshal(v, &r.watch)
+		if err != nil {
+			err = json.Unmarshal(b, &r.watch)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal watch: %w", err)
+			}
+		}
+	}
+
+	return nil
+}
+
+// ApiPushRequest represents the request with all the parameters for the API call.
+type ApiPushRequest struct {
+	indexName       string
+	pushTaskPayload *PushTaskPayload
+	watch           *bool
+}
+
+// NewApiPushRequest creates an instance of the ApiPushRequest to be used for the API call.
+func (c *APIClient) NewApiPushRequest(indexName string, pushTaskPayload *PushTaskPayload) ApiPushRequest {
+	return ApiPushRequest{
+		indexName:       indexName,
+		pushTaskPayload: pushTaskPayload,
+	}
+}
+
+// WithWatch adds the watch to the ApiPushRequest and returns the request for chaining.
+func (r ApiPushRequest) WithWatch(watch bool) ApiPushRequest {
+	r.watch = &watch
+	return r
+}
+
+/*
+Push calls the API and returns the raw response from it.
+
+	  Push a `batch` request payload through the Pipeline. You can check the status of your request with the observability endpoints.
+
+	    Required API Key ACLs:
+	    - addObject
+	    - deleteIndex
+	    - editSettings
+
+	Request can be constructed by NewApiPushRequest with parameters below.
+	  @param indexName string - Name of the index on which to perform the operation.
+	  @param pushTaskPayload PushTaskPayload - Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+	  @param watch bool - When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
+*/
+func (c *APIClient) PushWithHTTPInfo(r ApiPushRequest, opts ...RequestOption) (*http.Response, []byte, error) {
+	requestPath := "/1/push/{indexName}"
+	requestPath = strings.ReplaceAll(requestPath, "{indexName}", url.PathEscape(utils.ParameterToString(r.indexName)))
+
+	if r.indexName == "" {
+		return nil, nil, reportError("Parameter `indexName` is required when calling `Push`.")
+	}
+
+	if r.pushTaskPayload == nil {
+		return nil, nil, reportError("Parameter `pushTaskPayload` is required when calling `Push`.")
+	}
+
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+		timeouts: transport.RequestConfiguration{
+			ReadTimeout:    utils.ToPtr(180000 * time.Millisecond),
+			WriteTimeout:   utils.ToPtr(180000 * time.Millisecond),
+			ConnectTimeout: utils.ToPtr(180000 * time.Millisecond),
+		},
+	}
+
+	if !utils.IsNilOrEmpty(r.watch) {
+		conf.queryParams.Set("watch", utils.QueryParameterToString(*r.watch))
+	}
+
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	// body params
+	postBody = r.pushTaskPayload
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.headerParams, conf.queryParams)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return c.callAPI(req, false, conf.timeouts)
+}
+
+/*
+Push casts the HTTP response body to a defined struct.
+
+Push a `batch` request payload through the Pipeline. You can check the status of your request with the observability endpoints.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
+
+Request can be constructed by NewApiPushRequest with parameters below.
+
+	@param indexName string - Name of the index on which to perform the operation.
+	@param pushTaskPayload PushTaskPayload - Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+	@param watch bool - When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+	@return WatchResponse
+*/
+func (c *APIClient) Push(r ApiPushRequest, opts ...RequestOption) (*WatchResponse, error) {
+	var returnValue *WatchResponse
+
+	res, resBody, err := c.PushWithHTTPInfo(r, opts...)
+	if err != nil {
+		return returnValue, err
+	}
+	if res == nil {
+		return returnValue, reportError("res is nil")
+	}
+
+	if res.StatusCode >= 300 {
+		return returnValue, c.decodeError(res, resBody)
+	}
+
+	err = c.decode(&returnValue, resBody)
+	if err != nil {
+		return returnValue, reportError("cannot decode result: %w", err)
+	}
+
+	return returnValue, nil
+}
+
 func (r *ApiPushTaskRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)

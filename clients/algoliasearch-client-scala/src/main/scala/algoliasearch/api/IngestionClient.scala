@@ -1203,6 +1203,50 @@ class IngestionClient(
     execute[ListTransformationsResponse](request, requestOptions)
   }
 
+  /** Push a `batch` request payload through the Pipeline. You can check the status of your request with the
+    * observability endpoints.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param pushTaskPayload
+    *   Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+    * @param watch
+    *   When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished
+    *   before responding.
+    */
+  def push(
+      indexName: String,
+      pushTaskPayload: PushTaskPayload,
+      watch: Option[Boolean] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[WatchResponse] = Future {
+    requireNotNull(indexName, "Parameter `indexName` is required when calling `push`.")
+    requireNotNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `push`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/1/push/${escape(indexName)}")
+      .withBody(pushTaskPayload)
+      .withQueryParameter("watch", watch)
+      .build()
+    execute[WatchResponse](
+      request,
+      Some(
+        RequestOptions(
+          writeTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+          readTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+          connectTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS))
+        ) + requestOptions
+      )
+    )
+  }
+
   /** Push a `batch` request payload through the Pipeline. You can check the status of task pushes with the
     * observability endpoints.
     *

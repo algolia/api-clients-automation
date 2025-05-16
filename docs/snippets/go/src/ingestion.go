@@ -1689,6 +1689,66 @@ func SnippetForListTransformationsOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForPushOfIngestion() {
+	/*
+	   Snippet for the push method.
+
+	   global push
+	*/
+
+	// >SEPARATOR push global push
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.Push(client.NewApiPushRequest(
+		"<YOUR_INDEX_NAME>",
+		ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
+			[]ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForPushOfIngestion1() {
+	/*
+	   Snippet for the push method.
+
+	   global push with watch mode
+	*/
+
+	// >SEPARATOR push global push with watch mode
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.Push(client.NewApiPushRequest(
+		"<YOUR_INDEX_NAME>",
+		ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
+			[]ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})).WithWatch(true))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForPushTaskOfIngestion() {
 	/*
 	   Snippet for the pushTask method.

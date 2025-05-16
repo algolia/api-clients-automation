@@ -867,6 +867,57 @@ describe('listTransformations', () => {
   });
 });
 
+describe('push', () => {
+  test('global push', async () => {
+    const req = (await client.push({
+      indexName: 'foo',
+      pushTaskPayload: {
+        action: 'addObject',
+        records: [
+          { key: 'bar', foo: '1', objectID: 'o' },
+          { key: 'baz', foo: '2', objectID: 'k' },
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/push/foo');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      action: 'addObject',
+      records: [
+        { key: 'bar', foo: '1', objectID: 'o' },
+        { key: 'baz', foo: '2', objectID: 'k' },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('global push with watch mode', async () => {
+    const req = (await client.push({
+      indexName: 'bar',
+      pushTaskPayload: {
+        action: 'addObject',
+        records: [
+          { key: 'bar', foo: '1', objectID: 'o' },
+          { key: 'baz', foo: '2', objectID: 'k' },
+        ],
+      },
+      watch: true,
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/push/bar');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      action: 'addObject',
+      records: [
+        { key: 'bar', foo: '1', objectID: 'o' },
+        { key: 'baz', foo: '2', objectID: 'k' },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual({ watch: 'true' });
+  });
+});
+
 describe('pushTask', () => {
   test('pushTask', async () => {
     const req = (await client.pushTask({

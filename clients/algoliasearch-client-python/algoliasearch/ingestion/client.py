@@ -3566,6 +3566,127 @@ class IngestionClient:
         )
         return resp.deserialize(ListTransformationsResponse, resp.raw_data)
 
+    async def push_with_http_info(
+        self,
+        index_name: Annotated[
+            StrictStr,
+            Field(description="Name of the index on which to perform the operation."),
+        ],
+        push_task_payload: Union[
+            Annotated[
+                PushTaskPayload,
+                Field(
+                    description="Request body of a Search API `batch` request that will be pushed in the Connectors pipeline."
+                ),
+            ],
+            dict[str, Any],
+        ],
+        watch: Annotated[
+            Optional[StrictBool],
+            Field(
+                description="When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding."
+            ),
+        ] = None,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> ApiResponse[str]:
+        """
+        Push a `batch` request payload through the Pipeline. You can check the status of your request with the observability endpoints.
+
+        Required API Key ACLs:
+          - addObject
+                  - deleteIndex
+                  - editSettings
+
+        :param index_name: Name of the index on which to perform the operation. (required)
+        :type index_name: str
+        :param push_task_payload: Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
+        :type push_task_payload: PushTaskPayload
+        :param watch: When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+        :type watch: bool
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the raw algoliasearch 'APIResponse' object.
+        """
+
+        if index_name is None:
+            raise ValueError("Parameter `index_name` is required when calling `push`.")
+
+        if push_task_payload is None:
+            raise ValueError(
+                "Parameter `push_task_payload` is required when calling `push`."
+            )
+
+        _query_parameters: Dict[str, Any] = {}
+
+        if watch is not None:
+            _query_parameters["watch"] = watch
+
+        _data = {}
+        if push_task_payload is not None:
+            _data = push_task_payload
+
+        return await self._transporter.request(
+            verb=Verb.POST,
+            path="/1/push/{indexName}".replace(
+                "{indexName}", quote(str(index_name), safe="")
+            ),
+            request_options=self._request_options.merge(
+                query_parameters=_query_parameters,
+                data=dumps(body_serializer(_data)),
+                timeouts={
+                    "read": 180000,
+                    "write": 180000,
+                    "connect": 180000,
+                },
+                user_request_options=request_options,
+            ),
+            use_read_transporter=False,
+        )
+
+    async def push(
+        self,
+        index_name: Annotated[
+            StrictStr,
+            Field(description="Name of the index on which to perform the operation."),
+        ],
+        push_task_payload: Union[
+            Annotated[
+                PushTaskPayload,
+                Field(
+                    description="Request body of a Search API `batch` request that will be pushed in the Connectors pipeline."
+                ),
+            ],
+            dict[str, Any],
+        ],
+        watch: Annotated[
+            Optional[StrictBool],
+            Field(
+                description="When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding."
+            ),
+        ] = None,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> WatchResponse:
+        """
+        Push a `batch` request payload through the Pipeline. You can check the status of your request with the observability endpoints.
+
+        Required API Key ACLs:
+          - addObject
+                  - deleteIndex
+                  - editSettings
+
+        :param index_name: Name of the index on which to perform the operation. (required)
+        :type index_name: str
+        :param push_task_payload: Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
+        :type push_task_payload: PushTaskPayload
+        :param watch: When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+        :type watch: bool
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the deserialized response in a 'WatchResponse' result object.
+        """
+        resp = await self.push_with_http_info(
+            index_name, push_task_payload, watch, request_options
+        )
+        return resp.deserialize(WatchResponse, resp.raw_data)
+
     async def push_task_with_http_info(
         self,
         task_id: Annotated[
@@ -8473,6 +8594,127 @@ class IngestionClientSync:
             items_per_page, page, sort, order, request_options
         )
         return resp.deserialize(ListTransformationsResponse, resp.raw_data)
+
+    def push_with_http_info(
+        self,
+        index_name: Annotated[
+            StrictStr,
+            Field(description="Name of the index on which to perform the operation."),
+        ],
+        push_task_payload: Union[
+            Annotated[
+                PushTaskPayload,
+                Field(
+                    description="Request body of a Search API `batch` request that will be pushed in the Connectors pipeline."
+                ),
+            ],
+            dict[str, Any],
+        ],
+        watch: Annotated[
+            Optional[StrictBool],
+            Field(
+                description="When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding."
+            ),
+        ] = None,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> ApiResponse[str]:
+        """
+        Push a `batch` request payload through the Pipeline. You can check the status of your request with the observability endpoints.
+
+        Required API Key ACLs:
+          - addObject
+                  - deleteIndex
+                  - editSettings
+
+        :param index_name: Name of the index on which to perform the operation. (required)
+        :type index_name: str
+        :param push_task_payload: Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
+        :type push_task_payload: PushTaskPayload
+        :param watch: When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+        :type watch: bool
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the raw algoliasearch 'APIResponse' object.
+        """
+
+        if index_name is None:
+            raise ValueError("Parameter `index_name` is required when calling `push`.")
+
+        if push_task_payload is None:
+            raise ValueError(
+                "Parameter `push_task_payload` is required when calling `push`."
+            )
+
+        _query_parameters: Dict[str, Any] = {}
+
+        if watch is not None:
+            _query_parameters["watch"] = watch
+
+        _data = {}
+        if push_task_payload is not None:
+            _data = push_task_payload
+
+        return self._transporter.request(
+            verb=Verb.POST,
+            path="/1/push/{indexName}".replace(
+                "{indexName}", quote(str(index_name), safe="")
+            ),
+            request_options=self._request_options.merge(
+                query_parameters=_query_parameters,
+                data=dumps(body_serializer(_data)),
+                timeouts={
+                    "read": 180000,
+                    "write": 180000,
+                    "connect": 180000,
+                },
+                user_request_options=request_options,
+            ),
+            use_read_transporter=False,
+        )
+
+    def push(
+        self,
+        index_name: Annotated[
+            StrictStr,
+            Field(description="Name of the index on which to perform the operation."),
+        ],
+        push_task_payload: Union[
+            Annotated[
+                PushTaskPayload,
+                Field(
+                    description="Request body of a Search API `batch` request that will be pushed in the Connectors pipeline."
+                ),
+            ],
+            dict[str, Any],
+        ],
+        watch: Annotated[
+            Optional[StrictBool],
+            Field(
+                description="When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding."
+            ),
+        ] = None,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> WatchResponse:
+        """
+        Push a `batch` request payload through the Pipeline. You can check the status of your request with the observability endpoints.
+
+        Required API Key ACLs:
+          - addObject
+                  - deleteIndex
+                  - editSettings
+
+        :param index_name: Name of the index on which to perform the operation. (required)
+        :type index_name: str
+        :param push_task_payload: Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
+        :type push_task_payload: PushTaskPayload
+        :param watch: When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+        :type watch: bool
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the deserialized response in a 'WatchResponse' result object.
+        """
+        resp = self.push_with_http_info(
+            index_name, push_task_payload, watch, request_options
+        )
+        return resp.deserialize(WatchResponse, resp.raw_data)
 
     def push_task_with_http_info(
         self,

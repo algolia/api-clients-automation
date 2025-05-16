@@ -1378,6 +1378,99 @@ public class SnippetIngestionClient
   }
 
   /// <summary>
+  /// Snippet for the Push method.
+  ///
+  /// global push
+  /// </summary>
+  public async Task SnippetForIngestionClientPush()
+  {
+    // >SEPARATOR push global push
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+    );
+
+    // Call the API
+    var response = await client.PushAsync(
+      "<YOUR_INDEX_NAME>",
+      new PushTaskPayload
+      {
+        Action = Enum.Parse<Action>("AddObject"),
+        Records = new List<PushTaskRecords>
+        {
+          new PushTaskRecords
+          {
+            ObjectID = "o",
+            AdditionalProperties = new Dictionary<string, object>
+            {
+              { "key", "bar" },
+              { "foo", "1" },
+            },
+          },
+          new PushTaskRecords
+          {
+            ObjectID = "k",
+            AdditionalProperties = new Dictionary<string, object>
+            {
+              { "key", "baz" },
+              { "foo", "2" },
+            },
+          },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the Push method.
+  ///
+  /// global push with watch mode
+  /// </summary>
+  public async Task SnippetForIngestionClientPush1()
+  {
+    // >SEPARATOR push global push with watch mode
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+    );
+
+    // Call the API
+    var response = await client.PushAsync(
+      "<YOUR_INDEX_NAME>",
+      new PushTaskPayload
+      {
+        Action = Enum.Parse<Action>("AddObject"),
+        Records = new List<PushTaskRecords>
+        {
+          new PushTaskRecords
+          {
+            ObjectID = "o",
+            AdditionalProperties = new Dictionary<string, object>
+            {
+              { "key", "bar" },
+              { "foo", "1" },
+            },
+          },
+          new PushTaskRecords
+          {
+            ObjectID = "k",
+            AdditionalProperties = new Dictionary<string, object>
+            {
+              { "key", "baz" },
+              { "foo", "2" },
+            },
+          },
+        },
+      },
+      true
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the PushTask method.
   ///
   /// pushTask

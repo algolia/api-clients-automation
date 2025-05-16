@@ -3120,6 +3120,162 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
+   * Push a `batch` request payload through the Pipeline. You can check the status of your request
+   * with the observability endpoints.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public WatchResponse push(
+    @Nonnull String indexName,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    Boolean watch,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(pushAsync(indexName, pushTaskPayload, watch, requestOptions));
+  }
+
+  /**
+   * Push a `batch` request payload through the Pipeline. You can check the status of your request
+   * with the observability endpoints.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public WatchResponse push(@Nonnull String indexName, @Nonnull PushTaskPayload pushTaskPayload, Boolean watch)
+    throws AlgoliaRuntimeException {
+    return this.push(indexName, pushTaskPayload, watch, null);
+  }
+
+  /**
+   * Push a `batch` request payload through the Pipeline. You can check the status of your request
+   * with the observability endpoints.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public WatchResponse push(@Nonnull String indexName, @Nonnull PushTaskPayload pushTaskPayload, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.push(indexName, pushTaskPayload, null, requestOptions);
+  }
+
+  /**
+   * Push a `batch` request payload through the Pipeline. You can check the status of your request
+   * with the observability endpoints.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public WatchResponse push(@Nonnull String indexName, @Nonnull PushTaskPayload pushTaskPayload) throws AlgoliaRuntimeException {
+    return this.push(indexName, pushTaskPayload, null, null);
+  }
+
+  /**
+   * (asynchronously) Push a `batch` request payload through the Pipeline. You can check the status
+   * of your request with the observability endpoints.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<WatchResponse> pushAsync(
+    @Nonnull String indexName,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    Boolean watch,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `push`.");
+
+    Parameters.requireNonNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `push`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/push/{indexName}", indexName)
+      .setMethod("POST")
+      .setBody(pushTaskPayload)
+      .addQueryParameter("watch", watch)
+      .build();
+    return executeAsync(
+      request,
+      new RequestOptions()
+        .setReadTimeout(Duration.ofMillis(180000L))
+        .setWriteTimeout(Duration.ofMillis(180000L))
+        .setConnectTimeout(Duration.ofMillis(180000L))
+        .mergeRight(requestOptions),
+      new TypeReference<WatchResponse>() {}
+    );
+  }
+
+  /**
+   * (asynchronously) Push a `batch` request payload through the Pipeline. You can check the status
+   * of your request with the observability endpoints.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<WatchResponse> pushAsync(@Nonnull String indexName, @Nonnull PushTaskPayload pushTaskPayload, Boolean watch)
+    throws AlgoliaRuntimeException {
+    return this.pushAsync(indexName, pushTaskPayload, watch, null);
+  }
+
+  /**
+   * (asynchronously) Push a `batch` request payload through the Pipeline. You can check the status
+   * of your request with the observability endpoints.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<WatchResponse> pushAsync(
+    @Nonnull String indexName,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.pushAsync(indexName, pushTaskPayload, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Push a `batch` request payload through the Pipeline. You can check the status
+   * of your request with the observability endpoints.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
+   *     Connectors pipeline. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<WatchResponse> pushAsync(@Nonnull String indexName, @Nonnull PushTaskPayload pushTaskPayload)
+    throws AlgoliaRuntimeException {
+    return this.pushAsync(indexName, pushTaskPayload, null, null);
+  }
+
+  /**
    * Push a `batch` request payload through the Pipeline. You can check the status of task pushes
    * with the observability endpoints.
    *

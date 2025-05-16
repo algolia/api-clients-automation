@@ -1791,6 +1791,72 @@ class IngestionClient
     }
 
     /**
+     * Push a `batch` request payload through the Pipeline. You can check the status of your request with the observability endpoints.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
+     *
+     * @param string                $indexName       Name of the index on which to perform the operation. (required)
+     * @param array|PushTaskPayload $pushTaskPayload Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
+     *                                               - $pushTaskPayload['action'] => (array)  (required)
+     *                                               - $pushTaskPayload['records'] => (array)  (required)
+     *
+     * @see PushTaskPayload
+     *
+     * @param bool  $watch          When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding. (optional)
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     *
+     * @return array<string, mixed>|WatchResponse
+     */
+    public function push($indexName, $pushTaskPayload, $watch = null, $requestOptions = [])
+    {
+        // verify the required parameter 'indexName' is set
+        if (!isset($indexName)) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `push`.'
+            );
+        }
+        // verify the required parameter 'pushTaskPayload' is set
+        if (!isset($pushTaskPayload)) {
+            throw new \InvalidArgumentException(
+                'Parameter `pushTaskPayload` is required when calling `push`.'
+            );
+        }
+
+        $resourcePath = '/1/push/{indexName}';
+        $queryParameters = [];
+        $headers = [];
+        $httpBody = $pushTaskPayload;
+
+        if (null !== $watch) {
+            $queryParameters['watch'] = $watch;
+        }
+
+        // path params
+        if (null !== $indexName) {
+            $resourcePath = str_replace(
+                '{indexName}',
+                ObjectSerializer::toPathValue($indexName),
+                $resourcePath
+            );
+        }
+
+        if (!isset($requestOptions['readTimeout'])) {
+            $requestOptions['readTimeout'] = 180;
+        }
+        if (!isset($requestOptions['writeTimeout'])) {
+            $requestOptions['writeTimeout'] = 180;
+        }
+        if (!isset($requestOptions['connectTimeout'])) {
+            $requestOptions['connectTimeout'] = 180;
+        }
+
+        return $this->sendRequest('POST', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
+    }
+
+    /**
      * Push a `batch` request payload through the Pipeline. You can check the status of task pushes with the observability endpoints.
      *
      * Required API Key ACLs:

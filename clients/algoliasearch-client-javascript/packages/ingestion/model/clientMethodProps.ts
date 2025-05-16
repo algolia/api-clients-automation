@@ -581,6 +581,24 @@ export type ListTransformationsProps = {
 };
 
 /**
+ * Properties for the `push` method.
+ */
+export type PushProps = {
+  /**
+   * Name of the index on which to perform the operation.
+   */
+  indexName: string;
+  /**
+   * Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+   */
+  pushTaskPayload: PushTaskPayload;
+  /**
+   * When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+   */
+  watch?: boolean;
+};
+
+/**
  * Properties for the `pushTask` method.
  */
 export type PushTaskProps = {

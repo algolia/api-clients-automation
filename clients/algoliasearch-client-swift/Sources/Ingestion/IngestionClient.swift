@@ -2546,6 +2546,91 @@ open class IngestionClient {
         )
     }
 
+    /// - parameter indexName: (path) Name of the index on which to perform the operation.
+    /// - parameter pushTaskPayload: (body) Request body of a Search API `batch` request that will be pushed in the
+    /// Connectors pipeline.
+    /// - parameter watch: (query) When provided, the push operation will be synchronous and the API will wait for the
+    /// ingestion to be finished before responding. (optional)
+    /// - returns: WatchResponse
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func push(
+        indexName: String,
+        pushTaskPayload: PushTaskPayload,
+        watch: Bool? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> WatchResponse {
+        let response: Response<WatchResponse> = try await pushWithHTTPInfo(
+            indexName: indexName,
+            pushTaskPayload: pushTaskPayload,
+            watch: watch,
+            requestOptions: requestOptions
+        )
+
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    // Push a `batch` request payload through the Pipeline. You can check the status of your request with the
+    // observability endpoints.
+    // Required API Key ACLs:
+    //  - addObject
+    //  - deleteIndex
+    //  - editSettings
+    //
+    // - parameter indexName: (path) Name of the index on which to perform the operation.
+    //
+    // - parameter pushTaskPayload: (body) Request body of a Search API `batch` request that will be pushed in the
+    // Connectors pipeline.
+    //
+    // - parameter watch: (query) When provided, the push operation will be synchronous and the API will wait for the
+    // ingestion to be finished before responding. (optional)
+    // - returns: RequestBuilder<WatchResponse>
+
+    open func pushWithHTTPInfo(
+        indexName: String,
+        pushTaskPayload: PushTaskPayload,
+        watch: Bool? = nil,
+        requestOptions userRequestOptions: RequestOptions? = nil
+    ) async throws -> Response<WatchResponse> {
+        guard !indexName.isEmpty else {
+            throw AlgoliaError.invalidArgument("indexName", "push")
+        }
+
+        var resourcePath = "/1/push/{indexName}"
+        let indexNamePreEscape = "\(APIHelper.mapValueToPathItem(indexName))"
+        let indexNamePostEscape = indexNamePreEscape
+            .addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(
+            of: "{indexName}",
+            with: indexNamePostEscape,
+            options: .literal,
+            range: nil
+        )
+        let body = pushTaskPayload
+        let queryParameters: [String: Any?] = [
+            "watch": watch?.encodeToJSON(),
+        ]
+
+        let nillableHeaders: [String: Any?]? = nil
+
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+
+        return try await self.transporter.send(
+            method: "POST",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(
+                headers: headers,
+                queryParameters: queryParameters,
+                readTimeout: 180,
+                writeTimeout: 180
+            ) + userRequestOptions
+        )
+    }
+
     /// - parameter taskID: (path) Unique identifier of a task.
     /// - parameter pushTaskPayload: (body) Request body of a Search API `batch` request that will be pushed in the
     /// Connectors pipeline.

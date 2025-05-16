@@ -922,6 +922,38 @@ public class IngestionClient(
   }
 
   /**
+   * Push a `batch` request payload through the Pipeline. You can check the status of your request with the observability endpoints.
+   *
+   * Required API Key ACLs:
+   *   - addObject
+   *   - deleteIndex
+   *   - editSettings
+   * @param indexName Name of the index on which to perform the operation.
+   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+   * @param watch When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun push(indexName: String, pushTaskPayload: PushTaskPayload, watch: Boolean? = null, requestOptions: RequestOptions? = null): WatchResponse {
+    require(indexName.isNotBlank()) { "Parameter `indexName` is required when calling `push`." }
+    val requestConfig = RequestConfig(
+      method = RequestMethod.POST,
+      path = listOf("1", "push", "$indexName"),
+      query = buildMap {
+        watch?.let { put("watch", it) }
+      },
+      body = pushTaskPayload,
+    )
+    return requester.execute(
+      requestConfig = requestConfig,
+      requestOptions = RequestOptions(
+        readTimeout = 180000.milliseconds,
+        writeTimeout = 180000.milliseconds,
+        connectTimeout = 180000.milliseconds,
+      ) + requestOptions,
+    )
+  }
+
+  /**
    * Push a `batch` request payload through the Pipeline. You can check the status of task pushes with the observability endpoints.
    *
    * Required API Key ACLs:

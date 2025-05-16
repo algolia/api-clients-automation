@@ -97,6 +97,7 @@ import type {
   ListTasksProps,
   ListTasksV1Props,
   ListTransformationsProps,
+  PushProps,
   PushTaskProps,
   RunSourceProps,
   RunTaskProps,
@@ -1700,6 +1701,63 @@ export function createIngestionClient({
         path: requestPath,
         queryParameters,
         headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Push a `batch` request payload through the Pipeline. You can check the status of your request with the observability endpoints.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
+     * @param push - The push object.
+     * @param push.indexName - Name of the index on which to perform the operation.
+     * @param push.pushTaskPayload - Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+     * @param push.watch - When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    push({ indexName, pushTaskPayload, watch }: PushProps, requestOptions?: RequestOptions): Promise<WatchResponse> {
+      if (!indexName) {
+        throw new Error('Parameter `indexName` is required when calling `push`.');
+      }
+
+      if (!pushTaskPayload) {
+        throw new Error('Parameter `pushTaskPayload` is required when calling `push`.');
+      }
+
+      if (!pushTaskPayload.action) {
+        throw new Error('Parameter `pushTaskPayload.action` is required when calling `push`.');
+      }
+      if (!pushTaskPayload.records) {
+        throw new Error('Parameter `pushTaskPayload.records` is required when calling `push`.');
+      }
+
+      const requestPath = '/1/push/{indexName}'.replace('{indexName}', encodeURIComponent(indexName));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (watch !== undefined) {
+        queryParameters['watch'] = watch.toString();
+      }
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: pushTaskPayload,
+      };
+
+      requestOptions = {
+        timeouts: {
+          connect: 180000,
+          read: 180000,
+          write: 180000,
+          ...requestOptions?.timeouts,
+        },
       };
 
       return transporter.request(request, requestOptions);
