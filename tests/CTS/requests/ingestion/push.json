@@ -1,0 +1,86 @@
+[
+  {
+    "testName": "global push",
+    "parameters": {
+      "indexName": "foo",
+      "pushTaskPayload": {
+        "action": "addObject",
+        "records": [
+          {
+            "key": "bar",
+            "foo": "1",
+            "objectID": "o"
+          },
+          {
+            "key": "baz",
+            "foo": "2",
+            "objectID": "k"
+          }
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/push/foo",
+      "method": "POST",
+      "body": {
+        "action": "addObject",
+        "records": [
+          {
+            "key": "bar",
+            "foo": "1",
+            "objectID": "o"
+          },
+          {
+            "key": "baz",
+            "foo": "2",
+            "objectID": "k"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "testName": "global push with watch mode",
+    "parameters": {
+      "indexName": "bar",
+      "pushTaskPayload": {
+        "action": "addObject",
+        "records": [
+          {
+            "key": "bar",
+            "foo": "1",
+            "objectID": "o"
+          },
+          {
+            "key": "baz",
+            "foo": "2",
+            "objectID": "k"
+          }
+        ]
+      },
+      "watch": true
+    },
+    "request": {
+      "path": "/1/push/bar",
+      "method": "POST",
+      "queryParameters": {
+        "watch": "true"
+      },
+      "body": {
+        "action": "addObject",
+        "records": [
+          {
+            "key": "bar",
+            "foo": "1",
+            "objectID": "o"
+          },
+          {
+            "key": "baz",
+            "foo": "2",
+            "objectID": "k"
+          }
+        ]
+      }
+    }
+  }
+]

@@ -83,3 +83,11 @@ orderKeys:
   description: Ascending or descending sort order.
   default: desc
   enum: [asc, desc]
+
+watch:
+  name: watch
+  in: query
+  description: When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+  required: false
+  schema:
+    type: boolean

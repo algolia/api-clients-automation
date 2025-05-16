@@ -112,6 +112,9 @@ paths:
   /{path}:
     $ref: '../common/paths/customRequest.yml'
 
+  /1/push/{indexName}:
+    $ref: 'paths/push.yml'
+
   # authentications API.
   /1/authentications:
     $ref: 'paths/authentications/authentications.yml'
