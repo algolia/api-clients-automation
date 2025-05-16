@@ -1,5 +1,6 @@
 [
   {
+    "testName": "global push",
     "parameters": {
       "indexName": "foo",
       "pushTaskPayload": {
@@ -39,7 +40,7 @@
     }
   },
   {
-    "testName": "allows for watch query parameter",
+    "testName": "global push with watch mode",
     "parameters": {
       "indexName": "bar",
       "pushTaskPayload": {
