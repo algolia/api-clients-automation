@@ -32,7 +32,7 @@ export type Algoliasearch = SearchClient & {
   // Bridge helpers to expose along with the search endpoints at the root of the API client
 
   /**
-   * Helper: Similar to the `saveObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `taskID` and `region` must've been passed to the client instantiation method.
+   * Helper: Similar to the `saveObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client instantiation method.
    *
    * @summary Save objects to an Algolia index by leveraging the Transformation pipeline setup in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
    * @param saveObjects - The `saveObjects` object.
@@ -42,13 +42,10 @@ export type Algoliasearch = SearchClient & {
    * @param saveObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
    * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
    */
-  saveObjectsWithTransformation: (
-    { indexName, objects, waitForTasks, batchSize }: SaveObjectsOptions,
-    requestOptions?: RequestOptions,
-  ) => Promise<WatchResponse>;
+  saveObjectsWithTransformation: (options: SaveObjectsOptions, requestOptions?: RequestOptions) => Promise<WatchResponse>;
 
   /**
-   * Helper: Similar to the `partialUpdateObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `taskID` and `region` must've been passed to the client instantiation method.
+   * Helper: Similar to the `partialUpdateObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client instantiation method.
    *
    * @summary Save objects to an Algolia index by leveraging the Transformation pipeline setup in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
    * @param partialUpdateObjects - The `partialUpdateObjects` object.
@@ -59,18 +56,12 @@ export type Algoliasearch = SearchClient & {
    * @param partialUpdateObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
    * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
    */
-  partialUpdateObjectsWithTransformation: (
-    { indexName, objects, createIfNotExists, waitForTasks, batchSize }: PartialUpdateObjectsOptions,
-    requestOptions?: RequestOptions,
-  ) => Promise<WatchResponse>;
+  partialUpdateObjectsWithTransformation: (options: PartialUpdateObjectsOptions, requestOptions?: RequestOptions) => Promise<WatchResponse>;
 };
 
 export type TransformationOptions = {
   // When provided, a second transporter will be created in order to leverage the `*WithTransformation` methods exposed by the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
   transformation?: {
-    // The taskID returned by the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) setup.
-    taskID: string;
-
     // The region of your Algolia application ID, used to target the correct hosts of the transformation service.
     region: IngestionRegion;
   };
@@ -94,17 +85,11 @@ export function algoliasearch(
   let ingestionTransporter: IngestionClient | undefined;
 
   if (options?.transformation) {
-    if (!options.transformation.taskID) {
-      throw new Error('`taskID` must be provided when leveraging the transformation pipeline');
-    }
-
     if (!options.transformation.region) {
       throw new Error('`region` must be provided when leveraging the transformation pipeline');
     }
 
     ingestionTransporter = ingestionClient(appId, apiKey, options.transformation.region, options);
-
-    ingestionTransporter.addAlgoliaAgent("Ingestion via Algoliasearch");
   }
 
   return {
@@ -112,22 +97,15 @@ export function algoliasearch(
 
     async saveObjectsWithTransformation({ objects, waitForTasks }, requestOptions): Promise<WatchResponse> {
       if (!ingestionTransporter) {
-        throw new Error(
-          '`transformation.taskID` and `transformation.region` must be provided at client instantiation before calling this method.',
-        );
-      }
-
-      if (!options?.transformation?.taskID) {
-        throw new Error('`taskID` must be provided when leveraging the transformation pipeline');
+        throw new Error('`transformation.region` must be provided at client instantiation before calling this method.');
       }
 
       if (!options?.transformation?.region) {
         throw new Error('`region` must be provided when leveraging the transformation pipeline');
       }
 
-      return ingestionTransporter?.pushTask(
+      return ingestionTransporter?.push(
         {
-          taskID: options?.transformation?.taskID,
           watch: waitForTasks,
           pushTaskPayload: {
             action: 'addObject',
@@ -143,22 +121,15 @@ export function algoliasearch(
       requestOptions,
     ): Promise<WatchResponse> {
       if (!ingestionTransporter) {
-        throw new Error(
-          '`transformation.taskID` and `transformation.region` must be provided at client instantiation before calling this method.',
-        );
-      }
-
-      if (!options?.transformation?.taskID) {
-        throw new Error('`taskID` must be provided when leveraging the transformation pipeline');
+        throw new Error('`transformation.region` must be provided at client instantiation before calling this method.');
       }
 
       if (!options?.transformation?.region) {
         throw new Error('`region` must be provided when leveraging the transformation pipeline');
       }
 
-      return ingestionTransporter?.pushTask(
+      return ingestionTransporter?.push(
         {
-          taskID: options?.transformation?.taskID,
           watch: waitForTasks,
           pushTaskPayload: {
             action: createIfNotExists ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate',

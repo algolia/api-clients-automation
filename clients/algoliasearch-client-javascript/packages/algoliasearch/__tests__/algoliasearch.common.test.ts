@@ -159,15 +159,18 @@ describe('api', () => {
     });
 
     test('throws when calling the transformation methods without init parameters', async () => {
-      await expect(client.saveObjectsWithTransformation({
+      await expect(
+        client.saveObjectsWithTransformation({
           indexName: 'foo',
           objects: [{ objectID: 'bar', baz: 42 }],
           waitForTasks: true,
-        })).rejects.toThrow(
+        }),
+      ).rejects.toThrow(
         '`transformation.taskID` and `transformation.region` must be provided at client instantiation before calling this method.',
       );
 
-      await expect(client.partialUpdateObjectsWithTransformation({
+      await expect(
+        client.partialUpdateObjectsWithTransformation({
           indexName: 'foo',
           objects: [{ objectID: 'bar', baz: 42 }],
           waitForTasks: true,
@@ -180,7 +183,7 @@ describe('api', () => {
     test('exposes the transformation methods at the root of the client', async () => {
       const ingestionClient = algoliasearch('APP_ID', 'API_KEY', {
         requester: browserEchoRequester(),
-        transformation: { taskID: "foo", region: "us" }
+        transformation: { taskID: 'foo', region: 'us' },
       });
 
       expect(ingestionClient.saveObjectsWithTransformation).not.toBeUndefined();
@@ -197,13 +200,15 @@ describe('api', () => {
           'x-algolia-api-key': 'API_KEY',
         }),
       );
-      expect(res.url.startsWith("https://data.us.algolia.com/2/tasks/foo/push?watch=true")).toBeTruthy();
+      expect(res.url.startsWith('https://data.us.algolia.com/2/tasks/foo/push?watch=true')).toBeTruthy();
       expect(res.data).toEqual({
-        action: "addObject",
-        records: [{
-          baz: 42,
-          objectID: "bar"
-        }]
+        action: 'addObject',
+        records: [
+          {
+            baz: 42,
+            objectID: 'bar',
+          },
+        ],
       });
       expect(ingestionClient.partialUpdateObjectsWithTransformation).not.toBeUndefined();
 
@@ -220,13 +225,15 @@ describe('api', () => {
           'x-algolia-api-key': 'API_KEY',
         }),
       );
-      expect(res.url.startsWith("https://data.us.algolia.com/2/tasks/foo/push?watch=true")).toBeTruthy();
+      expect(res.url.startsWith('https://data.us.algolia.com/2/tasks/foo/push?watch=true')).toBeTruthy();
       expect(res.data).toEqual({
-        action: "partialUpdateObject",
-        records: [{
-          baz: 42,
-          objectID: "bar"
-        }]
+        action: 'partialUpdateObject',
+        records: [
+          {
+            baz: 42,
+            objectID: 'bar',
+          },
+        ],
       });
 
       res = (await ingestionClient.partialUpdateObjectsWithTransformation({
@@ -241,13 +248,15 @@ describe('api', () => {
           'x-algolia-api-key': 'API_KEY',
         }),
       );
-      expect(res.url.startsWith("https://data.us.algolia.com/2/tasks/foo/push?watch=true")).toBeTruthy();
+      expect(res.url.startsWith('https://data.us.algolia.com/2/tasks/foo/push?watch=true')).toBeTruthy();
       expect(res.data).toEqual({
-        action: "partialUpdateObjectNoCreate",
-        records: [{
-          baz: 42,
-          objectID: "bar"
-        }]
+        action: 'partialUpdateObjectNoCreate',
+        records: [
+          {
+            baz: 42,
+            objectID: 'bar',
+          },
+        ],
       });
     });
   });
