@@ -612,7 +612,7 @@ PushTaskPayload:
   type: object
   properties:
     action:
-      $ref: '../../../../common/schemas/Batch.yml#/action'
+      $ref: '../../../common/schemas/Batch.yml#/action'
     records:
       type: array
       items:
@@ -623,7 +623,7 @@ PushTaskPayload:
           - objectID
         properties:
           objectID:
-            $ref: '../../../../common/parameters.yml#/objectID'
+            $ref: '../../../common/parameters.yml#/objectID'
   required:
     - action
     - records
