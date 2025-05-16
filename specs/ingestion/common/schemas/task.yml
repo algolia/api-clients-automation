@@ -606,3 +606,24 @@ Policies:
       type: integer
       minimum: 1
       maximum: 10
+
+PushTaskPayload:
+  title: pushTaskPayload
+  type: object
+  properties:
+    action:
+      $ref: '../../../../common/schemas/Batch.yml#/action'
+    records:
+      type: array
+      items:
+        title: pushTaskRecords
+        type: object
+        additionalProperties: true
+        required:
+          - objectID
+        properties:
+          objectID:
+            $ref: '../../../../common/parameters.yml#/objectID'
+  required:
+    - action
+    - records
