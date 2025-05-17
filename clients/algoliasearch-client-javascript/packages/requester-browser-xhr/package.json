@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.1",
-    "@types/node": "22.15.17",
+    "@types/node": "22.15.18",
     "jsdom": "26.1.0",
     "publint": "0.3.12",
     "tsup": "8.4.0",
