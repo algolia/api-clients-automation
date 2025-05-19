@@ -134,7 +134,7 @@ async function testAlgoliasearch() {
 
 async function testAlgoliasearchBridgeIngestion() {
   // Init client with appId and apiKey
-  const client = algoliasearch(appId, adminApiKey, { transformation: {taskID: '942f7183-8596-4e51-a887-977c5b362f3d', region: 'eu'}});
+  const client = algoliasearch(appId, adminApiKey, { transformation: { region: 'eu'}});
 
   await client.saveObjectsWithTransformation({indexName: "foo", objects: [{objectID: "foo", data: {baz: "baz", win: 42}}], waitForTasks: true })
 
