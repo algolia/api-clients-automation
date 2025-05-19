@@ -146,7 +146,7 @@ describe('api', () => {
   describe('bridge methods', () => {
     test('throws when missing transformation.region', () => {
       //@ts-expect-error
-      expect(() => algoliasearch('APP_ID', 'API_KEY', { transformation: { taskID: 'foo' } })).toThrow(
+      expect(() => algoliasearch('APP_ID', 'API_KEY', { transformation: { } })).toThrow(
         '`region` must be provided when leveraging the transformation pipeline',
       );
     });
@@ -159,7 +159,7 @@ describe('api', () => {
           waitForTasks: true,
         }),
       ).rejects.toThrow(
-        '`transformation.taskID` and `transformation.region` must be provided at client instantiation before calling this method.',
+        '`transformation.region` must be provided at client instantiation before calling this method.',
       );
 
       await expect(
@@ -169,7 +169,7 @@ describe('api', () => {
           waitForTasks: true,
         }),
       ).rejects.toThrow(
-        '`transformation.taskID` and `transformation.region` must be provided at client instantiation before calling this method.',
+        '`transformation.region` must be provided at client instantiation before calling this method.',
       );
     });
 
