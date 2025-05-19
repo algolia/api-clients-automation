@@ -1646,6 +1646,85 @@ def snippet_for_list_transformations():
     # SEPARATOR<
 
 
+def snippet_for_push():
+    """
+    Snippet for the push method.
+
+    global push
+    """
+    # >SEPARATOR push global push
+    # Initialize the client
+    # In an asynchronous context, you can use IngestionClient instead, which exposes the exact same methods.
+    client = IngestionClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.push(
+        index_name="<YOUR_INDEX_NAME>",
+        push_task_payload={
+            "action": "addObject",
+            "records": [
+                {
+                    "key": "bar",
+                    "foo": "1",
+                    "objectID": "o",
+                },
+                {
+                    "key": "baz",
+                    "foo": "2",
+                    "objectID": "k",
+                },
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_push1():
+    """
+    Snippet for the push method.
+
+    global push with watch mode
+    """
+    # >SEPARATOR push global push with watch mode
+    # Initialize the client
+    # In an asynchronous context, you can use IngestionClient instead, which exposes the exact same methods.
+    client = IngestionClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.push(
+        index_name="<YOUR_INDEX_NAME>",
+        push_task_payload={
+            "action": "addObject",
+            "records": [
+                {
+                    "key": "bar",
+                    "foo": "1",
+                    "objectID": "o",
+                },
+                {
+                    "key": "baz",
+                    "foo": "2",
+                    "objectID": "k",
+                },
+            ],
+        },
+        watch=True,
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_push_task():
     """
     Snippet for the pushTask method.

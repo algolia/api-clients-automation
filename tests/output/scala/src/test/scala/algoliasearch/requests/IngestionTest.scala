@@ -1274,6 +1274,76 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
+  test("global push") {
+    val (client, echo) = testClient()
+    val future = client.push(
+      indexName = "foo",
+      pushTaskPayload = PushTaskPayload(
+        action = Action.withName("addObject"),
+        records = Seq(
+          PushTaskRecords(
+            objectID = "o",
+            additionalProperties = Some(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+          ),
+          PushTaskRecords(
+            objectID = "k",
+            additionalProperties = Some(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/push/foo")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("global push with watch mode1") {
+    val (client, echo) = testClient()
+    val future = client.push(
+      indexName = "bar",
+      pushTaskPayload = PushTaskPayload(
+        action = Action.withName("addObject"),
+        records = Seq(
+          PushTaskRecords(
+            objectID = "o",
+            additionalProperties = Some(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+          ),
+          PushTaskRecords(
+            objectID = "k",
+            additionalProperties = Some(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+          )
+        )
+      ),
+      watch = Some(true)
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/push/bar")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"watch":"true"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
   test("pushTask") {
     val (client, echo) = testClient()
     val future = client.pushTask(

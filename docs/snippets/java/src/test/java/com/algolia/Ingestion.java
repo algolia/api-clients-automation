@@ -1089,6 +1089,55 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the push method.
+  //
+  // global push
+  void snippetForPush() throws Exception {
+    // >SEPARATOR push global push
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.push(
+      "<YOUR_INDEX_NAME>",
+      new PushTaskPayload()
+        .setAction(Action.ADD_OBJECT)
+        .setRecords(
+          Arrays.asList(
+            new PushTaskRecords().setAdditionalProperty("key", "bar").setAdditionalProperty("foo", "1").setObjectID("o"),
+            new PushTaskRecords().setAdditionalProperty("key", "baz").setAdditionalProperty("foo", "2").setObjectID("k")
+          )
+        )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the push method.
+  //
+  // global push with watch mode
+  void snippetForPush1() throws Exception {
+    // >SEPARATOR push global push with watch mode
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.push(
+      "<YOUR_INDEX_NAME>",
+      new PushTaskPayload()
+        .setAction(Action.ADD_OBJECT)
+        .setRecords(
+          Arrays.asList(
+            new PushTaskRecords().setAdditionalProperty("key", "bar").setAdditionalProperty("foo", "1").setObjectID("o"),
+            new PushTaskRecords().setAdditionalProperty("key", "baz").setAdditionalProperty("foo", "2").setObjectID("k")
+          )
+        ),
+      true
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
   // Snippet for the pushTask method.
   //
   // pushTask
