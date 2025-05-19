@@ -900,8 +900,9 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         let expectedQueryParameters =
-            try XCTUnwrap("{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}"
-                .data(using: .utf8)
+            try XCTUnwrap(
+                "{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}"
+                    .data(using: .utf8)
             )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
@@ -1054,8 +1055,9 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}"
-            .data(using: .utf8)
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}"
+                .data(using: .utf8)
         )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
@@ -1192,8 +1194,9 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"isItWorking\":\"true\"}"
-            .data(using: .utf8)
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"query\":\"parameters\",\"isItWorking\":\"true\"}"
+                .data(using: .utf8)
         )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
@@ -1274,8 +1277,9 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"b%20and%20c%2Cd\"}"
-            .data(using: .utf8)
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"query\":\"parameters\",\"myParam\":\"b%20and%20c%2Cd\"}"
+                .data(using: .utf8)
         )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
@@ -1316,8 +1320,9 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"true%2Ctrue%2Cfalse\"}"
-            .data(using: .utf8)
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"query\":\"parameters\",\"myParam\":\"true%2Ctrue%2Cfalse\"}"
+                .data(using: .utf8)
         )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
@@ -1358,8 +1363,9 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"1%2C2\"}"
-            .data(using: .utf8)
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"query\":\"parameters\",\"myParam\":\"1%2C2\"}"
+                .data(using: .utf8)
         )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
@@ -1739,8 +1745,9 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         let expectedQueryParameters =
-            try XCTUnwrap("{\"offset\":\"5\",\"length\":\"10\",\"indexName\":\"theIndexName\",\"type\":\"all\"}"
-                .data(using: .utf8)
+            try XCTUnwrap(
+                "{\"offset\":\"5\",\"length\":\"10\",\"indexName\":\"theIndexName\",\"type\":\"all\"}"
+                    .data(using: .utf8)
             )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
@@ -2990,7 +2997,8 @@ final class SearchClientRequestsTests: XCTestCase {
             rule: Rule(
                 objectID: "clearance-category-filter",
                 conditions: [SearchCondition(pattern: "", anchoring: SearchAnchoring.`is`, context: "landing")],
-                consequence: SearchConsequence(params: SearchConsequenceParams(optionalFilters: SearchOptionalFilters
+                consequence: SearchConsequence(params: SearchConsequenceParams(
+                    optionalFilters: SearchOptionalFilters
                         .string("clearance:true")
                 ))
             )
@@ -3066,7 +3074,8 @@ final class SearchClientRequestsTests: XCTestCase {
             rule: Rule(
                 objectID: "tomato-fruit",
                 conditions: [SearchCondition(pattern: "tomato", anchoring: SearchAnchoring.contains)],
-                consequence: SearchConsequence(params: SearchConsequenceParams(optionalFilters: SearchOptionalFilters
+                consequence: SearchConsequence(params: SearchConsequenceParams(
+                    optionalFilters: SearchOptionalFilters
                         .string("food_group:fruit")
                 ))
             )
@@ -3319,8 +3328,9 @@ final class SearchClientRequestsTests: XCTestCase {
                 objectID: "color-facets",
                 conditions: [SearchCondition(pattern: "{facet:color}")],
                 consequence: SearchConsequence(
-                    params: SearchConsequenceParams(automaticFacetFilters: SearchAutomaticFacetFilters
-                        .arrayOfSearchAutomaticFacetFilter([SearchAutomaticFacetFilter(facet: "color")])
+                    params: SearchConsequenceParams(
+                        automaticFacetFilters: SearchAutomaticFacetFilters
+                            .arrayOfSearchAutomaticFacetFilter([SearchAutomaticFacetFilter(facet: "color")])
                     )
                 )
             )
@@ -3645,7 +3655,8 @@ final class SearchClientRequestsTests: XCTestCase {
             objectID: "a-rule-id",
             rule: Rule(
                 objectID: "a-rule-id",
-                consequence: SearchConsequence(params: SearchConsequenceParams(aroundRadius: SearchAroundRadius
+                consequence: SearchConsequence(params: SearchConsequenceParams(
+                    aroundRadius: SearchAroundRadius
                         .int(1000)
                 )),
                 validity: [SearchTimeRange(from: Int64(1_577_836_800), until: Int64(1_577_836_800))]
@@ -3712,8 +3723,9 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters = try XCTUnwrap("{\"forwardToReplicas\":\"false\",\"clearExistingRules\":\"true\"}"
-            .data(using: .utf8)
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"forwardToReplicas\":\"false\",\"clearExistingRules\":\"true\"}"
+                .data(using: .utf8)
         )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
@@ -3788,8 +3800,9 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters = try XCTUnwrap("{\"forwardToReplicas\":\"true\",\"clearExistingRules\":\"true\"}"
-            .data(using: .utf8)
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"forwardToReplicas\":\"true\",\"clearExistingRules\":\"true\"}"
+                .data(using: .utf8)
         )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
@@ -4502,7 +4515,8 @@ final class SearchClientRequestsTests: XCTestCase {
                         SearchFacetFilters.string("mySearch:filters"),
                         SearchFacetFilters.arrayOfSearchFacetFilters([
                             SearchFacetFilters.string("mySearch:filters"),
-                            SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string("mySearch:filters")]
+                            SearchFacetFilters.arrayOfSearchFacetFilters(
+                                [SearchFacetFilters.string("mySearch:filters")]
                             ),
                         ]),
                     ]),
@@ -5408,7 +5422,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
             indexName: "indexName",
             searchParams: SearchSearchParams
-                .searchSearchParamsObject(SearchSearchParamsObject(facetFilters: SearchFacetFilters
+                .searchSearchParamsObject(SearchSearchParamsObject(
+                    facetFilters: SearchFacetFilters
                         .arrayOfSearchFacetFilters([
                             SearchFacetFilters.string("publisher:Penguin"),
                             SearchFacetFilters.arrayOfSearchFacetFilters([
@@ -5597,7 +5612,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
             indexName: "indexName",
             searchParams: SearchSearchParams
-                .searchSearchParamsObject(SearchSearchParamsObject(facetFilters: SearchFacetFilters
+                .searchSearchParamsObject(SearchSearchParamsObject(
+                    facetFilters: SearchFacetFilters
                         .string("category:-Ebook")
                 ))
         )
@@ -5853,7 +5869,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
             indexName: "indexName",
             searchParams: SearchSearchParams
-                .searchSearchParamsObject(SearchSearchParamsObject(insideBoundingBox: SearchInsideBoundingBox
+                .searchSearchParamsObject(SearchSearchParamsObject(
+                    insideBoundingBox: SearchInsideBoundingBox
                         .arrayOfArrayOfDouble([[
                             49.067996905313834,
                             65.73828125,
@@ -5983,7 +6000,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
             indexName: "indexName",
             searchParams: SearchSearchParams
-                .searchSearchParamsObject(SearchSearchParamsObject(optionalFilters: SearchOptionalFilters
+                .searchSearchParamsObject(SearchSearchParamsObject(
+                    optionalFilters: SearchOptionalFilters
                         .arrayOfSearchOptionalFilters([SearchOptionalFilters.string("can_deliver_quickly:true")])
                 ))
         )
@@ -6016,7 +6034,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
             indexName: "indexName",
             searchParams: SearchSearchParams
-                .searchSearchParamsObject(SearchSearchParamsObject(optionalFilters: SearchOptionalFilters
+                .searchSearchParamsObject(SearchSearchParamsObject(
+                    optionalFilters: SearchOptionalFilters
                         .arrayOfSearchOptionalFilters([
                             SearchOptionalFilters.string("brand:Apple<score=3>"),
                             SearchOptionalFilters.string("brand:Samsung<score=2>"),
@@ -6055,7 +6074,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
             indexName: "indexName",
             searchParams: SearchSearchParams
-                .searchSearchParamsObject(SearchSearchParamsObject(optionalFilters: SearchOptionalFilters
+                .searchSearchParamsObject(SearchSearchParamsObject(
+                    optionalFilters: SearchOptionalFilters
                         .arrayOfSearchOptionalFilters([
                             SearchOptionalFilters.string("brand:Apple<score=2>"),
                             SearchOptionalFilters.string("type:tablet"),
@@ -6342,7 +6362,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
             indexName: "indexName",
             searchParams: SearchSearchParams
-                .searchSearchParamsObject(SearchSearchParamsObject(facetFilters: SearchFacetFilters
+                .searchSearchParamsObject(SearchSearchParamsObject(
+                    facetFilters: SearchFacetFilters
                         .arrayOfSearchFacetFilters([
                             SearchFacetFilters.string("user:user42"),
                             SearchFacetFilters.string("user:public"),
@@ -9669,8 +9690,9 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let response = try await client.setSettingsWithHTTPInfo(
             indexName: "theIndexName",
-            indexSettings: IndexSettings(typoTolerance: SearchTypoTolerance
-                .searchTypoToleranceEnum(SearchTypoToleranceEnum.min)
+            indexSettings: IndexSettings(
+                typoTolerance: SearchTypoTolerance
+                    .searchTypoToleranceEnum(SearchTypoToleranceEnum.min)
             ),
             forwardToReplicas: true
         )
@@ -9745,8 +9767,9 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let response = try await client.setSettingsWithHTTPInfo(
             indexName: "theIndexName",
-            indexSettings: IndexSettings(ignorePlurals: SearchIgnorePlurals
-                .arrayOfSearchSupportedLanguage([SearchSupportedLanguage.fr])
+            indexSettings: IndexSettings(
+                ignorePlurals: SearchIgnorePlurals
+                    .arrayOfSearchSupportedLanguage([SearchSupportedLanguage.fr])
             ),
             forwardToReplicas: true
         )
@@ -9821,8 +9844,9 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let response = try await client.setSettingsWithHTTPInfo(
             indexName: "theIndexName",
-            indexSettings: IndexSettings(removeStopWords: SearchRemoveStopWords
-                .arrayOfSearchSupportedLanguage([SearchSupportedLanguage.fr])
+            indexSettings: IndexSettings(
+                removeStopWords: SearchRemoveStopWords
+                    .arrayOfSearchSupportedLanguage([SearchSupportedLanguage.fr])
             ),
             forwardToReplicas: true
         )

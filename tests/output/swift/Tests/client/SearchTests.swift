@@ -54,15 +54,18 @@ final class SearchClientClientTests: XCTestCase {
             appID: "test-app-id",
             apiKey: "test-api-key",
             hosts: [
-                RetryableHost(url: URL(string: "http://" +
+                RetryableHost(url: URL(
+                    string: "http://" +
                         (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                         ":6676"
                 )!),
-                RetryableHost(url: URL(string: "http://" +
+                RetryableHost(url: URL(
+                    string: "http://" +
                         (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                         ":6677"
                 )!),
-                RetryableHost(url: URL(string: "http://" +
+                RetryableHost(url: URL(
+                    string: "http://" +
                         (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                         ":6678"
                 )!),
@@ -80,7 +83,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6676"
             )!)]
@@ -104,7 +108,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6678"
             )!)],
@@ -155,7 +160,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6686"
             )!)]
@@ -175,7 +181,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6686"
             )!)]
@@ -230,7 +237,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6680"
             )!)]
@@ -376,7 +384,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6681"
             )!)]
@@ -395,7 +404,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6681"
             )!)]
@@ -414,7 +424,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6681"
             )!)]
@@ -480,7 +491,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6680"
             )!)]
@@ -503,7 +515,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6680"
             )!)]
@@ -526,7 +539,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6679"
             )!)]
@@ -563,7 +577,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6685"
             )!)]
@@ -590,7 +605,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6684"
             )!)]
@@ -617,7 +633,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6680"
             )!)]
@@ -639,7 +656,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "wrong-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6680"
             )!)]
@@ -666,7 +684,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6686"
             )!)]
@@ -692,7 +711,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6686"
             )!)]
@@ -723,7 +743,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6686"
             )!)]
@@ -744,7 +765,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6683"
             )!)]
@@ -771,7 +793,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6681"
             )!)]
@@ -796,7 +819,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6681"
             )!)]
@@ -830,7 +854,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6681"
             )!)]
@@ -852,7 +877,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6681"
             )!)]
@@ -871,7 +897,8 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
-            hosts: [RetryableHost(url: URL(string: "http://" +
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6681"
             )!)]
