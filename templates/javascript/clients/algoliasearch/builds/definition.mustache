@@ -95,7 +95,7 @@ export function algoliasearch(
   return {
     ...client,
 
-    async saveObjectsWithTransformation({ objects, waitForTasks }, requestOptions): Promise<WatchResponse> {
+    async saveObjectsWithTransformation({ indexName, objects, waitForTasks }, requestOptions): Promise<WatchResponse> {
       if (!ingestionTransporter) {
         throw new Error('`transformation.region` must be provided at client instantiation before calling this method.');
       }
@@ -106,6 +106,7 @@ export function algoliasearch(
 
       return ingestionTransporter?.push(
         {
+          indexName,
           watch: waitForTasks,
           pushTaskPayload: {
             action: 'addObject',
@@ -117,7 +118,7 @@ export function algoliasearch(
     },
 
     async partialUpdateObjectsWithTransformation(
-      { objects, createIfNotExists, waitForTasks },
+      { indexName, objects, createIfNotExists, waitForTasks },
       requestOptions,
     ): Promise<WatchResponse> {
       if (!ingestionTransporter) {
@@ -130,6 +131,7 @@ export function algoliasearch(
 
       return ingestionTransporter?.push(
         {
+          indexName,
           watch: waitForTasks,
           pushTaskPayload: {
             action: createIfNotExists ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate',
