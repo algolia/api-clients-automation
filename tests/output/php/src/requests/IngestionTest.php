@@ -1241,6 +1241,68 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('global push')]
+    public function testPush(): void
+    {
+        $client = $this->getClient();
+        $client->push(
+            'foo',
+            ['action' => 'addObject',
+                'records' => [
+                    ['key' => 'bar',
+                        'foo' => '1',
+                        'objectID' => 'o',
+                    ],
+
+                    ['key' => 'baz',
+                        'foo' => '2',
+                        'objectID' => 'k',
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/push/foo',
+                'method' => 'POST',
+                'body' => json_decode('{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('global push with watch mode')]
+    public function testPush1(): void
+    {
+        $client = $this->getClient();
+        $client->push(
+            'bar',
+            ['action' => 'addObject',
+                'records' => [
+                    ['key' => 'bar',
+                        'foo' => '1',
+                        'objectID' => 'o',
+                    ],
+
+                    ['key' => 'baz',
+                        'foo' => '2',
+                        'objectID' => 'k',
+                    ],
+                ],
+            ],
+            true,
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/push/bar',
+                'method' => 'POST',
+                'body' => json_decode('{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}'),
+                'queryParameters' => json_decode('{"watch":"true"}', true),
+            ],
+        ]);
+    }
+
     #[TestDox('pushTask')]
     public function testPushTask(): void
     {

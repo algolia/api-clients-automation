@@ -1644,6 +1644,81 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the push method.
+    *
+    * global push
+    */
+  def snippetForIngestionClientPush(): Unit = {
+    // >SEPARATOR push global push
+    // Initialize the client
+    val client = IngestionClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.push(
+        indexName = "<YOUR_INDEX_NAME>",
+        pushTaskPayload = PushTaskPayload(
+          action = Action.withName("addObject"),
+          records = Seq(
+            PushTaskRecords(
+              objectID = "o",
+              additionalProperties = Some(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+            ),
+            PushTaskRecords(
+              objectID = "k",
+              additionalProperties = Some(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the push method.
+    *
+    * global push with watch mode
+    */
+  def snippetForIngestionClientPush1(): Unit = {
+    // >SEPARATOR push global push with watch mode
+    // Initialize the client
+    val client = IngestionClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.push(
+        indexName = "<YOUR_INDEX_NAME>",
+        pushTaskPayload = PushTaskPayload(
+          action = Action.withName("addObject"),
+          records = Seq(
+            PushTaskRecords(
+              objectID = "o",
+              additionalProperties = Some(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+            ),
+            PushTaskRecords(
+              objectID = "k",
+              additionalProperties = Some(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+            )
+          )
+        ),
+        watch = Some(true)
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
   /** Snippet for the pushTask method.
     *
     * pushTask

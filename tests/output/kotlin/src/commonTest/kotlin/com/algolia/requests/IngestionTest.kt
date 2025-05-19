@@ -1293,6 +1293,80 @@ class IngestionTest {
     )
   }
 
+  // push
+
+  @Test
+  fun `global push`() = runTest {
+    client.runTest(
+      call = {
+        push(
+          indexName = "foo",
+          pushTaskPayload = PushTaskPayload(
+            action = Action.entries.first { it.value == "addObject" },
+            records = listOf(
+              PushTaskRecords(
+                objectID = "o",
+                additionalProperties = mapOf(
+                  "key" to JsonPrimitive("bar"),
+                  "foo" to JsonPrimitive("1"),
+                ),
+              ),
+              PushTaskRecords(
+                objectID = "k",
+                additionalProperties = mapOf(
+                  "key" to JsonPrimitive("baz"),
+                  "foo" to JsonPrimitive("2"),
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/push/foo".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `global push with watch mode1`() = runTest {
+    client.runTest(
+      call = {
+        push(
+          indexName = "bar",
+          pushTaskPayload = PushTaskPayload(
+            action = Action.entries.first { it.value == "addObject" },
+            records = listOf(
+              PushTaskRecords(
+                objectID = "o",
+                additionalProperties = mapOf(
+                  "key" to JsonPrimitive("bar"),
+                  "foo" to JsonPrimitive("1"),
+                ),
+              ),
+              PushTaskRecords(
+                objectID = "k",
+                additionalProperties = mapOf(
+                  "key" to JsonPrimitive("baz"),
+                  "foo" to JsonPrimitive("2"),
+                ),
+              ),
+            ),
+          ),
+          watch = true,
+        )
+      },
+      intercept = {
+        assertEquals("/1/push/bar".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertQueryParams("""{"watch":"true"}""", it.url.encodedParameters)
+        assertJsonBody("""{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}""", it.body)
+      },
+    )
+  }
+
   // pushTask
 
   @Test
