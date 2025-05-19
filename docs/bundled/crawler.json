@@ -198,7 +198,7 @@
       "patch": {
         "operationId": "patchCrawler",
         "summary": "Change crawler name",
-        "description": "Change the crawler's name.\n\nWhile you _could_ use this endpoint to replace the crawler configuration,\nyou should [update it](#tag/config/operation/patchConfig) instead since cnfiguration changes made here aren't [versioned](#tag/config/operation/listConfigVersions).\n\nIf you replace the configuration, you must provide the full configuration,\nincluding any settings you want to keep.\n",
+        "description": "Change the crawler's name.\n\nWhile you _could_ use this endpoint to replace the crawler configuration,\nyou should [update it](#tag/config/operation/patchConfig) instead since configuration changes made here aren't [versioned](#tag/config/operation/listConfigVersions).\n\nIf you replace the configuration, you must provide the full configuration,\nincluding any settings you want to keep.\n",
         "tags": [
           "crawlers"
         ],

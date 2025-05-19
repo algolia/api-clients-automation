@@ -32,7 +32,7 @@ patch:
     Change the crawler's name.
 
     While you _could_ use this endpoint to replace the crawler configuration,
-    you should [update it](#tag/config/operation/patchConfig) instead since cnfiguration changes made here aren't [versioned](#tag/config/operation/listConfigVersions).
+    you should [update it](#tag/config/operation/patchConfig) instead since configuration changes made here aren't [versioned](#tag/config/operation/listConfigVersions).
 
     If you replace the configuration, you must provide the full configuration,
     including any settings you want to keep.
