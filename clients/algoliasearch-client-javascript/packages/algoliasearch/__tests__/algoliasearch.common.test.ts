@@ -151,13 +151,6 @@ describe('api', () => {
       );
     });
 
-    test('throws when missing transformation.taskID', () => {
-      //@ts-expect-error
-      expect(() => algoliasearch('APP_ID', 'API_KEY', { transformation: { region: 'us' } })).toThrow(
-        '`taskID` must be provided when leveraging the transformation pipeline',
-      );
-    });
-
     test('throws when calling the transformation methods without init parameters', async () => {
       await expect(
         client.saveObjectsWithTransformation({
@@ -183,7 +176,7 @@ describe('api', () => {
     test('exposes the transformation methods at the root of the client', async () => {
       const ingestionClient = algoliasearch('APP_ID', 'API_KEY', {
         requester: browserEchoRequester(),
-        transformation: { taskID: 'foo', region: 'us' },
+        transformation: { region: 'us' },
       });
 
       expect(ingestionClient.saveObjectsWithTransformation).not.toBeUndefined();
