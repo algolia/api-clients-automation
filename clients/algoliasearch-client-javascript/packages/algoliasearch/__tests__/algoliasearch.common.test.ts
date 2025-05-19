@@ -146,7 +146,7 @@ describe('api', () => {
   describe('bridge methods', () => {
     test('throws when missing transformation.region', () => {
       //@ts-expect-error
-      expect(() => algoliasearch('APP_ID', 'API_KEY', { transformation: { } })).toThrow(
+      expect(() => algoliasearch('APP_ID', 'API_KEY', { transformation: {} })).toThrow(
         '`region` must be provided when leveraging the transformation pipeline',
       );
     });
@@ -158,9 +158,7 @@ describe('api', () => {
           objects: [{ objectID: 'bar', baz: 42 }],
           waitForTasks: true,
         }),
-      ).rejects.toThrow(
-        '`transformation.region` must be provided at client instantiation before calling this method.',
-      );
+      ).rejects.toThrow('`transformation.region` must be provided at client instantiation before calling this method.');
 
       await expect(
         client.partialUpdateObjectsWithTransformation({
@@ -168,9 +166,7 @@ describe('api', () => {
           objects: [{ objectID: 'bar', baz: 42 }],
           waitForTasks: true,
         }),
-      ).rejects.toThrow(
-        '`transformation.region` must be provided at client instantiation before calling this method.',
-      );
+      ).rejects.toThrow('`transformation.region` must be provided at client instantiation before calling this method.');
     });
 
     test('exposes the transformation methods at the root of the client', async () => {
@@ -193,7 +189,7 @@ describe('api', () => {
           'x-algolia-api-key': 'API_KEY',
         }),
       );
-      expect(res.url.startsWith('https://data.us.algolia.com/2/tasks/foo/push?watch=true')).toBeTruthy();
+      expect(res.url.startsWith('https://data.us.algolia.com/1/push/foo?watch=true')).toBeTruthy();
       expect(res.data).toEqual({
         action: 'addObject',
         records: [
@@ -218,7 +214,7 @@ describe('api', () => {
           'x-algolia-api-key': 'API_KEY',
         }),
       );
-      expect(res.url.startsWith('https://data.us.algolia.com/2/tasks/foo/push?watch=true')).toBeTruthy();
+      expect(res.url.startsWith('https://data.us.algolia.com/1/push/foo?watch=true')).toBeTruthy();
       expect(res.data).toEqual({
         action: 'partialUpdateObject',
         records: [
@@ -241,7 +237,7 @@ describe('api', () => {
           'x-algolia-api-key': 'API_KEY',
         }),
       );
-      expect(res.url.startsWith('https://data.us.algolia.com/2/tasks/foo/push?watch=true')).toBeTruthy();
+      expect(res.url.startsWith('https://data.us.algolia.com/1/push/foo?watch=true')).toBeTruthy();
       expect(res.data).toEqual({
         action: 'partialUpdateObjectNoCreate',
         records: [
