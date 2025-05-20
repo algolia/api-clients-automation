@@ -6,18 +6,19 @@ import type { SearchResponses } from 'algoliasearch';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || '**** SEARCH_API_KEY *****';
+const adminApiKey = process.env.ALGOLIA_ADMIN_KEY || '**** ADMIN_API_KEY *****';
 
 const searchIndex = process.env.SEARCH_INDEX || 'test_index';
 const searchQuery = process.env.SEARCH_QUERY || 'test_query';
 const analyticsIndex = process.env.ANALYTICS_INDEX || 'test_index';
 
-// Init client with appId and apiKey
-const client = algoliasearch(appId, apiKey);
-const clientLite = liteClient(appId, apiKey);
-
-client.addAlgoliaAgent('algoliasearch node playground', '0.0.1');
-
 async function testAlgoliasearch() {
+  // Init client with appId and apiKey
+  const client = algoliasearch(appId, apiKey);
+  const clientLite = liteClient(appId, apiKey);
+  
+  client.addAlgoliaAgent('algoliasearch node playground', '0.0.1');
+
   try {
     const res: SearchResponses = await client.search({
       requests: [
@@ -131,4 +132,14 @@ async function testAlgoliasearch() {
   }
 }
 
-testAlgoliasearch();
+async function testAlgoliasearchBridgeIngestion() {
+  // Init client with appId and apiKey
+  const client = algoliasearch(appId, adminApiKey, { transformation: { region: 'eu'}});
+
+  await client.saveObjectsWithTransformation({indexName: "foo", objects: [{objectID: "foo", data: {baz: "baz", win: 42}}], waitForTasks: true })
+
+  await client.partialUpdateObjectsWithTransformation({indexName: "foo", objects: [{objectID: "foo", data: {baz: "baz", win: 42}}], waitForTasks: true, createIfNotExists: false })
+}
+
+// testAlgoliasearch();
+testAlgoliasearchBridgeIngestion()
