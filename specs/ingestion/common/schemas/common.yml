@@ -108,7 +108,9 @@ WatchResponse:
   additionalProperties: false
   properties:
     runID:
-      $ref: './common.yml#/runID'
+      $ref: '#/runID'
+    eventID:
+      $ref: '#/eventID'
     data:
       type: array
       description: when used with discovering or validating sources, the sampled data of your source is returned.
@@ -122,5 +124,7 @@ WatchResponse:
     message:
       description: a message describing the outcome of a validate run.
       type: string
+    createdAt:
+      $ref: '#/createdAt'
   required:
     - runID
