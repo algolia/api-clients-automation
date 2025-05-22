@@ -1,0 +1,32 @@
+get:
+  tags:
+    - abtest
+  operationId: getTimeseries
+  x-acl:
+    - analytics
+  summary: Retrieve timeseries of an A/B test
+  description: Retrieves timeseries for an A/B test by its ID.
+  parameters:
+    - $ref: '../common/parameters.yml#/ID'
+  responses:
+    '200':
+      description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-reset'
+      content:
+        application/json:
+          schema:
+            $ref: '../common/schemas/Timeseries.yml#/Timeseries'
+    '400':
+      $ref: '../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../common/responses/IndexNotFound.yml'
