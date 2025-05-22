@@ -23,16 +23,22 @@ package algoliasearch.ingestion
   *
   * @param runID
   *   Universally unique identifier (UUID) of a task run.
+  * @param eventID
+  *   Universally unique identifier (UUID) of an event.
   * @param data
   *   when used with discovering or validating sources, the sampled data of your source is returned.
   * @param events
   *   in case of error, observability events will be added to the response, if any.
   * @param message
   *   a message describing the outcome of a validate run.
+  * @param createdAt
+  *   Date of creation in RFC 3339 format.
   */
 case class WatchResponse(
     runID: String,
+    eventID: Option[String] = scala.None,
     data: Option[Seq[Any]] = scala.None,
     events: Option[Seq[Event]] = scala.None,
-    message: Option[String] = scala.None
+    message: Option[String] = scala.None,
+    createdAt: Option[String] = scala.None
 )

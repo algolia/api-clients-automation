@@ -2281,12 +2281,17 @@ components:
         - type
         - batchSize
         - publishedAt
+    createdAt:
+      type: string
+      description: Date of creation in RFC 3339 format.
     WatchResponse:
       type: object
       additionalProperties: false
       properties:
         runID:
           $ref: '#/components/schemas/runID'
+        eventID:
+          $ref: '#/components/schemas/eventID'
         data:
           type: array
           description: >-
@@ -2304,6 +2309,8 @@ components:
         message:
           description: a message describing the outcome of a validate run.
           type: string
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
       required:
         - runID
     itemsPerPage:
@@ -2484,9 +2491,6 @@ components:
         - $ref: '#/components/schemas/AuthAlgoliaPartial'
         - $ref: '#/components/schemas/AuthAlgoliaInsightsPartial'
         - $ref: '#/components/schemas/AuthSecrets'
-    createdAt:
-      type: string
-      description: Date of creation in RFC 3339 format.
     updatedAt:
       type: string
       description: Date of last update in RFC 3339 format.
