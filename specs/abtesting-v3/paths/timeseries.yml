@@ -8,6 +8,32 @@ get:
   description: Retrieves timeseries for an A/B test by its ID.
   parameters:
     - $ref: '../common/parameters.yml#/ID'
+    - $ref: '../../common/parameters.yml#/StartDate'
+    - $ref: '../../common/parameters.yml#/EndDate'
+    - in: query
+      name: metric
+      description: List of metrics to retrieve. If not specified, all metrics are returned.
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - search_count
+            - tracked_search_count
+            - user_count
+            - tracked_user_count
+            - no_result_count
+            - add_to_cart_count
+            - purchase_count
+            - clicked_search_count
+            - converted_search_count
+            - click_through_rate
+            - conversion_rate
+            - add_to_cart_rate
+            - purchase_rate
+            - average_click_position
+            - revenue
+        example: ["search_count", "click_through_rate", "conversion_rate"]
   responses:
     '200':
       description: OK
@@ -30,3 +56,5 @@ get:
       $ref: '../../common/responses/MethodNotAllowed.yml'
     '404':
       $ref: '../../common/responses/IndexNotFound.yml'
+    '422':
+      $ref: '../../common/responses/UnprocessableEntity.yml'
