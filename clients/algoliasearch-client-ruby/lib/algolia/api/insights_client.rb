@@ -23,18 +23,6 @@ module Algolia
         region = nil
       end
 
-      if opts.nil? || opts[:connect_timeout].nil?
-        opts[:connect_timeout] = 2000
-      end
-
-      if opts.nil? || opts[:read_timeout].nil?
-        opts[:read_timeout] = 5000
-      end
-
-      if opts.nil? || opts[:write_timeout].nil?
-        opts[:write_timeout] = 30000
-      end
-
       if !region.nil? && (!region.is_a?(String) || !regions.include?(region))
         raise "`region` must be one of the following: #{regions.join(", ")}"
       end
@@ -50,6 +38,18 @@ module Algolia
     end
 
     def self.create_with_config(config)
+      if config.connect_timeout.nil?
+        config.connect_timeout = 2000
+      end
+
+      if config.read_timeout.nil?
+        config.read_timeout = 5000
+      end
+
+      if config.write_timeout.nil?
+        config.write_timeout = 30000
+      end
+
       new(config)
     end
 
@@ -69,7 +69,7 @@ module Algolia
       self
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -101,7 +101,7 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -112,7 +112,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -144,7 +144,7 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -155,7 +155,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -188,7 +188,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -200,7 +200,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -233,7 +233,7 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -246,7 +246,9 @@ module Algolia
     end
 
     # Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
-
+    #
+    # Required API Key ACLs:
+    #   - deleteObject
     # @param user_token [String] User token for which to delete all associated events. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -276,7 +278,9 @@ module Algolia
     end
 
     # Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
-
+    #
+    # Required API Key ACLs:
+    #   - deleteObject
     # @param user_token [String] User token for which to delete all associated events. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [nil]
@@ -286,7 +290,9 @@ module Algolia
     end
 
     # Sends a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
-
+    #
+    # Required API Key ACLs:
+    #   - search
     # @param insights_events [InsightsEvents]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -316,7 +322,9 @@ module Algolia
     end
 
     # Sends a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
-
+    #
+    # Required API Key ACLs:
+    #   - search
     # @param insights_events [InsightsEvents]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [EventsResponse]

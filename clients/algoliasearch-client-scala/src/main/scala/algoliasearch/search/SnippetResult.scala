@@ -46,11 +46,13 @@ trait SnippetResultTrait extends SnippetResult
 object SnippetResult {
 
   case class MapOfStringSnippetResult(value: Map[String, SnippetResult]) extends SnippetResult
+
   case class SeqOfSnippetResult(value: Seq[SnippetResult]) extends SnippetResult
 
   def apply(value: Map[String, SnippetResult]): SnippetResult = {
     SnippetResult.MapOfStringSnippetResult(value)
   }
+
   def apply(value: Seq[SnippetResult]): SnippetResult = {
     SnippetResult.SeqOfSnippetResult(value)
   }
@@ -64,15 +66,16 @@ object SnippetResultSerializer extends Serializer[SnippetResult] {
       json match {
         case value: JObject if value.obj.exists(_._1 == "matchLevel") => Extraction.extract[SnippetResultOption](value)
         case value: JObject => SnippetResult.apply(Extraction.extract[Map[String, SnippetResult]](value))
-        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
-          SnippetResult.SeqOfSnippetResult(value.map(_.extract))
-        case _ => throw new MappingException("Can't convert " + json + " to SnippetResult")
+        case value: JArray  => SnippetResult.apply(Extraction.extract[Seq[SnippetResult]](value))
+        case _              => throw new MappingException("Can't convert " + json + " to SnippetResult")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: SnippetResult =>
     value match {
-      case value: SnippetResultOption              => Extraction.decompose(value)(format - this)
+      case value: SnippetResultOption => Extraction.decompose(value)(format - this)
+      case SnippetResult.MapOfStringSnippetResult(value) =>
+        JObject(value.map(kv => JField(kv._1, Extraction.decompose(kv._2)(format))).toList)
       case SnippetResult.SeqOfSnippetResult(value) => JArray(value.map(Extraction.decompose).toList)
     }
   }

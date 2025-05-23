@@ -837,15 +837,15 @@
     "customGet": {
       "allow get method for a custom path with minimal parameters": "response = client.custom_get(\"test/minimal\")",
       "allow get method for a custom path with all parameters": "response = client.custom_get(\"test/all\", {query: \"parameters with space\"})",
-      "requestOptions should be escaped too": "response = client.custom_get(\n  \"test/all\",\n  {query: \"to be overriden\"},\n  {\n    :header_params => JSON.parse(\"{\\\"x-header-1\\\":\\\"spaces are left alone\\\"}\", :symbolize_names => true),\n    :query_params => JSON.parse(\n      \"{\\\"query\\\":\\\"parameters with space\\\",\\\"and an array\\\":[\\\"array\\\",\\\"with spaces\\\"]}\",\n      :symbolize_names => true\n    )\n  }\n)"
+      "requestOptions should be escaped too": "response = client.custom_get(\n  \"test/all\",\n  {query: \"to be overriden\"},\n  {\n    :header_params => {\"x-header-1\" => \"spaces are left alone\"},\n    :query_params => JSON.parse(\n      \"{\\\"query\\\":\\\"parameters with space\\\",\\\"and an array\\\":[\\\"array\\\",\\\"with spaces\\\"]}\",\n      :symbolize_names => true\n    )\n  }\n)"
     },
     "customPost": {
       "allow post method for a custom path with minimal parameters": "response = client.custom_post(\"test/minimal\")",
       "allow post method for a custom path with all parameters": "response = client.custom_post(\"test/all\", {query: \"parameters\"}, {body: \"parameters\"})",
       "requestOptions can override default query parameters": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"query\\\":\\\"myQueryParameter\\\"}\", :symbolize_names => true)}\n)",
       "requestOptions merges query parameters with default ones": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"query2\\\":\\\"myQueryParameter\\\"}\", :symbolize_names => true)}\n)",
-      "requestOptions can override default headers": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:header_params => JSON.parse(\"{\\\"x-algolia-api-key\\\":\\\"ALGOLIA_API_KEY\\\"}\", :symbolize_names => true)}\n)",
-      "requestOptions merges headers with default ones": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:header_params => JSON.parse(\"{\\\"x-algolia-api-key\\\":\\\"ALGOLIA_API_KEY\\\"}\", :symbolize_names => true)}\n)",
+      "requestOptions can override default headers": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:header_params => {\"x-algolia-api-key\" => \"ALGOLIA_API_KEY\"}}\n)",
+      "requestOptions merges headers with default ones": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:header_params => {\"x-algolia-api-key\" => \"ALGOLIA_API_KEY\"}}\n)",
       "requestOptions queryParameters accepts booleans": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"isItWorking\\\":true}\", :symbolize_names => true)}\n)",
       "requestOptions queryParameters accepts integers": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"myParam\\\":2}\", :symbolize_names => true)}\n)",
       "requestOptions queryParameters accepts list of string": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"myParam\\\":[\\\"b and c\\\",\\\"d\\\"]}\", :symbolize_names => true)}\n)",
@@ -949,111 +949,114 @@
       "default": "import algoliasearch.api.AnalyticsClient\nimport algoliasearch.config.*"
     },
     "customDelete": {
-      "allow del method for a custom path with minimal parameters": "val response = client.customDelete[JObject](\n  path = \"test/minimal\"\n)",
-      "allow del method for a custom path with all parameters": "val response = client.customDelete[JObject](\n  path = \"test/all\",\n  parameters = Some(Map(\"query\" -> \"parameters\"))\n)"
+      "allow del method for a custom path with minimal parameters": "val response = Await.result(\n  client.customDelete[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "allow del method for a custom path with all parameters": "val response = Await.result(\n  client.customDelete[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"parameters\"))\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "customGet": {
-      "allow get method for a custom path with minimal parameters": "val response = client.customGet[JObject](\n  path = \"test/minimal\"\n)",
-      "allow get method for a custom path with all parameters": "val response = client.customGet[JObject](\n  path = \"test/all\",\n  parameters = Some(Map(\"query\" -> \"parameters with space\"))\n)",
-      "requestOptions should be escaped too": "val response = client.customGet[JObject](\n  path = \"test/all\",\n  parameters = Some(Map(\"query\" -> \"to be overriden\")),\n  requestOptions = Some(\n    RequestOptions\n      .builder()\n      .withQueryParameter(\"query\", \"parameters with space\")\n      .withQueryParameter(\"and an array\", Seq(\"array\", \"with spaces\"))\n      .withHeader(\"x-header-1\", \"spaces are left alone\")\n      .build()\n  )\n)"
+      "allow get method for a custom path with minimal parameters": "val response = Await.result(\n  client.customGet[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "allow get method for a custom path with all parameters": "val response = Await.result(\n  client.customGet[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"parameters with space\"))\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions should be escaped too": "val response = Await.result(\n  client.customGet[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"to be overriden\")),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"query\", \"parameters with space\")\n        .withQueryParameter(\"and an array\", Seq(\"array\", \"with spaces\"))\n        .withHeader(\"x-header-1\", \"spaces are left alone\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "customPost": {
-      "allow post method for a custom path with minimal parameters": "val response = client.customPost[JObject](\n  path = \"test/minimal\"\n)",
-      "allow post method for a custom path with all parameters": "val response = client.customPost[JObject](\n  path = \"test/all\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"body\", JString(\"parameters\")))))\n)",
-      "requestOptions can override default query parameters": "val response = client.customPost[JObject](\n  path = \"test/requestOptions\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n  requestOptions = Some(\n    RequestOptions\n      .builder()\n      .withQueryParameter(\"query\", \"myQueryParameter\")\n      .build()\n  )\n)",
-      "requestOptions merges query parameters with default ones": "val response = client.customPost[JObject](\n  path = \"test/requestOptions\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n  requestOptions = Some(\n    RequestOptions\n      .builder()\n      .withQueryParameter(\"query2\", \"myQueryParameter\")\n      .build()\n  )\n)",
-      "requestOptions can override default headers": "val response = client.customPost[JObject](\n  path = \"test/requestOptions\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n  requestOptions = Some(\n    RequestOptions\n      .builder()\n      .withHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n      .build()\n  )\n)",
-      "requestOptions merges headers with default ones": "val response = client.customPost[JObject](\n  path = \"test/requestOptions\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n  requestOptions = Some(\n    RequestOptions\n      .builder()\n      .withHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n      .build()\n  )\n)",
-      "requestOptions queryParameters accepts booleans": "val response = client.customPost[JObject](\n  path = \"test/requestOptions\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n  requestOptions = Some(\n    RequestOptions\n      .builder()\n      .withQueryParameter(\"isItWorking\", true)\n      .build()\n  )\n)",
-      "requestOptions queryParameters accepts integers": "val response = client.customPost[JObject](\n  path = \"test/requestOptions\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n  requestOptions = Some(\n    RequestOptions\n      .builder()\n      .withQueryParameter(\"myParam\", 2)\n      .build()\n  )\n)",
-      "requestOptions queryParameters accepts list of string": "val response = client.customPost[JObject](\n  path = \"test/requestOptions\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n  requestOptions = Some(\n    RequestOptions\n      .builder()\n      .withQueryParameter(\"myParam\", Seq(\"b and c\", \"d\"))\n      .build()\n  )\n)",
-      "requestOptions queryParameters accepts list of booleans": "val response = client.customPost[JObject](\n  path = \"test/requestOptions\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n  requestOptions = Some(\n    RequestOptions\n      .builder()\n      .withQueryParameter(\"myParam\", Seq(true, true, false))\n      .build()\n  )\n)",
-      "requestOptions queryParameters accepts list of integers": "val response = client.customPost[JObject](\n  path = \"test/requestOptions\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n  requestOptions = Some(\n    RequestOptions\n      .builder()\n      .withQueryParameter(\"myParam\", Seq(1, 2))\n      .build()\n  )\n)"
+      "allow post method for a custom path with minimal parameters": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "allow post method for a custom path with all parameters": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"body\", JString(\"parameters\")))))\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions can override default query parameters": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"query\", \"myQueryParameter\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions merges query parameters with default ones": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"query2\", \"myQueryParameter\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions can override default headers": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions merges headers with default ones": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts booleans": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"isItWorking\", true)\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts integers": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"myParam\", 2)\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts list of string": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"myParam\", Seq(\"b and c\", \"d\"))\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts list of booleans": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"myParam\", Seq(true, true, false))\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts list of integers": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"myParam\", Seq(1, 2))\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "customPut": {
-      "allow put method for a custom path with minimal parameters": "val response = client.customPut[JObject](\n  path = \"test/minimal\"\n)",
-      "allow put method for a custom path with all parameters": "val response = client.customPut[JObject](\n  path = \"test/all\",\n  parameters = Some(Map(\"query\" -> \"parameters\")),\n  body = Some(JObject(List(JField(\"body\", JString(\"parameters\")))))\n)"
+      "allow put method for a custom path with minimal parameters": "val response = Await.result(\n  client.customPut[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "allow put method for a custom path with all parameters": "val response = Await.result(\n  client.customPut[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"body\", JString(\"parameters\")))))\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getAddToCartRate": {
-      "get getAddToCartRate with minimal parameters": "val response = client.getAddToCartRate(\n  index = \"index\"\n)",
-      "get getAddToCartRate with all parameters": "val response = client.getAddToCartRate(\n  index = \"index\",\n  startDate = Some(\"1999-09-19\"),\n  endDate = Some(\"2001-01-01\"),\n  tags = Some(\"tag\")\n)"
+      "get getAddToCartRate with minimal parameters": "val response = Await.result(\n  client.getAddToCartRate(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get getAddToCartRate with all parameters": "val response = Await.result(\n  client.getAddToCartRate(\n    index = \"index\",\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getAverageClickPosition": {
-      "get getAverageClickPosition with minimal parameters": "val response = client.getAverageClickPosition(\n  index = \"index\"\n)",
-      "get getAverageClickPosition with all parameters": "val response = client.getAverageClickPosition(\n  index = \"index\",\n  startDate = Some(\"1999-09-19\"),\n  endDate = Some(\"2001-01-01\"),\n  tags = Some(\"tag\")\n)"
+      "get getAverageClickPosition with minimal parameters": "val response = Await.result(\n  client.getAverageClickPosition(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get getAverageClickPosition with all parameters": "val response = Await.result(\n  client.getAverageClickPosition(\n    index = \"index\",\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getClickPositions": {
-      "get getClickPositions with minimal parameters": "val response = client.getClickPositions(\n  index = \"index\"\n)",
-      "get getClickPositions with all parameters": "val response = client.getClickPositions(\n  index = \"index\",\n  startDate = Some(\"1999-09-19\"),\n  endDate = Some(\"2001-01-01\"),\n  tags = Some(\"tag\")\n)"
+      "get getClickPositions with minimal parameters": "val response = Await.result(\n  client.getClickPositions(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get getClickPositions with all parameters": "val response = Await.result(\n  client.getClickPositions(\n    index = \"index\",\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getClickThroughRate": {
-      "get getClickThroughRate with minimal parameters": "val response = client.getClickThroughRate(\n  index = \"index\"\n)",
-      "get getClickThroughRate with all parameters": "val response = client.getClickThroughRate(\n  index = \"index\",\n  startDate = Some(\"1999-09-19\"),\n  endDate = Some(\"2001-01-01\"),\n  tags = Some(\"tag\")\n)"
+      "get getClickThroughRate with minimal parameters": "val response = Await.result(\n  client.getClickThroughRate(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get getClickThroughRate with all parameters": "val response = Await.result(\n  client.getClickThroughRate(\n    index = \"index\",\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getConversionRate": {
-      "get getConversationRate with minimal parameters": "val response = client.getConversionRate(\n  index = \"index\"\n)",
-      "get getConversationRate with all parameters": "val response = client.getConversionRate(\n  index = \"index\",\n  startDate = Some(\"1999-09-19\"),\n  endDate = Some(\"2001-01-01\"),\n  tags = Some(\"tag\")\n)"
+      "get getConversationRate with minimal parameters": "val response = Await.result(\n  client.getConversionRate(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get getConversationRate with all parameters": "val response = Await.result(\n  client.getConversionRate(\n    index = \"index\",\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getNoClickRate": {
-      "get getNoClickRate with minimal parameters": "val response = client.getNoClickRate(\n  index = \"index\"\n)",
-      "get getNoClickRate with all parameters": "val response = client.getNoClickRate(\n  index = \"index\",\n  startDate = Some(\"1999-09-19\"),\n  endDate = Some(\"2001-01-01\"),\n  tags = Some(\"tag\")\n)"
+      "get getNoClickRate with minimal parameters": "val response = Await.result(\n  client.getNoClickRate(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get getNoClickRate with all parameters": "val response = Await.result(\n  client.getNoClickRate(\n    index = \"index\",\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getNoResultsRate": {
-      "get getNoResultsRate with minimal parameters": "val response = client.getNoResultsRate(\n  index = \"index\"\n)",
-      "get getNoResultsRate with all parameters": "val response = client.getNoResultsRate(\n  index = \"index\",\n  startDate = Some(\"1999-09-19\"),\n  endDate = Some(\"2001-01-01\"),\n  tags = Some(\"tag\")\n)"
+      "get getNoResultsRate with minimal parameters": "val response = Await.result(\n  client.getNoResultsRate(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get getNoResultsRate with all parameters": "val response = Await.result(\n  client.getNoResultsRate(\n    index = \"index\",\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getPurchaseRate": {
-      "get getPurchaseRate with minimal parameters": "val response = client.getPurchaseRate(\n  index = \"index\"\n)",
-      "get getPurchaseRate with all parameters": "val response = client.getPurchaseRate(\n  index = \"index\",\n  startDate = Some(\"1999-09-19\"),\n  endDate = Some(\"2001-01-01\"),\n  tags = Some(\"tag\")\n)"
+      "get getPurchaseRate with minimal parameters": "val response = Await.result(\n  client.getPurchaseRate(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get getPurchaseRate with all parameters": "val response = Await.result(\n  client.getPurchaseRate(\n    index = \"index\",\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getRevenue": {
-      "get getRevenue with minimal parameters": "val response = client.getRevenue(\n  index = \"index\"\n)",
-      "get getRevenue with all parameters": "val response = client.getRevenue(\n  index = \"index\",\n  startDate = Some(\"1999-09-19\"),\n  endDate = Some(\"2001-01-01\"),\n  tags = Some(\"tag\")\n)"
+      "get getRevenue with minimal parameters": "val response = Await.result(\n  client.getRevenue(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get getRevenue with all parameters": "val response = Await.result(\n  client.getRevenue(\n    index = \"index\",\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getSearchesCount": {
-      "get getSearchesCount with minimal parameters": "val response = client.getSearchesCount(\n  index = \"index\"\n)",
-      "get getSearchesCount with all parameters": "val response = client.getSearchesCount(\n  index = \"index\",\n  startDate = Some(\"1999-09-19\"),\n  endDate = Some(\"2001-01-01\"),\n  tags = Some(\"tag\")\n)"
+      "get getSearchesCount with minimal parameters": "val response = Await.result(\n  client.getSearchesCount(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get getSearchesCount with all parameters": "val response = Await.result(\n  client.getSearchesCount(\n    index = \"index\",\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getSearchesNoClicks": {
-      "get getSearchesNoClicks with minimal parameters": "val response = client.getSearchesNoClicks(\n  index = \"index\"\n)",
-      "get getSearchesNoClicks with all parameters": "val response = client.getSearchesNoClicks(\n  index = \"index\",\n  startDate = Some(\"1999-09-19\"),\n  endDate = Some(\"2001-01-01\"),\n  limit = Some(21),\n  offset = Some(42),\n  tags = Some(\"tag\")\n)"
+      "get getSearchesNoClicks with minimal parameters": "val response = Await.result(\n  client.getSearchesNoClicks(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get getSearchesNoClicks with all parameters": "val response = Await.result(\n  client.getSearchesNoClicks(\n    index = \"index\",\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    limit = Some(21),\n    offset = Some(42),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getSearchesNoResults": {
-      "get getSearchesNoResults with minimal parameters": "val response = client.getSearchesNoResults(\n  index = \"index\"\n)",
-      "get getSearchesNoResults with all parameters": "val response = client.getSearchesNoResults(\n  index = \"index\",\n  startDate = Some(\"1999-09-19\"),\n  endDate = Some(\"2001-01-01\"),\n  limit = Some(21),\n  offset = Some(42),\n  tags = Some(\"tag\")\n)"
+      "get getSearchesNoResults with minimal parameters": "val response = Await.result(\n  client.getSearchesNoResults(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get getSearchesNoResults with all parameters": "val response = Await.result(\n  client.getSearchesNoResults(\n    index = \"index\",\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    limit = Some(21),\n    offset = Some(42),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getStatus": {
-      "default": "val response = client.getStatus(\n  index = \"index\"\n)"
+      "default": "val response = Await.result(\n  client.getStatus(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getTopCountries": {
-      "get getTopCountries with minimal parameters": "val response = client.getTopCountries(\n  index = \"index\"\n)",
-      "get getTopCountries with all parameters": "val response = client.getTopCountries(\n  index = \"index\",\n  startDate = Some(\"1999-09-19\"),\n  endDate = Some(\"2001-01-01\"),\n  limit = Some(21),\n  offset = Some(42),\n  tags = Some(\"tag\")\n)"
+      "get getTopCountries with minimal parameters": "val response = Await.result(\n  client.getTopCountries(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get getTopCountries with all parameters": "val response = Await.result(\n  client.getTopCountries(\n    index = \"index\",\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    limit = Some(21),\n    offset = Some(42),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getTopFilterAttributes": {
-      "get getTopFilterAttributes with minimal parameters": "val response = client.getTopFilterAttributes(\n  index = \"index\"\n)",
-      "get getTopFilterAttributes with all parameters": "val response = client.getTopFilterAttributes(\n  index = \"index\",\n  search = Some(\"mySearch\"),\n  startDate = Some(\"1999-09-19\"),\n  endDate = Some(\"2001-01-01\"),\n  limit = Some(21),\n  offset = Some(42),\n  tags = Some(\"tag\")\n)"
+      "get getTopFilterAttributes with minimal parameters": "val response = Await.result(\n  client.getTopFilterAttributes(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get getTopFilterAttributes with all parameters": "val response = Await.result(\n  client.getTopFilterAttributes(\n    index = \"index\",\n    search = Some(\"mySearch\"),\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    limit = Some(21),\n    offset = Some(42),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getTopFilterForAttribute": {
-      "get getTopFilterForAttribute with minimal parameters": "val response = client.getTopFilterForAttribute(\n  attribute = \"myAttribute\",\n  index = \"index\"\n)",
-      "get getTopFilterForAttribute with minimal parameters and multiple attributes": "val response = client.getTopFilterForAttribute(\n  attribute = \"myAttribute1,myAttribute2\",\n  index = \"index\"\n)",
-      "get getTopFilterForAttribute with all parameters": "val response = client.getTopFilterForAttribute(\n  attribute = \"myAttribute\",\n  index = \"index\",\n  search = Some(\"mySearch\"),\n  startDate = Some(\"1999-09-19\"),\n  endDate = Some(\"2001-01-01\"),\n  limit = Some(21),\n  offset = Some(42),\n  tags = Some(\"tag\")\n)",
-      "get getTopFilterForAttribute with all parameters and multiple attributes": "val response = client.getTopFilterForAttribute(\n  attribute = \"myAttribute1,myAttribute2\",\n  index = \"index\",\n  search = Some(\"mySearch\"),\n  startDate = Some(\"1999-09-19\"),\n  endDate = Some(\"2001-01-01\"),\n  limit = Some(21),\n  offset = Some(42),\n  tags = Some(\"tag\")\n)"
+      "get getTopFilterForAttribute with minimal parameters": "val response = Await.result(\n  client.getTopFilterForAttribute(\n    attribute = \"myAttribute\",\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get getTopFilterForAttribute with minimal parameters and multiple attributes": "val response = Await.result(\n  client.getTopFilterForAttribute(\n    attribute = \"myAttribute1,myAttribute2\",\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get getTopFilterForAttribute with all parameters": "val response = Await.result(\n  client.getTopFilterForAttribute(\n    attribute = \"myAttribute\",\n    index = \"index\",\n    search = Some(\"mySearch\"),\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    limit = Some(21),\n    offset = Some(42),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)",
+      "get getTopFilterForAttribute with all parameters and multiple attributes": "val response = Await.result(\n  client.getTopFilterForAttribute(\n    attribute = \"myAttribute1,myAttribute2\",\n    index = \"index\",\n    search = Some(\"mySearch\"),\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    limit = Some(21),\n    offset = Some(42),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getTopFiltersNoResults": {
-      "get getTopFiltersNoResults with minimal parameters": "val response = client.getTopFiltersNoResults(\n  index = \"index\"\n)",
-      "get getTopFiltersNoResults with all parameters": "val response = client.getTopFiltersNoResults(\n  index = \"index\",\n  search = Some(\"mySearch\"),\n  startDate = Some(\"1999-09-19\"),\n  endDate = Some(\"2001-01-01\"),\n  limit = Some(21),\n  offset = Some(42),\n  tags = Some(\"tag\")\n)"
+      "get getTopFiltersNoResults with minimal parameters": "val response = Await.result(\n  client.getTopFiltersNoResults(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get getTopFiltersNoResults with all parameters": "val response = Await.result(\n  client.getTopFiltersNoResults(\n    index = \"index\",\n    search = Some(\"mySearch\"),\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    limit = Some(21),\n    offset = Some(42),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getTopHits": {
-      "get getTopHits with minimal parameters": "val response = client.getTopHits(\n  index = \"index\"\n)",
-      "get getTopHits with all parameters": "val response = client.getTopHits(\n  index = \"index\",\n  search = Some(\"mySearch\"),\n  clickAnalytics = Some(true),\n  revenueAnalytics = Some(true),\n  startDate = Some(\"1999-09-19\"),\n  endDate = Some(\"2001-01-01\"),\n  limit = Some(21),\n  offset = Some(42),\n  tags = Some(\"tag\")\n)"
+      "get getTopHits with minimal parameters": "val response = Await.result(\n  client.getTopHits(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get getTopHits with all parameters": "val response = Await.result(\n  client.getTopHits(\n    index = \"index\",\n    search = Some(\"mySearch\"),\n    clickAnalytics = Some(true),\n    revenueAnalytics = Some(true),\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    limit = Some(21),\n    offset = Some(42),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getTopSearches": {
-      "get getTopSearches with minimal parameters": "val response = client.getTopSearches(\n  index = \"index\"\n)",
-      "get getTopSearches with all parameters": "val response = client.getTopSearches(\n  index = \"index\",\n  clickAnalytics = Some(true),\n  revenueAnalytics = Some(true),\n  startDate = Some(\"1999-09-19\"),\n  endDate = Some(\"2001-01-01\"),\n  orderBy = Some(OrderBy.withName(\"searchCount\")),\n  direction = Some(Direction.withName(\"asc\")),\n  limit = Some(21),\n  offset = Some(42),\n  tags = Some(\"tag\")\n)"
+      "get getTopSearches with minimal parameters": "val response = Await.result(\n  client.getTopSearches(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get getTopSearches with all parameters": "val response = Await.result(\n  client.getTopSearches(\n    index = \"index\",\n    clickAnalytics = Some(true),\n    revenueAnalytics = Some(true),\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    orderBy = Some(OrderBy.withName(\"searchCount\")),\n    direction = Some(Direction.withName(\"asc\")),\n    limit = Some(21),\n    offset = Some(42),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getUsersCount": {
-      "get getUsersCount with minimal parameters": "val response = client.getUsersCount(\n  index = \"index\"\n)",
-      "get getUsersCount with all parameters": "val response = client.getUsersCount(\n  index = \"index\",\n  startDate = Some(\"1999-09-19\"),\n  endDate = Some(\"2001-01-01\"),\n  tags = Some(\"tag\")\n)"
+      "get getUsersCount with minimal parameters": "val response = Await.result(\n  client.getUsersCount(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get getUsersCount with all parameters": "val response = Await.result(\n  client.getUsersCount(\n    index = \"index\",\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey(\n  apiKey = \"updated-api-key\"\n)"
     },
     "init": {
       "default": "val client = AnalyticsClient(\n  appId = \"ALGOLIA_APPLICATION_ID\",\n  apiKey = \"ALGOLIA_API_KEY\",\n  region = Option(\"ALGOLIA_APPLICATION_REGION\")\n)"

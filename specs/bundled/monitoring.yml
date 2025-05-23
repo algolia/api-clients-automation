@@ -86,7 +86,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -116,7 +116,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -146,7 +146,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -170,7 +170,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -209,6 +209,7 @@ paths:
       summary: Retrieve cluster status
       description: Retrieves the status of selected clusters.
       operationId: getClusterStatus
+      x-mcp-tool: true
       tags:
         - monitoring
       security: []
@@ -226,6 +227,7 @@ paths:
       summary: Retrieve all incidents
       description: Retrieves known incidents for all clusters.
       operationId: getIncidents
+      x-mcp-tool: true
       security: []
       tags:
         - monitoring
@@ -508,6 +510,7 @@ components:
         - cluster
     Server:
       title: server
+      type: object
       additionalProperties: false
       properties:
         name:

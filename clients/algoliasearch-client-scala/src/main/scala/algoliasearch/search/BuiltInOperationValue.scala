@@ -42,11 +42,13 @@ sealed trait BuiltInOperationValue
 object BuiltInOperationValue {
 
   case class StringValue(value: String) extends BuiltInOperationValue
+
   case class IntValue(value: Int) extends BuiltInOperationValue
 
   def apply(value: String): BuiltInOperationValue = {
     BuiltInOperationValue.StringValue(value)
   }
+
   def apply(value: Int): BuiltInOperationValue = {
     BuiltInOperationValue.IntValue(value)
   }

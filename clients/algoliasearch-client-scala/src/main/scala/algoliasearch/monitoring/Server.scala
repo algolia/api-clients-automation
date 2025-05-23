@@ -22,6 +22,8 @@ import algoliasearch.monitoring.ModelType._
 import algoliasearch.monitoring.Region._
 import algoliasearch.monitoring.ServerStatus._
 
+import org.json4s._
+
 /** Server
   *
   * @param name
@@ -36,9 +38,42 @@ import algoliasearch.monitoring.ServerStatus._
 case class Server(
     name: Option[String] = scala.None,
     region: Option[Region] = scala.None,
-    isSlave: Option[Boolean] = scala.None,
-    isReplica: Option[Boolean] = scala.None,
+    isSlave /* is_slave */: Option[Boolean] = scala.None,
+    isReplica /* is_replica */: Option[Boolean] = scala.None,
     cluster: Option[String] = scala.None,
     status: Option[ServerStatus] = scala.None,
     `type`: Option[ModelType] = scala.None
 )
+
+class ServerSerializer extends Serializer[Server] {
+
+  private val renamedFields = Map[String, String](
+    "is_slave" -> "isSlave",
+    "is_replica" -> "isReplica"
+  )
+  override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), Server] = {
+    case (TypeInfo(clazz, _), json) if clazz == classOf[Server] =>
+      json match {
+        case jobject: JObject =>
+          // Rename fields from JSON to Scala
+          val renamedObject = JObject(
+            jobject.obj.map { field =>
+              renamedFields.get(field._1).map(JField(_, field._2)).getOrElse(field)
+            }
+          )
+          val formats = format - this
+          val mf = manifest[Server]
+          Extraction.extract[Server](renamedObject)(formats, mf)
+
+        case _ => throw new IllegalArgumentException(s"Can't deserialize $json as Server")
+      }
+  }
+
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: Server =>
+    val formats = format - this // remove current serializer from formats to avoid stackoverflow
+    val baseObj = Extraction.decompose(value)(formats)
+    baseObj transformField {
+      case JField(name, value) if renamedFields.exists(_._2 == name) => (renamedFields.find(_._2 == name).get._1, value)
+    }
+  }
+}

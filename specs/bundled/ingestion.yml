@@ -71,6 +71,7 @@ servers:
   - url: https://data.{region}.algolia.com
     variables:
       region:
+        description: The region where your Algolia application is hosted.
         enum:
           - eu
           - us
@@ -123,7 +124,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -153,7 +154,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -183,7 +184,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -207,7 +208,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -226,6 +227,53 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - ingestion
+  /1/push/{indexName}:
+    post:
+      summary: >-
+        Pushes records to be transformed through the Pipeline, directly to an
+        index
+      description: >
+        Pushes records through the Pipeline, directly to an index. You can make
+        the call synchronous by providing the `watch` parameter, for
+        asynchronous calls, you can use the observability endpoints and/or
+        debugger dashboard to see the status of your task.
+
+        If you want to leverage the [pre-indexing data
+        transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+        this is the recommended way of ingesting your records.
+
+        This method is similar to `pushTask`, but requires an `indexName`
+        instead of a `taskID`. If zero or many tasks are found, an error will be
+        returned.
+      operationId: push
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      x-timeouts:
+        connect: 180000
+        read: 180000
+        write: 180000
+      parameters:
+        - $ref: '#/components/parameters/IndexName'
+        - $ref: '#/components/parameters/watch'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PushTaskPayload'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WatchResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
       tags:
         - ingestion
   /1/authentications:
@@ -401,6 +449,7 @@ paths:
       summary: List destinations
       description: Retrieves a list of destinations.
       operationId: listDestinations
+      x-mcp-tool: true
       x-acl:
         - addObject
         - deleteIndex
@@ -568,6 +617,7 @@ paths:
       summary: List sources
       description: Retrieves a list of sources.
       operationId: listSources
+      x-mcp-tool: true
       x-acl:
         - addObject
         - deleteIndex
@@ -874,6 +924,7 @@ paths:
       summary: List tasks
       description: Retrieves a list of tasks.
       operationId: listTasks
+      x-mcp-tool: true
       x-acl:
         - addObject
         - deleteIndex
@@ -1053,10 +1104,22 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Push a `batch` request payload through the Pipeline
-      description: >-
-        Push a `batch` request payload through the Pipeline. You can check the
-        status of task pushes with the observability endpoints.
+      summary: >-
+        Pushes records to be transformed through the Pipeline, directly to an
+        index
+      description: >
+        Pushes records through the Pipeline, directly to an index. You can make
+        the call synchronous by providing the `watch` parameter, for
+        asynchronous calls, you can use the observability endpoints and/or
+        debugger dashboard to see the status of your task.
+
+        If you want to leverage the [pre-indexing data
+        transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+        this is the recommended way of ingesting your records.
+
+        This method is similar to `push`, but requires a `taskID` instead of a
+        `indexName`, which is useful when many `destinations` target the same
+        `indexName`.
       operationId: pushTask
       x-acl:
         - addObject
@@ -1068,40 +1131,12 @@ paths:
         write: 180000
       parameters:
         - $ref: '#/components/parameters/pathTaskID'
-        - name: watch
-          in: query
-          description: >-
-            When provided, the push operation will be synchronous and the API
-            will wait for the ingestion to be finished before responding.
-          required: false
-          schema:
-            type: boolean
+        - $ref: '#/components/parameters/watch'
       requestBody:
-        description: >-
-          Request body of a Search API `batch` request that will be pushed in
-          the Connectors pipeline.
         content:
           application/json:
             schema:
-              title: pushTaskPayload
-              type: object
-              properties:
-                action:
-                  $ref: '#/components/schemas/action'
-                records:
-                  type: array
-                  items:
-                    title: pushTaskRecords
-                    type: object
-                    additionalProperties: true
-                    required:
-                      - objectID
-                    properties:
-                      objectID:
-                        $ref: '#/components/schemas/objectID'
-              required:
-                - action
-                - records
+              $ref: '#/components/schemas/PushTaskPayload'
         required: true
       responses:
         '200':
@@ -1410,6 +1445,7 @@ paths:
       summary: List transformations
       description: Retrieves a list of transformations.
       operationId: listTransformations
+      x-mcp-tool: true
       x-acl:
         - addObject
         - deleteIndex
@@ -1807,6 +1843,23 @@ components:
       schema:
         type: object
         additionalProperties: true
+    IndexName:
+      name: indexName
+      in: path
+      description: Name of the index on which to perform the operation.
+      required: true
+      schema:
+        type: string
+        example: ALGOLIA_INDEX_NAME
+    watch:
+      name: watch
+      in: query
+      description: >-
+        When provided, the push operation will be synchronous and the API will
+        wait for the ingestion to be finished before responding.
+      required: false
+      schema:
+        type: boolean
     itemsPerPage:
       name: itemsPerPage
       in: query
@@ -2134,6 +2187,132 @@ components:
         message:
           type: string
           example: Invalid Application-Id or API-Key
+    action:
+      type: string
+      enum:
+        - addObject
+        - updateObject
+        - partialUpdateObject
+        - partialUpdateObjectNoCreate
+      description: Type of indexing operation.
+    objectID:
+      type: string
+      description: Unique record identifier.
+      example: test-record-123
+    PushTaskPayload:
+      title: pushTaskPayload
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/action'
+        records:
+          type: array
+          items:
+            title: pushTaskRecords
+            type: object
+            additionalProperties: true
+            required:
+              - objectID
+            properties:
+              objectID:
+                $ref: '#/components/schemas/objectID'
+      required:
+        - action
+        - records
+    runID:
+      type: string
+      description: Universally unique identifier (UUID) of a task run.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    eventID:
+      type: string
+      description: Universally unique identifier (UUID) of an event.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    EventStatus:
+      oneOf:
+        - type: string
+          enum:
+            - created
+            - started
+            - retried
+            - failed
+            - succeeded
+            - critical
+        - type: 'null'
+    EventType:
+      type: string
+      enum:
+        - fetch
+        - record
+        - log
+        - transform
+    publishedAt:
+      type: string
+      description: Date of publish RFC 3339 format.
+    Event:
+      type: object
+      description: An event describe a step of the task execution flow..
+      additionalProperties: false
+      properties:
+        eventID:
+          $ref: '#/components/schemas/eventID'
+        runID:
+          $ref: '#/components/schemas/runID'
+        status:
+          $ref: '#/components/schemas/EventStatus'
+        type:
+          $ref: '#/components/schemas/EventType'
+        batchSize:
+          type: integer
+          description: The extracted record batch size.
+          example: 10
+          minimum: 0
+          multipleOf: 1
+        data:
+          oneOf:
+            - type: object
+              additionalProperties: true
+            - type: 'null'
+        publishedAt:
+          $ref: '#/components/schemas/publishedAt'
+      required:
+        - eventID
+        - runID
+        - status
+        - type
+        - batchSize
+        - publishedAt
+    createdAt:
+      type: string
+      description: Date of creation in RFC 3339 format.
+    WatchResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        runID:
+          $ref: '#/components/schemas/runID'
+        eventID:
+          $ref: '#/components/schemas/eventID'
+        data:
+          type: array
+          description: >-
+            when used with discovering or validating sources, the sampled data
+            of your source is returned.
+          items:
+            type: object
+        events:
+          description: >-
+            in case of error, observability events will be added to the
+            response, if any.
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        message:
+          description: a message describing the outcome of a validate run.
+          type: string
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+      required:
+        - runID
     itemsPerPage:
       type: integer
       description: Number of items per page.
@@ -2204,6 +2383,11 @@ components:
     name:
       type: string
       description: Descriptive name for the resource.
+    owner:
+      oneOf:
+        - type: string
+          description: Owner of the resource.
+        - type: 'null'
     AuthGoogleServiceAccountPartial:
       type: object
       description: >-
@@ -2307,9 +2491,6 @@ components:
         - $ref: '#/components/schemas/AuthAlgoliaPartial'
         - $ref: '#/components/schemas/AuthAlgoliaInsightsPartial'
         - $ref: '#/components/schemas/AuthSecrets'
-    createdAt:
-      type: string
-      description: Date of creation in RFC 3339 format.
     updatedAt:
       type: string
       description: Date of last update in RFC 3339 format.
@@ -2328,6 +2509,8 @@ components:
           $ref: '#/components/schemas/name'
         platform:
           $ref: '#/components/schemas/Platform'
+        owner:
+          $ref: '#/components/schemas/owner'
         input:
           $ref: '#/components/schemas/AuthInputPartial'
         createdAt:
@@ -2340,6 +2523,7 @@ components:
         - name
         - input
         - createdAt
+        - updatedAt
     Pagination:
       type: object
       description: Paginated API response.
@@ -2597,6 +2781,7 @@ components:
       enum:
         - product
         - variant
+        - collection
     AttributesToExclude:
       type: array
       description: >
@@ -2619,7 +2804,7 @@ components:
           Use `*` as wildcard: `foo.[*].bar` excludes `bar` from all elements of the `foo` array.
       items:
         type: string
-    DestinationIndexName:
+    DestinationInput:
       type: object
       additionalProperties: false
       properties:
@@ -2632,9 +2817,6 @@ components:
           $ref: '#/components/schemas/AttributesToExclude'
       required:
         - indexName
-    DestinationInput:
-      oneOf:
-        - $ref: '#/components/schemas/DestinationIndexName'
     transformationIDs:
       type: array
       items:
@@ -2650,6 +2832,8 @@ components:
           $ref: '#/components/schemas/DestinationType'
         name:
           $ref: '#/components/schemas/name'
+        owner:
+          $ref: '#/components/schemas/owner'
         input:
           $ref: '#/components/schemas/DestinationInput'
         createdAt:
@@ -2666,6 +2850,7 @@ components:
         - name
         - input
         - createdAt
+        - updatedAt
     DestinationCreate:
       type: object
       additionalProperties: false
@@ -2826,6 +3011,12 @@ components:
           description: >
             Whether a fallback value is stored in the Algolia record if there's
             no inventory information about the product.
+        productQueryPredicate:
+          type: string
+          description: >
+            Predicate to filter out specific products when indexing. For more
+            information, see [Query
+            Predicate](https://docs.commercetools.com/api/predicates/query).
         customFields:
           $ref: '#/components/schemas/CommercetoolsCustomFields'
       required:
@@ -3011,7 +3202,7 @@ components:
       properties:
         image:
           type: string
-          description: Shortname of the image, as returned by the referential.
+          description: Name of the connector.
           example: zendesk
         configuration:
           type: object
@@ -3065,6 +3256,8 @@ components:
           $ref: '#/components/schemas/SourceType'
         name:
           type: string
+        owner:
+          $ref: '#/components/schemas/owner'
         input:
           $ref: '#/components/schemas/SourceInput'
         authenticationID:
@@ -3078,6 +3271,7 @@ components:
         - type
         - name
         - createdAt
+        - updatedAt
     SourceCreate:
       type: object
       additionalProperties: false
@@ -3109,89 +3303,6 @@ components:
         - sourceID
         - name
         - createdAt
-    runID:
-      type: string
-      description: Universally unique identifier (UUID) of a task run.
-      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-    eventID:
-      type: string
-      description: Universally unique identifier (UUID) of an event.
-      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-    EventStatus:
-      type: string
-      enum:
-        - created
-        - started
-        - retried
-        - failed
-        - succeeded
-        - critical
-    EventType:
-      type: string
-      enum:
-        - fetch
-        - record
-        - log
-        - transform
-    publishedAt:
-      type: string
-      description: Date of publish RFC 3339 format.
-    Event:
-      type: object
-      description: An event describe a step of the task execution flow..
-      additionalProperties: false
-      properties:
-        eventID:
-          $ref: '#/components/schemas/eventID'
-        runID:
-          $ref: '#/components/schemas/runID'
-        status:
-          $ref: '#/components/schemas/EventStatus'
-        type:
-          $ref: '#/components/schemas/EventType'
-        batchSize:
-          type: integer
-          description: The extracted record batch size.
-          example: 10
-          minimum: 0
-          multipleOf: 1
-        data:
-          type: object
-          additionalProperties: true
-        publishedAt:
-          $ref: '#/components/schemas/publishedAt'
-      required:
-        - eventID
-        - runID
-        - status
-        - type
-        - batchSize
-        - publishedAt
-    WatchResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        runID:
-          $ref: '#/components/schemas/runID'
-        data:
-          type: array
-          description: >-
-            when used with discovering or validating sources, the sampled data
-            of your source is returned.
-          items:
-            type: object
-        events:
-          description: >-
-            in case of error, observability events will be added to the
-            response, if any.
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
-        message:
-          description: a message describing the outcome of a validate run.
-          type: string
-      required:
-        - message
     SourceSearch:
       type: object
       additionalProperties: false
@@ -3228,6 +3339,12 @@ components:
           description: >
             Whether a fallback value is stored in the Algolia record if there's
             no inventory information about the product.
+        productQueryPredicate:
+          type: string
+          description: >
+            Predicate to filter out specific products when indexing. For more
+            information, see [Query
+            Predicate](https://docs.commercetools.com/api/predicates/query).
         customFields:
           $ref: '#/components/schemas/CommercetoolsCustomFields'
     SourceUpdateDocker:
@@ -3582,6 +3699,8 @@ components:
           $ref: '#/components/schemas/LastRun'
         nextRun:
           $ref: '#/components/schemas/NextRun'
+        owner:
+          $ref: '#/components/schemas/owner'
         input:
           $ref: '#/components/schemas/TaskInput'
         enabled:
@@ -3591,6 +3710,8 @@ components:
         failureThreshold:
           $ref: '#/components/schemas/failureThreshold'
         action:
+          $ref: '#/components/schemas/ActionType'
+        subscriptionAction:
           $ref: '#/components/schemas/ActionType'
         cursor:
           $ref: '#/components/schemas/cursor'
@@ -3608,6 +3729,7 @@ components:
         - destinationID
         - enabled
         - createdAt
+        - updatedAt
     TaskCreate:
       type: object
       additionalProperties: false
@@ -3618,6 +3740,8 @@ components:
         destinationID:
           $ref: '#/components/schemas/destinationID'
         action:
+          $ref: '#/components/schemas/ActionType'
+        subscriptionAction:
           $ref: '#/components/schemas/ActionType'
         cron:
           $ref: '#/components/schemas/Cron'
@@ -3674,6 +3798,8 @@ components:
         enabled:
           type: boolean
           description: Whether the task is enabled.
+        subscriptionAction:
+          $ref: '#/components/schemas/ActionType'
         failureThreshold:
           $ref: '#/components/schemas/failureThreshold'
         notifications:
@@ -3704,21 +3830,6 @@ components:
       required:
         - runID
         - createdAt
-    action:
-      type: string
-      enum:
-        - addObject
-        - updateObject
-        - partialUpdateObject
-        - partialUpdateObjectNoCreate
-        - deleteObject
-        - delete
-        - clear
-      description: Type of indexing operation.
-    objectID:
-      type: string
-      description: Unique record identifier.
-      example: test-record-123
     OnDemandTriggerType:
       type: string
       description: Task is run manually, with the `/run` endpoint.
@@ -3835,6 +3946,7 @@ components:
         - trigger
         - enabled
         - createdAt
+        - updatedAt
     OnDemandTriggerInput:
       type: object
       additionalProperties: false
@@ -3958,6 +4070,8 @@ components:
           $ref: '#/components/schemas/Name'
         description:
           $ref: '#/components/schemas/Description'
+        owner:
+          $ref: '#/components/schemas/owner'
         createdAt:
           $ref: '#/components/schemas/createdAt'
         updatedAt:
@@ -3967,6 +4081,7 @@ components:
         - code
         - name
         - createdAt
+        - updatedAt
     TransformationCreate:
       type: object
       additionalProperties: false
@@ -4017,9 +4132,11 @@ components:
       properties:
         payloads:
           type: array
-          description: The array of records returned by the transformation service.
+          description: >-
+            The array of stringified records returned by the transformation
+            service.
           items:
-            type: object
+            type: string
         error:
           title: transformationError
           type: object

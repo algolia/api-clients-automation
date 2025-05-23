@@ -16,7 +16,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class SnippetQuerySuggestionsClient {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   /** Snippet for the createConfig method.
     *
@@ -32,30 +32,30 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.createConfig(
-      configurationWithIndex = ConfigurationWithIndex(
-        indexName = "<YOUR_INDEX_NAME>",
-        sourceIndices = Seq(
-          SourceIndex(
-            indexName = "<YOUR_INDEX_NAME>",
-            facets = Some(
-              Seq(
-                Facet(
-                  attribute = Some("test")
+    val response = Await.result(
+      client.createConfig(
+        configurationWithIndex = ConfigurationWithIndex(
+          indexName = "<YOUR_INDEX_NAME>",
+          sourceIndices = Seq(
+            SourceIndex(
+              indexName = "<YOUR_INDEX_NAME>",
+              facets = Some(
+                Seq(
+                  Facet(
+                    attribute = Some("test")
+                  )
                 )
-              )
-            ),
-            generate = Some(Seq(Seq("facetA", "facetB"), Seq("facetC")))
-          )
-        ),
-        languages = Some(Languages(Seq("french"))),
-        exclude = Some(Seq("test"))
-      )
+              ),
+              generate = Some(Seq(Seq("facetA", "facetB"), Seq("facetC")))
+            )
+          ),
+          languages = Some(Languages(Seq("french"))),
+          exclude = Some(Seq("test"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -73,13 +73,13 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.customDelete[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customDelete[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -97,14 +97,14 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.customDelete[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters"))
+    val response = Await.result(
+      client.customDelete[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters"))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -122,13 +122,13 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.customGet[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -146,14 +146,14 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.customGet[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters with space"))
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters with space"))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -171,22 +171,22 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.customGet[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "to be overriden")),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("query", "parameters with space")
-          .withQueryParameter("and an array", Seq("array", "with spaces"))
-          .withHeader("x-header-1", "spaces are left alone")
-          .build()
-      )
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "to be overriden")),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query", "parameters with space")
+            .withQueryParameter("and an array", Seq("array", "with spaces"))
+            .withHeader("x-header-1", "spaces are left alone")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -204,13 +204,13 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -228,15 +228,15 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("body", JString("parameters")))))
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("body", JString("parameters")))))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -254,21 +254,21 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("query", "myQueryParameter")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query", "myQueryParameter")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -286,21 +286,21 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("query2", "myQueryParameter")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query2", "myQueryParameter")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -318,21 +318,21 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -350,21 +350,21 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -382,21 +382,21 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("isItWorking", true)
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("isItWorking", true)
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -414,21 +414,21 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", 2)
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", 2)
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -446,21 +446,21 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", Seq("b and c", "d"))
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq("b and c", "d"))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -478,21 +478,21 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", Seq(true, true, false))
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq(true, true, false))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -510,21 +510,21 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", Seq(1, 2))
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq(1, 2))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -542,13 +542,13 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.customPut[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customPut[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -566,15 +566,15 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.customPut[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("body", JString("parameters")))))
+    val response = Await.result(
+      client.customPut[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("body", JString("parameters")))))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -592,13 +592,13 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.deleteConfig(
-      indexName = "<YOUR_INDEX_NAME>"
+    val response = Await.result(
+      client.deleteConfig(
+        indexName = "<YOUR_INDEX_NAME>"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -616,12 +616,12 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.getAllConfigs(
+    val response = Await.result(
+      client.getAllConfigs(
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -639,13 +639,13 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.getConfig(
-      indexName = "<YOUR_INDEX_NAME>"
+    val response = Await.result(
+      client.getConfig(
+        indexName = "<YOUR_INDEX_NAME>"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -663,13 +663,13 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.getConfigStatus(
-      indexName = "<YOUR_INDEX_NAME>"
+    val response = Await.result(
+      client.getConfigStatus(
+        indexName = "<YOUR_INDEX_NAME>"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -687,13 +687,33 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.getLogFile(
-      indexName = "<YOUR_INDEX_NAME>"
+    val response = Await.result(
+      client.getLogFile(
+        indexName = "<YOUR_INDEX_NAME>"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the setClientApiKey method.
+    *
+    * switch API key
+    */
+  def snippetForQuerySuggestionsClientSetClientApiKey(): Unit = {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    val client = QuerySuggestionsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
     )
 
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // Call the API
+    client.setClientApiKey(
+      apiKey = "updated-api-key"
+    ) // >LOG
     // SEPARATOR<
   }
 
@@ -711,30 +731,30 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Call the API
-    val response = client.updateConfig(
-      indexName = "<YOUR_INDEX_NAME>",
-      configuration = Configuration(
-        sourceIndices = Seq(
-          SourceIndex(
-            indexName = "<YOUR_INDEX_NAME>",
-            facets = Some(
-              Seq(
-                Facet(
-                  attribute = Some("test")
+    val response = Await.result(
+      client.updateConfig(
+        indexName = "<YOUR_INDEX_NAME>",
+        configuration = Configuration(
+          sourceIndices = Seq(
+            SourceIndex(
+              indexName = "<YOUR_INDEX_NAME>",
+              facets = Some(
+                Seq(
+                  Facet(
+                    attribute = Some("test")
+                  )
                 )
-              )
-            ),
-            generate = Some(Seq(Seq("facetA", "facetB"), Seq("facetC")))
-          )
-        ),
-        languages = Some(Languages(Seq("french"))),
-        exclude = Some(Seq("test"))
-      )
+              ),
+              generate = Some(Seq(Seq("facetA", "facetB"), Seq("facetC")))
+            )
+          ),
+          languages = Some(Languages(Seq("french"))),
+          exclude = Some(Seq("test"))
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 

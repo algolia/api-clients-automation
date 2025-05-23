@@ -23,18 +23,6 @@ module Algolia
         region = nil
       end
 
-      if opts.nil? || opts[:connect_timeout].nil?
-        opts[:connect_timeout] = 25000
-      end
-
-      if opts.nil? || opts[:read_timeout].nil?
-        opts[:read_timeout] = 25000
-      end
-
-      if opts.nil? || opts[:write_timeout].nil?
-        opts[:write_timeout] = 25000
-      end
-
       if region.nil? || !region.is_a?(String) || !regions.include?(region)
         raise "`region` is required and must be one of the following: #{regions.join(", ")}"
       end
@@ -50,6 +38,18 @@ module Algolia
     end
 
     def self.create_with_config(config)
+      if config.connect_timeout.nil?
+        config.connect_timeout = 25000
+      end
+
+      if config.read_timeout.nil?
+        config.read_timeout = 25000
+      end
+
+      if config.write_timeout.nil?
+        config.write_timeout = 25000
+      end
+
       new(config)
     end
 
@@ -261,6 +261,7 @@ module Algolia
 
     # Creates a new task using the v1 endpoint, please use `createTask` instead.
 
+    # THIS OPERATION IS DEPRECATED
     # @param task_create [TaskCreateV1] Request body for creating a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -342,7 +343,7 @@ module Algolia
       )
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -374,7 +375,7 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -385,7 +386,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -417,7 +418,7 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -428,7 +429,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -461,7 +462,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -473,7 +474,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -506,7 +507,7 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # This method allow you to send requests to the Algolia REST API.
+    # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
@@ -710,6 +711,7 @@ module Algolia
 
     # Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
 
+    # THIS OPERATION IS DEPRECATED
     # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -845,6 +847,7 @@ module Algolia
     #   - addObject
     #   - deleteIndex
     #   - editSettings
+    # THIS OPERATION IS DEPRECATED
     # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -941,6 +944,7 @@ module Algolia
     #   - addObject
     #   - deleteIndex
     #   - editSettings
+    # THIS OPERATION IS DEPRECATED
     # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1292,6 +1296,7 @@ module Algolia
     #   - addObject
     #   - deleteIndex
     #   - editSettings
+    # THIS OPERATION IS DEPRECATED
     # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1972,6 +1977,7 @@ module Algolia
     #   - addObject
     #   - deleteIndex
     #   - editSettings
+    # THIS OPERATION IS DEPRECATED
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
     # @param action [Array<ActionType>] Actions for filtering the list of tasks.
@@ -2132,14 +2138,73 @@ module Algolia
       )
     end
 
-    # Push a `batch` request payload through the Pipeline. You can check the status of task pushes with the observability endpoints.
+    # Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `pushTask`, but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error will be returned.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param index_name [String] Name of the index on which to perform the operation. (required)
+    # @param push_task_payload [PushTaskPayload]  (required)
+    # @param watch [Boolean] When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def push_with_http_info(index_name, push_task_payload, watch = nil, request_options = {})
+      # verify the required parameter 'index_name' is set
+      if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `push`."
+      end
+      # verify the required parameter 'push_task_payload' is set
+      if @api_client.config.client_side_validation && push_task_payload.nil?
+        raise ArgumentError, "Parameter `push_task_payload` is required when calling `push`."
+      end
+
+      path = "/1/push/{indexName}".sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
+      query_params = {}
+      query_params[:watch] = watch unless watch.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+      request_options[:timeout] ||= 180000
+      request_options[:connect_timeout] ||= 180000
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(push_task_payload)
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.push",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `pushTask`, but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error will be returned.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param index_name [String] Name of the index on which to perform the operation. (required)
+    # @param push_task_payload [PushTaskPayload]  (required)
+    # @param watch [Boolean] When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [WatchResponse]
+    def push(index_name, push_task_payload, watch = nil, request_options = {})
+      response = push_with_http_info(index_name, push_task_payload, watch, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::WatchResponse")
+    end
+
+    # Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target the same `indexName`.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
     # @param task_id [String] Unique identifier of a task. (required)
-    # @param push_task_payload [PushTaskPayload] Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
+    # @param push_task_payload [PushTaskPayload]  (required)
     # @param watch [Boolean] When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -2175,14 +2240,14 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Push a `batch` request payload through the Pipeline. You can check the status of task pushes with the observability endpoints.
+    # Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target the same `indexName`.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
     # @param task_id [String] Unique identifier of a task. (required)
-    # @param push_task_payload [PushTaskPayload] Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
+    # @param push_task_payload [PushTaskPayload]  (required)
     # @param watch [Boolean] When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [WatchResponse]
@@ -2295,6 +2360,7 @@ module Algolia
     #   - addObject
     #   - deleteIndex
     #   - editSettings
+    # THIS OPERATION IS DEPRECATED
     # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -2535,6 +2601,7 @@ module Algolia
     #   - addObject
     #   - deleteIndex
     #   - editSettings
+    # THIS OPERATION IS DEPRECATED
     # @param task_search [TaskSearch]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -3014,6 +3081,7 @@ module Algolia
 
     # Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
 
+    # THIS OPERATION IS DEPRECATED
     # @param task_id [String] Unique identifier of a task. (required)
     # @param task_update [TaskUpdateV1]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)

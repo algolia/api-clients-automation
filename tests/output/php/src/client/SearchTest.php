@@ -154,6 +154,35 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('can handle unknown response fields')]
+    public function test8api(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6686']));
+
+        $res = $client->getSettings(
+            'cts_e2e_unknownField_php',
+        );
+        $this->assertEquals(
+            '{"minWordSizefor1Typo":12,"minWordSizefor2Typos":13,"hitsPerPage":14}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('can handle unknown response fields inside a nested oneOf')]
+    public function test9api(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6686']));
+
+        $res = $client->getRule(
+            'cts_e2e_unknownFieldNested_php',
+            'ruleObjectID',
+        );
+        $this->assertEquals(
+            '{"objectID":"ruleObjectID","consequence":{"promote":[{"objectID":"1","position":10}]}}',
+            json_encode($res)
+        );
+    }
+
     #[TestDox('calls api with correct user agent')]
     public function test0commonApi(): void
     {
@@ -178,7 +207,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.13.0\).*/',
+                '/^Algolia for PHP \(4.19.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
@@ -288,6 +317,30 @@ class SearchTest extends TestCase implements HttpClientInterface
 
         $res = $client->generateSecuredApiKey(
             '2640659426d5107b6e47d75db9cbaef8',
+            ['userToken' => 'user42',
+            ],
+        );
+    }
+
+    #[TestDox('mcm with filters')]
+    public function test5generateSecuredApiKey(): void
+    {
+        $client = $this->createClient(self::APP_ID, self::API_KEY);
+
+        $res = $client->generateSecuredApiKey(
+            'YourSearchOnlyApiKey',
+            ['filters' => 'user:user42 AND user:public',
+            ],
+        );
+    }
+
+    #[TestDox('mcm with user token')]
+    public function test6generateSecuredApiKey(): void
+    {
+        $client = $this->createClient(self::APP_ID, self::API_KEY);
+
+        $res = $client->generateSecuredApiKey(
+            'YourSearchOnlyApiKey',
             ['userToken' => 'user42',
             ],
         );
@@ -664,9 +717,28 @@ class SearchTest extends TestCase implements HttpClientInterface
                     'createdAt' => '1500240452',
                 ],
             ],
+            false,
+            1000,
             [
                 'headers' => [
                     'X-Algolia-User-ID' => '*',
+                ],
+            ]
+        );
+    }
+
+    #[TestDox('with algolia user id')]
+    public function test0searchSingleIndex(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6686']));
+
+        $res = $client->searchSingleIndex(
+            'playlists',
+            ['query' => 'foo',
+            ],
+            [
+                'headers' => [
+                    'X-Algolia-User-ID' => 'user1234',
                 ],
             ]
         );

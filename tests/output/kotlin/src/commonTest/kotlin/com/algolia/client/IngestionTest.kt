@@ -11,6 +11,8 @@ import io.ktor.http.*
 import kotlinx.coroutines.test.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
+import org.skyscreamer.jsonassert.JSONAssert
+import org.skyscreamer.jsonassert.JSONCompareMode
 import kotlin.test.*
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -54,6 +56,23 @@ class IngestionTest {
       intercept = {
         assertEquals(25000, it.connectTimeout)
         assertEquals(25000, it.socketTimeout)
+      },
+    )
+  }
+
+  @Test
+  fun `can leave call opened for a long time`() = runTest {
+    val client = IngestionClient(appId = "test-app-id", apiKey = "test-api-key", "us", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6676))))
+    client.runTest(
+      call = {
+        customGet(
+          path = "1/long-wait",
+        )
+      },
+
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"message":"OK"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
   }
@@ -126,7 +145,7 @@ class IngestionTest {
         )
       },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.14.0\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.19.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
       },
@@ -166,8 +185,8 @@ class IngestionTest {
       },
 
       response = {
-        val response = Json.encodeToString(it)
-        assertEquals("{\"headerAPIKeyValue\":\"test-api-key\"}", response)
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"headerAPIKeyValue":"test-api-key"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
     client.runTest(
@@ -187,8 +206,8 @@ class IngestionTest {
       },
 
       response = {
-        val response = Json.encodeToString(it)
-        assertEquals("{\"headerAPIKeyValue\":\"updated-api-key\"}", response)
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"headerAPIKeyValue":"updated-api-key"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
   }

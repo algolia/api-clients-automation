@@ -3,40 +3,113 @@
 
 package com.algolia.model.ingestion;
 
-import com.algolia.exceptions.AlgoliaRuntimeException;
 import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.core.*;
-import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.annotation.*;
-import java.io.IOException;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /** DestinationInput */
-@JsonDeserialize(using = DestinationInput.Deserializer.class)
-public interface DestinationInput {
-  class Deserializer extends JsonDeserializer<DestinationInput> {
+public class DestinationInput {
 
-    private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
+  @JsonProperty("indexName")
+  private String indexName;
 
-    @Override
-    public DestinationInput deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
-      JsonNode tree = jp.readValueAsTree();
-      // deserialize DestinationIndexName
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(DestinationIndexName.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf DestinationIndexName (error: " + e.getMessage() + ") (type: DestinationIndexName)");
-        }
-      }
-      throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
+  @JsonProperty("recordType")
+  private RecordType recordType;
+
+  @JsonProperty("attributesToExclude")
+  private List<String> attributesToExclude;
+
+  public DestinationInput setIndexName(String indexName) {
+    this.indexName = indexName;
+    return this;
+  }
+
+  /** Algolia index name (case-sensitive). */
+  @javax.annotation.Nonnull
+  public String getIndexName() {
+    return indexName;
+  }
+
+  public DestinationInput setRecordType(RecordType recordType) {
+    this.recordType = recordType;
+    return this;
+  }
+
+  /** Get recordType */
+  @javax.annotation.Nullable
+  public RecordType getRecordType() {
+    return recordType;
+  }
+
+  public DestinationInput setAttributesToExclude(List<String> attributesToExclude) {
+    this.attributesToExclude = attributesToExclude;
+    return this;
+  }
+
+  public DestinationInput addAttributesToExclude(String attributesToExcludeItem) {
+    if (this.attributesToExclude == null) {
+      this.attributesToExclude = new ArrayList<>();
     }
+    this.attributesToExclude.add(attributesToExcludeItem);
+    return this;
+  }
 
-    /** Handle deserialization of the 'null' value. */
-    @Override
-    public DestinationInput getNullValue(DeserializationContext ctxt) throws JsonMappingException {
-      throw new JsonMappingException(ctxt.getParser(), "DestinationInput cannot be null");
+  /**
+   * Attributes from your source to exclude from Algolia records. Not all your data attributes will
+   * be useful for searching. Keeping your Algolia records small increases indexing and search
+   * performance. - Exclude nested attributes with `.` notation. For example, `foo.bar` indexes the
+   * `foo` attribute and all its children **except** the `bar` attribute. - Exclude attributes from
+   * arrays with `[i]`, where `i` is the index of the array element. For example, `foo.[0].bar` only
+   * excludes the `bar` attribute from the first element of the `foo` array, but indexes the
+   * complete `foo` attribute for all other elements. Use `*` as wildcard: `foo.[*].bar` excludes
+   * `bar` from all elements of the `foo` array.
+   */
+  @javax.annotation.Nullable
+  public List<String> getAttributesToExclude() {
+    return attributesToExclude;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
     }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    DestinationInput destinationInput = (DestinationInput) o;
+    return (
+      Objects.equals(this.indexName, destinationInput.indexName) &&
+      Objects.equals(this.recordType, destinationInput.recordType) &&
+      Objects.equals(this.attributesToExclude, destinationInput.attributesToExclude)
+    );
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(indexName, recordType, attributesToExclude);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class DestinationInput {\n");
+    sb.append("    indexName: ").append(toIndentedString(indexName)).append("\n");
+    sb.append("    recordType: ").append(toIndentedString(recordType)).append("\n");
+    sb.append("    attributesToExclude: ").append(toIndentedString(attributesToExclude)).append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
   }
 }

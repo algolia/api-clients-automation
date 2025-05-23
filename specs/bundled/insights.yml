@@ -100,6 +100,7 @@ servers:
   - url: https://insights.{region}.algolia.io
     variables:
       region:
+        description: The region where your Algolia application is hosted.
         enum:
           - us
           - de
@@ -126,7 +127,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -156,7 +157,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -186,7 +187,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -210,7 +211,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -237,6 +238,8 @@ paths:
         - insights
       operationId: pushEvents
       summary: Send events
+      x-acl:
+        - search
       description: |
         Sends a list of events to the Insights API.
 
@@ -687,6 +690,8 @@ paths:
 
         To delete a personalization user profile, see `Delete a user profile` in
         the Personalization API.
+      x-acl:
+        - deleteObject
       parameters:
         - name: userToken
           in: path

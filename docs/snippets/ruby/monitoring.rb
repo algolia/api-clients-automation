@@ -97,7 +97,7 @@ def snippet_for_custom_get2
     "test/all",
     {query: "to be overriden"},
     {
-      :header_params => JSON.parse("{\"x-header-1\":\"spaces are left alone\"}", :symbolize_names => true),
+      :header_params => {"x-header-1" => "spaces are left alone"},
       :query_params => JSON.parse(
         "{\"query\":\"parameters with space\",\"and an array\":[\"array\",\"with spaces\"]}",
         :symbolize_names => true
@@ -217,7 +217,7 @@ def snippet_for_custom_post4
     "test/requestOptions",
     {query: "parameters"},
     {facet: "filters"},
-    {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
+    {:header_params => {"x-algolia-api-key" => "ALGOLIA_API_KEY"}}
   )
 
   # >LOG
@@ -242,7 +242,7 @@ def snippet_for_custom_post5
     "test/requestOptions",
     {query: "parameters"},
     {facet: "filters"},
-    {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
+    {:header_params => {"x-algolia-api-key" => "ALGOLIA_API_KEY"}}
   )
 
   # >LOG

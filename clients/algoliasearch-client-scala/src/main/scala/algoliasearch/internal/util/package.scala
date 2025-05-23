@@ -33,7 +33,7 @@ package object util {
       throw new UnsupportedOperationException(
         "Date must come as string (already serialized)"
       )
-    case c: Iterable[_] => c.map(_.toString).mkString(",")
+    case c: Iterable[?] => c.map(_.toString).mkString(",")
     case _              => value.toString
   }
 }

@@ -8,8 +8,6 @@ import org.json4s.*
 import org.json4s.native.JsonParser.*
 import org.scalatest.funsuite.AnyFunSuite
 import io.github.cdimascio.dotenv.Dotenv
-import org.skyscreamer.jsonassert.JSONCompare.compareJSON
-import org.skyscreamer.jsonassert.JSONCompareMode
 import org.json4s.native.Serialization
 import org.json4s.native.Serialization.write
 
@@ -17,9 +15,9 @@ import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
 
-class IngestionTestE2E extends AnyFunSuite {
+class IngestionTest extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   def testClient(): IngestionClient = {
     val region = "us"
@@ -46,7 +44,20 @@ class IngestionTestE2E extends AnyFunSuite {
     )
 
     val response = Await.result(future, Duration.Inf)
-    compareJSON("""{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498"}""", write(response), JSONCompareMode.LENIENT)
+    val expected = parse("""{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498"}""")
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
   }
 
   test("enableTaskV1") {
@@ -56,7 +67,20 @@ class IngestionTestE2E extends AnyFunSuite {
     )
 
     val response = Await.result(future, Duration.Inf)
-    compareJSON("""{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498"}""", write(response), JSONCompareMode.LENIENT)
+    val expected = parse("""{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498"}""")
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
   }
 
   test("getSource") {
@@ -66,11 +90,22 @@ class IngestionTestE2E extends AnyFunSuite {
     )
 
     val response = Await.result(future, Duration.Inf)
-    compareJSON(
-      """{"sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","name":"cts_e2e_browse","type":"json","input":{"url":"https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json"}}""",
-      write(response),
-      JSONCompareMode.LENIENT
+    val expected = parse(
+      """{"sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","name":"cts_e2e_browse","type":"json","input":{"url":"https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json"}}"""
     )
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
   }
 
   test("getAuthentications with query params1") {
@@ -85,11 +120,22 @@ class IngestionTestE2E extends AnyFunSuite {
     )
 
     val response = Await.result(future, Duration.Inf)
-    compareJSON(
-      """{"pagination":{"page":1,"itemsPerPage":2},"authentications":[{"authenticationID":"474f050f-a771-464c-a016-323538029f5f","type":"algolia","name":"algolia-auth-1677060483885","input":{},"createdAt":"2023-02-22T10:08:04Z","updatedAt":"2023-10-25T08:41:56Z"},{}]}""",
-      write(response),
-      JSONCompareMode.LENIENT
+    val expected = parse(
+      """{"pagination":{"page":1,"itemsPerPage":2},"authentications":[{"authenticationID":"474f050f-a771-464c-a016-323538029f5f","type":"algolia","name":"algolia-auth-1677060483885","input":{},"createdAt":"2023-02-22T10:08:04Z","updatedAt":"2023-10-25T08:41:56Z"},{}]}"""
     )
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
   }
 
   test("searchTasks") {
@@ -105,11 +151,22 @@ class IngestionTestE2E extends AnyFunSuite {
     )
 
     val response = Await.result(future, Duration.Inf)
-    compareJSON(
-      """[{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498","sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","destinationID":"506d79fa-e29d-4bcf-907c-6b6a41172153","enabled":true,"failureThreshold":0,"action":"replace","createdAt":"2024-01-08T16:47:41Z"}]""",
-      write(response),
-      JSONCompareMode.LENIENT
+    val expected = parse(
+      """[{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498","sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","destinationID":"506d79fa-e29d-4bcf-907c-6b6a41172153","enabled":true,"failureThreshold":0,"action":"replace","createdAt":"2024-01-08T16:47:41Z"}]"""
     )
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
   }
 
   test("searchTasksV1") {
@@ -125,11 +182,22 @@ class IngestionTestE2E extends AnyFunSuite {
     )
 
     val response = Await.result(future, Duration.Inf)
-    compareJSON(
-      """[{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498","sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","destinationID":"506d79fa-e29d-4bcf-907c-6b6a41172153","trigger":{"type":"onDemand"},"enabled":true,"failureThreshold":0,"action":"replace","createdAt":"2024-01-08T16:47:41Z"}]""",
-      write(response),
-      JSONCompareMode.LENIENT
+    val expected = parse(
+      """[{"taskID":"76ab4c2a-ce17-496f-b7a6-506dc59ee498","sourceID":"75eeb306-51d3-4e5e-a279-3c92bd8893ac","destinationID":"506d79fa-e29d-4bcf-907c-6b6a41172153","trigger":{"type":"onDemand"},"enabled":true,"failureThreshold":0,"action":"replace","createdAt":"2024-01-08T16:47:41Z"}]"""
     )
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
   }
 
 }

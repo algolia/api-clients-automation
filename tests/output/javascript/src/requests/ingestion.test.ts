@@ -93,7 +93,13 @@ describe('createSource', () => {
     const req = (await client.createSource({
       type: 'commercetools',
       name: 'sourceName',
-      input: { storeKeys: ['myStore'], locales: ['de'], url: 'http://commercetools.com', projectKey: 'keyID' },
+      input: {
+        storeKeys: ['myStore'],
+        locales: ['de'],
+        url: 'http://commercetools.com',
+        projectKey: 'keyID',
+        productQueryPredicate: 'masterVariant(attributes(name="Brand" and value="Algolia"))',
+      },
       authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     })) as unknown as EchoResponse;
 
@@ -102,7 +108,13 @@ describe('createSource', () => {
     expect(req.data).toEqual({
       type: 'commercetools',
       name: 'sourceName',
-      input: { storeKeys: ['myStore'], locales: ['de'], url: 'http://commercetools.com', projectKey: 'keyID' },
+      input: {
+        storeKeys: ['myStore'],
+        locales: ['de'],
+        url: 'http://commercetools.com',
+        projectKey: 'keyID',
+        productQueryPredicate: 'masterVariant(attributes(name="Brand" and value="Algolia"))',
+      },
       authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     });
     expect(req.searchParams).toStrictEqual(undefined);
@@ -852,6 +864,57 @@ describe('listTransformations', () => {
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('push', () => {
+  test('global push', async () => {
+    const req = (await client.push({
+      indexName: 'foo',
+      pushTaskPayload: {
+        action: 'addObject',
+        records: [
+          { key: 'bar', foo: '1', objectID: 'o' },
+          { key: 'baz', foo: '2', objectID: 'k' },
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/push/foo');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      action: 'addObject',
+      records: [
+        { key: 'bar', foo: '1', objectID: 'o' },
+        { key: 'baz', foo: '2', objectID: 'k' },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('global push with watch mode', async () => {
+    const req = (await client.push({
+      indexName: 'bar',
+      pushTaskPayload: {
+        action: 'addObject',
+        records: [
+          { key: 'bar', foo: '1', objectID: 'o' },
+          { key: 'baz', foo: '2', objectID: 'k' },
+        ],
+      },
+      watch: true,
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/push/bar');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      action: 'addObject',
+      records: [
+        { key: 'bar', foo: '1', objectID: 'o' },
+        { key: 'baz', foo: '2', objectID: 'k' },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual({ watch: 'true' });
   });
 });
 

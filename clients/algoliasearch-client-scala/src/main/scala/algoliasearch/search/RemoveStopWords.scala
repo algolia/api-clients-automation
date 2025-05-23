@@ -46,11 +46,13 @@ sealed trait RemoveStopWords
 object RemoveStopWords {
 
   case class SeqOfSupportedLanguage(value: Seq[SupportedLanguage]) extends RemoveStopWords
+
   case class BooleanValue(value: Boolean) extends RemoveStopWords
 
   def apply(value: Seq[SupportedLanguage]): RemoveStopWords = {
     RemoveStopWords.SeqOfSupportedLanguage(value)
   }
+
   def apply(value: Boolean): RemoveStopWords = {
     RemoveStopWords.BooleanValue(value)
   }
@@ -62,10 +64,9 @@ object RemoveStopWordsSerializer extends Serializer[RemoveStopWords] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[RemoveStopWords] =>
       json match {
-        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
-          RemoveStopWords.SeqOfSupportedLanguage(value.map(_.extract))
-        case JBool(value) => RemoveStopWords.BooleanValue(value)
-        case _            => throw new MappingException("Can't convert " + json + " to RemoveStopWords")
+        case value: JArray => RemoveStopWords.apply(Extraction.extract[Seq[SupportedLanguage]](value))
+        case JBool(value)  => RemoveStopWords.BooleanValue(value)
+        case _             => throw new MappingException("Can't convert " + json + " to RemoveStopWords")
       }
   }
 

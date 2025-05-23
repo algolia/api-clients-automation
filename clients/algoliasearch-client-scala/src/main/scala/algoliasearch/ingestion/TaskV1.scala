@@ -53,5 +53,5 @@ case class TaskV1(
     notifications: Option[Notifications] = scala.None,
     policies: Option[Policies] = scala.None,
     createdAt: String,
-    updatedAt: Option[String] = scala.None
+    updatedAt: String
 )

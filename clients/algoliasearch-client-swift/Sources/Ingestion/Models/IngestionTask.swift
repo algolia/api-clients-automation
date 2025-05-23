@@ -19,12 +19,15 @@ public struct IngestionTask: Codable, JSONEncodable {
     public var lastRun: String?
     /// The next scheduled run of the task in RFC 3339 format.
     public var nextRun: String?
+    /// Owner of the resource.
+    public var owner: String?
     public var input: TaskInput?
     /// Whether the task is enabled.
     public var enabled: Bool
     /// Maximum accepted percentage of failures for a task run to finish successfully.
     public var failureThreshold: Int?
     public var action: ActionType?
+    public var subscriptionAction: ActionType?
     /// Date of the last cursor in RFC 3339 format.
     public var cursor: String?
     public var notifications: Notifications?
@@ -32,7 +35,7 @@ public struct IngestionTask: Codable, JSONEncodable {
     /// Date of creation in RFC 3339 format.
     public var createdAt: String
     /// Date of last update in RFC 3339 format.
-    public var updatedAt: String?
+    public var updatedAt: String
 
     public init(
         taskID: String,
@@ -41,15 +44,17 @@ public struct IngestionTask: Codable, JSONEncodable {
         cron: String? = nil,
         lastRun: String? = nil,
         nextRun: String? = nil,
+        owner: String? = nil,
         input: TaskInput? = nil,
         enabled: Bool,
         failureThreshold: Int? = nil,
         action: ActionType? = nil,
+        subscriptionAction: ActionType? = nil,
         cursor: String? = nil,
         notifications: Notifications? = nil,
         policies: Policies? = nil,
         createdAt: String,
-        updatedAt: String? = nil
+        updatedAt: String
     ) {
         self.taskID = taskID
         self.sourceID = sourceID
@@ -57,10 +62,12 @@ public struct IngestionTask: Codable, JSONEncodable {
         self.cron = cron
         self.lastRun = lastRun
         self.nextRun = nextRun
+        self.owner = owner
         self.input = input
         self.enabled = enabled
         self.failureThreshold = failureThreshold
         self.action = action
+        self.subscriptionAction = subscriptionAction
         self.cursor = cursor
         self.notifications = notifications
         self.policies = policies
@@ -75,10 +82,12 @@ public struct IngestionTask: Codable, JSONEncodable {
         case cron
         case lastRun
         case nextRun
+        case owner
         case input
         case enabled
         case failureThreshold
         case action
+        case subscriptionAction
         case cursor
         case notifications
         case policies
@@ -96,15 +105,17 @@ public struct IngestionTask: Codable, JSONEncodable {
         try container.encodeIfPresent(self.cron, forKey: .cron)
         try container.encodeIfPresent(self.lastRun, forKey: .lastRun)
         try container.encodeIfPresent(self.nextRun, forKey: .nextRun)
+        try container.encodeIfPresent(self.owner, forKey: .owner)
         try container.encodeIfPresent(self.input, forKey: .input)
         try container.encode(self.enabled, forKey: .enabled)
         try container.encodeIfPresent(self.failureThreshold, forKey: .failureThreshold)
         try container.encodeIfPresent(self.action, forKey: .action)
+        try container.encodeIfPresent(self.subscriptionAction, forKey: .subscriptionAction)
         try container.encodeIfPresent(self.cursor, forKey: .cursor)
         try container.encodeIfPresent(self.notifications, forKey: .notifications)
         try container.encodeIfPresent(self.policies, forKey: .policies)
         try container.encode(self.createdAt, forKey: .createdAt)
-        try container.encodeIfPresent(self.updatedAt, forKey: .updatedAt)
+        try container.encode(self.updatedAt, forKey: .updatedAt)
     }
 }
 
@@ -116,10 +127,12 @@ extension IngestionTask: Equatable {
             lhs.cron == rhs.cron &&
             lhs.lastRun == rhs.lastRun &&
             lhs.nextRun == rhs.nextRun &&
+            lhs.owner == rhs.owner &&
             lhs.input == rhs.input &&
             lhs.enabled == rhs.enabled &&
             lhs.failureThreshold == rhs.failureThreshold &&
             lhs.action == rhs.action &&
+            lhs.subscriptionAction == rhs.subscriptionAction &&
             lhs.cursor == rhs.cursor &&
             lhs.notifications == rhs.notifications &&
             lhs.policies == rhs.policies &&
@@ -136,14 +149,16 @@ extension IngestionTask: Hashable {
         hasher.combine(self.cron?.hashValue)
         hasher.combine(self.lastRun?.hashValue)
         hasher.combine(self.nextRun?.hashValue)
+        hasher.combine(self.owner?.hashValue)
         hasher.combine(self.input?.hashValue)
         hasher.combine(self.enabled.hashValue)
         hasher.combine(self.failureThreshold?.hashValue)
         hasher.combine(self.action?.hashValue)
+        hasher.combine(self.subscriptionAction?.hashValue)
         hasher.combine(self.cursor?.hashValue)
         hasher.combine(self.notifications?.hashValue)
         hasher.combine(self.policies?.hashValue)
         hasher.combine(self.createdAt.hashValue)
-        hasher.combine(self.updatedAt?.hashValue)
+        hasher.combine(self.updatedAt.hashValue)
     }
 }

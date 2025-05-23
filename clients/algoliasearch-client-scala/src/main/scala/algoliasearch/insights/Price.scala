@@ -36,11 +36,13 @@ sealed trait Price
 object Price {
 
   case class DoubleValue(value: Double) extends Price
+
   case class StringValue(value: String) extends Price
 
   def apply(value: Double): Price = {
     Price.DoubleValue(value)
   }
+
   def apply(value: String): Price = {
     Price.StringValue(value)
   }

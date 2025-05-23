@@ -137,6 +137,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
                     ],
                     'url' => 'http://commercetools.com',
                     'projectKey' => 'keyID',
+                    'productQueryPredicate' => 'masterVariant(attributes(name="Brand" and value="Algolia"))',
                 ],
                 'authenticationID' => '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
             ],
@@ -146,7 +147,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/sources',
                 'method' => 'POST',
-                'body' => json_decode('{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'),
+                'body' => json_decode('{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID","productQueryPredicate":"masterVariant(attributes(name="Brand" and value="Algolia"))"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'),
             ],
         ]);
     }
@@ -1236,6 +1237,68 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/transformations',
                 'method' => 'GET',
                 'body' => null,
+            ],
+        ]);
+    }
+
+    #[TestDox('global push')]
+    public function testPush(): void
+    {
+        $client = $this->getClient();
+        $client->push(
+            'foo',
+            ['action' => 'addObject',
+                'records' => [
+                    ['key' => 'bar',
+                        'foo' => '1',
+                        'objectID' => 'o',
+                    ],
+
+                    ['key' => 'baz',
+                        'foo' => '2',
+                        'objectID' => 'k',
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/push/foo',
+                'method' => 'POST',
+                'body' => json_decode('{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('global push with watch mode')]
+    public function testPush1(): void
+    {
+        $client = $this->getClient();
+        $client->push(
+            'bar',
+            ['action' => 'addObject',
+                'records' => [
+                    ['key' => 'bar',
+                        'foo' => '1',
+                        'objectID' => 'o',
+                    ],
+
+                    ['key' => 'baz',
+                        'foo' => '2',
+                        'objectID' => 'k',
+                    ],
+                ],
+            ],
+            true,
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/push/bar',
+                'method' => 'POST',
+                'body' => json_decode('{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}'),
+                'queryParameters' => json_decode('{"watch":"true"}', true),
             ],
         ]);
     }

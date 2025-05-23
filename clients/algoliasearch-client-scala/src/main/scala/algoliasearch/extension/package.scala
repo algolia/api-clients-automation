@@ -5,11 +5,59 @@ import algoliasearch.config.RequestOptions
 import algoliasearch.exception.AlgoliaApiException
 import algoliasearch.extension.internal.Iterable.createIterable
 import algoliasearch.extension.internal.RetryUntil.{DEFAULT_DELAY, retryUntil}
+import algoliasearch.internal.util.{escape, paramToString}
 import algoliasearch.search._
+import org.json4s.native.Serialization.read
+import org.json4s.{DefaultFormats, Extraction, Formats, jvalue2extractable}
 
+import java.nio.charset.StandardCharsets
+import java.util.Base64
+import javax.crypto.Mac
+import javax.crypto.spec.SecretKeySpec
+import scala.concurrent.duration.Duration
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.matching.Regex
+import scala.util.{Failure, Success, Try}
 
 package object extension {
+
+  implicit class SecuredApiKeyRestrictionsExtension(val restrictions: SecuredApiKeyRestrictions) {
+
+    /** Converts the restrictions to a URL-encoded string. Only includes fields that are defined (Some).
+      */
+    def toUrlEncoded: String = {
+      implicit val formats: Formats = JsonSupport.format
+
+      val jValue = Extraction.decompose(restrictions.searchParams)
+      var baseParams = jValue.extract[Map[String, Any]]
+
+      if (restrictions.filters.isDefined) {
+        baseParams += ("filters" -> restrictions.filters.get)
+      }
+
+      if (restrictions.validUntil.isDefined) {
+        baseParams += ("validUntil" -> restrictions.validUntil.get)
+      }
+
+      if (restrictions.restrictIndices.isDefined) {
+        baseParams += ("restrictIndices" -> restrictions.restrictIndices.get)
+      }
+
+      if (restrictions.restrictSources.isDefined) {
+        baseParams += ("restrictSources" -> restrictions.restrictSources.get)
+      }
+
+      if (restrictions.userToken.isDefined) {
+        baseParams += ("userToken" -> restrictions.userToken.get)
+      }
+
+      val params = baseParams.toList
+        .sortBy(_._1)
+        .map { case (k, v) => s"${escape(k)}=${escape(paramToString(v))}" }
+
+      params.mkString("&")
+    }
+  }
 
   implicit class SearchClientExtensions(val client: SearchClient) {
 
@@ -25,6 +73,12 @@ package object extension {
       *   The maximum number of retries. 50 by default. (optional)
       * @param requestOptions
       *   Additional request configuration.
+      * @return
+      *   Option[GetApiKeyResponse] The response of the operation.
+      *   - for `add` operation, either Some(GetApiKeyResponse) if the key is created or None if the key is not created.
+      *   - for `update` operation, Some(GetApiKeyResponse) with the updated key
+      *   - for `delete` operation, either None if the key is deleted or Some(GetApiKeyResponse) if the key is not
+      *     deleted.
       */
     def waitForApiKey(
         operation: ApiKeyOperation,
@@ -33,7 +87,7 @@ package object extension {
         maxRetries: Int = 50,
         delay: Long => Long = DEFAULT_DELAY,
         requestOptions: Option[RequestOptions] = None
-    )(implicit ec: ExecutionContext): Future[Any] = {
+    )(implicit ec: ExecutionContext): Future[Option[GetApiKeyResponse]] = {
       operation match {
         case ApiKeyOperation.Add =>
           client.waitKeyCreation(key, maxRetries, delay, requestOptions)
@@ -59,6 +113,22 @@ package object extension {
       * @param requestOptions
       *   additional request configuration.
       */
+    def waitForTask(
+        indexName: String,
+        taskID: Long,
+        delay: Long => Long = DEFAULT_DELAY,
+        maxRetries: Int = 50,
+        requestOptions: Option[RequestOptions] = None
+    )(implicit ec: ExecutionContext): Future[GetTaskResponse] = {
+      retryUntil(
+        retry = () => client.getTask(indexName, taskID, requestOptions),
+        until = (res: GetTaskResponse) => res.status == TaskStatus.Published,
+        maxRetries = maxRetries,
+        delay = delay
+      )
+    }
+
+    @deprecated("Use `waitForTask` instead", "2.13.4")
     def waitTask(
         indexName: String,
         taskID: Long,
@@ -66,12 +136,7 @@ package object extension {
         maxRetries: Int = 50,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[TaskStatus] = {
-      retryUntil(
-        retry = () => client.getTask(indexName, taskID, requestOptions).map(_.status),
-        until = (status: TaskStatus) => status == TaskStatus.Published,
-        maxRetries = maxRetries,
-        delay = delay
-      )
+      waitForTask(indexName, taskID, delay, maxRetries, requestOptions).map(_.status)
     }
 
     /** Wait for an application-level taskID to complete before executing the next line of code.
@@ -83,18 +148,28 @@ package object extension {
       * @param requestOptions
       *   additional request configuration.
       */
+    def waitForAppTask(
+        taskID: Long,
+        delay: Long => Long = DEFAULT_DELAY,
+        maxRetries: Int = 50,
+        requestOptions: Option[RequestOptions] = None
+    )(implicit ec: ExecutionContext): Future[GetTaskResponse] = {
+      retryUntil(
+        retry = () => client.getAppTask(taskID, requestOptions),
+        until = (res: GetTaskResponse) => res.status == TaskStatus.Published,
+        maxRetries = maxRetries,
+        delay = delay
+      )
+    }
+
+    @deprecated("Use `waitForAppTask` instead", "2.13.4")
     def waitAppTask(
         taskID: Long,
         delay: Long => Long = DEFAULT_DELAY,
         maxRetries: Int = 50,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[TaskStatus] = {
-      retryUntil(
-        retry = () => client.getAppTask(taskID, requestOptions).map(_.status),
-        until = (status: TaskStatus) => status == TaskStatus.Published,
-        maxRetries = maxRetries,
-        delay = delay
-      )
+      waitForAppTask(taskID, delay, maxRetries, requestOptions).map(_.status)
     }
 
     /** Wait on an API key update operation.
@@ -114,7 +189,7 @@ package object extension {
         maxRetries: Int = 50,
         delay: Long => Long = DEFAULT_DELAY,
         requestOptions: Option[RequestOptions] = None
-    )(implicit ec: ExecutionContext): Future[GetApiKeyResponse] = {
+    )(implicit ec: ExecutionContext): Future[Option[GetApiKeyResponse]] = {
       retryUntil(
         retry = () => client.getApiKey(key, requestOptions),
         until = (res: GetApiKeyResponse) =>
@@ -125,11 +200,12 @@ package object extension {
             maxHitsPerQuery = res.maxHitsPerQuery,
             maxQueriesPerIPPerHour = res.maxQueriesPerIPPerHour,
             queryParameters = res.queryParameters,
-            referers = res.referers
+            referers = res.referers,
+            validity = res.validity
           ),
         maxRetries = maxRetries,
         delay = delay
-      )
+      ).map(Some(_))
     }
 
     /** Wait on an API key creation operation.
@@ -146,7 +222,7 @@ package object extension {
         maxRetries: Int = 50,
         delay: Long => Long = DEFAULT_DELAY,
         requestOptions: Option[RequestOptions] = None
-    )(implicit ec: ExecutionContext): Future[GetApiKeyResponse] = {
+    )(implicit ec: ExecutionContext): Future[Option[GetApiKeyResponse]] = {
       retryUntil(
         retry = () =>
           client
@@ -156,7 +232,7 @@ package object extension {
         until = (res: Option[GetApiKeyResponse]) => res.isDefined,
         maxRetries = maxRetries,
         delay = delay
-      ).map(_.get)
+      )
     }
 
     /** Wait on a delete API ket operation
@@ -173,25 +249,24 @@ package object extension {
         maxRetries: Int = 50,
         delay: Long => Long = DEFAULT_DELAY,
         requestOptions: Option[RequestOptions] = None
-    )(implicit ec: ExecutionContext): Future[Boolean] = {
+    )(implicit ec: ExecutionContext): Future[Option[GetApiKeyResponse]] = {
       retryUntil(
         retry = () =>
           client
             .getApiKey(key, requestOptions)
-            .map(_ => None) // The key still exists, return None
+            .map(Some(_))
             .recover {
-              case e: AlgoliaApiException if e.httpErrorCode == 404 => Some(true) // The key does not exist, done!
-              case _                                                => None // Any other error, still return None
+              case e: AlgoliaApiException if e.httpErrorCode == 404 => None // The key does not exist, done!
+              case exc                                              => throw exc // Any other error, rethrow
             },
-        until = (result: Option[Boolean]) =>
+        until = (result: Option[GetApiKeyResponse]) =>
           result match {
-            case Some(true) => true // Stop retrying when we get Some(true), indicating the key is deleted
-            case _          => false // Continue retrying otherwise
+            case None    => true // Stop retrying when we get None, indicating the key is deleted
+            case Some(_) => false // As long as we get a key, keep retrying
           },
         maxRetries = maxRetries,
         delay = delay
       )
-      Future.successful(true)
     }
 
     /** Helper: Chunks the given `objects` list in subset of 1000 elements max to make it fit in `batch` requests.
@@ -219,30 +294,29 @@ package object extension {
         batchSize: Int = 1000,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
-      var futures = Seq.empty[Future[BatchResponse]]
-      objects.grouped(batchSize).foreach { chunk =>
-        val requests = chunk.map { record =>
-          BatchRequest(action = action, body = record)
+      val batches = objects.grouped(batchSize).toSeq
+
+      val futureResponses = batches
+        .foldLeft(Future.successful(Vector.empty[BatchResponse])) { (acc, batch) =>
+          acc.flatMap(rs =>
+            client
+              .batch(
+                indexName,
+                BatchWriteParams(batch.map(obj => BatchRequest(action, obj))),
+                requestOptions = requestOptions
+              )
+              .map(rs :+ _)
+          )
         }
-        val future = client.batch(
-          indexName = indexName,
-          batchWriteParams = BatchWriteParams(requests),
-          requestOptions = requestOptions
+        .map(_.toSeq)
+
+      if (waitForTasks)
+        futureResponses.flatMap(rs =>
+          Future
+            .sequence(rs.map(r => client.waitForTask(indexName, r.taskID, requestOptions = requestOptions)))
+            .map(_ => rs)
         )
-        futures = futures :+ future
-      }
-
-      val responses = Future.sequence(futures)
-
-      if (waitForTasks) {
-        responses.foreach { tasks =>
-          tasks.foreach { task =>
-            client.waitTask(indexName, task.taskID, requestOptions = requestOptions)
-          }
-        }
-      }
-
-      responses
+      else futureResponses
     }
 
     /** Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used under the hood,
@@ -296,7 +370,7 @@ package object extension {
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
       chunkedBatch(
         indexName,
-        objectIDs.map(id => new { val objectID: String = id }),
+        objectIDs.map(id => Map("objectID" -> id)),
         Action.DeleteObject,
         waitForTasks,
         batchSize,
@@ -369,58 +443,56 @@ package object extension {
     )(implicit ec: ExecutionContext): Future[ReplaceAllObjectsResponse] = {
       val tmpIndexName = s"${indexName}_tmp_${scala.util.Random.nextInt(100)}"
 
-      try {
-        for {
-          copy <- client.operationIndex(
-            indexName = indexName,
-            operationIndexParams = OperationIndexParams(
-              operation = OperationType.Copy,
-              destination = tmpIndexName,
-              scope = scopes
-            ),
-            requestOptions = requestOptions
-          )
-
-          batchResponses <- chunkedBatch(
-            indexName = tmpIndexName,
-            objects = objects,
-            action = Action.AddObject,
-            waitForTasks = true,
-            batchSize = batchSize,
-            requestOptions = requestOptions
-          )
-
-          _ <- client.waitTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
-
-          copy <- client.operationIndex(
-            indexName = indexName,
-            operationIndexParams = OperationIndexParams(
-              operation = OperationType.Copy,
-              destination = tmpIndexName,
-              scope = scopes
-            ),
-            requestOptions = requestOptions
-          )
-          _ <- client.waitTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
-
-          move <- client.operationIndex(
-            indexName = tmpIndexName,
-            operationIndexParams = OperationIndexParams(operation = OperationType.Move, destination = indexName),
-            requestOptions = requestOptions
-          )
-          _ <- client.waitTask(indexName = tmpIndexName, taskID = move.taskID, requestOptions = requestOptions)
-        } yield ReplaceAllObjectsResponse(
-          copyOperationResponse = copy,
-          batchResponses = batchResponses,
-          moveOperationResponse = move
+      val steps = for {
+        copy <- client.operationIndex(
+          indexName = indexName,
+          operationIndexParams = OperationIndexParams(
+            operation = OperationType.Copy,
+            destination = tmpIndexName,
+            scope = scopes
+          ),
+          requestOptions = requestOptions
         )
-      } catch {
-        case e: Throwable => {
-          client.deleteIndex(tmpIndexName)
 
-          throw e
-        }
-      }
+        batchResponses <- chunkedBatch(
+          indexName = tmpIndexName,
+          objects = objects,
+          action = Action.AddObject,
+          waitForTasks = true,
+          batchSize = batchSize,
+          requestOptions = requestOptions
+        )
+
+        _ <- client.waitForTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
+
+        copy <- client.operationIndex(
+          indexName = indexName,
+          operationIndexParams = OperationIndexParams(
+            operation = OperationType.Copy,
+            destination = tmpIndexName,
+            scope = scopes
+          ),
+          requestOptions = requestOptions
+        )
+        _ <- client.waitForTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
+
+        move <- client.operationIndex(
+          indexName = tmpIndexName,
+          operationIndexParams = OperationIndexParams(operation = OperationType.Move, destination = indexName),
+          requestOptions = requestOptions
+        )
+        _ <- client.waitForTask(indexName = tmpIndexName, taskID = move.taskID, requestOptions = requestOptions)
+      } yield ReplaceAllObjectsResponse(
+        copyOperationResponse = copy,
+        batchResponses = batchResponses,
+        moveOperationResponse = move
+      )
+
+      steps.recover({ case e: Throwable =>
+        client.deleteIndex(tmpIndexName)
+
+        throw e
+      })
     }
 
     /** Check if an index exists.
@@ -430,14 +502,10 @@ package object extension {
       *   A future containing a boolean indicating if the index exists.
       */
     def indexExists(indexName: String)(implicit ec: ExecutionContext): Future[Boolean] = {
-      try {
-        client.getSettings(indexName)
-      } catch {
-        case apiError: AlgoliaApiException if apiError.httpErrorCode == 404 => Future.successful(false)
-        case e: Throwable                                                   => throw e
+      client.getSettings(indexName).map(_ => true).recover {
+        case apiError: AlgoliaApiException if apiError.httpErrorCode == 404 => false
+        case e                                                              => throw e
       }
-
-      Future.successful(true)
     }
 
     /** Browse objects in an index.
@@ -561,6 +629,56 @@ package object extension {
         validate = validate.getOrElse((response: SearchSynonymsResponse) => response.hits.length < hitsPerPage),
         aggregator = Some(aggregator)
       )
+    }
+
+    // HMAC utility
+    private def hmac256(data: String, key: String): String = {
+      val algorithm = "HmacSHA256"
+      val secretKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), algorithm)
+      val mac = Mac.getInstance(algorithm)
+      mac.init(secretKey)
+      mac.doFinal(data.getBytes(StandardCharsets.UTF_8)).map("%02x".format(_)).mkString
+    }
+
+    /** Generate a secured API key
+      * @param parentApiKey
+      *   The parent API key
+      * @param restrictions
+      *   The restrictions
+      * @return
+      *   The generated secured API key
+      */
+    def generateSecuredApiKey(
+        parentApiKey: String,
+        restrictions: SecuredApiKeyRestrictions = SecuredApiKeyRestrictions()
+    ): String = {
+      val queryParams = restrictions.toUrlEncoded
+      val hash = hmac256(queryParams, parentApiKey)
+      val combined = s"$hash$queryParams"
+      Base64.getEncoder.encodeToString(
+        combined.getBytes(StandardCharsets.UTF_8)
+      )
+    }
+
+    /** Get the remaining validity duration of a secured API key
+      * @param securedApiKey
+      *   The secured API key
+      * @return
+      *   The remaining validity duration of the secured API key
+      */
+    def getSecuredApiKeyRemainingValidity(securedApiKey: String): Option[Duration] = {
+      val decoded = new String(Base64.getDecoder.decode(securedApiKey), StandardCharsets.UTF_8)
+      val validUntilPattern: Regex = "validUntil=(\\d+)".r.unanchored
+
+      decoded match {
+        case validUntilPattern(validUntil) => {
+          Try(Duration(validUntil + " seconds")) match {
+            case Success(d) => Some(d)
+            case Failure(e) => None
+          }
+        }
+        case _ => None
+      }
     }
   }
 }

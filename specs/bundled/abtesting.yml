@@ -92,6 +92,7 @@ servers:
   - url: https://analytics.{region}.algolia.com
     variables:
       region:
+        description: The region where your Algolia application is hosted.
         enum:
           - us
           - de
@@ -118,7 +119,7 @@ paths:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -148,7 +149,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -178,7 +179,7 @@ paths:
             schema:
               type: object
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -202,7 +203,7 @@ paths:
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
-      description: This method allow you to send requests to the Algolia REST API.
+      description: This method lets you send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
         - $ref: '#/components/parameters/Parameters'
@@ -282,6 +283,7 @@ paths:
       tags:
         - abtesting
       operationId: listABTests
+      x-mcp-tool: true
       x-acl:
         - analytics
       summary: List all A/B tests
@@ -1104,11 +1106,12 @@ components:
     ABTests:
       oneOf:
         - type: array
-          description: A/B tests.
+          description: >-
+            The list of A/B tests, null if no A/B tests are configured for this
+            application.
           items:
             $ref: '#/components/schemas/ABTest'
         - type: 'null'
-          description: No A/B tests are configured for this application.
     abTestsVariant:
       type: object
       additionalProperties: false

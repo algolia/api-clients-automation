@@ -57,16 +57,10 @@ final class QuerySuggestionsClientRequestsTestsE2E: XCTestCase {
         }
 
         let response = try await client.getConfigWithHTTPInfo(indexName: "cts_e2e_browse_query_suggestions")
-        let responseBody = try XCTUnwrap(response.body)
-        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
-
-        let expectedBodyData =
-            try XCTUnwrap(
-                "{\"appID\":\"T8JK9S7I7X\",\"allowSpecialCharacters\":true,\"enablePersonalization\":false,\"exclude\":[\"^cocaines$\"],\"indexName\":\"cts_e2e_browse_query_suggestions\",\"languages\":[],\"sourceIndices\":[{\"facets\":[{\"amount\":1,\"attribute\":\"title\"}],\"generate\":[[\"year\"]],\"indexName\":\"cts_e2e_browse\",\"minHits\":5,\"minLetters\":4,\"replicas\":false}]}"
-                    .data(using: .utf8)
-            )
-
-        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
+        try XCTLenientAssertEqual(
+            received: XCTUnwrap(response.body),
+            expected: "{\"appID\":\"T8JK9S7I7X\",\"allowSpecialCharacters\":true,\"enablePersonalization\":false,\"exclude\":[\"^cocaines$\"],\"indexName\":\"cts_e2e_browse_query_suggestions\",\"languages\":[],\"sourceIndices\":[{\"facets\":[{\"amount\":1,\"attribute\":\"title\"}],\"generate\":[[\"year\"]],\"indexName\":\"cts_e2e_browse\",\"minHits\":5,\"minLetters\":4,\"replicas\":false}]}"
+        )
 
         XCTAssertEqual(response.statusCode, 200)
     }

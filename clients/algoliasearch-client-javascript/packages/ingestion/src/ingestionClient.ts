@@ -97,6 +97,7 @@ import type {
   ListTasksProps,
   ListTasksV1Props,
   ListTransformationsProps,
+  PushProps,
   PushTaskProps,
   RunSourceProps,
   RunTaskProps,
@@ -118,7 +119,7 @@ import type { SubscriptionTrigger } from '../model/subscriptionTrigger';
 import type { TaskCreateTrigger } from '../model/taskCreateTrigger';
 import type { Trigger } from '../model/trigger';
 
-export const apiClientVersion = '1.20.0';
+export const apiClientVersion = '1.25.0';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -399,6 +400,8 @@ export function createIngestionClient({
 
     /**
      * Creates a new task using the v1 endpoint, please use `createTask` instead.
+     *
+     * @deprecated
      * @param taskCreate - Request body for creating a task.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -471,7 +474,7 @@ export function createIngestionClient({
     },
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      * @param customDelete - The customDelete object.
      * @param customDelete.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customDelete.parameters - Query parameters to apply to the current query.
@@ -500,7 +503,7 @@ export function createIngestionClient({
     },
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      * @param customGet - The customGet object.
      * @param customGet.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customGet.parameters - Query parameters to apply to the current query.
@@ -526,7 +529,7 @@ export function createIngestionClient({
     },
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      * @param customPost - The customPost object.
      * @param customPost.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPost.parameters - Query parameters to apply to the current query.
@@ -557,7 +560,7 @@ export function createIngestionClient({
     },
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      * @param customPut - The customPut object.
      * @param customPut.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPut.parameters - Query parameters to apply to the current query.
@@ -716,6 +719,8 @@ export function createIngestionClient({
 
     /**
      * Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+     *
+     * @deprecated
      * @param deleteTaskV1 - The deleteTaskV1 object.
      * @param deleteTaskV1.taskID - Unique identifier of a task.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -807,6 +812,8 @@ export function createIngestionClient({
      *  - addObject
      *  - deleteIndex
      *  - editSettings
+     *
+     * @deprecated
      * @param disableTaskV1 - The disableTaskV1 object.
      * @param disableTaskV1.taskID - Unique identifier of a task.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -867,6 +874,8 @@ export function createIngestionClient({
      *  - addObject
      *  - deleteIndex
      *  - editSettings
+     *
+     * @deprecated
      * @param enableTaskV1 - The enableTaskV1 object.
      * @param enableTaskV1.taskID - Unique identifier of a task.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1093,6 +1102,8 @@ export function createIngestionClient({
      *  - addObject
      *  - deleteIndex
      *  - editSettings
+     *
+     * @deprecated
      * @param getTaskV1 - The getTaskV1 object.
      * @param getTaskV1.taskID - Unique identifier of a task.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1579,6 +1590,8 @@ export function createIngestionClient({
      *  - addObject
      *  - deleteIndex
      *  - editSettings
+     *
+     * @deprecated
      * @param listTasksV1 - The listTasksV1 object.
      * @param listTasksV1.itemsPerPage - Number of items per page.
      * @param listTasksV1.page - Page number of the paginated API response.
@@ -1694,7 +1707,64 @@ export function createIngestionClient({
     },
 
     /**
-     * Push a `batch` request payload through the Pipeline. You can check the status of task pushes with the observability endpoints.
+     * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `pushTask`, but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error will be returned.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
+     * @param push - The push object.
+     * @param push.indexName - Name of the index on which to perform the operation.
+     * @param push.pushTaskPayload - The pushTaskPayload object.
+     * @param push.watch - When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    push({ indexName, pushTaskPayload, watch }: PushProps, requestOptions?: RequestOptions): Promise<WatchResponse> {
+      if (!indexName) {
+        throw new Error('Parameter `indexName` is required when calling `push`.');
+      }
+
+      if (!pushTaskPayload) {
+        throw new Error('Parameter `pushTaskPayload` is required when calling `push`.');
+      }
+
+      if (!pushTaskPayload.action) {
+        throw new Error('Parameter `pushTaskPayload.action` is required when calling `push`.');
+      }
+      if (!pushTaskPayload.records) {
+        throw new Error('Parameter `pushTaskPayload.records` is required when calling `push`.');
+      }
+
+      const requestPath = '/1/push/{indexName}'.replace('{indexName}', encodeURIComponent(indexName));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (watch !== undefined) {
+        queryParameters['watch'] = watch.toString();
+      }
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: pushTaskPayload,
+      };
+
+      requestOptions = {
+        timeouts: {
+          connect: 180000,
+          read: 180000,
+          write: 180000,
+          ...requestOptions?.timeouts,
+        },
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target the same `indexName`.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -1702,7 +1772,7 @@ export function createIngestionClient({
      *  - editSettings
      * @param pushTask - The pushTask object.
      * @param pushTask.taskID - Unique identifier of a task.
-     * @param pushTask.pushTaskPayload - Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+     * @param pushTask.pushTaskPayload - The pushTaskPayload object.
      * @param pushTask.watch - When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1825,6 +1895,8 @@ export function createIngestionClient({
      *  - addObject
      *  - deleteIndex
      *  - editSettings
+     *
+     * @deprecated
      * @param runTaskV1 - The runTaskV1 object.
      * @param runTaskV1.taskID - Unique identifier of a task.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1999,6 +2071,8 @@ export function createIngestionClient({
      *  - addObject
      *  - deleteIndex
      *  - editSettings
+     *
+     * @deprecated
      * @param taskSearch - The taskSearch object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -2354,6 +2428,8 @@ export function createIngestionClient({
 
     /**
      * Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+     *
+     * @deprecated
      * @param updateTaskV1 - The updateTaskV1 object.
      * @param updateTaskV1.taskID - Unique identifier of a task.
      * @param updateTaskV1.taskUpdate - The taskUpdate object.

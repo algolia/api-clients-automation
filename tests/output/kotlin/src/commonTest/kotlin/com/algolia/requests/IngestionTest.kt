@@ -78,7 +78,7 @@ class IngestionTest {
           destinationCreate = DestinationCreate(
             type = DestinationType.entries.first { it.value == "search" },
             name = "destinationName",
-            input = DestinationIndexName(
+            input = DestinationInput(
               indexName = "full_name______",
             ),
             authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -101,7 +101,7 @@ class IngestionTest {
           destinationCreate = DestinationCreate(
             type = DestinationType.entries.first { it.value == "search" },
             name = "destinationName",
-            input = DestinationIndexName(
+            input = DestinationInput(
               indexName = "full_name______",
             ),
             transformationIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
@@ -131,6 +131,7 @@ class IngestionTest {
               locales = listOf("de"),
               url = "http://commercetools.com",
               projectKey = "keyID",
+              productQueryPredicate = "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))",
             ),
             authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           ),
@@ -139,7 +140,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/1/sources".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}""", it.body)
+        assertJsonBody("""{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID","productQueryPredicate":"masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}""", it.body)
       },
     )
   }
@@ -1288,6 +1289,80 @@ class IngestionTest {
         assertEquals("/1/transformations".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertNoBody(it.body)
+      },
+    )
+  }
+
+  // push
+
+  @Test
+  fun `global push`() = runTest {
+    client.runTest(
+      call = {
+        push(
+          indexName = "foo",
+          pushTaskPayload = PushTaskPayload(
+            action = Action.entries.first { it.value == "addObject" },
+            records = listOf(
+              PushTaskRecords(
+                objectID = "o",
+                additionalProperties = mapOf(
+                  "key" to JsonPrimitive("bar"),
+                  "foo" to JsonPrimitive("1"),
+                ),
+              ),
+              PushTaskRecords(
+                objectID = "k",
+                additionalProperties = mapOf(
+                  "key" to JsonPrimitive("baz"),
+                  "foo" to JsonPrimitive("2"),
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/push/foo".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `global push with watch mode1`() = runTest {
+    client.runTest(
+      call = {
+        push(
+          indexName = "bar",
+          pushTaskPayload = PushTaskPayload(
+            action = Action.entries.first { it.value == "addObject" },
+            records = listOf(
+              PushTaskRecords(
+                objectID = "o",
+                additionalProperties = mapOf(
+                  "key" to JsonPrimitive("bar"),
+                  "foo" to JsonPrimitive("1"),
+                ),
+              ),
+              PushTaskRecords(
+                objectID = "k",
+                additionalProperties = mapOf(
+                  "key" to JsonPrimitive("baz"),
+                  "foo" to JsonPrimitive("2"),
+                ),
+              ),
+            ),
+          ),
+          watch = true,
+        )
+      },
+      intercept = {
+        assertEquals("/1/push/bar".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertQueryParams("""{"watch":"true"}""", it.url.encodedParameters)
+        assertJsonBody("""{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}""", it.body)
       },
     )
   }

@@ -11,26 +11,30 @@ public struct IngestionSource: Codable, JSONEncodable {
     public var sourceID: String
     public var type: SourceType
     public var name: String
+    /// Owner of the resource.
+    public var owner: String?
     public var input: SourceInput?
     /// Universally unique identifier (UUID) of an authentication resource.
     public var authenticationID: String?
     /// Date of creation in RFC 3339 format.
     public var createdAt: String
     /// Date of last update in RFC 3339 format.
-    public var updatedAt: String?
+    public var updatedAt: String
 
     public init(
         sourceID: String,
         type: SourceType,
         name: String,
+        owner: String? = nil,
         input: SourceInput? = nil,
         authenticationID: String? = nil,
         createdAt: String,
-        updatedAt: String? = nil
+        updatedAt: String
     ) {
         self.sourceID = sourceID
         self.type = type
         self.name = name
+        self.owner = owner
         self.input = input
         self.authenticationID = authenticationID
         self.createdAt = createdAt
@@ -41,6 +45,7 @@ public struct IngestionSource: Codable, JSONEncodable {
         case sourceID
         case type
         case name
+        case owner
         case input
         case authenticationID
         case createdAt
@@ -54,10 +59,11 @@ public struct IngestionSource: Codable, JSONEncodable {
         try container.encode(self.sourceID, forKey: .sourceID)
         try container.encode(self.type, forKey: .type)
         try container.encode(self.name, forKey: .name)
+        try container.encodeIfPresent(self.owner, forKey: .owner)
         try container.encodeIfPresent(self.input, forKey: .input)
         try container.encodeIfPresent(self.authenticationID, forKey: .authenticationID)
         try container.encode(self.createdAt, forKey: .createdAt)
-        try container.encodeIfPresent(self.updatedAt, forKey: .updatedAt)
+        try container.encode(self.updatedAt, forKey: .updatedAt)
     }
 }
 
@@ -66,6 +72,7 @@ extension IngestionSource: Equatable {
         lhs.sourceID == rhs.sourceID &&
             lhs.type == rhs.type &&
             lhs.name == rhs.name &&
+            lhs.owner == rhs.owner &&
             lhs.input == rhs.input &&
             lhs.authenticationID == rhs.authenticationID &&
             lhs.createdAt == rhs.createdAt &&
@@ -78,9 +85,10 @@ extension IngestionSource: Hashable {
         hasher.combine(self.sourceID.hashValue)
         hasher.combine(self.type.hashValue)
         hasher.combine(self.name.hashValue)
+        hasher.combine(self.owner?.hashValue)
         hasher.combine(self.input?.hashValue)
         hasher.combine(self.authenticationID?.hashValue)
         hasher.combine(self.createdAt.hashValue)
-        hasher.combine(self.updatedAt?.hashValue)
+        hasher.combine(self.updatedAt.hashValue)
     }
 }

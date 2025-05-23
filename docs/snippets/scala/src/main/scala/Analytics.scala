@@ -16,7 +16,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class SnippetAnalyticsClient {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   /** Snippet for the customDelete method.
     *
@@ -32,13 +32,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.customDelete[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customDelete[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -56,14 +56,14 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.customDelete[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters"))
+    val response = Await.result(
+      client.customDelete[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters"))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -81,13 +81,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.customGet[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -105,14 +105,14 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.customGet[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters with space"))
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters with space"))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -130,22 +130,22 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.customGet[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "to be overriden")),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("query", "parameters with space")
-          .withQueryParameter("and an array", Seq("array", "with spaces"))
-          .withHeader("x-header-1", "spaces are left alone")
-          .build()
-      )
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "to be overriden")),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query", "parameters with space")
+            .withQueryParameter("and an array", Seq("array", "with spaces"))
+            .withHeader("x-header-1", "spaces are left alone")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -163,13 +163,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -187,15 +187,15 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("body", JString("parameters")))))
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("body", JString("parameters")))))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -213,21 +213,21 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("query", "myQueryParameter")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query", "myQueryParameter")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -245,21 +245,21 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("query2", "myQueryParameter")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query2", "myQueryParameter")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -277,21 +277,21 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -309,21 +309,21 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -341,21 +341,21 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("isItWorking", true)
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("isItWorking", true)
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -373,21 +373,21 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", 2)
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", 2)
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -405,21 +405,21 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", Seq("b and c", "d"))
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq("b and c", "d"))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -437,21 +437,21 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", Seq(true, true, false))
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq(true, true, false))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -469,21 +469,21 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", Seq(1, 2))
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq(1, 2))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -501,13 +501,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.customPut[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customPut[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -525,15 +525,15 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.customPut[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("body", JString("parameters")))))
+    val response = Await.result(
+      client.customPut[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("body", JString("parameters")))))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -551,13 +551,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getAddToCartRate(
-      index = "index"
+    val response = Await.result(
+      client.getAddToCartRate(
+        index = "index"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -575,16 +575,16 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getAddToCartRate(
-      index = "index",
-      startDate = Some("1999-09-19"),
-      endDate = Some("2001-01-01"),
-      tags = Some("tag")
+    val response = Await.result(
+      client.getAddToCartRate(
+        index = "index",
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        tags = Some("tag")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -602,13 +602,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getAverageClickPosition(
-      index = "index"
+    val response = Await.result(
+      client.getAverageClickPosition(
+        index = "index"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -626,16 +626,16 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getAverageClickPosition(
-      index = "index",
-      startDate = Some("1999-09-19"),
-      endDate = Some("2001-01-01"),
-      tags = Some("tag")
+    val response = Await.result(
+      client.getAverageClickPosition(
+        index = "index",
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        tags = Some("tag")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -653,13 +653,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getClickPositions(
-      index = "index"
+    val response = Await.result(
+      client.getClickPositions(
+        index = "index"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -677,16 +677,16 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getClickPositions(
-      index = "index",
-      startDate = Some("1999-09-19"),
-      endDate = Some("2001-01-01"),
-      tags = Some("tag")
+    val response = Await.result(
+      client.getClickPositions(
+        index = "index",
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        tags = Some("tag")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -704,13 +704,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getClickThroughRate(
-      index = "index"
+    val response = Await.result(
+      client.getClickThroughRate(
+        index = "index"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -728,16 +728,16 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getClickThroughRate(
-      index = "index",
-      startDate = Some("1999-09-19"),
-      endDate = Some("2001-01-01"),
-      tags = Some("tag")
+    val response = Await.result(
+      client.getClickThroughRate(
+        index = "index",
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        tags = Some("tag")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -755,13 +755,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getConversionRate(
-      index = "index"
+    val response = Await.result(
+      client.getConversionRate(
+        index = "index"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -779,16 +779,16 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getConversionRate(
-      index = "index",
-      startDate = Some("1999-09-19"),
-      endDate = Some("2001-01-01"),
-      tags = Some("tag")
+    val response = Await.result(
+      client.getConversionRate(
+        index = "index",
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        tags = Some("tag")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -806,13 +806,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getNoClickRate(
-      index = "index"
+    val response = Await.result(
+      client.getNoClickRate(
+        index = "index"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -830,16 +830,16 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getNoClickRate(
-      index = "index",
-      startDate = Some("1999-09-19"),
-      endDate = Some("2001-01-01"),
-      tags = Some("tag")
+    val response = Await.result(
+      client.getNoClickRate(
+        index = "index",
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        tags = Some("tag")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -857,13 +857,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getNoResultsRate(
-      index = "index"
+    val response = Await.result(
+      client.getNoResultsRate(
+        index = "index"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -881,16 +881,16 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getNoResultsRate(
-      index = "index",
-      startDate = Some("1999-09-19"),
-      endDate = Some("2001-01-01"),
-      tags = Some("tag")
+    val response = Await.result(
+      client.getNoResultsRate(
+        index = "index",
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        tags = Some("tag")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -908,13 +908,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getPurchaseRate(
-      index = "index"
+    val response = Await.result(
+      client.getPurchaseRate(
+        index = "index"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -932,16 +932,16 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getPurchaseRate(
-      index = "index",
-      startDate = Some("1999-09-19"),
-      endDate = Some("2001-01-01"),
-      tags = Some("tag")
+    val response = Await.result(
+      client.getPurchaseRate(
+        index = "index",
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        tags = Some("tag")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -959,13 +959,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getRevenue(
-      index = "index"
+    val response = Await.result(
+      client.getRevenue(
+        index = "index"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -983,16 +983,16 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getRevenue(
-      index = "index",
-      startDate = Some("1999-09-19"),
-      endDate = Some("2001-01-01"),
-      tags = Some("tag")
+    val response = Await.result(
+      client.getRevenue(
+        index = "index",
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        tags = Some("tag")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1010,13 +1010,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getSearchesCount(
-      index = "index"
+    val response = Await.result(
+      client.getSearchesCount(
+        index = "index"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1034,16 +1034,16 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getSearchesCount(
-      index = "index",
-      startDate = Some("1999-09-19"),
-      endDate = Some("2001-01-01"),
-      tags = Some("tag")
+    val response = Await.result(
+      client.getSearchesCount(
+        index = "index",
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        tags = Some("tag")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1061,13 +1061,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getSearchesNoClicks(
-      index = "index"
+    val response = Await.result(
+      client.getSearchesNoClicks(
+        index = "index"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1085,18 +1085,18 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getSearchesNoClicks(
-      index = "index",
-      startDate = Some("1999-09-19"),
-      endDate = Some("2001-01-01"),
-      limit = Some(21),
-      offset = Some(42),
-      tags = Some("tag")
+    val response = Await.result(
+      client.getSearchesNoClicks(
+        index = "index",
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        limit = Some(21),
+        offset = Some(42),
+        tags = Some("tag")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1114,13 +1114,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getSearchesNoResults(
-      index = "index"
+    val response = Await.result(
+      client.getSearchesNoResults(
+        index = "index"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1138,18 +1138,18 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getSearchesNoResults(
-      index = "index",
-      startDate = Some("1999-09-19"),
-      endDate = Some("2001-01-01"),
-      limit = Some(21),
-      offset = Some(42),
-      tags = Some("tag")
+    val response = Await.result(
+      client.getSearchesNoResults(
+        index = "index",
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        limit = Some(21),
+        offset = Some(42),
+        tags = Some("tag")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1167,13 +1167,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getStatus(
-      index = "index"
+    val response = Await.result(
+      client.getStatus(
+        index = "index"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1191,13 +1191,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getTopCountries(
-      index = "index"
+    val response = Await.result(
+      client.getTopCountries(
+        index = "index"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1215,18 +1215,18 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getTopCountries(
-      index = "index",
-      startDate = Some("1999-09-19"),
-      endDate = Some("2001-01-01"),
-      limit = Some(21),
-      offset = Some(42),
-      tags = Some("tag")
+    val response = Await.result(
+      client.getTopCountries(
+        index = "index",
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        limit = Some(21),
+        offset = Some(42),
+        tags = Some("tag")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1244,13 +1244,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getTopFilterAttributes(
-      index = "index"
+    val response = Await.result(
+      client.getTopFilterAttributes(
+        index = "index"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1268,19 +1268,19 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getTopFilterAttributes(
-      index = "index",
-      search = Some("mySearch"),
-      startDate = Some("1999-09-19"),
-      endDate = Some("2001-01-01"),
-      limit = Some(21),
-      offset = Some(42),
-      tags = Some("tag")
+    val response = Await.result(
+      client.getTopFilterAttributes(
+        index = "index",
+        search = Some("mySearch"),
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        limit = Some(21),
+        offset = Some(42),
+        tags = Some("tag")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1298,14 +1298,14 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getTopFilterForAttribute(
-      attribute = "myAttribute",
-      index = "index"
+    val response = Await.result(
+      client.getTopFilterForAttribute(
+        attribute = "myAttribute",
+        index = "index"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1323,14 +1323,14 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getTopFilterForAttribute(
-      attribute = "myAttribute1,myAttribute2",
-      index = "index"
+    val response = Await.result(
+      client.getTopFilterForAttribute(
+        attribute = "myAttribute1,myAttribute2",
+        index = "index"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1348,20 +1348,20 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getTopFilterForAttribute(
-      attribute = "myAttribute",
-      index = "index",
-      search = Some("mySearch"),
-      startDate = Some("1999-09-19"),
-      endDate = Some("2001-01-01"),
-      limit = Some(21),
-      offset = Some(42),
-      tags = Some("tag")
+    val response = Await.result(
+      client.getTopFilterForAttribute(
+        attribute = "myAttribute",
+        index = "index",
+        search = Some("mySearch"),
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        limit = Some(21),
+        offset = Some(42),
+        tags = Some("tag")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1379,20 +1379,20 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getTopFilterForAttribute(
-      attribute = "myAttribute1,myAttribute2",
-      index = "index",
-      search = Some("mySearch"),
-      startDate = Some("1999-09-19"),
-      endDate = Some("2001-01-01"),
-      limit = Some(21),
-      offset = Some(42),
-      tags = Some("tag")
+    val response = Await.result(
+      client.getTopFilterForAttribute(
+        attribute = "myAttribute1,myAttribute2",
+        index = "index",
+        search = Some("mySearch"),
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        limit = Some(21),
+        offset = Some(42),
+        tags = Some("tag")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1410,13 +1410,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getTopFiltersNoResults(
-      index = "index"
+    val response = Await.result(
+      client.getTopFiltersNoResults(
+        index = "index"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1434,19 +1434,19 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getTopFiltersNoResults(
-      index = "index",
-      search = Some("mySearch"),
-      startDate = Some("1999-09-19"),
-      endDate = Some("2001-01-01"),
-      limit = Some(21),
-      offset = Some(42),
-      tags = Some("tag")
+    val response = Await.result(
+      client.getTopFiltersNoResults(
+        index = "index",
+        search = Some("mySearch"),
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        limit = Some(21),
+        offset = Some(42),
+        tags = Some("tag")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1464,13 +1464,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getTopHits(
-      index = "index"
+    val response = Await.result(
+      client.getTopHits(
+        index = "index"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1488,21 +1488,21 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getTopHits(
-      index = "index",
-      search = Some("mySearch"),
-      clickAnalytics = Some(true),
-      revenueAnalytics = Some(true),
-      startDate = Some("1999-09-19"),
-      endDate = Some("2001-01-01"),
-      limit = Some(21),
-      offset = Some(42),
-      tags = Some("tag")
+    val response = Await.result(
+      client.getTopHits(
+        index = "index",
+        search = Some("mySearch"),
+        clickAnalytics = Some(true),
+        revenueAnalytics = Some(true),
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        limit = Some(21),
+        offset = Some(42),
+        tags = Some("tag")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1520,13 +1520,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getTopSearches(
-      index = "index"
+    val response = Await.result(
+      client.getTopSearches(
+        index = "index"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1544,22 +1544,22 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getTopSearches(
-      index = "index",
-      clickAnalytics = Some(true),
-      revenueAnalytics = Some(true),
-      startDate = Some("1999-09-19"),
-      endDate = Some("2001-01-01"),
-      orderBy = Some(OrderBy.withName("searchCount")),
-      direction = Some(Direction.withName("asc")),
-      limit = Some(21),
-      offset = Some(42),
-      tags = Some("tag")
+    val response = Await.result(
+      client.getTopSearches(
+        index = "index",
+        clickAnalytics = Some(true),
+        revenueAnalytics = Some(true),
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        orderBy = Some(OrderBy.withName("searchCount")),
+        direction = Some(Direction.withName("asc")),
+        limit = Some(21),
+        offset = Some(42),
+        tags = Some("tag")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1577,13 +1577,13 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getUsersCount(
-      index = "index"
+    val response = Await.result(
+      client.getUsersCount(
+        index = "index"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -1601,16 +1601,36 @@ class SnippetAnalyticsClient {
     )
 
     // Call the API
-    val response = client.getUsersCount(
-      index = "index",
-      startDate = Some("1999-09-19"),
-      endDate = Some("2001-01-01"),
-      tags = Some("tag")
+    val response = Await.result(
+      client.getUsersCount(
+        index = "index",
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        tags = Some("tag")
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the setClientApiKey method.
+    *
+    * switch API key
+    */
+  def snippetForAnalyticsClientSetClientApiKey(): Unit = {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    val client = AnalyticsClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
     )
 
-    // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // Call the API
+    client.setClientApiKey(
+      apiKey = "updated-api-key"
+    ) // >LOG
     // SEPARATOR<
   }
 
