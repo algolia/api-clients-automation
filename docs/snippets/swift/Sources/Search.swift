@@ -2120,8 +2120,7 @@ final class SearchClientSnippet {
             rule: Rule(
                 objectID: "clearance-category-filter",
                 conditions: [SearchCondition(pattern: "", anchoring: SearchAnchoring.`is`, context: "landing")],
-                consequence: SearchConsequence(params: SearchConsequenceParams(
-                    optionalFilters: SearchOptionalFilters
+                consequence: SearchConsequence(params: SearchConsequenceParams(optionalFilters: SearchOptionalFilters
                         .string("clearance:true")
                 ))
             )
@@ -2167,8 +2166,7 @@ final class SearchClientSnippet {
             rule: Rule(
                 objectID: "tomato-fruit",
                 conditions: [SearchCondition(pattern: "tomato", anchoring: SearchAnchoring.contains)],
-                consequence: SearchConsequence(params: SearchConsequenceParams(
-                    optionalFilters: SearchOptionalFilters
+                consequence: SearchConsequence(params: SearchConsequenceParams(optionalFilters: SearchOptionalFilters
                         .string("food_group:fruit")
                 ))
             )
@@ -2331,9 +2329,8 @@ final class SearchClientSnippet {
                 objectID: "color-facets",
                 conditions: [SearchCondition(pattern: "{facet:color}")],
                 consequence: SearchConsequence(
-                    params: SearchConsequenceParams(
-                        automaticFacetFilters: SearchAutomaticFacetFilters
-                            .arrayOfSearchAutomaticFacetFilter([SearchAutomaticFacetFilter(facet: "color")])
+                    params: SearchConsequenceParams(automaticFacetFilters: SearchAutomaticFacetFilters
+                        .arrayOfSearchAutomaticFacetFilter([SearchAutomaticFacetFilter(facet: "color")])
                     )
                 )
             )
@@ -2538,8 +2535,7 @@ final class SearchClientSnippet {
             objectID: "a-rule-id",
             rule: Rule(
                 objectID: "a-rule-id",
-                consequence: SearchConsequence(params: SearchConsequenceParams(
-                    aroundRadius: SearchAroundRadius
+                consequence: SearchConsequence(params: SearchConsequenceParams(aroundRadius: SearchAroundRadius
                         .int(1000)
                 )),
                 validity: [SearchTimeRange(from: Int64(1_577_836_800), until: Int64(1_577_836_800))]
@@ -3606,8 +3602,7 @@ final class SearchClientSnippet {
         let response: SearchResponse<Hit> = try await client.searchSingleIndex(
             indexName: "<YOUR_INDEX_NAME>",
             searchParams: SearchSearchParams
-                .searchSearchParamsObject(SearchSearchParamsObject(
-                    facetFilters: SearchFacetFilters
+                .searchSearchParamsObject(SearchSearchParamsObject(facetFilters: SearchFacetFilters
                         .arrayOfSearchFacetFilters([
                             SearchFacetFilters.string("publisher:Penguin"),
                             SearchFacetFilters.arrayOfSearchFacetFilters([
@@ -3726,8 +3721,7 @@ final class SearchClientSnippet {
         let response: SearchResponse<Hit> = try await client.searchSingleIndex(
             indexName: "<YOUR_INDEX_NAME>",
             searchParams: SearchSearchParams
-                .searchSearchParamsObject(SearchSearchParamsObject(
-                    facetFilters: SearchFacetFilters
+                .searchSearchParamsObject(SearchSearchParamsObject(facetFilters: SearchFacetFilters
                         .string("category:-Ebook")
                 ))
         )
@@ -3877,8 +3871,7 @@ final class SearchClientSnippet {
         let response: SearchResponse<Hit> = try await client.searchSingleIndex(
             indexName: "<YOUR_INDEX_NAME>",
             searchParams: SearchSearchParams
-                .searchSearchParamsObject(SearchSearchParamsObject(
-                    insideBoundingBox: SearchInsideBoundingBox
+                .searchSearchParamsObject(SearchSearchParamsObject(insideBoundingBox: SearchInsideBoundingBox
                         .arrayOfArrayOfDouble([[
                             49.067996905313834,
                             65.73828125,
@@ -3963,8 +3956,7 @@ final class SearchClientSnippet {
         let response: SearchResponse<Hit> = try await client.searchSingleIndex(
             indexName: "<YOUR_INDEX_NAME>",
             searchParams: SearchSearchParams
-                .searchSearchParamsObject(SearchSearchParamsObject(
-                    optionalFilters: SearchOptionalFilters
+                .searchSearchParamsObject(SearchSearchParamsObject(optionalFilters: SearchOptionalFilters
                         .arrayOfSearchOptionalFilters([SearchOptionalFilters.string("can_deliver_quickly:true")])
                 ))
         )
@@ -3984,8 +3976,7 @@ final class SearchClientSnippet {
         let response: SearchResponse<Hit> = try await client.searchSingleIndex(
             indexName: "<YOUR_INDEX_NAME>",
             searchParams: SearchSearchParams
-                .searchSearchParamsObject(SearchSearchParamsObject(
-                    optionalFilters: SearchOptionalFilters
+                .searchSearchParamsObject(SearchSearchParamsObject(optionalFilters: SearchOptionalFilters
                         .arrayOfSearchOptionalFilters([
                             SearchOptionalFilters.string("brand:Apple<score=3>"),
                             SearchOptionalFilters.string("brand:Samsung<score=2>"),
@@ -4009,8 +4000,7 @@ final class SearchClientSnippet {
         let response: SearchResponse<Hit> = try await client.searchSingleIndex(
             indexName: "<YOUR_INDEX_NAME>",
             searchParams: SearchSearchParams
-                .searchSearchParamsObject(SearchSearchParamsObject(
-                    optionalFilters: SearchOptionalFilters
+                .searchSearchParamsObject(SearchSearchParamsObject(optionalFilters: SearchOptionalFilters
                         .arrayOfSearchOptionalFilters([
                             SearchOptionalFilters.string("brand:Apple<score=2>"),
                             SearchOptionalFilters.string("type:tablet"),
@@ -4180,8 +4170,7 @@ final class SearchClientSnippet {
         let response: SearchResponse<Hit> = try await client.searchSingleIndex(
             indexName: "<YOUR_INDEX_NAME>",
             searchParams: SearchSearchParams
-                .searchSearchParamsObject(SearchSearchParamsObject(
-                    facetFilters: SearchFacetFilters
+                .searchSearchParamsObject(SearchSearchParamsObject(facetFilters: SearchFacetFilters
                         .arrayOfSearchFacetFilters([
                             SearchFacetFilters.string("user:user42"),
                             SearchFacetFilters.string("user:public"),
@@ -6191,9 +6180,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.setSettings(
             indexName: "<YOUR_INDEX_NAME>",
-            indexSettings: IndexSettings(
-                typoTolerance: SearchTypoTolerance
-                    .searchTypoToleranceEnum(SearchTypoToleranceEnum.min)
+            indexSettings: IndexSettings(typoTolerance: SearchTypoTolerance
+                .searchTypoToleranceEnum(SearchTypoToleranceEnum.min)
             ),
             forwardToReplicas: true
         )
@@ -6230,9 +6218,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.setSettings(
             indexName: "<YOUR_INDEX_NAME>",
-            indexSettings: IndexSettings(
-                ignorePlurals: SearchIgnorePlurals
-                    .arrayOfSearchSupportedLanguage([SearchSupportedLanguage.fr])
+            indexSettings: IndexSettings(ignorePlurals: SearchIgnorePlurals
+                .arrayOfSearchSupportedLanguage([SearchSupportedLanguage.fr])
             ),
             forwardToReplicas: true
         )
@@ -6269,9 +6256,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.setSettings(
             indexName: "<YOUR_INDEX_NAME>",
-            indexSettings: IndexSettings(
-                removeStopWords: SearchRemoveStopWords
-                    .arrayOfSearchSupportedLanguage([SearchSupportedLanguage.fr])
+            indexSettings: IndexSettings(removeStopWords: SearchRemoveStopWords
+                .arrayOfSearchSupportedLanguage([SearchSupportedLanguage.fr])
             ),
             forwardToReplicas: true
         )
