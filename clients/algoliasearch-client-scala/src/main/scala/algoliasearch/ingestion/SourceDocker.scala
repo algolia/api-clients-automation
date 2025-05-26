@@ -22,7 +22,7 @@ package algoliasearch.ingestion
 /** SourceDocker
   *
   * @param image
-  *   Shortname of the image, as returned by the referential.
+  *   Name of the connector.
   * @param configuration
   *   Configuration of the spec.
   */

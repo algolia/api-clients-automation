@@ -1,3 +1,5 @@
+namespace Algolia;
+
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -8,7 +10,7 @@ using Algolia.Search.Models.Search;
 
 class SaveObjectsMovies
 {
-  public static async Task Main(string[] args)
+  async Task Main(string[] args)
   {
     // read json file from url
     var url = "https://dashboard.algolia.com/api/1/sample_datasets?type=movie";
@@ -19,7 +21,7 @@ class SaveObjectsMovies
     // parse json
     var movies = JsonSerializer.Deserialize<List<dynamic>>(content);
 
-    // initiate client and index
+    // initiate client and index with your app ID and write API key
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // push data to algolia

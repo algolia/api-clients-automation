@@ -84,8 +84,8 @@ func SnippetForCreateDestinationOfIngestion() {
 	// Call the API
 	response, err := client.CreateDestination(client.NewApiCreateDestinationRequest(
 
-		ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(ingestion.DestinationIndexNameAsDestinationInput(
-			ingestion.NewEmptyDestinationIndexName().SetIndexName("<YOUR_INDEX_NAME>"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
+		ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(
+			ingestion.NewEmptyDestinationInput().SetIndexName("<YOUR_INDEX_NAME>")).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -114,8 +114,8 @@ func SnippetForCreateDestinationOfIngestion1() {
 	// Call the API
 	response, err := client.CreateDestination(client.NewApiCreateDestinationRequest(
 
-		ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(ingestion.DestinationIndexNameAsDestinationInput(
-			ingestion.NewEmptyDestinationIndexName().SetIndexName("<YOUR_INDEX_NAME>"))).SetTransformationIDs(
+		ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(
+			ingestion.NewEmptyDestinationInput().SetIndexName("<YOUR_INDEX_NAME>")).SetTransformationIDs(
 			[]string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f"})))
 	if err != nil {
 		// handle the eventual error
@@ -148,7 +148,7 @@ func SnippetForCreateSourceOfIngestion() {
 		ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType("commercetools")).SetName("sourceName").SetInput(ingestion.SourceCommercetoolsAsSourceInput(
 			ingestion.NewEmptySourceCommercetools().SetStoreKeys(
 				[]string{"myStore"}).SetLocales(
-				[]string{"de"}).SetUrl("http://commercetools.com").SetProjectKey("keyID"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
+				[]string{"de"}).SetUrl("http://commercetools.com").SetProjectKey("keyID").SetProductQueryPredicate("masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1679,6 +1679,66 @@ func SnippetForListTransformationsOfIngestion() {
 
 	// Call the API
 	response, err := client.ListTransformations(client.NewApiListTransformationsRequest())
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForPushOfIngestion() {
+	/*
+	   Snippet for the push method.
+
+	   global push
+	*/
+
+	// >SEPARATOR push global push
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.Push(client.NewApiPushRequest(
+		"<YOUR_INDEX_NAME>",
+		ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
+			[]ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForPushOfIngestion1() {
+	/*
+	   Snippet for the push method.
+
+	   global push with watch mode
+	*/
+
+	// >SEPARATOR push global push with watch mode
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.Push(client.NewApiPushRequest(
+		"<YOUR_INDEX_NAME>",
+		ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
+			[]ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})).WithWatch(true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

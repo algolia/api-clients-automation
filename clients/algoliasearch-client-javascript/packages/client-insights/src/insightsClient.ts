@@ -21,7 +21,7 @@ import type {
   DeleteUserTokenProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '5.20.0';
+export const apiClientVersion = '5.25.0';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -113,7 +113,7 @@ export function createInsightsClient({
     },
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      * @param customDelete - The customDelete object.
      * @param customDelete.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customDelete.parameters - Query parameters to apply to the current query.
@@ -142,7 +142,7 @@ export function createInsightsClient({
     },
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      * @param customGet - The customGet object.
      * @param customGet.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customGet.parameters - Query parameters to apply to the current query.
@@ -168,7 +168,7 @@ export function createInsightsClient({
     },
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      * @param customPost - The customPost object.
      * @param customPost.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPost.parameters - Query parameters to apply to the current query.
@@ -199,7 +199,7 @@ export function createInsightsClient({
     },
 
     /**
-     * This method allow you to send requests to the Algolia REST API.
+     * This method lets you send requests to the Algolia REST API.
      * @param customPut - The customPut object.
      * @param customPut.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPut.parameters - Query parameters to apply to the current query.
@@ -231,6 +231,9 @@ export function createInsightsClient({
 
     /**
      * Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
+     *
+     * Required API Key ACLs:
+     *  - deleteObject
      * @param deleteUserToken - The deleteUserToken object.
      * @param deleteUserToken.userToken - User token for which to delete all associated events.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -256,6 +259,9 @@ export function createInsightsClient({
 
     /**
      * Sends a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
+     *
+     * Required API Key ACLs:
+     *  - search
      * @param insightsEvents - The insightsEvents object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */

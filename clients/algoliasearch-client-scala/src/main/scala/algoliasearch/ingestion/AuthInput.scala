@@ -66,6 +66,8 @@ object AuthInputSerializer extends Serializer[AuthInput] {
       case value: AuthAPIKey               => Extraction.decompose(value)(format - this)
       case value: AuthAlgolia              => Extraction.decompose(value)(format - this)
       case value: AuthAlgoliaInsights      => Extraction.decompose(value)(format - this)
+      case AuthInput.MapOfStringString(value) =>
+        JObject(value.map(kv => JField(kv._1, Extraction.decompose(kv._2)(format))).toList)
     }
   }
 }

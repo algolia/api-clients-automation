@@ -25,10 +25,10 @@ public class FetchedIndex {
   private Integer entries;
 
   @JsonProperty("dataSize")
-  private Integer dataSize;
+  private Long dataSize;
 
   @JsonProperty("fileSize")
-  private Integer fileSize;
+  private Long fileSize;
 
   @JsonProperty("lastBuildTimeS")
   private Integer lastBuildTimeS;
@@ -92,25 +92,25 @@ public class FetchedIndex {
     return entries;
   }
 
-  public FetchedIndex setDataSize(Integer dataSize) {
+  public FetchedIndex setDataSize(Long dataSize) {
     this.dataSize = dataSize;
     return this;
   }
 
   /** Number of bytes of the index in minified format. */
   @javax.annotation.Nonnull
-  public Integer getDataSize() {
+  public Long getDataSize() {
     return dataSize;
   }
 
-  public FetchedIndex setFileSize(Integer fileSize) {
+  public FetchedIndex setFileSize(Long fileSize) {
     this.fileSize = fileSize;
     return this;
   }
 
   /** Number of bytes of the index binary file. */
   @javax.annotation.Nonnull
-  public Integer getFileSize() {
+  public Long getFileSize() {
     return fileSize;
   }
 

@@ -92,7 +92,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let response = try await client.createDestinationWithHTTPInfo(destinationCreate: DestinationCreate(
             type: DestinationType.search,
             name: "destinationName",
-            input: DestinationInput.destinationIndexName(DestinationIndexName(indexName: "full_name______")),
+            input: DestinationInput(indexName: "full_name______"),
             authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
         ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -127,7 +127,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let response = try await client.createDestinationWithHTTPInfo(destinationCreate: DestinationCreate(
             type: DestinationType.search,
             name: "destinationName",
-            input: DestinationInput.destinationIndexName(DestinationIndexName(indexName: "full_name______")),
+            input: DestinationInput(indexName: "full_name______"),
             transformationIDs: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]
         ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -166,7 +166,8 @@ final class IngestionClientRequestsTests: XCTestCase {
                 storeKeys: ["myStore"],
                 locales: ["de"],
                 url: "http://commercetools.com",
-                projectKey: "keyID"
+                projectKey: "keyID",
+                productQueryPredicate: "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"
             )),
             authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
         ))
@@ -177,7 +178,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}"
+            "{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\",\"productQueryPredicate\":\"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -241,9 +242,8 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"action\":\"replace\"}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"action\":\"replace\"}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -987,10 +987,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters = try XCTUnwrap(
-            "{\"query\":\"parameters\",\"myParam\":\"2\"}"
-                .data(using: .utf8)
-        )
+        let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"2\"}".data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1826,6 +1823,107 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// global push
+    func testPushTest() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.pushWithHTTPInfo(
+            indexName: "foo",
+            pushTaskPayload: PushTaskPayload(
+                action: IngestionAction.addObject,
+                records: [
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("o"),
+                        "key": AnyCodable("bar"),
+                        "foo": AnyCodable("1"),
+                    ]),
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("k"),
+                        "key": AnyCodable("baz"),
+                        "foo": AnyCodable("2"),
+                    ]),
+                ]
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/push/foo")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// global push with watch mode
+    func testPushTest1() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.pushWithHTTPInfo(
+            indexName: "bar",
+            pushTaskPayload: PushTaskPayload(
+                action: IngestionAction.addObject,
+                records: [
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("o"),
+                        "key": AnyCodable("bar"),
+                        "foo": AnyCodable("1"),
+                    ]),
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("k"),
+                        "key": AnyCodable("baz"),
+                        "foo": AnyCodable("2"),
+                    ]),
+                ]
+            ),
+            watch: true
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/push/bar")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        let expectedQueryParameters = try XCTUnwrap("{\"watch\":\"true\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
     /// pushTask

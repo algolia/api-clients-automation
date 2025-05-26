@@ -107,7 +107,13 @@ export async function snippetForCreateSource(): Promise<void> {
   const response = await client.createSource({
     type: 'commercetools',
     name: 'sourceName',
-    input: { storeKeys: ['myStore'], locales: ['de'], url: 'http://commercetools.com', projectKey: 'keyID' },
+    input: {
+      storeKeys: ['myStore'],
+      locales: ['de'],
+      url: 'http://commercetools.com',
+      projectKey: 'keyID',
+      productQueryPredicate: 'masterVariant(attributes(name="Brand" and value="Algolia"))',
+    },
     authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
   });
 
@@ -1185,6 +1191,61 @@ export async function snippetForListTransformations(): Promise<void> {
 
   // Call the API
   const response = await client.listTransformations();
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the push method.
+//
+// global push
+export async function snippetForPush(): Promise<void> {
+  // >SEPARATOR push global push
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.push({
+    indexName: 'foo',
+    pushTaskPayload: {
+      action: 'addObject',
+      records: [
+        { key: 'bar', foo: '1', objectID: 'o' },
+        { key: 'baz', foo: '2', objectID: 'k' },
+      ],
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the push method.
+//
+// global push with watch mode
+export async function snippetForPush1(): Promise<void> {
+  // >SEPARATOR push global push with watch mode
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.push({
+    indexName: 'bar',
+    pushTaskPayload: {
+      action: 'addObject',
+      records: [
+        { key: 'bar', foo: '1', objectID: 'o' },
+        { key: 'baz', foo: '2', objectID: 'k' },
+      ],
+    },
+    watch: true,
+  });
 
   // >LOG
   // use typed response

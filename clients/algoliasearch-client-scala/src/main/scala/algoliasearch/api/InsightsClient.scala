@@ -85,7 +85,7 @@ class InsightsClient(
       options = clientOptions
     ) {
 
-  /** This method allow you to send requests to the Algolia REST API.
+  /** This method lets you send requests to the Algolia REST API.
     *
     * @param path
     *   Path of the endpoint, anything after \"/1\" must be specified.
@@ -108,7 +108,7 @@ class InsightsClient(
     execute[T](request, requestOptions)
   }
 
-  /** This method allow you to send requests to the Algolia REST API.
+  /** This method lets you send requests to the Algolia REST API.
     *
     * @param path
     *   Path of the endpoint, anything after \"/1\" must be specified.
@@ -131,7 +131,7 @@ class InsightsClient(
     execute[T](request, requestOptions)
   }
 
-  /** This method allow you to send requests to the Algolia REST API.
+  /** This method lets you send requests to the Algolia REST API.
     *
     * @param path
     *   Path of the endpoint, anything after \"/1\" must be specified.
@@ -158,7 +158,7 @@ class InsightsClient(
     execute[T](request, requestOptions)
   }
 
-  /** This method allow you to send requests to the Algolia REST API.
+  /** This method lets you send requests to the Algolia REST API.
     *
     * @param path
     *   Path of the endpoint, anything after \"/1\" must be specified.
@@ -189,6 +189,9 @@ class InsightsClient(
     * asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user profile`
     * in the Personalization API.
     *
+    * Required API Key ACLs:
+    *   - deleteObject
+    *
     * @param userToken
     *   User token for which to delete all associated events.
     */
@@ -207,6 +210,9 @@ class InsightsClient(
 
   /** Sends a list of events to the Insights API. You can include up to 1,000 events in a single request, but the
     * request body must be smaller than 2&nbsp;MB.
+    *
+    * Required API Key ACLs:
+    *   - search
     */
   def pushEvents(insightsEvents: InsightsEvents, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext

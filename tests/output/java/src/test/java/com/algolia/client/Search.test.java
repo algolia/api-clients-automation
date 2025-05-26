@@ -203,6 +203,64 @@ class SearchClientClientTests {
   }
 
   @Test
+  @DisplayName("can handle unknown response fields")
+  void apiTest8() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6686
+          )
+        ),
+        false
+      )
+    );
+    SettingsResponse res = client.getSettings("cts_e2e_unknownField_java");
+
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"minWordSizefor1Typo\":12,\"minWordSizefor2Typos\":13,\"hitsPerPage\":14}",
+        json.writeValueAsString(res),
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("can handle unknown response fields inside a nested oneOf")
+  void apiTest9() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6686
+          )
+        ),
+        false
+      )
+    );
+    Rule res = client.getRule("cts_e2e_unknownFieldNested_java", "ruleObjectID");
+
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"ruleObjectID\",\"consequence\":{\"promote\":[{\"objectID\":\"1\",\"position\":10}]}}",
+        json.writeValueAsString(res),
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("calls api with correct user agent")
   void commonApiTest0() {
     SearchClient client = createClient();
@@ -230,7 +288,7 @@ class SearchClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.12.0\\).*";
+      String regexp = "^Algolia for Java \\(4.16.0\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
@@ -348,6 +406,29 @@ class SearchClientClientTests {
 
     assertDoesNotThrow(() -> {
       String res = client.generateSecuredApiKey("2640659426d5107b6e47d75db9cbaef8", new SecuredApiKeyRestrictions().setUserToken("user42"));
+    });
+  }
+
+  @Test
+  @DisplayName("mcm with filters")
+  void generateSecuredApiKeyTest5() {
+    SearchClient client = createClient();
+
+    assertDoesNotThrow(() -> {
+      String res = client.generateSecuredApiKey(
+        "YourSearchOnlyApiKey",
+        new SecuredApiKeyRestrictions().setFilters("user:user42 AND user:public")
+      );
+    });
+  }
+
+  @Test
+  @DisplayName("mcm with user token")
+  void generateSecuredApiKeyTest6() {
+    SearchClient client = createClient();
+
+    assertDoesNotThrow(() -> {
+      String res = client.generateSecuredApiKey("YourSearchOnlyApiKey", new SecuredApiKeyRestrictions().setUserToken("user42"));
     });
   }
 
@@ -932,9 +1013,37 @@ class SearchClientClientTests {
             }
           }
         ),
+        false,
+        1000,
         new RequestOptions().addExtraHeader("X-Algolia-User-ID", "*")
       );
     });
+  }
+
+  @Test
+  @DisplayName("with algolia user id")
+  void searchSingleIndexTest0() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6686
+          )
+        ),
+        false
+      )
+    );
+    SearchResponse res = client.searchSingleIndex(
+      "playlists",
+      new SearchParamsObject().setQuery("foo"),
+      Hit.class,
+      new RequestOptions().addExtraHeader("X-Algolia-User-ID", "user1234")
+    );
   }
 
   @Test

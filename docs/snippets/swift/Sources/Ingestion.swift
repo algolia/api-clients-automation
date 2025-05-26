@@ -55,7 +55,7 @@ final class IngestionClientSnippet {
         let response = try await client.createDestination(destinationCreate: DestinationCreate(
             type: DestinationType.search,
             name: "destinationName",
-            input: DestinationInput.destinationIndexName(DestinationIndexName(indexName: "<YOUR_INDEX_NAME>")),
+            input: DestinationInput(indexName: "<YOUR_INDEX_NAME>"),
             authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
         ))
         // >LOG
@@ -74,7 +74,7 @@ final class IngestionClientSnippet {
         let response = try await client.createDestination(destinationCreate: DestinationCreate(
             type: DestinationType.search,
             name: "destinationName",
-            input: DestinationInput.destinationIndexName(DestinationIndexName(indexName: "<YOUR_INDEX_NAME>")),
+            input: DestinationInput(indexName: "<YOUR_INDEX_NAME>"),
             transformationIDs: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]
         ))
         // >LOG
@@ -97,7 +97,8 @@ final class IngestionClientSnippet {
                 storeKeys: ["myStore"],
                 locales: ["de"],
                 url: "http://commercetools.com",
-                projectKey: "keyID"
+                projectKey: "keyID",
+                productQueryPredicate: "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"
             )),
             authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
         ))
@@ -1003,6 +1004,69 @@ final class IngestionClientSnippet {
 
         // Call the API
         let response = try await client.listTransformations()
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the push method.
+    ///
+    /// global push
+    func snippetForPush() async throws {
+        // >SEPARATOR push global push
+        // Initialize the client
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.push(
+            indexName: "<YOUR_INDEX_NAME>",
+            pushTaskPayload: PushTaskPayload(
+                action: IngestionAction.addObject,
+                records: [
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("o"),
+                        "key": AnyCodable("bar"),
+                        "foo": AnyCodable("1"),
+                    ]),
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("k"),
+                        "key": AnyCodable("baz"),
+                        "foo": AnyCodable("2"),
+                    ]),
+                ]
+            )
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the push method.
+    ///
+    /// global push with watch mode
+    func snippetForPush1() async throws {
+        // >SEPARATOR push global push with watch mode
+        // Initialize the client
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.push(
+            indexName: "<YOUR_INDEX_NAME>",
+            pushTaskPayload: PushTaskPayload(
+                action: IngestionAction.addObject,
+                records: [
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("o"),
+                        "key": AnyCodable("bar"),
+                        "foo": AnyCodable("1"),
+                    ]),
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("k"),
+                        "key": AnyCodable("baz"),
+                        "foo": AnyCodable("2"),
+                    ]),
+                ]
+            ),
+            watch: true
+        )
         // >LOG
         // SEPARATOR<
     }

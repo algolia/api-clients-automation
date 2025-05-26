@@ -94,7 +94,7 @@ class IngestionClientRequestsTests {
         new DestinationCreate()
           .setType(DestinationType.SEARCH)
           .setName("destinationName")
-          .setInput(new DestinationIndexName().setIndexName("full_name______"))
+          .setInput(new DestinationInput().setIndexName("full_name______"))
           .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       );
     });
@@ -118,7 +118,7 @@ class IngestionClientRequestsTests {
         new DestinationCreate()
           .setType(DestinationType.SEARCH)
           .setName("destinationName")
-          .setInput(new DestinationIndexName().setIndexName("full_name______"))
+          .setInput(new DestinationInput().setIndexName("full_name______"))
           .setTransformationIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
       );
     });
@@ -148,6 +148,7 @@ class IngestionClientRequestsTests {
               .setLocales(Arrays.asList("de"))
               .setUrl("http://commercetools.com")
               .setProjectKey("keyID")
+              .setProductQueryPredicate("masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))")
           )
           .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       );
@@ -157,7 +158,8 @@ class IngestionClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}",
+        "{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\",\"productQueryPredicate\":\"masterVariant(attributes(name=\\\"Brand\\\"" +
+        " and value=\\\"Algolia\\\"))\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1329,6 +1331,75 @@ class IngestionClientRequestsTests {
     assertEquals("/1/transformations", req.path);
     assertEquals("GET", req.method);
     assertNull(req.body);
+  }
+
+  @Test
+  @DisplayName("global push")
+  void pushTest() {
+    assertDoesNotThrow(() -> {
+      client.push(
+        "foo",
+        new PushTaskPayload()
+          .setAction(Action.ADD_OBJECT)
+          .setRecords(
+            Arrays.asList(
+              new PushTaskRecords().setAdditionalProperty("key", "bar").setAdditionalProperty("foo", "1").setObjectID("o"),
+              new PushTaskRecords().setAdditionalProperty("key", "baz").setAdditionalProperty("foo", "2").setObjectID("k")
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/push/foo", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("global push with watch mode")
+  void pushTest1() {
+    assertDoesNotThrow(() -> {
+      client.push(
+        "bar",
+        new PushTaskPayload()
+          .setAction(Action.ADD_OBJECT)
+          .setRecords(
+            Arrays.asList(
+              new PushTaskRecords().setAdditionalProperty("key", "bar").setAdditionalProperty("foo", "1").setObjectID("o"),
+              new PushTaskRecords().setAdditionalProperty("key", "baz").setAdditionalProperty("foo", "2").setObjectID("k")
+            )
+          ),
+        true
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/push/bar", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+
+    try {
+      Map<String, String> expectedQuery = json.readValue("{\"watch\":\"true\"}", new TypeReference<HashMap<String, String>>() {});
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
   }
 
   @Test

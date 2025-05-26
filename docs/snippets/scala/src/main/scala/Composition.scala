@@ -16,7 +16,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class SnippetCompositionClient {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   /** Snippet for the search method.
     *
@@ -28,20 +28,20 @@ class SnippetCompositionClient {
     val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.search(
-      compositionID = "foo",
-      requestBody = RequestBody(
-        params = Some(
-          Params(
-            query = Some("batman")
+    val response = Await.result(
+      client.search(
+        compositionID = "foo",
+        requestBody = RequestBody(
+          params = Some(
+            Params(
+              query = Some("batman")
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -55,23 +55,23 @@ class SnippetCompositionClient {
     val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchForFacetValues(
-      compositionID = "foo",
-      facetName = "brand",
-      searchForFacetValuesRequest = Some(
-        SearchForFacetValuesRequest(
-          params = Some(
-            SearchForFacetValuesParams(
-              maxFacetHits = Some(10)
+    val response = Await.result(
+      client.searchForFacetValues(
+        compositionID = "foo",
+        facetName = "brand",
+        searchForFacetValuesRequest = Some(
+          SearchForFacetValuesRequest(
+            params = Some(
+              SearchForFacetValuesParams(
+                maxFacetHits = Some(10)
+              )
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 

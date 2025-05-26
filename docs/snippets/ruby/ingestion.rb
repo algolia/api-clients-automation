@@ -69,7 +69,7 @@ def snippet_for_create_destination
     Algolia::Ingestion::DestinationCreate.new(
       type: "search",
       name: "destinationName",
-      input: Algolia::Ingestion::DestinationIndexName.new(index_name: "<YOUR_INDEX_NAME>"),
+      input: Algolia::Ingestion::DestinationInput.new(index_name: "<YOUR_INDEX_NAME>"),
       authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
     )
   )
@@ -96,7 +96,7 @@ def snippet_for_create_destination1
     Algolia::Ingestion::DestinationCreate.new(
       type: "search",
       name: "destinationName",
-      input: Algolia::Ingestion::DestinationIndexName.new(index_name: "<YOUR_INDEX_NAME>"),
+      input: Algolia::Ingestion::DestinationInput.new(index_name: "<YOUR_INDEX_NAME>"),
       transformation_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]
     )
   )
@@ -127,7 +127,8 @@ def snippet_for_create_source
         store_keys: ["myStore"],
         locales: ["de"],
         url: "http://commercetools.com",
-        project_key: "keyID"
+        project_key: "keyID",
+        product_query_predicate: "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"
       ),
       authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
     )
@@ -471,7 +472,7 @@ def snippet_for_custom_get2
     "test/all",
     {query: "to be overriden"},
     {
-      :header_params => JSON.parse("{\"x-header-1\":\"spaces are left alone\"}", :symbolize_names => true),
+      :header_params => {"x-header-1" => "spaces are left alone"},
       :query_params => JSON.parse(
         "{\"query\":\"parameters with space\",\"and an array\":[\"array\",\"with spaces\"]}",
         :symbolize_names => true
@@ -591,7 +592,7 @@ def snippet_for_custom_post4
     "test/requestOptions",
     {query: "parameters"},
     {facet: "filters"},
-    {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
+    {:header_params => {"x-algolia-api-key" => "ALGOLIA_API_KEY"}}
   )
 
   # >LOG
@@ -616,7 +617,7 @@ def snippet_for_custom_post5
     "test/requestOptions",
     {query: "parameters"},
     {facet: "filters"},
-    {:header_params => JSON.parse("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", :symbolize_names => true)}
+    {:header_params => {"x-algolia-api-key" => "ALGOLIA_API_KEY"}}
   )
 
   # >LOG
@@ -1323,6 +1324,65 @@ def snippet_for_list_transformations
 
   # Call the API
   response = client.list_transformations
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the push method.
+#
+# global push
+def snippet_for_push
+  # >SEPARATOR push global push
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.push(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Ingestion::PushTaskPayload.new(
+      action: "addObject",
+      records: [
+        Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", algolia_object_id: "o"),
+        Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", algolia_object_id: "k")
+      ]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the push method.
+#
+# global push with watch mode
+def snippet_for_push1
+  # >SEPARATOR push global push with watch mode
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.push(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Ingestion::PushTaskPayload.new(
+      action: "addObject",
+      records: [
+        Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", algolia_object_id: "o"),
+        Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", algolia_object_id: "k")
+      ]
+    ),
+    true
+  )
 
   # >LOG
   # use the class directly

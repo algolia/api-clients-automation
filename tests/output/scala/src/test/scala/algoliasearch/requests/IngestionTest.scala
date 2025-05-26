@@ -15,7 +15,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class IngestionTest extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   def testClient(): (IngestionClient, EchoInterceptor) = {
     val echo = EchoInterceptor()
@@ -41,8 +41,8 @@ class IngestionTest extends AnyFunSuite {
         name = "authName",
         input = AuthOAuth(
           url = "http://test.oauth",
-          client_id = "myID",
-          client_secret = "mySecret"
+          clientId = "myID",
+          clientSecret = "mySecret"
         )
       )
     )
@@ -90,7 +90,7 @@ class IngestionTest extends AnyFunSuite {
       destinationCreate = DestinationCreate(
         `type` = DestinationType.withName("search"),
         name = "destinationName",
-        input = DestinationIndexName(
+        input = DestinationInput(
           indexName = "full_name______"
         ),
         authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -115,7 +115,7 @@ class IngestionTest extends AnyFunSuite {
       destinationCreate = DestinationCreate(
         `type` = DestinationType.withName("search"),
         name = "destinationName",
-        input = DestinationIndexName(
+        input = DestinationInput(
           indexName = "full_name______"
         ),
         transformationIDs = Some(Seq("6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
@@ -145,7 +145,8 @@ class IngestionTest extends AnyFunSuite {
             storeKeys = Some(Seq("myStore")),
             locales = Some(Seq("de")),
             url = "http://commercetools.com",
-            projectKey = "keyID"
+            projectKey = "keyID",
+            productQueryPredicate = Some("masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))")
           )
         ),
         authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -158,7 +159,7 @@ class IngestionTest extends AnyFunSuite {
     assert(res.path == "/1/sources")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}"""
+      """{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID","productQueryPredicate":"masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -1273,6 +1274,76 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
+  test("global push") {
+    val (client, echo) = testClient()
+    val future = client.push(
+      indexName = "foo",
+      pushTaskPayload = PushTaskPayload(
+        action = Action.withName("addObject"),
+        records = Seq(
+          PushTaskRecords(
+            objectID = "o",
+            additionalProperties = Some(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+          ),
+          PushTaskRecords(
+            objectID = "k",
+            additionalProperties = Some(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/push/foo")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("global push with watch mode1") {
+    val (client, echo) = testClient()
+    val future = client.push(
+      indexName = "bar",
+      pushTaskPayload = PushTaskPayload(
+        action = Action.withName("addObject"),
+        records = Seq(
+          PushTaskRecords(
+            objectID = "o",
+            additionalProperties = Some(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+          ),
+          PushTaskRecords(
+            objectID = "k",
+            additionalProperties = Some(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+          )
+        )
+      ),
+      watch = Some(true)
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/push/bar")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"watch":"true"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
   test("pushTask") {
     val (client, echo) = testClient()
     val future = client.pushTask(
@@ -1570,8 +1641,8 @@ class IngestionTest extends AnyFunSuite {
               name = "authName",
               input = AuthOAuth(
                 url = "http://test.oauth",
-                client_id = "myID",
-                client_secret = "mySecret"
+                clientId = "myID",
+                clientSecret = "mySecret"
               )
             )
           )
@@ -1625,8 +1696,8 @@ class IngestionTest extends AnyFunSuite {
               name = "authName",
               input = AuthOAuth(
                 url = "http://test.oauth",
-                client_id = "myID",
-                client_secret = "mySecret"
+                clientId = "myID",
+                clientSecret = "mySecret"
               )
             )
           )

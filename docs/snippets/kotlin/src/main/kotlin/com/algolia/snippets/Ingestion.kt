@@ -73,7 +73,7 @@ class SnippetIngestionClient {
       destinationCreate = DestinationCreate(
         type = DestinationType.entries.first { it.value == "search" },
         name = "destinationName",
-        input = DestinationIndexName(
+        input = DestinationInput(
           indexName = "<YOUR_INDEX_NAME>",
         ),
         authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -98,7 +98,7 @@ class SnippetIngestionClient {
       destinationCreate = DestinationCreate(
         type = DestinationType.entries.first { it.value == "search" },
         name = "destinationName",
-        input = DestinationIndexName(
+        input = DestinationInput(
           indexName = "<YOUR_INDEX_NAME>",
         ),
         transformationIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
@@ -128,6 +128,7 @@ class SnippetIngestionClient {
           locales = listOf("de"),
           url = "http://commercetools.com",
           projectKey = "keyID",
+          productQueryPredicate = "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))",
         ),
         authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       ),
@@ -1304,6 +1305,81 @@ class SnippetIngestionClient {
 
     // Call the API
     var response = client.listTransformations()
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForPush() {
+    // >SEPARATOR push global push
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.push(
+      indexName = "<YOUR_INDEX_NAME>",
+      pushTaskPayload = PushTaskPayload(
+        action = Action.entries.first { it.value == "addObject" },
+        records = listOf(
+          PushTaskRecords(
+            objectID = "o",
+            additionalProperties = mapOf(
+              "key" to JsonPrimitive("bar"),
+              "foo" to JsonPrimitive("1"),
+            ),
+          ),
+          PushTaskRecords(
+            objectID = "k",
+            additionalProperties = mapOf(
+              "key" to JsonPrimitive("baz"),
+              "foo" to JsonPrimitive("2"),
+            ),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForPush1() {
+    // >SEPARATOR push global push with watch mode
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.push(
+      indexName = "<YOUR_INDEX_NAME>",
+      pushTaskPayload = PushTaskPayload(
+        action = Action.entries.first { it.value == "addObject" },
+        records = listOf(
+          PushTaskRecords(
+            objectID = "o",
+            additionalProperties = mapOf(
+              "key" to JsonPrimitive("bar"),
+              "foo" to JsonPrimitive("1"),
+            ),
+          ),
+          PushTaskRecords(
+            objectID = "k",
+            additionalProperties = mapOf(
+              "key" to JsonPrimitive("baz"),
+              "foo" to JsonPrimitive("2"),
+            ),
+          ),
+        ),
+      ),
+      watch = true,
+    )
 
     // >LOG
     // Use the response

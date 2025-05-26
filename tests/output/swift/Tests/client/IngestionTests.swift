@@ -26,10 +26,7 @@ final class IngestionClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration)
         let client = IngestionClient(configuration: configuration, transporter: transporter)
         do {
-            let response = try await client.customGetWithHTTPInfo(path: "1/html-error")
-
-            let responseBodyData = try XCTUnwrap(response.bodyData)
-            let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
+            let response = try await client.customGet(path: "1/html-error")
 
             XCTFail("Expected an error to be thrown")
         } catch {
@@ -45,8 +42,7 @@ final class IngestionClientClientTests: XCTestCase {
 
         let response = try await client.customGetWithHTTPInfo(path: "1/test")
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
         XCTAssertEqual(TimeInterval(25000) / 1000, echoResponse.timeout)
     }
@@ -59,14 +55,32 @@ final class IngestionClientClientTests: XCTestCase {
 
         let response = try await client.customPostWithHTTPInfo(path: "1/test")
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
         XCTAssertEqual(TimeInterval(25000) / 1000, echoResponse.timeout)
     }
 
-    /// endpoint level timeout
+    /// can leave call opened for a long time
     func testApiTest3() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            region: Region(rawValue: "us"),
+            hosts: [RetryableHost(url: URL(
+                string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6676"
+            )!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+        let response = try await client.customGet(path: "1/long-wait")
+
+        XTCJSONEquals(received: response, expected: "{\"message\":\"OK\"}")
+    }
+
+    /// endpoint level timeout
+    func testApiTest4() async throws {
         let configuration = try IngestionClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
@@ -76,14 +90,13 @@ final class IngestionClientClientTests: XCTestCase {
             sourceUpdate: SourceUpdate(name: "newName")
         )
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
         XCTAssertEqual(TimeInterval(180_000) / 1000, echoResponse.timeout)
     }
 
     /// can override endpoint level timeout
-    func testApiTest4() async throws {
+    func testApiTest5() async throws {
         let configuration = try IngestionClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
@@ -96,8 +109,7 @@ final class IngestionClientClientTests: XCTestCase {
             )
         )
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
         XCTAssertEqual(TimeInterval(3456) / 1000, echoResponse.timeout)
     }
@@ -110,8 +122,7 @@ final class IngestionClientClientTests: XCTestCase {
 
         let response = try await client.customPostWithHTTPInfo(path: "1/test")
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
         let pattern =
             "^Algolia for Swift \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Ingestion (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
@@ -129,10 +140,9 @@ final class IngestionClientClientTests: XCTestCase {
 
         let response = try await client.customPostWithHTTPInfo(path: "1/test")
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
-        let pattern = "^Algolia for Swift \\(9.14.0\\).*"
+        let pattern = "^Algolia for Swift \\(9.19.0\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
@@ -150,8 +160,7 @@ final class IngestionClientClientTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
         let response = try await client.getSourceWithHTTPInfo(sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
         XCTAssertEqual("data.us.algolia.com", echoResponse.host)
     }
@@ -188,27 +197,17 @@ final class IngestionClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration)
         let client = IngestionClient(configuration: configuration, transporter: transporter)
         do {
-            let response = try await client.customGetWithHTTPInfo(path: "check-api-key/1")
+            let response = try await client.customGet(path: "check-api-key/1")
 
-            let responseBodyData = try XCTUnwrap(response.bodyData)
-            let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
-
-            let comparableData = "{\"headerAPIKeyValue\":\"test-api-key\"}".data(using: .utf8)
-            let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
-            XCTAssertEqual(comparableJSON, responseBodyJSON)
+            XTCJSONEquals(received: response, expected: "{\"headerAPIKeyValue\":\"test-api-key\"}")
         }
         do {
             let _ = try client.setClientApiKey(apiKey: "updated-api-key")
         }
         do {
-            let response = try await client.customGetWithHTTPInfo(path: "check-api-key/2")
+            let response = try await client.customGet(path: "check-api-key/2")
 
-            let responseBodyData = try XCTUnwrap(response.bodyData)
-            let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
-
-            let comparableData = "{\"headerAPIKeyValue\":\"updated-api-key\"}".data(using: .utf8)
-            let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
-            XCTAssertEqual(comparableJSON, responseBodyJSON)
+            XTCJSONEquals(received: response, expected: "{\"headerAPIKeyValue\":\"updated-api-key\"}")
         }
     }
 }

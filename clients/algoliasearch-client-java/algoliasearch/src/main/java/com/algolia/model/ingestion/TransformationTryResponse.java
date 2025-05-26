@@ -13,24 +13,24 @@ import java.util.Objects;
 public class TransformationTryResponse {
 
   @JsonProperty("payloads")
-  private List<Object> payloads = new ArrayList<>();
+  private List<String> payloads = new ArrayList<>();
 
   @JsonProperty("error")
   private TransformationError error;
 
-  public TransformationTryResponse setPayloads(List<Object> payloads) {
+  public TransformationTryResponse setPayloads(List<String> payloads) {
     this.payloads = payloads;
     return this;
   }
 
-  public TransformationTryResponse addPayloads(Object payloadsItem) {
+  public TransformationTryResponse addPayloads(String payloadsItem) {
     this.payloads.add(payloadsItem);
     return this;
   }
 
-  /** The array of records returned by the transformation service. */
+  /** The array of stringified records returned by the transformation service. */
   @javax.annotation.Nonnull
-  public List<Object> getPayloads() {
+  public List<String> getPayloads() {
     return payloads;
   }
 

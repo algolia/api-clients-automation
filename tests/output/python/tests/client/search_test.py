@@ -153,6 +153,69 @@ class TestSearchClient:
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 30000
 
+    async def test_api_8(self):
+        """
+        can handle unknown response fields
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.get_settings(
+            index_name="cts_e2e_unknownField_python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"minWordSizefor1Typo":12,"minWordSizefor2Typos":13,"hitsPerPage":14}"""
+        )
+
+    async def test_api_9(self):
+        """
+        can handle unknown response fields inside a nested oneOf
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.get_rule(
+            index_name="cts_e2e_unknownFieldNested_python",
+            object_id="ruleObjectID",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"objectID":"ruleObjectID","consequence":{"promote":[{"objectID":"1","position":10}]}}"""
+        )
+
     async def test_common_api_0(self):
         """
         calls api with correct user agent
@@ -176,7 +239,7 @@ class TestSearchClient:
         _req = await _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.13.0\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.17.0\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     async def test_delete_objects_0(self):
@@ -306,6 +369,32 @@ class TestSearchClient:
             },
         )
 
+    async def test_generate_secured_api_key_5(self):
+        """
+        mcm with filters
+        """
+        _client = self.create_client()
+
+        _req = await _client.generate_secured_api_key(
+            parent_api_key="YourSearchOnlyApiKey",
+            restrictions={
+                "filters": "user:user42 AND user:public",
+            },
+        )
+
+    async def test_generate_secured_api_key_6(self):
+        """
+        mcm with user token
+        """
+        _client = self.create_client()
+
+        _req = await _client.generate_secured_api_key(
+            parent_api_key="YourSearchOnlyApiKey",
+            restrictions={
+                "userToken": "user42",
+            },
+        )
+
     async def test_index_exists_0(self):
         """
         indexExists
@@ -327,7 +416,7 @@ class TestSearchClient:
         _req = await _client.index_exists(
             index_name="indexExistsYES",
         )
-        assert _req is True
+        assert _req
 
     async def test_index_exists_1(self):
         """
@@ -350,7 +439,7 @@ class TestSearchClient:
         _req = await _client.index_exists(
             index_name="indexExistsNO",
         )
-        assert _req is False
+        assert not _req
 
     async def test_index_exists_2(self):
         """
@@ -838,8 +927,38 @@ class TestSearchClient:
                     "createdAt": "1500240452",
                 },
             ],
+            wait_for_tasks=False,
+            batch_size=1000,
             request_options={
                 "headers": loads("""{"X-Algolia-User-ID":"*"}"""),
+            },
+        )
+
+    async def test_search_single_index_0(self):
+        """
+        with algolia user id
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.search_single_index(
+            index_name="playlists",
+            search_params={
+                "query": "foo",
+            },
+            request_options={
+                "headers": loads("""{"X-Algolia-User-ID":"user1234"}"""),
             },
         )
 
@@ -1194,6 +1313,69 @@ class TestSearchClientSync:
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 30000
 
+    def test_api_8(self):
+        """
+        can handle unknown response fields
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.get_settings(
+            index_name="cts_e2e_unknownField_python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"minWordSizefor1Typo":12,"minWordSizefor2Typos":13,"hitsPerPage":14}"""
+        )
+
+    def test_api_9(self):
+        """
+        can handle unknown response fields inside a nested oneOf
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.get_rule(
+            index_name="cts_e2e_unknownFieldNested_python",
+            object_id="ruleObjectID",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"objectID":"ruleObjectID","consequence":{"promote":[{"objectID":"1","position":10}]}}"""
+        )
+
     def test_common_api_0(self):
         """
         calls api with correct user agent
@@ -1217,7 +1399,7 @@ class TestSearchClientSync:
         _req = _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.13.0\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.17.0\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     def test_delete_objects_0(self):
@@ -1347,6 +1529,32 @@ class TestSearchClientSync:
             },
         )
 
+    def test_generate_secured_api_key_5(self):
+        """
+        mcm with filters
+        """
+        _client = self.create_client()
+
+        _req = _client.generate_secured_api_key(
+            parent_api_key="YourSearchOnlyApiKey",
+            restrictions={
+                "filters": "user:user42 AND user:public",
+            },
+        )
+
+    def test_generate_secured_api_key_6(self):
+        """
+        mcm with user token
+        """
+        _client = self.create_client()
+
+        _req = _client.generate_secured_api_key(
+            parent_api_key="YourSearchOnlyApiKey",
+            restrictions={
+                "userToken": "user42",
+            },
+        )
+
     def test_index_exists_0(self):
         """
         indexExists
@@ -1368,7 +1576,7 @@ class TestSearchClientSync:
         _req = _client.index_exists(
             index_name="indexExistsYES",
         )
-        assert _req is True
+        assert _req
 
     def test_index_exists_1(self):
         """
@@ -1391,7 +1599,7 @@ class TestSearchClientSync:
         _req = _client.index_exists(
             index_name="indexExistsNO",
         )
-        assert _req is False
+        assert not _req
 
     def test_index_exists_2(self):
         """
@@ -1879,8 +2087,38 @@ class TestSearchClientSync:
                     "createdAt": "1500240452",
                 },
             ],
+            wait_for_tasks=False,
+            batch_size=1000,
             request_options={
                 "headers": loads("""{"X-Algolia-User-ID":"*"}"""),
+            },
+        )
+
+    def test_search_single_index_0(self):
+        """
+        with algolia user id
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6686,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.search_single_index(
+            index_name="playlists",
+            search_params={
+                "query": "foo",
+            },
+            request_options={
+                "headers": loads("""{"X-Algolia-User-ID":"user1234"}"""),
             },
         )
 

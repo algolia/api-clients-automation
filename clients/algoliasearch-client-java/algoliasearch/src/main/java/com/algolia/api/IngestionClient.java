@@ -386,7 +386,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -400,7 +400,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -411,7 +411,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -423,7 +423,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -433,7 +433,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -453,7 +453,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -464,7 +464,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -477,7 +477,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -487,7 +487,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -501,7 +501,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -512,7 +512,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -524,7 +524,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -534,7 +534,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -554,7 +554,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -565,7 +565,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -578,7 +578,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -588,7 +588,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -603,7 +603,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -615,7 +615,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -627,7 +627,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -637,7 +637,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -664,7 +664,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -677,7 +677,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -690,7 +690,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -700,7 +700,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -715,7 +715,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -727,7 +727,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -739,7 +739,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -749,7 +749,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -776,7 +776,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
@@ -789,7 +789,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -802,7 +802,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This method allow you to send requests to the Algolia REST API.
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3120,12 +3120,213 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Push a `batch` request payload through the Pipeline. You can check the status of task pushes
-   * with the observability endpoints.
+   * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by
+   * providing the `watch` parameter, for asynchronous calls, you can use the observability
+   * endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the
+   * [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
+   * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
+   * will be returned.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public WatchResponse push(
+    @Nonnull String indexName,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    Boolean watch,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(pushAsync(indexName, pushTaskPayload, watch, requestOptions));
+  }
+
+  /**
+   * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by
+   * providing the `watch` parameter, for asynchronous calls, you can use the observability
+   * endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the
+   * [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
+   * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
+   * will be returned.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public WatchResponse push(@Nonnull String indexName, @Nonnull PushTaskPayload pushTaskPayload, Boolean watch)
+    throws AlgoliaRuntimeException {
+    return this.push(indexName, pushTaskPayload, watch, null);
+  }
+
+  /**
+   * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by
+   * providing the `watch` parameter, for asynchronous calls, you can use the observability
+   * endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the
+   * [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
+   * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
+   * will be returned.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public WatchResponse push(@Nonnull String indexName, @Nonnull PushTaskPayload pushTaskPayload, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.push(indexName, pushTaskPayload, null, requestOptions);
+  }
+
+  /**
+   * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by
+   * providing the `watch` parameter, for asynchronous calls, you can use the observability
+   * endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the
+   * [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
+   * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
+   * will be returned.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public WatchResponse push(@Nonnull String indexName, @Nonnull PushTaskPayload pushTaskPayload) throws AlgoliaRuntimeException {
+    return this.push(indexName, pushTaskPayload, null, null);
+  }
+
+  /**
+   * (asynchronously) Pushes records through the Pipeline, directly to an index. You can make the
+   * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
+   * observability endpoints and/or debugger dashboard to see the status of your task. If you want
+   * to leverage the [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
+   * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
+   * will be returned.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<WatchResponse> pushAsync(
+    @Nonnull String indexName,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    Boolean watch,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `push`.");
+
+    Parameters.requireNonNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `push`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/push/{indexName}", indexName)
+      .setMethod("POST")
+      .setBody(pushTaskPayload)
+      .addQueryParameter("watch", watch)
+      .build();
+    return executeAsync(
+      request,
+      new RequestOptions()
+        .setReadTimeout(Duration.ofMillis(180000L))
+        .setWriteTimeout(Duration.ofMillis(180000L))
+        .setConnectTimeout(Duration.ofMillis(180000L))
+        .mergeRight(requestOptions),
+      new TypeReference<WatchResponse>() {}
+    );
+  }
+
+  /**
+   * (asynchronously) Pushes records through the Pipeline, directly to an index. You can make the
+   * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
+   * observability endpoints and/or debugger dashboard to see the status of your task. If you want
+   * to leverage the [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
+   * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
+   * will be returned.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<WatchResponse> pushAsync(@Nonnull String indexName, @Nonnull PushTaskPayload pushTaskPayload, Boolean watch)
+    throws AlgoliaRuntimeException {
+    return this.pushAsync(indexName, pushTaskPayload, watch, null);
+  }
+
+  /**
+   * (asynchronously) Pushes records through the Pipeline, directly to an index. You can make the
+   * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
+   * observability endpoints and/or debugger dashboard to see the status of your task. If you want
+   * to leverage the [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
+   * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
+   * will be returned.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<WatchResponse> pushAsync(
+    @Nonnull String indexName,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.pushAsync(indexName, pushTaskPayload, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Pushes records through the Pipeline, directly to an index. You can make the
+   * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
+   * observability endpoints and/or debugger dashboard to see the status of your task. If you want
+   * to leverage the [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
+   * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
+   * will be returned.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<WatchResponse> pushAsync(@Nonnull String indexName, @Nonnull PushTaskPayload pushTaskPayload)
+    throws AlgoliaRuntimeException {
+    return this.pushAsync(indexName, pushTaskPayload, null, null);
+  }
+
+  /**
+   * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by
+   * providing the `watch` parameter, for asynchronous calls, you can use the observability
+   * endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the
+   * [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * this is the recommended way of ingesting your records. This method is similar to `push`, but
+   * requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target
+   * the same `indexName`.
    *
    * @param taskID Unique identifier of a task. (required)
-   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
-   *     Connectors pipeline. (required)
+   * @param pushTaskPayload (required)
    * @param watch When provided, the push operation will be synchronous and the API will wait for
    *     the ingestion to be finished before responding. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3142,12 +3343,17 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Push a `batch` request payload through the Pipeline. You can check the status of task pushes
-   * with the observability endpoints.
+   * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by
+   * providing the `watch` parameter, for asynchronous calls, you can use the observability
+   * endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the
+   * [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * this is the recommended way of ingesting your records. This method is similar to `push`, but
+   * requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target
+   * the same `indexName`.
    *
    * @param taskID Unique identifier of a task. (required)
-   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
-   *     Connectors pipeline. (required)
+   * @param pushTaskPayload (required)
    * @param watch When provided, the push operation will be synchronous and the API will wait for
    *     the ingestion to be finished before responding. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3158,12 +3364,17 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Push a `batch` request payload through the Pipeline. You can check the status of task pushes
-   * with the observability endpoints.
+   * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by
+   * providing the `watch` parameter, for asynchronous calls, you can use the observability
+   * endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the
+   * [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * this is the recommended way of ingesting your records. This method is similar to `push`, but
+   * requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target
+   * the same `indexName`.
    *
    * @param taskID Unique identifier of a task. (required)
-   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
-   *     Connectors pipeline. (required)
+   * @param pushTaskPayload (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3174,12 +3385,17 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Push a `batch` request payload through the Pipeline. You can check the status of task pushes
-   * with the observability endpoints.
+   * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by
+   * providing the `watch` parameter, for asynchronous calls, you can use the observability
+   * endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the
+   * [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * this is the recommended way of ingesting your records. This method is similar to `push`, but
+   * requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target
+   * the same `indexName`.
    *
    * @param taskID Unique identifier of a task. (required)
-   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
-   *     Connectors pipeline. (required)
+   * @param pushTaskPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public WatchResponse pushTask(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload) throws AlgoliaRuntimeException {
@@ -3187,12 +3403,17 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Push a `batch` request payload through the Pipeline. You can check the status
-   * of task pushes with the observability endpoints.
+   * (asynchronously) Pushes records through the Pipeline, directly to an index. You can make the
+   * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
+   * observability endpoints and/or debugger dashboard to see the status of your task. If you want
+   * to leverage the [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * this is the recommended way of ingesting your records. This method is similar to `push`, but
+   * requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target
+   * the same `indexName`.
    *
    * @param taskID Unique identifier of a task. (required)
-   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
-   *     Connectors pipeline. (required)
+   * @param pushTaskPayload (required)
    * @param watch When provided, the push operation will be synchronous and the API will wait for
    *     the ingestion to be finished before responding. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3227,12 +3448,17 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Push a `batch` request payload through the Pipeline. You can check the status
-   * of task pushes with the observability endpoints.
+   * (asynchronously) Pushes records through the Pipeline, directly to an index. You can make the
+   * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
+   * observability endpoints and/or debugger dashboard to see the status of your task. If you want
+   * to leverage the [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * this is the recommended way of ingesting your records. This method is similar to `push`, but
+   * requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target
+   * the same `indexName`.
    *
    * @param taskID Unique identifier of a task. (required)
-   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
-   *     Connectors pipeline. (required)
+   * @param pushTaskPayload (required)
    * @param watch When provided, the push operation will be synchronous and the API will wait for
    *     the ingestion to be finished before responding. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3243,12 +3469,17 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Push a `batch` request payload through the Pipeline. You can check the status
-   * of task pushes with the observability endpoints.
+   * (asynchronously) Pushes records through the Pipeline, directly to an index. You can make the
+   * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
+   * observability endpoints and/or debugger dashboard to see the status of your task. If you want
+   * to leverage the [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * this is the recommended way of ingesting your records. This method is similar to `push`, but
+   * requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target
+   * the same `indexName`.
    *
    * @param taskID Unique identifier of a task. (required)
-   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
-   *     Connectors pipeline. (required)
+   * @param pushTaskPayload (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3262,12 +3493,17 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Push a `batch` request payload through the Pipeline. You can check the status
-   * of task pushes with the observability endpoints.
+   * (asynchronously) Pushes records through the Pipeline, directly to an index. You can make the
+   * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
+   * observability endpoints and/or debugger dashboard to see the status of your task. If you want
+   * to leverage the [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * this is the recommended way of ingesting your records. This method is similar to `push`, but
+   * requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target
+   * the same `indexName`.
    *
    * @param taskID Unique identifier of a task. (required)
-   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the
-   *     Connectors pipeline. (required)
+   * @param pushTaskPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<WatchResponse> pushTaskAsync(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload)

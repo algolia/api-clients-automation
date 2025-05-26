@@ -137,7 +137,7 @@ class InsightsClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -184,7 +184,7 @@ class InsightsClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> object:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -214,7 +214,7 @@ class InsightsClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -259,7 +259,7 @@ class InsightsClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> object:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -291,7 +291,7 @@ class InsightsClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -347,7 +347,7 @@ class InsightsClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> object:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -383,7 +383,7 @@ class InsightsClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -439,7 +439,7 @@ class InsightsClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> object:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -472,6 +472,8 @@ class InsightsClient:
         """
         Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
 
+        Required API Key ACLs:
+          - deleteObject
 
         :param user_token: User token for which to delete all associated events. (required)
         :type user_token: str
@@ -511,6 +513,8 @@ class InsightsClient:
         """
         Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
 
+        Required API Key ACLs:
+          - deleteObject
 
         :param user_token: User token for which to delete all associated events. (required)
         :type user_token: str
@@ -527,6 +531,8 @@ class InsightsClient:
         """
         Sends a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
 
+        Required API Key ACLs:
+          - search
 
         :param insights_events: (required)
         :type insights_events: InsightsEvents
@@ -561,6 +567,8 @@ class InsightsClient:
         """
         Sends a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
 
+        Required API Key ACLs:
+          - search
 
         :param insights_events: (required)
         :type insights_events: InsightsEvents
@@ -676,7 +684,7 @@ class InsightsClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -723,7 +731,7 @@ class InsightsClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> object:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -751,7 +759,7 @@ class InsightsClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -796,7 +804,7 @@ class InsightsClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> object:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -828,7 +836,7 @@ class InsightsClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -884,7 +892,7 @@ class InsightsClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> object:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -918,7 +926,7 @@ class InsightsClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -974,7 +982,7 @@ class InsightsClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> object:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -1005,6 +1013,8 @@ class InsightsClientSync:
         """
         Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
 
+        Required API Key ACLs:
+          - deleteObject
 
         :param user_token: User token for which to delete all associated events. (required)
         :type user_token: str
@@ -1044,6 +1054,8 @@ class InsightsClientSync:
         """
         Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
 
+        Required API Key ACLs:
+          - deleteObject
 
         :param user_token: User token for which to delete all associated events. (required)
         :type user_token: str
@@ -1060,6 +1072,8 @@ class InsightsClientSync:
         """
         Sends a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
 
+        Required API Key ACLs:
+          - search
 
         :param insights_events: (required)
         :type insights_events: InsightsEvents
@@ -1094,6 +1108,8 @@ class InsightsClientSync:
         """
         Sends a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
 
+        Required API Key ACLs:
+          - search
 
         :param insights_events: (required)
         :type insights_events: InsightsEvents

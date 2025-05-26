@@ -43,7 +43,7 @@ class RecommendationsResults extends AbstractModel implements ModelInterface, \A
         'renderingContent' => '\Algolia\AlgoliaSearch\Model\Recommend\RenderingContent',
         'serverTimeMS' => 'int',
         'serverUsed' => 'string',
-        'userData' => 'object',
+        'userData' => 'mixed',
         'queryID' => 'string',
         'automaticInsights' => 'bool',
         'page' => 'int',
@@ -655,7 +655,7 @@ class RecommendationsResults extends AbstractModel implements ModelInterface, \A
     /**
      * Gets facetsStats.
      *
-     * @return null|array<string,\Algolia\AlgoliaSearch\Model\Recommend\FacetStats>
+     * @return null|array<string,FacetStats>
      */
     public function getFacetsStats()
     {
@@ -665,7 +665,7 @@ class RecommendationsResults extends AbstractModel implements ModelInterface, \A
     /**
      * Sets facetsStats.
      *
-     * @param null|array<string,\Algolia\AlgoliaSearch\Model\Recommend\FacetStats> $facetsStats statistics for numerical facets
+     * @param null|array<string,FacetStats> $facetsStats statistics for numerical facets
      *
      * @return self
      */
@@ -967,7 +967,7 @@ class RecommendationsResults extends AbstractModel implements ModelInterface, \A
     /**
      * Gets userData.
      *
-     * @return null|object
+     * @return null|mixed
      */
     public function getUserData()
     {
@@ -977,7 +977,7 @@ class RecommendationsResults extends AbstractModel implements ModelInterface, \A
     /**
      * Sets userData.
      *
-     * @param null|object $userData An object with custom data.  You can store up to 32kB as custom data.
+     * @param null|mixed $userData An object with custom data.  You can store up to 32kB as custom data.
      *
      * @return self
      */
@@ -1135,7 +1135,7 @@ class RecommendationsResults extends AbstractModel implements ModelInterface, \A
     /**
      * Gets hits.
      *
-     * @return \Algolia\AlgoliaSearch\Model\Recommend\RecommendationsHit[]
+     * @return RecommendationsHit[]
      */
     public function getHits()
     {
@@ -1145,7 +1145,7 @@ class RecommendationsResults extends AbstractModel implements ModelInterface, \A
     /**
      * Sets hits.
      *
-     * @param \Algolia\AlgoliaSearch\Model\Recommend\RecommendationsHit[] $hits hits
+     * @param RecommendationsHit[] $hits hits
      *
      * @return self
      */

@@ -118,7 +118,7 @@ func (r ApiCustomDeleteRequest) WithParameters(parameters map[string]any) ApiCus
 /*
 CustomDelete calls the API and returns the raw response from it.
 
-	  This method allow you to send requests to the Algolia REST API.
+	  This method lets you send requests to the Algolia REST API.
 
 
 	Request can be constructed by NewApiCustomDeleteRequest with parameters below.
@@ -167,7 +167,7 @@ func (c *APIClient) CustomDeleteWithHTTPInfo(r ApiCustomDeleteRequest, opts ...R
 /*
 CustomDelete casts the HTTP response body to a defined struct.
 
-This method allow you to send requests to the Algolia REST API.
+This method lets you send requests to the Algolia REST API.
 
 Request can be constructed by NewApiCustomDeleteRequest with parameters below.
 
@@ -248,7 +248,7 @@ func (r ApiCustomGetRequest) WithParameters(parameters map[string]any) ApiCustom
 /*
 CustomGet calls the API and returns the raw response from it.
 
-	  This method allow you to send requests to the Algolia REST API.
+	  This method lets you send requests to the Algolia REST API.
 
 
 	Request can be constructed by NewApiCustomGetRequest with parameters below.
@@ -297,7 +297,7 @@ func (c *APIClient) CustomGetWithHTTPInfo(r ApiCustomGetRequest, opts ...Request
 /*
 CustomGet casts the HTTP response body to a defined struct.
 
-This method allow you to send requests to the Algolia REST API.
+This method lets you send requests to the Algolia REST API.
 
 Request can be constructed by NewApiCustomGetRequest with parameters below.
 
@@ -394,7 +394,7 @@ func (r ApiCustomPostRequest) WithBody(body map[string]any) ApiCustomPostRequest
 /*
 CustomPost calls the API and returns the raw response from it.
 
-	  This method allow you to send requests to the Algolia REST API.
+	  This method lets you send requests to the Algolia REST API.
 
 
 	Request can be constructed by NewApiCustomPostRequest with parameters below.
@@ -450,7 +450,7 @@ func (c *APIClient) CustomPostWithHTTPInfo(r ApiCustomPostRequest, opts ...Reque
 /*
 CustomPost casts the HTTP response body to a defined struct.
 
-This method allow you to send requests to the Algolia REST API.
+This method lets you send requests to the Algolia REST API.
 
 Request can be constructed by NewApiCustomPostRequest with parameters below.
 
@@ -548,7 +548,7 @@ func (r ApiCustomPutRequest) WithBody(body map[string]any) ApiCustomPutRequest {
 /*
 CustomPut calls the API and returns the raw response from it.
 
-	  This method allow you to send requests to the Algolia REST API.
+	  This method lets you send requests to the Algolia REST API.
 
 
 	Request can be constructed by NewApiCustomPutRequest with parameters below.
@@ -604,7 +604,7 @@ func (c *APIClient) CustomPutWithHTTPInfo(r ApiCustomPutRequest, opts ...Request
 /*
 CustomPut casts the HTTP response body to a defined struct.
 
-This method allow you to send requests to the Algolia REST API.
+This method lets you send requests to the Algolia REST API.
 
 Request can be constructed by NewApiCustomPutRequest with parameters below.
 
@@ -675,6 +675,9 @@ DeleteUserToken calls the API and returns the raw response from it.
 The deletion is asynchronous, and processed within 48 hours.
 To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
 
+	    Required API Key ACLs:
+	    - deleteObject
+
 	Request can be constructed by NewApiDeleteUserTokenRequest with parameters below.
 	  @param userToken string - User token for which to delete all associated events.
 	@param opts ...RequestOption - Optional parameters for the API call
@@ -717,6 +720,9 @@ DeleteUserToken casts the HTTP response body to a defined struct.
 Deletes all events related to the specified user token from events metrics and analytics.
 The deletion is asynchronous, and processed within 48 hours.
 To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
+
+Required API Key ACLs:
+  - deleteObject
 
 Request can be constructed by NewApiDeleteUserTokenRequest with parameters below.
 
@@ -782,6 +788,9 @@ PushEvents calls the API and returns the raw response from it.
 You can include up to 1,000 events in a single request,
 but the request body must be smaller than 2&nbsp;MB.
 
+	    Required API Key ACLs:
+	    - search
+
 	Request can be constructed by NewApiPushEventsRequest with parameters below.
 	  @param insightsEvents InsightsEvents
 	@param opts ...RequestOption - Optional parameters for the API call
@@ -826,6 +835,9 @@ Sends a list of events to the Insights API.
 
 You can include up to 1,000 events in a single request,
 but the request body must be smaller than 2&nbsp;MB.
+
+Required API Key ACLs:
+  - search
 
 Request can be constructed by NewApiPushEventsRequest with parameters below.
 

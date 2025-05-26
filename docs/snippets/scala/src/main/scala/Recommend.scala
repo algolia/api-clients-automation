@@ -16,7 +16,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 class SnippetRecommendClient {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
-  implicit val formats: Formats = org.json4s.DefaultFormats
+  implicit val formats: Formats = JsonSupport.format
 
   /** Snippet for the batchRecommendRules method.
     *
@@ -28,14 +28,14 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.batchRecommendRules(
-      indexName = "<YOUR_INDEX_NAME>",
-      model = RecommendModels.withName("related-products")
+    val response = Await.result(
+      client.batchRecommendRules(
+        indexName = "<YOUR_INDEX_NAME>",
+        model = RecommendModels.withName("related-products")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -49,13 +49,13 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customDelete[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customDelete[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -69,14 +69,14 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customDelete[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters"))
+    val response = Await.result(
+      client.customDelete[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters"))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -90,13 +90,13 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customGet[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -110,14 +110,14 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customGet[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters with space"))
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters with space"))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -131,22 +131,22 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customGet[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "to be overriden")),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("query", "parameters with space")
-          .withQueryParameter("and an array", Seq("array", "with spaces"))
-          .withHeader("x-header-1", "spaces are left alone")
-          .build()
-      )
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "to be overriden")),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query", "parameters with space")
+            .withQueryParameter("and an array", Seq("array", "with spaces"))
+            .withHeader("x-header-1", "spaces are left alone")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -160,13 +160,13 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -180,15 +180,15 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("body", JString("parameters")))))
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("body", JString("parameters")))))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -202,21 +202,21 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("query", "myQueryParameter")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query", "myQueryParameter")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -230,21 +230,21 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("query2", "myQueryParameter")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query2", "myQueryParameter")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -258,21 +258,21 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -286,21 +286,21 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -314,21 +314,21 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("isItWorking", true)
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("isItWorking", true)
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -342,21 +342,21 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", 2)
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", 2)
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -370,21 +370,21 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", Seq("b and c", "d"))
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq("b and c", "d"))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -398,21 +398,21 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", Seq(true, true, false))
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq(true, true, false))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -426,21 +426,21 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPost[JObject](
-      path = "test/requestOptions",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("facet", JString("filters"))))),
-      requestOptions = Some(
-        RequestOptions
-          .builder()
-          .withQueryParameter("myParam", Seq(1, 2))
-          .build()
-      )
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq(1, 2))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -454,13 +454,13 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPut[JObject](
-      path = "test/minimal"
+    val response = Await.result(
+      client.customPut[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -474,15 +474,15 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.customPut[JObject](
-      path = "test/all",
-      parameters = Some(Map("query" -> "parameters")),
-      body = Some(JObject(List(JField("body", JString("parameters")))))
+    val response = Await.result(
+      client.customPut[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("body", JString("parameters")))))
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -496,15 +496,15 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.deleteRecommendRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      model = RecommendModels.withName("related-products"),
-      objectID = "objectID"
+    val response = Await.result(
+      client.deleteRecommendRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        model = RecommendModels.withName("related-products"),
+        objectID = "objectID"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -518,15 +518,15 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getRecommendRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      model = RecommendModels.withName("related-products"),
-      objectID = "objectID"
+    val response = Await.result(
+      client.getRecommendRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        model = RecommendModels.withName("related-products"),
+        objectID = "objectID"
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -540,15 +540,15 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getRecommendStatus(
-      indexName = "<YOUR_INDEX_NAME>",
-      model = RecommendModels.withName("related-products"),
-      taskID = 12345L
+    val response = Await.result(
+      client.getRecommendStatus(
+        indexName = "<YOUR_INDEX_NAME>",
+        model = RecommendModels.withName("related-products"),
+        taskID = 12345L
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -562,22 +562,22 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getRecommendations(
-      getRecommendationsParams = GetRecommendationsParams(
-        requests = Seq(
-          RelatedQuery(
-            indexName = "<YOUR_INDEX_NAME>",
-            objectID = "objectID",
-            model = RelatedModel.withName("related-products"),
-            threshold = 42.1
+    val response = Await.result(
+      client.getRecommendations(
+        getRecommendationsParams = GetRecommendationsParams(
+          requests = Seq(
+            RelatedQuery(
+              indexName = "<YOUR_INDEX_NAME>",
+              objectID = "objectID",
+              model = RelatedModel.withName("related-products"),
+              threshold = 42.1
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -591,23 +591,23 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getRecommendations(
-      getRecommendationsParams = GetRecommendationsParams(
-        requests = Seq(
-          RelatedQuery(
-            indexName = "<YOUR_INDEX_NAME>",
-            objectID = "Æon Flux",
-            model = RelatedModel.withName("related-products"),
-            threshold = 20.0,
-            maxRecommendations = Some(2)
+    val response = Await.result(
+      client.getRecommendations(
+        getRecommendationsParams = GetRecommendationsParams(
+          requests = Seq(
+            RelatedQuery(
+              indexName = "<YOUR_INDEX_NAME>",
+              objectID = "Æon Flux",
+              model = RelatedModel.withName("related-products"),
+              threshold = 20.0,
+              maxRecommendations = Some(2)
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -621,35 +621,35 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getRecommendations(
-      getRecommendationsParams = GetRecommendationsParams(
-        requests = Seq(
-          RelatedQuery(
-            indexName = "<YOUR_INDEX_NAME>",
-            objectID = "objectID",
-            model = RelatedModel.withName("related-products"),
-            threshold = 42.1,
-            maxRecommendations = Some(10),
-            queryParameters = Some(
-              RecommendSearchParams(
-                query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(FacetFilters("query"))))
-              )
-            ),
-            fallbackParameters = Some(
-              FallbackParams(
-                query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback"))))
+    val response = Await.result(
+      client.getRecommendations(
+        getRecommendationsParams = GetRecommendationsParams(
+          requests = Seq(
+            RelatedQuery(
+              indexName = "<YOUR_INDEX_NAME>",
+              objectID = "objectID",
+              model = RelatedModel.withName("related-products"),
+              threshold = 42.1,
+              maxRecommendations = Some(10),
+              queryParameters = Some(
+                RecommendSearchParams(
+                  query = Some("myQuery"),
+                  facetFilters = Some(FacetFilters(Seq(FacetFilters("query"))))
+                )
+              ),
+              fallbackParameters = Some(
+                FallbackParams(
+                  query = Some("myQuery"),
+                  facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback"))))
+                )
               )
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -663,23 +663,23 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getRecommendations(
-      getRecommendationsParams = GetRecommendationsParams(
-        requests = Seq(
-          TrendingItemsQuery(
-            indexName = "<YOUR_INDEX_NAME>",
-            model = TrendingItemsModel.withName("trending-items"),
-            threshold = 42.1,
-            facetName = Some("facet"),
-            facetValue = Some("value")
+    val response = Await.result(
+      client.getRecommendations(
+        getRecommendationsParams = GetRecommendationsParams(
+          requests = Seq(
+            TrendingItemsQuery(
+              indexName = "<YOUR_INDEX_NAME>",
+              model = TrendingItemsModel.withName("trending-items"),
+              threshold = 42.1,
+              facetName = Some("facet"),
+              facetValue = Some("value")
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -693,36 +693,36 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getRecommendations(
-      getRecommendationsParams = GetRecommendationsParams(
-        requests = Seq(
-          TrendingItemsQuery(
-            indexName = "<YOUR_INDEX_NAME>",
-            model = TrendingItemsModel.withName("trending-items"),
-            threshold = 42.1,
-            maxRecommendations = Some(10),
-            facetName = Some("myFacetName"),
-            facetValue = Some("myFacetValue"),
-            queryParameters = Some(
-              RecommendSearchParams(
-                query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(FacetFilters("query"))))
-              )
-            ),
-            fallbackParameters = Some(
-              FallbackParams(
-                query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback"))))
+    val response = Await.result(
+      client.getRecommendations(
+        getRecommendationsParams = GetRecommendationsParams(
+          requests = Seq(
+            TrendingItemsQuery(
+              indexName = "<YOUR_INDEX_NAME>",
+              model = TrendingItemsModel.withName("trending-items"),
+              threshold = 42.1,
+              maxRecommendations = Some(10),
+              facetName = Some("myFacetName"),
+              facetValue = Some("myFacetValue"),
+              queryParameters = Some(
+                RecommendSearchParams(
+                  query = Some("myQuery"),
+                  facetFilters = Some(FacetFilters(Seq(FacetFilters("query"))))
+                )
+              ),
+              fallbackParameters = Some(
+                FallbackParams(
+                  query = Some("myQuery"),
+                  facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback"))))
+                )
               )
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -736,28 +736,28 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getRecommendations(
-      getRecommendationsParams = GetRecommendationsParams(
-        requests = Seq(
-          RelatedQuery(
-            indexName = "<YOUR_INDEX_NAME>",
-            objectID = "objectID1",
-            model = RelatedModel.withName("related-products"),
-            threshold = 21.7
-          ),
-          RelatedQuery(
-            indexName = "<YOUR_INDEX_NAME>",
-            objectID = "objectID2",
-            model = RelatedModel.withName("related-products"),
-            threshold = 21.7
+    val response = Await.result(
+      client.getRecommendations(
+        getRecommendationsParams = GetRecommendationsParams(
+          requests = Seq(
+            RelatedQuery(
+              indexName = "<YOUR_INDEX_NAME>",
+              objectID = "objectID1",
+              model = RelatedModel.withName("related-products"),
+              threshold = 21.7
+            ),
+            RelatedQuery(
+              indexName = "<YOUR_INDEX_NAME>",
+              objectID = "objectID2",
+              model = RelatedModel.withName("related-products"),
+              threshold = 21.7
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -771,54 +771,54 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getRecommendations(
-      getRecommendationsParams = GetRecommendationsParams(
-        requests = Seq(
-          RelatedQuery(
-            indexName = "<YOUR_INDEX_NAME>",
-            objectID = "objectID1",
-            model = RelatedModel.withName("related-products"),
-            threshold = 21.7,
-            maxRecommendations = Some(10),
-            queryParameters = Some(
-              RecommendSearchParams(
-                query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(FacetFilters("query1"))))
+    val response = Await.result(
+      client.getRecommendations(
+        getRecommendationsParams = GetRecommendationsParams(
+          requests = Seq(
+            RelatedQuery(
+              indexName = "<YOUR_INDEX_NAME>",
+              objectID = "objectID1",
+              model = RelatedModel.withName("related-products"),
+              threshold = 21.7,
+              maxRecommendations = Some(10),
+              queryParameters = Some(
+                RecommendSearchParams(
+                  query = Some("myQuery"),
+                  facetFilters = Some(FacetFilters(Seq(FacetFilters("query1"))))
+                )
+              ),
+              fallbackParameters = Some(
+                FallbackParams(
+                  query = Some("myQuery"),
+                  facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback1"))))
+                )
               )
             ),
-            fallbackParameters = Some(
-              FallbackParams(
-                query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback1"))))
-              )
-            )
-          ),
-          RelatedQuery(
-            indexName = "<YOUR_INDEX_NAME>",
-            objectID = "objectID2",
-            model = RelatedModel.withName("related-products"),
-            threshold = 21.7,
-            maxRecommendations = Some(10),
-            queryParameters = Some(
-              RecommendSearchParams(
-                query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(FacetFilters("query2"))))
-              )
-            ),
-            fallbackParameters = Some(
-              FallbackParams(
-                query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback2"))))
+            RelatedQuery(
+              indexName = "<YOUR_INDEX_NAME>",
+              objectID = "objectID2",
+              model = RelatedModel.withName("related-products"),
+              threshold = 21.7,
+              maxRecommendations = Some(10),
+              queryParameters = Some(
+                RecommendSearchParams(
+                  query = Some("myQuery"),
+                  facetFilters = Some(FacetFilters(Seq(FacetFilters("query2"))))
+                )
+              ),
+              fallbackParameters = Some(
+                FallbackParams(
+                  query = Some("myQuery"),
+                  facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback2"))))
+                )
               )
             )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -832,22 +832,22 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.getRecommendations(
-      getRecommendationsParams = GetRecommendationsParams(
-        requests = Seq(
-          BoughtTogetherQuery(
-            indexName = "<YOUR_INDEX_NAME>",
-            objectID = "objectID1",
-            model = FbtModel.withName("bought-together"),
-            threshold = 42.7
+    val response = Await.result(
+      client.getRecommendations(
+        getRecommendationsParams = GetRecommendationsParams(
+          requests = Seq(
+            BoughtTogetherQuery(
+              indexName = "<YOUR_INDEX_NAME>",
+              objectID = "objectID1",
+              model = FbtModel.withName("bought-together"),
+              threshold = 42.7
+            )
           )
         )
-      )
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -861,14 +861,30 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = client.searchRecommendRules(
-      indexName = "<YOUR_INDEX_NAME>",
-      model = RecommendModels.withName("related-products")
+    val response = Await.result(
+      client.searchRecommendRules(
+        indexName = "<YOUR_INDEX_NAME>",
+        model = RecommendModels.withName("related-products")
+      ),
+      Duration(100, "sec")
     )
-
     // >LOG
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the setClientApiKey method.
+    *
+    * switch API key
+    */
+  def snippetForRecommendClientSetClientApiKey(): Unit = {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    client.setClientApiKey(
+      apiKey = "updated-api-key"
+    ) // >LOG
     // SEPARATOR<
   }
 

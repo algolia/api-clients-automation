@@ -114,6 +114,7 @@ public class IngestionClient(
 
   /**
    * Creates a new task using the v1 endpoint, please use `createTask` instead.
+   * @deprecated
    * @param taskCreate Request body for creating a task.
    * @param requestOptions additional request configuration.
    */
@@ -147,7 +148,7 @@ public class IngestionClient(
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    * @param path Path of the endpoint, anything after \"/1\" must be specified.
    * @param parameters Query parameters to apply to the current query.
    * @param requestOptions additional request configuration.
@@ -168,7 +169,7 @@ public class IngestionClient(
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    * @param path Path of the endpoint, anything after \"/1\" must be specified.
    * @param parameters Query parameters to apply to the current query.
    * @param requestOptions additional request configuration.
@@ -189,7 +190,7 @@ public class IngestionClient(
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    * @param path Path of the endpoint, anything after \"/1\" must be specified.
    * @param parameters Query parameters to apply to the current query.
    * @param body Parameters to send with the custom request.
@@ -212,7 +213,7 @@ public class IngestionClient(
   }
 
   /**
-   * This method allow you to send requests to the Algolia REST API.
+   * This method lets you send requests to the Algolia REST API.
    * @param path Path of the endpoint, anything after \"/1\" must be specified.
    * @param parameters Query parameters to apply to the current query.
    * @param body Parameters to send with the custom request.
@@ -319,6 +320,7 @@ public class IngestionClient(
 
   /**
    * Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+   * @deprecated
    * @param taskID Unique identifier of a task.
    * @param requestOptions additional request configuration.
    */
@@ -380,6 +382,7 @@ public class IngestionClient(
    *   - addObject
    *   - deleteIndex
    *   - editSettings
+   * @deprecated
    * @param taskID Unique identifier of a task.
    * @param requestOptions additional request configuration.
    */
@@ -424,6 +427,7 @@ public class IngestionClient(
    *   - addObject
    *   - deleteIndex
    *   - editSettings
+   * @deprecated
    * @param taskID Unique identifier of a task.
    * @param requestOptions additional request configuration.
    */
@@ -580,6 +584,7 @@ public class IngestionClient(
    *   - addObject
    *   - deleteIndex
    *   - editSettings
+   * @deprecated
    * @param taskID Unique identifier of a task.
    * @param requestOptions additional request configuration.
    */
@@ -852,6 +857,7 @@ public class IngestionClient(
    *   - addObject
    *   - deleteIndex
    *   - editSettings
+   * @deprecated
    * @param itemsPerPage Number of items per page. (default to 10)
    * @param page Page number of the paginated API response.
    * @param action Actions for filtering the list of tasks.
@@ -916,14 +922,46 @@ public class IngestionClient(
   }
 
   /**
-   * Push a `batch` request payload through the Pipeline. You can check the status of task pushes with the observability endpoints.
+   * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `pushTask`, but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error will be returned.
+   *
+   * Required API Key ACLs:
+   *   - addObject
+   *   - deleteIndex
+   *   - editSettings
+   * @param indexName Name of the index on which to perform the operation.
+   * @param pushTaskPayload
+   * @param watch When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun push(indexName: String, pushTaskPayload: PushTaskPayload, watch: Boolean? = null, requestOptions: RequestOptions? = null): WatchResponse {
+    require(indexName.isNotBlank()) { "Parameter `indexName` is required when calling `push`." }
+    val requestConfig = RequestConfig(
+      method = RequestMethod.POST,
+      path = listOf("1", "push", "$indexName"),
+      query = buildMap {
+        watch?.let { put("watch", it) }
+      },
+      body = pushTaskPayload,
+    )
+    return requester.execute(
+      requestConfig = requestConfig,
+      requestOptions = RequestOptions(
+        readTimeout = 180000.milliseconds,
+        writeTimeout = 180000.milliseconds,
+        connectTimeout = 180000.milliseconds,
+      ) + requestOptions,
+    )
+  }
+
+  /**
+   * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target the same `indexName`.
    *
    * Required API Key ACLs:
    *   - addObject
    *   - deleteIndex
    *   - editSettings
    * @param taskID Unique identifier of a task.
-   * @param pushTaskPayload Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+   * @param pushTaskPayload
    * @param watch When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
    * @param requestOptions additional request configuration.
    */
@@ -1000,6 +1038,7 @@ public class IngestionClient(
    *   - addObject
    *   - deleteIndex
    *   - editSettings
+   * @deprecated
    * @param taskID Unique identifier of a task.
    * @param requestOptions additional request configuration.
    */
@@ -1110,6 +1149,7 @@ public class IngestionClient(
    *   - addObject
    *   - deleteIndex
    *   - editSettings
+   * @deprecated
    * @param taskSearch
    * @param requestOptions additional request configuration.
    */
@@ -1312,6 +1352,7 @@ public class IngestionClient(
 
   /**
    * Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+   * @deprecated
    * @param taskID Unique identifier of a task.
    * @param taskUpdate
    * @param requestOptions additional request configuration.

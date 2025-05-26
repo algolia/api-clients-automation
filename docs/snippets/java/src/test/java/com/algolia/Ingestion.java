@@ -60,7 +60,7 @@ class SnippetIngestionClient {
       new DestinationCreate()
         .setType(DestinationType.SEARCH)
         .setName("destinationName")
-        .setInput(new DestinationIndexName().setIndexName("<YOUR_INDEX_NAME>"))
+        .setInput(new DestinationInput().setIndexName("<YOUR_INDEX_NAME>"))
         .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
     );
     // >LOG
@@ -80,7 +80,7 @@ class SnippetIngestionClient {
       new DestinationCreate()
         .setType(DestinationType.SEARCH)
         .setName("destinationName")
-        .setInput(new DestinationIndexName().setIndexName("<YOUR_INDEX_NAME>"))
+        .setInput(new DestinationInput().setIndexName("<YOUR_INDEX_NAME>"))
         .setTransformationIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
     );
     // >LOG
@@ -106,6 +106,7 @@ class SnippetIngestionClient {
             .setLocales(Arrays.asList("de"))
             .setUrl("http://commercetools.com")
             .setProjectKey("keyID")
+            .setProductQueryPredicate("masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))")
         )
         .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
     );
@@ -1084,6 +1085,55 @@ class SnippetIngestionClient {
 
     // Call the API
     client.listTransformations();
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the push method.
+  //
+  // global push
+  void snippetForPush() throws Exception {
+    // >SEPARATOR push global push
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.push(
+      "<YOUR_INDEX_NAME>",
+      new PushTaskPayload()
+        .setAction(Action.ADD_OBJECT)
+        .setRecords(
+          Arrays.asList(
+            new PushTaskRecords().setAdditionalProperty("key", "bar").setAdditionalProperty("foo", "1").setObjectID("o"),
+            new PushTaskRecords().setAdditionalProperty("key", "baz").setAdditionalProperty("foo", "2").setObjectID("k")
+          )
+        )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the push method.
+  //
+  // global push with watch mode
+  void snippetForPush1() throws Exception {
+    // >SEPARATOR push global push with watch mode
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.push(
+      "<YOUR_INDEX_NAME>",
+      new PushTaskPayload()
+        .setAction(Action.ADD_OBJECT)
+        .setRecords(
+          Arrays.asList(
+            new PushTaskRecords().setAdditionalProperty("key", "bar").setAdditionalProperty("foo", "1").setObjectID("o"),
+            new PushTaskRecords().setAdditionalProperty("key", "baz").setAdditionalProperty("foo", "2").setObjectID("k")
+          )
+        ),
+      true
+    );
     // >LOG
     // SEPARATOR<
   }

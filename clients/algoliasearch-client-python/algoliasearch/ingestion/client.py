@@ -600,7 +600,7 @@ class IngestionClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -647,7 +647,7 @@ class IngestionClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> object:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -677,7 +677,7 @@ class IngestionClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -722,7 +722,7 @@ class IngestionClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> object:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -754,7 +754,7 @@ class IngestionClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -810,7 +810,7 @@ class IngestionClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> object:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -846,7 +846,7 @@ class IngestionClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -902,7 +902,7 @@ class IngestionClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> object:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -2367,7 +2367,7 @@ class IngestionClient:
         status: Union[
             list[str],
             Annotated[
-                Optional[List[EventStatus]],
+                Optional[List[Optional[EventStatus]]],
                 Field(description="Event status for filtering the list of task runs."),
             ],
         ] = None,
@@ -2492,7 +2492,7 @@ class IngestionClient:
         status: Union[
             list[str],
             Annotated[
-                Optional[List[EventStatus]],
+                Optional[List[Optional[EventStatus]]],
                 Field(description="Event status for filtering the list of task runs."),
             ],
         ] = None,
@@ -3566,20 +3566,13 @@ class IngestionClient:
         )
         return resp.deserialize(ListTransformationsResponse, resp.raw_data)
 
-    async def push_task_with_http_info(
+    async def push_with_http_info(
         self,
-        task_id: Annotated[
-            StrictStr, Field(description="Unique identifier of a task.")
+        index_name: Annotated[
+            StrictStr,
+            Field(description="Name of the index on which to perform the operation."),
         ],
-        push_task_payload: Union[
-            Annotated[
-                PushTaskPayload,
-                Field(
-                    description="Request body of a Search API `batch` request that will be pushed in the Connectors pipeline."
-                ),
-            ],
-            dict[str, Any],
-        ],
+        push_task_payload: Union[PushTaskPayload, dict[str, Any]],
         watch: Annotated[
             Optional[StrictBool],
             Field(
@@ -3589,7 +3582,111 @@ class IngestionClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Push a `batch` request payload through the Pipeline. You can check the status of task pushes with the observability endpoints.
+        Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `pushTask`, but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error will be returned.
+
+        Required API Key ACLs:
+          - addObject
+                  - deleteIndex
+                  - editSettings
+
+        :param index_name: Name of the index on which to perform the operation. (required)
+        :type index_name: str
+        :param push_task_payload: (required)
+        :type push_task_payload: PushTaskPayload
+        :param watch: When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+        :type watch: bool
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the raw algoliasearch 'APIResponse' object.
+        """
+
+        if index_name is None:
+            raise ValueError("Parameter `index_name` is required when calling `push`.")
+
+        if push_task_payload is None:
+            raise ValueError(
+                "Parameter `push_task_payload` is required when calling `push`."
+            )
+
+        _query_parameters: Dict[str, Any] = {}
+
+        if watch is not None:
+            _query_parameters["watch"] = watch
+
+        _data = {}
+        if push_task_payload is not None:
+            _data = push_task_payload
+
+        return await self._transporter.request(
+            verb=Verb.POST,
+            path="/1/push/{indexName}".replace(
+                "{indexName}", quote(str(index_name), safe="")
+            ),
+            request_options=self._request_options.merge(
+                query_parameters=_query_parameters,
+                data=dumps(body_serializer(_data)),
+                timeouts={
+                    "read": 180000,
+                    "write": 180000,
+                    "connect": 180000,
+                },
+                user_request_options=request_options,
+            ),
+            use_read_transporter=False,
+        )
+
+    async def push(
+        self,
+        index_name: Annotated[
+            StrictStr,
+            Field(description="Name of the index on which to perform the operation."),
+        ],
+        push_task_payload: Union[PushTaskPayload, dict[str, Any]],
+        watch: Annotated[
+            Optional[StrictBool],
+            Field(
+                description="When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding."
+            ),
+        ] = None,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> WatchResponse:
+        """
+        Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `pushTask`, but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error will be returned.
+
+        Required API Key ACLs:
+          - addObject
+                  - deleteIndex
+                  - editSettings
+
+        :param index_name: Name of the index on which to perform the operation. (required)
+        :type index_name: str
+        :param push_task_payload: (required)
+        :type push_task_payload: PushTaskPayload
+        :param watch: When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+        :type watch: bool
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the deserialized response in a 'WatchResponse' result object.
+        """
+        resp = await self.push_with_http_info(
+            index_name, push_task_payload, watch, request_options
+        )
+        return resp.deserialize(WatchResponse, resp.raw_data)
+
+    async def push_task_with_http_info(
+        self,
+        task_id: Annotated[
+            StrictStr, Field(description="Unique identifier of a task.")
+        ],
+        push_task_payload: Union[PushTaskPayload, dict[str, Any]],
+        watch: Annotated[
+            Optional[StrictBool],
+            Field(
+                description="When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding."
+            ),
+        ] = None,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> ApiResponse[str]:
+        """
+        Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target the same `indexName`.
 
         Required API Key ACLs:
           - addObject
@@ -3598,7 +3695,7 @@ class IngestionClient:
 
         :param task_id: Unique identifier of a task. (required)
         :type task_id: str
-        :param push_task_payload: Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
+        :param push_task_payload: (required)
         :type push_task_payload: PushTaskPayload
         :param watch: When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
         :type watch: bool
@@ -3648,15 +3745,7 @@ class IngestionClient:
         task_id: Annotated[
             StrictStr, Field(description="Unique identifier of a task.")
         ],
-        push_task_payload: Union[
-            Annotated[
-                PushTaskPayload,
-                Field(
-                    description="Request body of a Search API `batch` request that will be pushed in the Connectors pipeline."
-                ),
-            ],
-            dict[str, Any],
-        ],
+        push_task_payload: Union[PushTaskPayload, dict[str, Any]],
         watch: Annotated[
             Optional[StrictBool],
             Field(
@@ -3666,7 +3755,7 @@ class IngestionClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> WatchResponse:
         """
-        Push a `batch` request payload through the Pipeline. You can check the status of task pushes with the observability endpoints.
+        Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target the same `indexName`.
 
         Required API Key ACLs:
           - addObject
@@ -3675,7 +3764,7 @@ class IngestionClient:
 
         :param task_id: Unique identifier of a task. (required)
         :type task_id: str
-        :param push_task_payload: Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
+        :param push_task_payload: (required)
         :type push_task_payload: PushTaskPayload
         :param watch: When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
         :type watch: bool
@@ -5518,7 +5607,7 @@ class IngestionClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -5565,7 +5654,7 @@ class IngestionClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> object:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -5593,7 +5682,7 @@ class IngestionClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -5638,7 +5727,7 @@ class IngestionClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> object:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -5670,7 +5759,7 @@ class IngestionClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -5726,7 +5815,7 @@ class IngestionClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> object:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -5760,7 +5849,7 @@ class IngestionClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -5816,7 +5905,7 @@ class IngestionClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> object:
         """
-        This method allow you to send requests to the Algolia REST API.
+        This method lets you send requests to the Algolia REST API.
 
 
         :param path: Path of the endpoint, anything after \"/1\" must be specified. (required)
@@ -7275,7 +7364,7 @@ class IngestionClientSync:
         status: Union[
             list[str],
             Annotated[
-                Optional[List[EventStatus]],
+                Optional[List[Optional[EventStatus]]],
                 Field(description="Event status for filtering the list of task runs."),
             ],
         ] = None,
@@ -7400,7 +7489,7 @@ class IngestionClientSync:
         status: Union[
             list[str],
             Annotated[
-                Optional[List[EventStatus]],
+                Optional[List[Optional[EventStatus]]],
                 Field(description="Event status for filtering the list of task runs."),
             ],
         ] = None,
@@ -8474,20 +8563,13 @@ class IngestionClientSync:
         )
         return resp.deserialize(ListTransformationsResponse, resp.raw_data)
 
-    def push_task_with_http_info(
+    def push_with_http_info(
         self,
-        task_id: Annotated[
-            StrictStr, Field(description="Unique identifier of a task.")
+        index_name: Annotated[
+            StrictStr,
+            Field(description="Name of the index on which to perform the operation."),
         ],
-        push_task_payload: Union[
-            Annotated[
-                PushTaskPayload,
-                Field(
-                    description="Request body of a Search API `batch` request that will be pushed in the Connectors pipeline."
-                ),
-            ],
-            dict[str, Any],
-        ],
+        push_task_payload: Union[PushTaskPayload, dict[str, Any]],
         watch: Annotated[
             Optional[StrictBool],
             Field(
@@ -8497,7 +8579,111 @@ class IngestionClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Push a `batch` request payload through the Pipeline. You can check the status of task pushes with the observability endpoints.
+        Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `pushTask`, but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error will be returned.
+
+        Required API Key ACLs:
+          - addObject
+                  - deleteIndex
+                  - editSettings
+
+        :param index_name: Name of the index on which to perform the operation. (required)
+        :type index_name: str
+        :param push_task_payload: (required)
+        :type push_task_payload: PushTaskPayload
+        :param watch: When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+        :type watch: bool
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the raw algoliasearch 'APIResponse' object.
+        """
+
+        if index_name is None:
+            raise ValueError("Parameter `index_name` is required when calling `push`.")
+
+        if push_task_payload is None:
+            raise ValueError(
+                "Parameter `push_task_payload` is required when calling `push`."
+            )
+
+        _query_parameters: Dict[str, Any] = {}
+
+        if watch is not None:
+            _query_parameters["watch"] = watch
+
+        _data = {}
+        if push_task_payload is not None:
+            _data = push_task_payload
+
+        return self._transporter.request(
+            verb=Verb.POST,
+            path="/1/push/{indexName}".replace(
+                "{indexName}", quote(str(index_name), safe="")
+            ),
+            request_options=self._request_options.merge(
+                query_parameters=_query_parameters,
+                data=dumps(body_serializer(_data)),
+                timeouts={
+                    "read": 180000,
+                    "write": 180000,
+                    "connect": 180000,
+                },
+                user_request_options=request_options,
+            ),
+            use_read_transporter=False,
+        )
+
+    def push(
+        self,
+        index_name: Annotated[
+            StrictStr,
+            Field(description="Name of the index on which to perform the operation."),
+        ],
+        push_task_payload: Union[PushTaskPayload, dict[str, Any]],
+        watch: Annotated[
+            Optional[StrictBool],
+            Field(
+                description="When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding."
+            ),
+        ] = None,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> WatchResponse:
+        """
+        Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `pushTask`, but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error will be returned.
+
+        Required API Key ACLs:
+          - addObject
+                  - deleteIndex
+                  - editSettings
+
+        :param index_name: Name of the index on which to perform the operation. (required)
+        :type index_name: str
+        :param push_task_payload: (required)
+        :type push_task_payload: PushTaskPayload
+        :param watch: When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+        :type watch: bool
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns the deserialized response in a 'WatchResponse' result object.
+        """
+        resp = self.push_with_http_info(
+            index_name, push_task_payload, watch, request_options
+        )
+        return resp.deserialize(WatchResponse, resp.raw_data)
+
+    def push_task_with_http_info(
+        self,
+        task_id: Annotated[
+            StrictStr, Field(description="Unique identifier of a task.")
+        ],
+        push_task_payload: Union[PushTaskPayload, dict[str, Any]],
+        watch: Annotated[
+            Optional[StrictBool],
+            Field(
+                description="When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding."
+            ),
+        ] = None,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> ApiResponse[str]:
+        """
+        Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target the same `indexName`.
 
         Required API Key ACLs:
           - addObject
@@ -8506,7 +8692,7 @@ class IngestionClientSync:
 
         :param task_id: Unique identifier of a task. (required)
         :type task_id: str
-        :param push_task_payload: Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
+        :param push_task_payload: (required)
         :type push_task_payload: PushTaskPayload
         :param watch: When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
         :type watch: bool
@@ -8556,15 +8742,7 @@ class IngestionClientSync:
         task_id: Annotated[
             StrictStr, Field(description="Unique identifier of a task.")
         ],
-        push_task_payload: Union[
-            Annotated[
-                PushTaskPayload,
-                Field(
-                    description="Request body of a Search API `batch` request that will be pushed in the Connectors pipeline."
-                ),
-            ],
-            dict[str, Any],
-        ],
+        push_task_payload: Union[PushTaskPayload, dict[str, Any]],
         watch: Annotated[
             Optional[StrictBool],
             Field(
@@ -8574,7 +8752,7 @@ class IngestionClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> WatchResponse:
         """
-        Push a `batch` request payload through the Pipeline. You can check the status of task pushes with the observability endpoints.
+        Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target the same `indexName`.
 
         Required API Key ACLs:
           - addObject
@@ -8583,7 +8761,7 @@ class IngestionClientSync:
 
         :param task_id: Unique identifier of a task. (required)
         :type task_id: str
-        :param push_task_payload: Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
+        :param push_task_payload: (required)
         :type push_task_payload: PushTaskPayload
         :param watch: When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
         :type watch: bool

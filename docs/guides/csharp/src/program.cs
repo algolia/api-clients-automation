@@ -1,4 +1,6 @@
-public class Program
+namespace Algolia;
+
+public static class Program
 {
   public static void Main() { }
 }

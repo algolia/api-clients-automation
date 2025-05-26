@@ -87,7 +87,7 @@ public class IngestionClientRequestTests
       {
         Type = Enum.Parse<DestinationType>("Search"),
         Name = "destinationName",
-        Input = new DestinationInput(new DestinationIndexName { IndexName = "full_name______" }),
+        Input = new DestinationInput { IndexName = "full_name______" },
         AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       }
     );
@@ -110,7 +110,7 @@ public class IngestionClientRequestTests
       {
         Type = Enum.Parse<DestinationType>("Search"),
         Name = "destinationName",
-        Input = new DestinationInput(new DestinationIndexName { IndexName = "full_name______" }),
+        Input = new DestinationInput { IndexName = "full_name______" },
         TransformationIDs = new List<string> { "6c02aeb1-775e-418e-870b-1faccd4b2c0f" },
       }
     );
@@ -140,6 +140,8 @@ public class IngestionClientRequestTests
             Locales = new List<string> { "de" },
             Url = "http://commercetools.com",
             ProjectKey = "keyID",
+            ProductQueryPredicate =
+              "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))",
           }
         ),
         AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -150,7 +152,7 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/sources", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}",
+      "{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\",\"productQueryPredicate\":\"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -1211,6 +1213,104 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/transformations", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
+  }
+
+  [Fact(DisplayName = "global push")]
+  public async Task PushTest()
+  {
+    await client.PushAsync(
+      "foo",
+      new PushTaskPayload
+      {
+        Action = Enum.Parse<Action>("AddObject"),
+        Records = new List<PushTaskRecords>
+        {
+          new PushTaskRecords
+          {
+            ObjectID = "o",
+            AdditionalProperties = new Dictionary<string, object>
+            {
+              { "key", "bar" },
+              { "foo", "1" },
+            },
+          },
+          new PushTaskRecords
+          {
+            ObjectID = "k",
+            AdditionalProperties = new Dictionary<string, object>
+            {
+              { "key", "baz" },
+              { "foo", "2" },
+            },
+          },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/push/foo", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "global push with watch mode")]
+  public async Task PushTest1()
+  {
+    await client.PushAsync(
+      "bar",
+      new PushTaskPayload
+      {
+        Action = Enum.Parse<Action>("AddObject"),
+        Records = new List<PushTaskRecords>
+        {
+          new PushTaskRecords
+          {
+            ObjectID = "o",
+            AdditionalProperties = new Dictionary<string, object>
+            {
+              { "key", "bar" },
+              { "foo", "1" },
+            },
+          },
+          new PushTaskRecords
+          {
+            ObjectID = "k",
+            AdditionalProperties = new Dictionary<string, object>
+            {
+              { "key", "baz" },
+              { "foo", "2" },
+            },
+          },
+        },
+      },
+      true
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/push/bar", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"watch\":\"true\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
   }
 
   [Fact(DisplayName = "pushTask")]
