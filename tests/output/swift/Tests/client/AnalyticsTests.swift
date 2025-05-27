@@ -104,8 +104,7 @@ final class AnalyticsClientClientTests: XCTestCase {
             appID: "test-app-id",
             apiKey: "test-api-key",
             region: Region(rawValue: "us"),
-            hosts: [RetryableHost(url: URL(
-                string: "http://" +
+            hosts: [RetryableHost(url: URL(string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
                     ":6683"
             )!)]

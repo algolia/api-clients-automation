@@ -8244,11 +8244,13 @@
           },
           "dataSize": {
             "type": "integer",
+            "format": "int64",
             "description": "Number of bytes of the index in minified format.",
             "example": 48450
           },
           "fileSize": {
             "type": "integer",
+            "format": "int64",
             "description": "Number of bytes of the index binary file.",
             "example": 112927
           },

@@ -229,6 +229,56 @@
         }
       }
     },
+    "/1/push/{indexName}": {
+      "post": {
+        "summary": "Pushes records to be transformed through the Pipeline, directly to an index",
+        "description": "Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task.\nIf you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records.\nThis method is similar to `pushTask`, but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error will be returned.\n",
+        "operationId": "push",
+        "x-acl": [
+          "addObject",
+          "deleteIndex",
+          "editSettings"
+        ],
+        "x-timeouts": {
+          "connect": 180000,
+          "read": 180000,
+          "write": 180000
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IndexName"
+          },
+          {
+            "$ref": "#/components/parameters/watch"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PushTaskPayload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WatchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
     "/1/authentications": {
       "get": {
         "tags": [
@@ -1517,8 +1567,8 @@
         "tags": [
           "tasks"
         ],
-        "summary": "Push a `batch` request payload through the Pipeline",
-        "description": "Push a `batch` request payload through the Pipeline. You can check the status of task pushes with the observability endpoints.",
+        "summary": "Pushes records to be transformed through the Pipeline, directly to an index",
+        "description": "Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task.\nIf you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records.\nThis method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target the same `indexName`.\n",
         "operationId": "pushTask",
         "x-acl": [
           "addObject",
@@ -1535,47 +1585,14 @@
             "$ref": "#/components/parameters/pathTaskID"
           },
           {
-            "name": "watch",
-            "in": "query",
-            "description": "When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.",
-            "required": false,
-            "schema": {
-              "type": "boolean"
-            }
+            "$ref": "#/components/parameters/watch"
           }
         ],
         "requestBody": {
-          "description": "Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.",
           "content": {
             "application/json": {
               "schema": {
-                "title": "pushTaskPayload",
-                "type": "object",
-                "properties": {
-                  "action": {
-                    "$ref": "#/components/schemas/action"
-                  },
-                  "records": {
-                    "type": "array",
-                    "items": {
-                      "title": "pushTaskRecords",
-                      "type": "object",
-                      "additionalProperties": true,
-                      "required": [
-                        "objectID"
-                      ],
-                      "properties": {
-                        "objectID": {
-                          "$ref": "#/components/schemas/objectID"
-                        }
-                      }
-                    }
-                  }
-                },
-                "required": [
-                  "action",
-                  "records"
-                ]
+                "$ref": "#/components/schemas/PushTaskPayload"
               }
             }
           },
@@ -2663,6 +2680,25 @@
           "additionalProperties": true
         }
       },
+      "IndexName": {
+        "name": "indexName",
+        "in": "path",
+        "description": "Name of the index on which to perform the operation.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "ALGOLIA_INDEX_NAME"
+        }
+      },
+      "watch": {
+        "name": "watch",
+        "in": "query",
+        "description": "When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.",
+        "required": false,
+        "schema": {
+          "type": "boolean"
+        }
+      },
       "itemsPerPage": {
         "name": "itemsPerPage",
         "in": "query",
@@ -3078,6 +3114,179 @@
           }
         }
       },
+      "action": {
+        "type": "string",
+        "enum": [
+          "addObject",
+          "updateObject",
+          "partialUpdateObject",
+          "partialUpdateObjectNoCreate"
+        ],
+        "description": "Type of indexing operation."
+      },
+      "objectID": {
+        "type": "string",
+        "description": "Unique record identifier.",
+        "example": "test-record-123"
+      },
+      "PushTaskPayload": {
+        "title": "pushTaskPayload",
+        "type": "object",
+        "properties": {
+          "action": {
+            "$ref": "#/components/schemas/action"
+          },
+          "records": {
+            "type": "array",
+            "items": {
+              "title": "pushTaskRecords",
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "objectID"
+              ],
+              "properties": {
+                "objectID": {
+                  "$ref": "#/components/schemas/objectID"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "action",
+          "records"
+        ]
+      },
+      "runID": {
+        "type": "string",
+        "description": "Universally unique identifier (UUID) of a task run.",
+        "example": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+      },
+      "eventID": {
+        "type": "string",
+        "description": "Universally unique identifier (UUID) of an event.",
+        "example": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+      },
+      "EventStatus": {
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "created",
+              "started",
+              "retried",
+              "failed",
+              "succeeded",
+              "critical"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "EventType": {
+        "type": "string",
+        "enum": [
+          "fetch",
+          "record",
+          "log",
+          "transform"
+        ]
+      },
+      "publishedAt": {
+        "type": "string",
+        "description": "Date of publish RFC 3339 format."
+      },
+      "Event": {
+        "type": "object",
+        "description": "An event describe a step of the task execution flow..",
+        "additionalProperties": false,
+        "properties": {
+          "eventID": {
+            "$ref": "#/components/schemas/eventID"
+          },
+          "runID": {
+            "$ref": "#/components/schemas/runID"
+          },
+          "status": {
+            "$ref": "#/components/schemas/EventStatus"
+          },
+          "type": {
+            "$ref": "#/components/schemas/EventType"
+          },
+          "batchSize": {
+            "type": "integer",
+            "description": "The extracted record batch size.",
+            "example": 10,
+            "minimum": 0,
+            "multipleOf": 1
+          },
+          "data": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": true
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "publishedAt": {
+            "$ref": "#/components/schemas/publishedAt"
+          }
+        },
+        "required": [
+          "eventID",
+          "runID",
+          "status",
+          "type",
+          "batchSize",
+          "publishedAt"
+        ]
+      },
+      "createdAt": {
+        "type": "string",
+        "description": "Date of creation in RFC 3339 format."
+      },
+      "WatchResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "runID": {
+            "$ref": "#/components/schemas/runID"
+          },
+          "eventID": {
+            "$ref": "#/components/schemas/eventID"
+          },
+          "data": {
+            "type": "array",
+            "description": "when used with discovering or validating sources, the sampled data of your source is returned.",
+            "items": {
+              "type": "object"
+            }
+          },
+          "events": {
+            "description": "in case of error, observability events will be added to the response, if any.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Event"
+            }
+          },
+          "message": {
+            "description": "a message describing the outcome of a validate run.",
+            "type": "string"
+          },
+          "createdAt": {
+            "$ref": "#/components/schemas/createdAt"
+          }
+        },
+        "required": [
+          "runID"
+        ]
+      },
       "itemsPerPage": {
         "type": "integer",
         "description": "Number of items per page.",
@@ -3317,10 +3526,6 @@
             "$ref": "#/components/schemas/AuthSecrets"
           }
         ]
-      },
-      "createdAt": {
-        "type": "string",
-        "description": "Date of creation in RFC 3339 format."
       },
       "updatedAt": {
         "type": "string",
@@ -4414,125 +4619,6 @@
           "createdAt"
         ]
       },
-      "runID": {
-        "type": "string",
-        "description": "Universally unique identifier (UUID) of a task run.",
-        "example": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-      },
-      "eventID": {
-        "type": "string",
-        "description": "Universally unique identifier (UUID) of an event.",
-        "example": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-      },
-      "EventStatus": {
-        "oneOf": [
-          {
-            "type": "string",
-            "enum": [
-              "created",
-              "started",
-              "retried",
-              "failed",
-              "succeeded",
-              "critical"
-            ]
-          },
-          {
-            "type": "null"
-          }
-        ]
-      },
-      "EventType": {
-        "type": "string",
-        "enum": [
-          "fetch",
-          "record",
-          "log",
-          "transform"
-        ]
-      },
-      "publishedAt": {
-        "type": "string",
-        "description": "Date of publish RFC 3339 format."
-      },
-      "Event": {
-        "type": "object",
-        "description": "An event describe a step of the task execution flow..",
-        "additionalProperties": false,
-        "properties": {
-          "eventID": {
-            "$ref": "#/components/schemas/eventID"
-          },
-          "runID": {
-            "$ref": "#/components/schemas/runID"
-          },
-          "status": {
-            "$ref": "#/components/schemas/EventStatus"
-          },
-          "type": {
-            "$ref": "#/components/schemas/EventType"
-          },
-          "batchSize": {
-            "type": "integer",
-            "description": "The extracted record batch size.",
-            "example": 10,
-            "minimum": 0,
-            "multipleOf": 1
-          },
-          "data": {
-            "oneOf": [
-              {
-                "type": "object",
-                "additionalProperties": true
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "publishedAt": {
-            "$ref": "#/components/schemas/publishedAt"
-          }
-        },
-        "required": [
-          "eventID",
-          "runID",
-          "status",
-          "type",
-          "batchSize",
-          "publishedAt"
-        ]
-      },
-      "WatchResponse": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "runID": {
-            "$ref": "#/components/schemas/runID"
-          },
-          "data": {
-            "type": "array",
-            "description": "when used with discovering or validating sources, the sampled data of your source is returned.",
-            "items": {
-              "type": "object"
-            }
-          },
-          "events": {
-            "description": "in case of error, observability events will be added to the response, if any.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Event"
-            }
-          },
-          "message": {
-            "description": "a message describing the outcome of a validate run.",
-            "type": "string"
-          }
-        },
-        "required": [
-          "runID"
-        ]
-      },
       "SourceSearch": {
         "type": "object",
         "additionalProperties": false,
@@ -5236,24 +5322,6 @@
           "runID",
           "createdAt"
         ]
-      },
-      "action": {
-        "type": "string",
-        "enum": [
-          "addObject",
-          "updateObject",
-          "partialUpdateObject",
-          "partialUpdateObjectNoCreate",
-          "deleteObject",
-          "delete",
-          "clear"
-        ],
-        "description": "Type of indexing operation."
-      },
-      "objectID": {
-        "type": "string",
-        "description": "Unique record identifier.",
-        "example": "test-record-123"
       },
       "OnDemandTriggerType": {
         "type": "string",

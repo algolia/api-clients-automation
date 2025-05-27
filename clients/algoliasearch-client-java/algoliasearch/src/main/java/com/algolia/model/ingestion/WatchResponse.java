@@ -15,6 +15,9 @@ public class WatchResponse {
   @JsonProperty("runID")
   private String runID;
 
+  @JsonProperty("eventID")
+  private String eventID;
+
   @JsonProperty("data")
   private List<Object> data;
 
@@ -23,6 +26,9 @@ public class WatchResponse {
 
   @JsonProperty("message")
   private String message;
+
+  @JsonProperty("createdAt")
+  private String createdAt;
 
   public WatchResponse setRunID(String runID) {
     this.runID = runID;
@@ -33,6 +39,17 @@ public class WatchResponse {
   @javax.annotation.Nonnull
   public String getRunID() {
     return runID;
+  }
+
+  public WatchResponse setEventID(String eventID) {
+    this.eventID = eventID;
+    return this;
+  }
+
+  /** Universally unique identifier (UUID) of an event. */
+  @javax.annotation.Nullable
+  public String getEventID() {
+    return eventID;
   }
 
   public WatchResponse setData(List<Object> data) {
@@ -86,6 +103,17 @@ public class WatchResponse {
     return message;
   }
 
+  public WatchResponse setCreatedAt(String createdAt) {
+    this.createdAt = createdAt;
+    return this;
+  }
+
+  /** Date of creation in RFC 3339 format. */
+  @javax.annotation.Nullable
+  public String getCreatedAt() {
+    return createdAt;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -97,15 +125,17 @@ public class WatchResponse {
     WatchResponse watchResponse = (WatchResponse) o;
     return (
       Objects.equals(this.runID, watchResponse.runID) &&
+      Objects.equals(this.eventID, watchResponse.eventID) &&
       Objects.equals(this.data, watchResponse.data) &&
       Objects.equals(this.events, watchResponse.events) &&
-      Objects.equals(this.message, watchResponse.message)
+      Objects.equals(this.message, watchResponse.message) &&
+      Objects.equals(this.createdAt, watchResponse.createdAt)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(runID, data, events, message);
+    return Objects.hash(runID, eventID, data, events, message, createdAt);
   }
 
   @Override
@@ -113,9 +143,11 @@ public class WatchResponse {
     StringBuilder sb = new StringBuilder();
     sb.append("class WatchResponse {\n");
     sb.append("    runID: ").append(toIndentedString(runID)).append("\n");
+    sb.append("    eventID: ").append(toIndentedString(eventID)).append("\n");
     sb.append("    data: ").append(toIndentedString(data)).append("\n");
     sb.append("    events: ").append(toIndentedString(events)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
+    sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("}");
     return sb.toString();
   }

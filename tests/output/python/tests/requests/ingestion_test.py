@@ -1128,6 +1128,69 @@ class TestIngestionClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
+    async def test_push_(self):
+        """
+        global push
+        """
+        _req = await self._client.push_with_http_info(
+            index_name="foo",
+            push_task_payload={
+                "action": "addObject",
+                "records": [
+                    {
+                        "key": "bar",
+                        "foo": "1",
+                        "objectID": "o",
+                    },
+                    {
+                        "key": "baz",
+                        "foo": "2",
+                        "objectID": "k",
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/push/foo"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}"""
+        )
+
+    async def test_push_1(self):
+        """
+        global push with watch mode
+        """
+        _req = await self._client.push_with_http_info(
+            index_name="bar",
+            push_task_payload={
+                "action": "addObject",
+                "records": [
+                    {
+                        "key": "bar",
+                        "foo": "1",
+                        "objectID": "o",
+                    },
+                    {
+                        "key": "baz",
+                        "foo": "2",
+                        "objectID": "k",
+                    },
+                ],
+            },
+            watch=True,
+        )
+
+        assert _req.path == "/1/push/bar"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"watch": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}"""
+        )
+
     async def test_push_task_(self):
         """
         pushTask
@@ -2773,6 +2836,69 @@ class TestIngestionClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
+
+    def test_push_(self):
+        """
+        global push
+        """
+        _req = self._client.push_with_http_info(
+            index_name="foo",
+            push_task_payload={
+                "action": "addObject",
+                "records": [
+                    {
+                        "key": "bar",
+                        "foo": "1",
+                        "objectID": "o",
+                    },
+                    {
+                        "key": "baz",
+                        "foo": "2",
+                        "objectID": "k",
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/push/foo"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}"""
+        )
+
+    def test_push_1(self):
+        """
+        global push with watch mode
+        """
+        _req = self._client.push_with_http_info(
+            index_name="bar",
+            push_task_payload={
+                "action": "addObject",
+                "records": [
+                    {
+                        "key": "bar",
+                        "foo": "1",
+                        "objectID": "o",
+                    },
+                    {
+                        "key": "baz",
+                        "foo": "2",
+                        "objectID": "k",
+                    },
+                ],
+            },
+            watch=True,
+        )
+
+        assert _req.path == "/1/push/bar"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"watch": "true"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}"""
+        )
 
     def test_push_task_(self):
         """

@@ -24,6 +24,10 @@ import { commitStartRelease } from './text.ts';
 async function handleSpecFiles(spec: SpecsToPush, tempGitDir: string): Promise<void> {
   const output = toAbsolutePath(`${tempGitDir}/${spec.output}`);
 
+  if (!(await exists(output))) {
+    await fsp.mkdir(output, { recursive: true });
+  }
+
   if (spec.includeSnippets) {
     await run(`cp ${toAbsolutePath('docs/bundled/*-snippets.json')} ${output}`);
   }

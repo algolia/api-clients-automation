@@ -1027,6 +1027,396 @@ paths:
             let response = try await client.customDelete(path: "test/minimal")
 
             // >LOG
+  /1/push/{indexName}:
+    post:
+      summary: >-
+        Pushes records to be transformed through the Pipeline, directly to an
+        index
+      description: >
+        Pushes records through the Pipeline, directly to an index. You can make
+        the call synchronous by providing the `watch` parameter, for
+        asynchronous calls, you can use the observability endpoints and/or
+        debugger dashboard to see the status of your task.
+
+        If you want to leverage the [pre-indexing data
+        transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+        this is the recommended way of ingesting your records.
+
+        This method is similar to `pushTask`, but requires an `indexName`
+        instead of a `taskID`. If zero or many tasks are found, an error will be
+        returned.
+      operationId: push
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      x-timeouts:
+        connect: 180000
+        read: 180000
+        write: 180000
+      parameters:
+        - $ref: '#/components/parameters/IndexName'
+        - $ref: '#/components/parameters/watch'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PushTaskPayload'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WatchResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            var response = await client.PushAsync(
+              "<YOUR_INDEX_NAME>",
+              new PushTaskPayload
+              {
+                Action = Enum.Parse<Action>("AddObject"),
+                Records = new List<PushTaskRecords>
+                {
+                  new PushTaskRecords
+                  {
+                    ObjectID = "o",
+                    AdditionalProperties = new Dictionary<string, object>
+                    {
+                      { "key", "bar" },
+                      { "foo", "1" },
+                    },
+                  },
+                  new PushTaskRecords
+                  {
+                    ObjectID = "k",
+                    AdditionalProperties = new Dictionary<string, object>
+                    {
+                      { "key", "baz" },
+                      { "foo", "2" },
+                    },
+                  },
+                },
+              }
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.Push(client.NewApiPushRequest(
+              "<YOUR_INDEX_NAME>",
+              ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
+                []ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.push(
+              "<YOUR_INDEX_NAME>",
+              new PushTaskPayload()
+                .setAction(Action.ADD_OBJECT)
+                .setRecords(
+                  Arrays.asList(
+                    new PushTaskRecords().setAdditionalProperty("key", "bar").setAdditionalProperty("foo", "1").setObjectID("o"),
+                    new PushTaskRecords().setAdditionalProperty("key", "baz").setAdditionalProperty("foo", "2").setObjectID("k")
+                  )
+                )
+            );
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.push({
+              indexName: 'foo',
+              pushTaskPayload: {
+                action: 'addObject',
+                records: [
+                  { key: 'bar', foo: '1', objectID: 'o' },
+                  { key: 'baz', foo: '2', objectID: 'k' },
+                ],
+              },
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.push(
+              indexName = "<YOUR_INDEX_NAME>",
+              pushTaskPayload = PushTaskPayload(
+                action = Action.entries.first { it.value == "addObject" },
+                records = listOf(
+                  PushTaskRecords(
+                    objectID = "o",
+                    additionalProperties = mapOf(
+                      "key" to JsonPrimitive("bar"),
+                      "foo" to JsonPrimitive("1"),
+                    ),
+                  ),
+                  PushTaskRecords(
+                    objectID = "k",
+                    additionalProperties = mapOf(
+                      "key" to JsonPrimitive("baz"),
+                      "foo" to JsonPrimitive("2"),
+                    ),
+                  ),
+                ),
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->push(
+                '<YOUR_INDEX_NAME>',
+                ['action' => 'addObject',
+                    'records' => [
+                        ['key' => 'bar',
+                            'foo' => '1',
+                            'objectID' => 'o',
+                        ],
+
+                        ['key' => 'baz',
+                            'foo' => '2',
+                            'objectID' => 'k',
+                        ],
+                    ],
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.push(
+                index_name="<YOUR_INDEX_NAME>",
+                push_task_payload={
+                    "action": "addObject",
+                    "records": [
+                        {
+                            "key": "bar",
+                            "foo": "1",
+                            "objectID": "o",
+                        },
+                        {
+                            "key": "baz",
+                            "foo": "2",
+                            "objectID": "k",
+                        },
+                    ],
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.push(
+              "<YOUR_INDEX_NAME>",
+              Algolia::Ingestion::PushTaskPayload.new(
+                action: "addObject",
+                records: [
+                  Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", algolia_object_id: "o"),
+                  Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", algolia_object_id: "k")
+                ]
+              )
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.push(
+                indexName = "<YOUR_INDEX_NAME>",
+                pushTaskPayload = PushTaskPayload(
+                  action = Action.withName("addObject"),
+                  records = Seq(
+                    PushTaskRecords(
+                      objectID = "o",
+                      additionalProperties = Some(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+                    ),
+                    PushTaskRecords(
+                      objectID = "k",
+                      additionalProperties = Some(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+                    )
+                  )
+                )
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.push(
+                indexName: "<YOUR_INDEX_NAME>",
+                pushTaskPayload: PushTaskPayload(
+                    action: IngestionAction.addObject,
+                    records: [
+                        PushTaskRecords(from: [
+                            "objectID": AnyCodable("o"),
+                            "key": AnyCodable("bar"),
+                            "foo": AnyCodable("1"),
+                        ]),
+                        PushTaskRecords(from: [
+                            "objectID": AnyCodable("k"),
+                            "key": AnyCodable("baz"),
+                            "foo": AnyCodable("2"),
+                        ]),
+                    ]
+                )
+            )
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url 'https://data.us.algolia.com/1/push/ALGOLIA_INDEX_NAME?watch=true' \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"action":"addObject","records":[{"objectID":"test-record-123"}]}'
   /1/authentications:
     get:
       tags:
@@ -8780,10 +9170,22 @@ paths:
     post:
       tags:
         - tasks
-      summary: Push a `batch` request payload through the Pipeline
-      description: >-
-        Push a `batch` request payload through the Pipeline. You can check the
-        status of task pushes with the observability endpoints.
+      summary: >-
+        Pushes records to be transformed through the Pipeline, directly to an
+        index
+      description: >
+        Pushes records through the Pipeline, directly to an index. You can make
+        the call synchronous by providing the `watch` parameter, for
+        asynchronous calls, you can use the observability endpoints and/or
+        debugger dashboard to see the status of your task.
+
+        If you want to leverage the [pre-indexing data
+        transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+        this is the recommended way of ingesting your records.
+
+        This method is similar to `push`, but requires a `taskID` instead of a
+        `indexName`, which is useful when many `destinations` target the same
+        `indexName`.
       operationId: pushTask
       x-acl:
         - addObject
@@ -8795,40 +9197,12 @@ paths:
         write: 180000
       parameters:
         - $ref: '#/components/parameters/pathTaskID'
-        - name: watch
-          in: query
-          description: >-
-            When provided, the push operation will be synchronous and the API
-            will wait for the ingestion to be finished before responding.
-          required: false
-          schema:
-            type: boolean
+        - $ref: '#/components/parameters/watch'
       requestBody:
-        description: >-
-          Request body of a Search API `batch` request that will be pushed in
-          the Connectors pipeline.
         content:
           application/json:
             schema:
-              title: pushTaskPayload
-              type: object
-              properties:
-                action:
-                  $ref: '#/components/schemas/action'
-                records:
-                  type: array
-                  items:
-                    title: pushTaskRecords
-                    type: object
-                    additionalProperties: true
-                    required:
-                      - objectID
-                    properties:
-                      objectID:
-                        $ref: '#/components/schemas/objectID'
-              required:
-                - action
-                - records
+              $ref: '#/components/schemas/PushTaskPayload'
         required: true
       responses:
         '200':
@@ -15155,6 +15529,23 @@ components:
       schema:
         type: object
         additionalProperties: true
+    IndexName:
+      name: indexName
+      in: path
+      description: Name of the index on which to perform the operation.
+      required: true
+      schema:
+        type: string
+        example: ALGOLIA_INDEX_NAME
+    watch:
+      name: watch
+      in: query
+      description: >-
+        When provided, the push operation will be synchronous and the API will
+        wait for the ingestion to be finished before responding.
+      required: false
+      schema:
+        type: boolean
     itemsPerPage:
       name: itemsPerPage
       in: query
@@ -15482,6 +15873,132 @@ components:
         message:
           type: string
           example: Invalid Application-Id or API-Key
+    action:
+      type: string
+      enum:
+        - addObject
+        - updateObject
+        - partialUpdateObject
+        - partialUpdateObjectNoCreate
+      description: Type of indexing operation.
+    objectID:
+      type: string
+      description: Unique record identifier.
+      example: test-record-123
+    PushTaskPayload:
+      title: pushTaskPayload
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/action'
+        records:
+          type: array
+          items:
+            title: pushTaskRecords
+            type: object
+            additionalProperties: true
+            required:
+              - objectID
+            properties:
+              objectID:
+                $ref: '#/components/schemas/objectID'
+      required:
+        - action
+        - records
+    runID:
+      type: string
+      description: Universally unique identifier (UUID) of a task run.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    eventID:
+      type: string
+      description: Universally unique identifier (UUID) of an event.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    EventStatus:
+      oneOf:
+        - type: string
+          enum:
+            - created
+            - started
+            - retried
+            - failed
+            - succeeded
+            - critical
+        - type: 'null'
+    EventType:
+      type: string
+      enum:
+        - fetch
+        - record
+        - log
+        - transform
+    publishedAt:
+      type: string
+      description: Date of publish RFC 3339 format.
+    Event:
+      type: object
+      description: An event describe a step of the task execution flow..
+      additionalProperties: false
+      properties:
+        eventID:
+          $ref: '#/components/schemas/eventID'
+        runID:
+          $ref: '#/components/schemas/runID'
+        status:
+          $ref: '#/components/schemas/EventStatus'
+        type:
+          $ref: '#/components/schemas/EventType'
+        batchSize:
+          type: integer
+          description: The extracted record batch size.
+          example: 10
+          minimum: 0
+          multipleOf: 1
+        data:
+          oneOf:
+            - type: object
+              additionalProperties: true
+            - type: 'null'
+        publishedAt:
+          $ref: '#/components/schemas/publishedAt'
+      required:
+        - eventID
+        - runID
+        - status
+        - type
+        - batchSize
+        - publishedAt
+    createdAt:
+      type: string
+      description: Date of creation in RFC 3339 format.
+    WatchResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        runID:
+          $ref: '#/components/schemas/runID'
+        eventID:
+          $ref: '#/components/schemas/eventID'
+        data:
+          type: array
+          description: >-
+            when used with discovering or validating sources, the sampled data
+            of your source is returned.
+          items:
+            type: object
+        events:
+          description: >-
+            in case of error, observability events will be added to the
+            response, if any.
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        message:
+          description: a message describing the outcome of a validate run.
+          type: string
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+      required:
+        - runID
     itemsPerPage:
       type: integer
       description: Number of items per page.
@@ -15660,9 +16177,6 @@ components:
         - $ref: '#/components/schemas/AuthAlgoliaPartial'
         - $ref: '#/components/schemas/AuthAlgoliaInsightsPartial'
         - $ref: '#/components/schemas/AuthSecrets'
-    createdAt:
-      type: string
-      description: Date of creation in RFC 3339 format.
     updatedAt:
       type: string
       description: Date of last update in RFC 3339 format.
@@ -16475,93 +16989,6 @@ components:
         - sourceID
         - name
         - createdAt
-    runID:
-      type: string
-      description: Universally unique identifier (UUID) of a task run.
-      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-    eventID:
-      type: string
-      description: Universally unique identifier (UUID) of an event.
-      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-    EventStatus:
-      oneOf:
-        - type: string
-          enum:
-            - created
-            - started
-            - retried
-            - failed
-            - succeeded
-            - critical
-        - type: 'null'
-    EventType:
-      type: string
-      enum:
-        - fetch
-        - record
-        - log
-        - transform
-    publishedAt:
-      type: string
-      description: Date of publish RFC 3339 format.
-    Event:
-      type: object
-      description: An event describe a step of the task execution flow..
-      additionalProperties: false
-      properties:
-        eventID:
-          $ref: '#/components/schemas/eventID'
-        runID:
-          $ref: '#/components/schemas/runID'
-        status:
-          $ref: '#/components/schemas/EventStatus'
-        type:
-          $ref: '#/components/schemas/EventType'
-        batchSize:
-          type: integer
-          description: The extracted record batch size.
-          example: 10
-          minimum: 0
-          multipleOf: 1
-        data:
-          oneOf:
-            - type: object
-              additionalProperties: true
-            - type: 'null'
-        publishedAt:
-          $ref: '#/components/schemas/publishedAt'
-      required:
-        - eventID
-        - runID
-        - status
-        - type
-        - batchSize
-        - publishedAt
-    WatchResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        runID:
-          $ref: '#/components/schemas/runID'
-        data:
-          type: array
-          description: >-
-            when used with discovering or validating sources, the sampled data
-            of your source is returned.
-          items:
-            type: object
-        events:
-          description: >-
-            in case of error, observability events will be added to the
-            response, if any.
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
-        message:
-          description: a message describing the outcome of a validate run.
-          type: string
-      required:
-        - runID
     SourceSearch:
       type: object
       additionalProperties: false
@@ -17089,21 +17516,6 @@ components:
       required:
         - runID
         - createdAt
-    action:
-      type: string
-      enum:
-        - addObject
-        - updateObject
-        - partialUpdateObject
-        - partialUpdateObjectNoCreate
-        - deleteObject
-        - delete
-        - clear
-      description: Type of indexing operation.
-    objectID:
-      type: string
-      description: Unique record identifier.
-      example: test-record-123
     OnDemandTriggerType:
       type: string
       description: Task is run manually, with the `/run` endpoint.

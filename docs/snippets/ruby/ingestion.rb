@@ -1334,6 +1334,65 @@ def snippet_for_list_transformations
   # SEPARATOR<
 end
 
+# Snippet for the push method.
+#
+# global push
+def snippet_for_push
+  # >SEPARATOR push global push
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.push(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Ingestion::PushTaskPayload.new(
+      action: "addObject",
+      records: [
+        Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", algolia_object_id: "o"),
+        Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", algolia_object_id: "k")
+      ]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the push method.
+#
+# global push with watch mode
+def snippet_for_push1
+  # >SEPARATOR push global push with watch mode
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.push(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Ingestion::PushTaskPayload.new(
+      action: "addObject",
+      records: [
+        Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", algolia_object_id: "o"),
+        Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", algolia_object_id: "k")
+      ]
+    ),
+    true
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the pushTask method.
 #
 # pushTask

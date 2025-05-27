@@ -920,6 +920,57 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
+  # global push
+  def test_push
+    req = @client.push_with_http_info(
+      "foo",
+      Algolia::Ingestion::PushTaskPayload.new(
+        action: "addObject",
+        records: [
+          Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", algolia_object_id: "o"),
+          Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", algolia_object_id: "k")
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/push/foo", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # global push with watch mode
+  def test_push1
+    req = @client.push_with_http_info(
+      "bar",
+      Algolia::Ingestion::PushTaskPayload.new(
+        action: "addObject",
+        records: [
+          Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", algolia_object_id: "o"),
+          Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", algolia_object_id: "k")
+        ]
+      ),
+      true
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/push/bar", req.path)
+    assert_equal({:"watch" => "true"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # pushTask
   def test_push_task
     req = @client.push_task_with_http_info(
