@@ -56,8 +56,10 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         self._config = config
         self._request_options = RequestOptions(config)
 
+        {{#isSearchClient}}
         if config.region is not None:
             self._ingestion_transporter = IngestionClient{{#isSyncClient}}Sync{{/isSyncClient}}.create_with_config(IngestionConfig(config.app_id, config.api_key, config.region))
+        {{/isSearchClient}}
 
         if transporter is None:
             transporter = Transporter{{#isSyncClient}}Sync{{/isSyncClient}}(config)
