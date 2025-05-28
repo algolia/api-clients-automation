@@ -50,16 +50,15 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
     def __init__(self, app_id: Optional[str] = None, api_key: Optional[str] = None, {{#hasRegionalHost}}region: {{#fallbackToAliasHost}}Optional[str] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str = ""{{/fallbackToAliasHost}}, {{/hasRegionalHost}}transporter: Optional[Transporter{{#isSyncClient}}Sync{{/isSyncClient}}] = None, config: Optional[{{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}] = None) -> None:
         if transporter is not None and config is None:
             config = {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(transporter.config.app_id, transporter.config.api_key{{#hasRegionalHost}}, region{{/hasRegionalHost}})
-
-        if config is None:
+        elif config is None:
             config = {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(app_id, api_key{{#hasRegionalHost}}, region{{/hasRegionalHost}})
-        self._config = config
-        self._request_options = RequestOptions(config)
-
         {{#isSearchClient}}
-        if config.region is not None:
+        elif config.region is not None:
             self._ingestion_transporter = IngestionClient{{#isSyncClient}}Sync{{/isSyncClient}}.create_with_config(IngestionConfig(config.app_id, config.api_key, config.region))
         {{/isSearchClient}}
+
+        self._config = config
+        self._request_options = RequestOptions(config)
 
         if transporter is None:
             transporter = Transporter{{#isSyncClient}}Sync{{/isSyncClient}}(config)
