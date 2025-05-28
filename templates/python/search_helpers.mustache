@@ -292,6 +292,31 @@
         """
         return {{^isSyncClient}}await {{/isSyncClient}}self.chunked_batch(index_name=index_name, objects=objects, action=Action.ADDOBJECT, wait_for_tasks=wait_for_tasks, batch_size=batch_size, request_options=request_options)
 
+    {{^isSyncClient}}async {{/isSyncClient}}def save_objects_with_transformation(
+        self,
+        index_name: str,
+        objects: List[Dict[str, Any]],
+        wait_for_tasks: bool = False,
+        batch_size: int = 1000,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> WatchResponse:
+        """
+        Helper: Similar to the `save_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client's config at instantiation.
+        """
+        if self._ingestion_transporter is None:
+            raise ValueError("`region` must be provided at client instantiation before calling this method.")
+
+        return {{^isSyncClient}}await {{/isSyncClient}}self._ingestion_transporter.push(
+            index_name=index_name,
+            push_task_payload={
+                "action": Action.ADDOBJECT,
+                "records": objects,
+            },
+            watch=wait_for_tasks,
+            request_options=request_options,
+        )
+
+
     {{^isSyncClient}}async {{/isSyncClient}}def delete_objects(
         self,
         index_name: str,
@@ -318,6 +343,32 @@
         Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
         """
         return {{^isSyncClient}}await {{/isSyncClient}}self.chunked_batch(index_name=index_name, objects=objects, action=Action.PARTIALUPDATEOBJECT if create_if_not_exists else Action.PARTIALUPDATEOBJECTNOCREATE, wait_for_tasks=wait_for_tasks, batch_size=batch_size, request_options=request_options)
+
+    {{^isSyncClient}}async {{/isSyncClient}}def partial_update_objects_with_transformation(
+        self,
+        index_name: str,
+        objects: List[Dict[str, Any]],
+        create_if_not_exists: bool = False,
+        wait_for_tasks: bool = False,
+        batch_size: int = 1000,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> WatchResponse:
+        """
+        Helper: Similar to the `partial_update_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client instantiation method.
+        """
+        if self._ingestion_transporter is None:
+            raise ValueError("`region` must be provided at client instantiation before calling this method.")
+
+        return {{^isSyncClient}}await {{/isSyncClient}}self._ingestion_transporter.push(
+            index_name=index_name,
+            push_task_payload={
+                "action": Action.PARTIALUPDATEOBJECT if create_if_not_exists else Action.PARTIALUPDATEOBJECTNOCREATE,
+                "records": objects,
+            },
+            watch=wait_for_tasks,
+            request_options=request_options,
+        )
+
 
     {{^isSyncClient}}async {{/isSyncClient}}def chunked_batch(
         self,

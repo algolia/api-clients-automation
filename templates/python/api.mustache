@@ -9,6 +9,10 @@ from algoliasearch.search.models.operation_type import OperationType
 from algoliasearch.search.models.replace_all_objects_response import ReplaceAllObjectsResponse
 from algoliasearch.search.models.scope_type import ScopeType
 from algoliasearch.search.models.secured_api_key_restrictions import SecuredApiKeyRestrictions
+
+from algoliasearch.ingestion.models.watch_response import WatchResponse
+from algoliasearch.ingestion.config import IngestionConfig
+from algoliasearch.ingestion.client import (IngestionClient, IngestionClientSync)
 {{/isSearchClient}}
 
 {{#operations}}{{#operation}}{{#imports}}
@@ -37,15 +41,22 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
     """
 
     _transporter: Transporter{{#isSyncClient}}Sync{{/isSyncClient}}
+    {{#isSearchClient}}
+    _ingestion_transporter: Optional[IngestionClient{{#isSyncClient}}Sync{{/isSyncClient}}]
+    {{/isSearchClient}}
     _config: BaseConfig
     _request_options: RequestOptions
 
     def __init__(self, app_id: Optional[str] = None, api_key: Optional[str] = None, {{#hasRegionalHost}}region: {{#fallbackToAliasHost}}Optional[str] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str = ""{{/fallbackToAliasHost}}, {{/hasRegionalHost}}transporter: Optional[Transporter{{#isSyncClient}}Sync{{/isSyncClient}}] = None, config: Optional[{{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}] = None) -> None:
         if transporter is not None and config is None:
             config = {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(transporter.config.app_id, transporter.config.api_key{{#hasRegionalHost}}, region{{/hasRegionalHost}})
-
-        if config is None:
+        elif config is None:
             config = {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(app_id, api_key{{#hasRegionalHost}}, region{{/hasRegionalHost}})
+        {{#isSearchClient}}
+        elif config.region is not None:
+            self._ingestion_transporter = IngestionClient{{#isSyncClient}}Sync{{/isSyncClient}}.create_with_config(IngestionConfig(config.app_id, config.api_key, config.region))
+        {{/isSearchClient}}
+
         self._config = config
         self._request_options = RequestOptions(config)
 
