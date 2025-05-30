@@ -2,6 +2,7 @@ package transport
 
 import (
 	"context"
+	"errors"
 	"net"
 	"strings"
 	"sync"
@@ -99,16 +100,19 @@ func (s *RetryStrategy) Decide(h Host, code int, err error) Outcome {
 
 	if err == nil && is2xx(code) {
 		s.markUp(h)
+
 		return Success
 	}
 
 	if isTimeoutError(err) {
 		s.markTimeout(h)
+
 		return Retry
 	}
 
-	if !(isZero(code) || is4xx(code) || is2xx(code)) || isNetworkError(err) {
+	if (!isZero(code) && !is4xx(code) && !is2xx(code)) || isNetworkError(err) {
 		s.markDown(h)
+
 		return Retry
 	}
 
@@ -119,6 +123,7 @@ func (s *RetryStrategy) markUp(host Host) {
 	for _, h := range s.hosts {
 		if h.host == host.host {
 			h.markUp()
+
 			return
 		}
 	}
@@ -128,6 +133,7 @@ func (s *RetryStrategy) markTimeout(host Host) {
 	for _, h := range s.hosts {
 		if h.host == host.host {
 			h.markTimeout()
+
 			return
 		}
 	}
@@ -137,6 +143,7 @@ func (s *RetryStrategy) markDown(host Host) {
 	for _, h := range s.hosts {
 		if h.host == host.host {
 			h.markDown()
+
 			return
 		}
 	}
@@ -146,7 +153,9 @@ func isNetworkError(err error) bool {
 	if err == nil {
 		return false
 	}
-	_, ok := err.(net.Error)
+
+	var netErr net.Error
+	ok := errors.As(err, &netErr)
 	// We need to ensure that the error is a net.Error but not a
 	// context.DeadlineExceeded error (which is actually a net.Error), because
 	// we do not want to consider context.DeadlineExceeded as an error.
@@ -157,6 +166,7 @@ func isTimeoutError(err error) bool {
 	if err == nil {
 		return false
 	}
+
 	return strings.Contains(err.Error(), context.DeadlineExceeded.Error())
 }
 

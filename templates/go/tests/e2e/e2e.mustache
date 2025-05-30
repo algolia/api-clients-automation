@@ -3,13 +3,16 @@ package e2e
 // {{generationBanner}}
 
 import (
+  "encoding/json"
   "os"
 	"testing"
   "context"
 
 	"github.com/stretchr/testify/require"
-
+  "github.com/kinbiko/jsonassert"
 	"github.com/joho/godotenv"
+
+  "gotests/tests"
 
   "github.com/algolia/algoliasearch-client-go/v4/algolia/next/{{clientImport}}"
 )
@@ -32,8 +35,11 @@ func createE2E{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t
 
 {{#blocksE2E}}
 func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}E2E_{{#lambda.titlecase}}{{operationId}}{{/lambda.titlecase}}(t *testing.T) {
+    t.Parallel()
     {{#tests}}
     t.Run("{{{testName}}}", func(t *testing.T) {
+      t.Parallel()
+      
       client := createE2E{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t)
       res, err := {{> tests/method}}
       require.NoError(t, err)
