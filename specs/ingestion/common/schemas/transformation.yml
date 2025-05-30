@@ -165,7 +165,7 @@ NoCodeFilterRecordValue:
 NoCodeCondition:
   description: The value object defining the condition logic.
   oneOf:
-    - $ref: '#/NoCodeConditionGroup'
+    #    - $ref: '#/NoCodeConditionGroup'
     - $ref: '#/NoCodeSimpleCondition'
 
 NoCodeGate:
