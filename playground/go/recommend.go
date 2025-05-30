@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/recommend"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/recommend"
 )
 
 func testRecommend(appID, apiKey string) int {

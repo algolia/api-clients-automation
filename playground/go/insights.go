@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/insights"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/insights"
 )
 
 func testInsights(appID, apiKey string) int {

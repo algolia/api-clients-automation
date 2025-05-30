@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/ingestion"
 )
 
 func testIngestion(appID, apiKey string) int {
