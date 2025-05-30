@@ -28,7 +28,6 @@ import (
 
 type config struct {
 	// -- Request options for API calls
-	context      context.Context
 	queryParams  url.Values
 	headerParams map[string]string
   timeouts transport.RequestConfiguration
@@ -73,12 +72,6 @@ type requestOption func(*config)
 
 func (r requestOption) apply(c *config) {
 	r(c)
-}
-
-func WithContext(ctx context.Context) requestOption {
-	return requestOption(func(c *config) {
-		c.context = ctx
-	})
 }
 
 func WithHeaderParam(key string, value any) requestOption {
@@ -355,17 +348,17 @@ func (o *{{operationId}}Options) With{{#lambda.titlecase}}{{baseName}}{{/lambda.
   {{#optionalParams}}
 //  - {{paramName}} {{#description}}- {{{.}}}{{/description}} (in optionalParams)
   {{/optionalParams}}
-//  - opts - Optional parameters for the API call (e.g. WithContext, WithHeaderParam...)
+//  - opts - Optional parameters for the API call (e.g. WithHeaderParam, WithReadTimeout...)
   {{#isDeprecated}}
 //
 // Deprecated: {{operationId}} is deprecated
   {{/isDeprecated}}
-func (c *APIClient) {{nickname}}({{#requiredParams}}{{paramName}} {{#required}}{{#isModel}}*{{/isModel}}{{/required}}{{^required}}{{^isMap}}*{{/isMap}}{{/required}}{{{dataType}}}, {{/requiredParams}}{{#hasOptionalParams}}optionalParams *{{operationId}}Options, {{/hasOptionalParams}}opts ...RequestOption) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
+func (c *APIClient) {{nickname}}(ctx context.Context, {{#requiredParams}}{{paramName}} {{#required}}{{#isModel}}*{{/isModel}}{{/required}}{{^required}}{{^isMap}}*{{/isMap}}{{/required}}{{{dataType}}}, {{/requiredParams}}{{#hasOptionalParams}}optionalParams *{{operationId}}Options, {{/hasOptionalParams}}opts ...RequestOption) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
   {{#returnType}}
   var returnValue {{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}
   {{/returnType}}
 
-  res, resBody, err := c.{{nickname}}WithHTTPInfo({{#requiredParams}}{{paramName}}, {{/requiredParams}}{{#hasOptionalParams}}optionalParams, {{/hasOptionalParams}}opts...)
+  res, resBody, err := c.{{nickname}}WithHTTPInfo(ctx, {{#requiredParams}}{{paramName}}, {{/requiredParams}}{{#hasOptionalParams}}optionalParams, {{/hasOptionalParams}}opts...)
   if err != nil {
 		return {{#returnType}}returnValue, {{/returnType}}err
 	}
@@ -406,12 +399,12 @@ func (c *APIClient) {{nickname}}({{#requiredParams}}{{paramName}} {{#required}}{
   {{#optionalParams}}
 //  - {{paramName}} {{#description}}- {{{.}}}{{/description}} (in optionalParams)
   {{/optionalParams}}
-//  - opts - Optional parameters for the API call (e.g. WithContext, WithHeaderParam...)
+//  - opts - Optional parameters for the API call (e.g. WithHeaderParam, WithReadTimeout...)
   {{#isDeprecated}}
 //
 // Deprecated: {{operationId}} is deprecated
   {{/isDeprecated}}
-func (c *APIClient) {{nickname}}WithHTTPInfo({{#requiredParams}}{{paramName}} {{#required}}{{#isModel}}*{{/isModel}}{{/required}}{{^required}}{{^isMap}}*{{/isMap}}{{/required}}{{{dataType}}}, {{/requiredParams}}{{#hasOptionalParams}}optionalParams *{{operationId}}Options, {{/hasOptionalParams}}opts ...RequestOption) (*http.Response, []byte, error) {
+func (c *APIClient) {{nickname}}WithHTTPInfo(ctx context.Context, {{#requiredParams}}{{paramName}} {{#required}}{{#isModel}}*{{/isModel}}{{/required}}{{^required}}{{^isMap}}*{{/isMap}}{{/required}}{{{dataType}}}, {{/requiredParams}}{{#hasOptionalParams}}optionalParams *{{operationId}}Options, {{/hasOptionalParams}}opts ...RequestOption) (*http.Response, []byte, error) {
   {{#vendorExtensions}}
   requestPath := "{{{path}}}"{{#pathParams}}
   requestPath = strings.ReplaceAll(requestPath, {{=<% %>=}}"{<%baseName%>}"<%={{ }}=%>, {{#x-is-custom-request}}utils.ParameterToString({{paramName}}){{/x-is-custom-request}}{{^x-is-custom-request}}url.PathEscape(utils.ParameterToString({{paramName}})){{/x-is-custom-request}}){{/pathParams}}
@@ -436,7 +429,6 @@ func (c *APIClient) {{nickname}}WithHTTPInfo({{#requiredParams}}{{paramName}} {{
 	{{/allParams}}
 
   conf := config{
-    context:      context.Background(),
     queryParams:  url.Values{},
     headerParams: map[string]string{},
     {{#vendorExtensions.x-timeouts}}
@@ -533,7 +525,7 @@ func (c *APIClient) {{nickname}}WithHTTPInfo({{#requiredParams}}{{paramName}} {{
   {{/required}}
   {{/vendorExtensions.x-flat-body}}
 {{/bodyParams}}
-	req, err := c.prepareRequest(conf.context, requestPath, http.Method{{httpMethod}}, {{^bodyParams}}nil{{/bodyParams}}{{#bodyParams}}postBody{{/bodyParams}}, conf.headerParams, conf.queryParams)
+	req, err := c.prepareRequest(ctx, requestPath, http.Method{{httpMethod}}, {{^bodyParams}}nil{{/bodyParams}}{{#bodyParams}}postBody{{/bodyParams}}, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}

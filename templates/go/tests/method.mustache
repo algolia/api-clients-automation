@@ -1,1 +1,1 @@
-client.{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}({{> tests/requiredParams}}{{> tests/optionalWrapper}}{{> tests/nilWrapper}}{{> tests/inlineOptional}}{{> tests/requestOptions}})
+client.{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}({{#isAsyncMethod}}context.Background(), {{/isAsyncMethod}}{{> tests/requiredParams}}{{> tests/optionalWrapper}}{{> tests/nilWrapper}}{{> tests/inlineOptional}}{{> tests/requestOptions}})

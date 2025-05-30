@@ -43,8 +43,8 @@ func CreateIterable[T any](execute func(*T, error) (*T, error), validate func(*T
 
 // SearchForHits calls the `search` method but with certainty that we will only request Algolia records (hits) and not facets.
 // Disclaimer: We don't assert that the parameters you pass to this method only contains `hits` requests to prevent impacting search performances, this helper is purely for typing purposes.
-func (c *APIClient) SearchForHits(requests []SearchQuery, strategy *SearchStrategy, opts ...RequestOption) ([]SearchResponse, error) {
-  res, err := c.Search(requests, strategy, opts...)
+func (c *APIClient) SearchForHits(ctx context.Context, requests []SearchQuery, strategy *SearchStrategy, opts ...RequestOption) ([]SearchResponse, error) {
+  res, err := c.Search(ctx, requests, strategy, opts...)
   if err != nil {
     return nil, err
   }
@@ -62,8 +62,8 @@ func (c *APIClient) SearchForHits(requests []SearchQuery, strategy *SearchStrate
 
 // SearchForFacets calls the `search` method but with certainty that we will only request Algolia facets and not records (hits).
 // Disclaimer: We don't assert that the parameters you pass to this method only contains `facets` requests to prevent impacting search performances, this helper is purely for typing purposes.
-func (c *APIClient) SearchForFacets(requests []SearchQuery, strategy *SearchStrategy, opts ...RequestOption) ([]SearchForFacetValuesResponse, error) {
-  res, err := c.Search(requests, strategy, opts...)
+func (c *APIClient) SearchForFacets(ctx context.Context,requests []SearchQuery, strategy *SearchStrategy, opts ...RequestOption) ([]SearchForFacetValuesResponse, error) {
+  res, err := c.Search(ctx, requests, strategy, opts...)
   if err != nil {
     return nil, err
   }
@@ -83,6 +83,7 @@ func (c *APIClient) SearchForFacets(requests []SearchQuery, strategy *SearchStra
 // It returns the task response if the operation was successful.
 // It returns an error if the operation failed.
 func (c *APIClient) WaitForTask(
+  ctx context.Context,
 	indexName string,
 	taskID int64,
 	opts ...IterableOption,
@@ -94,7 +95,7 @@ func (c *APIClient) WaitForTask(
 
 	return CreateIterable( //nolint:wrapcheck
 		func(*GetTaskResponse, error) (*GetTaskResponse, error) {
-			return c.GetTask(indexName, taskID, toRequestOptions(opts)...)
+			return c.GetTask(ctx, indexName, taskID, toRequestOptions(opts)...)
 		},
 		func(response *GetTaskResponse, err error) (bool, error) {
 			if err != nil || response == nil {
@@ -111,6 +112,7 @@ func (c *APIClient) WaitForTask(
 // It returns the task response if the operation was successful.
 // It returns an error if the operation failed.
 func (c *APIClient) WaitForAppTask(
+  ctx context.Context,
 	taskID int64,
 	opts ...IterableOption,
 ) (*GetTaskResponse, error) {
@@ -121,7 +123,7 @@ func (c *APIClient) WaitForAppTask(
 
 	return CreateIterable( //nolint:wrapcheck
 		func(*GetTaskResponse, error) (*GetTaskResponse, error) {
-			return c.GetAppTask(taskID, toRequestOptions(opts)...)
+			return c.GetAppTask(ctx, taskID, toRequestOptions(opts)...)
 		},
 		func(response *GetTaskResponse, err error) (bool, error) {
 			if err != nil || response == nil {
@@ -164,6 +166,7 @@ func slicesEqualUnordered[T cmp.Ordered](a []T, b []T) bool {
 // If the operation is "update", the apiKey parameter must be set.
 // If the operation is "delete" or "add", the apiKey parameter is not used.
 func (c *APIClient) WaitForApiKey(
+  ctx context.Context,
   key string,
 	operation ApiKeyOperation,
 	opts ...WaitForApiKeyOption,
@@ -247,7 +250,7 @@ func (c *APIClient) WaitForApiKey(
 
 	return CreateIterable( //nolint:wrapcheck
 		func(*GetApiKeyResponse, error) (*GetApiKeyResponse, error) {
-			return c.GetApiKey(key, toRequestOptions(opts)...)
+			return c.GetApiKey(ctx, key, toRequestOptions(opts)...)
 		},
 		validateFunc,
 		waitForApiKeyToIterableOptions(opts)...,
@@ -257,6 +260,7 @@ func (c *APIClient) WaitForApiKey(
 // BrowseObjects allows to aggregate all the hits returned by the API calls.
 // Use the `WithAggregator` option to collect all the responses.
 func (c *APIClient) BrowseObjects(
+  ctx context.Context,
 	indexName string,
 	browseParams BrowseParamsObject,
 	opts ...IterableOption,
@@ -272,7 +276,7 @@ func (c *APIClient) BrowseObjects(
 			}
 
 			return c.Browse(
-				indexName, BrowseParamsObjectAsBrowseParams(&browseParams),
+				ctx, indexName, BrowseParamsObjectAsBrowseParams(&browseParams),
 				toRequestOptions(opts)...,
 			)
 		},
@@ -288,6 +292,7 @@ func (c *APIClient) BrowseObjects(
 // BrowseRules allows to aggregate all the rules returned by the API calls.
 // Use the `WithAggregator` option to collect all the responses.
 func (c *APIClient) BrowseRules(
+  ctx context.Context,
 	indexName string,
 	optionalParams *SearchRulesOptions,
 	opts ...IterableOption,
@@ -312,7 +317,7 @@ func (c *APIClient) BrowseRules(
 				optionalParams.Page = utils.ToPtr(int32(0))
 			}
 
-			return c.SearchRules(indexName, optionalParams, toRequestOptions(opts)...)
+			return c.SearchRules(ctx, indexName, optionalParams, toRequestOptions(opts)...)
 		},
 		func(response *SearchRulesResponse, err error) (bool, error) {
 			return err != nil || (response != nil && len(response.Hits) < int(hitsPerPage)), err
@@ -326,6 +331,7 @@ func (c *APIClient) BrowseRules(
 // BrowseSynonyms allows to aggregate all the synonyms returned by the API calls.
 // Use the `WithAggregator` option to collect all the responses.
 func (c *APIClient) BrowseSynonyms(
+  ctx context.Context,
 	indexName string,
 	optionalParams *SearchSynonymsOptions,
 	opts ...IterableOption,
@@ -350,7 +356,7 @@ func (c *APIClient) BrowseSynonyms(
 				optionalParams.Page = utils.ToPtr(*optionalParams.Page + 1)
 			}()
 
-			return c.SearchSynonyms(indexName, optionalParams,	toRequestOptions(opts)...)
+			return c.SearchSynonyms(ctx, indexName, optionalParams,	toRequestOptions(opts)...)
 		},
 		func(response *SearchSynonymsResponse, err error) (bool, error) {
 			return err != nil || (response != nil && len(response.Hits) < int(hitsPerPage)), err
@@ -454,23 +460,23 @@ func (c *APIClient) GetSecuredApiKeyRemainingValidity(securedApiKey string) (tim
 }
 
 // Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
-func (c *APIClient) SaveObjects(indexName string, objects []map[string]any, opts ...ChunkedBatchOption) ([]BatchResponse, error) {
-  return c.ChunkedBatch(indexName, objects, ACTION_ADD_OBJECT, opts...)
+func (c *APIClient) SaveObjects(ctx context.Context, indexName string, objects []map[string]any, opts ...ChunkedBatchOption) ([]BatchResponse, error) {
+  return c.ChunkedBatch(ctx, indexName, objects, ACTION_ADD_OBJECT, opts...)
 }
 
 // Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
-func (c *APIClient) DeleteObjects(indexName string, objectIDs []string, opts ...ChunkedBatchOption) ([]BatchResponse, error) {
+func (c *APIClient) DeleteObjects(ctx context.Context, indexName string, objectIDs []string, opts ...ChunkedBatchOption) ([]BatchResponse, error) {
   objects := make([]map[string]any, 0, len(objectIDs))
 
   for _, id := range objectIDs {
     objects = append(objects, map[string]any{"objectID":id})
   }
 
-  return c.ChunkedBatch(indexName, objects, ACTION_DELETE_OBJECT, opts...)
+  return c.ChunkedBatch(ctx, indexName, objects, ACTION_DELETE_OBJECT, opts...)
 }
 
 // Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
-func (c *APIClient) PartialUpdateObjects(indexName string, objects []map[string]any, opts ...PartialUpdateObjectsOption) ([]BatchResponse, error) {
+func (c *APIClient) PartialUpdateObjects(ctx context.Context, indexName string, objects []map[string]any, opts ...PartialUpdateObjectsOption) ([]BatchResponse, error) {
   conf := config{
     headerParams: map[string]string{},
     createIfNotExists: true,
@@ -488,11 +494,11 @@ func (c *APIClient) PartialUpdateObjects(indexName string, objects []map[string]
     action = ACTION_PARTIAL_UPDATE_OBJECT_NO_CREATE
   }
 
-  return c.ChunkedBatch(indexName, objects, action, partialUpdateObjectsToChunkedBatchOptions(opts)...)
+  return c.ChunkedBatch(ctx, indexName, objects, action, partialUpdateObjectsToChunkedBatchOptions(opts)...)
 }
 
 // ChunkedBatch chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
-func (c *APIClient) ChunkedBatch(indexName string, objects []map[string]any, action Action, opts ...ChunkedBatchOption) ([]BatchResponse, error) {
+func (c *APIClient) ChunkedBatch(ctx context.Context, indexName string, objects []map[string]any, action Action, opts ...ChunkedBatchOption) ([]BatchResponse, error) {
   conf := config{
     headerParams: map[string]string{},
     waitForTasks: false,
@@ -510,7 +516,7 @@ func (c *APIClient) ChunkedBatch(indexName string, objects []map[string]any, act
 		requests = append(requests, *NewBatchRequest(action, obj))
 
 		if len(requests) == conf.batchSize || i == len(objects)-1 {
-			resp, err := c.Batch(indexName, requests, toRequestOptions(opts)...)
+			resp, err := c.Batch(ctx, indexName, requests, toRequestOptions(opts)...)
 			if err != nil {
 				return nil, err
 			}
@@ -522,7 +528,7 @@ func (c *APIClient) ChunkedBatch(indexName string, objects []map[string]any, act
 
 	if conf.waitForTasks {
 		for _, resp := range responses {
-			_, err := c.WaitForTask(indexName, resp.TaskID, toIterableOptions(opts)...)
+			_, err := c.WaitForTask(ctx, indexName, resp.TaskID, toIterableOptions(opts)...)
 			if err != nil {
 				return nil, err
 			}
@@ -620,7 +626,7 @@ func (c *APIClient) ReplaceAllObjectsWithTransformation(indexName string, object
 
 // ReplaceAllObjects replaces all objects (records) in the given `indexName` with the given `objects`. A temporary index is created during this process in order to backup your data.
 // See https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation details.
-func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any, opts ...ReplaceAllObjectsOption) (*ReplaceAllObjectsResponse, error) {
+func (c *APIClient) ReplaceAllObjects(ctx context.Context, indexName string, objects []map[string]any, opts ...ReplaceAllObjectsOption) (*ReplaceAllObjectsResponse, error) {
 	tmpIndexName := fmt.Sprintf("%s_tmp_%d", indexName, time.Now().UnixNano())
 
   conf := config{
@@ -634,49 +640,49 @@ func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any
 
   opts = append(opts, WithWaitForTasks(true))
 
-	copyResp, err := c.OperationIndex(indexName, OPERATION_TYPE_COPY, tmpIndexName, &conf.scopes, toRequestOptions(opts)...)
+	copyResp, err := c.OperationIndex(ctx, indexName, OPERATION_TYPE_COPY, tmpIndexName, &conf.scopes, toRequestOptions(opts)...)
 	if err != nil {
 		return nil, err
 	}
 
-	batchResp, err := c.ChunkedBatch(tmpIndexName, objects, ACTION_ADD_OBJECT, replaceAllObjectsToChunkBatchOptions(opts)...)
+	batchResp, err := c.ChunkedBatch(ctx, tmpIndexName, objects, ACTION_ADD_OBJECT, replaceAllObjectsToChunkBactchOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(tmpIndexName)
+		_, _ = c.DeleteIndex(ctx, tmpIndexName)
 
 		return nil, err
 	}
 
-	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
+	_, err = c.WaitForTask(ctx, tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(tmpIndexName)
+		_, _ = c.DeleteIndex(ctx, tmpIndexName)
 
 		return nil, err
 	}
 
-	copyResp, err = c.OperationIndex(indexName, OPERATION_TYPE_COPY, tmpIndexName, &conf.scopes, toRequestOptions(opts)...)
+	copyResp, err = c.OperationIndex(ctx, indexName, OPERATION_TYPE_COPY, tmpIndexName, &conf.scopes, toRequestOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(tmpIndexName)
+		_, _ = c.DeleteIndex(ctx, tmpIndexName)
 
 		return nil, err
 	}
 
-	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
+	_, err = c.WaitForTask(ctx, tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(tmpIndexName)
+		_, _ = c.DeleteIndex(ctx, tmpIndexName)
 
 		return nil, err
 	}
 
-	moveResp, err := c.OperationIndex(tmpIndexName, OPERATION_TYPE_MOVE, indexName, nil, toRequestOptions(opts)...)
+	moveResp, err := c.OperationIndex(ctx, tmpIndexName, OPERATION_TYPE_MOVE, indexName, nil, toRequestOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(tmpIndexName)
+		_, _ = c.DeleteIndex(ctx, tmpIndexName)
 
 		return nil, err
 	}
 
-	_, err = c.WaitForTask(tmpIndexName, moveResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
+	_, err = c.WaitForTask(ctx, tmpIndexName, moveResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(tmpIndexName)
+		_, _ = c.DeleteIndex(ctx, tmpIndexName)
 
 		return nil, err
 	}
@@ -691,8 +697,8 @@ func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any
 // Exists returns whether an initialized index exists or not, along with a nil
 // error. When encountering a network error, a non-nil error is returned along
 // with false.
-func (c *APIClient) IndexExists(indexName string) (bool, error) {
-	_, err := c.GetSettings(indexName)
+func (c *APIClient) IndexExists(ctx context.Context, indexName string) (bool, error) {
+	_, err := c.GetSettings(ctx, indexName)
 	if err == nil {
 		return true, nil
 	}
