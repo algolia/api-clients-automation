@@ -28,7 +28,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       }
       break;
     case 'go':
-      await run('goimports -w . && golangci-lint run --fix', { cwd, language });
+      await run('golangci-lint fmt && golangci-lint run --fix', { cwd, language });
       break;
     case 'java':
       await run(

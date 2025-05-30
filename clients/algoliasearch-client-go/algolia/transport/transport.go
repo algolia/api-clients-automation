@@ -94,6 +94,7 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind,
 		// already cancelled.
 		if ctx.Err() != nil {
 			cancel()
+
 			return res, nil, err
 		}
 
@@ -101,22 +102,28 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind,
 		case Success, Failure:
 			body, errBody := io.ReadAll(res.Body)
 			errClose := res.Body.Close()
+
 			cancel()
+
 			res.Body = io.NopCloser(bytes.NewBuffer(body))
 			if errBody != nil {
-				return res, nil, fmt.Errorf("cannot read body: %v", errBody)
+				return res, nil, fmt.Errorf("cannot read body: %w", errBody)
 			}
+
 			if errClose != nil {
-				return res, nil, fmt.Errorf("cannot close response's body: %v", errClose)
+				return res, nil, fmt.Errorf("cannot close response's body: %w", errClose)
 			}
+
 			return res, body, err
 		default:
 			if err != nil {
 				intermediateNetworkErrors = append(intermediateNetworkErrors, err)
 			}
+
 			if res != nil && res.Body != nil {
 				if err = res.Body.Close(); err != nil {
 					cancel()
+
 					return res, nil, fmt.Errorf("cannot close response's body before retry: %w", err)
 				}
 			}
@@ -142,7 +149,9 @@ func (t *Transport) request(req *http.Request, host Host, timeout time.Duration,
 
 	if err != nil {
 		msg := fmt.Sprintf("cannot perform request:\n\terror=%v\n\tmethod=%s\n\turl=%s", err, req.Method, req.URL)
+
 		var nerr net.Error
+
 		if errors.As(err, &nerr) {
 			// Because net.Error and error have different meanings for the
 			// retry strategy, we cannot simply return a new error, which
@@ -154,6 +163,7 @@ func (t *Transport) request(req *http.Request, host Host, timeout time.Duration,
 		} else {
 			err = errors.New(msg)
 		}
+
 		return nil, err
 	}
 
@@ -164,5 +174,6 @@ func shouldCompress(c compression.Compression, method string, body any) bool {
 	isValidMethod := method == http.MethodPut || method == http.MethodPost
 	isCompressionEnabled := c != compression.NONE
 	isBodyNonEmpty := body != nil
+
 	return isCompressionEnabled && isValidMethod && isBodyNonEmpty
 }

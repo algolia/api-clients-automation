@@ -93,7 +93,7 @@ func (c *APIClient) WaitForTask(
     return time.Duration(min(200*count, 5000)) * time.Millisecond
   }), WithMaxRetries(50)}, opts...)
 
-	return CreateIterable( //nolint:wrapcheck
+	return CreateIterable(
 		func(*GetTaskResponse, error) (*GetTaskResponse, error) {
 			return c.GetTask(ctx, indexName, taskID, toRequestOptions(opts)...)
 		},
@@ -121,7 +121,7 @@ func (c *APIClient) WaitForAppTask(
     return time.Duration(min(200*count, 5000)) * time.Millisecond
   }), WithMaxRetries(50)}, opts...)
 
-	return CreateIterable( //nolint:wrapcheck
+	return CreateIterable(
 		func(*GetTaskResponse, error) (*GetTaskResponse, error) {
 			return c.GetAppTask(ctx, taskID, toRequestOptions(opts)...)
 		},
@@ -248,7 +248,7 @@ func (c *APIClient) WaitForApiKey(
     return time.Duration(min(200*count, 5000)) * time.Millisecond
   }), WithMaxRetries(50)}, opts...)
 
-	return CreateIterable( //nolint:wrapcheck
+	return CreateIterable(
 		func(*GetApiKeyResponse, error) (*GetApiKeyResponse, error) {
 			return c.GetApiKey(ctx, key, toRequestOptions(opts)...)
 		},
@@ -269,7 +269,7 @@ func (c *APIClient) BrowseObjects(
     browseParams.HitsPerPage = utils.ToPtr(int32(1000))
   }
 
-	_, err := CreateIterable( //nolint:wrapcheck
+	_, err := CreateIterable(
 		func(previousResponse *BrowseResponse, previousErr error) (*BrowseResponse, error) {
 			if previousResponse != nil {
 				browseParams.Cursor = previousResponse.Cursor
@@ -305,7 +305,7 @@ func (c *APIClient) BrowseRules(
 		hitsPerPage = *optionalParams.HitsPerPage
 	}
 
-	_, err := CreateIterable( //nolint:wrapcheck
+	_, err := CreateIterable(
 		func(previousResponse *SearchRulesResponse, previousErr error) (*SearchRulesResponse, error) {
 			optionalParams.HitsPerPage = &hitsPerPage
 
@@ -348,7 +348,7 @@ func (c *APIClient) BrowseSynonyms(
 		optionalParams.Page = utils.ToPtr(int32(0))
 	}
 
-	_, err := CreateIterable( //nolint:wrapcheck
+	_, err := CreateIterable(
 		func(previousResponse *SearchSynonymsResponse, previousErr error) (*SearchSynonymsResponse, error) {
 			optionalParams.HitsPerPage = &hitsPerPage
 
@@ -442,7 +442,7 @@ func (c *APIClient) GetSecuredApiKeyRemainingValidity(securedApiKey string) (tim
 
 	decoded, err := base64.StdEncoding.DecodeString(securedApiKey)
 	if err != nil {
-		return 0, fmt.Errorf("unable to decode given secured API key: %s", err)
+		return 0, fmt.Errorf("unable to decode given secured API key: %w", err)
 	}
 
 	submatch := regexp.MustCompile(`validUntil=(\d{1,10})`).FindSubmatch(decoded)

@@ -53,7 +53,7 @@ type config struct {
 }
 
 type RequestOption interface {
-	apply(*config)
+	apply(c *config)
 }
 
 type requestOption func(*config)
@@ -227,7 +227,7 @@ func WithMaxRetries(maxRetries int) iterableOption {
 	})
 }
 
-// WithTimeout he function to decide how long to wait between retries. Default to min(retryCount * 200, 5000)
+// WithTimeout he function to decide how long to wait between retries. Default to min(retryCount * 200, 5000).
 func WithTimeout(timeout func(int) time.Duration) iterableOption {
 	return iterableOption(func(c *config) {
 		c.timeout = timeout
@@ -268,7 +268,7 @@ func (r requestOption) waitForApiKey() {}
 
 func (i iterableOption) waitForApiKey() {}
 
-// WithApiKey necessary to know if an `update` operation has been processed, compare fields of the response with it. (optional - mandatory if operation is UPDATE)
+// WithApiKey necessary to know if an `update` operation has been processed, compare fields of the response with it. (optional - mandatory if operation is UPDATE).
 func WithApiKey(apiKey *ApiKey) waitForApiKeyOption {
 	return waitForApiKeyOption(func(c *config) {
 		c.apiKey = apiKey
@@ -358,7 +358,7 @@ type {{operationId}}Options struct {
 }
 
 {{#isDeprecated}}
-// Deprecated: {{operationId}}Options is deprecated
+// Deprecated: {{operationId}}Options is deprecated.
 {{/isDeprecated}}
 // New{{operationId}}Options creates an instance of the {{operationId}}Options used to add optional parameters to {{operationId}}WithOptions.
 func New{{{operationId}}}Options() *{{operationId}}Options {
@@ -368,7 +368,7 @@ func New{{{operationId}}}Options() *{{operationId}}Options {
 {{#optionalParams}}
 // With{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}} {{#description}}{{{.}}}{{/description}}{{^description}}adds the {{paramName}} to the Api{{operationId}}Request and returns the request for chaining.{{/description}}
 {{#isDeprecated}}
-// Deprecated: With{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}} is deprecated
+// Deprecated: With{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}} is deprecated.
 {{/isDeprecated}}
 func (o *{{operationId}}Options) With{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}}({{paramName}} {{#isModel}}*{{/isModel}}{{{dataType}}}) *{{operationId}}Options {
 	o.{{nameInPascalCase}} = {{^isModel}}{{^isMap}}&{{/isMap}}{{/isModel}}{{paramName}}
@@ -399,7 +399,7 @@ func (o *{{operationId}}Options) With{{#lambda.titlecase}}{{baseName}}{{/lambda.
 //  - opts - Optional parameters for the API call (e.g. WithHeaderParam, WithReadTimeout...)
   {{#isDeprecated}}
 //
-// Deprecated: {{operationId}} is deprecated
+// Deprecated: {{operationId}} is deprecated.
   {{/isDeprecated}}
 func (c *APIClient) {{nickname}}(ctx context.Context, {{#requiredParams}}{{paramName}} {{#required}}{{#isModel}}*{{/isModel}}{{/required}}{{^required}}{{^isMap}}*{{/isMap}}{{/required}}{{{dataType}}}, {{/requiredParams}}{{#hasOptionalParams}}optionalParams *{{operationId}}Options, {{/hasOptionalParams}}opts ...RequestOption) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
   {{#returnType}}
@@ -413,6 +413,7 @@ func (c *APIClient) {{nickname}}(ctx context.Context, {{#requiredParams}}{{param
   if res == nil {
     return {{#returnType}}returnValue, {{/returnType}}reportError("res is nil")
   }
+  defer res.Body.Close()
 
 	if res.StatusCode >= 300 {
 			return {{#returnType}}returnValue, {{/returnType}}c.decodeError(res, resBody)
@@ -450,7 +451,7 @@ func (c *APIClient) {{nickname}}(ctx context.Context, {{#requiredParams}}{{param
 //  - opts - Optional parameters for the API call (e.g. WithHeaderParam, WithReadTimeout...)
   {{#isDeprecated}}
 //
-// Deprecated: {{operationId}} is deprecated
+// Deprecated: {{operationId}} is deprecated.
   {{/isDeprecated}}
 func (c *APIClient) {{nickname}}WithHTTPInfo(ctx context.Context, {{#requiredParams}}{{paramName}} {{#required}}{{#isModel}}*{{/isModel}}{{/required}}{{^required}}{{^isMap}}*{{/isMap}}{{/required}}{{{dataType}}}, {{/requiredParams}}{{#hasOptionalParams}}optionalParams *{{operationId}}Options, {{/hasOptionalParams}}opts ...RequestOption) (*http.Response, []byte, error) {
   {{#vendorExtensions}}
