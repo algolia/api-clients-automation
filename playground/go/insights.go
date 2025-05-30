@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/insights"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/insights"
 )
 
 func testInsights(appID, apiKey string) int {
@@ -12,17 +12,15 @@ func testInsights(appID, apiKey string) int {
 		panic(err)
 	}
 
-	events := insights.NewInsightsEvents([]insights.EventsItems{
+	events := []insights.EventsItems{
 		*insights.ClickedObjectIDsAsEventsItems(insights.NewClickedObjectIDs("myEvent",
 			insights.CLICK_EVENT_CLICK,
 			"test_index",
 			[]string{"myObjectID"},
 			"myToken",
 			insights.WithClickedObjectIDsTimestamp(1234567890))),
-	})
-	eventsResponse, err := insightsClient.PushEvents(
-		insightsClient.NewApiPushEventsRequest(events),
-	)
+	}
+	eventsResponse, err := insightsClient.PushEvents(events)
 	if err != nil {
 		fmt.Printf("request error with PushEvents: %v\n", err)
 		return 1
