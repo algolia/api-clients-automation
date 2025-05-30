@@ -41,7 +41,7 @@ You can now import the Algolia API client in your project and play with it.
 
 
 ```go
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+import "github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 
 client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 

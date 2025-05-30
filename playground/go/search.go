@@ -3,8 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
-	// "github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 )
 
 func testSearch(appID, apiKey string) int {

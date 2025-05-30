@@ -37,7 +37,7 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     additionalProperties.put("packageName", client.equals("query-suggestions") ? "suggestions" : Helpers.camelize(client));
     additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize(client)) + "Client", true);
 
-    String outputFolder = "algolia" + File.separator + client;
+    String outputFolder = "algolia/next/" + client;
     setOutputDir(getOutputDir() + File.separator + outputFolder);
 
     super.processOpts();
@@ -59,7 +59,7 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     supportingFiles.add(new SupportingFile("configuration.mustache", "", "configuration.go"));
     supportingFiles.add(new SupportingFile("client.mustache", "", "client.go"));
 
-    Helpers.addCommonSupportingFiles(supportingFiles, "../../");
+    Helpers.addCommonSupportingFiles(supportingFiles, "../../../");
 
     try {
       additionalProperties.put("packageVersion", Helpers.getClientConfigField("go", "packageVersion"));

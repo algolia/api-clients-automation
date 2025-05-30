@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	suggestions "github.com/algolia/algoliasearch-client-go/v4/algolia/query-suggestions"
+	suggestions "github.com/algolia/algoliasearch-client-go/v4/algolia/next/query-suggestions"
 )
 
 func testQuerySuggestions(appID, apiKey string) int {

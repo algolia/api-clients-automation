@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/personalization"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/personalization"
 )
 
 func testPersonalization(appID, apiKey string) int {
