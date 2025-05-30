@@ -1,6 +1,6 @@
 package main
 
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+import "github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 
 func savePopularRecords() {
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -32,8 +32,7 @@ func savePopularRecords() {
 		panic(err)
 	}
 
-	_, err = client.SaveObjects(
-		"<YOUR_INDEX_NAME>", records)
+	_, err = client.SaveObjects("<YOUR_INDEX_NAME>", records)
 	if err != nil {
 		panic(err)
 	}

@@ -1,6 +1,6 @@
 package main
 
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+import "github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 
 func getBuyerAccountId() (string, error) {
 	return "", nil // Implement your logic here
@@ -25,8 +25,7 @@ func searchWithRuleContextBuyer() {
 			SetRuleContexts([]string{buyer}),
 	)
 
-	_, err = client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-		"<YOUR_INDEX_NAME>").WithSearchParams(searchParams))
+	_, err = client.SearchSingleIndex("<YOUR_INDEX_NAME>", searchParams)
 	if err != nil {
 		panic(err)
 	}

@@ -11,8 +11,9 @@ import (
 
 	"gotests/tests"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 func createSearchClient(t *testing.T) (*search.APIClient, *tests.EchoRequester) {
@@ -37,10 +38,8 @@ func TestSearch_AddApiKey(t *testing.T) {
 	_ = echo
 
 	t.Run("minimal", func(t *testing.T) {
-		_, err := client.AddApiKey(client.NewApiAddApiKeyRequest(
-
-			search.NewEmptyApiKey().SetAcl(
-				[]search.Acl{search.Acl("search"), search.Acl("addObject")}).SetDescription("my new api key")))
+		_, err := client.AddApiKey(
+			[]search.Acl{search.ACL_SEARCH, search.ACL_ADD_OBJECT}, search.NewAddApiKeyOptions().WithDescription("my new api key"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/keys", echo.Path)
@@ -50,10 +49,8 @@ func TestSearch_AddApiKey(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"acl":["search","addObject"],"description":"my new api key"}`)
 	})
 	t.Run("all", func(t *testing.T) {
-		_, err := client.AddApiKey(client.NewApiAddApiKeyRequest(
-
-			search.NewEmptyApiKey().SetAcl(
-				[]search.Acl{search.Acl("search"), search.Acl("addObject")}).SetDescription("my new api key").SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20)))
+		_, err := client.AddApiKey(
+			[]search.Acl{search.ACL_SEARCH, search.ACL_ADD_OBJECT}, search.NewAddApiKeyOptions().WithDescription("my new api key").WithValidity(300).WithMaxQueriesPerIPPerHour(100).WithMaxHitsPerQuery(20))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/keys", echo.Path)
@@ -69,8 +66,7 @@ func TestSearch_AddOrUpdateObject(t *testing.T) {
 	_ = echo
 
 	t.Run("addOrUpdateObject", func(t *testing.T) {
-		_, err := client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
-			"indexName", "uniqueID", map[string]any{"key": "value"}))
+		_, err := client.AddOrUpdateObject("indexName", "uniqueID", map[string]any{"key": "value"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/uniqueID", echo.Path)
@@ -86,9 +82,7 @@ func TestSearch_AppendSource(t *testing.T) {
 	_ = echo
 
 	t.Run("appendSource", func(t *testing.T) {
-		_, err := client.AppendSource(client.NewApiAppendSourceRequest(
-
-			search.NewEmptySource().SetSource("theSource").SetDescription("theDescription")))
+		_, err := client.AppendSource("theSource", utils.ToPtr("theDescription"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/security/sources/append", echo.Path)
@@ -104,9 +98,7 @@ func TestSearch_AssignUserId(t *testing.T) {
 	_ = echo
 
 	t.Run("simple", func(t *testing.T) {
-		_, err := client.AssignUserId(client.NewApiAssignUserIdRequest(
-			"user42",
-			search.NewEmptyAssignUserIdParams().SetCluster("d4242-eu")))
+		_, err := client.AssignUserId("user42", "d4242-eu")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/clusters/mapping", echo.Path)
@@ -121,9 +113,7 @@ func TestSearch_AssignUserId(t *testing.T) {
 		}
 	})
 	t.Run("it should not encode the userID", func(t *testing.T) {
-		_, err := client.AssignUserId(client.NewApiAssignUserIdRequest(
-			"user id with spaces",
-			search.NewEmptyAssignUserIdParams().SetCluster("cluster with spaces")))
+		_, err := client.AssignUserId("user id with spaces", "cluster with spaces")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/clusters/mapping", echo.Path)
@@ -144,10 +134,8 @@ func TestSearch_Batch(t *testing.T) {
 	_ = echo
 
 	t.Run("addObject", func(t *testing.T) {
-		_, err := client.Batch(client.NewApiBatchRequest(
-			"<YOUR_INDEX_NAME>",
-			search.NewEmptyBatchWriteParams().SetRequests(
-				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "bar", "foo": "1"}), *search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "baz", "foo": "2"})})))
+		_, err := client.Batch("<YOUR_INDEX_NAME>",
+			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.ACTION_ADD_OBJECT).SetBody(map[string]any{"key": "bar", "foo": "1"}), *search.NewEmptyBatchRequest().SetAction(search.ACTION_ADD_OBJECT).SetBody(map[string]any{"key": "baz", "foo": "2"})})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", echo.Path)
@@ -157,10 +145,8 @@ func TestSearch_Batch(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"action":"addObject","body":{"key":"bar","foo":"1"}},{"action":"addObject","body":{"key":"baz","foo":"2"}}]}`)
 	})
 	t.Run("clear", func(t *testing.T) {
-		_, err := client.Batch(client.NewApiBatchRequest(
-			"<YOUR_INDEX_NAME>",
-			search.NewEmptyBatchWriteParams().SetRequests(
-				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("clear")).SetBody(map[string]any{"key": "value"})})))
+		_, err := client.Batch("<YOUR_INDEX_NAME>",
+			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.ACTION_CLEAR).SetBody(map[string]any{"key": "value"})})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", echo.Path)
@@ -170,10 +156,8 @@ func TestSearch_Batch(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"action":"clear","body":{"key":"value"}}]}`)
 	})
 	t.Run("delete", func(t *testing.T) {
-		_, err := client.Batch(client.NewApiBatchRequest(
-			"<YOUR_INDEX_NAME>",
-			search.NewEmptyBatchWriteParams().SetRequests(
-				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("delete")).SetBody(map[string]any{"key": "value"})})))
+		_, err := client.Batch("<YOUR_INDEX_NAME>",
+			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.ACTION_DELETE).SetBody(map[string]any{"key": "value"})})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", echo.Path)
@@ -183,10 +167,8 @@ func TestSearch_Batch(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"action":"delete","body":{"key":"value"}}]}`)
 	})
 	t.Run("deleteObject", func(t *testing.T) {
-		_, err := client.Batch(client.NewApiBatchRequest(
-			"<YOUR_INDEX_NAME>",
-			search.NewEmptyBatchWriteParams().SetRequests(
-				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("deleteObject")).SetBody(map[string]any{"key": "value"})})))
+		_, err := client.Batch("<YOUR_INDEX_NAME>",
+			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.ACTION_DELETE_OBJECT).SetBody(map[string]any{"key": "value"})})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", echo.Path)
@@ -196,10 +178,8 @@ func TestSearch_Batch(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"action":"deleteObject","body":{"key":"value"}}]}`)
 	})
 	t.Run("partialUpdateObject", func(t *testing.T) {
-		_, err := client.Batch(client.NewApiBatchRequest(
-			"<YOUR_INDEX_NAME>",
-			search.NewEmptyBatchWriteParams().SetRequests(
-				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("partialUpdateObject")).SetBody(map[string]any{"key": "value"})})))
+		_, err := client.Batch("<YOUR_INDEX_NAME>",
+			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.ACTION_PARTIAL_UPDATE_OBJECT).SetBody(map[string]any{"key": "value"})})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", echo.Path)
@@ -209,10 +189,8 @@ func TestSearch_Batch(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"action":"partialUpdateObject","body":{"key":"value"}}]}`)
 	})
 	t.Run("partialUpdateObjectNoCreate", func(t *testing.T) {
-		_, err := client.Batch(client.NewApiBatchRequest(
-			"<YOUR_INDEX_NAME>",
-			search.NewEmptyBatchWriteParams().SetRequests(
-				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("partialUpdateObjectNoCreate")).SetBody(map[string]any{"key": "value"})})))
+		_, err := client.Batch("<YOUR_INDEX_NAME>",
+			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.ACTION_PARTIAL_UPDATE_OBJECT_NO_CREATE).SetBody(map[string]any{"key": "value"})})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", echo.Path)
@@ -222,10 +200,8 @@ func TestSearch_Batch(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"action":"partialUpdateObjectNoCreate","body":{"key":"value"}}]}`)
 	})
 	t.Run("updateObject", func(t *testing.T) {
-		_, err := client.Batch(client.NewApiBatchRequest(
-			"<YOUR_INDEX_NAME>",
-			search.NewEmptyBatchWriteParams().SetRequests(
-				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("updateObject")).SetBody(map[string]any{"key": "value"})})))
+		_, err := client.Batch("<YOUR_INDEX_NAME>",
+			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.ACTION_UPDATE_OBJECT).SetBody(map[string]any{"key": "value"})})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", echo.Path)
@@ -241,10 +217,8 @@ func TestSearch_BatchAssignUserIds(t *testing.T) {
 	_ = echo
 
 	t.Run("batchAssignUserIds", func(t *testing.T) {
-		_, err := client.BatchAssignUserIds(client.NewApiBatchAssignUserIdsRequest(
-			"userID",
-			search.NewEmptyBatchAssignUserIdsParams().SetCluster("theCluster").SetUsers(
-				[]string{"user1", "user2"})))
+		_, err := client.BatchAssignUserIds("userID", "theCluster",
+			[]string{"user1", "user2"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/clusters/mapping/batch", echo.Path)
@@ -265,13 +239,11 @@ func TestSearch_BatchDictionaryEntries(t *testing.T) {
 	_ = echo
 
 	t.Run("replace", func(t *testing.T) {
-		_, err := client.BatchDictionaryEntries(client.NewApiBatchDictionaryEntriesRequest(
-			search.DictionaryType("plurals"),
-			search.NewEmptyBatchDictionaryEntriesParams().SetClearExistingDictionaryEntries(true).SetRequests(
-				[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
-					search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetWord("fancy").SetWords(
-						[]string{"believe", "algolia"}).SetDecomposition(
-						[]string{"trust", "algolia"}).SetState(search.DictionaryEntryState("enabled")))})))
+		_, err := client.BatchDictionaryEntries(search.DICTIONARY_TYPE_PLURALS,
+			[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DICTIONARY_ACTION_ADD_ENTRY).SetBody(
+				search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SUPPORTED_LANGUAGE_EN).SetWord("fancy").SetWords(
+					[]string{"believe", "algolia"}).SetDecomposition(
+					[]string{"trust", "algolia"}).SetState(search.DICTIONARY_ENTRY_STATE_ENABLED))}, utils.ToPtr(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/dictionaries/plurals/batch", echo.Path)
@@ -281,11 +253,9 @@ func TestSearch_BatchDictionaryEntries(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"clearExistingDictionaryEntries":true,"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}}]}`)
 	})
 	t.Run("delete", func(t *testing.T) {
-		_, err := client.BatchDictionaryEntries(client.NewApiBatchDictionaryEntriesRequest(
-			search.DictionaryType("plurals"),
-			search.NewEmptyBatchDictionaryEntriesParams().SetClearExistingDictionaryEntries(true).SetRequests(
-				[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("deleteEntry")).SetBody(
-					search.NewEmptyDictionaryEntry().SetObjectID("1"))})))
+		_, err := client.BatchDictionaryEntries(search.DICTIONARY_TYPE_PLURALS,
+			[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DICTIONARY_ACTION_DELETE_ENTRY).SetBody(
+				search.NewEmptyDictionaryEntry().SetObjectID("1"))}, utils.ToPtr(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/dictionaries/plurals/batch", echo.Path)
@@ -295,11 +265,9 @@ func TestSearch_BatchDictionaryEntries(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"clearExistingDictionaryEntries":true,"requests":[{"action":"deleteEntry","body":{"objectID":"1"}}]}`)
 	})
 	t.Run("append", func(t *testing.T) {
-		_, err := client.BatchDictionaryEntries(client.NewApiBatchDictionaryEntriesRequest(
-			search.DictionaryType("stopwords"),
-			search.NewEmptyBatchDictionaryEntriesParams().SetRequests(
-				[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
-					search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetAdditionalProperty("additional", "try me"))})))
+		_, err := client.BatchDictionaryEntries(search.DICTIONARY_TYPE_STOPWORDS,
+			[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DICTIONARY_ACTION_ADD_ENTRY).SetBody(
+				search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SUPPORTED_LANGUAGE_EN).SetAdditionalProperty("additional", "try me"))}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/dictionaries/stopwords/batch", echo.Path)
@@ -315,8 +283,7 @@ func TestSearch_Browse(t *testing.T) {
 	_ = echo
 
 	t.Run("browse with minimal parameters", func(t *testing.T) {
-		_, err := client.Browse(client.NewApiBrowseRequest(
-			"cts_e2e_browse"))
+		_, err := client.Browse("cts_e2e_browse", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/cts_e2e_browse/browse", echo.Path)
@@ -326,10 +293,9 @@ func TestSearch_Browse(t *testing.T) {
 		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("browse with search parameters", func(t *testing.T) {
-		_, err := client.Browse(client.NewApiBrowseRequest(
-			"indexName").WithBrowseParams(search.BrowseParamsObjectAsBrowseParams(
+		_, err := client.Browse("indexName", search.BrowseParamsObjectAsBrowseParams(
 			search.NewEmptyBrowseParamsObject().SetQuery("myQuery").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
-				[]search.FacetFilters{*search.StringAsFacetFilters("tags:algolia")})))))
+				[]search.FacetFilters{*search.StringAsFacetFilters("tags:algolia")}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/browse", echo.Path)
@@ -339,9 +305,8 @@ func TestSearch_Browse(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"myQuery","facetFilters":["tags:algolia"]}`)
 	})
 	t.Run("browse allow a cursor in parameters", func(t *testing.T) {
-		_, err := client.Browse(client.NewApiBrowseRequest(
-			"indexName").WithBrowseParams(search.BrowseParamsObjectAsBrowseParams(
-			search.NewEmptyBrowseParamsObject().SetCursor("test"))))
+		_, err := client.Browse("indexName", search.BrowseParamsObjectAsBrowseParams(
+			search.NewEmptyBrowseParamsObject().SetCursor("test")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/browse", echo.Path)
@@ -357,8 +322,7 @@ func TestSearch_ClearObjects(t *testing.T) {
 	_ = echo
 
 	t.Run("clearObjects", func(t *testing.T) {
-		_, err := client.ClearObjects(client.NewApiClearObjectsRequest(
-			"theIndexName"))
+		_, err := client.ClearObjects("theIndexName")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/clear", echo.Path)
@@ -373,8 +337,7 @@ func TestSearch_ClearRules(t *testing.T) {
 	_ = echo
 
 	t.Run("clearRules", func(t *testing.T) {
-		_, err := client.ClearRules(client.NewApiClearRulesRequest(
-			"indexName"))
+		_, err := client.ClearRules("indexName", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/clear", echo.Path)
@@ -389,8 +352,7 @@ func TestSearch_ClearSynonyms(t *testing.T) {
 	_ = echo
 
 	t.Run("clearSynonyms", func(t *testing.T) {
-		_, err := client.ClearSynonyms(client.NewApiClearSynonymsRequest(
-			"indexName"))
+		_, err := client.ClearSynonyms("indexName", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/synonyms/clear", echo.Path)
@@ -405,8 +367,7 @@ func TestSearch_CustomDelete(t *testing.T) {
 	_ = echo
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"test/minimal"))
+		_, err := client.CustomDelete("test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -415,8 +376,7 @@ func TestSearch_CustomDelete(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("allow del method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters"}))
+		_, err := client.CustomDelete("test/all", map[string]any{"query": "parameters"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -437,8 +397,7 @@ func TestSearch_CustomGet(t *testing.T) {
 	_ = echo
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/minimal"))
+		_, err := client.CustomGet("test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -447,8 +406,7 @@ func TestSearch_CustomGet(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("allow get method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters with space"}))
+		_, err := client.CustomGet("test/all", map[string]any{"query": "parameters with space"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -463,8 +421,7 @@ func TestSearch_CustomGet(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions should be escaped too", func(t *testing.T) {
-		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/all").WithParameters(map[string]any{"query": "to be overriden"}), search.WithQueryParam("query", "parameters with space"), search.WithQueryParam("and an array",
+		_, err := client.CustomGet("test/all", map[string]any{"query": "to be overriden"}, search.WithQueryParam("query", "parameters with space"), search.WithQueryParam("and an array",
 			[]string{"array", "with spaces"}), search.WithHeaderParam("x-header-1", "spaces are left alone"))
 		require.NoError(t, err)
 
@@ -491,8 +448,7 @@ func TestSearch_CustomPost(t *testing.T) {
 	_ = echo
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/minimal"))
+		_, err := client.CustomPost("test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -502,8 +458,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("allow post method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+		_, err := client.CustomPost("test/all", search.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -519,8 +474,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions can override default query parameters", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("query", "myQueryParameter"))
+		_, err := client.CustomPost("test/requestOptions", search.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("query", "myQueryParameter"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -536,8 +490,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions merges query parameters with default ones", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("query2", "myQueryParameter"))
+		_, err := client.CustomPost("test/requestOptions", search.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("query2", "myQueryParameter"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -553,8 +506,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions can override default headers", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		_, err := client.CustomPost("test/requestOptions", search.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -575,8 +527,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions merges headers with default ones", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		_, err := client.CustomPost("test/requestOptions", search.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -597,8 +548,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions queryParameters accepts booleans", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("isItWorking", true))
+		_, err := client.CustomPost("test/requestOptions", search.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("isItWorking", true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -614,8 +564,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions queryParameters accepts integers", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("myParam", 2))
+		_, err := client.CustomPost("test/requestOptions", search.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("myParam", 2))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -631,8 +580,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of string", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("myParam",
+		_, err := client.CustomPost("test/requestOptions", search.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("myParam",
 			[]string{"b and c", "d"}))
 		require.NoError(t, err)
 
@@ -649,8 +597,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of booleans", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("myParam",
+		_, err := client.CustomPost("test/requestOptions", search.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("myParam",
 			[]bool{true, true, false}))
 		require.NoError(t, err)
 
@@ -667,8 +614,7 @@ func TestSearch_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of integers", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("myParam",
+		_, err := client.CustomPost("test/requestOptions", search.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("myParam",
 			[]int32{1, 2}))
 		require.NoError(t, err)
 
@@ -691,8 +637,7 @@ func TestSearch_CustomPut(t *testing.T) {
 	_ = echo
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"test/minimal"))
+		_, err := client.CustomPut("test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -702,8 +647,7 @@ func TestSearch_CustomPut(t *testing.T) {
 		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("allow put method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+		_, err := client.CustomPut("test/all", search.NewCustomPutOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -725,8 +669,7 @@ func TestSearch_DeleteApiKey(t *testing.T) {
 	_ = echo
 
 	t.Run("deleteApiKey", func(t *testing.T) {
-		_, err := client.DeleteApiKey(client.NewApiDeleteApiKeyRequest(
-			"myTestApiKey"))
+		_, err := client.DeleteApiKey("myTestApiKey")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/keys/myTestApiKey", echo.Path)
@@ -741,9 +684,7 @@ func TestSearch_DeleteBy(t *testing.T) {
 	_ = echo
 
 	t.Run("deleteBy", func(t *testing.T) {
-		_, err := client.DeleteBy(client.NewApiDeleteByRequest(
-			"theIndexName",
-			search.NewEmptyDeleteByParams().SetFilters("brand:brandName")))
+		_, err := client.DeleteBy("theIndexName", search.NewDeleteByOptions().WithFilters("brand:brandName"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/deleteByQuery", echo.Path)
@@ -759,8 +700,7 @@ func TestSearch_DeleteIndex(t *testing.T) {
 	_ = echo
 
 	t.Run("deleteIndex", func(t *testing.T) {
-		_, err := client.DeleteIndex(client.NewApiDeleteIndexRequest(
-			"theIndexName"))
+		_, err := client.DeleteIndex("theIndexName")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName", echo.Path)
@@ -775,8 +715,7 @@ func TestSearch_DeleteObject(t *testing.T) {
 	_ = echo
 
 	t.Run("deleteObject", func(t *testing.T) {
-		_, err := client.DeleteObject(client.NewApiDeleteObjectRequest(
-			"<YOUR_INDEX_NAME>", "uniqueID"))
+		_, err := client.DeleteObject("<YOUR_INDEX_NAME>", "uniqueID")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/uniqueID", echo.Path)
@@ -791,8 +730,7 @@ func TestSearch_DeleteRule(t *testing.T) {
 	_ = echo
 
 	t.Run("delete rule simple case", func(t *testing.T) {
-		_, err := client.DeleteRule(client.NewApiDeleteRuleRequest(
-			"indexName", "id1"))
+		_, err := client.DeleteRule("indexName", "id1", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/id1", echo.Path)
@@ -801,8 +739,7 @@ func TestSearch_DeleteRule(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("delete rule with simple characters to encode in objectID", func(t *testing.T) {
-		_, err := client.DeleteRule(client.NewApiDeleteRuleRequest(
-			"indexName", "test/with/slash"))
+		_, err := client.DeleteRule("indexName", "test/with/slash", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/test%2Fwith%2Fslash", echo.Path)
@@ -817,8 +754,7 @@ func TestSearch_DeleteSource(t *testing.T) {
 	_ = echo
 
 	t.Run("deleteSource", func(t *testing.T) {
-		_, err := client.DeleteSource(client.NewApiDeleteSourceRequest(
-			"theSource"))
+		_, err := client.DeleteSource("theSource")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/security/sources/theSource", echo.Path)
@@ -833,8 +769,7 @@ func TestSearch_DeleteSynonym(t *testing.T) {
 	_ = echo
 
 	t.Run("deleteSynonym", func(t *testing.T) {
-		_, err := client.DeleteSynonym(client.NewApiDeleteSynonymRequest(
-			"indexName", "id1"))
+		_, err := client.DeleteSynonym("indexName", "id1", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/synonyms/id1", echo.Path)
@@ -849,8 +784,7 @@ func TestSearch_GetApiKey(t *testing.T) {
 	_ = echo
 
 	t.Run("getApiKey", func(t *testing.T) {
-		_, err := client.GetApiKey(client.NewApiGetApiKeyRequest(
-			"myTestApiKey"))
+		_, err := client.GetApiKey("myTestApiKey")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/keys/myTestApiKey", echo.Path)
@@ -865,8 +799,7 @@ func TestSearch_GetAppTask(t *testing.T) {
 	_ = echo
 
 	t.Run("getAppTask", func(t *testing.T) {
-		_, err := client.GetAppTask(client.NewApiGetAppTaskRequest(
-			123))
+		_, err := client.GetAppTask(123)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/task/123", echo.Path)
@@ -911,7 +844,7 @@ func TestSearch_GetLogs(t *testing.T) {
 	_ = echo
 
 	t.Run("getLogs with minimal parameters", func(t *testing.T) {
-		_, err := client.GetLogs(client.NewApiGetLogsRequest())
+		_, err := client.GetLogs(nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/logs", echo.Path)
@@ -920,7 +853,7 @@ func TestSearch_GetLogs(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("getLogs with parameters", func(t *testing.T) {
-		_, err := client.GetLogs(client.NewApiGetLogsRequest().WithOffset(5).WithLength(10).WithIndexName("theIndexName").WithType(search.LogType("all")))
+		_, err := client.GetLogs(search.NewGetLogsOptions().WithOffset(5).WithLength(10).WithIndexName("theIndexName").WithType(search.LOG_TYPE_ALL))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/logs", echo.Path)
@@ -941,8 +874,7 @@ func TestSearch_GetObject(t *testing.T) {
 	_ = echo
 
 	t.Run("getObject", func(t *testing.T) {
-		_, err := client.GetObject(client.NewApiGetObjectRequest(
-			"theIndexName", "uniqueID").WithAttributesToRetrieve(
+		_, err := client.GetObject("theIndexName", "uniqueID", utils.ToPtr(
 			[]string{"attr1", "attr2"}))
 		require.NoError(t, err)
 
@@ -958,8 +890,7 @@ func TestSearch_GetObject(t *testing.T) {
 		}
 	})
 	t.Run("search with a real object", func(t *testing.T) {
-		_, err := client.GetObject(client.NewApiGetObjectRequest(
-			"cts_e2e_browse", "Batman and Robin"))
+		_, err := client.GetObject("cts_e2e_browse", "Batman and Robin", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/cts_e2e_browse/Batman%20and%20Robin", echo.Path)
@@ -974,10 +905,8 @@ func TestSearch_GetObjects(t *testing.T) {
 	_ = echo
 
 	t.Run("by ID", func(t *testing.T) {
-		_, err := client.GetObjects(client.NewApiGetObjectsRequest(
-
-			search.NewEmptyGetObjectsParams().SetRequests(
-				[]search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetObjectID("uniqueID").SetIndexName("theIndexName")})))
+		_, err := client.GetObjects(
+			[]search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetObjectID("uniqueID").SetIndexName("theIndexName")})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/objects", echo.Path)
@@ -987,10 +916,8 @@ func TestSearch_GetObjects(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"objectID":"uniqueID","indexName":"theIndexName"}]}`)
 	})
 	t.Run("multiple IDs", func(t *testing.T) {
-		_, err := client.GetObjects(client.NewApiGetObjectsRequest(
-
-			search.NewEmptyGetObjectsParams().SetRequests(
-				[]search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetObjectID("uniqueID1").SetIndexName("theIndexName1"), *search.NewEmptyGetObjectsRequest().SetObjectID("uniqueID2").SetIndexName("theIndexName2")})))
+		_, err := client.GetObjects(
+			[]search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetObjectID("uniqueID1").SetIndexName("theIndexName1"), *search.NewEmptyGetObjectsRequest().SetObjectID("uniqueID2").SetIndexName("theIndexName2")})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/objects", echo.Path)
@@ -1000,11 +927,9 @@ func TestSearch_GetObjects(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"objectID":"uniqueID1","indexName":"theIndexName1"},{"objectID":"uniqueID2","indexName":"theIndexName2"}]}`)
 	})
 	t.Run("with attributesToRetrieve", func(t *testing.T) {
-		_, err := client.GetObjects(client.NewApiGetObjectsRequest(
-
-			search.NewEmptyGetObjectsParams().SetRequests(
-				[]search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetAttributesToRetrieve(
-					[]string{"attr1", "attr2"}).SetObjectID("uniqueID").SetIndexName("theIndexName")})))
+		_, err := client.GetObjects(
+			[]search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetAttributesToRetrieve(
+				[]string{"attr1", "attr2"}).SetObjectID("uniqueID").SetIndexName("theIndexName")})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/objects", echo.Path)
@@ -1020,8 +945,7 @@ func TestSearch_GetRule(t *testing.T) {
 	_ = echo
 
 	t.Run("getRule", func(t *testing.T) {
-		_, err := client.GetRule(client.NewApiGetRuleRequest(
-			"cts_e2e_browse", "qr-1725004648916"))
+		_, err := client.GetRule("cts_e2e_browse", "qr-1725004648916")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/cts_e2e_browse/rules/qr-1725004648916", echo.Path)
@@ -1036,8 +960,7 @@ func TestSearch_GetSettings(t *testing.T) {
 	_ = echo
 
 	t.Run("getSettings", func(t *testing.T) {
-		_, err := client.GetSettings(client.NewApiGetSettingsRequest(
-			"cts_e2e_settings"))
+		_, err := client.GetSettings("cts_e2e_settings")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/cts_e2e_settings/settings", echo.Path)
@@ -1067,8 +990,7 @@ func TestSearch_GetSynonym(t *testing.T) {
 	_ = echo
 
 	t.Run("getSynonym", func(t *testing.T) {
-		_, err := client.GetSynonym(client.NewApiGetSynonymRequest(
-			"indexName", "id1"))
+		_, err := client.GetSynonym("indexName", "id1")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/synonyms/id1", echo.Path)
@@ -1083,8 +1005,7 @@ func TestSearch_GetTask(t *testing.T) {
 	_ = echo
 
 	t.Run("getTask", func(t *testing.T) {
-		_, err := client.GetTask(client.NewApiGetTaskRequest(
-			"theIndexName", 123))
+		_, err := client.GetTask("theIndexName", 123)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/task/123", echo.Path)
@@ -1114,8 +1035,7 @@ func TestSearch_GetUserId(t *testing.T) {
 	_ = echo
 
 	t.Run("getUserId", func(t *testing.T) {
-		_, err := client.GetUserId(client.NewApiGetUserIdRequest(
-			"uniqueID"))
+		_, err := client.GetUserId("uniqueID")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/clusters/mapping/uniqueID", echo.Path)
@@ -1130,7 +1050,7 @@ func TestSearch_HasPendingMappings(t *testing.T) {
 	_ = echo
 
 	t.Run("hasPendingMappings with minimal parameters", func(t *testing.T) {
-		_, err := client.HasPendingMappings(client.NewApiHasPendingMappingsRequest())
+		_, err := client.HasPendingMappings(nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/clusters/mapping/pending", echo.Path)
@@ -1139,7 +1059,7 @@ func TestSearch_HasPendingMappings(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("hasPendingMappings with parameters", func(t *testing.T) {
-		_, err := client.HasPendingMappings(client.NewApiHasPendingMappingsRequest().WithGetClusters(true))
+		_, err := client.HasPendingMappings(utils.ToPtr(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/clusters/mapping/pending", echo.Path)
@@ -1190,7 +1110,7 @@ func TestSearch_ListIndices(t *testing.T) {
 	_ = echo
 
 	t.Run("listIndices with minimal parameters", func(t *testing.T) {
-		_, err := client.ListIndices(client.NewApiListIndicesRequest())
+		_, err := client.ListIndices(nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes", echo.Path)
@@ -1199,7 +1119,7 @@ func TestSearch_ListIndices(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("listIndices with parameters", func(t *testing.T) {
-		_, err := client.ListIndices(client.NewApiListIndicesRequest().WithPage(8).WithHitsPerPage(3))
+		_, err := client.ListIndices(search.NewListIndicesOptions().WithPage(8).WithHitsPerPage(3))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes", echo.Path)
@@ -1220,7 +1140,7 @@ func TestSearch_ListUserIds(t *testing.T) {
 	_ = echo
 
 	t.Run("listUserIds with minimal parameters", func(t *testing.T) {
-		_, err := client.ListUserIds(client.NewApiListUserIdsRequest())
+		_, err := client.ListUserIds(nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/clusters/mapping", echo.Path)
@@ -1229,7 +1149,7 @@ func TestSearch_ListUserIds(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("listUserIds with parameters", func(t *testing.T) {
-		_, err := client.ListUserIds(client.NewApiListUserIdsRequest().WithPage(8).WithHitsPerPage(100))
+		_, err := client.ListUserIds(search.NewListUserIdsOptions().WithPage(8).WithHitsPerPage(100))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/clusters/mapping", echo.Path)
@@ -1250,10 +1170,8 @@ func TestSearch_MultipleBatch(t *testing.T) {
 	_ = echo
 
 	t.Run("multipleBatch", func(t *testing.T) {
-		_, err := client.MultipleBatch(client.NewApiMultipleBatchRequest(
-
-			search.NewEmptyBatchParams().SetRequests(
-				[]search.MultipleBatchRequest{*search.NewEmptyMultipleBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "value"}).SetIndexName("theIndexName")})))
+		_, err := client.MultipleBatch(
+			[]search.MultipleBatchRequest{*search.NewEmptyMultipleBatchRequest().SetAction(search.ACTION_ADD_OBJECT).SetBody(map[string]any{"key": "value"}).SetIndexName("theIndexName")})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/batch", echo.Path)
@@ -1269,10 +1187,8 @@ func TestSearch_OperationIndex(t *testing.T) {
 	_ = echo
 
 	t.Run("scopes", func(t *testing.T) {
-		_, err := client.OperationIndex(client.NewApiOperationIndexRequest(
-			"<SOURCE_INDEX_NAME>",
-			search.NewEmptyOperationIndexParams().SetOperation(search.OperationType("move")).SetDestination("<DESTINATION_INDEX_NAME>").SetScope(
-				[]search.ScopeType{search.ScopeType("rules"), search.ScopeType("settings")})))
+		_, err := client.OperationIndex("<SOURCE_INDEX_NAME>", search.OPERATION_TYPE_MOVE, "<DESTINATION_INDEX_NAME>", utils.ToPtr(
+			[]search.ScopeType{search.SCOPE_TYPE_RULES, search.SCOPE_TYPE_SETTINGS}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation", echo.Path)
@@ -1282,9 +1198,7 @@ func TestSearch_OperationIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"operation":"move","destination":"<DESTINATION_INDEX_NAME>","scope":["rules","settings"]}`)
 	})
 	t.Run("copy", func(t *testing.T) {
-		_, err := client.OperationIndex(client.NewApiOperationIndexRequest(
-			"<SOURCE_INDEX_NAME>",
-			search.NewEmptyOperationIndexParams().SetOperation(search.OperationType("copy")).SetDestination("<DESTINATION_INDEX_NAME>")))
+		_, err := client.OperationIndex("<SOURCE_INDEX_NAME>", search.OPERATION_TYPE_COPY, "<DESTINATION_INDEX_NAME>", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation", echo.Path)
@@ -1294,9 +1208,7 @@ func TestSearch_OperationIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"operation":"copy","destination":"<DESTINATION_INDEX_NAME>"}`)
 	})
 	t.Run("move", func(t *testing.T) {
-		_, err := client.OperationIndex(client.NewApiOperationIndexRequest(
-			"<SOURCE_INDEX_NAME>",
-			search.NewEmptyOperationIndexParams().SetOperation(search.OperationType("move")).SetDestination("<DESTINATION_INDEX_NAME>")))
+		_, err := client.OperationIndex("<SOURCE_INDEX_NAME>", search.OPERATION_TYPE_MOVE, "<DESTINATION_INDEX_NAME>", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation", echo.Path)
@@ -1312,8 +1224,7 @@ func TestSearch_PartialUpdateObject(t *testing.T) {
 	_ = echo
 
 	t.Run("Partial update with a new value for a string attribute", func(t *testing.T) {
-		_, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
-			"theIndexName", "uniqueID", map[string]any{"attributeId": "new value"}))
+		_, err := client.PartialUpdateObject("theIndexName", "uniqueID", map[string]any{"attributeId": "new value"}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/uniqueID/partial", echo.Path)
@@ -1323,8 +1234,7 @@ func TestSearch_PartialUpdateObject(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributeId":"new value"}`)
 	})
 	t.Run("Partial update with a new value for an integer attribute", func(t *testing.T) {
-		_, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
-			"theIndexName", "uniqueID", map[string]any{"attributeId": 1}))
+		_, err := client.PartialUpdateObject("theIndexName", "uniqueID", map[string]any{"attributeId": 1}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/uniqueID/partial", echo.Path)
@@ -1334,8 +1244,7 @@ func TestSearch_PartialUpdateObject(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributeId":1}`)
 	})
 	t.Run("Partial update with a new value for a boolean attribute", func(t *testing.T) {
-		_, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
-			"theIndexName", "uniqueID", map[string]any{"attributeId": true}))
+		_, err := client.PartialUpdateObject("theIndexName", "uniqueID", map[string]any{"attributeId": true}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/uniqueID/partial", echo.Path)
@@ -1345,8 +1254,7 @@ func TestSearch_PartialUpdateObject(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributeId":true}`)
 	})
 	t.Run("Partial update with a new value for an array attribute", func(t *testing.T) {
-		_, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
-			"theIndexName", "uniqueID", map[string]any{"attributeId": []string{"one", "two", "three"}}))
+		_, err := client.PartialUpdateObject("theIndexName", "uniqueID", map[string]any{"attributeId": []string{"one", "two", "three"}}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/uniqueID/partial", echo.Path)
@@ -1356,8 +1264,7 @@ func TestSearch_PartialUpdateObject(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributeId":["one","two","three"]}`)
 	})
 	t.Run("Partial update with a new value for an object attribute", func(t *testing.T) {
-		_, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
-			"theIndexName", "uniqueID", map[string]any{"attributeId": map[string]any{"nested": "value"}}))
+		_, err := client.PartialUpdateObject("theIndexName", "uniqueID", map[string]any{"attributeId": map[string]any{"nested": "value"}}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/uniqueID/partial", echo.Path)
@@ -1367,8 +1274,7 @@ func TestSearch_PartialUpdateObject(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributeId":{"nested":"value"}}`)
 	})
 	t.Run("with visible_by filter", func(t *testing.T) {
-		_, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
-			"theIndexName", "uniqueID", map[string]any{"visible_by": []string{"Angela", "group/Finance", "group/Shareholders"}}))
+		_, err := client.PartialUpdateObject("theIndexName", "uniqueID", map[string]any{"visible_by": []string{"Angela", "group/Finance", "group/Shareholders"}}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/uniqueID/partial", echo.Path)
@@ -1378,8 +1284,7 @@ func TestSearch_PartialUpdateObject(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"visible_by":["Angela","group/Finance","group/Shareholders"]}`)
 	})
 	t.Run("add men pant", func(t *testing.T) {
-		_, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
-			"theIndexName", "productId", map[string]any{"categoryPageId": map[string]any{"_operation": "Add", "value": "men-clothing-pants"}}))
+		_, err := client.PartialUpdateObject("theIndexName", "productId", map[string]any{"categoryPageId": map[string]any{"_operation": "Add", "value": "men-clothing-pants"}}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/productId/partial", echo.Path)
@@ -1389,8 +1294,7 @@ func TestSearch_PartialUpdateObject(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"categoryPageId":{"_operation":"Add","value":"men-clothing-pants"}}`)
 	})
 	t.Run("remove men pant", func(t *testing.T) {
-		_, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
-			"theIndexName", "productId", map[string]any{"categoryPageId": map[string]any{"_operation": "Remove", "value": "men-clothing-pants"}}))
+		_, err := client.PartialUpdateObject("theIndexName", "productId", map[string]any{"categoryPageId": map[string]any{"_operation": "Remove", "value": "men-clothing-pants"}}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/productId/partial", echo.Path)
@@ -1406,8 +1310,7 @@ func TestSearch_RemoveUserId(t *testing.T) {
 	_ = echo
 
 	t.Run("removeUserId", func(t *testing.T) {
-		_, err := client.RemoveUserId(client.NewApiRemoveUserIdRequest(
-			"uniqueID"))
+		_, err := client.RemoveUserId("uniqueID")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/clusters/mapping/uniqueID", echo.Path)
@@ -1422,9 +1325,8 @@ func TestSearch_ReplaceSources(t *testing.T) {
 	_ = echo
 
 	t.Run("replaceSources", func(t *testing.T) {
-		_, err := client.ReplaceSources(client.NewApiReplaceSourcesRequest(
-
-			[]search.Source{*search.NewEmptySource().SetSource("theSource").SetDescription("theDescription")}))
+		_, err := client.ReplaceSources(
+			[]search.Source{*search.NewEmptySource().SetSource("theSource").SetDescription("theDescription")})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/security/sources", echo.Path)
@@ -1440,8 +1342,7 @@ func TestSearch_RestoreApiKey(t *testing.T) {
 	_ = echo
 
 	t.Run("restoreApiKey", func(t *testing.T) {
-		_, err := client.RestoreApiKey(client.NewApiRestoreApiKeyRequest(
-			"ALGOLIA_API_KEY"))
+		_, err := client.RestoreApiKey("ALGOLIA_API_KEY")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/keys/ALGOLIA_API_KEY/restore", echo.Path)
@@ -1456,8 +1357,7 @@ func TestSearch_SaveObject(t *testing.T) {
 	_ = echo
 
 	t.Run("saveObject", func(t *testing.T) {
-		_, err := client.SaveObject(client.NewApiSaveObjectRequest(
-			"<YOUR_INDEX_NAME>", map[string]any{"name": "Black T-shirt", "color": "#000000||black", "availableIn": "https://source.unsplash.com/100x100/?paris||Paris", "objectID": "myID"}))
+		_, err := client.SaveObject("<YOUR_INDEX_NAME>", map[string]any{"name": "Black T-shirt", "color": "#000000||black", "availableIn": "https://source.unsplash.com/100x100/?paris||Paris", "objectID": "myID"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E", echo.Path)
@@ -1473,12 +1373,11 @@ func TestSearch_SaveRule(t *testing.T) {
 	_ = echo
 
 	t.Run("saveRule with minimal parameters", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "id1",
+		_, err := client.SaveRule("indexName", "id1",
 			search.NewEmptyRule().SetObjectID("id1").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.ANCHORING_CONTAINS)}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
-					search.NewEmptyConsequenceParams().SetFilters("brand:xiaomi")))))
+					search.NewEmptyConsequenceParams().SetFilters("brand:xiaomi"))), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/id1", echo.Path)
@@ -1488,21 +1387,20 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains"}],"consequence":{"params":{"filters":"brand:xiaomi"}}}`)
 	})
 	t.Run("saveRule with all parameters", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "id1",
+		_, err := client.SaveRule("indexName", "id1",
 			search.NewEmptyRule().SetObjectID("id1").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains")).SetAlternatives(false).SetContext("search")}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.ANCHORING_CONTAINS).SetAlternatives(false).SetContext("search")}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
 					search.NewEmptyConsequenceParams().SetFilters("brand:apple").SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
 						search.NewEmptyConsequenceQueryObject().SetRemove(
 							[]string{"algolia"}).SetEdits(
-							[]search.Edit{*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("abc").SetInsert("cde"), *search.NewEmptyEdit().SetType(search.EditType("replace")).SetDelete("abc").SetInsert("cde")})))).SetHide(
+							[]search.Edit{*search.NewEmptyEdit().SetType(search.EDIT_TYPE_REMOVE).SetDelete("abc").SetInsert("cde"), *search.NewEmptyEdit().SetType(search.EDIT_TYPE_REPLACE).SetDelete("abc").SetInsert("cde")})))).SetHide(
 					[]search.ConsequenceHide{*search.NewEmptyConsequenceHide().SetObjectID("321")}).SetFilterPromotes(false).SetUserData(map[string]any{"algolia": "aloglia"}).SetPromote(
 					[]search.Promote{*search.PromoteObjectIDAsPromote(
 						search.NewEmptyPromoteObjectID().SetObjectID("abc").SetPosition(3)), *search.PromoteObjectIDsAsPromote(
 						search.NewEmptyPromoteObjectIDs().SetObjectIDs(
 							[]string{"abc", "def"}).SetPosition(1))})).SetDescription("test").SetEnabled(true).SetValidity(
-				[]search.TimeRange{*search.NewEmptyTimeRange().SetFrom(1656670273).SetUntil(1656670277)})).WithForwardToReplicas(true))
+				[]search.TimeRange{*search.NewEmptyTimeRange().SetFrom(1656670273).SetUntil(1656670277)}), utils.ToPtr(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/id1", echo.Path)
@@ -1518,15 +1416,14 @@ func TestSearch_SaveRule(t *testing.T) {
 		}
 	})
 	t.Run("b2b catalog", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "article-rule",
+		_, err := client.SaveRule("indexName", "article-rule",
 			search.NewEmptyRule().SetObjectID("article-rule").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("article").SetAnchoring(search.Anchoring("startsWith"))}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("article").SetAnchoring(search.ANCHORING_STARTS_WITH)}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
 					search.NewEmptyConsequenceParams().SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
 						search.NewEmptyConsequenceQueryObject().SetEdits(
-							[]search.Edit{*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("article")}))).SetRestrictSearchableAttributes(
-						[]string{"title", "book_id"})))))
+							[]search.Edit{*search.NewEmptyEdit().SetType(search.EDIT_TYPE_REMOVE).SetDelete("article")}))).SetRestrictSearchableAttributes(
+						[]string{"title", "book_id"}))), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/article-rule", echo.Path)
@@ -1536,16 +1433,15 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"objectID":"article-rule","conditions":[{"pattern":"article","anchoring":"startsWith"}],"consequence":{"params":{"query":{"edits":[{"type":"remove","delete":"article"}]},"restrictSearchableAttributes":["title","book_id"]}}}`)
 	})
 	t.Run("merchandising and promoting", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "director-rule",
+		_, err := client.SaveRule("indexName", "director-rule",
 			search.NewEmptyRule().SetObjectID("director-rule").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("{facet:director} director").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("{facet:director} director").SetAnchoring(search.ANCHORING_CONTAINS)}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
 					search.NewEmptyConsequenceParams().SetRestrictSearchableAttributes(
 						[]string{"title", "book_id"}).SetAutomaticFacetFilters(search.ArrayOfAutomaticFacetFilterAsAutomaticFacetFilters(
 						[]search.AutomaticFacetFilter{*search.NewEmptyAutomaticFacetFilter().SetFacet("director")})).SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
 						search.NewEmptyConsequenceQueryObject().SetEdits(
-							[]search.Edit{*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("director")})))))))
+							[]search.Edit{*search.NewEmptyEdit().SetType(search.EDIT_TYPE_REMOVE).SetDelete("director")}))))), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/director-rule", echo.Path)
@@ -1555,11 +1451,10 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"objectID":"director-rule","conditions":[{"pattern":"{facet:director} director","anchoring":"contains"}],"consequence":{"params":{"restrictSearchableAttributes":["title","book_id"],"automaticFacetFilters":[{"facet":"director"}],"query":{"edits":[{"type":"remove","delete":"director"}]}}}}`)
 	})
 	t.Run("harry potter", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "harry-potter-rule",
+		_, err := client.SaveRule("indexName", "harry-potter-rule",
 			search.NewEmptyRule().SetObjectID("harry-potter-rule").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("harry potter").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
-				search.NewEmptyConsequence().SetUserData(map[string]any{"promo_content": "20% OFF on all Harry Potter books!"}))))
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("harry potter").SetAnchoring(search.ANCHORING_CONTAINS)}).SetConsequence(
+				search.NewEmptyConsequence().SetUserData(map[string]any{"promo_content": "20% OFF on all Harry Potter books!"})), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/harry-potter-rule", echo.Path)
@@ -1569,12 +1464,11 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"objectID":"harry-potter-rule","conditions":[{"pattern":"harry potter","anchoring":"contains"}],"consequence":{"userData":{"promo_content":"20%% OFF on all Harry Potter books!"}}}`)
 	})
 	t.Run("merchandising empty query", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "clearance-category-filter",
+		_, err := client.SaveRule("indexName", "clearance-category-filter",
 			search.NewEmptyRule().SetObjectID("clearance-category-filter").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("").SetAnchoring(search.Anchoring("is")).SetContext("landing")}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("").SetAnchoring(search.ANCHORING_IS).SetContext("landing")}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
-					search.NewEmptyConsequenceParams().SetOptionalFilters(search.StringAsOptionalFilters("clearance:true"))))))
+					search.NewEmptyConsequenceParams().SetOptionalFilters(search.StringAsOptionalFilters("clearance:true")))), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/clearance-category-filter", echo.Path)
@@ -1584,11 +1478,10 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"objectID":"clearance-category-filter","conditions":[{"pattern":"","anchoring":"is","context":"landing"}],"consequence":{"params":{"optionalFilters":"clearance:true"}}}`)
 	})
 	t.Run("redirect", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "redirect-help-rule",
+		_, err := client.SaveRule("indexName", "redirect-help-rule",
 			search.NewEmptyRule().SetObjectID("redirect-help-rule").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("help").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
-				search.NewEmptyConsequence().SetUserData(map[string]any{"redirect": "https://www.algolia.com/support"}))))
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("help").SetAnchoring(search.ANCHORING_CONTAINS)}).SetConsequence(
+				search.NewEmptyConsequence().SetUserData(map[string]any{"redirect": "https://www.algolia.com/support"})), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/redirect-help-rule", echo.Path)
@@ -1598,12 +1491,11 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"objectID":"redirect-help-rule","conditions":[{"pattern":"help","anchoring":"contains"}],"consequence":{"userData":{"redirect":"https://www.algolia.com/support"}}}`)
 	})
 	t.Run("promote some results over others", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "tomato-fruit",
+		_, err := client.SaveRule("indexName", "tomato-fruit",
 			search.NewEmptyRule().SetObjectID("tomato-fruit").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("tomato").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("tomato").SetAnchoring(search.ANCHORING_CONTAINS)}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
-					search.NewEmptyConsequenceParams().SetOptionalFilters(search.StringAsOptionalFilters("food_group:fruit"))))))
+					search.NewEmptyConsequenceParams().SetOptionalFilters(search.StringAsOptionalFilters("food_group:fruit")))), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/tomato-fruit", echo.Path)
@@ -1613,14 +1505,13 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"objectID":"tomato-fruit","conditions":[{"pattern":"tomato","anchoring":"contains"}],"consequence":{"params":{"optionalFilters":"food_group:fruit"}}}`)
 	})
 	t.Run("promote several hits", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "Promote-Apple-Newest",
+		_, err := client.SaveRule("indexName", "Promote-Apple-Newest",
 			search.NewEmptyRule().SetObjectID("Promote-Apple-Newest").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("is"))}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.ANCHORING_IS)}).SetConsequence(
 				search.NewEmptyConsequence().SetPromote(
 					[]search.Promote{*search.PromoteObjectIDsAsPromote(
 						search.NewEmptyPromoteObjectIDs().SetObjectIDs(
-							[]string{"iPhone-12345", "watch-123"}).SetPosition(0))}))))
+							[]string{"iPhone-12345", "watch-123"}).SetPosition(0))})), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/Promote-Apple-Newest", echo.Path)
@@ -1630,13 +1521,12 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"objectID":"Promote-Apple-Newest","conditions":[{"pattern":"apple","anchoring":"is"}],"consequence":{"promote":[{"objectIDs":["iPhone-12345","watch-123"],"position":0}]}}`)
 	})
 	t.Run("promote newest release", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "Promote-iPhone-X",
+		_, err := client.SaveRule("indexName", "Promote-iPhone-X",
 			search.NewEmptyRule().SetObjectID("Promote-iPhone-X").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("iPhone").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("iPhone").SetAnchoring(search.ANCHORING_CONTAINS)}).SetConsequence(
 				search.NewEmptyConsequence().SetPromote(
 					[]search.Promote{*search.PromoteObjectIDAsPromote(
-						search.NewEmptyPromoteObjectID().SetObjectID("iPhone-12345").SetPosition(0))}))))
+						search.NewEmptyPromoteObjectID().SetObjectID("iPhone-12345").SetPosition(0))})), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/Promote-iPhone-X", echo.Path)
@@ -1646,13 +1536,12 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"objectID":"Promote-iPhone-X","conditions":[{"pattern":"iPhone","anchoring":"contains"}],"consequence":{"promote":[{"objectID":"iPhone-12345","position":0}]}}`)
 	})
 	t.Run("promote single item", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "promote-harry-potter-box-set",
+		_, err := client.SaveRule("indexName", "promote-harry-potter-box-set",
 			search.NewEmptyRule().SetObjectID("promote-harry-potter-box-set").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("Harry Potter").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("Harry Potter").SetAnchoring(search.ANCHORING_CONTAINS)}).SetConsequence(
 				search.NewEmptyConsequence().SetPromote(
 					[]search.Promote{*search.PromoteObjectIDAsPromote(
-						search.NewEmptyPromoteObjectID().SetObjectID("HP-12345").SetPosition(0))}))))
+						search.NewEmptyPromoteObjectID().SetObjectID("HP-12345").SetPosition(0))})), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/promote-harry-potter-box-set", echo.Path)
@@ -1662,15 +1551,14 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"objectID":"promote-harry-potter-box-set","conditions":[{"pattern":"Harry Potter","anchoring":"contains"}],"consequence":{"promote":[{"objectID":"HP-12345","position":0}]}}`)
 	})
 	t.Run("limit search results", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "article-rule",
+		_, err := client.SaveRule("indexName", "article-rule",
 			search.NewEmptyRule().SetObjectID("article-rule").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("article").SetAnchoring(search.Anchoring("startsWith"))}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("article").SetAnchoring(search.ANCHORING_STARTS_WITH)}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
 					search.NewEmptyConsequenceParams().SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
 						search.NewEmptyConsequenceQueryObject().SetEdits(
-							[]search.Edit{*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("article")}))).SetRestrictSearchableAttributes(
-						[]string{"title", "book_id"})))))
+							[]search.Edit{*search.NewEmptyEdit().SetType(search.EDIT_TYPE_REMOVE).SetDelete("article")}))).SetRestrictSearchableAttributes(
+						[]string{"title", "book_id"}))), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/article-rule", echo.Path)
@@ -1680,15 +1568,14 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"objectID":"article-rule","conditions":[{"pattern":"article","anchoring":"startsWith"}],"consequence":{"params":{"query":{"edits":[{"type":"remove","delete":"article"}]},"restrictSearchableAttributes":["title","book_id"]}}}`)
 	})
 	t.Run("query match", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "tagged-brand-rule",
+		_, err := client.SaveRule("indexName", "tagged-brand-rule",
 			search.NewEmptyRule().SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("brand: {facet:brand}").SetAnchoring(search.Anchoring("contains")).SetAlternatives(false)}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("brand: {facet:brand}").SetAnchoring(search.ANCHORING_CONTAINS).SetAlternatives(false)}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
 					search.NewEmptyConsequenceParams().SetAutomaticFacetFilters(search.ArrayOfAutomaticFacetFilterAsAutomaticFacetFilters(
 						[]search.AutomaticFacetFilter{*search.NewEmptyAutomaticFacetFilter().SetFacet("brand")})).SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
 						search.NewEmptyConsequenceQueryObject().SetRemove(
-							[]string{"brand:", "{facet:brand}"}))))).SetDescription("filter on brand: {brand}").SetObjectID("tagged-brand-rule")))
+							[]string{"brand:", "{facet:brand}"}))))).SetDescription("filter on brand: {brand}").SetObjectID("tagged-brand-rule"), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/tagged-brand-rule", echo.Path)
@@ -1698,13 +1585,12 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"conditions":[{"pattern":"brand: {facet:brand}","anchoring":"contains","alternatives":false}],"consequence":{"params":{"automaticFacetFilters":[{"facet":"brand"}],"query":{"remove":["brand:","{facet:brand}"]}}},"description":"filter on brand: {brand}","objectID":"tagged-brand-rule"}`)
 	})
 	t.Run("dynamic filtering", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "color-facets",
+		_, err := client.SaveRule("indexName", "color-facets",
 			search.NewEmptyRule().SetObjectID("color-facets").SetConditions(
 				[]search.Condition{*search.NewEmptyCondition().SetPattern("{facet:color}")}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
 					search.NewEmptyConsequenceParams().SetAutomaticFacetFilters(search.ArrayOfAutomaticFacetFilterAsAutomaticFacetFilters(
-						[]search.AutomaticFacetFilter{*search.NewEmptyAutomaticFacetFilter().SetFacet("color")}))))))
+						[]search.AutomaticFacetFilter{*search.NewEmptyAutomaticFacetFilter().SetFacet("color")})))), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/color-facets", echo.Path)
@@ -1714,12 +1600,11 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"objectID":"color-facets","conditions":[{"pattern":"{facet:color}"}],"consequence":{"params":{"automaticFacetFilters":[{"facet":"color"}]}}}`)
 	})
 	t.Run("hide hits", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "hide-12345",
+		_, err := client.SaveRule("indexName", "hide-12345",
 			search.NewEmptyRule().SetObjectID("hide-12345").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("cheap").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("cheap").SetAnchoring(search.ANCHORING_CONTAINS)}).SetConsequence(
 				search.NewEmptyConsequence().SetHide(
-					[]search.ConsequenceHide{*search.NewEmptyConsequenceHide().SetObjectID("to-hide-12345")}))))
+					[]search.ConsequenceHide{*search.NewEmptyConsequenceHide().SetObjectID("to-hide-12345")})), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/hide-12345", echo.Path)
@@ -1729,14 +1614,13 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"objectID":"hide-12345","conditions":[{"pattern":"cheap","anchoring":"contains"}],"consequence":{"hide":[{"objectID":"to-hide-12345"}]}}`)
 	})
 	t.Run("one rule per facet", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "red-color",
+		_, err := client.SaveRule("indexName", "red-color",
 			search.NewEmptyRule().SetObjectID("red-color").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("red").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("red").SetAnchoring(search.ANCHORING_CONTAINS)}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
 					search.NewEmptyConsequenceParams().SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
 						search.NewEmptyConsequenceQueryObject().SetRemove(
-							[]string{"red"}))).SetFilters("color:red")))))
+							[]string{"red"}))).SetFilters("color:red"))), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/red-color", echo.Path)
@@ -1746,14 +1630,13 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"objectID":"red-color","conditions":[{"pattern":"red","anchoring":"contains"}],"consequence":{"params":{"query":{"remove":["red"]},"filters":"color:red"}}}`)
 	})
 	t.Run("numerical filters", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "cheap",
+		_, err := client.SaveRule("indexName", "cheap",
 			search.NewEmptyRule().SetObjectID("cheap").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("cheap").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("cheap").SetAnchoring(search.ANCHORING_CONTAINS)}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
 					search.NewEmptyConsequenceParams().SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
 						search.NewEmptyConsequenceQueryObject().SetRemove(
-							[]string{"cheap"}))).SetFilters("price < 10")))))
+							[]string{"cheap"}))).SetFilters("price < 10"))), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/cheap", echo.Path)
@@ -1763,14 +1646,13 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"objectID":"cheap","conditions":[{"pattern":"cheap","anchoring":"contains"}],"consequence":{"params":{"query":{"remove":["cheap"]},"filters":"price < 10"}}}`)
 	})
 	t.Run("negative filters", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "gluten-free-rule",
+		_, err := client.SaveRule("indexName", "gluten-free-rule",
 			search.NewEmptyRule().SetObjectID("gluten-free-rule").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("gluten-free").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("gluten-free").SetAnchoring(search.ANCHORING_CONTAINS)}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
 					search.NewEmptyConsequenceParams().SetFilters("NOT allergens:gluten").SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
 						search.NewEmptyConsequenceQueryObject().SetEdits(
-							[]search.Edit{*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("gluten-free")})))))))
+							[]search.Edit{*search.NewEmptyEdit().SetType(search.EDIT_TYPE_REMOVE).SetDelete("gluten-free")}))))), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/gluten-free-rule", echo.Path)
@@ -1780,14 +1662,13 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"objectID":"gluten-free-rule","conditions":[{"pattern":"gluten-free","anchoring":"contains"}],"consequence":{"params":{"filters":"NOT allergens:gluten","query":{"edits":[{"type":"remove","delete":"gluten-free"}]}}}}`)
 	})
 	t.Run("positive filters", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "diet-rule",
+		_, err := client.SaveRule("indexName", "diet-rule",
 			search.NewEmptyRule().SetObjectID("diet-rule").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("diet").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("diet").SetAnchoring(search.ANCHORING_CONTAINS)}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
 					search.NewEmptyConsequenceParams().SetFilters("'low-carb' OR 'low-fat'").SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
 						search.NewEmptyConsequenceQueryObject().SetEdits(
-							[]search.Edit{*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("diet")})))))))
+							[]search.Edit{*search.NewEmptyEdit().SetType(search.EDIT_TYPE_REMOVE).SetDelete("diet")}))))), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/diet-rule", echo.Path)
@@ -1797,13 +1678,12 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"objectID":"diet-rule","conditions":[{"pattern":"diet","anchoring":"contains"}],"consequence":{"params":{"filters":"'low-carb' OR 'low-fat'","query":{"edits":[{"type":"remove","delete":"diet"}]}}}}`)
 	})
 	t.Run("conditionless", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "diet-rule",
+		_, err := client.SaveRule("indexName", "diet-rule",
 			search.NewEmptyRule().SetObjectID("diet-rule").SetConsequence(
 				search.NewEmptyConsequence().SetParams(
 					search.NewEmptyConsequenceParams().SetFilters("'low-carb' OR 'low-fat'").SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
 						search.NewEmptyConsequenceQueryObject().SetEdits(
-							[]search.Edit{*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("diet")})))))))
+							[]search.Edit{*search.NewEmptyEdit().SetType(search.EDIT_TYPE_REMOVE).SetDelete("diet")}))))), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/diet-rule", echo.Path)
@@ -1813,12 +1693,11 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"objectID":"diet-rule","consequence":{"params":{"filters":"'low-carb' OR 'low-fat'","query":{"edits":[{"type":"remove","delete":"diet"}]}}}}`)
 	})
 	t.Run("contextual", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "a-rule-id",
+		_, err := client.SaveRule("indexName", "a-rule-id",
 			search.NewEmptyRule().SetObjectID("a-rule-id").SetConditions(
 				[]search.Condition{*search.NewEmptyCondition().SetContext("mobile")}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
-					search.NewEmptyConsequenceParams().SetFilters("release_date >= 1577836800")))))
+					search.NewEmptyConsequenceParams().SetFilters("release_date >= 1577836800"))), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/a-rule-id", echo.Path)
@@ -1828,12 +1707,11 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"objectID":"a-rule-id","conditions":[{"context":"mobile"}],"consequence":{"params":{"filters":"release_date >= 1577836800"}}}`)
 	})
 	t.Run("saveRule always active rule", func(t *testing.T) {
-		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
-			"indexName", "a-rule-id",
+		_, err := client.SaveRule("indexName", "a-rule-id",
 			search.NewEmptyRule().SetObjectID("a-rule-id").SetConsequence(
 				search.NewEmptyConsequence().SetParams(
 					search.NewEmptyConsequenceParams().SetAroundRadius(search.Int32AsAroundRadius(1000)))).SetValidity(
-				[]search.TimeRange{*search.NewEmptyTimeRange().SetFrom(1577836800).SetUntil(1577836800)})))
+				[]search.TimeRange{*search.NewEmptyTimeRange().SetFrom(1577836800).SetUntil(1577836800)}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/rules/a-rule-id", echo.Path)
@@ -1849,15 +1727,14 @@ func TestSearch_SaveRules(t *testing.T) {
 	_ = echo
 
 	t.Run("saveRules with minimal parameters", func(t *testing.T) {
-		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
-			"<YOUR_INDEX_NAME>",
+		_, err := client.SaveRules("<YOUR_INDEX_NAME>",
 			[]search.Rule{*search.NewEmptyRule().SetObjectID("a-rule-id").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("smartphone").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("smartphone").SetAnchoring(search.ANCHORING_CONTAINS)}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
 					search.NewEmptyConsequenceParams().SetFilters("brand:apple"))), *search.NewEmptyRule().SetObjectID("a-second-rule-id").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.ANCHORING_CONTAINS)}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
-					search.NewEmptyConsequenceParams().SetFilters("brand:samsung")))}).WithForwardToReplicas(false).WithClearExistingRules(true))
+					search.NewEmptyConsequenceParams().SetFilters("brand:samsung")))}, search.NewSaveRulesOptions().WithForwardToReplicas(false).WithClearExistingRules(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch", echo.Path)
@@ -1873,21 +1750,20 @@ func TestSearch_SaveRules(t *testing.T) {
 		}
 	})
 	t.Run("saveRules with all parameters", func(t *testing.T) {
-		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
-			"<YOUR_INDEX_NAME>",
+		_, err := client.SaveRules("<YOUR_INDEX_NAME>",
 			[]search.Rule{*search.NewEmptyRule().SetObjectID("id1").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains")).SetAlternatives(false).SetContext("search")}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.ANCHORING_CONTAINS).SetAlternatives(false).SetContext("search")}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
 					search.NewEmptyConsequenceParams().SetFilters("brand:apple").SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
 						search.NewEmptyConsequenceQueryObject().SetRemove(
 							[]string{"algolia"}).SetEdits(
-							[]search.Edit{*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("abc").SetInsert("cde"), *search.NewEmptyEdit().SetType(search.EditType("replace")).SetDelete("abc").SetInsert("cde")})))).SetHide(
+							[]search.Edit{*search.NewEmptyEdit().SetType(search.EDIT_TYPE_REMOVE).SetDelete("abc").SetInsert("cde"), *search.NewEmptyEdit().SetType(search.EDIT_TYPE_REPLACE).SetDelete("abc").SetInsert("cde")})))).SetHide(
 					[]search.ConsequenceHide{*search.NewEmptyConsequenceHide().SetObjectID("321")}).SetFilterPromotes(false).SetUserData(map[string]any{"algolia": "aloglia"}).SetPromote(
 					[]search.Promote{*search.PromoteObjectIDAsPromote(
 						search.NewEmptyPromoteObjectID().SetObjectID("abc").SetPosition(3)), *search.PromoteObjectIDsAsPromote(
 						search.NewEmptyPromoteObjectIDs().SetObjectIDs(
 							[]string{"abc", "def"}).SetPosition(1))})).SetDescription("test").SetEnabled(true).SetValidity(
-				[]search.TimeRange{*search.NewEmptyTimeRange().SetFrom(1656670273).SetUntil(1656670277)})}).WithForwardToReplicas(true).WithClearExistingRules(true))
+				[]search.TimeRange{*search.NewEmptyTimeRange().SetFrom(1656670273).SetUntil(1656670277)})}, search.NewSaveRulesOptions().WithForwardToReplicas(true).WithClearExistingRules(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch", echo.Path)
@@ -1903,19 +1779,18 @@ func TestSearch_SaveRules(t *testing.T) {
 		}
 	})
 	t.Run("dynamic filtering", func(t *testing.T) {
-		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
-			"<YOUR_INDEX_NAME>",
+		_, err := client.SaveRules("<YOUR_INDEX_NAME>",
 			[]search.Rule{*search.NewEmptyRule().SetObjectID("toaster").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("toaster").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("toaster").SetAnchoring(search.ANCHORING_CONTAINS)}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
 					search.NewEmptyConsequenceParams().SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
 						search.NewEmptyConsequenceQueryObject().SetRemove(
 							[]string{"toaster"}))).SetFilters("product_type:toaster"))), *search.NewEmptyRule().SetObjectID("cheap").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("cheap").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("cheap").SetAnchoring(search.ANCHORING_CONTAINS)}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
 					search.NewEmptyConsequenceParams().SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
 						search.NewEmptyConsequenceQueryObject().SetRemove(
-							[]string{"cheap"}))).SetFilters("price < 15")))}))
+							[]string{"cheap"}))).SetFilters("price < 15")))}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch", echo.Path)
@@ -1925,15 +1800,14 @@ func TestSearch_SaveRules(t *testing.T) {
 		ja.Assertf(*echo.Body, `[{"objectID":"toaster","conditions":[{"pattern":"toaster","anchoring":"contains"}],"consequence":{"params":{"query":{"remove":["toaster"]},"filters":"product_type:toaster"}}},{"objectID":"cheap","conditions":[{"pattern":"cheap","anchoring":"contains"}],"consequence":{"params":{"query":{"remove":["cheap"]},"filters":"price < 15"}}}]`)
 	})
 	t.Run("enhance search results", func(t *testing.T) {
-		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
-			"<YOUR_INDEX_NAME>",
+		_, err := client.SaveRules("<YOUR_INDEX_NAME>",
 			[]search.Rule{*search.NewEmptyRule().SetObjectID("country").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("{facet:country}").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("{facet:country}").SetAnchoring(search.ANCHORING_CONTAINS)}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
 					search.NewEmptyConsequenceParams().SetAroundLatLngViaIP(false))), *search.NewEmptyRule().SetObjectID("city").SetConditions(
-				[]search.Condition{*search.NewEmptyCondition().SetPattern("{facet:city}").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+				[]search.Condition{*search.NewEmptyCondition().SetPattern("{facet:city}").SetAnchoring(search.ANCHORING_CONTAINS)}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
-					search.NewEmptyConsequenceParams().SetAroundLatLngViaIP(false)))}))
+					search.NewEmptyConsequenceParams().SetAroundLatLngViaIP(false)))}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch", echo.Path)
@@ -1949,10 +1823,9 @@ func TestSearch_SaveSynonym(t *testing.T) {
 	_ = echo
 
 	t.Run("saveSynonym", func(t *testing.T) {
-		_, err := client.SaveSynonym(client.NewApiSaveSynonymRequest(
-			"indexName", "id1",
-			search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SynonymType("synonym")).SetSynonyms(
-				[]string{"car", "vehicule", "auto"})).WithForwardToReplicas(true))
+		_, err := client.SaveSynonym("indexName", "id1",
+			search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SYNONYM_TYPE_SYNONYM).SetSynonyms(
+				[]string{"car", "vehicule", "auto"}), utils.ToPtr(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/synonyms/id1", echo.Path)
@@ -1974,11 +1847,10 @@ func TestSearch_SaveSynonyms(t *testing.T) {
 	_ = echo
 
 	t.Run("saveSynonyms", func(t *testing.T) {
-		_, err := client.SaveSynonyms(client.NewApiSaveSynonymsRequest(
-			"<YOUR_INDEX_NAME>",
-			[]search.SynonymHit{*search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SynonymType("synonym")).SetSynonyms(
-				[]string{"car", "vehicule", "auto"}), *search.NewEmptySynonymHit().SetObjectID("id2").SetType(search.SynonymType("onewaysynonym")).SetInput("iphone").SetSynonyms(
-				[]string{"ephone", "aphone", "yphone"})}).WithForwardToReplicas(true).WithReplaceExistingSynonyms(true))
+		_, err := client.SaveSynonyms("<YOUR_INDEX_NAME>",
+			[]search.SynonymHit{*search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SYNONYM_TYPE_SYNONYM).SetSynonyms(
+				[]string{"car", "vehicule", "auto"}), *search.NewEmptySynonymHit().SetObjectID("id2").SetType(search.SYNONYM_TYPE_ONEWAYSYNONYM).SetInput("iphone").SetSynonyms(
+				[]string{"ephone", "aphone", "yphone"})}, search.NewSaveSynonymsOptions().WithForwardToReplicas(true).WithReplaceExistingSynonyms(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/synonyms/batch", echo.Path)
@@ -2000,11 +1872,9 @@ func TestSearch_Search(t *testing.T) {
 	_ = echo
 
 	t.Run("withHitsPerPage", func(t *testing.T) {
-		_, err := client.Search(client.NewApiSearchRequest(
-
-			search.NewEmptySearchMethodParams().SetRequests(
-				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetHitsPerPage(50))})))
+		_, err := client.Search(
+			[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+				search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetHitsPerPage(50))}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/queries", echo.Path)
@@ -2014,11 +1884,9 @@ func TestSearch_Search(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","hitsPerPage":50}]}`)
 	})
 	t.Run("filterOnly", func(t *testing.T) {
-		_, err := client.Search(client.NewApiSearchRequest(
-
-			search.NewEmptySearchMethodParams().SetRequests(
-				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFilters("actor:Scarlett Johansson"))})))
+		_, err := client.Search(
+			[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+				search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFilters("actor:Scarlett Johansson"))}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/queries", echo.Path)
@@ -2028,11 +1896,9 @@ func TestSearch_Search(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"actor:Scarlett Johansson"}]}`)
 	})
 	t.Run("filterOr", func(t *testing.T) {
-		_, err := client.Search(client.NewApiSearchRequest(
-
-			search.NewEmptySearchMethodParams().SetRequests(
-				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFilters("actor:Tom Cruise OR actor:Scarlett Johansson"))})))
+		_, err := client.Search(
+			[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+				search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFilters("actor:Tom Cruise OR actor:Scarlett Johansson"))}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/queries", echo.Path)
@@ -2042,11 +1908,9 @@ func TestSearch_Search(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"actor:Tom Cruise OR actor:Scarlett Johansson"}]}`)
 	})
 	t.Run("filterNot", func(t *testing.T) {
-		_, err := client.Search(client.NewApiSearchRequest(
-
-			search.NewEmptySearchMethodParams().SetRequests(
-				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFilters("NOT actor:Nicolas Cage"))})))
+		_, err := client.Search(
+			[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+				search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFilters("NOT actor:Nicolas Cage"))}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/queries", echo.Path)
@@ -2056,11 +1920,9 @@ func TestSearch_Search(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"NOT actor:Nicolas Cage"}]}`)
 	})
 	t.Run("search for a single hits request with minimal parameters", func(t *testing.T) {
-		_, err := client.Search(client.NewApiSearchRequest(
-
-			search.NewEmptySearchMethodParams().SetRequests(
-				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_empty_index"))})))
+		_, err := client.Search(
+			[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+				search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_empty_index"))}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/queries", echo.Path)
@@ -2070,14 +1932,12 @@ func TestSearch_Search(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"cts_e2e_search_empty_index"}]}`)
 	})
 	t.Run("search with highlight and snippet results", func(t *testing.T) {
-		_, err := client.Search(client.NewApiSearchRequest(
-
-			search.NewEmptySearchMethodParams().SetRequests(
-				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetIndexName("cts_e2e_highlight_snippet_results").SetQuery("vim").SetAttributesToSnippet(
-						[]string{"*:20"}).SetAttributesToHighlight(
-						[]string{"*"}).SetAttributesToRetrieve(
-						[]string{"*"}))})))
+		_, err := client.Search(
+			[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+				search.NewEmptySearchForHits().SetIndexName("cts_e2e_highlight_snippet_results").SetQuery("vim").SetAttributesToSnippet(
+					[]string{"*:20"}).SetAttributesToHighlight(
+					[]string{"*"}).SetAttributesToRetrieve(
+					[]string{"*"}))}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/queries", echo.Path)
@@ -2087,12 +1947,10 @@ func TestSearch_Search(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"cts_e2e_highlight_snippet_results","query":"vim","attributesToSnippet":["*:20"],"attributesToHighlight":["*"],"attributesToRetrieve":["*"]}]}`)
 	})
 	t.Run("retrieveFacets", func(t *testing.T) {
-		_, err := client.Search(client.NewApiSearchRequest(
-
-			search.NewEmptySearchMethodParams().SetRequests(
-				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFacets(
-						[]string{"author", "genre"}))})))
+		_, err := client.Search(
+			[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+				search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFacets(
+					[]string{"author", "genre"}))}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/queries", echo.Path)
@@ -2102,12 +1960,10 @@ func TestSearch_Search(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","facets":["author","genre"]}]}`)
 	})
 	t.Run("retrieveFacetsWildcard", func(t *testing.T) {
-		_, err := client.Search(client.NewApiSearchRequest(
-
-			search.NewEmptySearchMethodParams().SetRequests(
-				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFacets(
-						[]string{"*"}))})))
+		_, err := client.Search(
+			[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+				search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFacets(
+					[]string{"*"}))}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/queries", echo.Path)
@@ -2117,11 +1973,9 @@ func TestSearch_Search(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","facets":["*"]}]}`)
 	})
 	t.Run("search for a single facet request with minimal parameters", func(t *testing.T) {
-		_, err := client.Search(client.NewApiSearchRequest(
-
-			search.NewEmptySearchMethodParams().SetRequests(
-				[]search.SearchQuery{*search.SearchForFacetsAsSearchQuery(
-					search.NewEmptySearchForFacets().SetIndexName("cts_e2e_search_facet").SetType(search.SearchTypeFacet("facet")).SetFacet("editor"))}).SetStrategy(search.SearchStrategy("stopIfEnoughMatches"))))
+		_, err := client.Search(
+			[]search.SearchQuery{*search.SearchForFacetsAsSearchQuery(
+				search.NewEmptySearchForFacets().SetIndexName("cts_e2e_search_facet").SetType(search.SEARCH_TYPE_FACET_FACET).SetFacet("editor"))}, utils.ToPtr(search.SEARCH_STRATEGY_STOP_IF_ENOUGH_MATCHES))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/queries", echo.Path)
@@ -2131,11 +1985,9 @@ func TestSearch_Search(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"cts_e2e_search_facet","type":"facet","facet":"editor"}],"strategy":"stopIfEnoughMatches"}`)
 	})
 	t.Run("search for a single hits request with all parameters", func(t *testing.T) {
-		_, err := client.Search(client.NewApiSearchRequest(
-
-			search.NewEmptySearchMethodParams().SetRequests(
-				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetIndexName("theIndexName").SetQuery("myQuery").SetHitsPerPage(50).SetType(search.SearchTypeDefault("default")))})))
+		_, err := client.Search(
+			[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+				search.NewEmptySearchForHits().SetIndexName("theIndexName").SetQuery("myQuery").SetHitsPerPage(50).SetType(search.SEARCH_TYPE_DEFAULT_DEFAULT))}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/queries", echo.Path)
@@ -2145,11 +1997,9 @@ func TestSearch_Search(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"theIndexName","query":"myQuery","hitsPerPage":50,"type":"default"}]}`)
 	})
 	t.Run("search for a single facet request with all parameters", func(t *testing.T) {
-		_, err := client.Search(client.NewApiSearchRequest(
-
-			search.NewEmptySearchMethodParams().SetRequests(
-				[]search.SearchQuery{*search.SearchForFacetsAsSearchQuery(
-					search.NewEmptySearchForFacets().SetIndexName("theIndexName").SetType(search.SearchTypeFacet("facet")).SetFacet("theFacet").SetFacetQuery("theFacetQuery").SetQuery("theQuery").SetMaxFacetHits(50))}).SetStrategy(search.SearchStrategy("stopIfEnoughMatches"))))
+		_, err := client.Search(
+			[]search.SearchQuery{*search.SearchForFacetsAsSearchQuery(
+				search.NewEmptySearchForFacets().SetIndexName("theIndexName").SetType(search.SEARCH_TYPE_FACET_FACET).SetFacet("theFacet").SetFacetQuery("theFacetQuery").SetQuery("theQuery").SetMaxFacetHits(50))}, utils.ToPtr(search.SEARCH_STRATEGY_STOP_IF_ENOUGH_MATCHES))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/queries", echo.Path)
@@ -2159,13 +2009,11 @@ func TestSearch_Search(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet","facetQuery":"theFacetQuery","query":"theQuery","maxFacetHits":50}],"strategy":"stopIfEnoughMatches"}`)
 	})
 	t.Run("search for multiple mixed requests in multiple indices with minimal parameters", func(t *testing.T) {
-		_, err := client.Search(client.NewApiSearchRequest(
-
-			search.NewEmptySearchMethodParams().SetRequests(
-				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetIndexName("theIndexName")), *search.SearchForFacetsAsSearchQuery(
-					search.NewEmptySearchForFacets().SetIndexName("theIndexName2").SetType(search.SearchTypeFacet("facet")).SetFacet("theFacet")), *search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetIndexName("theIndexName").SetType(search.SearchTypeDefault("default")))}).SetStrategy(search.SearchStrategy("stopIfEnoughMatches"))))
+		_, err := client.Search(
+			[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+				search.NewEmptySearchForHits().SetIndexName("theIndexName")), *search.SearchForFacetsAsSearchQuery(
+				search.NewEmptySearchForFacets().SetIndexName("theIndexName2").SetType(search.SEARCH_TYPE_FACET_FACET).SetFacet("theFacet")), *search.SearchForHitsAsSearchQuery(
+				search.NewEmptySearchForHits().SetIndexName("theIndexName").SetType(search.SEARCH_TYPE_DEFAULT_DEFAULT))}, utils.ToPtr(search.SEARCH_STRATEGY_STOP_IF_ENOUGH_MATCHES))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/queries", echo.Path)
@@ -2175,12 +2023,10 @@ func TestSearch_Search(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"theIndexName"},{"indexName":"theIndexName2","type":"facet","facet":"theFacet"},{"indexName":"theIndexName","type":"default"}],"strategy":"stopIfEnoughMatches"}`)
 	})
 	t.Run("search for multiple mixed requests in multiple indices with all parameters", func(t *testing.T) {
-		_, err := client.Search(client.NewApiSearchRequest(
-
-			search.NewEmptySearchMethodParams().SetRequests(
-				[]search.SearchQuery{*search.SearchForFacetsAsSearchQuery(
-					search.NewEmptySearchForFacets().SetIndexName("theIndexName").SetType(search.SearchTypeFacet("facet")).SetFacet("theFacet").SetFacetQuery("theFacetQuery").SetQuery("theQuery").SetMaxFacetHits(50)), *search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetIndexName("theIndexName").SetQuery("myQuery").SetHitsPerPage(50).SetType(search.SearchTypeDefault("default")))}).SetStrategy(search.SearchStrategy("stopIfEnoughMatches"))))
+		_, err := client.Search(
+			[]search.SearchQuery{*search.SearchForFacetsAsSearchQuery(
+				search.NewEmptySearchForFacets().SetIndexName("theIndexName").SetType(search.SEARCH_TYPE_FACET_FACET).SetFacet("theFacet").SetFacetQuery("theFacetQuery").SetQuery("theQuery").SetMaxFacetHits(50)), *search.SearchForHitsAsSearchQuery(
+				search.NewEmptySearchForHits().SetIndexName("theIndexName").SetQuery("myQuery").SetHitsPerPage(50).SetType(search.SEARCH_TYPE_DEFAULT_DEFAULT))}, utils.ToPtr(search.SEARCH_STRATEGY_STOP_IF_ENOUGH_MATCHES))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/queries", echo.Path)
@@ -2190,23 +2036,21 @@ func TestSearch_Search(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet","facetQuery":"theFacetQuery","query":"theQuery","maxFacetHits":50},{"indexName":"theIndexName","query":"myQuery","hitsPerPage":50,"type":"default"}],"strategy":"stopIfEnoughMatches"}`)
 	})
 	t.Run("search filters accept all of the possible shapes", func(t *testing.T) {
-		_, err := client.Search(client.NewApiSearchRequest(
-
-			search.NewEmptySearchMethodParams().SetRequests(
-				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetIndexName("theIndexName").SetFacetFilters(search.StringAsFacetFilters("mySearch:filters")).SetReRankingApplyFilter(search.StringAsReRankingApplyFilter("mySearch:filters")).SetTagFilters(search.StringAsTagFilters("mySearch:filters")).SetNumericFilters(search.StringAsNumericFilters("mySearch:filters")).SetOptionalFilters(search.StringAsOptionalFilters("mySearch:filters"))), *search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetIndexName("theIndexName").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+		_, err := client.Search(
+			[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+				search.NewEmptySearchForHits().SetIndexName("theIndexName").SetFacetFilters(search.StringAsFacetFilters("mySearch:filters")).SetReRankingApplyFilter(search.StringAsReRankingApplyFilter("mySearch:filters")).SetTagFilters(search.StringAsTagFilters("mySearch:filters")).SetNumericFilters(search.StringAsNumericFilters("mySearch:filters")).SetOptionalFilters(search.StringAsOptionalFilters("mySearch:filters"))), *search.SearchForHitsAsSearchQuery(
+				search.NewEmptySearchForHits().SetIndexName("theIndexName").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+					[]search.FacetFilters{*search.StringAsFacetFilters("mySearch:filters"), *search.ArrayOfFacetFiltersAsFacetFilters(
 						[]search.FacetFilters{*search.StringAsFacetFilters("mySearch:filters"), *search.ArrayOfFacetFiltersAsFacetFilters(
-							[]search.FacetFilters{*search.StringAsFacetFilters("mySearch:filters"), *search.ArrayOfFacetFiltersAsFacetFilters(
-								[]search.FacetFilters{*search.StringAsFacetFilters("mySearch:filters")})})})).SetReRankingApplyFilter(search.ArrayOfReRankingApplyFilterAsReRankingApplyFilter(
-						[]search.ReRankingApplyFilter{*search.StringAsReRankingApplyFilter("mySearch:filters"), *search.ArrayOfReRankingApplyFilterAsReRankingApplyFilter(
-							[]search.ReRankingApplyFilter{*search.StringAsReRankingApplyFilter("mySearch:filters")})})).SetTagFilters(search.ArrayOfTagFiltersAsTagFilters(
-						[]search.TagFilters{*search.StringAsTagFilters("mySearch:filters"), *search.ArrayOfTagFiltersAsTagFilters(
-							[]search.TagFilters{*search.StringAsTagFilters("mySearch:filters")})})).SetNumericFilters(search.ArrayOfNumericFiltersAsNumericFilters(
-						[]search.NumericFilters{*search.StringAsNumericFilters("mySearch:filters"), *search.ArrayOfNumericFiltersAsNumericFilters(
-							[]search.NumericFilters{*search.StringAsNumericFilters("mySearch:filters")})})).SetOptionalFilters(search.ArrayOfOptionalFiltersAsOptionalFilters(
-						[]search.OptionalFilters{*search.StringAsOptionalFilters("mySearch:filters"), *search.ArrayOfOptionalFiltersAsOptionalFilters(
-							[]search.OptionalFilters{*search.StringAsOptionalFilters("mySearch:filters")})})))})))
+							[]search.FacetFilters{*search.StringAsFacetFilters("mySearch:filters")})})})).SetReRankingApplyFilter(search.ArrayOfReRankingApplyFilterAsReRankingApplyFilter(
+					[]search.ReRankingApplyFilter{*search.StringAsReRankingApplyFilter("mySearch:filters"), *search.ArrayOfReRankingApplyFilterAsReRankingApplyFilter(
+						[]search.ReRankingApplyFilter{*search.StringAsReRankingApplyFilter("mySearch:filters")})})).SetTagFilters(search.ArrayOfTagFiltersAsTagFilters(
+					[]search.TagFilters{*search.StringAsTagFilters("mySearch:filters"), *search.ArrayOfTagFiltersAsTagFilters(
+						[]search.TagFilters{*search.StringAsTagFilters("mySearch:filters")})})).SetNumericFilters(search.ArrayOfNumericFiltersAsNumericFilters(
+					[]search.NumericFilters{*search.StringAsNumericFilters("mySearch:filters"), *search.ArrayOfNumericFiltersAsNumericFilters(
+						[]search.NumericFilters{*search.StringAsNumericFilters("mySearch:filters")})})).SetOptionalFilters(search.ArrayOfOptionalFiltersAsOptionalFilters(
+					[]search.OptionalFilters{*search.StringAsOptionalFilters("mySearch:filters"), *search.ArrayOfOptionalFiltersAsOptionalFilters(
+						[]search.OptionalFilters{*search.StringAsOptionalFilters("mySearch:filters")})})))}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/queries", echo.Path)
@@ -2216,20 +2060,18 @@ func TestSearch_Search(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"theIndexName","facetFilters":"mySearch:filters","reRankingApplyFilter":"mySearch:filters","tagFilters":"mySearch:filters","numericFilters":"mySearch:filters","optionalFilters":"mySearch:filters"},{"indexName":"theIndexName","facetFilters":["mySearch:filters",["mySearch:filters",["mySearch:filters"]]],"reRankingApplyFilter":["mySearch:filters",["mySearch:filters"]],"tagFilters":["mySearch:filters",["mySearch:filters"]],"numericFilters":["mySearch:filters",["mySearch:filters"]],"optionalFilters":["mySearch:filters",["mySearch:filters"]]}]}`)
 	})
 	t.Run("search filters end to end", func(t *testing.T) {
-		_, err := client.Search(client.NewApiSearchRequest(
-
-			search.NewEmptySearchMethodParams().SetRequests(
-				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_facet").SetFilters("editor:'visual studio' OR editor:neovim")), *search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_facet").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
-						[]search.FacetFilters{*search.StringAsFacetFilters("editor:'visual studio'"), *search.StringAsFacetFilters("editor:neovim")}))), *search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_facet").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
-						[]search.FacetFilters{*search.StringAsFacetFilters("editor:'visual studio'"), *search.ArrayOfFacetFiltersAsFacetFilters(
-							[]search.FacetFilters{*search.StringAsFacetFilters("editor:neovim")})}))), *search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_facet").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
-						[]search.FacetFilters{*search.StringAsFacetFilters("editor:'visual studio'"), *search.ArrayOfFacetFiltersAsFacetFilters(
-							[]search.FacetFilters{*search.StringAsFacetFilters("editor:neovim"), *search.ArrayOfFacetFiltersAsFacetFilters(
-								[]search.FacetFilters{*search.StringAsFacetFilters("editor:goland")})})})))})))
+		_, err := client.Search(
+			[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+				search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_facet").SetFilters("editor:'visual studio' OR editor:neovim")), *search.SearchForHitsAsSearchQuery(
+				search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_facet").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+					[]search.FacetFilters{*search.StringAsFacetFilters("editor:'visual studio'"), *search.StringAsFacetFilters("editor:neovim")}))), *search.SearchForHitsAsSearchQuery(
+				search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_facet").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+					[]search.FacetFilters{*search.StringAsFacetFilters("editor:'visual studio'"), *search.ArrayOfFacetFiltersAsFacetFilters(
+						[]search.FacetFilters{*search.StringAsFacetFilters("editor:neovim")})}))), *search.SearchForHitsAsSearchQuery(
+				search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_facet").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+					[]search.FacetFilters{*search.StringAsFacetFilters("editor:'visual studio'"), *search.ArrayOfFacetFiltersAsFacetFilters(
+						[]search.FacetFilters{*search.StringAsFacetFilters("editor:neovim"), *search.ArrayOfFacetFiltersAsFacetFilters(
+							[]search.FacetFilters{*search.StringAsFacetFilters("editor:goland")})})})))}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/queries", echo.Path)
@@ -2239,43 +2081,41 @@ func TestSearch_Search(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"cts_e2e_search_facet","filters":"editor:'visual studio' OR editor:neovim"},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'","editor:neovim"]},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'",["editor:neovim"]]},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'",["editor:neovim",["editor:goland"]]]}]}`)
 	})
 	t.Run("search with all search parameters", func(t *testing.T) {
-		_, err := client.Search(client.NewApiSearchRequest(
-
-			search.NewEmptySearchMethodParams().SetRequests(
-				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetAdvancedSyntax(true).SetAdvancedSyntaxFeatures(
-						[]search.AdvancedSyntaxFeatures{search.AdvancedSyntaxFeatures("exactPhrase")}).SetAllowTyposOnNumericTokens(true).SetAlternativesAsExact(
-						[]search.AlternativesAsExact{search.AlternativesAsExact("multiWordsSynonym")}).SetAnalytics(true).SetAnalyticsTags(
-						[]string{""}).SetAroundLatLng("").SetAroundLatLngViaIP(true).SetAroundPrecision(search.Int32AsAroundPrecision(0)).SetAroundRadius(search.AroundRadiusAllAsAroundRadius(search.AroundRadiusAll("all"))).SetAttributeCriteriaComputedByMinProximity(true).SetAttributesToHighlight(
-						[]string{""}).SetAttributesToRetrieve(
-						[]string{""}).SetAttributesToSnippet(
-						[]string{""}).SetClickAnalytics(true).SetDecompoundQuery(true).SetDisableExactOnAttributes(
-						[]string{""}).SetDisableTypoToleranceOnAttributes(
-						[]string{""}).SetDistinct(search.Int32AsDistinct(0)).SetEnableABTest(true).SetEnablePersonalization(true).SetEnableReRanking(true).SetEnableRules(true).SetExactOnSingleWordQuery(search.ExactOnSingleWordQuery("attribute")).SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
-						[]search.FacetFilters{*search.StringAsFacetFilters("")})).SetFacetingAfterDistinct(true).SetFacets(
-						[]string{""}).SetFilters("").SetGetRankingInfo(true).SetHighlightPostTag("").SetHighlightPreTag("").SetHitsPerPage(1).SetIgnorePlurals(search.BoolAsIgnorePlurals(false)).SetIndexName("theIndexName").SetInsideBoundingBox(search.ArrayOfArrayOfFloat64AsInsideBoundingBox(
-						[][]float64{
-							[]float64{47.3165, 4.9665, 47.3424, 5.0201},
-							[]float64{40.9234, 2.1185, 38.643, 1.9916}})).SetInsidePolygon(
-						[][]float64{
-							[]float64{47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9},
-							[]float64{40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104}}).SetLength(1).SetMaxValuesPerFacet(0).SetMinProximity(1).SetMinWordSizefor1Typo(0).SetMinWordSizefor2Typos(0).SetMinimumAroundRadius(1).SetNaturalLanguages(
-						[]search.SupportedLanguage{search.SupportedLanguage("fr")}).SetNumericFilters(search.ArrayOfNumericFiltersAsNumericFilters(
-						[]search.NumericFilters{*search.StringAsNumericFilters("")})).SetOffset(0).SetOptionalFilters(search.ArrayOfOptionalFiltersAsOptionalFilters(
-						[]search.OptionalFilters{*search.StringAsOptionalFilters("")})).SetOptionalWords(search.ArrayOfStringAsOptionalWords(
-						[]string{""})).SetPage(0).SetPercentileComputation(true).SetPersonalizationImpact(0).SetQuery("").SetQueryLanguages(
-						[]search.SupportedLanguage{search.SupportedLanguage("fr")}).SetQueryType(search.QueryType("prefixAll")).SetRanking(
-						[]string{""}).SetReRankingApplyFilter(search.ArrayOfReRankingApplyFilterAsReRankingApplyFilter(
-						[]search.ReRankingApplyFilter{*search.StringAsReRankingApplyFilter("")})).SetRelevancyStrictness(0).SetRemoveStopWords(search.BoolAsRemoveStopWords(true)).SetRemoveWordsIfNoResults(search.RemoveWordsIfNoResults("allOptional")).SetRenderingContent(
-						search.NewEmptyRenderingContent().SetFacetOrdering(
-							search.NewEmptyFacetOrdering().SetFacets(
-								search.NewEmptyFacets().SetOrder(
-									[]string{"a", "b"})).SetValues(map[string]search.Value{"a": *search.NewEmptyValue().SetOrder(
-								[]string{"b"}).SetSortRemainingBy(search.SortRemainingBy("count"))}))).SetReplaceSynonymsInHighlight(true).SetResponseFields(
-						[]string{""}).SetRestrictHighlightAndSnippetArrays(true).SetRestrictSearchableAttributes(
-						[]string{""}).SetRuleContexts(
-						[]string{""}).SetSimilarQuery("").SetSnippetEllipsisText("").SetSortFacetValuesBy("").SetSumOrFiltersScores(true).SetSynonyms(true).SetTagFilters(search.ArrayOfTagFiltersAsTagFilters(
-						[]search.TagFilters{*search.StringAsTagFilters("")})).SetType(search.SearchTypeDefault("default")).SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("min"))).SetUserToken(""))})))
+		_, err := client.Search(
+			[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+				search.NewEmptySearchForHits().SetAdvancedSyntax(true).SetAdvancedSyntaxFeatures(
+					[]search.AdvancedSyntaxFeatures{search.ADVANCED_SYNTAX_FEATURES_EXACT_PHRASE}).SetAllowTyposOnNumericTokens(true).SetAlternativesAsExact(
+					[]search.AlternativesAsExact{search.ALTERNATIVES_AS_EXACT_MULTI_WORDS_SYNONYM}).SetAnalytics(true).SetAnalyticsTags(
+					[]string{""}).SetAroundLatLng("").SetAroundLatLngViaIP(true).SetAroundPrecision(search.Int32AsAroundPrecision(0)).SetAroundRadius(search.AroundRadiusAllAsAroundRadius(search.AROUND_RADIUS_ALL_ALL)).SetAttributeCriteriaComputedByMinProximity(true).SetAttributesToHighlight(
+					[]string{""}).SetAttributesToRetrieve(
+					[]string{""}).SetAttributesToSnippet(
+					[]string{""}).SetClickAnalytics(true).SetDecompoundQuery(true).SetDisableExactOnAttributes(
+					[]string{""}).SetDisableTypoToleranceOnAttributes(
+					[]string{""}).SetDistinct(search.Int32AsDistinct(0)).SetEnableABTest(true).SetEnablePersonalization(true).SetEnableReRanking(true).SetEnableRules(true).SetExactOnSingleWordQuery(search.EXACT_ON_SINGLE_WORD_QUERY_ATTRIBUTE).SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+					[]search.FacetFilters{*search.StringAsFacetFilters("")})).SetFacetingAfterDistinct(true).SetFacets(
+					[]string{""}).SetFilters("").SetGetRankingInfo(true).SetHighlightPostTag("").SetHighlightPreTag("").SetHitsPerPage(1).SetIgnorePlurals(search.BoolAsIgnorePlurals(false)).SetIndexName("theIndexName").SetInsideBoundingBox(search.ArrayOfArrayOfFloat64AsInsideBoundingBox(
+					[][]float64{
+						[]float64{47.3165, 4.9665, 47.3424, 5.0201},
+						[]float64{40.9234, 2.1185, 38.643, 1.9916}})).SetInsidePolygon(
+					[][]float64{
+						[]float64{47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9},
+						[]float64{40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104}}).SetLength(1).SetMaxValuesPerFacet(0).SetMinProximity(1).SetMinWordSizefor1Typo(0).SetMinWordSizefor2Typos(0).SetMinimumAroundRadius(1).SetNaturalLanguages(
+					[]search.SupportedLanguage{search.SUPPORTED_LANGUAGE_FR}).SetNumericFilters(search.ArrayOfNumericFiltersAsNumericFilters(
+					[]search.NumericFilters{*search.StringAsNumericFilters("")})).SetOffset(0).SetOptionalFilters(search.ArrayOfOptionalFiltersAsOptionalFilters(
+					[]search.OptionalFilters{*search.StringAsOptionalFilters("")})).SetOptionalWords(search.ArrayOfStringAsOptionalWords(
+					[]string{""})).SetPage(0).SetPercentileComputation(true).SetPersonalizationImpact(0).SetQuery("").SetQueryLanguages(
+					[]search.SupportedLanguage{search.SUPPORTED_LANGUAGE_FR}).SetQueryType(search.QUERY_TYPE_PREFIX_ALL).SetRanking(
+					[]string{""}).SetReRankingApplyFilter(search.ArrayOfReRankingApplyFilterAsReRankingApplyFilter(
+					[]search.ReRankingApplyFilter{*search.StringAsReRankingApplyFilter("")})).SetRelevancyStrictness(0).SetRemoveStopWords(search.BoolAsRemoveStopWords(true)).SetRemoveWordsIfNoResults(search.REMOVE_WORDS_IF_NO_RESULTS_ALL_OPTIONAL).SetRenderingContent(
+					search.NewEmptyRenderingContent().SetFacetOrdering(
+						search.NewEmptyFacetOrdering().SetFacets(
+							search.NewEmptyFacets().SetOrder(
+								[]string{"a", "b"})).SetValues(map[string]search.Value{"a": *search.NewEmptyValue().SetOrder(
+							[]string{"b"}).SetSortRemainingBy(search.SORT_REMAINING_BY_COUNT)}))).SetReplaceSynonymsInHighlight(true).SetResponseFields(
+					[]string{""}).SetRestrictHighlightAndSnippetArrays(true).SetRestrictSearchableAttributes(
+					[]string{""}).SetRuleContexts(
+					[]string{""}).SetSimilarQuery("").SetSnippetEllipsisText("").SetSortFacetValuesBy("").SetSumOrFiltersScores(true).SetSynonyms(true).SetTagFilters(search.ArrayOfTagFiltersAsTagFilters(
+					[]search.TagFilters{*search.StringAsTagFilters("")})).SetType(search.SEARCH_TYPE_DEFAULT_DEFAULT).SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TYPO_TOLERANCE_ENUM_MIN)).SetUserToken(""))}, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/queries", echo.Path)
@@ -2291,9 +2131,7 @@ func TestSearch_SearchDictionaryEntries(t *testing.T) {
 	_ = echo
 
 	t.Run("get searchDictionaryEntries results with minimal parameters", func(t *testing.T) {
-		_, err := client.SearchDictionaryEntries(client.NewApiSearchDictionaryEntriesRequest(
-			search.DictionaryType("stopwords"),
-			search.NewEmptySearchDictionaryEntriesParams().SetQuery("about")))
+		_, err := client.SearchDictionaryEntries(search.DICTIONARY_TYPE_STOPWORDS, "about", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/dictionaries/stopwords/search", echo.Path)
@@ -2303,9 +2141,7 @@ func TestSearch_SearchDictionaryEntries(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"about"}`)
 	})
 	t.Run("get searchDictionaryEntries results with all parameters", func(t *testing.T) {
-		_, err := client.SearchDictionaryEntries(client.NewApiSearchDictionaryEntriesRequest(
-			search.DictionaryType("compounds"),
-			search.NewEmptySearchDictionaryEntriesParams().SetQuery("foo").SetPage(4).SetHitsPerPage(2).SetLanguage(search.SupportedLanguage("fr"))))
+		_, err := client.SearchDictionaryEntries(search.DICTIONARY_TYPE_COMPOUNDS, "foo", search.NewSearchDictionaryEntriesOptions().WithPage(4).WithHitsPerPage(2).WithLanguage(search.SUPPORTED_LANGUAGE_FR))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/dictionaries/compounds/search", echo.Path)
@@ -2321,8 +2157,7 @@ func TestSearch_SearchForFacetValues(t *testing.T) {
 	_ = echo
 
 	t.Run("get searchForFacetValues results with minimal parameters", func(t *testing.T) {
-		_, err := client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(
-			"indexName", "facetName"))
+		_, err := client.SearchForFacetValues("indexName", "facetName", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/facets/facetName/query", echo.Path)
@@ -2332,9 +2167,7 @@ func TestSearch_SearchForFacetValues(t *testing.T) {
 		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("get searchForFacetValues results with all parameters", func(t *testing.T) {
-		_, err := client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(
-			"indexName", "facetName").WithSearchForFacetValuesRequest(
-			search.NewEmptySearchForFacetValuesRequest().SetParams("query=foo&facetFilters=['bar']").SetFacetQuery("foo").SetMaxFacetHits(42)))
+		_, err := client.SearchForFacetValues("indexName", "facetName", search.NewSearchForFacetValuesOptions().WithParams("query=foo&facetFilters=['bar']").WithFacetQuery("foo").WithMaxFacetHits(42))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/facets/facetName/query", echo.Path)
@@ -2344,9 +2177,7 @@ func TestSearch_SearchForFacetValues(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"params":"query=foo&facetFilters=['bar']","facetQuery":"foo","maxFacetHits":42}`)
 	})
 	t.Run("facetName and facetQuery", func(t *testing.T) {
-		_, err := client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(
-			"indexName", "author").WithSearchForFacetValuesRequest(
-			search.NewEmptySearchForFacetValuesRequest().SetFacetQuery("stephen")))
+		_, err := client.SearchForFacetValues("indexName", "author", search.NewSearchForFacetValuesOptions().WithFacetQuery("stephen"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/facets/author/query", echo.Path)
@@ -2362,9 +2193,7 @@ func TestSearch_SearchRules(t *testing.T) {
 	_ = echo
 
 	t.Run("searchRules", func(t *testing.T) {
-		_, err := client.SearchRules(client.NewApiSearchRulesRequest(
-			"cts_e2e_browse").WithSearchRulesParams(
-			search.NewEmptySearchRulesParams().SetQuery("zorro")))
+		_, err := client.SearchRules("cts_e2e_browse", search.NewSearchRulesOptions().WithQuery("zorro"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/cts_e2e_browse/rules/search", echo.Path)
@@ -2380,8 +2209,7 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 	_ = echo
 
 	t.Run("search with minimal parameters", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName"))
+		_, err := client.SearchSingleIndex("indexName", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2391,8 +2219,7 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("search with special characters in indexName", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"cts_e2e_space in index"))
+		_, err := client.SearchSingleIndex("cts_e2e_space in index", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/cts_e2e_space%20in%20index/query", echo.Path)
@@ -2402,10 +2229,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("search with searchParams", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
-				[]search.FacetFilters{*search.StringAsFacetFilters("tags:algolia")})))))
+				[]search.FacetFilters{*search.StringAsFacetFilters("tags:algolia")}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2415,11 +2241,10 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"myQuery","facetFilters":["tags:algolia"]}`)
 	})
 	t.Run("single search retrieve snippets", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"cts_e2e_browse").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("cts_e2e_browse", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("batman mask of the phantasm").SetAttributesToRetrieve(
 				[]string{"*"}).SetAttributesToSnippet(
-				[]string{"*:20"}))))
+				[]string{"*:20"})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/cts_e2e_browse/query", echo.Path)
@@ -2429,9 +2254,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"batman mask of the phantasm","attributesToRetrieve":["*"],"attributesToSnippet":["*:20"]}`)
 	})
 	t.Run("query", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("phone"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("phone")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2441,9 +2265,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"phone"}`)
 	})
 	t.Run("filters", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetFilters("country:US AND price.gross < 2.0"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetFilters("country:US AND price.gross < 2.0")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2453,9 +2276,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"filters":"country:US AND price.gross < 2.0"}`)
 	})
 	t.Run("filters for stores", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("ben").SetFilters("categories:politics AND store:Gibert Joseph Saint-Michel"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("ben").SetFilters("categories:politics AND store:Gibert Joseph Saint-Michel")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2465,9 +2287,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"ben","filters":"categories:politics AND store:Gibert Joseph Saint-Michel"}`)
 	})
 	t.Run("filters boolean", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetFilters("is_available:true"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetFilters("is_available:true")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2477,9 +2298,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"filters":"is_available:true"}`)
 	})
 	t.Run("distinct", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetDistinct(search.BoolAsDistinct(true)))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetDistinct(search.BoolAsDistinct(true))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2489,9 +2309,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"distinct":true}`)
 	})
 	t.Run("filtersNumeric", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetFilters("price < 10"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetFilters("price < 10")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2501,9 +2320,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"filters":"price < 10"}`)
 	})
 	t.Run("filtersTimestamp", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetFilters("NOT date_timestamp:1514764800 TO 1546300799"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetFilters("NOT date_timestamp:1514764800 TO 1546300799")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2513,9 +2331,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"filters":"NOT date_timestamp:1514764800 TO 1546300799"}`)
 	})
 	t.Run("filtersSumOrFiltersScoresFalse", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetFilters("(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)").SetSumOrFiltersScores(false))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetFilters("(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)").SetSumOrFiltersScores(false)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2525,9 +2342,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"filters":"(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)","sumOrFiltersScores":false}`)
 	})
 	t.Run("filtersSumOrFiltersScoresTrue", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetFilters("(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)").SetSumOrFiltersScores(true))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetFilters("(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)").SetSumOrFiltersScores(true)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2537,9 +2353,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"filters":"(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)","sumOrFiltersScores":true}`)
 	})
 	t.Run("filtersStephenKing", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetFilters("author:\"Stephen King\""))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetFilters("author:\"Stephen King\"")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2549,9 +2364,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"filters":"author:\"Stephen King\""}`)
 	})
 	t.Run("filtersNotTags", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("harry").SetFilters("_tags:non-fiction"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("harry").SetFilters("_tags:non-fiction")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2561,11 +2375,10 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"harry","filters":"_tags:non-fiction"}`)
 	})
 	t.Run("facetFiltersList", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
 				[]search.FacetFilters{*search.StringAsFacetFilters("publisher:Penguin"), *search.ArrayOfFacetFiltersAsFacetFilters(
-					[]search.FacetFilters{*search.StringAsFacetFilters("author:Stephen King"), *search.StringAsFacetFilters("genre:Horror")})})))))
+					[]search.FacetFilters{*search.StringAsFacetFilters("author:Stephen King"), *search.StringAsFacetFilters("genre:Horror")})}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2575,10 +2388,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facetFilters":["publisher:Penguin",["author:Stephen King","genre:Horror"]]}`)
 	})
 	t.Run("facetFiltersBook", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
-				[]search.FacetFilters{*search.StringAsFacetFilters("category:Book")})))))
+				[]search.FacetFilters{*search.StringAsFacetFilters("category:Book")}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2588,10 +2400,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","facetFilters":["category:Book"]}`)
 	})
 	t.Run("facetFiltersAND", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
-				[]search.FacetFilters{*search.StringAsFacetFilters("category:Book"), *search.StringAsFacetFilters("author:John Doe")})))))
+				[]search.FacetFilters{*search.StringAsFacetFilters("category:Book"), *search.StringAsFacetFilters("author:John Doe")}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2601,11 +2412,10 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","facetFilters":["category:Book","author:John Doe"]}`)
 	})
 	t.Run("facetFiltersOR", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
 				[]search.FacetFilters{*search.ArrayOfFacetFiltersAsFacetFilters(
-					[]search.FacetFilters{*search.StringAsFacetFilters("category:Book"), *search.StringAsFacetFilters("author:John Doe")})})))))
+					[]search.FacetFilters{*search.StringAsFacetFilters("category:Book"), *search.StringAsFacetFilters("author:John Doe")})}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2615,11 +2425,10 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","facetFilters":[["category:Book","author:John Doe"]]}`)
 	})
 	t.Run("facetFiltersCombined", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
 				[]search.FacetFilters{*search.StringAsFacetFilters("author:John Doe"), *search.ArrayOfFacetFiltersAsFacetFilters(
-					[]search.FacetFilters{*search.StringAsFacetFilters("category:Book"), *search.StringAsFacetFilters("category:Movie")})})))))
+					[]search.FacetFilters{*search.StringAsFacetFilters("category:Book"), *search.StringAsFacetFilters("category:Movie")})}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2629,9 +2438,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","facetFilters":["author:John Doe",["category:Book","category:Movie"]]}`)
 	})
 	t.Run("facetFiltersNeg", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetFacetFilters(search.StringAsFacetFilters("category:-Ebook")))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetFacetFilters(search.StringAsFacetFilters("category:-Ebook"))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2641,10 +2449,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facetFilters":"category:-Ebook"}`)
 	})
 	t.Run("filtersAndFacetFilters", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetFilters("(author:\"Stephen King\" OR genre:\"Horror\")").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
-				[]search.FacetFilters{*search.StringAsFacetFilters("publisher:Penguin")})))))
+				[]search.FacetFilters{*search.StringAsFacetFilters("publisher:Penguin")}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2654,10 +2461,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"filters":"(author:\"Stephen King\" OR genre:\"Horror\")","facetFilters":["publisher:Penguin"]}`)
 	})
 	t.Run("facet author genre", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetFacets(
-				[]string{"author", "genre"}))))
+				[]string{"author", "genre"})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2667,10 +2473,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facets":["author","genre"]}`)
 	})
 	t.Run("facet wildcard", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetFacets(
-				[]string{"*"}))))
+				[]string{"*"})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2680,9 +2485,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facets":["*"]}`)
 	})
 	t.Run("maxValuesPerFacet", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetMaxValuesPerFacet(1000))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetMaxValuesPerFacet(1000)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2692,9 +2496,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"maxValuesPerFacet":1000}`)
 	})
 	t.Run("aroundLatLng", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetAroundLatLng("40.71, -74.01"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetAroundLatLng("40.71, -74.01")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2704,9 +2507,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"aroundLatLng":"40.71, -74.01"}`)
 	})
 	t.Run("aroundLatLngViaIP", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetAroundLatLngViaIP(true))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetAroundLatLngViaIP(true)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2716,9 +2518,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"aroundLatLngViaIP":true}`)
 	})
 	t.Run("aroundRadius", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetAroundLatLng("40.71, -74.01").SetAroundRadius(search.Int32AsAroundRadius(1000000)))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetAroundLatLng("40.71, -74.01").SetAroundRadius(search.Int32AsAroundRadius(1000000))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2728,11 +2529,10 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"aroundLatLng":"40.71, -74.01","aroundRadius":1000000}`)
 	})
 	t.Run("insideBoundingBox", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetInsideBoundingBox(search.ArrayOfArrayOfFloat64AsInsideBoundingBox(
 				[][]float64{
-					[]float64{49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875}})))))
+					[]float64{49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875}}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2742,11 +2542,10 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"insideBoundingBox":[[49.067996905313834,65.73828125,25.905859247243498,128.8046875]]}`)
 	})
 	t.Run("insidePolygon", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetInsidePolygon(
 				[][]float64{
-					[]float64{42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005, 31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545, -117.54828125}}))))
+					[]float64{42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005, 31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545, -117.54828125}})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2756,11 +2555,10 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}`)
 	})
 	t.Run("insidePolygon", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetInsidePolygon(
 				[][]float64{
-					[]float64{42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005, 31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545, -117.54828125}}))))
+					[]float64{42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005, 31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545, -117.54828125}})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2770,10 +2568,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}`)
 	})
 	t.Run("optionalFilters", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetOptionalFilters(search.ArrayOfOptionalFiltersAsOptionalFilters(
-				[]search.OptionalFilters{*search.StringAsOptionalFilters("can_deliver_quickly:true")})))))
+				[]search.OptionalFilters{*search.StringAsOptionalFilters("can_deliver_quickly:true")}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2783,10 +2580,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"optionalFilters":["can_deliver_quickly:true"]}`)
 	})
 	t.Run("optionalFiltersMany", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetOptionalFilters(search.ArrayOfOptionalFiltersAsOptionalFilters(
-				[]search.OptionalFilters{*search.StringAsOptionalFilters("brand:Apple<score=3>"), *search.StringAsOptionalFilters("brand:Samsung<score=2>"), *search.StringAsOptionalFilters("brand:-Huawei")})))))
+				[]search.OptionalFilters{*search.StringAsOptionalFilters("brand:Apple<score=3>"), *search.StringAsOptionalFilters("brand:Samsung<score=2>"), *search.StringAsOptionalFilters("brand:-Huawei")}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2796,10 +2592,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"optionalFilters":["brand:Apple<score=3>","brand:Samsung<score=2>","brand:-Huawei"]}`)
 	})
 	t.Run("optionalFiltersSimple", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetOptionalFilters(search.ArrayOfOptionalFiltersAsOptionalFilters(
-				[]search.OptionalFilters{*search.StringAsOptionalFilters("brand:Apple<score=2>"), *search.StringAsOptionalFilters("type:tablet")})))))
+				[]search.OptionalFilters{*search.StringAsOptionalFilters("brand:Apple<score=2>"), *search.StringAsOptionalFilters("type:tablet")}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2809,10 +2604,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"optionalFilters":["brand:Apple<score=2>","type:tablet"]}`)
 	})
 	t.Run("restrictSearchableAttributes", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetRestrictSearchableAttributes(
-				[]string{"title_fr"}))))
+				[]string{"title_fr"})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2822,9 +2616,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"restrictSearchableAttributes":["title_fr"]}`)
 	})
 	t.Run("getRankingInfo", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetGetRankingInfo(true))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetGetRankingInfo(true)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2834,9 +2627,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"getRankingInfo":true}`)
 	})
 	t.Run("clickAnalytics", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetClickAnalytics(true))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetClickAnalytics(true)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2846,9 +2638,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"clickAnalytics":true}`)
 	})
 	t.Run("clickAnalyticsUserToken", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetClickAnalytics(true).SetUserToken("user-1"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetClickAnalytics(true).SetUserToken("user-1")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2858,9 +2649,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"clickAnalytics":true,"userToken":"user-1"}`)
 	})
 	t.Run("enablePersonalization", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetEnablePersonalization(true).SetUserToken("user-1"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetEnablePersonalization(true).SetUserToken("user-1")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2870,9 +2660,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"enablePersonalization":true,"userToken":"user-1"}`)
 	})
 	t.Run("userToken", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetUserToken("user-1"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetUserToken("user-1")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2882,9 +2671,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"userToken":"user-1"}`)
 	})
 	t.Run("userToken1234", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetUserToken("user-1234"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetUserToken("user-1234")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2894,10 +2682,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","userToken":"user-1234"}`)
 	})
 	t.Run("analyticsTag", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetAnalyticsTags(
-				[]string{"YOUR_ANALYTICS_TAG"}))))
+				[]string{"YOUR_ANALYTICS_TAG"})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2907,10 +2694,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"analyticsTags":["YOUR_ANALYTICS_TAG"]}`)
 	})
 	t.Run("facetFiltersUsers", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
-				[]search.FacetFilters{*search.StringAsFacetFilters("user:user42"), *search.StringAsFacetFilters("user:public")})))))
+				[]search.FacetFilters{*search.StringAsFacetFilters("user:user42"), *search.StringAsFacetFilters("user:public")}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2920,10 +2706,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"facetFilters":["user:user42","user:public"]}`)
 	})
 	t.Run("buildTheQuery", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetFilters("categoryPageId: Men's Clothing").SetHitsPerPage(50).SetAnalyticsTags(
-				[]string{"mens-clothing"}))))
+				[]string{"mens-clothing"})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2933,10 +2718,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"filters":"categoryPageId: Men's Clothing","hitsPerPage":50,"analyticsTags":["mens-clothing"]}`)
 	})
 	t.Run("attributesToHighlightOverride", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetAttributesToHighlight(
-				[]string{"title", "content"}))))
+				[]string{"title", "content"})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2946,10 +2730,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","attributesToHighlight":["title","content"]}`)
 	})
 	t.Run("disableTypoToleranceOnAttributes", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetDisableTypoToleranceOnAttributes(
-				[]string{"serial_number"}))))
+				[]string{"serial_number"})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2959,9 +2742,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","disableTypoToleranceOnAttributes":["serial_number"]}`)
 	})
 	t.Run("search_a_query", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("shirt"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("shirt")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2971,9 +2753,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"shirt"}`)
 	})
 	t.Run("search_everything", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery(""))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2983,9 +2764,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":""}`)
 	})
 	t.Run("api_filtering_range_example", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("books").SetFilters("price:10 TO 20"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("books").SetFilters("price:10 TO 20")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2995,9 +2775,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"books","filters":"price:10 TO 20"}`)
 	})
 	t.Run("search_a_query", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("").SetSimilarQuery("Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen").SetFilters("year:1991 TO 2001"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("").SetSimilarQuery("Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen").SetFilters("year:1991 TO 2001")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3007,10 +2786,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"","similarQuery":"Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen","filters":"year:1991 TO 2001"}`)
 	})
 	t.Run("override_retrievable_attributes", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetAttributesToRetrieve(
-				[]string{"title", "content"}))))
+				[]string{"title", "content"})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3020,10 +2798,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","attributesToRetrieve":["title","content"]}`)
 	})
 	t.Run("restrict_searchable_attributes", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetRestrictSearchableAttributes(
-				[]string{"title", "author"}))))
+				[]string{"title", "author"})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3033,9 +2810,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","restrictSearchableAttributes":["title","author"]}`)
 	})
 	t.Run("override_default_relevancy", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetRelevancyStrictness(70))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetRelevancyStrictness(70)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3045,9 +2821,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","relevancyStrictness":70}`)
 	})
 	t.Run("apply_filters", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetFilters("(category:Book OR category:Ebook) AND _tags:published"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetFilters("(category:Book OR category:Ebook) AND _tags:published")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3057,9 +2832,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","filters":"(category:Book OR category:Ebook) AND _tags:published"}`)
 	})
 	t.Run("apply_all_filters", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetFilters("available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\"John Doe\""))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetFilters("available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\"John Doe\"")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3069,9 +2843,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","filters":"available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\"John Doe\""}`)
 	})
 	t.Run("escape_spaces", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetFilters("category:\"Books and Comics\""))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetFilters("category:\"Books and Comics\"")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3081,9 +2854,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","filters":"category:\"Books and Comics\""}`)
 	})
 	t.Run("escape_keywords", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetFilters("keyword:\"OR\""))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetFilters("keyword:\"OR\"")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3093,9 +2865,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","filters":"keyword:\"OR\""}`)
 	})
 	t.Run("escape_single_quotes", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetFilters("content:\"It's a wonderful day\""))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetFilters("content:\"It's a wonderful day\"")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3105,9 +2876,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","filters":"content:\"It's a wonderful day\""}`)
 	})
 	t.Run("escape_double_quotes", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetFilters("content:\"She said \"Hello World\""))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetFilters("content:\"She said \"Hello World\"")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3117,10 +2887,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","filters":"content:\"She said \"Hello World\""}`)
 	})
 	t.Run("apply_filters", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetOptionalFilters(search.ArrayOfOptionalFiltersAsOptionalFilters(
-				[]search.OptionalFilters{*search.StringAsOptionalFilters("category:Book"), *search.StringAsOptionalFilters("author:John Doe")})))))
+				[]search.OptionalFilters{*search.StringAsOptionalFilters("category:Book"), *search.StringAsOptionalFilters("author:John Doe")}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3130,10 +2899,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","optionalFilters":["category:Book","author:John Doe"]}`)
 	})
 	t.Run("apply_negative_filters", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetOptionalFilters(search.ArrayOfOptionalFiltersAsOptionalFilters(
-				[]search.OptionalFilters{*search.StringAsOptionalFilters("category:Book"), *search.StringAsOptionalFilters("author:-John Doe")})))))
+				[]search.OptionalFilters{*search.StringAsOptionalFilters("category:Book"), *search.StringAsOptionalFilters("author:-John Doe")}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3143,10 +2911,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","optionalFilters":["category:Book","author:-John Doe"]}`)
 	})
 	t.Run("apply_negative_filters_restaurants", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetOptionalFilters(search.ArrayOfOptionalFiltersAsOptionalFilters(
-				[]search.OptionalFilters{*search.StringAsOptionalFilters("restaurant:-Bert's Inn")})))))
+				[]search.OptionalFilters{*search.StringAsOptionalFilters("restaurant:-Bert's Inn")}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3156,11 +2923,10 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","optionalFilters":["restaurant:-Bert's Inn"]}`)
 	})
 	t.Run("apply_numeric_filters", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetNumericFilters(search.ArrayOfNumericFiltersAsNumericFilters(
 				[]search.NumericFilters{*search.StringAsNumericFilters("price < 1000"), *search.ArrayOfNumericFiltersAsNumericFilters(
-					[]search.NumericFilters{*search.StringAsNumericFilters("inStock = 1"), *search.StringAsNumericFilters("deliveryDate < 1441755506")})})))))
+					[]search.NumericFilters{*search.StringAsNumericFilters("inStock = 1"), *search.StringAsNumericFilters("deliveryDate < 1441755506")})}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3170,11 +2936,10 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","numericFilters":["price < 1000",["inStock = 1","deliveryDate < 1441755506"]]}`)
 	})
 	t.Run("apply_tag_filters", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetTagFilters(search.ArrayOfTagFiltersAsTagFilters(
 				[]search.TagFilters{*search.StringAsTagFilters("SciFi"), *search.ArrayOfTagFiltersAsTagFilters(
-					[]search.TagFilters{*search.StringAsTagFilters("Book"), *search.StringAsTagFilters("Movie")})})))))
+					[]search.TagFilters{*search.StringAsTagFilters("Book"), *search.StringAsTagFilters("Movie")})}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3184,9 +2949,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","tagFilters":["SciFi",["Book","Movie"]]}`)
 	})
 	t.Run("apply_filters", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetSumOrFiltersScores(true))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetSumOrFiltersScores(true)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3196,10 +2960,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","sumOrFiltersScores":true}`)
 	})
 	t.Run("facets_all", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetFacets(
-				[]string{"*"}))))
+				[]string{"*"})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3209,10 +2972,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","facets":["*"]}`)
 	})
 	t.Run("retrieve_only_some_facets", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetFacets(
-				[]string{"category", "author"}))))
+				[]string{"category", "author"})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3222,9 +2984,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","facets":["category","author"]}`)
 	})
 	t.Run("override_default_max_values_per_facet", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetMaxValuesPerFacet(20))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetMaxValuesPerFacet(20)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3234,9 +2995,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","maxValuesPerFacet":20}`)
 	})
 	t.Run("enable_faceting_after_distinct", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetFacetingAfterDistinct(true))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetFacetingAfterDistinct(true)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3246,9 +3006,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","facetingAfterDistinct":true}`)
 	})
 	t.Run("sort_facet_values_alphabetically", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetSortFacetValuesBy("count"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetSortFacetValuesBy("count")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3258,10 +3017,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","sortFacetValuesBy":"count"}`)
 	})
 	t.Run("override_attributes_to_snippet", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetAttributesToSnippet(
-				[]string{"title", "content:80"}))))
+				[]string{"title", "content:80"})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3271,9 +3029,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","attributesToSnippet":["title","content:80"]}`)
 	})
 	t.Run("override_default_highlight_pre_tag", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetHighlightPreTag("<strong>"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetHighlightPreTag("<strong>")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3283,9 +3040,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","highlightPreTag":"<strong>"}`)
 	})
 	t.Run("override_default_highlight_post_tag", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetHighlightPostTag("</strong>"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetHighlightPostTag("</strong>")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3295,9 +3051,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","highlightPostTag":"</strong>"}`)
 	})
 	t.Run("override_default_snippet_ellipsis_text", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetSnippetEllipsisText(""))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetSnippetEllipsisText("")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3307,9 +3062,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","snippetEllipsisText":""}`)
 	})
 	t.Run("enable_restrict_highlight_and_snippet_arrays", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetRestrictHighlightAndSnippetArrays(false))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetRestrictHighlightAndSnippetArrays(false)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3319,9 +3073,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","restrictHighlightAndSnippetArrays":false}`)
 	})
 	t.Run("access_page", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetPage(0))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetPage(0)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3331,9 +3084,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","page":0}`)
 	})
 	t.Run("override_default_hits_per_page", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetHitsPerPage(10))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetHitsPerPage(10)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3343,9 +3095,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","hitsPerPage":10}`)
 	})
 	t.Run("get_nth_hit", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetOffset(4))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetOffset(4)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3355,9 +3106,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","offset":4}`)
 	})
 	t.Run("get_n_results", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetLength(4))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetLength(4)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3367,9 +3117,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","length":4}`)
 	})
 	t.Run("override_default_min_word_size_for_one_typo", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetMinWordSizefor1Typo(2))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetMinWordSizefor1Typo(2)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3379,9 +3128,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","minWordSizefor1Typo":2}`)
 	})
 	t.Run("override_default_min_word_size_for_two_typos", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetMinWordSizefor2Typos(2))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetMinWordSizefor2Typos(2)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3391,9 +3139,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","minWordSizefor2Typos":2}`)
 	})
 	t.Run("override_default_typo_tolerance_mode", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetTypoTolerance(search.BoolAsTypoTolerance(false)))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetTypoTolerance(search.BoolAsTypoTolerance(false))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3403,9 +3150,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","typoTolerance":false}`)
 	})
 	t.Run("disable_typos_on_numeric_tokens_at_search_time", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetAllowTyposOnNumericTokens(false))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetAllowTyposOnNumericTokens(false)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3415,9 +3161,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","allowTyposOnNumericTokens":false}`)
 	})
 	t.Run("search_around_a_position", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetAroundLatLng("40.71, -74.01"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetAroundLatLng("40.71, -74.01")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3427,9 +3172,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","aroundLatLng":"40.71, -74.01"}`)
 	})
 	t.Run("search_around_server_ip", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetAroundLatLngViaIP(true))), search.WithHeaderParam("x-forwarded-for", "94.228.178.246 // should be replaced with the actual IP you would like to search around"))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetAroundLatLngViaIP(true)), search.WithHeaderParam("x-forwarded-for", "94.228.178.246 // should be replaced with the actual IP you would like to search around"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3444,9 +3188,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		}
 	})
 	t.Run("set_around_radius", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetAroundRadius(search.Int32AsAroundRadius(1000)))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetAroundRadius(search.Int32AsAroundRadius(1000))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3456,9 +3199,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","aroundRadius":1000}`)
 	})
 	t.Run("disable_automatic_radius", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetAroundRadius(search.AroundRadiusAllAsAroundRadius(search.AroundRadiusAll("all"))))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetAroundRadius(search.AroundRadiusAllAsAroundRadius(search.AROUND_RADIUS_ALL_ALL))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3468,9 +3210,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","aroundRadius":"all"}`)
 	})
 	t.Run("set_geo_search_precision", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetAroundPrecision(search.Int32AsAroundPrecision(100)))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetAroundPrecision(search.Int32AsAroundPrecision(100))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3480,10 +3221,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","aroundPrecision":100}`)
 	})
 	t.Run("set_geo_search_precision_non_linear", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetAroundPrecision(search.ArrayOfModelRangeAsAroundPrecision(
-				[]search.ModelRange{*search.NewEmptyModelRange().SetFrom(0).SetValue(25), *search.NewEmptyModelRange().SetFrom(2000).SetValue(1000)})))))
+				[]search.ModelRange{*search.NewEmptyModelRange().SetFrom(0).SetValue(25), *search.NewEmptyModelRange().SetFrom(2000).SetValue(1000)}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3493,9 +3233,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","aroundPrecision":[{"from":0,"value":25},{"from":2000,"value":1000}]}`)
 	})
 	t.Run("set_minimum_geo_search_radius", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetMinimumAroundRadius(1000))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetMinimumAroundRadius(1000)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3505,11 +3244,10 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","minimumAroundRadius":1000}`)
 	})
 	t.Run("search_inside_rectangular_area", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetInsideBoundingBox(search.ArrayOfArrayOfFloat64AsInsideBoundingBox(
 				[][]float64{
-					[]float64{46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625}})))))
+					[]float64{46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625}}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3519,12 +3257,11 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","insideBoundingBox":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625]]}`)
 	})
 	t.Run("search_inside_multiple_rectangular_areas", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetInsideBoundingBox(search.ArrayOfArrayOfFloat64AsInsideBoundingBox(
 				[][]float64{
 					[]float64{46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625},
-					[]float64{49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875}})))))
+					[]float64{49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875}}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3534,11 +3271,10 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","insideBoundingBox":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875]]}`)
 	})
 	t.Run("search_inside_polygon_area", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetInsidePolygon(
 				[][]float64{
-					[]float64{46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625, 49.62625916704081, 4.6181640625}}))))
+					[]float64{46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625, 49.62625916704081, 4.6181640625}})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3548,12 +3284,11 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","insidePolygon":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625]]}`)
 	})
 	t.Run("search_inside_multiple_polygon_areas", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetInsidePolygon(
 				[][]float64{
 					[]float64{46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625, 49.62625916704081, 4.6181640625},
-					[]float64{49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875, 45.17210966999772, 1.009765625, 50.62626704081, 4.6181640625}}))))
+					[]float64{49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875, 45.17210966999772, 1.009765625, 50.62626704081, 4.6181640625}})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3563,10 +3298,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","insidePolygon":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875,45.17210966999772,1.009765625,50.62626704081,4.6181640625]]}`)
 	})
 	t.Run("set_querylanguages_override", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetIgnorePlurals(search.ArrayOfSupportedLanguageAsIgnorePlurals(
-				[]search.SupportedLanguage{search.SupportedLanguage("ca"), search.SupportedLanguage("es")})))))
+				[]search.SupportedLanguage{search.SUPPORTED_LANGUAGE_CA, search.SUPPORTED_LANGUAGE_ES}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3576,10 +3310,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","ignorePlurals":["ca","es"]}`)
 	})
 	t.Run("set_querylanguages_override", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetRemoveStopWords(search.ArrayOfSupportedLanguageAsRemoveStopWords(
-				[]search.SupportedLanguage{search.SupportedLanguage("ca"), search.SupportedLanguage("es")})))))
+				[]search.SupportedLanguage{search.SUPPORTED_LANGUAGE_CA, search.SUPPORTED_LANGUAGE_ES}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3589,10 +3322,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","removeStopWords":["ca","es"]}`)
 	})
 	t.Run("set_querylanguages_override", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetRemoveStopWords(search.ArrayOfSupportedLanguageAsRemoveStopWords(
-				[]search.SupportedLanguage{search.SupportedLanguage("ca"), search.SupportedLanguage("es")})))))
+				[]search.SupportedLanguage{search.SUPPORTED_LANGUAGE_CA, search.SUPPORTED_LANGUAGE_ES}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3602,10 +3334,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","removeStopWords":["ca","es"]}`)
 	})
 	t.Run("set_querylanguages_with_japanese_query", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetQueryLanguages(
-				[]search.SupportedLanguage{search.SupportedLanguage("ja"), search.SupportedLanguage("en")}))))
+				[]search.SupportedLanguage{search.SUPPORTED_LANGUAGE_JA, search.SUPPORTED_LANGUAGE_EN})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3615,10 +3346,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","queryLanguages":["ja","en"]}`)
 	})
 	t.Run("set_natural_languages", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("").SetNaturalLanguages(
-				[]search.SupportedLanguage{search.SupportedLanguage("fr")}))))
+				[]search.SupportedLanguage{search.SUPPORTED_LANGUAGE_FR})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3628,10 +3358,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"","naturalLanguages":["fr"]}`)
 	})
 	t.Run("override_natural_languages_with_query", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("").SetNaturalLanguages(
-				[]search.SupportedLanguage{search.SupportedLanguage("fr")}).SetRemoveWordsIfNoResults(search.RemoveWordsIfNoResults("firstWords")))))
+				[]search.SupportedLanguage{search.SUPPORTED_LANGUAGE_FR}).SetRemoveWordsIfNoResults(search.REMOVE_WORDS_IF_NO_RESULTS_FIRST_WORDS)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3641,9 +3370,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"","naturalLanguages":["fr"],"removeWordsIfNoResults":"firstWords"}`)
 	})
 	t.Run("enable_decompound_query_search_time", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetDecompoundQuery(true))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetDecompoundQuery(true)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3653,9 +3381,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","decompoundQuery":true}`)
 	})
 	t.Run("enable_rules_search_time", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetEnableRules(true))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetEnableRules(true)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3665,10 +3392,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","enableRules":true}`)
 	})
 	t.Run("set_rule_contexts", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetRuleContexts(
-				[]string{"front_end", "website2"}))))
+				[]string{"front_end", "website2"})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3678,9 +3404,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","ruleContexts":["front_end","website2"]}`)
 	})
 	t.Run("enable_personalization", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetEnablePersonalization(true))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetEnablePersonalization(true)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3690,9 +3415,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","enablePersonalization":true}`)
 	})
 	t.Run("enable_personalization_with_user_token", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetEnablePersonalization(true).SetUserToken("123456"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetEnablePersonalization(true).SetUserToken("123456")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3702,9 +3426,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","enablePersonalization":true,"userToken":"123456"}`)
 	})
 	t.Run("personalization_impact", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetPersonalizationImpact(20))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetPersonalizationImpact(20)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3714,9 +3437,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","personalizationImpact":20}`)
 	})
 	t.Run("set_user_token", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetUserToken("123456"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetUserToken("123456")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3726,9 +3448,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","userToken":"123456"}`)
 	})
 	t.Run("set_user_token_with_personalization", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetEnablePersonalization(true).SetUserToken("123456"))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetEnablePersonalization(true).SetUserToken("123456")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3738,9 +3459,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","enablePersonalization":true,"userToken":"123456"}`)
 	})
 	t.Run("override_default_query_type", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetQueryType(search.QueryType("prefixAll")))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetQueryType(search.QUERY_TYPE_PREFIX_ALL)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3750,9 +3470,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","queryType":"prefixAll"}`)
 	})
 	t.Run("override_default_remove_words_if_no_results", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetRemoveWordsIfNoResults(search.RemoveWordsIfNoResults("lastWords")))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetRemoveWordsIfNoResults(search.REMOVE_WORDS_IF_NO_RESULTS_LAST_WORDS)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3762,9 +3481,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","removeWordsIfNoResults":"lastWords"}`)
 	})
 	t.Run("enable_advanced_syntax_search_time", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetAdvancedSyntax(true))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetAdvancedSyntax(true)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3774,10 +3492,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","advancedSyntax":true}`)
 	})
 	t.Run("overide_default_optional_words", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetOptionalWords(search.ArrayOfStringAsOptionalWords(
-				[]string{"toyota", "2020 2021"})))))
+				[]string{"toyota", "2020 2021"}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3787,10 +3504,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","optionalWords":["toyota","2020 2021"]}`)
 	})
 	t.Run("disabling_exact_for_some_attributes_search_time", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetDisableExactOnAttributes(
-				[]string{"description"}))))
+				[]string{"description"})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3800,9 +3516,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","disableExactOnAttributes":["description"]}`)
 	})
 	t.Run("override_default_exact_single_word_query", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetExactOnSingleWordQuery(search.ExactOnSingleWordQuery("none")))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetExactOnSingleWordQuery(search.EXACT_ON_SINGLE_WORD_QUERY_NONE)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3812,10 +3527,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","exactOnSingleWordQuery":"none"}`)
 	})
 	t.Run("override_default_aternative_as_exact", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetAlternativesAsExact(
-				[]search.AlternativesAsExact{search.AlternativesAsExact("multiWordsSynonym")}))))
+				[]search.AlternativesAsExact{search.ALTERNATIVES_AS_EXACT_MULTI_WORDS_SYNONYM})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3825,10 +3539,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","alternativesAsExact":["multiWordsSynonym"]}`)
 	})
 	t.Run("enable_advanced_syntax_exact_phrase", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetAdvancedSyntax(true).SetAdvancedSyntaxFeatures(
-				[]search.AdvancedSyntaxFeatures{search.AdvancedSyntaxFeatures("exactPhrase")}))))
+				[]search.AdvancedSyntaxFeatures{search.ADVANCED_SYNTAX_FEATURES_EXACT_PHRASE})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3838,10 +3551,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"]}`)
 	})
 	t.Run("enable_advanced_syntax_exclude_words", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetAdvancedSyntax(true).SetAdvancedSyntaxFeatures(
-				[]search.AdvancedSyntaxFeatures{search.AdvancedSyntaxFeatures("excludeWords")}))))
+				[]search.AdvancedSyntaxFeatures{search.ADVANCED_SYNTAX_FEATURES_EXCLUDE_WORDS})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3851,9 +3563,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","advancedSyntax":true,"advancedSyntaxFeatures":["excludeWords"]}`)
 	})
 	t.Run("override_distinct", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetDistinct(search.Int32AsDistinct(0)))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetDistinct(search.Int32AsDistinct(0))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3863,9 +3574,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","distinct":0}`)
 	})
 	t.Run("get_ranking_info", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetGetRankingInfo(true))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetGetRankingInfo(true)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3875,9 +3585,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","getRankingInfo":true}`)
 	})
 	t.Run("disable_click_analytics", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetClickAnalytics(false))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetClickAnalytics(false)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3887,9 +3596,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","clickAnalytics":false}`)
 	})
 	t.Run("enable_click_analytics", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetClickAnalytics(true))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetClickAnalytics(true)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3899,9 +3607,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","clickAnalytics":true}`)
 	})
 	t.Run("disable_analytics", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetAnalytics(false))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetAnalytics(false)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3911,10 +3618,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","analytics":false}`)
 	})
 	t.Run("add_analytics_tags", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetAnalyticsTags(
-				[]string{"front_end", "website2"}))))
+				[]string{"front_end", "website2"})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3924,9 +3630,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","analyticsTags":["front_end","website2"]}`)
 	})
 	t.Run("disable_synonyms", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetSynonyms(false))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetSynonyms(false)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3936,9 +3641,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","synonyms":false}`)
 	})
 	t.Run("override_replace_synonyms_in_highlights", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetReplaceSynonymsInHighlight(true))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetReplaceSynonymsInHighlight(true)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3948,9 +3652,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","replaceSynonymsInHighlight":true}`)
 	})
 	t.Run("override_min_proximity", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetMinProximity(2))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetMinProximity(2)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3960,10 +3663,9 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","minProximity":2}`)
 	})
 	t.Run("override_default_field", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetResponseFields(
-				[]string{"hits", "facets"}))))
+				[]string{"hits", "facets"})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3973,9 +3675,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","responseFields":["hits","facets"]}`)
 	})
 	t.Run("override_percentile_computation", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetPercentileComputation(false))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetPercentileComputation(false)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3985,9 +3686,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","percentileComputation":false}`)
 	})
 	t.Run("set_ab_test", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetEnableABTest(false))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetEnableABTest(false)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3997,9 +3697,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","enableABTest":false}`)
 	})
 	t.Run("set_enable_re_ranking", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetEnableReRanking(false))))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetEnableReRanking(false)))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -4009,9 +3708,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query","enableReRanking":false}`)
 	})
 	t.Run("with algolia user id", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query"))), search.WithHeaderParam("X-Algolia-User-ID", "user1234"))
+		_, err := client.SearchSingleIndex("indexName", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query")), search.WithHeaderParam("X-Algolia-User-ID", "user1234"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -4021,9 +3719,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"query":"query"}`)
 	})
 	t.Run("mcm with algolia user id", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"playlists").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("peace"))), search.WithHeaderParam("X-Algolia-User-ID", "user42"))
+		_, err := client.SearchSingleIndex("playlists", search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("peace")), search.WithHeaderParam("X-Algolia-User-ID", "user42"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/playlists/query", echo.Path)
@@ -4039,8 +3736,7 @@ func TestSearch_SearchSynonyms(t *testing.T) {
 	_ = echo
 
 	t.Run("searchSynonyms with minimal parameters", func(t *testing.T) {
-		_, err := client.SearchSynonyms(client.NewApiSearchSynonymsRequest(
-			"indexName"))
+		_, err := client.SearchSynonyms("indexName", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/synonyms/search", echo.Path)
@@ -4050,9 +3746,7 @@ func TestSearch_SearchSynonyms(t *testing.T) {
 		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("searchSynonyms with all parameters", func(t *testing.T) {
-		_, err := client.SearchSynonyms(client.NewApiSearchSynonymsRequest(
-			"indexName").WithSearchSynonymsParams(
-			search.NewEmptySearchSynonymsParams().SetQuery("myQuery").SetType(search.SynonymType("altcorrection1")).SetPage(10).SetHitsPerPage(10)))
+		_, err := client.SearchSynonyms("indexName", search.NewSearchSynonymsOptions().WithQuery("myQuery").WithType(search.SYNONYM_TYPE_ALTCORRECTION1).WithPage(10).WithHitsPerPage(10))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/synonyms/search", echo.Path)
@@ -4068,9 +3762,7 @@ func TestSearch_SearchUserIds(t *testing.T) {
 	_ = echo
 
 	t.Run("searchUserIds", func(t *testing.T) {
-		_, err := client.SearchUserIds(client.NewApiSearchUserIdsRequest(
-
-			search.NewEmptySearchUserIdsParams().SetQuery("test").SetClusterName("theClusterName").SetPage(5).SetHitsPerPage(10)))
+		_, err := client.SearchUserIds("test", search.NewSearchUserIdsOptions().WithClusterName("theClusterName").WithPage(5).WithHitsPerPage(10))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/clusters/mapping/search", echo.Path)
@@ -4086,10 +3778,8 @@ func TestSearch_SetDictionarySettings(t *testing.T) {
 	_ = echo
 
 	t.Run("get setDictionarySettings results with minimal parameters", func(t *testing.T) {
-		_, err := client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(
-
-			search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(
-				search.NewEmptyStandardEntries().SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true}))))
+		_, err := client.SetDictionarySettings(
+			search.NewEmptyStandardEntries().SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/dictionaries/*/settings", echo.Path)
@@ -4099,10 +3789,8 @@ func TestSearch_SetDictionarySettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true}}}`)
 	})
 	t.Run("get setDictionarySettings results with all parameters", func(t *testing.T) {
-		_, err := client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(
-
-			search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(
-				search.NewEmptyStandardEntries().SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true}).SetStopwords(map[string]bool{"fr": false}).SetCompounds(map[string]bool{"ru": true}))))
+		_, err := client.SetDictionarySettings(
+			search.NewEmptyStandardEntries().SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true}).SetStopwords(map[string]bool{"fr": false}).SetCompounds(map[string]bool{"ru": true}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/dictionaries/*/settings", echo.Path)
@@ -4118,9 +3806,8 @@ func TestSearch_SetSettings(t *testing.T) {
 	_ = echo
 
 	t.Run("minimal parameters", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"cts_e2e_settings",
-			search.NewEmptyIndexSettings().SetPaginationLimitedTo(10)).WithForwardToReplicas(true))
+		_, err := client.SetSettings("cts_e2e_settings",
+			search.NewEmptyIndexSettings().SetPaginationLimitedTo(10), utils.ToPtr(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/cts_e2e_settings/settings", echo.Path)
@@ -4136,9 +3823,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		}
 	})
 	t.Run("boolean typoTolerance", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetTypoTolerance(search.BoolAsTypoTolerance(true))).WithForwardToReplicas(true))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetTypoTolerance(search.BoolAsTypoTolerance(true)), utils.ToPtr(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4154,9 +3840,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		}
 	})
 	t.Run("enum typoTolerance", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("min")))).WithForwardToReplicas(true))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TYPO_TOLERANCE_ENUM_MIN)), utils.ToPtr(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4172,9 +3857,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		}
 	})
 	t.Run("ignorePlurals", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetIgnorePlurals(search.BoolAsIgnorePlurals(true))).WithForwardToReplicas(true))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetIgnorePlurals(search.BoolAsIgnorePlurals(true)), utils.ToPtr(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4190,10 +3874,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		}
 	})
 	t.Run("list of string ignorePlurals", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetIgnorePlurals(search.ArrayOfSupportedLanguageAsIgnorePlurals(
-				[]search.SupportedLanguage{search.SupportedLanguage("fr")}))).WithForwardToReplicas(true))
+				[]search.SupportedLanguage{search.SUPPORTED_LANGUAGE_FR})), utils.ToPtr(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4209,9 +3892,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		}
 	})
 	t.Run("removeStopWords boolean", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetRemoveStopWords(search.BoolAsRemoveStopWords(true))).WithForwardToReplicas(true))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetRemoveStopWords(search.BoolAsRemoveStopWords(true)), utils.ToPtr(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4227,10 +3909,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		}
 	})
 	t.Run("removeStopWords list of string", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetRemoveStopWords(search.ArrayOfSupportedLanguageAsRemoveStopWords(
-				[]search.SupportedLanguage{search.SupportedLanguage("fr")}))).WithForwardToReplicas(true))
+				[]search.SupportedLanguage{search.SUPPORTED_LANGUAGE_FR})), utils.ToPtr(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4246,9 +3927,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		}
 	})
 	t.Run("boolean distinct", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetDistinct(search.BoolAsDistinct(true))).WithForwardToReplicas(true))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetDistinct(search.BoolAsDistinct(true)), utils.ToPtr(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4264,9 +3944,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		}
 	})
 	t.Run("integer distinct", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetDistinct(search.Int32AsDistinct(1))).WithForwardToReplicas(true))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetDistinct(search.Int32AsDistinct(1)), utils.ToPtr(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4282,9 +3961,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		}
 	})
 	t.Run("distinct company", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetAttributeForDistinct("company").SetDistinct(search.BoolAsDistinct(true))))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetAttributeForDistinct("company").SetDistinct(search.BoolAsDistinct(true)), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4294,9 +3972,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributeForDistinct":"company","distinct":true}`)
 	})
 	t.Run("distinct design", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetAttributeForDistinct("design").SetDistinct(search.BoolAsDistinct(true))))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetAttributeForDistinct("design").SetDistinct(search.BoolAsDistinct(true)), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4306,9 +3983,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributeForDistinct":"design","distinct":true}`)
 	})
 	t.Run("distinct true", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetDistinct(search.BoolAsDistinct(true))))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetDistinct(search.BoolAsDistinct(true)), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4318,9 +3994,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"distinct":true}`)
 	})
 	t.Run("distinct section", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetAttributeForDistinct("section").SetDistinct(search.BoolAsDistinct(true))))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetAttributeForDistinct("section").SetDistinct(search.BoolAsDistinct(true)), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4330,10 +4005,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributeForDistinct":"section","distinct":true}`)
 	})
 	t.Run("attributesForFaceting allergens", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"<YOUR_INDEX_NAME>",
+		_, err := client.SetSettings("<YOUR_INDEX_NAME>",
 			search.NewEmptyIndexSettings().SetAttributesForFaceting(
-				[]string{"allergens"})))
+				[]string{"allergens"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", echo.Path)
@@ -4343,10 +4017,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributesForFaceting":["allergens"]}`)
 	})
 	t.Run("attributesForFaceting availableIn", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"<YOUR_INDEX_NAME>",
+		_, err := client.SetSettings("<YOUR_INDEX_NAME>",
 			search.NewEmptyIndexSettings().SetAttributesForFaceting(
-				[]string{"color", "availableIn"})))
+				[]string{"color", "availableIn"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", echo.Path)
@@ -4356,10 +4029,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributesForFaceting":["color","availableIn"]}`)
 	})
 	t.Run("api_attributes_for_faceting", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"<YOUR_INDEX_NAME>",
+		_, err := client.SetSettings("<YOUR_INDEX_NAME>",
 			search.NewEmptyIndexSettings().SetAttributesForFaceting(
-				[]string{"genre", "author"})))
+				[]string{"genre", "author"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", echo.Path)
@@ -4369,10 +4041,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributesForFaceting":["genre","author"]}`)
 	})
 	t.Run("api_attributes_for_faceting_searchable", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"<YOUR_INDEX_NAME>",
+		_, err := client.SetSettings("<YOUR_INDEX_NAME>",
 			search.NewEmptyIndexSettings().SetAttributesForFaceting(
-				[]string{"genre", "searchable(author)"})))
+				[]string{"genre", "searchable(author)"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", echo.Path)
@@ -4382,10 +4053,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributesForFaceting":["genre","searchable(author)"]}`)
 	})
 	t.Run("api_attributes_for_filter_only", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"<YOUR_INDEX_NAME>",
+		_, err := client.SetSettings("<YOUR_INDEX_NAME>",
 			search.NewEmptyIndexSettings().SetAttributesForFaceting(
-				[]string{"filterOnly(genre)", "author"})))
+				[]string{"filterOnly(genre)", "author"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", echo.Path)
@@ -4395,10 +4065,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributesForFaceting":["filterOnly(genre)","author"]}`)
 	})
 	t.Run("attributesForFaceting categoryPageId", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"<YOUR_INDEX_NAME>",
+		_, err := client.SetSettings("<YOUR_INDEX_NAME>",
 			search.NewEmptyIndexSettings().SetAttributesForFaceting(
-				[]string{"searchable(categoryPageId)"})))
+				[]string{"searchable(categoryPageId)"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", echo.Path)
@@ -4408,10 +4077,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributesForFaceting":["searchable(categoryPageId)"]}`)
 	})
 	t.Run("unretrievableAttributes", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"<YOUR_INDEX_NAME>",
+		_, err := client.SetSettings("<YOUR_INDEX_NAME>",
 			search.NewEmptyIndexSettings().SetUnretrievableAttributes(
-				[]string{"visible_by"})))
+				[]string{"visible_by"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", echo.Path)
@@ -4421,10 +4089,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"unretrievableAttributes":["visible_by"]}`)
 	})
 	t.Run("attributesForFaceting user restricted data", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"<YOUR_INDEX_NAME>",
+		_, err := client.SetSettings("<YOUR_INDEX_NAME>",
 			search.NewEmptyIndexSettings().SetAttributesForFaceting(
-				[]string{"filterOnly(visible_by)"})))
+				[]string{"filterOnly(visible_by)"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", echo.Path)
@@ -4434,10 +4101,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributesForFaceting":["filterOnly(visible_by)"]}`)
 	})
 	t.Run("attributesForFaceting optional filters", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"<YOUR_INDEX_NAME>",
+		_, err := client.SetSettings("<YOUR_INDEX_NAME>",
 			search.NewEmptyIndexSettings().SetAttributesForFaceting(
-				[]string{"can_deliver_quickly", "restaurant"})))
+				[]string{"can_deliver_quickly", "restaurant"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", echo.Path)
@@ -4447,10 +4113,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributesForFaceting":["can_deliver_quickly","restaurant"]}`)
 	})
 	t.Run("attributesForFaceting redirect index", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"<YOUR_INDEX_NAME>",
+		_, err := client.SetSettings("<YOUR_INDEX_NAME>",
 			search.NewEmptyIndexSettings().SetAttributesForFaceting(
-				[]string{"query_terms"})))
+				[]string{"query_terms"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", echo.Path)
@@ -4460,10 +4125,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributesForFaceting":["query_terms"]}`)
 	})
 	t.Run("attributesForFaceting multiple consequences", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"<YOUR_INDEX_NAME>",
+		_, err := client.SetSettings("<YOUR_INDEX_NAME>",
 			search.NewEmptyIndexSettings().SetAttributesForFaceting(
-				[]string{"director"})))
+				[]string{"director"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", echo.Path)
@@ -4473,10 +4137,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributesForFaceting":["director"]}`)
 	})
 	t.Run("attributesForFaceting in-depth optional filters", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"<YOUR_INDEX_NAME>",
+		_, err := client.SetSettings("<YOUR_INDEX_NAME>",
 			search.NewEmptyIndexSettings().SetAttributesForFaceting(
-				[]string{"filterOnly(brand)"})))
+				[]string{"filterOnly(brand)"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", echo.Path)
@@ -4486,9 +4149,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributesForFaceting":["filterOnly(brand)"]}`)
 	})
 	t.Run("mode neuralSearch", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetMode(search.Mode("neuralSearch"))))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetMode(search.MODE_NEURAL_SEARCH), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4498,9 +4160,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"mode":"neuralSearch"}`)
 	})
 	t.Run("mode keywordSearch", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetMode(search.Mode("keywordSearch"))))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetMode(search.MODE_KEYWORD_SEARCH), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4510,10 +4171,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"mode":"keywordSearch"}`)
 	})
 	t.Run("searchableAttributes same priority", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetSearchableAttributes(
-				[]string{"title,comments", "ingredients"})))
+				[]string{"title,comments", "ingredients"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4523,10 +4183,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"searchableAttributes":["title,comments","ingredients"]}`)
 	})
 	t.Run("searchableAttributes higher priority", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetSearchableAttributes(
-				[]string{"title", "ingredients"})))
+				[]string{"title", "ingredients"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4536,10 +4195,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"searchableAttributes":["title","ingredients"]}`)
 	})
 	t.Run("customRanking retweets", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetCustomRanking(
-				[]string{"desc(retweets)", "desc(likes)"})))
+				[]string{"desc(retweets)", "desc(likes)"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4549,10 +4207,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"customRanking":["desc(retweets)","desc(likes)"]}`)
 	})
 	t.Run("customRanking boosted", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetCustomRanking(
-				[]string{"desc(boosted)"})))
+				[]string{"desc(boosted)"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4562,10 +4219,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"customRanking":["desc(boosted)"]}`)
 	})
 	t.Run("customRanking pageviews", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetCustomRanking(
-				[]string{"desc(pageviews)", "desc(comments)"})))
+				[]string{"desc(pageviews)", "desc(comments)"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4575,11 +4231,10 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"customRanking":["desc(pageviews)","desc(comments)"]}`)
 	})
 	t.Run("customRanking applying search parameters for a specific query", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetCustomRanking(
 				[]string{"desc(nb_airline_liaisons)"}).SetAttributesForFaceting(
-				[]string{"city, country"})))
+				[]string{"city, country"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4589,10 +4244,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"customRanking":["desc(nb_airline_liaisons)"],"attributesForFaceting":["city, country"]}`)
 	})
 	t.Run("customRanking rounded pageviews", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetCustomRanking(
-				[]string{"desc(rounded_pageviews)", "desc(comments)"})))
+				[]string{"desc(rounded_pageviews)", "desc(comments)"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4602,10 +4256,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"customRanking":["desc(rounded_pageviews)","desc(comments)"]}`)
 	})
 	t.Run("customRanking price", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetCustomRanking(
-				[]string{"desc(price)"})))
+				[]string{"desc(price)"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4615,10 +4268,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"customRanking":["desc(price)"]}`)
 	})
 	t.Run("ranking exhaustive (price)", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetRanking(
-				[]string{"desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"})))
+				[]string{"desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4628,10 +4280,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"ranking":["desc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}`)
 	})
 	t.Run("ranking exhaustive (is_popular)", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetRanking(
-				[]string{"desc(is_popular)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"})))
+				[]string{"desc(is_popular)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4641,10 +4292,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"ranking":["desc(is_popular)","typo","geo","words","filters","proximity","attribute","exact","custom"]}`)
 	})
 	t.Run("ranking standard replica", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetRanking(
-				[]string{"desc(post_date_timestamp)"})))
+				[]string{"desc(post_date_timestamp)"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4654,10 +4304,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"ranking":["desc(post_date_timestamp)"]}`)
 	})
 	t.Run("ranking virtual replica", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetCustomRanking(
-				[]string{"desc(post_date_timestamp)"})))
+				[]string{"desc(post_date_timestamp)"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4667,11 +4316,10 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"customRanking":["desc(post_date_timestamp)"]}`)
 	})
 	t.Run("customRanking and ranking sort alphabetically", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetCustomRanking(
 				[]string{"asc(textual_attribute)"}).SetRanking(
-				[]string{"custom", "typo", "geo", "words", "filters", "proximity", "attribute", "exact"})))
+				[]string{"custom", "typo", "geo", "words", "filters", "proximity", "attribute", "exact"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4681,10 +4329,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"customRanking":["asc(textual_attribute)"],"ranking":["custom","typo","geo","words","filters","proximity","attribute","exact"]}`)
 	})
 	t.Run("relevancyStrictness", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetCustomRanking(
-				[]string{"asc(textual_attribute)"}).SetRelevancyStrictness(0)))
+				[]string{"asc(textual_attribute)"}).SetRelevancyStrictness(0), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4694,10 +4341,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"customRanking":["asc(textual_attribute)"],"relevancyStrictness":0}`)
 	})
 	t.Run("create replica index", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetReplicas(
-				[]string{"products_price_desc"})))
+				[]string{"products_price_desc"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4707,10 +4353,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"replicas":["products_price_desc"]}`)
 	})
 	t.Run("create replica index articles", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetReplicas(
-				[]string{"articles_date_desc"})))
+				[]string{"articles_date_desc"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4720,10 +4365,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"replicas":["articles_date_desc"]}`)
 	})
 	t.Run("create virtual replica index", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetReplicas(
-				[]string{"virtual(products_price_desc)"})))
+				[]string{"virtual(products_price_desc)"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4733,10 +4377,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"replicas":["virtual(products_price_desc)"]}`)
 	})
 	t.Run("unlink replica index", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetReplicas(
-				[]string{""})))
+				[]string{""}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4746,10 +4389,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"replicas":[""]}`)
 	})
 	t.Run("forwardToReplicas", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetSearchableAttributes(
-				[]string{"name", "description"})).WithForwardToReplicas(true))
+				[]string{"name", "description"}), utils.ToPtr(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4765,9 +4407,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		}
 	})
 	t.Run("maxValuesPerFacet", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetMaxValuesPerFacet(1000)))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetMaxValuesPerFacet(1000), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4777,9 +4418,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"maxValuesPerFacet":1000}`)
 	})
 	t.Run("maxFacetHits", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetMaxFacetHits(100)))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetMaxFacetHits(100), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4789,10 +4429,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"maxFacetHits":100}`)
 	})
 	t.Run("attributesForFaceting complex", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"<YOUR_INDEX_NAME>",
+		_, err := client.SetSettings("<YOUR_INDEX_NAME>",
 			search.NewEmptyIndexSettings().SetAttributesForFaceting(
-				[]string{"actor", "filterOnly(category)", "searchable(publisher)"})))
+				[]string{"actor", "filterOnly(category)", "searchable(publisher)"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", echo.Path)
@@ -4802,10 +4441,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributesForFaceting":["actor","filterOnly(category)","searchable(publisher)"]}`)
 	})
 	t.Run("ranking closest dates", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetRanking(
-				[]string{"asc(date_timestamp)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"})))
+				[]string{"asc(date_timestamp)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4815,10 +4453,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"ranking":["asc(date_timestamp)","typo","geo","words","filters","proximity","attribute","exact","custom"]}`)
 	})
 	t.Run("searchableAttributes item variation", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetSearchableAttributes(
-				[]string{"design", "type", "color"})))
+				[]string{"design", "type", "color"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4828,11 +4465,10 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"searchableAttributes":["design","type","color"]}`)
 	})
 	t.Run("searchableAttributes around location", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetSearchableAttributes(
 				[]string{"name", "country", "city", "iata_code"}).SetCustomRanking(
-				[]string{"desc(links_count)"})))
+				[]string{"desc(links_count)"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4842,10 +4478,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"searchableAttributes":["name","country","city","iata_code"],"customRanking":["desc(links_count)"]}`)
 	})
 	t.Run("attributesToHighlight", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetAttributesToHighlight(
-				[]string{"author", "title", "content"})))
+				[]string{"author", "title", "content"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4855,10 +4490,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributesToHighlight":["author","title","content"]}`)
 	})
 	t.Run("attributesToHighlightStar", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetAttributesToHighlight(
-				[]string{"*"})))
+				[]string{"*"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4868,11 +4502,10 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributesToHighlight":["*"]}`)
 	})
 	t.Run("everything", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetAdvancedSyntax(true).SetAdvancedSyntaxFeatures(
-				[]search.AdvancedSyntaxFeatures{search.AdvancedSyntaxFeatures("exactPhrase")}).SetAllowCompressionOfIntegerArray(true).SetAllowTyposOnNumericTokens(true).SetAlternativesAsExact(
-				[]search.AlternativesAsExact{search.AlternativesAsExact("singleWordSynonym")}).SetAttributeCriteriaComputedByMinProximity(true).SetAttributeForDistinct("test").SetAttributesForFaceting(
+				[]search.AdvancedSyntaxFeatures{search.ADVANCED_SYNTAX_FEATURES_EXACT_PHRASE}).SetAllowCompressionOfIntegerArray(true).SetAllowTyposOnNumericTokens(true).SetAlternativesAsExact(
+				[]search.AlternativesAsExact{search.ALTERNATIVES_AS_EXACT_SINGLE_WORD_SYNONYM}).SetAttributeCriteriaComputedByMinProximity(true).SetAttributeForDistinct("test").SetAttributesForFaceting(
 				[]string{"algolia"}).SetAttributesToHighlight(
 				[]string{"algolia"}).SetAttributesToRetrieve(
 				[]string{"algolia"}).SetAttributesToSnippet(
@@ -4883,23 +4516,23 @@ func TestSearch_SetSettings(t *testing.T) {
 				[]string{"algolia"}).SetDisablePrefixOnAttributes(
 				[]string{"algolia"}).SetDisableTypoToleranceOnAttributes(
 				[]string{"algolia"}).SetDisableTypoToleranceOnWords(
-				[]string{"algolia"}).SetDistinct(search.Int32AsDistinct(3)).SetEnablePersonalization(true).SetEnableReRanking(false).SetEnableRules(true).SetExactOnSingleWordQuery(search.ExactOnSingleWordQuery("attribute")).SetHighlightPreTag("<span>").SetHighlightPostTag("</span>").SetHitsPerPage(10).SetIgnorePlurals(search.BoolAsIgnorePlurals(false)).SetIndexLanguages(
-				[]search.SupportedLanguage{search.SupportedLanguage("fr")}).SetKeepDiacriticsOnCharacters("abc").SetMaxFacetHits(20).SetMaxValuesPerFacet(30).SetMinProximity(6).SetMinWordSizefor1Typo(5).SetMinWordSizefor2Typos(11).SetMode(search.Mode("neuralSearch")).SetNumericAttributesForFiltering(
+				[]string{"algolia"}).SetDistinct(search.Int32AsDistinct(3)).SetEnablePersonalization(true).SetEnableReRanking(false).SetEnableRules(true).SetExactOnSingleWordQuery(search.EXACT_ON_SINGLE_WORD_QUERY_ATTRIBUTE).SetHighlightPreTag("<span>").SetHighlightPostTag("</span>").SetHitsPerPage(10).SetIgnorePlurals(search.BoolAsIgnorePlurals(false)).SetIndexLanguages(
+				[]search.SupportedLanguage{search.SUPPORTED_LANGUAGE_FR}).SetKeepDiacriticsOnCharacters("abc").SetMaxFacetHits(20).SetMaxValuesPerFacet(30).SetMinProximity(6).SetMinWordSizefor1Typo(5).SetMinWordSizefor2Typos(11).SetMode(search.MODE_NEURAL_SEARCH).SetNumericAttributesForFiltering(
 				[]string{"algolia"}).SetOptionalWords(search.ArrayOfStringAsOptionalWords(
 				[]string{"myspace"})).SetPaginationLimitedTo(0).SetQueryLanguages(
-				[]search.SupportedLanguage{search.SupportedLanguage("fr")}).SetQueryType(search.QueryType("prefixLast")).SetRanking(
-				[]string{"geo"}).SetReRankingApplyFilter(search.StringAsReRankingApplyFilter("mySearch:filters")).SetRelevancyStrictness(10).SetRemoveStopWords(search.BoolAsRemoveStopWords(false)).SetRemoveWordsIfNoResults(search.RemoveWordsIfNoResults("lastWords")).SetRenderingContent(
+				[]search.SupportedLanguage{search.SUPPORTED_LANGUAGE_FR}).SetQueryType(search.QUERY_TYPE_PREFIX_LAST).SetRanking(
+				[]string{"geo"}).SetReRankingApplyFilter(search.StringAsReRankingApplyFilter("mySearch:filters")).SetRelevancyStrictness(10).SetRemoveStopWords(search.BoolAsRemoveStopWords(false)).SetRemoveWordsIfNoResults(search.REMOVE_WORDS_IF_NO_RESULTS_LAST_WORDS).SetRenderingContent(
 				search.NewEmptyRenderingContent().SetFacetOrdering(
 					search.NewEmptyFacetOrdering().SetFacets(
 						search.NewEmptyFacets().SetOrder(
 							[]string{"a", "b"})).SetValues(map[string]search.Value{"a": *search.NewEmptyValue().SetOrder(
-						[]string{"b"}).SetSortRemainingBy(search.SortRemainingBy("count"))}))).SetReplaceSynonymsInHighlight(true).SetReplicas(
+						[]string{"b"}).SetSortRemainingBy(search.SORT_REMAINING_BY_COUNT)}))).SetReplaceSynonymsInHighlight(true).SetReplicas(
 				[]string{""}).SetResponseFields(
 				[]string{"algolia"}).SetRestrictHighlightAndSnippetArrays(true).SetSearchableAttributes(
 				[]string{"foo"}).SetSemanticSearch(
 				search.NewEmptySemanticSearch().SetEventSources(
 					[]string{"foo"})).SetSeparatorsToIndex("bar").SetSnippetEllipsisText("---").SetSortFacetValuesBy("date").SetTypoTolerance(search.BoolAsTypoTolerance(false)).SetUnretrievableAttributes(
-				[]string{"foo"}).SetUserData(map[string]any{"user": "data"})))
+				[]string{"foo"}).SetUserData(map[string]any{"user": "data"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4909,12 +4542,11 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["fr"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["fr"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}`)
 	})
 	t.Run("searchableAttributesWithCustomRankingsAndAttributesForFaceting", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetSearchableAttributes(
 				[]string{"brand", "name", "categories", "unordered(description)"}).SetCustomRanking(
 				[]string{"desc(popularity)"}).SetAttributesForFaceting(
-				[]string{"searchable(brand)", "type", "categories", "price"})))
+				[]string{"searchable(brand)", "type", "categories", "price"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4924,10 +4556,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"searchableAttributes":["brand","name","categories","unordered(description)"],"customRanking":["desc(popularity)"],"attributesForFaceting":["searchable(brand)","type","categories","price"]}`)
 	})
 	t.Run("searchableAttributesOrdering", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetSearchableAttributes(
-				[]string{"unordered(title)", "cast"})))
+				[]string{"unordered(title)", "cast"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4937,10 +4568,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"searchableAttributes":["unordered(title)","cast"]}`)
 	})
 	t.Run("searchableAttributesProductReferenceSuffixes", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetSearchableAttributes(
-				[]string{"name", "product_reference", "product_reference_suffixes"})))
+				[]string{"name", "product_reference", "product_reference_suffixes"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4950,10 +4580,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"searchableAttributes":["name","product_reference","product_reference_suffixes"]}`)
 	})
 	t.Run("queryLanguageAndIgnorePlurals", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetQueryLanguages(
-				[]search.SupportedLanguage{search.SupportedLanguage("en")}).SetIgnorePlurals(search.BoolAsIgnorePlurals(true))))
+				[]search.SupportedLanguage{search.SUPPORTED_LANGUAGE_EN}).SetIgnorePlurals(search.BoolAsIgnorePlurals(true)), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4963,10 +4592,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"queryLanguages":["en"],"ignorePlurals":true}`)
 	})
 	t.Run("searchableAttributesInMovies", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"movies",
+		_, err := client.SetSettings("movies",
 			search.NewEmptyIndexSettings().SetSearchableAttributes(
-				[]string{"title_eng", "title_fr", "title_es"})))
+				[]string{"title_eng", "title_fr", "title_es"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/movies/settings", echo.Path)
@@ -4976,10 +4604,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"searchableAttributes":["title_eng","title_fr","title_es"]}`)
 	})
 	t.Run("disablePrefixOnAttributes", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetDisablePrefixOnAttributes(
-				[]string{"serial_number"})))
+				[]string{"serial_number"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -4989,10 +4616,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"disablePrefixOnAttributes":["serial_number"]}`)
 	})
 	t.Run("disableTypoToleranceOnAttributes", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetDisableTypoToleranceOnAttributes(
-				[]string{"serial_number"})))
+				[]string{"serial_number"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5002,10 +4628,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"disableTypoToleranceOnAttributes":["serial_number"]}`)
 	})
 	t.Run("searchableAttributesSimpleExample", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetSearchableAttributes(
-				[]string{"serial_number"})))
+				[]string{"serial_number"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5015,10 +4640,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"searchableAttributes":["serial_number"]}`)
 	})
 	t.Run("searchableAttributesSimpleExampleAlt", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetSearchableAttributes(
-				[]string{"serial_number", "serial_number_suffixes"})))
+				[]string{"serial_number", "serial_number_suffixes"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5028,10 +4652,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"searchableAttributes":["serial_number","serial_number_suffixes"]}`)
 	})
 	t.Run("set_searchable_attributes", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetSearchableAttributes(
-				[]string{"title,alternative_title", "author", "unordered(text)", "emails.personal"})))
+				[]string{"title,alternative_title", "author", "unordered(text)", "emails.personal"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5041,10 +4664,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"searchableAttributes":["title,alternative_title","author","unordered(text)","emails.personal"]}`)
 	})
 	t.Run("set_searchable_attributes", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetAttributesForFaceting(
-				[]string{"author", "filterOnly(isbn)", "searchable(edition)", "afterDistinct(category)", "afterDistinct(searchable(publisher))"})))
+				[]string{"author", "filterOnly(isbn)", "searchable(edition)", "afterDistinct(category)", "afterDistinct(searchable(publisher))"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5054,10 +4676,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributesForFaceting":["author","filterOnly(isbn)","searchable(edition)","afterDistinct(category)","afterDistinct(searchable(publisher))"]}`)
 	})
 	t.Run("unretrievable_attributes", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetUnretrievableAttributes(
-				[]string{"total_number_of_sales"})))
+				[]string{"total_number_of_sales"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5067,10 +4688,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"unretrievableAttributes":["total_number_of_sales"]}`)
 	})
 	t.Run("set_retrievable_attributes", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetAttributesToRetrieve(
-				[]string{"author", "title", "content"})))
+				[]string{"author", "title", "content"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5080,10 +4700,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributesToRetrieve":["author","title","content"]}`)
 	})
 	t.Run("set_all_attributes_as_retrievable", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetAttributesToRetrieve(
-				[]string{"*"})))
+				[]string{"*"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5093,10 +4712,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributesToRetrieve":["*"]}`)
 	})
 	t.Run("specify_attributes_not_to_retrieve", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetAttributesToRetrieve(
-				[]string{"*", "-SKU", "-internal_desc"})))
+				[]string{"*", "-SKU", "-internal_desc"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5106,9 +4724,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributesToRetrieve":["*","-SKU","-internal_desc"]}`)
 	})
 	t.Run("neural_search", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetMode(search.Mode("neuralSearch"))))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetMode(search.MODE_NEURAL_SEARCH), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5118,9 +4735,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"mode":"neuralSearch"}`)
 	})
 	t.Run("keyword_search", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetMode(search.Mode("keywordSearch"))))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetMode(search.MODE_KEYWORD_SEARCH), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5130,10 +4746,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"mode":"keywordSearch"}`)
 	})
 	t.Run("set_default_ranking", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetRanking(
-				[]string{"typo", "geo", "words", "filters", "attribute", "proximity", "exact", "custom"})))
+				[]string{"typo", "geo", "words", "filters", "attribute", "proximity", "exact", "custom"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5143,10 +4758,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"ranking":["typo","geo","words","filters","attribute","proximity","exact","custom"]}`)
 	})
 	t.Run("set_ranking_by_attribute_asc", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetRanking(
-				[]string{"asc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"})))
+				[]string{"asc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5156,10 +4770,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"ranking":["asc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}`)
 	})
 	t.Run("set_ranking_by_attribute_desc", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetRanking(
-				[]string{"desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"})))
+				[]string{"desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5169,10 +4782,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"ranking":["desc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}`)
 	})
 	t.Run("restrict_searchable_attributes", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetCustomRanking(
-				[]string{"desc(popularity)", "asc(price)"})))
+				[]string{"desc(popularity)", "asc(price)"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5182,9 +4794,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"customRanking":["desc(popularity)","asc(price)"]}`)
 	})
 	t.Run("set_default_relevancy", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetRelevancyStrictness(90)))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetRelevancyStrictness(90), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5194,10 +4805,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"relevancyStrictness":90}`)
 	})
 	t.Run("set_replicas", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetReplicas(
-				[]string{"name_of_replica_index1", "name_of_replica_index2"})))
+				[]string{"name_of_replica_index1", "name_of_replica_index2"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5207,9 +4817,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"replicas":["name_of_replica_index1","name_of_replica_index2"]}`)
 	})
 	t.Run("set_default_max_values_per_facet", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetMaxValuesPerFacet(100)))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetMaxValuesPerFacet(100), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5219,9 +4828,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"maxValuesPerFacet":100}`)
 	})
 	t.Run("set_default_sort_facet_values_by", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetSortFacetValuesBy("alpha")))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetSortFacetValuesBy("alpha"), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5231,10 +4839,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"sortFacetValuesBy":"alpha"}`)
 	})
 	t.Run("set_attributes_to_snippet", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetAttributesToSnippet(
-				[]string{"content:80", "description"})))
+				[]string{"content:80", "description"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5244,10 +4851,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributesToSnippet":["content:80","description"]}`)
 	})
 	t.Run("set_all_attributes_to_snippet", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetAttributesToSnippet(
-				[]string{"*:80"})))
+				[]string{"*:80"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5257,9 +4863,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributesToSnippet":["*:80"]}`)
 	})
 	t.Run("set_default_highlight_pre_tag", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetHighlightPreTag("<em>")))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetHighlightPreTag("<em>"), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5269,9 +4874,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"highlightPreTag":"<em>"}`)
 	})
 	t.Run("set_default_highlight_post_tag", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetHighlightPostTag("</em>")))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetHighlightPostTag("</em>"), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5281,9 +4885,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"highlightPostTag":"</em>"}`)
 	})
 	t.Run("set_default_snippet_ellipsis_text", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetSnippetEllipsisText("…")))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetSnippetEllipsisText("…"), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5293,9 +4896,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"snippetEllipsisText":"…"}`)
 	})
 	t.Run("enable_restrict_highlight_and_snippet_arrays_by_default", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetRestrictHighlightAndSnippetArrays(true)))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetRestrictHighlightAndSnippetArrays(true), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5305,9 +4907,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"restrictHighlightAndSnippetArrays":true}`)
 	})
 	t.Run("set_default_hits_per_page", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetHitsPerPage(20)))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetHitsPerPage(20), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5317,9 +4918,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"hitsPerPage":20}`)
 	})
 	t.Run("set_pagination_limit", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetPaginationLimitedTo(1000)))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetPaginationLimitedTo(1000), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5329,9 +4929,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"paginationLimitedTo":1000}`)
 	})
 	t.Run("set_default_min_word_size_for_one_typo", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetMinWordSizefor1Typo(4)))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetMinWordSizefor1Typo(4), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5341,9 +4940,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"minWordSizefor1Typo":4}`)
 	})
 	t.Run("set_default_min_word_size_for_two_typos", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetMinWordSizefor2Typos(4)))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetMinWordSizefor2Typos(4), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5353,9 +4951,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"minWordSizefor2Typos":4}`)
 	})
 	t.Run("set_default_typo_tolerance_mode", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetTypoTolerance(search.BoolAsTypoTolerance(true))))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetTypoTolerance(search.BoolAsTypoTolerance(true)), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5365,9 +4962,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"typoTolerance":true}`)
 	})
 	t.Run("disable_typos_on_numeric_tokens_by_default", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetAllowTyposOnNumericTokens(false)))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetAllowTyposOnNumericTokens(false), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5377,10 +4973,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"allowTyposOnNumericTokens":false}`)
 	})
 	t.Run("disable_typo_tolerance_for_words", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetDisableTypoToleranceOnWords(
-				[]string{"wheel", "1X2BCD"})))
+				[]string{"wheel", "1X2BCD"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5390,9 +4985,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"disableTypoToleranceOnWords":["wheel","1X2BCD"]}`)
 	})
 	t.Run("set_separators_to_index", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetSeparatorsToIndex("+#")))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetSeparatorsToIndex("+#"), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5402,10 +4996,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"separatorsToIndex":"+#"}`)
 	})
 	t.Run("set_languages_using_querylanguages", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetQueryLanguages(
-				[]search.SupportedLanguage{search.SupportedLanguage("es")}).SetIgnorePlurals(search.BoolAsIgnorePlurals(true))))
+				[]search.SupportedLanguage{search.SUPPORTED_LANGUAGE_ES}).SetIgnorePlurals(search.BoolAsIgnorePlurals(true)), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5415,11 +5008,10 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"queryLanguages":["es"],"ignorePlurals":true}`)
 	})
 	t.Run("set_attributes_to_transliterate", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetIndexLanguages(
-				[]search.SupportedLanguage{search.SupportedLanguage("ja")}).SetAttributesToTransliterate(
-				[]string{"name", "description"})))
+				[]search.SupportedLanguage{search.SUPPORTED_LANGUAGE_JA}).SetAttributesToTransliterate(
+				[]string{"name", "description"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5429,10 +5021,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"indexLanguages":["ja"],"attributesToTransliterate":["name","description"]}`)
 	})
 	t.Run("set_languages_using_querylanguages", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetQueryLanguages(
-				[]search.SupportedLanguage{search.SupportedLanguage("es")}).SetRemoveStopWords(search.BoolAsRemoveStopWords(true))))
+				[]search.SupportedLanguage{search.SUPPORTED_LANGUAGE_ES}).SetRemoveStopWords(search.BoolAsRemoveStopWords(true)), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5442,10 +5033,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"queryLanguages":["es"],"removeStopWords":true}`)
 	})
 	t.Run("set_camel_case_attributes", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetCamelCaseAttributes(
-				[]string{"description"})))
+				[]string{"description"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5455,9 +5045,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"camelCaseAttributes":["description"]}`)
 	})
 	t.Run("set_decompounded_attributes", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetDecompoundedAttributes(map[string]any{"de": []string{"name"}})))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetDecompoundedAttributes(map[string]any{"de": []string{"name"}}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5467,9 +5056,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"decompoundedAttributes":{"de":["name"]}}`)
 	})
 	t.Run("set_decompounded_multiple_attributes", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetDecompoundedAttributes(map[string]any{"de": []string{"name_de", "description_de"}, "fi": []string{"name_fi", "description_fi"}})))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetDecompoundedAttributes(map[string]any{"de": []string{"name_de", "description_de"}, "fi": []string{"name_fi", "description_fi"}}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5479,9 +5067,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"decompoundedAttributes":{"de":["name_de","description_de"],"fi":["name_fi","description_fi"]}}`)
 	})
 	t.Run("set_keep_diacritics_on_characters", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetKeepDiacriticsOnCharacters("øé")))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetKeepDiacriticsOnCharacters("øé"), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5491,9 +5078,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"keepDiacriticsOnCharacters":"øé"}`)
 	})
 	t.Run("set_custom_normalization", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetCustomNormalization(map[string]map[string]string{"default": map[string]string{"ä": "ae"}})))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetCustomNormalization(map[string]map[string]string{"default": map[string]string{"ä": "ae"}}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5503,10 +5089,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"customNormalization":{"default":{"ä":"ae"}}}`)
 	})
 	t.Run("set_languages_using_querylanguages", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetQueryLanguages(
-				[]search.SupportedLanguage{search.SupportedLanguage("es")}).SetRemoveStopWords(search.BoolAsRemoveStopWords(true)).SetIgnorePlurals(search.BoolAsIgnorePlurals(true))))
+				[]search.SupportedLanguage{search.SUPPORTED_LANGUAGE_ES}).SetRemoveStopWords(search.BoolAsRemoveStopWords(true)).SetIgnorePlurals(search.BoolAsIgnorePlurals(true)), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5516,10 +5101,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"queryLanguages":["es"],"removeStopWords":true,"ignorePlurals":true}`)
 	})
 	t.Run("set_indexlanguages", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetIndexLanguages(
-				[]search.SupportedLanguage{search.SupportedLanguage("ja")})))
+				[]search.SupportedLanguage{search.SUPPORTED_LANGUAGE_JA}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5529,9 +5113,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"indexLanguages":["ja"]}`)
 	})
 	t.Run("enable_decompound_query_by_default", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetDecompoundQuery(true)))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetDecompoundQuery(true), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5541,9 +5124,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"decompoundQuery":true}`)
 	})
 	t.Run("enable_rules_syntax_by_default", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetEnableRules(true)))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetEnableRules(true), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5553,9 +5135,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"enableRules":true}`)
 	})
 	t.Run("enable_personalization_settings", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetEnablePersonalization(true)))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetEnablePersonalization(true), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5565,9 +5146,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"enablePersonalization":true}`)
 	})
 	t.Run("set_default_query_type", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetQueryType(search.QueryType("prefixLast"))))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetQueryType(search.QUERY_TYPE_PREFIX_LAST), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5577,9 +5157,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"queryType":"prefixLast"}`)
 	})
 	t.Run("set_default_remove_words_if_no_result", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetRemoveWordsIfNoResults(search.RemoveWordsIfNoResults("none"))))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetRemoveWordsIfNoResults(search.REMOVE_WORDS_IF_NO_RESULTS_NONE), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5589,9 +5168,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"removeWordsIfNoResults":"none"}`)
 	})
 	t.Run("enable_advanced_syntax_by_default", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetAdvancedSyntax(true)))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetAdvancedSyntax(true), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5601,10 +5179,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"advancedSyntax":true}`)
 	})
 	t.Run("set_default_optional_words", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetOptionalWords(search.ArrayOfStringAsOptionalWords(
-				[]string{"blue", "iphone case"}))))
+				[]string{"blue", "iphone case"})), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5614,10 +5191,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"optionalWords":["blue","iphone case"]}`)
 	})
 	t.Run("disabling_prefix_search_for_some_attributes_by_default", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetDisablePrefixOnAttributes(
-				[]string{"sku"})))
+				[]string{"sku"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5627,10 +5203,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"disablePrefixOnAttributes":["sku"]}`)
 	})
 	t.Run("disabling_exact_for_some_attributes_by_default", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetDisableExactOnAttributes(
-				[]string{"description"})))
+				[]string{"description"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5640,9 +5215,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"disableExactOnAttributes":["description"]}`)
 	})
 	t.Run("set_default_exact_single_word_query", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetExactOnSingleWordQuery(search.ExactOnSingleWordQuery("attribute"))))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetExactOnSingleWordQuery(search.EXACT_ON_SINGLE_WORD_QUERY_ATTRIBUTE), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5652,10 +5226,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"exactOnSingleWordQuery":"attribute"}`)
 	})
 	t.Run("set_default_aternative_as_exact", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetAlternativesAsExact(
-				[]search.AlternativesAsExact{search.AlternativesAsExact("ignorePlurals"), search.AlternativesAsExact("singleWordSynonym")})))
+				[]search.AlternativesAsExact{search.ALTERNATIVES_AS_EXACT_IGNORE_PLURALS, search.ALTERNATIVES_AS_EXACT_SINGLE_WORD_SYNONYM}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5665,9 +5238,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"alternativesAsExact":["ignorePlurals","singleWordSynonym"]}`)
 	})
 	t.Run("enable_advanced_syntax_by_default", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetAdvancedSyntax(true)))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetAdvancedSyntax(true), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5677,10 +5249,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"advancedSyntax":true}`)
 	})
 	t.Run("set_numeric_attributes_for_filtering", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetNumericAttributesForFiltering(
-				[]string{"quantity", "popularity"})))
+				[]string{"quantity", "popularity"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5690,9 +5261,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"numericAttributesForFiltering":["quantity","popularity"]}`)
 	})
 	t.Run("enable_compression_of_integer_array", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetAllowCompressionOfIntegerArray(true)))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetAllowCompressionOfIntegerArray(true), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5702,9 +5272,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"allowCompressionOfIntegerArray":true}`)
 	})
 	t.Run("set_attributes_for_distinct", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetAttributeForDistinct("url")))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetAttributeForDistinct("url"), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5714,9 +5283,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributeForDistinct":"url"}`)
 	})
 	t.Run("set_distinct", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetDistinct(search.Int32AsDistinct(1)).SetAttributeForDistinct("url")))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetDistinct(search.Int32AsDistinct(1)).SetAttributeForDistinct("url"), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5726,9 +5294,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"distinct":1,"attributeForDistinct":"url"}`)
 	})
 	t.Run("set_replace_synonyms_in_highlights", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetReplaceSynonymsInHighlight(false)))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetReplaceSynonymsInHighlight(false), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5738,9 +5305,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"replaceSynonymsInHighlight":false}`)
 	})
 	t.Run("set_min_proximity", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetMinProximity(1)))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetMinProximity(1), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5750,10 +5316,9 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"minProximity":1}`)
 	})
 	t.Run("set_default_field", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetResponseFields(
-				[]string{"hits", "hitsPerPage", "nbPages", "page"})))
+				[]string{"hits", "hitsPerPage", "nbPages", "page"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5763,9 +5328,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"responseFields":["hits","hitsPerPage","nbPages","page"]}`)
 	})
 	t.Run("set_max_facet_hits", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetMaxFacetHits(10)))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetMaxFacetHits(10), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5775,9 +5339,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"maxFacetHits":10}`)
 	})
 	t.Run("set_attribute_criteria_computed_by_min_proximity", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetAttributeCriteriaComputedByMinProximity(true)))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetAttributeCriteriaComputedByMinProximity(true), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5787,9 +5350,8 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"attributeCriteriaComputedByMinProximity":true}`)
 	})
 	t.Run("set_user_data", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetUserData(map[string]any{"extraData": "This is the custom data that you want to store in your index"})))
+		_, err := client.SetSettings("theIndexName",
+			search.NewEmptyIndexSettings().SetUserData(map[string]any{"extraData": "This is the custom data that you want to store in your index"}), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5799,16 +5361,15 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"userData":{"extraData":"This is the custom data that you want to store in your index"}}`)
 	})
 	t.Run("set_rendering_content", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
+		_, err := client.SetSettings("theIndexName",
 			search.NewEmptyIndexSettings().SetRenderingContent(
 				search.NewEmptyRenderingContent().SetFacetOrdering(
 					search.NewEmptyFacetOrdering().SetFacets(
 						search.NewEmptyFacets().SetOrder(
 							[]string{"size", "brand"})).SetValues(map[string]search.Value{"brand": *search.NewEmptyValue().SetOrder(
 						[]string{"uniqlo"}).SetHide(
-						[]string{"muji"}).SetSortRemainingBy(search.SortRemainingBy("count")), "size": *search.NewEmptyValue().SetOrder(
-						[]string{"S", "M", "L"}).SetSortRemainingBy(search.SortRemainingBy("hidden"))})))))
+						[]string{"muji"}).SetSortRemainingBy(search.SORT_REMAINING_BY_COUNT), "size": *search.NewEmptyValue().SetOrder(
+						[]string{"S", "M", "L"}).SetSortRemainingBy(search.SORT_REMAINING_BY_HIDDEN)}))), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
@@ -5824,10 +5385,8 @@ func TestSearch_UpdateApiKey(t *testing.T) {
 	_ = echo
 
 	t.Run("updateApiKey", func(t *testing.T) {
-		_, err := client.UpdateApiKey(client.NewApiUpdateApiKeyRequest(
-			"ALGOLIA_API_KEY",
-			search.NewEmptyApiKey().SetAcl(
-				[]search.Acl{search.Acl("search"), search.Acl("addObject")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20)))
+		_, err := client.UpdateApiKey("ALGOLIA_API_KEY",
+			[]search.Acl{search.ACL_SEARCH, search.ACL_ADD_OBJECT}, search.NewUpdateApiKeyOptions().WithValidity(300).WithMaxQueriesPerIPPerHour(100).WithMaxHitsPerQuery(20))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/keys/ALGOLIA_API_KEY", echo.Path)

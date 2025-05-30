@@ -205,8 +205,8 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "test/minimal"))
+            response, err := client.CustomGet("test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -434,8 +434,8 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "test/minimal"))
+            response, err := client.CustomPost("test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -663,8 +663,8 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "test/minimal"))
+            response, err := client.CustomPut("test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -886,9 +886,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "test/minimal"))
+            response, err := client.CustomDelete("test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1180,9 +1179,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetTopSearches(client.NewApiGetTopSearchesRequest(
-              "index"))
+            response, err := client.GetTopSearches("index", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1455,9 +1453,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetSearchesCount(client.NewApiGetSearchesCountRequest(
-              "index"))
+            response, err := client.GetSearchesCount("index", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1726,9 +1723,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetSearchesNoResults(client.NewApiGetSearchesNoResultsRequest(
-              "index"))
+            response, err := client.GetSearchesNoResults("index", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2007,9 +2003,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetSearchesNoClicks(client.NewApiGetSearchesNoClicksRequest(
-              "index"))
+            response, err := client.GetSearchesNoClicks("index", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2299,9 +2294,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetNoResultsRate(client.NewApiGetNoResultsRateRequest(
-              "index"))
+            response, err := client.GetNoResultsRate("index", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2589,9 +2583,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetNoClickRate(client.NewApiGetNoClickRateRequest(
-              "index"))
+            response, err := client.GetNoClickRate("index", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2888,8 +2881,8 @@ paths:
 
             // Call the API
 
-            response, err := client.GetTopHits(client.NewApiGetTopHitsRequest(
-              "index"))
+            response, err := client.GetTopHits("index", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -3179,9 +3172,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetUsersCount(client.NewApiGetUsersCountRequest(
-              "index"))
+            response, err := client.GetUsersCount("index", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -3433,9 +3425,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetTopFilterAttributes(client.NewApiGetTopFilterAttributesRequest(
-              "index"))
+            response, err := client.GetTopFilterAttributes("index", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -3696,9 +3687,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(
-              "myAttribute", "index"))
+            response, err := client.GetTopFilterForAttribute("myAttribute",
+            "index", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -3959,9 +3950,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetTopFiltersNoResults(client.NewApiGetTopFiltersNoResultsRequest(
-              "index"))
+            response, err := client.GetTopFiltersNoResults("index", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4231,9 +4221,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetTopCountries(client.NewApiGetTopCountriesRequest(
-              "index"))
+            response, err := client.GetTopCountries("index", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4526,9 +4515,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetAverageClickPosition(client.NewApiGetAverageClickPositionRequest(
-              "index"))
+            response, err := client.GetAverageClickPosition("index", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4793,9 +4781,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetClickPositions(client.NewApiGetClickPositionsRequest(
-              "index"))
+            response, err := client.GetClickPositions("index", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5092,9 +5079,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetClickThroughRate(client.NewApiGetClickThroughRateRequest(
-              "index"))
+            response, err := client.GetClickThroughRate("index", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5392,9 +5378,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetConversionRate(client.NewApiGetConversionRateRequest(
-              "index"))
+            response, err := client.GetConversionRate("index", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5701,9 +5686,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetAddToCartRate(client.NewApiGetAddToCartRateRequest(
-              "index"))
+            response, err := client.GetAddToCartRate("index", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6010,9 +5994,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetPurchaseRate(client.NewApiGetPurchaseRateRequest(
-              "index"))
+            response, err := client.GetPurchaseRate("index", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6287,8 +6270,8 @@ paths:
 
             // Call the API
 
-            response, err := client.GetRevenue(client.NewApiGetRevenueRequest(
-              "index"))
+            response, err := client.GetRevenue("index", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6538,8 +6521,8 @@ paths:
 
             // Call the API
 
-            response, err := client.GetStatus(client.NewApiGetStatusRequest(
-              "index"))
+            response, err := client.GetStatus("index")
+
             if err != nil {
               // handle the eventual error
               panic(err)

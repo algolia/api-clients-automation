@@ -1,6 +1,6 @@
 package main
 
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+import "github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 
 func setHeaderUserIDThenSaveObjects() {
 	playlists := []map[string]any{{ /* Your records */ }}
@@ -14,8 +14,7 @@ func setHeaderUserIDThenSaveObjects() {
 	for _, playlist := range playlists {
 		playlistUserID := playlist["userID"]
 
-		_, err := client.SaveObjects(
-			"<YOUR_INDEX_NAME>", playlists, search.WithWaitForTasks(false), search.WithBatchSize(1000), search.WithHeaderParam("X-Algolia-User-ID", playlistUserID))
+		_, err := client.SaveObjects("<YOUR_INDEX_NAME>", playlists, search.WithWaitForTasks(false), search.WithBatchSize(1000), search.WithHeaderParam("X-Algolia-User-ID", playlistUserID))
 		if err != nil {
 			panic(err)
 		}

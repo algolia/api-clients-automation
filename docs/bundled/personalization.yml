@@ -178,8 +178,8 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "test/minimal"))
+            response, err := client.CustomGet("test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -406,8 +406,8 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "test/minimal"))
+            response, err := client.CustomPost("test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -634,8 +634,8 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "test/minimal"))
+            response, err := client.CustomPut("test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -856,9 +856,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "test/minimal"))
+            response, err := client.CustomDelete("test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1115,9 +1114,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetUserTokenProfile(client.NewApiGetUserTokenProfileRequest(
-              "UserToken"))
+            response, err := client.GetUserTokenProfile("UserToken")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1380,9 +1378,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.DeleteUserProfile(client.NewApiDeleteUserProfileRequest(
-              "UserToken"))
+            response, err := client.DeleteUserProfile("UserToken")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1879,12 +1876,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.SetPersonalizationStrategy(client.NewApiSetPersonalizationStrategyRequest(
-
-              personalization.NewEmptyPersonalizationStrategyParams().SetEventsScoring(
-                []personalization.EventsScoring{*personalization.NewEmptyEventsScoring().SetScore(42).SetEventName("Algolia").SetEventType(personalization.EventType("click"))}).SetFacetsScoring(
-                []personalization.FacetsScoring{*personalization.NewEmptyFacetsScoring().SetScore(42).SetFacetName("Event")}).SetPersonalizationImpact(42)))
+            response, err := client.SetPersonalizationStrategy(
+              []personalization.EventsScoring{*personalization.NewEmptyEventsScoring().SetScore(42).SetEventName("Algolia").SetEventType(personalization.EVENT_TYPE_CLICK)},
+              []personalization.FacetsScoring{*personalization.NewEmptyFacetsScoring().SetScore(42).SetFacetName("Event")}, 42)
             if err != nil {
               // handle the eventual error
               panic(err)

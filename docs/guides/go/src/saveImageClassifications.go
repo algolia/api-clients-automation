@@ -1,6 +1,6 @@
 package main
 
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+import "github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 
 func saveImageClassifications() {
 	type Image struct {
@@ -55,8 +55,7 @@ func saveImageClassifications() {
 		}
 	}
 
-	_, err = client.PartialUpdateObjects(
-		"<YOUR_INDEX_NAME>", records, search.WithCreateIfNotExists(true))
+	_, err = client.PartialUpdateObjects("<YOUR_INDEX_NAME>", records, search.WithCreateIfNotExists(true))
 	if err != nil {
 		panic(err)
 	}
