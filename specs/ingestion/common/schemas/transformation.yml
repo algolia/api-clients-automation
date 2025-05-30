@@ -27,7 +27,7 @@ Transformation:
 
 Code:
   type: string
-  description: The source code of the transformation.
+  description: The source code of the transformation. - foo.
 
 Name:
   type: string
