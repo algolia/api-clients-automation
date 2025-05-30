@@ -127,7 +127,7 @@ void main() {
       call: (client) => client.customGet(
           path: "test/all",
           parameters: {
-            'query': "to be overriden",
+            'query': "to be overridden",
           },
           requestOptions: RequestOptions(
             headers: {

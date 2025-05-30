@@ -117,7 +117,7 @@ class SnippetInsightsClient
         // Call the API
         $response = $client->customGet(
             'test/all',
-            ['query' => 'to be overriden',
+            ['query' => 'to be overridden',
             ],
             [
                 'queryParameters' => [
@@ -589,7 +589,7 @@ class SnippetInsightsClient
                     'index' => 'products',
                     'userToken' => 'user-123456',
                     'authenticatedUserToken' => 'user-123456',
-                    'timestamp' => 1748304000000,
+                    'timestamp' => 1748563200000,
                     'objectIDs' => [
                         '9780545139700',
 
@@ -603,7 +603,7 @@ class SnippetInsightsClient
                     'index' => 'products',
                     'userToken' => 'user-123456',
                     'authenticatedUserToken' => 'user-123456',
-                    'timestamp' => 1748304000000,
+                    'timestamp' => 1748563200000,
                     'objectIDs' => [
                         '9780545139700',
 

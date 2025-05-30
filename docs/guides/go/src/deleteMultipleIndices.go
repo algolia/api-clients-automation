@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 )
 
 func deleteMultipleIndices() {
@@ -15,14 +15,14 @@ func deleteMultipleIndices() {
 	}
 
 	// List all indices
-	indices, err := client.ListIndices(client.NewApiListIndicesRequest())
+	indices, err := client.ListIndices(nil)
 	if err != nil {
 		panic(err)
 	}
 
 	// Primary indices don't have a `primary` key
-	primaryIndices := make([]search.FetchedIndex, len(indices.Items))
-	replicaIndices := make([]search.FetchedIndex, len(indices.Items))
+	primaryIndices := make([]search.FetchedIndex, 0, len(indices.Items))
+	replicaIndices := make([]search.FetchedIndex, 0, len(indices.Items))
 
 	for _, index := range indices.Items {
 		if index.Primary == nil {
@@ -34,7 +34,7 @@ func deleteMultipleIndices() {
 
 	// Delete primary indices first
 	if len(primaryIndices) > 0 {
-		requests := make([]search.MultipleBatchRequest, len(primaryIndices))
+		requests := make([]search.MultipleBatchRequest, 0, len(primaryIndices))
 
 		for _, index := range primaryIndices {
 			requests = append(requests, search.MultipleBatchRequest{
@@ -43,9 +43,7 @@ func deleteMultipleIndices() {
 			})
 		}
 
-		_, err = client.MultipleBatch(client.NewApiMultipleBatchRequest(
-
-			search.NewEmptyBatchParams().SetRequests(requests)))
+		_, err = client.MultipleBatch(requests)
 		if err != nil {
 			panic(err)
 		}
@@ -55,7 +53,7 @@ func deleteMultipleIndices() {
 
 	// Now, delete replica indices
 	if len(replicaIndices) > 0 {
-		requests := make([]search.MultipleBatchRequest, len(primaryIndices))
+		requests := make([]search.MultipleBatchRequest, 0, len(primaryIndices))
 
 		for _, index := range primaryIndices {
 			requests = append(requests, search.MultipleBatchRequest{
@@ -64,9 +62,7 @@ func deleteMultipleIndices() {
 			})
 		}
 
-		_, err = client.MultipleBatch(client.NewApiMultipleBatchRequest(
-
-			search.NewEmptyBatchParams().SetRequests(requests)))
+		_, err = client.MultipleBatch(requests)
 		if err != nil {
 			panic(err)
 		}

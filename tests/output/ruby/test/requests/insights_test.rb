@@ -64,7 +64,7 @@ class TestInsightsClient < Test::Unit::TestCase
   def test_custom_get2
     req = @client.custom_get_with_http_info(
       "test/all",
-      {query: "to be overriden"},
+      {query: "to be overridden"},
       {
         :header_params => {"x-header-1" => "spaces are left alone"},
         :query_params => JSON.parse(
@@ -337,7 +337,7 @@ class TestInsightsClient < Test::Unit::TestCase
             index: "products",
             user_token: "user-123456",
             authenticated_user_token: "user-123456",
-            timestamp: 1748304000000,
+            timestamp: 1748563200000,
             object_ids: ["9780545139700", "9780439784542"],
             query_id: "43b15df305339e827f0ac0bdc5ebcaa7"
           ),
@@ -347,7 +347,7 @@ class TestInsightsClient < Test::Unit::TestCase
             index: "products",
             user_token: "user-123456",
             authenticated_user_token: "user-123456",
-            timestamp: 1748304000000,
+            timestamp: 1748563200000,
             object_ids: ["9780545139700", "9780439784542"]
           )
         ]
@@ -360,7 +360,7 @@ class TestInsightsClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1748304000000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1748304000000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}"
+        "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1748563200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1748563200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}"
       ),
       JSON.parse(req.body)
     )

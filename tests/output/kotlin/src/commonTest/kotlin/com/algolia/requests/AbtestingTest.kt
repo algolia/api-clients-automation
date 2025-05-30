@@ -27,7 +27,6 @@ class AbtestingTest {
       call = {
         addABTests(
           addABTestsRequest = AddABTestsRequest(
-            endAt = "2022-12-31T00:00:00.000Z",
             name = "myABTest",
             variants = listOf(
               AbTestsVariant(
@@ -39,13 +38,14 @@ class AbtestingTest {
                 trafficPercentage = 50,
               ),
             ),
+            endAt = "2022-12-31T00:00:00.000Z",
           ),
         )
       },
       intercept = {
         assertEquals("/2/abtests".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}""", it.body)
+        assertJsonBody("""{"name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"endAt":"2022-12-31T00:00:00.000Z"}""", it.body)
       },
     )
   }
@@ -128,7 +128,7 @@ class AbtestingTest {
       call = {
         customGet(
           path = "test/all",
-          parameters = mapOf("query" to "to be overriden"),
+          parameters = mapOf("query" to "to be overridden"),
           requestOptions = RequestOptions(
             urlParameters = buildMap {
               put("query", "parameters with space")
@@ -615,8 +615,6 @@ class AbtestingTest {
       call = {
         scheduleABTest(
           scheduleABTestsRequest = ScheduleABTestsRequest(
-            endAt = "2022-12-31T00:00:00.000Z",
-            scheduledAt = "2022-11-31T00:00:00.000Z",
             name = "myABTest",
             variants = listOf(
               AbTestsVariant(
@@ -628,13 +626,15 @@ class AbtestingTest {
                 trafficPercentage = 50,
               ),
             ),
+            scheduledAt = "2022-11-31T00:00:00.000Z",
+            endAt = "2022-12-31T00:00:00.000Z",
           ),
         )
       },
       intercept = {
         assertEquals("/2/abtests/schedule".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"endAt":"2022-12-31T00:00:00.000Z","scheduledAt":"2022-11-31T00:00:00.000Z","name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}""", it.body)
+        assertJsonBody("""{"name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"scheduledAt":"2022-11-31T00:00:00.000Z","endAt":"2022-12-31T00:00:00.000Z"}""", it.body)
       },
     )
   }

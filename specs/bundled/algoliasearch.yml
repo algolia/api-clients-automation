@@ -317,13 +317,8 @@ paths:
 
         This can be useful in these cases:
 
-
-        - Different indices for different purposes, such as, one index for
-        products, another one for marketing content.
-
-        - Multiple searches to the same index—for example, with different
-        filters.
-
+          - Different indices for different purposes, such as, one index for products, another one for marketing content.
+          - Multiple searches to the same index—for example, with different filters.
 
         Use the helper `searchForHits` or `searchForFacets` to get the results
         in a more convenient format, if you already know the return type you
@@ -3657,10 +3652,10 @@ components:
             Whether the filter is disjunctive or conjunctive.
 
 
-            If true the filter has multiple matches, multiple occurences are
+            If true the filter has multiple matches, multiple occurrences are
             combined with the logical `OR` operation.
 
-            If false, multiple occurences are combined with the logical `AND`
+            If false, multiple occurrences are combined with the logical `AND`
             operation.
       required:
         - facet

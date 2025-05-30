@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 )
 
 func mcmSearchWithout() {
@@ -11,7 +11,7 @@ func mcmSearchWithout() {
 		return "", nil // Implement your logic here
 	}
 
-	getIndexingApiKeyFor := func(_ string) (string, error) {
+	getIndexingAPIKeyFor := func(_ string) (string, error) {
 		return "", nil // Implement your logic here
 	}
 
@@ -20,18 +20,21 @@ func mcmSearchWithout() {
 	appID, err := getAppIDFor("user42")
 	if err != nil {
 		fmt.Println(err)
+
 		return
 	}
 
-	apiKey, err := getIndexingApiKeyFor("user42")
+	apiKey, err := getIndexingAPIKeyFor("user42")
 	if err != nil {
 		fmt.Println(err)
+
 		return
 	}
 
 	client, err := search.NewClient(appID, apiKey)
 	if err != nil {
 		fmt.Println(err)
+
 		return
 	}
 
@@ -48,8 +51,7 @@ func mcmSearchWithout() {
 			),
 	)
 
-	_, err = client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-		"<YOUR_INDEX_NAME>").WithSearchParams(searchParams))
+	_, err = client.SearchSingleIndex("<YOUR_INDEX_NAME>", searchParams)
 	if err != nil {
 		panic(err)
 	}

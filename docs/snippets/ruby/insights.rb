@@ -95,7 +95,7 @@ def snippet_for_custom_get2
   # Call the API
   response = client.custom_get(
     "test/all",
-    {query: "to be overriden"},
+    {query: "to be overridden"},
     {
       :header_params => {"x-header-1" => "spaces are left alone"},
       :query_params => JSON.parse(
@@ -487,7 +487,7 @@ def snippet_for_push_events1
           index: "products",
           user_token: "user-123456",
           authenticated_user_token: "user-123456",
-          timestamp: 1748304000000,
+          timestamp: 1748563200000,
           object_ids: ["9780545139700", "9780439784542"],
           query_id: "43b15df305339e827f0ac0bdc5ebcaa7"
         ),
@@ -497,7 +497,7 @@ def snippet_for_push_events1
           index: "products",
           user_token: "user-123456",
           authenticated_user_token: "user-123456",
-          timestamp: 1748304000000,
+          timestamp: 1748563200000,
           object_ids: ["9780545139700", "9780439784542"]
         )
       ]

@@ -124,7 +124,7 @@ def snippet_for_custom_get2():
     response = client.custom_get(
         path="test/all",
         parameters={
-            "query": "to be overriden",
+            "query": "to be overridden",
         },
         request_options={
             "headers": loads("""{"x-header-1":"spaces are left alone"}"""),
@@ -634,7 +634,7 @@ def snippet_for_push_events1():
                     "index": "products",
                     "userToken": "user-123456",
                     "authenticatedUserToken": "user-123456",
-                    "timestamp": 1748304000000,
+                    "timestamp": 1748563200000,
                     "objectIDs": [
                         "9780545139700",
                         "9780439784542",
@@ -647,7 +647,7 @@ def snippet_for_push_events1():
                     "index": "products",
                     "userToken": "user-123456",
                     "authenticatedUserToken": "user-123456",
-                    "timestamp": 1748304000000,
+                    "timestamp": 1748563200000,
                     "objectIDs": [
                         "9780545139700",
                         "9780439784542",

@@ -3,14 +3,13 @@ package requests
 
 import (
 	"encoding/json"
+	"gotests/tests"
 	"testing"
 
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
 
-	"gotests/tests"
-
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/personalization"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/personalization"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
@@ -33,12 +32,13 @@ func createPersonalizationClient(t *testing.T) (*personalization.APIClient, *tes
 }
 
 func TestPersonalization_CustomDelete(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createPersonalizationClient(t)
 	_ = echo
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"test/minimal"))
+		_, err := client.CustomDelete("test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -47,17 +47,18 @@ func TestPersonalization_CustomDelete(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("allow del method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters"}))
+		_, err := client.CustomDelete("test/all", map[string]any{"query": "parameters"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -65,12 +66,13 @@ func TestPersonalization_CustomDelete(t *testing.T) {
 }
 
 func TestPersonalization_CustomGet(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createPersonalizationClient(t)
 	_ = echo
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/minimal"))
+		_, err := client.CustomGet("test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -79,39 +81,49 @@ func TestPersonalization_CustomGet(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("allow get method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters with space"}))
+		_, err := client.CustomGet("test/all", map[string]any{"query": "parameters with space"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters%20with%20space"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions should be escaped too", func(t *testing.T) {
-		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/all").WithParameters(map[string]any{"query": "to be overriden"}), personalization.WithQueryParam("query", "parameters with space"), personalization.WithQueryParam("and an array",
-			[]string{"array", "with spaces"}), personalization.WithHeaderParam("x-header-1", "spaces are left alone"))
+		_, err := client.CustomGet(
+			"test/all",
+			map[string]any{"query": "to be overridden"},
+			personalization.WithQueryParam("query", "parameters with space"),
+			personalization.WithQueryParam("and an array",
+				[]string{"array", "with spaces"}),
+			personalization.WithHeaderParam("x-header-1", "spaces are left alone"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
+
 		headers := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"x-header-1":"spaces are left alone"}`), &headers))
+
 		for k, v := range headers {
 			require.Equal(t, v, echo.Header.Get(k))
 		}
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -119,12 +131,13 @@ func TestPersonalization_CustomGet(t *testing.T) {
 }
 
 func TestPersonalization_CustomPost(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createPersonalizationClient(t)
 	_ = echo
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/minimal"))
+		_, err := client.CustomPost("test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -134,8 +147,12 @@ func TestPersonalization_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("allow post method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+		_, err := client.CustomPost(
+			"test/all",
+			personalization.NewCustomPostOptions().
+				WithParameters(map[string]any{"query": "parameters"}).
+				WithBody(map[string]any{"body": "parameters"}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -143,16 +160,21 @@ func TestPersonalization_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions can override default query parameters", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithQueryParam("query", "myQueryParameter"))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			personalization.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			personalization.WithQueryParam("query", "myQueryParameter"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -160,16 +182,21 @@ func TestPersonalization_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"myQueryParameter"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions merges query parameters with default ones", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithQueryParam("query2", "myQueryParameter"))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			personalization.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			personalization.WithQueryParam("query2", "myQueryParameter"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -177,16 +204,21 @@ func TestPersonalization_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","query2":"myQueryParameter"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions can override default headers", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			personalization.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			personalization.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -194,21 +226,28 @@ func TestPersonalization_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		headers := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"ALGOLIA_API_KEY"}`), &headers))
+
 		for k, v := range headers {
 			require.Equal(t, v, echo.Header.Get(k))
 		}
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions merges headers with default ones", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			personalization.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			personalization.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -216,21 +255,28 @@ func TestPersonalization_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		headers := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"ALGOLIA_API_KEY"}`), &headers))
+
 		for k, v := range headers {
 			require.Equal(t, v, echo.Header.Get(k))
 		}
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts booleans", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithQueryParam("isItWorking", true))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			personalization.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			personalization.WithQueryParam("isItWorking", true),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -238,16 +284,21 @@ func TestPersonalization_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","isItWorking":"true"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts integers", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithQueryParam("myParam", 2))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			personalization.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			personalization.WithQueryParam("myParam", 2),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -255,17 +306,22 @@ func TestPersonalization_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"2"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of string", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithQueryParam("myParam",
-			[]string{"b and c", "d"}))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			personalization.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			personalization.WithQueryParam("myParam",
+				[]string{"b and c", "d"}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -273,17 +329,22 @@ func TestPersonalization_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"b%20and%20c%2Cd"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of booleans", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithQueryParam("myParam",
-			[]bool{true, true, false}))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			personalization.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			personalization.WithQueryParam("myParam",
+				[]bool{true, true, false}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -291,17 +352,22 @@ func TestPersonalization_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of integers", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithQueryParam("myParam",
-			[]int32{1, 2}))
+		_, err := client.CustomPost(
+			"test/requestOptions",
+			personalization.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			personalization.WithQueryParam("myParam",
+				[]int32{1, 2}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -309,9 +375,11 @@ func TestPersonalization_CustomPost(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"1%2C2"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -319,12 +387,13 @@ func TestPersonalization_CustomPost(t *testing.T) {
 }
 
 func TestPersonalization_CustomPut(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createPersonalizationClient(t)
 	_ = echo
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"test/minimal"))
+		_, err := client.CustomPut("test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -334,8 +403,12 @@ func TestPersonalization_CustomPut(t *testing.T) {
 		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("allow put method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+		_, err := client.CustomPut(
+			"test/all",
+			personalization.NewCustomPutOptions().
+				WithParameters(map[string]any{"query": "parameters"}).
+				WithBody(map[string]any{"body": "parameters"}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -343,9 +416,11 @@ func TestPersonalization_CustomPut(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
+
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
+
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
@@ -353,12 +428,13 @@ func TestPersonalization_CustomPut(t *testing.T) {
 }
 
 func TestPersonalization_DeleteUserProfile(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createPersonalizationClient(t)
 	_ = echo
 
 	t.Run("delete deleteUserProfile", func(t *testing.T) {
-		_, err := client.DeleteUserProfile(client.NewApiDeleteUserProfileRequest(
-			"UserToken"))
+		_, err := client.DeleteUserProfile("UserToken")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/profiles/UserToken", echo.Path)
@@ -369,6 +445,8 @@ func TestPersonalization_DeleteUserProfile(t *testing.T) {
 }
 
 func TestPersonalization_GetPersonalizationStrategy(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createPersonalizationClient(t)
 	_ = echo
 
@@ -384,12 +462,13 @@ func TestPersonalization_GetPersonalizationStrategy(t *testing.T) {
 }
 
 func TestPersonalization_GetUserTokenProfile(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createPersonalizationClient(t)
 	_ = echo
 
 	t.Run("get getUserTokenProfile", func(t *testing.T) {
-		_, err := client.GetUserTokenProfile(client.NewApiGetUserTokenProfileRequest(
-			"UserToken"))
+		_, err := client.GetUserTokenProfile("UserToken")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/profiles/personalization/UserToken", echo.Path)
@@ -400,21 +479,28 @@ func TestPersonalization_GetUserTokenProfile(t *testing.T) {
 }
 
 func TestPersonalization_SetPersonalizationStrategy(t *testing.T) {
+	t.Parallel()
+
 	client, echo := createPersonalizationClient(t)
 	_ = echo
 
 	t.Run("set setPersonalizationStrategy", func(t *testing.T) {
-		_, err := client.SetPersonalizationStrategy(client.NewApiSetPersonalizationStrategyRequest(
-
-			personalization.NewEmptyPersonalizationStrategyParams().SetEventsScoring(
-				[]personalization.EventsScoring{*personalization.NewEmptyEventsScoring().SetScore(42).SetEventName("Algolia").SetEventType(personalization.EventType("click"))}).SetFacetsScoring(
-				[]personalization.FacetsScoring{*personalization.NewEmptyFacetsScoring().SetScore(42).SetFacetName("Event")}).SetPersonalizationImpact(42)))
+		_, err := client.SetPersonalizationStrategy(
+			[]personalization.EventsScoring{
+				*personalization.NewEmptyEventsScoring().SetScore(42).SetEventName("Algolia").SetEventType(personalization.EVENT_TYPE_CLICK),
+			},
+			[]personalization.FacetsScoring{*personalization.NewEmptyFacetsScoring().SetScore(42).SetFacetName("Event")},
+			42,
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/strategies/personalization", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"eventsScoring":[{"score":42,"eventName":"Algolia","eventType":"click"}],"facetsScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}`)
+		ja.Assertf(
+			*echo.Body,
+			`{"eventsScoring":[{"score":42,"eventName":"Algolia","eventType":"click"}],"facetsScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}`,
+		)
 	})
 }

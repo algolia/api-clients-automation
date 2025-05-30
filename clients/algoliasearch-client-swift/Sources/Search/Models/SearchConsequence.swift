@@ -14,7 +14,7 @@ public struct SearchConsequence: Codable, JSONEncodable {
     /// individually, or as groups of up to 100 records each.
     public var promote: [SearchPromote]?
     /// Whether promoted records must match an active filter for the consequence to be applied.  This ensures that user
-    /// actions (filtering the search) are given a higher precendence. For example, if you promote a record with the
+    /// actions (filtering the search) are given a higher precedence. For example, if you promote a record with the
     /// `color: red` attribute, and the user filters the search for `color: blue`, the \"red\" record won't be shown.
     public var filterPromotes: Bool?
     /// Records you want to hide from the search results.

@@ -22,7 +22,7 @@ package algoliasearch.ingestion
 import algoliasearch.ingestion.EventStatus._
 import algoliasearch.ingestion.EventType._
 
-/** An event describe a step of the task execution flow..
+/** An event describe a step of the task execution flow.
   *
   * @param eventID
   *   Universally unique identifier (UUID) of an event.

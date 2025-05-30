@@ -486,7 +486,7 @@ class SearchClient
     }
 
     /**
-     * Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.  - The Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:  - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they'll be ignored.
+     * Retrieves records from an index, up to 1,000 per request.  While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details), browsing _just_ returns matching records. This can be useful if you want to export your indices.    - The Analytics API doesn't collect data when using `browse`.   - Records are ranked by attributes and custom ranking.   - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.  Browse requests automatically apply these settings:   - `advancedSyntax`: `false`   - `attributesToHighlight`: `[]`   - `attributesToSnippet`: `[]`   - `distinct`: `false`   - `enablePersonalization`: `false`   - `enableRules`: `false`   - `facets`: `[]`   - `getRankingInfo`: `false`   - `ignorePlurals`: `false`   - `optionalFilters`: `[]`   - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)  If you send these parameters with your browse requests, they'll be ignored.
      *
      * Required API Key ACLs:
      *  - browse
@@ -2340,7 +2340,7 @@ class SearchClient
     }
 
     /**
-     * Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
+     * Sends multiple search requests to one or more indices.  This can be useful in these cases:    - Different indices for different purposes, such as, one index for products, another one for marketing content.   - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
      *
      * Required API Key ACLs:
      *  - search
@@ -3039,7 +3039,7 @@ class SearchClient
      *
      * @param string $indexName         the `indexName` to replace `objects` in
      * @param array  $objects           the array of `objects` to store in the given Algolia `indexName`
-     * @param bool   $createIfNotExists To be provided if non-existing objects are passed, otherwise, the call will fail..
+     * @param bool   $createIfNotExists to be provided if non-existing objects are passed, otherwise, the call will fail
      * @param bool   $waitForTasks      Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
      * @param array  $batchSize         The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param array  $requestOptions    Request options

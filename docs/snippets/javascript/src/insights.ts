@@ -87,7 +87,7 @@ export async function snippetForCustomGet2(): Promise<void> {
 
   // Call the API
   const response = await client.customGet(
-    { path: 'test/all', parameters: { query: 'to be overriden' } },
+    { path: 'test/all', parameters: { query: 'to be overridden' } },
     {
       queryParameters: { query: 'parameters with space', 'and an array': ['array', 'with spaces'] },
       headers: { 'x-header-1': 'spaces are left alone' },
@@ -453,7 +453,7 @@ export async function snippetForPushEvents1(): Promise<void> {
         index: 'products',
         userToken: 'user-123456',
         authenticatedUserToken: 'user-123456',
-        timestamp: 1748304000000,
+        timestamp: 1748563200000,
         objectIDs: ['9780545139700', '9780439784542'],
         queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
       },
@@ -463,7 +463,7 @@ export async function snippetForPushEvents1(): Promise<void> {
         index: 'products',
         userToken: 'user-123456',
         authenticatedUserToken: 'user-123456',
-        timestamp: 1748304000000,
+        timestamp: 1748563200000,
         objectIDs: ['9780545139700', '9780439784542'],
       },
     ],

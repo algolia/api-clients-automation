@@ -32,13 +32,13 @@ public class AbtestingClientRequestTests
     await client.AddABTestsAsync(
       new AddABTestsRequest
       {
-        EndAt = "2022-12-31T00:00:00.000Z",
         Name = "myABTest",
         Variants = new List<AddABTestsVariant>
         {
           new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30 }),
           new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
         },
+        EndAt = "2022-12-31T00:00:00.000Z",
       }
     );
 
@@ -46,7 +46,7 @@ public class AbtestingClientRequestTests
     Assert.Equal("/2/abtests", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"name\":\"myABTest\",\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}",
+      "{\"name\":\"myABTest\",\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}],\"endAt\":\"2022-12-31T00:00:00.000Z\"}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -133,7 +133,7 @@ public class AbtestingClientRequestTests
   {
     await client.CustomGetAsync(
       "test/all",
-      new Dictionary<string, object> { { "query", "to be overriden" } },
+      new Dictionary<string, object> { { "query", "to be overridden" } },
       new RequestOptionBuilder()
         .AddExtraQueryParameters("query", "parameters with space")
         .AddExtraQueryParameters("and an array", new List<object> { "array", "with spaces" })
@@ -639,14 +639,14 @@ public class AbtestingClientRequestTests
     await client.ScheduleABTestAsync(
       new ScheduleABTestsRequest
       {
-        EndAt = "2022-12-31T00:00:00.000Z",
-        ScheduledAt = "2022-11-31T00:00:00.000Z",
         Name = "myABTest",
         Variants = new List<AddABTestsVariant>
         {
           new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30 }),
           new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
         },
+        ScheduledAt = "2022-11-31T00:00:00.000Z",
+        EndAt = "2022-12-31T00:00:00.000Z",
       }
     );
 
@@ -654,7 +654,7 @@ public class AbtestingClientRequestTests
     Assert.Equal("/2/abtests/schedule", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"scheduledAt\":\"2022-11-31T00:00:00.000Z\",\"name\":\"myABTest\",\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}",
+      "{\"name\":\"myABTest\",\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}],\"scheduledAt\":\"2022-11-31T00:00:00.000Z\",\"endAt\":\"2022-12-31T00:00:00.000Z\"}",
       req.Body,
       new JsonDiffConfig(false)
     );

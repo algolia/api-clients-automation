@@ -3,14 +3,14 @@ package main
 import (
 	"fmt"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 )
 
 func getAppIDFor(_ string) (string, error) {
 	return "", nil // Implement your logic here
 }
 
-func getIndexingApiKeyFor(_ string) (string, error) {
+func getIndexingAPIKeyFor(_ string) (string, error) {
 	return "", nil // Implement your logic here
 }
 
@@ -23,18 +23,21 @@ func setSettingsThenSaveObjects() {
 		appID, err := getAppIDFor(playlist["user"].(string))
 		if err != nil {
 			fmt.Println(err)
+
 			return
 		}
 
-		apiKey, err := getIndexingApiKeyFor(playlist["user"].(string))
+		apiKey, err := getIndexingAPIKeyFor(playlist["user"].(string))
 		if err != nil {
 			fmt.Println(err)
+
 			return
 		}
 
 		client, err := search.NewClient(appID, apiKey)
 		if err != nil {
 			fmt.Println(err)
+
 			return
 		}
 
@@ -42,14 +45,12 @@ func setSettingsThenSaveObjects() {
 			AttributesForFaceting: []string{"filterOnly(user)"},
 		}
 
-		_, err = client.SetSettings(client.NewApiSetSettingsRequest(
-			"<YOUR_INDEX_NAME>", settings))
+		_, err = client.SetSettings("<YOUR_INDEX_NAME>", settings, nil)
 		if err != nil {
 			panic(err)
 		}
 
-		_, err = client.SaveObjects(
-			"<YOUR_INDEX_NAME>", playlists)
+		_, err = client.SaveObjects("<YOUR_INDEX_NAME>", playlists)
 		if err != nil {
 			panic(err)
 		}

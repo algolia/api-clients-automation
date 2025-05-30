@@ -85,7 +85,7 @@ class TestAnalyticsClient:
         _req = await self._client.custom_get_with_http_info(
             path="test/all",
             parameters={
-                "query": "to be overriden",
+                "query": "to be overridden",
             },
             request_options={
                 "headers": loads("""{"x-header-1":"spaces are left alone"}"""),
@@ -1335,7 +1335,7 @@ class TestAnalyticsClientSync:
         _req = self._client.custom_get_with_http_info(
             path="test/all",
             parameters={
-                "query": "to be overriden",
+                "query": "to be overridden",
             },
             request_options={
                 "headers": loads("""{"x-header-1":"spaces are left alone"}"""),
