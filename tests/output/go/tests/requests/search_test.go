@@ -4120,14 +4120,14 @@ func TestSearch_SetSettings(t *testing.T) {
 	t.Run("minimal parameters", func(t *testing.T) {
 		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
 			"cts_e2e_settings",
-			search.NewEmptyIndexSettings().SetPaginationLimitedTo(10)).WithForwardToReplicas(true))
+			search.NewEmptyIndexSettings().SetPaginationLimitedTo(10).SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("false")))).WithForwardToReplicas(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/cts_e2e_settings/settings", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"paginationLimitedTo":10}`)
+		ja.Assertf(*echo.Body, `{"paginationLimitedTo":10,"typoTolerance":"false"}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))

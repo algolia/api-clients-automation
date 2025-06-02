@@ -9019,6 +9019,7 @@ def snippet_for_set_settings():
         index_name="<YOUR_INDEX_NAME>",
         index_settings={
             "paginationLimitedTo": 10,
+            "typoTolerance": "false",
         },
         forward_to_replicas=True,
     )

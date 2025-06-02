@@ -7094,7 +7094,8 @@ class SearchTest extends AnyFunSuite {
     val future = client.setSettings(
       indexName = "cts_e2e_settings",
       indexSettings = IndexSettings(
-        paginationLimitedTo = Some(10)
+        paginationLimitedTo = Some(10),
+        typoTolerance = Some(TypoToleranceEnum.withName("false"))
       ),
       forwardToReplicas = Some(true)
     )
@@ -7104,7 +7105,7 @@ class SearchTest extends AnyFunSuite {
 
     assert(res.path == "/1/indexes/cts_e2e_settings/settings")
     assert(res.method == "PUT")
-    val expectedBody = parse("""{"paginationLimitedTo":10}""")
+    val expectedBody = parse("""{"paginationLimitedTo":10,"typoTolerance":"false"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
     val expectedQuery = parse("""{"forwardToReplicas":"true"}""").asInstanceOf[JObject].obj.toMap
