@@ -58,16 +58,16 @@ object TypoToleranceSerializer extends Serializer[TypoTolerance] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[TypoTolerance] =>
       json match {
-        case JBool(value)   => TypoTolerance.BooleanValue(value)
         case value: JString => Extraction.extract[TypoToleranceEnum](value)
+        case JBool(value)   => TypoTolerance.BooleanValue(value)
         case _              => throw new MappingException("Can't convert " + json + " to TypoTolerance")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: TypoTolerance =>
     value match {
-      case TypoTolerance.BooleanValue(value) => JBool(value)
       case value: TypoToleranceEnum          => JString(value.toString)
+      case TypoTolerance.BooleanValue(value) => JBool(value)
     }
   }
 }

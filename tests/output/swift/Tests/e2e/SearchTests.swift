@@ -107,7 +107,7 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
         let response = try await client.getSettingsWithHTTPInfo(indexName: "cts_e2e_settings")
         try XCTLenientAssertEqual(
             received: XCTUnwrap(response.body),
-            expected: "{\"minWordSizefor1Typo\":4,\"minWordSizefor2Typos\":8,\"hitsPerPage\":100,\"maxValuesPerFacet\":100,\"paginationLimitedTo\":10,\"exactOnSingleWordQuery\":\"attribute\",\"ranking\":[\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"],\"separatorsToIndex\":\"\",\"removeWordsIfNoResults\":\"none\",\"queryType\":\"prefixLast\",\"highlightPreTag\":\"<em>\",\"highlightPostTag\":\"</em>\",\"alternativesAsExact\":[\"ignorePlurals\",\"singleWordSynonym\"]}"
+            expected: "{\"minWordSizefor1Typo\":4,\"minWordSizefor2Typos\":8,\"hitsPerPage\":100,\"maxValuesPerFacet\":100,\"paginationLimitedTo\":10,\"exactOnSingleWordQuery\":\"attribute\",\"ranking\":[\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"],\"separatorsToIndex\":\"\",\"removeWordsIfNoResults\":\"none\",\"queryType\":\"prefixLast\",\"highlightPreTag\":\"<em>\",\"highlightPostTag\":\"</em>\",\"alternativesAsExact\":[\"ignorePlurals\",\"singleWordSynonym\"],\"typoTolerance\":\"false\"}"
         )
 
         XCTAssertEqual(response.statusCode, 200)
@@ -312,7 +312,10 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
 
         let response = try await client.setSettingsWithHTTPInfo(
             indexName: "cts_e2e_settings",
-            indexSettings: IndexSettings(paginationLimitedTo: 10),
+            indexSettings: IndexSettings(
+                paginationLimitedTo: 10,
+                typoTolerance: SearchTypoTolerance.searchTypoToleranceEnum(SearchTypoToleranceEnum.`false`)
+            ),
             forwardToReplicas: true
         )
 
