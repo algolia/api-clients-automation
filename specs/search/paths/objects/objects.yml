@@ -23,6 +23,7 @@ post:
   requestBody:
     required: true
     description: The record. A schemaless object with attributes that are useful in the context of search and discovery.
+    x-is-generic: true
     content:
       application/json:
         schema:
