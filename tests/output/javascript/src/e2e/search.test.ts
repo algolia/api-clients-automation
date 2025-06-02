@@ -81,6 +81,7 @@ describe('getSettings', () => {
       highlightPreTag: '<em>',
       highlightPostTag: '</em>',
       alternativesAsExact: ['ignorePlurals', 'singleWordSynonym'],
+      typoTolerance: 'false',
     };
 
     expect(expectedBody).toEqual(union(expectedBody, resp));
@@ -353,7 +354,7 @@ describe('setSettings', () => {
   test('minimal parameters', async () => {
     await client.setSettings({
       indexName: 'cts_e2e_settings',
-      indexSettings: { paginationLimitedTo: 10 },
+      indexSettings: { paginationLimitedTo: 10, typoTolerance: 'false' },
       forwardToReplicas: true,
     });
   });

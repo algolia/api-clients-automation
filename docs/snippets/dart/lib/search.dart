@@ -7569,6 +7569,7 @@ void snippetForsetSettings() async {
     indexName: "<YOUR_INDEX_NAME>",
     indexSettings: IndexSettings(
       paginationLimitedTo: 10,
+      typoTolerance: TypoToleranceEnum.fromJson("false"),
     ),
     forwardToReplicas: true,
   );

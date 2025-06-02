@@ -6585,6 +6585,7 @@ class SearchTest {
           indexName = "cts_e2e_settings",
           indexSettings = IndexSettings(
             paginationLimitedTo = 10,
+            typoTolerance = TypoToleranceEnum.entries.first { it.value == "false" },
           ),
           forwardToReplicas = true,
         )
@@ -6593,7 +6594,7 @@ class SearchTest {
         assertEquals("/1/indexes/cts_e2e_settings/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
         assertQueryParams("""{"forwardToReplicas":"true"}""", it.url.encodedParameters)
-        assertJsonBody("""{"paginationLimitedTo":10}""", it.body)
+        assertJsonBody("""{"paginationLimitedTo":10,"typoTolerance":"false"}""", it.body)
       },
     )
   }

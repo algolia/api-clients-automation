@@ -9595,7 +9595,10 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let response = try await client.setSettingsWithHTTPInfo(
             indexName: "cts_e2e_settings",
-            indexSettings: IndexSettings(paginationLimitedTo: 10),
+            indexSettings: IndexSettings(
+                paginationLimitedTo: 10,
+                typoTolerance: SearchTypoTolerance.searchTypoToleranceEnum(SearchTypoToleranceEnum.`false`)
+            ),
             forwardToReplicas: true
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -9604,7 +9607,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"paginationLimitedTo\":10}".data(using: .utf8)
+        let expectedBodyData = "{\"paginationLimitedTo\":10,\"typoTolerance\":\"false\"}".data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
