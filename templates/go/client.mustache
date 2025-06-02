@@ -20,6 +20,7 @@ import (
 
   "github.com/algolia/algoliasearch-client-go/v4/algolia/call"
   "github.com/algolia/algoliasearch-client-go/v4/algolia/compression"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
   "github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
@@ -29,6 +30,9 @@ type APIClient struct {
 	appID     string
 	cfg       *{{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{{/lambda.camelcase}}{{/lambda.titlecase}}Configuration
 	transport *transport.Transport
+  {{#isSearchClient}}
+	ingestionTransporter *ingestion.APIClient
+  {{/isSearchClient}}
 }
 
 // NewClient creates a new API client with {{#hasRegionalHost}}appID, apiKey and region.{{/hasRegionalHost}}{{^hasRegionalHost}}appID and apiKey.{{/hasRegionalHost}}
@@ -72,13 +76,29 @@ func NewClientWithConfig(cfg {{#lambda.titlecase}}{{#lambda.camelcase}}{{client}
 		cfg.WriteTimeout = {{x-timeouts.server.write}} * time.Millisecond
 	}
 
-  return &APIClient{
+  apiClient := APIClient{
 		appID: cfg.AppID,
 		cfg:   &cfg,
 		transport: transport.New(
-      cfg.Configuration,
+			cfg.Configuration,
 		),
-	}, nil
+	}
+
+  {{#isSearchClient}}
+  if cfg.Transformation != nil && cfg.Transformation.Region != "" {
+    ingestionClient, err := ingestion.NewClientWithConfig(ingestion.IngestionConfiguration{
+      Configuration: cfg.Configuration,
+      Region: cfg.Transformation.Region,
+    })
+    if err != nil {
+      return nil, err //nolint:wrapcheck
+    }
+
+    apiClient.ingestionTransporter = ingestionClient
+  }
+  {{/isSearchClient}}
+
+	return &apiClient, nil
 }
 
 {{#hasRegionalHost}}
