@@ -1,12 +1,13 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/recommend"
 )
 
-func testRecommend(appID, apiKey string) int {
+func testRecommend(ctx context.Context, appID, apiKey string) int {
 	recommendClient, err := recommend.NewClient(appID, apiKey)
 	if err != nil {
 		panic(err)
@@ -27,7 +28,7 @@ func testRecommend(appID, apiKey string) int {
 		},
 	}}
 
-	searchResponse, err := recommendClient.GetRecommendations(params)
+	searchResponse, err := recommendClient.GetRecommendations(ctx, params)
 	if err != nil {
 		fmt.Printf("request error with SearchSingleIndex: %v\n", err)
 		return 1
