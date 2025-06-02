@@ -49,7 +49,8 @@ TransformationCode:
   description: Input for a transformation that contains the source code of the transformation.
   properties:
     code:
-      $ref: '#/Code'
+      type: string
+      description: The source code of the transformation.
   required:
     - code
 
@@ -71,7 +72,7 @@ TransformationNoCodeStep:
 
 Code:
   type: string
-  description: The source code of the transformation.
+  description: It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
 
 Name:
   type: string
