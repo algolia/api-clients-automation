@@ -86,10 +86,7 @@ func NewClientWithConfig(cfg {{#lambda.titlecase}}{{#lambda.camelcase}}{{client}
 
   {{#isSearchClient}}
   if cfg.Transformation != nil && cfg.Transformation.Region != "" {
-    ingestionClient, err := ingestion.NewClientWithConfig(ingestion.IngestionConfiguration{
-      Configuration: cfg.Configuration,
-      Region: cfg.Transformation.Region,
-    })
+		ingestionClient, err := ingestion.NewClient(apiClient.appID, cfg.ApiKey, cfg.Transformation.Region)
     if err != nil {
       return nil, err //nolint:wrapcheck
     }
