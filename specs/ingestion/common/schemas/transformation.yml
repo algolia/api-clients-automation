@@ -7,7 +7,6 @@ Transformation:
     authenticationIDs:
       $ref: '#/AuthenticationIDs'
     code:
-      deprecated: true
       $ref: '#/Code'
     type:
       $ref: '#/TransformationType'
@@ -72,6 +71,7 @@ TransformationNoCodeStep:
 
 Code:
   type: string
+  deprecated: true
   description: It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
 
 Name:
@@ -94,7 +94,6 @@ TransformationCreate:
   description: API request body for creating a transformation.
   properties:
     code:
-      deprecated: true
       $ref: '#/Code'
     name:
       $ref: '#/Name'
