@@ -13,7 +13,7 @@ func savePopularRecords() {
 
   records := []map[string]any{ { /* Your records */ } }
 
-  err = client.BrowseObjects("<YOUR_INDEX_NAME>", search.BrowseParamsObject{}, search.WithAggregator(func(res any, err error) {
+  err = client.BrowseObjects(context.Background(), "<YOUR_INDEX_NAME>", search.BrowseParamsObject{}, search.WithAggregator(func(res any, err error) {
 		if err != nil {
 			panic(err)
 		}
