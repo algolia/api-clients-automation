@@ -2,13 +2,15 @@
 {{> imports}}
 
 {{#isSearchClient}}
-from algoliasearch.search.models.action import Action
-from algoliasearch.search.models.batch_request import BatchRequest
-from algoliasearch.search.models.browse_params_object import BrowseParamsObject
-from algoliasearch.search.models.operation_type import OperationType
-from algoliasearch.search.models.replace_all_objects_response import ReplaceAllObjectsResponse
-from algoliasearch.search.models.scope_type import ScopeType
-from algoliasearch.search.models.secured_api_key_restrictions import SecuredApiKeyRestrictions
+from algoliasearch.search.models import (
+  Action,
+  BatchRequest,
+  BrowseParamsObject,
+  OperationType,
+  ReplaceAllObjectsResponse,
+  ScopeType,
+  SecuredApiKeyRestrictions,
+)
 
 from algoliasearch.ingestion.models.watch_response import WatchResponse
 from algoliasearch.ingestion.config import IngestionConfig
@@ -16,7 +18,7 @@ from algoliasearch.ingestion.client import (IngestionClient, IngestionClientSync
 {{/isSearchClient}}
 
 {{#operations}}{{#operation}}{{#imports}}
-from algoliasearch.{{packageName}}.models.{{#lambda.snakecase}}{{{.}}}{{/lambda.snakecase}} import {{{.}}}
+from algoliasearch.{{packageName}}.models import {{{.}}}
 {{/imports}}{{/operation}}{{/operations}}
 
 
