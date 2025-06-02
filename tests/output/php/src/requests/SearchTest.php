@@ -6778,6 +6778,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client->setSettings(
             'cts_e2e_settings',
             ['paginationLimitedTo' => 10,
+                'typoTolerance' => 'false',
             ],
             true,
         );
@@ -6786,7 +6787,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/cts_e2e_settings/settings',
                 'method' => 'PUT',
-                'body' => json_decode('{"paginationLimitedTo":10}'),
+                'body' => json_decode('{"paginationLimitedTo":10,"typoTolerance":"false"}'),
                 'queryParameters' => json_decode('{"forwardToReplicas":"true"}', true),
             ],
         ]);

@@ -130,7 +130,7 @@ func TestSearchE2E_GetSettings(t *testing.T) {
 		err = json.Unmarshal(rawBody, &rawBodyMap)
 		require.NoError(t, err)
 
-		expectedBodyRaw := `{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":100,"maxValuesPerFacet":100,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"]}`
+		expectedBodyRaw := `{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":100,"maxValuesPerFacet":100,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"typoTolerance":"false"}`
 		var expectedBody any
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
@@ -372,7 +372,7 @@ func TestSearchE2E_SetSettings(t *testing.T) {
 		client := createE2ESearchClient(t)
 		res, err := client.SetSettings(client.NewApiSetSettingsRequest(
 			"cts_e2e_settings",
-			search.NewEmptyIndexSettings().SetPaginationLimitedTo(10)).WithForwardToReplicas(true))
+			search.NewEmptyIndexSettings().SetPaginationLimitedTo(10).SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("false")))).WithForwardToReplicas(true))
 		require.NoError(t, err)
 		_ = res
 

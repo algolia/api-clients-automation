@@ -7019,7 +7019,11 @@ public class SearchClientRequestTests
   {
     await client.SetSettingsAsync(
       "cts_e2e_settings",
-      new IndexSettings { PaginationLimitedTo = 10 },
+      new IndexSettings
+      {
+        PaginationLimitedTo = 10,
+        TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>("False")),
+      },
       true
     );
 
@@ -7027,7 +7031,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/indexes/cts_e2e_settings/settings", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"paginationLimitedTo\":10}",
+      "{\"paginationLimitedTo\":10,\"typoTolerance\":\"false\"}",
       req.Body,
       new JsonDiffConfig(false)
     );

@@ -5067,7 +5067,7 @@ class TestSearchClient < Test::Unit::TestCase
   def test_set_settings
     req = @client.set_settings_with_http_info(
       "cts_e2e_settings",
-      Algolia::Search::IndexSettings.new(pagination_limited_to: 10),
+      Algolia::Search::IndexSettings.new(pagination_limited_to: 10, typo_tolerance: "false"),
       true
     )
 
@@ -5075,7 +5075,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal("/1/indexes/cts_e2e_settings/settings", req.path)
     assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"paginationLimitedTo\":10}"), JSON.parse(req.body))
+    assert_equal(JSON.parse("{\"paginationLimitedTo\":10,\"typoTolerance\":\"false\"}"), JSON.parse(req.body))
   end
 
   # boolean typoTolerance

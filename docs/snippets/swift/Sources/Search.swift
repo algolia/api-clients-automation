@@ -6144,7 +6144,10 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.setSettings(
             indexName: "<YOUR_INDEX_NAME>",
-            indexSettings: IndexSettings(paginationLimitedTo: 10),
+            indexSettings: IndexSettings(
+                paginationLimitedTo: 10,
+                typoTolerance: SearchTypoTolerance.searchTypoToleranceEnum(SearchTypoToleranceEnum.`false`)
+            ),
             forwardToReplicas: true
         )
         // >LOG
