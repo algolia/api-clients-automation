@@ -41,16 +41,16 @@ sealed trait Distinct
 
 object Distinct {
 
-  case class BooleanValue(value: Boolean) extends Distinct
-
   case class IntValue(value: Int) extends Distinct
 
-  def apply(value: Boolean): Distinct = {
-    Distinct.BooleanValue(value)
-  }
+  case class BooleanValue(value: Boolean) extends Distinct
 
   def apply(value: Int): Distinct = {
     Distinct.IntValue(value)
+  }
+
+  def apply(value: Boolean): Distinct = {
+    Distinct.BooleanValue(value)
   }
 
 }
@@ -60,16 +60,16 @@ object DistinctSerializer extends Serializer[Distinct] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[Distinct] =>
       json match {
-        case JBool(value) => Distinct.BooleanValue(value)
         case JInt(value)  => Distinct.IntValue(value.toInt)
+        case JBool(value) => Distinct.BooleanValue(value)
         case _            => throw new MappingException("Can't convert " + json + " to Distinct")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: Distinct =>
     value match {
-      case Distinct.BooleanValue(value) => JBool(value)
       case Distinct.IntValue(value)     => JInt(value)
+      case Distinct.BooleanValue(value) => JBool(value)
     }
   }
 }

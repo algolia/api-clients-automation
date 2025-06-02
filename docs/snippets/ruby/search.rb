@@ -7499,7 +7499,7 @@ def snippet_for_set_settings
   # Call the API
   response = client.set_settings(
     "<YOUR_INDEX_NAME>",
-    Algolia::Search::IndexSettings.new(pagination_limited_to: 10),
+    Algolia::Search::IndexSettings.new(pagination_limited_to: 10, typo_tolerance: "false"),
     true
   )
 

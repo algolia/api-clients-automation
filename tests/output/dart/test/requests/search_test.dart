@@ -8092,6 +8092,7 @@ void main() {
         indexName: "cts_e2e_settings",
         indexSettings: IndexSettings(
           paginationLimitedTo: 10,
+          typoTolerance: TypoToleranceEnum.fromJson("false"),
         ),
         forwardToReplicas: true,
       ),
@@ -8100,7 +8101,8 @@ void main() {
         expect(request.method, 'put');
         expectParams(
             request.queryParameters, """{"forwardToReplicas":"true"}""");
-        expectBody(request.body, """{"paginationLimitedTo":10}""");
+        expectBody(request.body,
+            """{"paginationLimitedTo":10,"typoTolerance":"false"}""");
       },
     ),
   );

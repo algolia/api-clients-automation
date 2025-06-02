@@ -6432,7 +6432,11 @@ paths:
 
             var response = await client.SetSettingsAsync(
               "<YOUR_INDEX_NAME>",
-              new IndexSettings { PaginationLimitedTo = 10 },
+              new IndexSettings
+              {
+                PaginationLimitedTo = 10,
+                TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>("False")),
+              },
               true
             );
 
@@ -6449,6 +6453,7 @@ paths:
               indexName: "<YOUR_INDEX_NAME>",
               indexSettings: IndexSettings(
                 paginationLimitedTo: 10,
+                typoTolerance: TypoToleranceEnum.fromJson("false"),
               ),
               forwardToReplicas: true,
             );
@@ -6471,7 +6476,7 @@ paths:
 
             response, err := client.SetSettings(client.NewApiSetSettingsRequest(
               "<YOUR_INDEX_NAME>",
-              search.NewEmptyIndexSettings().SetPaginationLimitedTo(10)).WithForwardToReplicas(true))
+              search.NewEmptyIndexSettings().SetPaginationLimitedTo(10).SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("false")))).WithForwardToReplicas(true))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6495,7 +6500,8 @@ paths:
             // Call the API
 
             client.setSettings("<YOUR_INDEX_NAME>", new
-            IndexSettings().setPaginationLimitedTo(10), true);
+            IndexSettings().setPaginationLimitedTo(10).setTypoTolerance(TypoToleranceEnum.FALSE),
+            true);
 
             // >LOG
         - lang: javascript
@@ -6513,7 +6519,7 @@ paths:
 
             const response = await client.setSettings({
               indexName: 'cts_e2e_settings',
-              indexSettings: { paginationLimitedTo: 10 },
+              indexSettings: { paginationLimitedTo: 10, typoTolerance: 'false' },
               forwardToReplicas: true,
             });
 
@@ -6538,6 +6544,7 @@ paths:
               indexName = "<YOUR_INDEX_NAME>",
               indexSettings = IndexSettings(
                 paginationLimitedTo = 10,
+                typoTolerance = TypoToleranceEnum.entries.first { it.value == "false" },
               ),
               forwardToReplicas = true,
             )
@@ -6562,6 +6569,7 @@ paths:
             $response = $client->setSettings(
                 '<YOUR_INDEX_NAME>',
                 ['paginationLimitedTo' => 10,
+                    'typoTolerance' => 'false',
                 ],
                 true,
             );
@@ -6590,6 +6598,7 @@ paths:
                 index_name="<YOUR_INDEX_NAME>",
                 index_settings={
                     "paginationLimitedTo": 10,
+                    "typoTolerance": "false",
                 },
                 forward_to_replicas=True,
             )
@@ -6613,7 +6622,7 @@ paths:
 
             response = client.set_settings(
               "<YOUR_INDEX_NAME>",
-              Algolia::Search::IndexSettings.new(pagination_limited_to: 10),
+              Algolia::Search::IndexSettings.new(pagination_limited_to: 10, typo_tolerance: "false"),
               true
             )
 
@@ -6643,7 +6652,8 @@ paths:
               client.setSettings(
                 indexName = "<YOUR_INDEX_NAME>",
                 indexSettings = IndexSettings(
-                  paginationLimitedTo = Some(10)
+                  paginationLimitedTo = Some(10),
+                  typoTolerance = Some(TypoToleranceEnum.withName("false"))
                 ),
                 forwardToReplicas = Some(true)
               ),
@@ -6664,7 +6674,10 @@ paths:
 
             let response = try await client.setSettings(
                 indexName: "<YOUR_INDEX_NAME>",
-                indexSettings: IndexSettings(paginationLimitedTo: 10),
+                indexSettings: IndexSettings(
+                    paginationLimitedTo: 10,
+                    typoTolerance: SearchTypoTolerance.searchTypoToleranceEnum(SearchTypoToleranceEnum.`false`)
+                ),
                 forwardToReplicas: true
             )
 
@@ -19768,6 +19781,8 @@ components:
       enum:
         - min
         - strict
+        - 'true'
+        - 'false'
     typoTolerance:
       description: >
         Whether [typo

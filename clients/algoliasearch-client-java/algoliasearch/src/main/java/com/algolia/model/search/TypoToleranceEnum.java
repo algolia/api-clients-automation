@@ -16,7 +16,11 @@ import com.fasterxml.jackson.databind.annotation.*;
 public enum TypoToleranceEnum implements TypoTolerance {
   MIN("min"),
 
-  STRICT("strict");
+  STRICT("strict"),
+
+  TRUE("true"),
+
+  FALSE("false");
 
   private final String value;
 

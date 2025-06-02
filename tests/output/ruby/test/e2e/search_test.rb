@@ -58,7 +58,7 @@ class TestSearchClientE2E < Test::Unit::TestCase
     assert_equal(res.status, 200)
     res = @client.get_settings("cts_e2e_settings")
     expected_body = JSON.parse(
-      "{\"minWordSizefor1Typo\":4,\"minWordSizefor2Typos\":8,\"hitsPerPage\":100,\"maxValuesPerFacet\":100,\"paginationLimitedTo\":10,\"exactOnSingleWordQuery\":\"attribute\",\"ranking\":[\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"],\"separatorsToIndex\":\"\",\"removeWordsIfNoResults\":\"none\",\"queryType\":\"prefixLast\",\"highlightPreTag\":\"<em>\",\"highlightPostTag\":\"</em>\",\"alternativesAsExact\":[\"ignorePlurals\",\"singleWordSynonym\"]}"
+      "{\"minWordSizefor1Typo\":4,\"minWordSizefor2Typos\":8,\"hitsPerPage\":100,\"maxValuesPerFacet\":100,\"paginationLimitedTo\":10,\"exactOnSingleWordQuery\":\"attribute\",\"ranking\":[\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"],\"separatorsToIndex\":\"\",\"removeWordsIfNoResults\":\"none\",\"queryType\":\"prefixLast\",\"highlightPreTag\":\"<em>\",\"highlightPostTag\":\"</em>\",\"alternativesAsExact\":[\"ignorePlurals\",\"singleWordSynonym\"],\"typoTolerance\":\"false\"}"
     )
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
@@ -266,7 +266,7 @@ class TestSearchClientE2E < Test::Unit::TestCase
   def test_set_settings
     res = @client.set_settings_with_http_info(
       "cts_e2e_settings",
-      Algolia::Search::IndexSettings.new(pagination_limited_to: 10),
+      Algolia::Search::IndexSettings.new(pagination_limited_to: 10, typo_tolerance: "false"),
       true
     )
 

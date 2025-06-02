@@ -106,7 +106,7 @@ class TestSearchClientE2E:
             index_name="cts_e2e_settings",
         )
         _expected_body = loads(
-            """{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":100,"maxValuesPerFacet":100,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"]}"""
+            """{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":100,"maxValuesPerFacet":100,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"typoTolerance":"false"}"""
         )
         assert (
             self._helpers.union(_expected_body, self._helpers.unwrap(resp))
@@ -454,6 +454,7 @@ class TestSearchClientE2E:
             index_name="cts_e2e_settings",
             index_settings={
                 "paginationLimitedTo": 10,
+                "typoTolerance": "false",
             },
             forward_to_replicas=True,
         )
@@ -557,7 +558,7 @@ class TestSearchClientSyncE2E:
             index_name="cts_e2e_settings",
         )
         _expected_body = loads(
-            """{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":100,"maxValuesPerFacet":100,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"]}"""
+            """{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":100,"maxValuesPerFacet":100,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"typoTolerance":"false"}"""
         )
         assert (
             self._helpers.union(_expected_body, self._helpers.unwrap(resp))
@@ -905,6 +906,7 @@ class TestSearchClientSyncE2E:
             index_name="cts_e2e_settings",
             index_settings={
                 "paginationLimitedTo": 10,
+                "typoTolerance": "false",
             },
             forward_to_replicas=True,
         )

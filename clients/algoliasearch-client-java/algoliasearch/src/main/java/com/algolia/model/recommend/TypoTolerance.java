@@ -56,6 +56,15 @@ public interface TypoTolerance {
     @Override
     public TypoTolerance deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
+      // deserialize TypoToleranceEnum
+      if (tree.isTextual()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(TypoToleranceEnum.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf TypoToleranceEnum (error: " + e.getMessage() + ") (type: TypoToleranceEnum)");
+        }
+      }
       // deserialize Boolean
       if (tree.isBoolean()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -64,15 +73,6 @@ public interface TypoTolerance {
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf Boolean (error: " + e.getMessage() + ") (type: Boolean)");
-        }
-      }
-      // deserialize TypoToleranceEnum
-      if (tree.isTextual()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(TypoToleranceEnum.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf TypoToleranceEnum (error: " + e.getMessage() + ") (type: TypoToleranceEnum)");
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));

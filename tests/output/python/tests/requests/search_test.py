@@ -6540,6 +6540,7 @@ class TestSearchClient:
             index_name="cts_e2e_settings",
             index_settings={
                 "paginationLimitedTo": 10,
+                "typoTolerance": "false",
             },
             forward_to_replicas=True,
         )
@@ -6548,7 +6549,9 @@ class TestSearchClient:
         assert _req.verb == "PUT"
         assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"paginationLimitedTo":10}""")
+        assert loads(_req.data) == loads(
+            """{"paginationLimitedTo":10,"typoTolerance":"false"}"""
+        )
 
     async def test_set_settings_1(self):
         """
@@ -15862,6 +15865,7 @@ class TestSearchClientSync:
             index_name="cts_e2e_settings",
             index_settings={
                 "paginationLimitedTo": 10,
+                "typoTolerance": "false",
             },
             forward_to_replicas=True,
         )
@@ -15870,7 +15874,9 @@ class TestSearchClientSync:
         assert _req.verb == "PUT"
         assert _req.query_parameters.items() == {"forwardToReplicas": "true"}.items()
         assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"paginationLimitedTo":10}""")
+        assert loads(_req.data) == loads(
+            """{"paginationLimitedTo":10,"typoTolerance":"false"}"""
+        )
 
     def test_set_settings_1(self):
         """

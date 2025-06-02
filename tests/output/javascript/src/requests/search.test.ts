@@ -4389,13 +4389,13 @@ describe('setSettings', () => {
   test('minimal parameters', async () => {
     const req = (await client.setSettings({
       indexName: 'cts_e2e_settings',
-      indexSettings: { paginationLimitedTo: 10 },
+      indexSettings: { paginationLimitedTo: 10, typoTolerance: 'false' },
       forwardToReplicas: true,
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/cts_e2e_settings/settings');
     expect(req.method).toEqual('PUT');
-    expect(req.data).toEqual({ paginationLimitedTo: 10 });
+    expect(req.data).toEqual({ paginationLimitedTo: 10, typoTolerance: 'false' });
     expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true' });
   });
 

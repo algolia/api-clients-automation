@@ -6263,12 +6263,18 @@ class SearchClientRequestsTests {
   @DisplayName("minimal parameters")
   void setSettingsTest() {
     assertDoesNotThrow(() -> {
-      client.setSettings("cts_e2e_settings", new IndexSettings().setPaginationLimitedTo(10), true);
+      client.setSettings(
+        "cts_e2e_settings",
+        new IndexSettings().setPaginationLimitedTo(10).setTypoTolerance(TypoToleranceEnum.FALSE),
+        true
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/cts_e2e_settings/settings", req.path);
     assertEquals("PUT", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"paginationLimitedTo\":10}", req.body, JSONCompareMode.STRICT));
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"paginationLimitedTo\":10,\"typoTolerance\":\"false\"}", req.body, JSONCompareMode.STRICT)
+    );
 
     try {
       Map<String, String> expectedQuery = json.readValue(

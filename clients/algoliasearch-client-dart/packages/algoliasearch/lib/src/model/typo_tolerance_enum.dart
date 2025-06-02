@@ -6,7 +6,9 @@ import 'package:json_annotation/json_annotation.dart';
 @JsonEnum(valueField: 'raw')
 enum TypoToleranceEnum {
   min(r'min'),
-  strict(r'strict');
+  strict(r'strict'),
+  true_(r'true'),
+  false_(r'false');
 
   const TypoToleranceEnum(this.raw);
   final dynamic raw;

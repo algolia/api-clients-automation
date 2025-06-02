@@ -8753,6 +8753,7 @@ class SnippetSearchClient
         $response = $client->setSettings(
             '<YOUR_INDEX_NAME>',
             ['paginationLimitedTo' => 10,
+                'typoTolerance' => 'false',
             ],
             true,
         );

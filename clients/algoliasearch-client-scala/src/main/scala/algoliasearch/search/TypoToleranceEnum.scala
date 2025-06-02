@@ -49,7 +49,13 @@ object TypoToleranceEnum {
   case object Strict extends TypoToleranceEnum {
     override def toString = "strict"
   }
-  val values: Seq[TypoToleranceEnum] = Seq(Min, Strict)
+  case object `True` extends TypoToleranceEnum {
+    override def toString = "true"
+  }
+  case object `False` extends TypoToleranceEnum {
+    override def toString = "false"
+  }
+  val values: Seq[TypoToleranceEnum] = Seq(Min, Strict, `True`, `False`)
 
   def withName(name: String): TypoToleranceEnum = TypoToleranceEnum.values
     .find(_.toString == name)

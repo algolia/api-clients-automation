@@ -6684,7 +6684,7 @@ export async function snippetForSetSettings(): Promise<void> {
   // Call the API
   const response = await client.setSettings({
     indexName: 'cts_e2e_settings',
-    indexSettings: { paginationLimitedTo: 10 },
+    indexSettings: { paginationLimitedTo: 10, typoTolerance: 'false' },
     forwardToReplicas: true,
   });
 

@@ -431,7 +431,7 @@
       "get setDictionarySettings results with all parameters": "var response = await client.SetDictionarySettingsAsync(\n  new DictionarySettingsParams\n  {\n    DisableStandardEntries = new StandardEntries\n    {\n      Plurals = new Dictionary<string, Boolean>\n      {\n        { \"fr\", false },\n        { \"en\", false },\n        { \"ru\", true },\n      },\n      Stopwords = new Dictionary<string, Boolean> { { \"fr\", false } },\n      Compounds = new Dictionary<string, Boolean> { { \"ru\", true } },\n    },\n  }\n);"
     },
     "setSettings": {
-      "minimal parameters": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings { PaginationLimitedTo = 10 },\n  true\n);",
+      "minimal parameters": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings\n  {\n    PaginationLimitedTo = 10,\n    TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>(\"False\")),\n  },\n  true\n);",
       "boolean typoTolerance": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings { TypoTolerance = new TypoTolerance(true) },\n  true\n);",
       "enum typoTolerance": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings { TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>(\"Min\")) },\n  true\n);",
       "ignorePlurals": "var response = await client.SetSettingsAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new IndexSettings { IgnorePlurals = new IgnorePlurals(true) },\n  true\n);",
@@ -1005,7 +1005,7 @@
       "get setDictionarySettings results with all parameters": "final response = await client.setDictionarySettings(\n  dictionarySettingsParams: DictionarySettingsParams(\n    disableStandardEntries: StandardEntries(\n      plurals: {\n        'fr': false,\n        'en': false,\n        'ru': true,\n      },\n      stopwords: {\n        'fr': false,\n      },\n      compounds: {\n        'ru': true,\n      },\n    ),\n  ),\n);"
     },
     "setSettings": {
-      "minimal parameters": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    paginationLimitedTo: 10,\n  ),\n  forwardToReplicas: true,\n);",
+      "minimal parameters": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    paginationLimitedTo: 10,\n    typoTolerance: TypoToleranceEnum.fromJson(\"false\"),\n  ),\n  forwardToReplicas: true,\n);",
       "boolean typoTolerance": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    typoTolerance: true,\n  ),\n  forwardToReplicas: true,\n);",
       "enum typoTolerance": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    typoTolerance: TypoToleranceEnum.fromJson(\"min\"),\n  ),\n  forwardToReplicas: true,\n);",
       "ignorePlurals": "final response = await client.setSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  indexSettings: IndexSettings(\n    ignorePlurals: true,\n  ),\n  forwardToReplicas: true,\n);",
@@ -1579,7 +1579,7 @@
       "get setDictionarySettings results with all parameters": "response, err := client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(\n\n  search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(\n    search.NewEmptyStandardEntries().SetPlurals(map[string]bool{\"fr\": false, \"en\": false, \"ru\": true}).SetStopwords(map[string]bool{\"fr\": false}).SetCompounds(map[string]bool{\"ru\": true}))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "setSettings": {
-      "minimal parameters": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetPaginationLimitedTo(10)).WithForwardToReplicas(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "minimal parameters": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetPaginationLimitedTo(10).SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum(\"false\")))).WithForwardToReplicas(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "boolean typoTolerance": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetTypoTolerance(search.BoolAsTypoTolerance(true))).WithForwardToReplicas(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "enum typoTolerance": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum(\"min\")))).WithForwardToReplicas(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "ignorePlurals": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().SetIgnorePlurals(search.BoolAsIgnorePlurals(true))).WithForwardToReplicas(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -2153,7 +2153,7 @@
       "get setDictionarySettings results with all parameters": "client.setDictionarySettings(\n  new DictionarySettingsParams()\n    .setDisableStandardEntries(\n      new StandardEntries()\n        .setPlurals(\n          new HashMap() {\n            {\n              put(\"fr\", false);\n              put(\"en\", false);\n              put(\"ru\", true);\n            }\n          }\n        )\n        .setStopwords(\n          new HashMap() {\n            {\n              put(\"fr\", false);\n            }\n          }\n        )\n        .setCompounds(\n          new HashMap() {\n            {\n              put(\"ru\", true);\n            }\n          }\n        )\n    )\n);"
     },
     "setSettings": {
-      "minimal parameters": "client.setSettings(\"<YOUR_INDEX_NAME>\", new IndexSettings().setPaginationLimitedTo(10), true);",
+      "minimal parameters": "client.setSettings(\"<YOUR_INDEX_NAME>\", new IndexSettings().setPaginationLimitedTo(10).setTypoTolerance(TypoToleranceEnum.FALSE), true);",
       "boolean typoTolerance": "client.setSettings(\"<YOUR_INDEX_NAME>\", new IndexSettings().setTypoTolerance(TypoTolerance.of(true)), true);",
       "enum typoTolerance": "client.setSettings(\"<YOUR_INDEX_NAME>\", new IndexSettings().setTypoTolerance(TypoToleranceEnum.MIN), true);",
       "ignorePlurals": "client.setSettings(\"<YOUR_INDEX_NAME>\", new IndexSettings().setIgnorePlurals(IgnorePlurals.of(true)), true);",
@@ -2730,7 +2730,7 @@
       "get setDictionarySettings results with all parameters": "const response = await client.setDictionarySettings({\n  disableStandardEntries: {\n    plurals: { fr: false, en: false, ru: true },\n    stopwords: { fr: false },\n    compounds: { ru: true },\n  },\n});"
     },
     "setSettings": {
-      "minimal parameters": "const response = await client.setSettings({\n  indexName: 'cts_e2e_settings',\n  indexSettings: { paginationLimitedTo: 10 },\n  forwardToReplicas: true,\n});",
+      "minimal parameters": "const response = await client.setSettings({\n  indexName: 'cts_e2e_settings',\n  indexSettings: { paginationLimitedTo: 10, typoTolerance: 'false' },\n  forwardToReplicas: true,\n});",
       "boolean typoTolerance": "const response = await client.setSettings({\n  indexName: 'theIndexName',\n  indexSettings: { typoTolerance: true },\n  forwardToReplicas: true,\n});",
       "enum typoTolerance": "const response = await client.setSettings({\n  indexName: 'theIndexName',\n  indexSettings: { typoTolerance: 'min' },\n  forwardToReplicas: true,\n});",
       "ignorePlurals": "const response = await client.setSettings({\n  indexName: 'theIndexName',\n  indexSettings: { ignorePlurals: true },\n  forwardToReplicas: true,\n});",
@@ -3304,7 +3304,7 @@
       "get setDictionarySettings results with all parameters": "var response = client.setDictionarySettings(\n  dictionarySettingsParams = DictionarySettingsParams(\n    disableStandardEntries = StandardEntries(\n      plurals = mapOf(\"fr\" to false, \"en\" to false, \"ru\" to true),\n      stopwords = mapOf(\"fr\" to false),\n      compounds = mapOf(\"ru\" to true),\n    ),\n  ),\n)"
     },
     "setSettings": {
-      "minimal parameters": "var response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    paginationLimitedTo = 10,\n  ),\n  forwardToReplicas = true,\n)",
+      "minimal parameters": "var response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    paginationLimitedTo = 10,\n    typoTolerance = TypoToleranceEnum.entries.first { it.value == \"false\" },\n  ),\n  forwardToReplicas = true,\n)",
       "boolean typoTolerance": "var response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    typoTolerance = TypoTolerance.of(true),\n  ),\n  forwardToReplicas = true,\n)",
       "enum typoTolerance": "var response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    typoTolerance = TypoToleranceEnum.entries.first { it.value == \"min\" },\n  ),\n  forwardToReplicas = true,\n)",
       "ignorePlurals": "var response = client.setSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  indexSettings = IndexSettings(\n    ignorePlurals = IgnorePlurals.of(true),\n  ),\n  forwardToReplicas = true,\n)",
@@ -3878,7 +3878,7 @@
       "get setDictionarySettings results with all parameters": "$response = $client->setDictionarySettings(\n    ['disableStandardEntries' => ['plurals' => ['fr' => false,\n        'en' => false,\n        'ru' => true,\n    ],\n        'stopwords' => ['fr' => false,\n        ],\n        'compounds' => ['ru' => true,\n        ],\n    ],\n    ],\n);"
     },
     "setSettings": {
-      "minimal parameters": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['paginationLimitedTo' => 10,\n    ],\n    true,\n);",
+      "minimal parameters": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['paginationLimitedTo' => 10,\n        'typoTolerance' => 'false',\n    ],\n    true,\n);",
       "boolean typoTolerance": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['typoTolerance' => true,\n    ],\n    true,\n);",
       "enum typoTolerance": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['typoTolerance' => 'min',\n    ],\n    true,\n);",
       "ignorePlurals": "$response = $client->setSettings(\n    '<YOUR_INDEX_NAME>',\n    ['ignorePlurals' => true,\n    ],\n    true,\n);",
@@ -4452,7 +4452,7 @@
       "get setDictionarySettings results with all parameters": "response = client.set_dictionary_settings(\n    dictionary_settings_params={\n        \"disableStandardEntries\": {\n            \"plurals\": {\n                \"fr\": False,\n                \"en\": False,\n                \"ru\": True,\n            },\n            \"stopwords\": {\n                \"fr\": False,\n            },\n            \"compounds\": {\n                \"ru\": True,\n            },\n        },\n    },\n)"
     },
     "setSettings": {
-      "minimal parameters": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"paginationLimitedTo\": 10,\n    },\n    forward_to_replicas=True,\n)",
+      "minimal parameters": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"paginationLimitedTo\": 10,\n        \"typoTolerance\": \"false\",\n    },\n    forward_to_replicas=True,\n)",
       "boolean typoTolerance": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"typoTolerance\": True,\n    },\n    forward_to_replicas=True,\n)",
       "enum typoTolerance": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"typoTolerance\": \"min\",\n    },\n    forward_to_replicas=True,\n)",
       "ignorePlurals": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"ignorePlurals\": True,\n    },\n    forward_to_replicas=True,\n)",
@@ -5026,7 +5026,7 @@
       "get setDictionarySettings results with all parameters": "response = client.set_dictionary_settings(\n  Algolia::Search::DictionarySettingsParams.new(\n    disable_standard_entries: Algolia::Search::StandardEntries.new(\n      plurals: {fr: false, en: false, ru: true},\n      stopwords: {fr: false},\n      compounds: {ru: true}\n    )\n  )\n)"
     },
     "setSettings": {
-      "minimal parameters": "response = client.set_settings(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::IndexSettings.new(pagination_limited_to: 10),\n  true\n)",
+      "minimal parameters": "response = client.set_settings(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::IndexSettings.new(pagination_limited_to: 10, typo_tolerance: \"false\"),\n  true\n)",
       "boolean typoTolerance": "response = client.set_settings(\"<YOUR_INDEX_NAME>\", Algolia::Search::IndexSettings.new(typo_tolerance: true), true)",
       "enum typoTolerance": "response = client.set_settings(\"<YOUR_INDEX_NAME>\", Algolia::Search::IndexSettings.new(typo_tolerance: \"min\"), true)",
       "ignorePlurals": "response = client.set_settings(\"<YOUR_INDEX_NAME>\", Algolia::Search::IndexSettings.new(ignore_plurals: true), true)",
@@ -5600,7 +5600,7 @@
       "get setDictionarySettings results with all parameters": "val response = Await.result(\n  client.setDictionarySettings(\n    dictionarySettingsParams = DictionarySettingsParams(\n      disableStandardEntries = StandardEntries(\n        plurals = Some(Map(\"fr\" -> false, \"en\" -> false, \"ru\" -> true)),\n        stopwords = Some(Map(\"fr\" -> false)),\n        compounds = Some(Map(\"ru\" -> true))\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "setSettings": {
-      "minimal parameters": "val response = Await.result(\n  client.setSettings(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    indexSettings = IndexSettings(\n      paginationLimitedTo = Some(10)\n    ),\n    forwardToReplicas = Some(true)\n  ),\n  Duration(100, \"sec\")\n)",
+      "minimal parameters": "val response = Await.result(\n  client.setSettings(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    indexSettings = IndexSettings(\n      paginationLimitedTo = Some(10),\n      typoTolerance = Some(TypoToleranceEnum.withName(\"false\"))\n    ),\n    forwardToReplicas = Some(true)\n  ),\n  Duration(100, \"sec\")\n)",
       "boolean typoTolerance": "val response = Await.result(\n  client.setSettings(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    indexSettings = IndexSettings(\n      typoTolerance = Some(TypoTolerance(true))\n    ),\n    forwardToReplicas = Some(true)\n  ),\n  Duration(100, \"sec\")\n)",
       "enum typoTolerance": "val response = Await.result(\n  client.setSettings(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    indexSettings = IndexSettings(\n      typoTolerance = Some(TypoToleranceEnum.withName(\"min\"))\n    ),\n    forwardToReplicas = Some(true)\n  ),\n  Duration(100, \"sec\")\n)",
       "ignorePlurals": "val response = Await.result(\n  client.setSettings(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    indexSettings = IndexSettings(\n      ignorePlurals = Some(IgnorePlurals(true))\n    ),\n    forwardToReplicas = Some(true)\n  ),\n  Duration(100, \"sec\")\n)",
@@ -6174,7 +6174,7 @@
       "get setDictionarySettings results with all parameters": "let response = try await client\n    .setDictionarySettings(\n        dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(\n            plurals: [\"fr\": false, \"en\": false, \"ru\": true],\n            stopwords: [\"fr\": false],\n            compounds: [\"ru\": true]\n        ))\n    )"
     },
     "setSettings": {
-      "minimal parameters": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(paginationLimitedTo: 10),\n    forwardToReplicas: true\n)",
+      "minimal parameters": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(\n        paginationLimitedTo: 10,\n        typoTolerance: SearchTypoTolerance.searchTypoToleranceEnum(SearchTypoToleranceEnum.`false`)\n    ),\n    forwardToReplicas: true\n)",
       "boolean typoTolerance": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(typoTolerance: SearchTypoTolerance.bool(true)),\n    forwardToReplicas: true\n)",
       "enum typoTolerance": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(typoTolerance: SearchTypoTolerance\n        .searchTypoToleranceEnum(SearchTypoToleranceEnum.min)\n    ),\n    forwardToReplicas: true\n)",
       "ignorePlurals": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(ignorePlurals: SearchIgnorePlurals.bool(true)),\n    forwardToReplicas: true\n)",

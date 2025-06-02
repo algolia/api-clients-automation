@@ -205,8 +205,12 @@ public class OneOf {
       List<?> discriminatorsA = (List<?>) propA.vendorExtensions.get("x-discriminator-fields");
       List<?> discriminatorsB = (List<?>) propB.vendorExtensions.get("x-discriminator-fields");
       return discriminatorsB.size() - discriminatorsA.size();
-    } else {
-      return 0;
+    } else if (propA.isBoolean && !propB.isBoolean) {
+      // put boolean last, because of typoTolerance
+      return 1;
+    } else if (!propA.isBoolean && propB.isBoolean) {
+      return -1;
     }
+    return 0;
   };
 }
