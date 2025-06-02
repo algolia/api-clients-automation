@@ -1,12 +1,13 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/insights"
 )
 
-func testInsights(appID, apiKey string) int {
+func testInsights(ctx context.Context, appID, apiKey string) int {
 	insightsClient, err := insights.NewClient(appID, apiKey, insights.US)
 	if err != nil {
 		panic(err)
@@ -20,7 +21,7 @@ func testInsights(appID, apiKey string) int {
 			"myToken",
 			insights.WithClickedObjectIDsTimestamp(1234567890))),
 	}
-	eventsResponse, err := insightsClient.PushEvents(events)
+	eventsResponse, err := insightsClient.PushEvents(ctx, events)
 	if err != nil {
 		fmt.Printf("request error with PushEvents: %v\n", err)
 		return 1

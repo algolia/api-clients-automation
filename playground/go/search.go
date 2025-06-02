@@ -1,19 +1,20 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 )
 
-func testSearch(appID, apiKey string) int {
+func testSearch(ctx context.Context, appID, apiKey string) int {
 	// indexName := getEnvWithDefault("SEARCH_INDEX", "test_index")
 	searchClient, err := search.NewClient(appID, apiKey)
 	if err != nil {
 		panic(err)
 	}
 
-	err = searchClient.BrowseObjects("test-flag", *search.NewEmptyBrowseParamsObject(), search.WithAggregator(func(res any, err error) {
+	err = searchClient.BrowseObjects(ctx, "test-flag", *search.NewEmptyBrowseParamsObject(), search.WithAggregator(func(res any, err error) {
 		if err != nil {
 			panic(err)
 		}
@@ -29,12 +30,12 @@ func testSearch(appID, apiKey string) int {
 	//})))
 
 	// new way
-	//searchClient.Search([]search.SearchQuery{
+	//searchClient.Search(ctx, []search.SearchQuery{
 	//	search.NewSearchForHits("indexName").WithQuery("foo"),
 	//}, nil)
 
 	/*
-		response, err := searchClient.AddOrUpdateObject(
+		response, err := searchClient.AddOrUpdateObject(ctx,
 			searchClient.NewApiAddOrUpdateObjectRequest(
 				indexName,
 				"1",
@@ -49,12 +50,12 @@ func testSearch(appID, apiKey string) int {
 			panic(err)
 		}
 
-		_, err = searchClient.WaitForTask(indexName, *response.TaskID)
+		_, err = searchClient.WaitForTask(ctx, indexName, *response.TaskID)
 		if err != nil {
 			panic(err)
 		}
 
-		searchResponse, err := searchClient.Search(
+		searchResponse, err := searchClient.Search(ctx,
 			searchClient.NewApiSearchRequest(
 				search.NewSearchMethodParams(
 					[]search.SearchQuery{
