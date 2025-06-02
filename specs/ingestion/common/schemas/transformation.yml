@@ -105,14 +105,10 @@ TransformationCreate:
       $ref: '#/Description'
     authenticationIDs:
       $ref: '#/AuthenticationIDs'
-  oneOf:
-    - required:
-        - code
-        - name
-    - required:
-        - input
-        - name
-        - type
+  required:
+    - name
+    - type
+    - input
 
 TransformationCreateResponse:
   type: object
