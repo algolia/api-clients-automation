@@ -2,6 +2,7 @@ from os import environ
 
 from algoliasearch.search.client import SearchClientSync
 from algoliasearch.search.config import SearchConfig
+from algoliasearch.search import __version__
 from dotenv import load_dotenv
 
 load_dotenv("../.env")
