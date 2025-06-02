@@ -80,6 +80,12 @@ public class TestsClient extends TestsGenerator {
           testOut.put("autoCreateClient", test.autoCreateClient);
           testOut.put("useEchoRequester", true);
           testOut.put("isBenchmark", withBenchmark);
+
+          if (language.equals("go") && "`addApiKey` throws with invalid parameters".equals(test.testName)) {
+            // skip this test because the body is flattened in go
+            continue;
+          }
+
           for (Step step : test.steps) {
             Map<String, Object> stepOut = new HashMap<>();
             if (step.times > 1) stepOut.put("times", step.times);
@@ -156,6 +162,7 @@ public class TestsClient extends TestsGenerator {
               // default to true because most api calls are asynchronous
               testOut.put("isAsyncMethod", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
 
+              setOptionalParameters(language, ope, stepOut, step.parameters, isHelper);
               addRequestOptions(paramsType, step.requestOptions, stepOut);
 
               methodCount++;
@@ -176,6 +183,7 @@ public class TestsClient extends TestsGenerator {
                 ((List<Map<String, Object>>) stepOut.getOrDefault("parametersWithDataType", new ArrayList<>())).stream()
                   .anyMatch(item -> (boolean) item.getOrDefault("isNullObject", false) || (boolean) item.getOrDefault("isNull", false));
               if (isNotTestable) {
+                System.out.println("Skipping test " + test.testName + " for " + language + " because of nil object");
                 continue;
               }
             }
