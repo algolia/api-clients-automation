@@ -1,6 +1,10 @@
 package main
 
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+import (
+	"context"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
+)
 
 func searchWithLogicalOr() {
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -15,8 +19,7 @@ func searchWithLogicalOr() {
 			SetQuery(query).
 			SetOptionalWords(optionalWords),
 	)
-	_, err = client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-		"<YOUR_INDEX_NAME>").WithSearchParams(searchParams))
+	_, err = client.SearchSingleIndex(context.Background(), "<YOUR_INDEX_NAME>", searchParams)
 	if err != nil {
 		panic(err)
 	}

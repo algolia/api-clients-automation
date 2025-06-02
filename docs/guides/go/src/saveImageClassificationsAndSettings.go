@@ -1,9 +1,10 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 )
 
 func saveImageClassificationsAndSettings() {
@@ -30,7 +31,7 @@ func saveImageClassificationsAndSettings() {
 
 	images := []Image{}
 
-	err = client.BrowseObjects("<YOUR_INDEX_NAME>", search.BrowseParamsObject{}, search.WithAggregator(func(res any, err error) {
+	err = client.BrowseObjects(context.Background(), "<YOUR_INDEX_NAME>", search.BrowseParamsObject{}, search.WithAggregator(func(res any, err error) {
 		if err != nil {
 			panic(err)
 		}
@@ -59,8 +60,7 @@ func saveImageClassificationsAndSettings() {
 		}
 	}
 
-	_, err = client.PartialUpdateObjects(
-		"<YOUR_INDEX_NAME>", records, search.WithCreateIfNotExists(true))
+	_, err = client.PartialUpdateObjects(context.Background(), "<YOUR_INDEX_NAME>", records, search.WithCreateIfNotExists(true))
 	if err != nil {
 		panic(err)
 	}
@@ -82,8 +82,7 @@ func saveImageClassificationsAndSettings() {
 		}
 	}
 
-	currentSettings, err := client.GetSettings(client.NewApiGetSettingsRequest(
-		"<YOUR_INDEX_NAME>"))
+	currentSettings, err := client.GetSettings(context.Background(), "<YOUR_INDEX_NAME>")
 	if err != nil {
 		panic(err)
 	}
@@ -92,8 +91,7 @@ func saveImageClassificationsAndSettings() {
 		SetSearchableAttributes(append(currentSettings.SearchableAttributes, attributes...)).
 		SetAttributesForFaceting(append(currentSettings.AttributesForFaceting, facets...))
 
-	_, err = client.SetSettings(client.NewApiSetSettingsRequest(
-		"<YOUR_INDEX_NAME>", settings))
+	_, err = client.SetSettings(context.Background(), "<YOUR_INDEX_NAME>", settings, nil)
 	if err != nil {
 		panic(err)
 	}

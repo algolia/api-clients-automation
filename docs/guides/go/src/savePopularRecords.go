@@ -1,6 +1,10 @@
 package main
 
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+import (
+	"context"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
+)
 
 func savePopularRecords() {
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -11,7 +15,7 @@ func savePopularRecords() {
 
 	records := []map[string]any{{ /* Your records */ }}
 
-	err = client.BrowseObjects("<YOUR_INDEX_NAME>", search.BrowseParamsObject{}, search.WithAggregator(func(res any, err error) {
+	err = client.BrowseObjects(context.Background(), "<YOUR_INDEX_NAME>", search.BrowseParamsObject{}, search.WithAggregator(func(res any, err error) {
 		if err != nil {
 			panic(err)
 		}
@@ -32,8 +36,7 @@ func savePopularRecords() {
 		panic(err)
 	}
 
-	_, err = client.SaveObjects(
-		"<YOUR_INDEX_NAME>", records)
+	_, err = client.SaveObjects(context.Background(), "<YOUR_INDEX_NAME>", records)
 	if err != nil {
 		panic(err)
 	}

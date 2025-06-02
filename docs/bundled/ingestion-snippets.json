@@ -214,211 +214,211 @@
   "dart": {},
   "go": {
     "import": {
-      "default": "import \"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion\""
+      "default": "import (\n\t\"context\"\n\n\t\"github.com/algolia/algoliasearch-client-go/v4/algolia/next/ingestion\"\n\t\"github.com/algolia/algoliasearch-client-go/v4/algolia/utils\"\n)"
     },
     "createAuthentication": {
-      "createAuthenticationOAuth": "response, err := client.CreateAuthentication(client.NewApiCreateAuthenticationRequest(\n\n  ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType(\"oauth\")).SetName(\"authName\").SetInput(ingestion.AuthOAuthAsAuthInput(\n    ingestion.NewEmptyAuthOAuth().SetUrl(\"http://test.oauth\").SetClientId(\"myID\").SetClientSecret(\"mySecret\")))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "createAuthenticationAlgolia": "response, err := client.CreateAuthentication(client.NewApiCreateAuthenticationRequest(\n\n  ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType(\"algolia\")).SetName(\"authName\").SetInput(ingestion.AuthAlgoliaAsAuthInput(\n    ingestion.NewEmptyAuthAlgolia().SetAppID(\"ALGOLIA_APPLICATION_ID\").SetApiKey(\"ALGOLIA_API_KEY\")))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "createAuthenticationOAuth": "response, err := client.CreateAuthentication(context.Background(), ingestion.AUTHENTICATION_TYPE_OAUTH, \"authName\", ingestion.AuthOAuthAsAuthInput(\n  ingestion.NewEmptyAuthOAuth().SetUrl(\"http://test.oauth\").SetClientId(\"myID\").SetClientSecret(\"mySecret\")), nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "createAuthenticationAlgolia": "response, err := client.CreateAuthentication(context.Background(), ingestion.AUTHENTICATION_TYPE_ALGOLIA, \"authName\", ingestion.AuthAlgoliaAsAuthInput(\n  ingestion.NewEmptyAuthAlgolia().SetAppID(\"ALGOLIA_APPLICATION_ID\").SetApiKey(\"ALGOLIA_API_KEY\")), nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "createDestination": {
-      "createDestination": "response, err := client.CreateDestination(client.NewApiCreateDestinationRequest(\n\n  ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType(\"search\")).SetName(\"destinationName\").SetInput(\n    ingestion.NewEmptyDestinationInput().SetIndexName(\"<YOUR_INDEX_NAME>\")).SetAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "with transformationIDs": "response, err := client.CreateDestination(client.NewApiCreateDestinationRequest(\n\n  ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType(\"search\")).SetName(\"destinationName\").SetInput(\n    ingestion.NewEmptyDestinationInput().SetIndexName(\"<YOUR_INDEX_NAME>\")).SetTransformationIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "createDestination": "response, err := client.CreateDestination(context.Background(), ingestion.DESTINATION_TYPE_SEARCH, \"destinationName\",\n  ingestion.NewEmptyDestinationInput().SetIndexName(\"<YOUR_INDEX_NAME>\"), ingestion.NewCreateDestinationOptions().WithAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "with transformationIDs": "response, err := client.CreateDestination(context.Background(), ingestion.DESTINATION_TYPE_SEARCH, \"destinationName\",\n  ingestion.NewEmptyDestinationInput().SetIndexName(\"<YOUR_INDEX_NAME>\"), ingestion.NewCreateDestinationOptions().WithTransformationIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "createSource": {
-      "createSource": "response, err := client.CreateSource(client.NewApiCreateSourceRequest(\n\n  ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType(\"commercetools\")).SetName(\"sourceName\").SetInput(ingestion.SourceCommercetoolsAsSourceInput(\n    ingestion.NewEmptySourceCommercetools().SetStoreKeys(\n      []string{\"myStore\"}).SetLocales(\n      []string{\"de\"}).SetUrl(\"http://commercetools.com\").SetProjectKey(\"keyID\").SetProductQueryPredicate(\"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\"))).SetAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "push": "response, err := client.CreateSource(client.NewApiCreateSourceRequest(\n\n  ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType(\"push\")).SetName(\"pushezpourentrer\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "createSource": "response, err := client.CreateSource(context.Background(), ingestion.SOURCE_TYPE_COMMERCETOOLS, \"sourceName\", ingestion.NewCreateSourceOptions().WithInput(ingestion.SourceCommercetoolsAsSourceInput(\n  ingestion.NewEmptySourceCommercetools().SetStoreKeys(\n    []string{\"myStore\"}).SetLocales(\n    []string{\"de\"}).SetUrl(\"http://commercetools.com\").SetProjectKey(\"keyID\").SetProductQueryPredicate(\"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\"))).WithAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "push": "response, err := client.CreateSource(context.Background(), ingestion.SOURCE_TYPE_PUSH, \"pushezpourentrer\", nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "createTask": {
-      "task without cron": "response, err := client.CreateTask(client.NewApiCreateTaskRequest(\n\n  ingestion.NewEmptyTaskCreate().SetSourceID(\"search\").SetDestinationID(\"destinationName\").SetAction(ingestion.ActionType(\"replace\"))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "task with cron": "response, err := client.CreateTask(client.NewApiCreateTaskRequest(\n\n  ingestion.NewEmptyTaskCreate().SetSourceID(\"search\").SetDestinationID(\"destinationName\").SetCron(\"* * * * *\").SetAction(ingestion.ActionType(\"replace\")).SetNotifications(\n    ingestion.NewEmptyNotifications().SetEmail(\n      ingestion.NewEmptyEmailNotifications().SetEnabled(true))).SetPolicies(\n    ingestion.NewEmptyPolicies().SetCriticalThreshold(8))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "task shopify": "response, err := client.CreateTask(client.NewApiCreateTaskRequest(\n\n  ingestion.NewEmptyTaskCreate().SetSourceID(\"search\").SetDestinationID(\"destinationName\").SetCron(\"* * * * *\").SetAction(ingestion.ActionType(\"replace\")).SetInput(ingestion.DockerStreamsInputAsTaskInput(\n    ingestion.NewEmptyDockerStreamsInput().SetStreams(\n      []ingestion.DockerStreams{*ingestion.NewEmptyDockerStreams().SetName(\"foo\").SetSyncMode(ingestion.DockerStreamsSyncMode(\"incremental\"))})))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "task without cron": "response, err := client.CreateTask(context.Background(), \"search\", \"destinationName\", ingestion.ACTION_TYPE_REPLACE, nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "task with cron": "response, err := client.CreateTask(context.Background(), \"search\", \"destinationName\", ingestion.ACTION_TYPE_REPLACE, ingestion.NewCreateTaskOptions().WithCron(\"* * * * *\").WithNotifications(\n  ingestion.NewEmptyNotifications().SetEmail(\n    ingestion.NewEmptyEmailNotifications().SetEnabled(true))).WithPolicies(\n  ingestion.NewEmptyPolicies().SetCriticalThreshold(8)))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "task shopify": "response, err := client.CreateTask(context.Background(), \"search\", \"destinationName\", ingestion.ACTION_TYPE_REPLACE, ingestion.NewCreateTaskOptions().WithCron(\"* * * * *\").WithInput(ingestion.DockerStreamsInputAsTaskInput(\n  ingestion.NewEmptyDockerStreamsInput().SetStreams(\n    []ingestion.DockerStreams{*ingestion.NewEmptyDockerStreams().SetName(\"foo\").SetSyncMode(ingestion.DOCKER_STREAMS_SYNC_MODE_INCREMENTAL)}))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "createTaskV1": {
-      "createTaskOnDemand": "response, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(\n\n  ingestion.NewEmptyTaskCreateV1().SetSourceID(\"search\").SetDestinationID(\"destinationName\").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(\n    ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType(\"onDemand\")))).SetAction(ingestion.ActionType(\"replace\"))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "createTaskSchedule": "response, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(\n\n  ingestion.NewEmptyTaskCreateV1().SetSourceID(\"search\").SetDestinationID(\"destinationName\").SetTrigger(ingestion.ScheduleTriggerInputAsTaskCreateTrigger(\n    ingestion.NewEmptyScheduleTriggerInput().SetType(ingestion.ScheduleTriggerType(\"schedule\")).SetCron(\"* * * * *\"))).SetAction(ingestion.ActionType(\"replace\"))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "createTaskSubscription": "response, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(\n\n  ingestion.NewEmptyTaskCreateV1().SetSourceID(\"search\").SetDestinationID(\"destinationName\").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(\n    ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType(\"onDemand\")))).SetAction(ingestion.ActionType(\"replace\"))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "task shopify": "response, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(\n\n  ingestion.NewEmptyTaskCreateV1().SetSourceID(\"search\").SetDestinationID(\"destinationName\").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(\n    ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType(\"onDemand\")))).SetAction(ingestion.ActionType(\"replace\")).SetInput(ingestion.DockerStreamsInputAsTaskInput(\n    ingestion.NewEmptyDockerStreamsInput().SetStreams(\n      []ingestion.DockerStreams{*ingestion.NewEmptyDockerStreams().SetName(\"foo\").SetSyncMode(ingestion.DockerStreamsSyncMode(\"incremental\"))})))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "createTaskOnDemand": "response, err := client.CreateTaskV1(context.Background(), \"search\", \"destinationName\", ingestion.OnDemandTriggerInputAsTaskCreateTrigger(\n  ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.ON_DEMAND_TRIGGER_TYPE_ON_DEMAND)), ingestion.ACTION_TYPE_REPLACE, nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "createTaskSchedule": "response, err := client.CreateTaskV1(context.Background(), \"search\", \"destinationName\", ingestion.ScheduleTriggerInputAsTaskCreateTrigger(\n  ingestion.NewEmptyScheduleTriggerInput().SetType(ingestion.SCHEDULE_TRIGGER_TYPE_SCHEDULE).SetCron(\"* * * * *\")), ingestion.ACTION_TYPE_REPLACE, nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "createTaskSubscription": "response, err := client.CreateTaskV1(context.Background(), \"search\", \"destinationName\", ingestion.OnDemandTriggerInputAsTaskCreateTrigger(\n  ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.ON_DEMAND_TRIGGER_TYPE_ON_DEMAND)), ingestion.ACTION_TYPE_REPLACE, nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "task shopify": "response, err := client.CreateTaskV1(context.Background(), \"search\", \"destinationName\", ingestion.OnDemandTriggerInputAsTaskCreateTrigger(\n  ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.ON_DEMAND_TRIGGER_TYPE_ON_DEMAND)), ingestion.ACTION_TYPE_REPLACE, ingestion.NewCreateTaskV1Options().WithInput(ingestion.DockerStreamsInputAsTaskInput(\n  ingestion.NewEmptyDockerStreamsInput().SetStreams(\n    []ingestion.DockerStreams{*ingestion.NewEmptyDockerStreams().SetName(\"foo\").SetSyncMode(ingestion.DOCKER_STREAMS_SYNC_MODE_INCREMENTAL)}))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "createTransformation": {
-      "default": "response, err := client.CreateTransformation(client.NewApiCreateTransformationRequest(\n\n  ingestion.NewEmptyTransformationCreate().SetCode(\"foo\").SetName(\"bar\").SetDescription(\"baz\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CreateTransformation(context.Background(), \"foo\", \"bar\", ingestion.NewCreateTransformationOptions().WithDescription(\"baz\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customDelete": {
-      "allow del method for a custom path with minimal parameters": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "allow del method for a custom path with all parameters": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "allow del method for a custom path with minimal parameters": "response, err := client.CustomDelete(context.Background(), \"test/minimal\", nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "allow del method for a custom path with all parameters": "response, err := client.CustomDelete(context.Background(), \"test/all\", map[string]any{\"query\": \"parameters\"})\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customGet": {
-      "allow get method for a custom path with minimal parameters": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "allow get method for a custom path with all parameters": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters with space\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions should be escaped too": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"to be overriden\"}), ingestion.WithQueryParam(\"query\", \"parameters with space\"), ingestion.WithQueryParam(\"and an array\",\n  []string{\"array\", \"with spaces\"}), ingestion.WithHeaderParam(\"x-header-1\", \"spaces are left alone\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "allow get method for a custom path with minimal parameters": "response, err := client.CustomGet(context.Background(), \"test/minimal\", nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "allow get method for a custom path with all parameters": "response, err := client.CustomGet(context.Background(), \"test/all\", map[string]any{\"query\": \"parameters with space\"})\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions should be escaped too": "response, err := client.CustomGet(context.Background(), \"test/all\", map[string]any{\"query\": \"to be overriden\"}, ingestion.WithQueryParam(\"query\", \"parameters with space\"), ingestion.WithQueryParam(\"and an array\",\n  []string{\"array\", \"with spaces\"}), ingestion.WithHeaderParam(\"x-header-1\", \"spaces are left alone\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPost": {
-      "allow post method for a custom path with minimal parameters": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "allow post method for a custom path with all parameters": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"body\": \"parameters\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions can override default query parameters": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), ingestion.WithQueryParam(\"query\", \"myQueryParameter\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions merges query parameters with default ones": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), ingestion.WithQueryParam(\"query2\", \"myQueryParameter\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions can override default headers": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), ingestion.WithHeaderParam(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions merges headers with default ones": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), ingestion.WithHeaderParam(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions queryParameters accepts booleans": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), ingestion.WithQueryParam(\"isItWorking\", true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions queryParameters accepts integers": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), ingestion.WithQueryParam(\"myParam\", 2))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions queryParameters accepts list of string": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), ingestion.WithQueryParam(\"myParam\",\n  []string{\"b and c\", \"d\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions queryParameters accepts list of booleans": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), ingestion.WithQueryParam(\"myParam\",\n  []bool{true, true, false}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions queryParameters accepts list of integers": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), ingestion.WithQueryParam(\"myParam\",\n  []int32{1, 2}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "allow post method for a custom path with minimal parameters": "response, err := client.CustomPost(context.Background(), \"test/minimal\", nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "allow post method for a custom path with all parameters": "response, err := client.CustomPost(context.Background(), \"test/all\", ingestion.NewCustomPostOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"body\": \"parameters\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions can override default query parameters": "response, err := client.CustomPost(context.Background(), \"test/requestOptions\", ingestion.NewCustomPostOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), ingestion.WithQueryParam(\"query\", \"myQueryParameter\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions merges query parameters with default ones": "response, err := client.CustomPost(context.Background(), \"test/requestOptions\", ingestion.NewCustomPostOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), ingestion.WithQueryParam(\"query2\", \"myQueryParameter\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions can override default headers": "response, err := client.CustomPost(context.Background(), \"test/requestOptions\", ingestion.NewCustomPostOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), ingestion.WithHeaderParam(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions merges headers with default ones": "response, err := client.CustomPost(context.Background(), \"test/requestOptions\", ingestion.NewCustomPostOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), ingestion.WithHeaderParam(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts booleans": "response, err := client.CustomPost(context.Background(), \"test/requestOptions\", ingestion.NewCustomPostOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), ingestion.WithQueryParam(\"isItWorking\", true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts integers": "response, err := client.CustomPost(context.Background(), \"test/requestOptions\", ingestion.NewCustomPostOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), ingestion.WithQueryParam(\"myParam\", 2))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts list of string": "response, err := client.CustomPost(context.Background(), \"test/requestOptions\", ingestion.NewCustomPostOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), ingestion.WithQueryParam(\"myParam\",\n  []string{\"b and c\", \"d\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts list of booleans": "response, err := client.CustomPost(context.Background(), \"test/requestOptions\", ingestion.NewCustomPostOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), ingestion.WithQueryParam(\"myParam\",\n  []bool{true, true, false}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts list of integers": "response, err := client.CustomPost(context.Background(), \"test/requestOptions\", ingestion.NewCustomPostOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), ingestion.WithQueryParam(\"myParam\",\n  []int32{1, 2}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPut": {
-      "allow put method for a custom path with minimal parameters": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "allow put method for a custom path with all parameters": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"body\": \"parameters\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "allow put method for a custom path with minimal parameters": "response, err := client.CustomPut(context.Background(), \"test/minimal\", nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "allow put method for a custom path with all parameters": "response, err := client.CustomPut(context.Background(), \"test/all\", ingestion.NewCustomPutOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"body\": \"parameters\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "deleteAuthentication": {
-      "default": "response, err := client.DeleteAuthentication(client.NewApiDeleteAuthenticationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.DeleteAuthentication(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "deleteDestination": {
-      "default": "response, err := client.DeleteDestination(client.NewApiDeleteDestinationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.DeleteDestination(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "deleteSource": {
-      "default": "response, err := client.DeleteSource(client.NewApiDeleteSourceRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.DeleteSource(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "deleteTask": {
-      "default": "response, err := client.DeleteTask(client.NewApiDeleteTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.DeleteTask(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "deleteTaskV1": {
-      "default": "response, err := client.DeleteTaskV1(client.NewApiDeleteTaskV1Request(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.DeleteTaskV1(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "deleteTransformation": {
-      "default": "response, err := client.DeleteTransformation(client.NewApiDeleteTransformationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.DeleteTransformation(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "disableTask": {
-      "default": "response, err := client.DisableTask(client.NewApiDisableTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.DisableTask(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "disableTaskV1": {
-      "default": "response, err := client.DisableTaskV1(client.NewApiDisableTaskV1Request(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.DisableTaskV1(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "enableTask": {
-      "default": "response, err := client.EnableTask(client.NewApiEnableTaskRequest(\n  \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.EnableTask(context.Background(), \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "enableTaskV1": {
-      "default": "response, err := client.EnableTaskV1(client.NewApiEnableTaskV1Request(\n  \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.EnableTaskV1(context.Background(), \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getAuthentication": {
-      "default": "response, err := client.GetAuthentication(client.NewApiGetAuthenticationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetAuthentication(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getDestination": {
-      "default": "response, err := client.GetDestination(client.NewApiGetDestinationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetDestination(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getEvent": {
-      "default": "response, err := client.GetEvent(client.NewApiGetEventRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"6c02aeb1-775e-418e-870b-1faccd4b2c0c\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetEvent(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"6c02aeb1-775e-418e-870b-1faccd4b2c0c\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getRun": {
-      "default": "response, err := client.GetRun(client.NewApiGetRunRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetRun(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getSource": {
-      "default": "response, err := client.GetSource(client.NewApiGetSourceRequest(\n  \"75eeb306-51d3-4e5e-a279-3c92bd8893ac\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetSource(context.Background(), \"75eeb306-51d3-4e5e-a279-3c92bd8893ac\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getTask": {
-      "default": "response, err := client.GetTask(client.NewApiGetTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetTask(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getTaskV1": {
-      "default": "response, err := client.GetTaskV1(client.NewApiGetTaskV1Request(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetTaskV1(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getTransformation": {
-      "default": "response, err := client.GetTransformation(client.NewApiGetTransformationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetTransformation(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listAuthentications": {
-      "getAuthentications": "response, err := client.ListAuthentications(client.NewApiListAuthenticationsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "getAuthentications with query params": "response, err := client.ListAuthentications(client.NewApiListAuthenticationsRequest().WithItemsPerPage(2).WithPage(1).WithType(\n  []ingestion.AuthenticationType{ingestion.AuthenticationType(\"basic\"), ingestion.AuthenticationType(\"algolia\")}).WithPlatform(\n  []ingestion.PlatformWithNone{*ingestion.PlatformNoneAsPlatformWithNone(ingestion.PlatformNone(\"none\"))}).WithSort(ingestion.AuthenticationSortKeys(\"createdAt\")).WithOrder(ingestion.OrderKeys(\"asc\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "getAuthentications": "response, err := client.ListAuthentications(context.Background(), nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "getAuthentications with query params": "response, err := client.ListAuthentications(context.Background(), ingestion.NewListAuthenticationsOptions().WithItemsPerPage(2).WithPage(1).WithType(\n  []ingestion.AuthenticationType{ingestion.AUTHENTICATION_TYPE_BASIC, ingestion.AUTHENTICATION_TYPE_ALGOLIA}).WithPlatform(\n  []ingestion.PlatformWithNone{*ingestion.PlatformNoneAsPlatformWithNone(ingestion.PLATFORM_NONE_NONE)}).WithSort(ingestion.AUTHENTICATION_SORT_KEYS_CREATED_AT).WithOrder(ingestion.ORDER_KEYS_ASC))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listDestinations": {
-      "default": "response, err := client.ListDestinations(client.NewApiListDestinationsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.ListDestinations(context.Background(), nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listEvents": {
-      "default": "response, err := client.ListEvents(client.NewApiListEventsRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.ListEvents(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listRuns": {
-      "default": "response, err := client.ListRuns(client.NewApiListRunsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.ListRuns(context.Background(), nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listSources": {
-      "default": "response, err := client.ListSources(client.NewApiListSourcesRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.ListSources(context.Background(), nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listTasks": {
-      "default": "response, err := client.ListTasks(client.NewApiListTasksRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.ListTasks(context.Background(), nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listTasksV1": {
-      "default": "response, err := client.ListTasksV1(client.NewApiListTasksV1Request())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.ListTasksV1(context.Background(), nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listTransformations": {
-      "default": "response, err := client.ListTransformations(client.NewApiListTransformationsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.ListTransformations(context.Background(), nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "push": {
-      "global push": "response, err := client.Push(client.NewApiPushRequest(\n  \"<YOUR_INDEX_NAME>\",\n  ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action(\"addObject\")).SetRecords(\n    []ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"bar\").SetAdditionalProperty(\"foo\", \"1\").SetObjectID(\"o\"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"baz\").SetAdditionalProperty(\"foo\", \"2\").SetObjectID(\"k\")})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "global push with watch mode": "response, err := client.Push(client.NewApiPushRequest(\n  \"<YOUR_INDEX_NAME>\",\n  ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action(\"addObject\")).SetRecords(\n    []ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"bar\").SetAdditionalProperty(\"foo\", \"1\").SetObjectID(\"o\"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"baz\").SetAdditionalProperty(\"foo\", \"2\").SetObjectID(\"k\")})).WithWatch(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "global push": "response, err := client.Push(context.Background(), \"<YOUR_INDEX_NAME>\", ingestion.ACTION_ADD_OBJECT,\n  []ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"bar\").SetAdditionalProperty(\"foo\", \"1\").SetObjectID(\"o\"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"baz\").SetAdditionalProperty(\"foo\", \"2\").SetObjectID(\"k\")}, nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "global push with watch mode": "response, err := client.Push(context.Background(), \"<YOUR_INDEX_NAME>\", ingestion.ACTION_ADD_OBJECT,\n  []ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"bar\").SetAdditionalProperty(\"foo\", \"1\").SetObjectID(\"o\"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"baz\").SetAdditionalProperty(\"foo\", \"2\").SetObjectID(\"k\")}, utils.ToPtr(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "pushTask": {
-      "pushTask": "response, err := client.PushTask(client.NewApiPushTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action(\"addObject\")).SetRecords(\n    []ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"bar\").SetAdditionalProperty(\"foo\", \"1\").SetObjectID(\"o\"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"baz\").SetAdditionalProperty(\"foo\", \"2\").SetObjectID(\"k\")})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "allows for watch query parameter": "response, err := client.PushTask(client.NewApiPushTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action(\"addObject\")).SetRecords(\n    []ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"bar\").SetAdditionalProperty(\"foo\", \"1\").SetObjectID(\"o\"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"baz\").SetAdditionalProperty(\"foo\", \"2\").SetObjectID(\"k\")})).WithWatch(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "pushTask": "response, err := client.PushTask(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", ingestion.ACTION_ADD_OBJECT,\n  []ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"bar\").SetAdditionalProperty(\"foo\", \"1\").SetObjectID(\"o\"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"baz\").SetAdditionalProperty(\"foo\", \"2\").SetObjectID(\"k\")}, nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "allows for watch query parameter": "response, err := client.PushTask(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", ingestion.ACTION_ADD_OBJECT,\n  []ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"bar\").SetAdditionalProperty(\"foo\", \"1\").SetObjectID(\"o\"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"baz\").SetAdditionalProperty(\"foo\", \"2\").SetObjectID(\"k\")}, utils.ToPtr(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "runSource": {
-      "default": "response, err := client.RunSource(client.NewApiRunSourceRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\").WithRunSourcePayload(\n  ingestion.NewEmptyRunSourcePayload().SetIndexToInclude(\n    []string{\"products_us\", \"products eu\"}).SetEntityIDs(\n    []string{\"1234\", \"5678\"}).SetEntityType(ingestion.EntityType(\"product\"))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.RunSource(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", ingestion.NewRunSourceOptions().WithIndexToInclude(\n  []string{\"products_us\", \"products eu\"}).WithEntityIDs(\n  []string{\"1234\", \"5678\"}).WithEntityType(ingestion.ENTITY_TYPE_PRODUCT))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "runTask": {
-      "default": "response, err := client.RunTask(client.NewApiRunTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.RunTask(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "runTaskV1": {
-      "default": "response, err := client.RunTaskV1(client.NewApiRunTaskV1Request(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.RunTaskV1(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "searchAuthentications": {
-      "default": "response, err := client.SearchAuthentications(client.NewApiSearchAuthenticationsRequest(\n\n  ingestion.NewEmptyAuthenticationSearch().SetAuthenticationIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.SearchAuthentications(context.Background(),\n  []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"})\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "searchDestinations": {
-      "default": "response, err := client.SearchDestinations(client.NewApiSearchDestinationsRequest(\n\n  ingestion.NewEmptyDestinationSearch().SetDestinationIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.SearchDestinations(context.Background(),\n  []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"})\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "searchSources": {
-      "default": "response, err := client.SearchSources(client.NewApiSearchSourcesRequest(\n\n  ingestion.NewEmptySourceSearch().SetSourceIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.SearchSources(context.Background(),\n  []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"})\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "searchTasks": {
-      "default": "response, err := client.SearchTasks(client.NewApiSearchTasksRequest(\n\n  ingestion.NewEmptyTaskSearch().SetTaskIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.SearchTasks(context.Background(),\n  []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"})\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "searchTasksV1": {
-      "default": "response, err := client.SearchTasksV1(client.NewApiSearchTasksV1Request(\n\n  ingestion.NewEmptyTaskSearch().SetTaskIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.SearchTasksV1(context.Background(),\n  []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"})\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "searchTransformations": {
-      "default": "response, err := client.SearchTransformations(client.NewApiSearchTransformationsRequest(\n\n  ingestion.NewEmptyTransformationSearch().SetTransformationIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.SearchTransformations(context.Background(),\n  []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"})\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "setClientApiKey": {
-      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "err = client.SetClientApiKey(\"updated-api-key\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "triggerDockerSourceDiscover": {
-      "default": "response, err := client.TriggerDockerSourceDiscover(client.NewApiTriggerDockerSourceDiscoverRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.TriggerDockerSourceDiscover(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "tryTransformation": {
-      "tryTransformation": "response, err := client.TryTransformation(client.NewApiTryTransformationRequest(\n\n  ingestion.NewEmptyTransformationTry().SetCode(\"foo\").SetSampleRecord(map[string]any{\"bar\": \"baz\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "with authentications": "response, err := client.TryTransformation(client.NewApiTryTransformationRequest(\n\n  ingestion.NewEmptyTransformationTry().SetCode(\"foo\").SetSampleRecord(map[string]any{\"bar\": \"baz\"}).SetAuthentications(\n    []ingestion.AuthenticationCreate{*ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType(\"oauth\")).SetName(\"authName\").SetInput(ingestion.AuthOAuthAsAuthInput(\n      ingestion.NewEmptyAuthOAuth().SetUrl(\"http://test.oauth\").SetClientId(\"myID\").SetClientSecret(\"mySecret\")))})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "tryTransformation": "response, err := client.TryTransformation(context.Background(), \"foo\", map[string]any{\"bar\": \"baz\"}, nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "with authentications": "response, err := client.TryTransformation(context.Background(), \"foo\", map[string]any{\"bar\": \"baz\"}, utils.ToPtr(\n  []ingestion.AuthenticationCreate{*ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AUTHENTICATION_TYPE_OAUTH).SetName(\"authName\").SetInput(ingestion.AuthOAuthAsAuthInput(\n    ingestion.NewEmptyAuthOAuth().SetUrl(\"http://test.oauth\").SetClientId(\"myID\").SetClientSecret(\"mySecret\")))}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "tryTransformationBeforeUpdate": {
-      "tryTransformationBeforeUpdate": "response, err := client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyTransformationTry().SetCode(\"foo\").SetSampleRecord(map[string]any{\"bar\": \"baz\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "existing with authentications": "response, err := client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyTransformationTry().SetCode(\"foo\").SetSampleRecord(map[string]any{\"bar\": \"baz\"}).SetAuthentications(\n    []ingestion.AuthenticationCreate{*ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType(\"oauth\")).SetName(\"authName\").SetInput(ingestion.AuthOAuthAsAuthInput(\n      ingestion.NewEmptyAuthOAuth().SetUrl(\"http://test.oauth\").SetClientId(\"myID\").SetClientSecret(\"mySecret\")))})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "tryTransformationBeforeUpdate": "response, err := client.TryTransformationBeforeUpdate(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"foo\", map[string]any{\"bar\": \"baz\"}, nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "existing with authentications": "response, err := client.TryTransformationBeforeUpdate(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"foo\", map[string]any{\"bar\": \"baz\"}, utils.ToPtr(\n  []ingestion.AuthenticationCreate{*ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AUTHENTICATION_TYPE_OAUTH).SetName(\"authName\").SetInput(ingestion.AuthOAuthAsAuthInput(\n    ingestion.NewEmptyAuthOAuth().SetUrl(\"http://test.oauth\").SetClientId(\"myID\").SetClientSecret(\"mySecret\")))}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "updateAuthentication": {
-      "default": "response, err := client.UpdateAuthentication(client.NewApiUpdateAuthenticationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyAuthenticationUpdate().SetName(\"newName\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.UpdateAuthentication(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", ingestion.NewUpdateAuthenticationOptions().WithName(\"newName\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "updateDestination": {
-      "default": "response, err := client.UpdateDestination(client.NewApiUpdateDestinationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyDestinationUpdate().SetName(\"newName\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.UpdateDestination(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", ingestion.NewUpdateDestinationOptions().WithName(\"newName\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "updateSource": {
-      "default": "response, err := client.UpdateSource(client.NewApiUpdateSourceRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptySourceUpdate().SetName(\"newName\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.UpdateSource(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", ingestion.NewUpdateSourceOptions().WithName(\"newName\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "updateTask": {
-      "default": "response, err := client.UpdateTask(client.NewApiUpdateTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyTaskUpdate().SetEnabled(false).SetCron(\"* * * * *\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.UpdateTask(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", ingestion.NewUpdateTaskOptions().WithEnabled(false).WithCron(\"* * * * *\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "updateTaskV1": {
-      "default": "response, err := client.UpdateTaskV1(client.NewApiUpdateTaskV1Request(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyTaskUpdateV1().SetEnabled(false)))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.UpdateTaskV1(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", ingestion.NewUpdateTaskV1Options().WithEnabled(false))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "updateTransformation": {
-      "default": "response, err := client.UpdateTransformation(client.NewApiUpdateTransformationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyTransformationCreate().SetCode(\"foo\").SetName(\"bar\").SetDescription(\"baz\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.UpdateTransformation(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"foo\", \"bar\", ingestion.NewUpdateTransformationOptions().WithDescription(\"baz\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "validateSource": {
-      "default": "response, err := client.ValidateSource(client.NewApiValidateSourceRequest().WithSourceCreate(\n  ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType(\"commercetools\")).SetName(\"sourceName\").SetInput(ingestion.SourceCommercetoolsAsSourceInput(\n    ingestion.NewEmptySourceCommercetools().SetStoreKeys(\n      []string{\"myStore\"}).SetLocales(\n      []string{\"de\"}).SetUrl(\"http://commercetools.com\").SetProjectKey(\"keyID\"))).SetAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.ValidateSource(context.Background(), ingestion.SOURCE_TYPE_COMMERCETOOLS, \"sourceName\", ingestion.NewValidateSourceOptions().WithInput(ingestion.SourceCommercetoolsAsSourceInput(\n  ingestion.NewEmptySourceCommercetools().SetStoreKeys(\n    []string{\"myStore\"}).SetLocales(\n    []string{\"de\"}).SetUrl(\"http://commercetools.com\").SetProjectKey(\"keyID\"))).WithAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "validateSourceBeforeUpdate": {
-      "default": "response, err := client.ValidateSourceBeforeUpdate(client.NewApiValidateSourceBeforeUpdateRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptySourceUpdate().SetName(\"newName\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.ValidateSourceBeforeUpdate(context.Background(), \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", ingestion.NewValidateSourceBeforeUpdateOptions().WithName(\"newName\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "init": {
       "default": "client, err := ingestion.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"

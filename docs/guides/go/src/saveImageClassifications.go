@@ -1,6 +1,10 @@
 package main
 
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+import (
+	"context"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
+)
 
 func saveImageClassifications() {
 	type Image struct {
@@ -26,7 +30,7 @@ func saveImageClassifications() {
 
 	images := []Image{}
 
-	err = client.BrowseObjects("<YOUR_INDEX_NAME>", search.BrowseParamsObject{}, search.WithAggregator(func(res any, err error) {
+	err = client.BrowseObjects(context.Background(), "<YOUR_INDEX_NAME>", search.BrowseParamsObject{}, search.WithAggregator(func(res any, err error) {
 		if err != nil {
 			panic(err)
 		}
@@ -55,8 +59,7 @@ func saveImageClassifications() {
 		}
 	}
 
-	_, err = client.PartialUpdateObjects(
-		"<YOUR_INDEX_NAME>", records, search.WithCreateIfNotExists(true))
+	_, err = client.PartialUpdateObjects(context.Background(), "<YOUR_INDEX_NAME>", records, search.WithCreateIfNotExists(true))
 	if err != nil {
 		panic(err)
 	}

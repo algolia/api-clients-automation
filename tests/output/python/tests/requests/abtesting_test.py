@@ -19,7 +19,6 @@ class TestAbtestingClient:
         """
         _req = await self._client.add_ab_tests_with_http_info(
             add_ab_tests_request={
-                "endAt": "2022-12-31T00:00:00.000Z",
                 "name": "myABTest",
                 "variants": [
                     {
@@ -31,6 +30,7 @@ class TestAbtestingClient:
                         "trafficPercentage": 50,
                     },
                 ],
+                "endAt": "2022-12-31T00:00:00.000Z",
             },
         )
 
@@ -39,7 +39,7 @@ class TestAbtestingClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}"""
+            """{"name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"endAt":"2022-12-31T00:00:00.000Z"}"""
         )
 
     async def test_custom_delete_(self):
@@ -536,8 +536,6 @@ class TestAbtestingClient:
         """
         _req = await self._client.schedule_ab_test_with_http_info(
             schedule_ab_tests_request={
-                "endAt": "2022-12-31T00:00:00.000Z",
-                "scheduledAt": "2022-11-31T00:00:00.000Z",
                 "name": "myABTest",
                 "variants": [
                     {
@@ -549,6 +547,8 @@ class TestAbtestingClient:
                         "trafficPercentage": 50,
                     },
                 ],
+                "scheduledAt": "2022-11-31T00:00:00.000Z",
+                "endAt": "2022-12-31T00:00:00.000Z",
             },
         )
 
@@ -557,7 +557,7 @@ class TestAbtestingClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"endAt":"2022-12-31T00:00:00.000Z","scheduledAt":"2022-11-31T00:00:00.000Z","name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}"""
+            """{"name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"scheduledAt":"2022-11-31T00:00:00.000Z","endAt":"2022-12-31T00:00:00.000Z"}"""
         )
 
     async def test_stop_ab_test_(self):
@@ -586,7 +586,6 @@ class TestAbtestingClientSync:
         """
         _req = self._client.add_ab_tests_with_http_info(
             add_ab_tests_request={
-                "endAt": "2022-12-31T00:00:00.000Z",
                 "name": "myABTest",
                 "variants": [
                     {
@@ -598,6 +597,7 @@ class TestAbtestingClientSync:
                         "trafficPercentage": 50,
                     },
                 ],
+                "endAt": "2022-12-31T00:00:00.000Z",
             },
         )
 
@@ -606,7 +606,7 @@ class TestAbtestingClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}"""
+            """{"name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"endAt":"2022-12-31T00:00:00.000Z"}"""
         )
 
     def test_custom_delete_(self):
@@ -1103,8 +1103,6 @@ class TestAbtestingClientSync:
         """
         _req = self._client.schedule_ab_test_with_http_info(
             schedule_ab_tests_request={
-                "endAt": "2022-12-31T00:00:00.000Z",
-                "scheduledAt": "2022-11-31T00:00:00.000Z",
                 "name": "myABTest",
                 "variants": [
                     {
@@ -1116,6 +1114,8 @@ class TestAbtestingClientSync:
                         "trafficPercentage": 50,
                     },
                 ],
+                "scheduledAt": "2022-11-31T00:00:00.000Z",
+                "endAt": "2022-12-31T00:00:00.000Z",
             },
         )
 
@@ -1124,7 +1124,7 @@ class TestAbtestingClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"endAt":"2022-12-31T00:00:00.000Z","scheduledAt":"2022-11-31T00:00:00.000Z","name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}"""
+            """{"name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"scheduledAt":"2022-11-31T00:00:00.000Z","endAt":"2022-12-31T00:00:00.000Z"}"""
         )
 
     def test_stop_ab_test_(self):

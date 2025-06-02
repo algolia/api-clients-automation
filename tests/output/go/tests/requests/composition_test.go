@@ -2,6 +2,7 @@
 package requests
 
 import (
+	"context"
 	"testing"
 
 	"github.com/kinbiko/jsonassert"
@@ -9,7 +10,7 @@ import (
 
 	"gotests/tests"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/composition"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/composition"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
@@ -35,10 +36,8 @@ func TestComposition_Search(t *testing.T) {
 	_ = echo
 
 	t.Run("search", func(t *testing.T) {
-		_, err := client.Search(client.NewApiSearchRequest(
-			"foo",
-			composition.NewEmptyRequestBody().SetParams(
-				composition.NewEmptyParams().SetQuery("batman"))))
+		_, err := client.Search(context.Background(), "foo",
+			composition.NewEmptyParams().SetQuery("batman"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/foo/run", echo.Path)
@@ -54,10 +53,8 @@ func TestComposition_SearchForFacetValues(t *testing.T) {
 	_ = echo
 
 	t.Run("searchForFacetValues", func(t *testing.T) {
-		_, err := client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(
-			"foo", "brand").WithSearchForFacetValuesRequest(
-			composition.NewEmptySearchForFacetValuesRequest().SetParams(
-				composition.NewEmptySearchForFacetValuesParams().SetMaxFacetHits(10))))
+		_, err := client.SearchForFacetValues(context.Background(), "foo", "brand",
+			composition.NewEmptySearchForFacetValuesParams().SetMaxFacetHits(10))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/foo/facets/brand/query", echo.Path)

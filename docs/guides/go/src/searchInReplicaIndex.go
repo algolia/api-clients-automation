@@ -1,6 +1,10 @@
 package main
 
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+import (
+	"context"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
+)
 
 func searchInReplicaIndex() {
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -19,9 +23,8 @@ func searchInReplicaIndex() {
 	}
 
 	// 3. Search on dynamic index name (primary or replica)
-	_, err = client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-		indexName).WithSearchParams(search.SearchParamsObjectAsSearchParams(
-		search.NewEmptySearchParamsObject().SetQuery("query"))))
+	_, err = client.SearchSingleIndex(context.Background(), indexName, search.SearchParamsObjectAsSearchParams(
+		search.NewEmptySearchParamsObject().SetQuery("query")))
 	if err != nil {
 		panic(err)
 	}

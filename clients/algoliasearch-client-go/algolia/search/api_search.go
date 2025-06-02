@@ -8829,7 +8829,7 @@ func (c *APIClient) WaitForTask(
 		return time.Duration(min(200*count, 5000)) * time.Millisecond
 	}), WithMaxRetries(50)}, opts...)
 
-	return CreateIterable( 
+	return CreateIterable(
 		func(*GetTaskResponse, error) (*GetTaskResponse, error) {
 			return c.GetTask(c.NewApiGetTaskRequest(indexName, taskID), toRequestOptions(opts)...)
 		},
@@ -8863,7 +8863,7 @@ func (c *APIClient) WaitForAppTask(
 		return time.Duration(min(200*count, 5000)) * time.Millisecond
 	}), WithMaxRetries(50)}, opts...)
 
-	return CreateIterable( 
+	return CreateIterable(
 		func(*GetTaskResponse, error) (*GetTaskResponse, error) {
 			return c.GetAppTask(c.NewApiGetAppTaskRequest(taskID), toRequestOptions(opts)...)
 		},
@@ -8996,7 +8996,7 @@ func (c *APIClient) WaitForApiKey(
 		return time.Duration(min(200*count, 5000)) * time.Millisecond
 	}), WithMaxRetries(50)}, opts...)
 
-	return CreateIterable( 
+	return CreateIterable(
 		func(*GetApiKeyResponse, error) (*GetApiKeyResponse, error) {
 			return c.GetApiKey(c.NewApiGetApiKeyRequest(key), toRequestOptions(opts)...)
 		},
@@ -9024,7 +9024,7 @@ func (c *APIClient) BrowseObjects(
 		browseParams.HitsPerPage = utils.ToPtr(int32(1000))
 	}
 
-	_, err := CreateIterable( 
+	_, err := CreateIterable(
 		func(previousResponse *BrowseResponse, previousErr error) (*BrowseResponse, error) {
 			if previousResponse != nil {
 				browseParams.Cursor = previousResponse.Cursor
@@ -9064,7 +9064,7 @@ func (c *APIClient) BrowseRules(
 		hitsPerPage = *searchRulesParams.HitsPerPage
 	}
 
-	_, err := CreateIterable( 
+	_, err := CreateIterable(
 		func(previousResponse *SearchRulesResponse, previousErr error) (*SearchRulesResponse, error) {
 			searchRulesParams.HitsPerPage = &hitsPerPage
 
@@ -9114,7 +9114,7 @@ func (c *APIClient) BrowseSynonyms(
 		searchSynonymsParams.Page = utils.ToPtr(int32(0))
 	}
 
-	_, err := CreateIterable( 
+	_, err := CreateIterable(
 		func(previousResponse *SearchSynonymsResponse, previousErr error) (*SearchSynonymsResponse, error) {
 			searchSynonymsParams.HitsPerPage = &hitsPerPage
 

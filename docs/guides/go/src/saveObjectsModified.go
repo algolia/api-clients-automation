@@ -1,10 +1,11 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"os"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 )
 
 func saveObjectsModified() {
@@ -42,8 +43,7 @@ func saveObjectsModified() {
 		records = append(records, record)
 	}
 
-	_, err = client.SaveObjects(
-		"<YOUR_INDEX_NAME>", records)
+	_, err = client.SaveObjects(context.Background(), "<YOUR_INDEX_NAME>", records)
 	if err != nil {
 		panic(err)
 	}

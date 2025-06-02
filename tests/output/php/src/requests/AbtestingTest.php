@@ -36,8 +36,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->addABTests(
-            ['endAt' => '2022-12-31T00:00:00.000Z',
-                'name' => 'myABTest',
+            ['name' => 'myABTest',
                 'variants' => [
                     ['index' => 'AB_TEST_1',
                         'trafficPercentage' => 30,
@@ -47,6 +46,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                         'trafficPercentage' => 50,
                     ],
                 ],
+                'endAt' => '2022-12-31T00:00:00.000Z',
             ],
         );
 
@@ -54,7 +54,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/abtests',
                 'method' => 'POST',
-                'body' => json_decode('{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}'),
+                'body' => json_decode('{"name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"endAt":"2022-12-31T00:00:00.000Z"}'),
             ],
         ]);
     }
@@ -590,9 +590,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->scheduleABTest(
-            ['endAt' => '2022-12-31T00:00:00.000Z',
-                'scheduledAt' => '2022-11-31T00:00:00.000Z',
-                'name' => 'myABTest',
+            ['name' => 'myABTest',
                 'variants' => [
                     ['index' => 'AB_TEST_1',
                         'trafficPercentage' => 30,
@@ -602,6 +600,8 @@ class AbtestingTest extends TestCase implements HttpClientInterface
                         'trafficPercentage' => 50,
                     ],
                 ],
+                'scheduledAt' => '2022-11-31T00:00:00.000Z',
+                'endAt' => '2022-12-31T00:00:00.000Z',
             ],
         );
 
@@ -609,7 +609,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/abtests/schedule',
                 'method' => 'POST',
-                'body' => json_decode('{"endAt":"2022-12-31T00:00:00.000Z","scheduledAt":"2022-11-31T00:00:00.000Z","name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}'),
+                'body' => json_decode('{"name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"scheduledAt":"2022-11-31T00:00:00.000Z","endAt":"2022-12-31T00:00:00.000Z"}'),
             ],
         ]);
     }

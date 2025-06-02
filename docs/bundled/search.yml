@@ -335,8 +335,9 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "test/minimal"))
+            response, err := client.CustomGet(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -577,8 +578,9 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "test/minimal"))
+            response, err := client.CustomPost(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -819,8 +821,9 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "test/minimal"))
+            response, err := client.CustomPut(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1055,9 +1058,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "test/minimal"))
+            response, err := client.CustomDelete(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1314,9 +1317,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-              "<YOUR_INDEX_NAME>"))
+            response, err := client.SearchSingleIndex(context.Background(),
+            "<YOUR_INDEX_NAME>", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1515,13 +1518,8 @@ paths:
 
         This can be useful in these cases:
 
-
-        - Different indices for different purposes, such as, one index for
-        products, another one for marketing content.
-
-        - Multiple searches to the same index—for example, with different
-        filters.
-
+          - Different indices for different purposes, such as, one index for products, another one for marketing content.
+          - Multiple searches to the same index—for example, with different filters.
 
         Use the helper `searchForHits` or `searchForFacets` to get the results
         in a more convenient format, if you already know the return type you
@@ -1636,11 +1634,9 @@ paths:
 
             // Call the API
 
-            response, err := client.Search(client.NewApiSearchRequest(
-
-              search.NewEmptySearchMethodParams().SetRequests(
-                []search.SearchQuery{*search.SearchForHitsAsSearchQuery(
-                  search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetHitsPerPage(50))})))
+            response, err := client.Search(context.Background(),
+              []search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+                search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetHitsPerPage(50))}, nil)
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1971,9 +1967,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(
-              "<YOUR_INDEX_NAME>", "facetName"))
+            response, err := client.SearchForFacetValues(context.Background(),
+            "<YOUR_INDEX_NAME>", "facetName", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2180,41 +2176,22 @@ paths:
 
         This can be useful if you want to export your indices.
 
-
-        - The Analytics API doesn't collect data when using `browse`.
-
-        - Records are ranked by attributes and custom ranking.
-
-        - There's no ranking for: typo-tolerance, number of matched words,
-        proximity, geo distance.
-
+          - The Analytics API doesn't collect data when using `browse`.
+          - Records are ranked by attributes and custom ranking.
+          - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.
 
         Browse requests automatically apply these settings:
-
-
-        - `advancedSyntax`: `false`
-
-        - `attributesToHighlight`: `[]`
-
-        - `attributesToSnippet`: `[]`
-
-        - `distinct`: `false`
-
-        - `enablePersonalization`: `false`
-
-        - `enableRules`: `false`
-
-        - `facets`: `[]`
-
-        - `getRankingInfo`: `false`
-
-        - `ignorePlurals`: `false`
-
-        - `optionalFilters`: `[]`
-
-        - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to
-        `true`)
-
+          - `advancedSyntax`: `false`
+          - `attributesToHighlight`: `[]`
+          - `attributesToSnippet`: `[]`
+          - `distinct`: `false`
+          - `enablePersonalization`: `false`
+          - `enableRules`: `false`
+          - `facets`: `[]`
+          - `getRankingInfo`: `false`
+          - `ignorePlurals`: `false`
+          - `optionalFilters`: `[]`
+          - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`)
 
         If you send these parameters with your browse requests, they'll be
         ignored.
@@ -2283,8 +2260,9 @@ paths:
 
             // Call the API
 
-            response, err := client.Browse(client.NewApiBrowseRequest(
-              "<YOUR_INDEX_NAME>"))
+            response, err := client.Browse(context.Background(),
+            "<YOUR_INDEX_NAME>", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2597,8 +2575,12 @@ paths:
 
             // Call the API
 
-            response, err := client.SaveObject(client.NewApiSaveObjectRequest(
-              "<YOUR_INDEX_NAME>", map[string]any{"name": "Black T-shirt", "color": "#000000||black", "availableIn": "https://source.unsplash.com/100x100/?paris||Paris", "objectID": "myID"}))
+            response, err := client.SaveObject(context.Background(),
+            "<YOUR_INDEX_NAME>", map[string]any{"name": "Black T-shirt",
+            "color": "#000000||black", "availableIn":
+            "https://source.unsplash.com/100x100/?paris||Paris", "objectID":
+            "myID"})
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2932,8 +2914,9 @@ paths:
 
             // Call the API
 
-            response, err := client.DeleteIndex(client.NewApiDeleteIndexRequest(
-              "<YOUR_INDEX_NAME>"))
+            response, err := client.DeleteIndex(context.Background(),
+            "<YOUR_INDEX_NAME>")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -3219,8 +3202,8 @@ paths:
 
             // Call the API
 
-            response, err := client.GetObject(client.NewApiGetObjectRequest(
-              "<YOUR_INDEX_NAME>", "uniqueID").WithAttributesToRetrieve(
+            response, err := client.GetObject(context.Background(),
+            "<YOUR_INDEX_NAME>", "uniqueID", utils.ToPtr(
               []string{"attr1", "attr2"}))
             if err != nil {
               // handle the eventual error
@@ -3520,9 +3503,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
-              "<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"key": "value"}))
+            response, err := client.AddOrUpdateObject(context.Background(),
+            "<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"key": "value"})
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -3810,9 +3793,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.DeleteObject(client.NewApiDeleteObjectRequest(
-              "<YOUR_INDEX_NAME>", "uniqueID"))
+            response, err := client.DeleteObject(context.Background(),
+            "<YOUR_INDEX_NAME>", "uniqueID")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4095,9 +4078,10 @@ paths:
 
             // Call the API
 
-            response, err := client.DeleteBy(client.NewApiDeleteByRequest(
-              "<YOUR_INDEX_NAME>",
-              search.NewEmptyDeleteByParams().SetFilters("brand:brandName")))
+            response, err := client.DeleteBy(context.Background(),
+            "<YOUR_INDEX_NAME>",
+            search.NewDeleteByOptions().WithFilters("brand:brandName"))
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4364,9 +4348,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.ClearObjects(client.NewApiClearObjectsRequest(
-              "<YOUR_INDEX_NAME>"))
+            response, err := client.ClearObjects(context.Background(),
+            "<YOUR_INDEX_NAME>")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4699,9 +4683,10 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
-              "<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"attributeId": "new value"}))
+            response, err := client.PartialUpdateObject(context.Background(),
+            "<YOUR_INDEX_NAME>", "uniqueID", map[string]any{"attributeId": "new
+            value"}, nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5040,10 +5025,9 @@ paths:
 
             // Call the API
 
-            response, err := client.Batch(client.NewApiBatchRequest(
-              "<YOUR_INDEX_NAME>",
-              search.NewEmptyBatchWriteParams().SetRequests(
-                []search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "bar", "foo": "1"}), *search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "baz", "foo": "2"})})))
+            response, err := client.Batch(context.Background(),
+            "<YOUR_INDEX_NAME>",
+              []search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.ACTION_ADD_OBJECT).SetBody(map[string]any{"key": "bar", "foo": "1"}), *search.NewEmptyBatchRequest().SetAction(search.ACTION_ADD_OBJECT).SetBody(map[string]any{"key": "baz", "foo": "2"})})
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5506,11 +5490,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.MultipleBatch(client.NewApiMultipleBatchRequest(
-
-              search.NewEmptyBatchParams().SetRequests(
-                []search.MultipleBatchRequest{*search.NewEmptyMultipleBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "value"}).SetIndexName("<YOUR_INDEX_NAME>")})))
+            response, err := client.MultipleBatch(context.Background(),
+              []search.MultipleBatchRequest{*search.NewEmptyMultipleBatchRequest().SetAction(search.ACTION_ADD_OBJECT).SetBody(map[string]any{"key": "value"}).SetIndexName("<YOUR_INDEX_NAME>")})
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5909,10 +5890,8 @@ paths:
 
             // Call the API
 
-            response, err := client.GetObjects(client.NewApiGetObjectsRequest(
-
-              search.NewEmptyGetObjectsParams().SetRequests(
-                []search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetObjectID("uniqueID").SetIndexName("<YOUR_INDEX_NAME>")})))
+            response, err := client.GetObjects(context.Background(),
+              []search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetObjectID("uniqueID").SetIndexName("<YOUR_INDEX_NAME>")})
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6199,8 +6178,9 @@ paths:
 
             // Call the API
 
-            response, err := client.GetSettings(client.NewApiGetSettingsRequest(
-              "<YOUR_INDEX_NAME>"))
+            response, err := client.GetSettings(context.Background(),
+            "<YOUR_INDEX_NAME>")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6474,9 +6454,9 @@ paths:
 
             // Call the API
 
-            response, err := client.SetSettings(client.NewApiSetSettingsRequest(
-              "<YOUR_INDEX_NAME>",
-              search.NewEmptyIndexSettings().SetPaginationLimitedTo(10).SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("false")))).WithForwardToReplicas(true))
+            response, err := client.SetSettings(context.Background(),
+            "<YOUR_INDEX_NAME>",
+              search.NewEmptyIndexSettings().SetPaginationLimitedTo(10).SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TYPO_TOLERANCE_ENUM_FALSE)), utils.ToPtr(true))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6767,8 +6747,9 @@ paths:
 
             // Call the API
 
-            response, err := client.GetSynonym(client.NewApiGetSynonymRequest(
-              "<YOUR_INDEX_NAME>", "id1"))
+            response, err := client.GetSynonym(context.Background(),
+            "<YOUR_INDEX_NAME>", "id1")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -7069,10 +7050,10 @@ paths:
 
             // Call the API
 
-            response, err := client.SaveSynonym(client.NewApiSaveSynonymRequest(
-              "<YOUR_INDEX_NAME>", "id1",
-              search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SynonymType("synonym")).SetSynonyms(
-                []string{"car", "vehicule", "auto"})).WithForwardToReplicas(true))
+            response, err := client.SaveSynonym(context.Background(),
+            "<YOUR_INDEX_NAME>", "id1",
+              search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SYNONYM_TYPE_SYNONYM).SetSynonyms(
+                []string{"car", "vehicule", "auto"}), utils.ToPtr(true))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -7381,9 +7362,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.DeleteSynonym(client.NewApiDeleteSynonymRequest(
-              "<YOUR_INDEX_NAME>", "id1"))
+            response, err := client.DeleteSynonym(context.Background(),
+            "<YOUR_INDEX_NAME>", "id1", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -7690,12 +7671,11 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.SaveSynonyms(client.NewApiSaveSynonymsRequest(
-              "<YOUR_INDEX_NAME>",
-              []search.SynonymHit{*search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SynonymType("synonym")).SetSynonyms(
-                []string{"car", "vehicule", "auto"}), *search.NewEmptySynonymHit().SetObjectID("id2").SetType(search.SynonymType("onewaysynonym")).SetInput("iphone").SetSynonyms(
-                []string{"ephone", "aphone", "yphone"})}).WithForwardToReplicas(true).WithReplaceExistingSynonyms(true))
+            response, err := client.SaveSynonyms(context.Background(),
+            "<YOUR_INDEX_NAME>",
+              []search.SynonymHit{*search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SYNONYM_TYPE_SYNONYM).SetSynonyms(
+                []string{"car", "vehicule", "auto"}), *search.NewEmptySynonymHit().SetObjectID("id2").SetType(search.SYNONYM_TYPE_ONEWAYSYNONYM).SetInput("iphone").SetSynonyms(
+                []string{"ephone", "aphone", "yphone"})}, search.NewSaveSynonymsOptions().WithForwardToReplicas(true).WithReplaceExistingSynonyms(true))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -8066,9 +8046,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.ClearSynonyms(client.NewApiClearSynonymsRequest(
-              "<YOUR_INDEX_NAME>"))
+            response, err := client.ClearSynonyms(context.Background(),
+            "<YOUR_INDEX_NAME>", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -8338,9 +8318,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.SearchSynonyms(client.NewApiSearchSynonymsRequest(
-              "<YOUR_INDEX_NAME>"))
+            response, err := client.SearchSynonyms(context.Background(),
+            "<YOUR_INDEX_NAME>", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -8599,7 +8579,7 @@ paths:
 
             // Call the API
 
-            response, err := client.ListApiKeys()
+            response, err := client.ListApiKeys(context.Background())
 
             if err != nil {
               // handle the eventual error
@@ -8855,10 +8835,8 @@ paths:
 
             // Call the API
 
-            response, err := client.AddApiKey(client.NewApiAddApiKeyRequest(
-
-              search.NewEmptyApiKey().SetAcl(
-                []search.Acl{search.Acl("search"), search.Acl("addObject")}).SetDescription("my new api key")))
+            response, err := client.AddApiKey(context.Background(),
+              []search.Acl{search.ACL_SEARCH, search.ACL_ADD_OBJECT}, search.NewAddApiKeyOptions().WithDescription("my new api key"))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -9140,8 +9118,9 @@ paths:
 
             // Call the API
 
-            response, err := client.GetApiKey(client.NewApiGetApiKeyRequest(
-              "myTestApiKey"))
+            response, err := client.GetApiKey(context.Background(),
+            "myTestApiKey")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -9424,11 +9403,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.UpdateApiKey(client.NewApiUpdateApiKeyRequest(
-              "ALGOLIA_API_KEY",
-              search.NewEmptyApiKey().SetAcl(
-                []search.Acl{search.Acl("search"), search.Acl("addObject")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20)))
+            response, err := client.UpdateApiKey(context.Background(),
+            "ALGOLIA_API_KEY",
+              []search.Acl{search.ACL_SEARCH, search.ACL_ADD_OBJECT}, search.NewUpdateApiKeyOptions().WithValidity(300).WithMaxQueriesPerIPPerHour(100).WithMaxHitsPerQuery(20))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -9735,9 +9712,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.DeleteApiKey(client.NewApiDeleteApiKeyRequest(
-              "myTestApiKey"))
+            response, err := client.DeleteApiKey(context.Background(),
+            "myTestApiKey")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -9994,9 +9971,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.RestoreApiKey(client.NewApiRestoreApiKeyRequest(
-              "ALGOLIA_API_KEY"))
+            response, err := client.RestoreApiKey(context.Background(),
+            "ALGOLIA_API_KEY")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -10252,8 +10229,9 @@ paths:
 
             // Call the API
 
-            response, err := client.GetRule(client.NewApiGetRuleRequest(
-              "<YOUR_INDEX_NAME>", "qr-1725004648916"))
+            response, err := client.GetRule(context.Background(),
+            "<YOUR_INDEX_NAME>", "qr-1725004648916")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -10546,12 +10524,12 @@ paths:
 
             // Call the API
 
-            response, err := client.SaveRule(client.NewApiSaveRuleRequest(
-              "<YOUR_INDEX_NAME>", "id1",
+            response, err := client.SaveRule(context.Background(),
+            "<YOUR_INDEX_NAME>", "id1",
               search.NewEmptyRule().SetObjectID("id1").SetConditions(
-                []search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+                []search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.ANCHORING_CONTAINS)}).SetConsequence(
                 search.NewEmptyConsequence().SetParams(
-                  search.NewEmptyConsequenceParams().SetFilters("brand:xiaomi")))))
+                  search.NewEmptyConsequenceParams().SetFilters("brand:xiaomi"))), nil)
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -10895,8 +10873,9 @@ paths:
 
             // Call the API
 
-            response, err := client.DeleteRule(client.NewApiDeleteRuleRequest(
-              "<YOUR_INDEX_NAME>", "id1"))
+            response, err := client.DeleteRule(context.Background(),
+            "<YOUR_INDEX_NAME>", "id1", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -11231,15 +11210,15 @@ paths:
 
             // Call the API
 
-            response, err := client.SaveRules(client.NewApiSaveRulesRequest(
-              "<YOUR_INDEX_NAME>",
+            response, err := client.SaveRules(context.Background(),
+            "<YOUR_INDEX_NAME>",
               []search.Rule{*search.NewEmptyRule().SetObjectID("a-rule-id").SetConditions(
-                []search.Condition{*search.NewEmptyCondition().SetPattern("smartphone").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+                []search.Condition{*search.NewEmptyCondition().SetPattern("smartphone").SetAnchoring(search.ANCHORING_CONTAINS)}).SetConsequence(
                 search.NewEmptyConsequence().SetParams(
                   search.NewEmptyConsequenceParams().SetFilters("brand:apple"))), *search.NewEmptyRule().SetObjectID("a-second-rule-id").SetConditions(
-                []search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
+                []search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.ANCHORING_CONTAINS)}).SetConsequence(
                 search.NewEmptyConsequence().SetParams(
-                  search.NewEmptyConsequenceParams().SetFilters("brand:samsung")))}).WithForwardToReplicas(false).WithClearExistingRules(true))
+                  search.NewEmptyConsequenceParams().SetFilters("brand:samsung")))}, search.NewSaveRulesOptions().WithForwardToReplicas(false).WithClearExistingRules(true))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -11680,8 +11659,9 @@ paths:
 
             // Call the API
 
-            response, err := client.ClearRules(client.NewApiClearRulesRequest(
-              "<YOUR_INDEX_NAME>"))
+            response, err := client.ClearRules(context.Background(),
+            "<YOUR_INDEX_NAME>", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -11991,9 +11971,10 @@ paths:
 
             // Call the API
 
-            response, err := client.SearchRules(client.NewApiSearchRulesRequest(
-              "<YOUR_INDEX_NAME>").WithSearchRulesParams(
-              search.NewEmptySearchRulesParams().SetQuery("zorro")))
+            response, err := client.SearchRules(context.Background(),
+            "<YOUR_INDEX_NAME>",
+            search.NewSearchRulesOptions().WithQuery("zorro"))
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -12336,14 +12317,12 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.BatchDictionaryEntries(client.NewApiBatchDictionaryEntriesRequest(
-              search.DictionaryType("plurals"),
-              search.NewEmptyBatchDictionaryEntriesParams().SetClearExistingDictionaryEntries(true).SetRequests(
-                []search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
-                  search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetWord("fancy").SetWords(
-                    []string{"believe", "algolia"}).SetDecomposition(
-                    []string{"trust", "algolia"}).SetState(search.DictionaryEntryState("enabled")))})))
+            response, err := client.BatchDictionaryEntries(context.Background(),
+            search.DICTIONARY_TYPE_PLURALS,
+              []search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DICTIONARY_ACTION_ADD_ENTRY).SetBody(
+                search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SUPPORTED_LANGUAGE_EN).SetWord("fancy").SetWords(
+                  []string{"believe", "algolia"}).SetDecomposition(
+                  []string{"trust", "algolia"}).SetState(search.DICTIONARY_ENTRY_STATE_ENABLED))}, utils.ToPtr(true))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -12767,9 +12746,9 @@ paths:
             // Call the API
 
             response, err :=
-            client.SearchDictionaryEntries(client.NewApiSearchDictionaryEntriesRequest(
-              search.DictionaryType("stopwords"),
-              search.NewEmptySearchDictionaryEntriesParams().SetQuery("about")))
+            client.SearchDictionaryEntries(context.Background(),
+            search.DICTIONARY_TYPE_STOPWORDS, "about", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -13046,7 +13025,7 @@ paths:
 
             // Call the API
 
-            response, err := client.GetDictionarySettings()
+            response, err := client.GetDictionarySettings(context.Background())
 
             if err != nil {
               // handle the eventual error
@@ -13319,11 +13298,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(
-
-              search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(
-                search.NewEmptyStandardEntries().SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true}))))
+            response, err := client.SetDictionarySettings(context.Background(),
+              search.NewEmptyStandardEntries().SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true}))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -13625,7 +13601,7 @@ paths:
 
             // Call the API
 
-            response, err := client.GetDictionaryLanguages()
+            response, err := client.GetDictionaryLanguages(context.Background())
 
             if err != nil {
               // handle the eventual error
@@ -13888,10 +13864,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.AssignUserId(client.NewApiAssignUserIdRequest(
-              "user42",
-              search.NewEmptyAssignUserIdParams().SetCluster("d4242-eu")))
+            response, err := client.AssignUserId(context.Background(), "user42",
+            "d4242-eu")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -14174,8 +14149,7 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.ListUserIds(client.NewApiListUserIdsRequest())
+            response, err := client.ListUserIds(context.Background(), nil)
 
             if err != nil {
               // handle the eventual error
@@ -14454,11 +14428,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.BatchAssignUserIds(client.NewApiBatchAssignUserIdsRequest(
-              "userID",
-              search.NewEmptyBatchAssignUserIdsParams().SetCluster("theCluster").SetUsers(
-                []string{"user1", "user2"})))
+            response, err := client.BatchAssignUserIds(context.Background(),
+            "userID", "theCluster",
+              []string{"user1", "user2"})
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -14764,7 +14736,7 @@ paths:
 
             // Call the API
 
-            response, err := client.GetTopUserIds()
+            response, err := client.GetTopUserIds(context.Background())
 
             if err != nil {
               // handle the eventual error
@@ -15013,8 +14985,8 @@ paths:
 
             // Call the API
 
-            response, err := client.GetUserId(client.NewApiGetUserIdRequest(
-              "uniqueID"))
+            response, err := client.GetUserId(context.Background(), "uniqueID")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -15268,9 +15240,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.RemoveUserId(client.NewApiRemoveUserIdRequest(
-              "uniqueID"))
+            response, err := client.RemoveUserId(context.Background(),
+            "uniqueID")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -15527,7 +15499,7 @@ paths:
 
             // Call the API
 
-            response, err := client.ListClusters()
+            response, err := client.ListClusters(context.Background())
 
             if err != nil {
               // handle the eventual error
@@ -15870,10 +15842,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.SearchUserIds(client.NewApiSearchUserIdsRequest(
+            response, err := client.SearchUserIds(context.Background(), "test",
+            search.NewSearchUserIdsOptions().WithClusterName("theClusterName").WithPage(5).WithHitsPerPage(10))
 
-              search.NewEmptySearchUserIdsParams().SetQuery("test").SetClusterName("theClusterName").SetPage(5).SetHitsPerPage(10)))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -16182,8 +16153,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.HasPendingMappings(client.NewApiHasPendingMappingsRequest())
+            response, err := client.HasPendingMappings(context.Background(),
+            nil)
 
             if err != nil {
               // handle the eventual error
@@ -16420,7 +16391,7 @@ paths:
 
             // Call the API
 
-            response, err := client.GetSources()
+            response, err := client.GetSources(context.Background())
 
             if err != nil {
               // handle the eventual error
@@ -16682,10 +16653,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.ReplaceSources(client.NewApiReplaceSourcesRequest(
-
-              []search.Source{*search.NewEmptySource().SetSource("theSource").SetDescription("theDescription")}))
+            response, err := client.ReplaceSources(context.Background(),
+              []search.Source{*search.NewEmptySource().SetSource("theSource").SetDescription("theDescription")})
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -16967,10 +16936,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.AppendSource(client.NewApiAppendSourceRequest(
+            response, err := client.AppendSource(context.Background(),
+            "theSource", utils.ToPtr("theDescription"))
 
-              search.NewEmptySource().SetSource("theSource").SetDescription("theDescription")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -17249,9 +17217,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.DeleteSource(client.NewApiDeleteSourceRequest(
-              "theSource"))
+            response, err := client.DeleteSource(context.Background(),
+            "theSource")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -17668,7 +17636,7 @@ paths:
 
             // Call the API
 
-            response, err := client.GetLogs(client.NewApiGetLogsRequest())
+            response, err := client.GetLogs(context.Background(), nil)
 
             if err != nil {
               // handle the eventual error
@@ -17915,8 +17883,8 @@ paths:
 
             // Call the API
 
-            response, err := client.GetAppTask(client.NewApiGetAppTaskRequest(
-              123))
+            response, err := client.GetAppTask(context.Background(), 123)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -18185,8 +18153,9 @@ paths:
 
             // Call the API
 
-            response, err := client.GetTask(client.NewApiGetTaskRequest(
-              "<YOUR_INDEX_NAME>", 123))
+            response, err := client.GetTask(context.Background(),
+            "<YOUR_INDEX_NAME>", 123)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -18533,11 +18502,10 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.OperationIndex(client.NewApiOperationIndexRequest(
-              "<SOURCE_INDEX_NAME>",
-              search.NewEmptyOperationIndexParams().SetOperation(search.OperationType("move")).SetDestination("<DESTINATION_INDEX_NAME>").SetScope(
-                []search.ScopeType{search.ScopeType("rules"), search.ScopeType("settings")})))
+            response, err := client.OperationIndex(context.Background(),
+            "<SOURCE_INDEX_NAME>", search.OPERATION_TYPE_MOVE,
+            "<DESTINATION_INDEX_NAME>", utils.ToPtr(
+              []search.ScopeType{search.SCOPE_TYPE_RULES, search.SCOPE_TYPE_SETTINGS}))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -18840,8 +18808,7 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.ListIndices(client.NewApiListIndicesRequest())
+            response, err := client.ListIndices(context.Background(), nil)
 
             if err != nil {
               // handle the eventual error

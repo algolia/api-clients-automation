@@ -35,7 +35,6 @@ class SnippetAbtestingClient {
     val response = Await.result(
       client.addABTests(
         addABTestsRequest = AddABTestsRequest(
-          endAt = "2022-12-31T00:00:00.000Z",
           name = "myABTest",
           variants = Seq(
             AbTestsVariant(
@@ -46,7 +45,8 @@ class SnippetAbtestingClient {
               index = "AB_TEST_2",
               trafficPercentage = 50
             )
-          )
+          ),
+          endAt = "2022-12-31T00:00:00.000Z"
         )
       ),
       Duration(100, "sec")
@@ -735,8 +735,6 @@ class SnippetAbtestingClient {
     val response = Await.result(
       client.scheduleABTest(
         scheduleABTestsRequest = ScheduleABTestsRequest(
-          endAt = "2022-12-31T00:00:00.000Z",
-          scheduledAt = "2022-11-31T00:00:00.000Z",
           name = "myABTest",
           variants = Seq(
             AbTestsVariant(
@@ -747,7 +745,9 @@ class SnippetAbtestingClient {
               index = "AB_TEST_2",
               trafficPercentage = 50
             )
-          )
+          ),
+          scheduledAt = "2022-11-31T00:00:00.000Z",
+          endAt = "2022-12-31T00:00:00.000Z"
         )
       ),
       Duration(100, "sec")

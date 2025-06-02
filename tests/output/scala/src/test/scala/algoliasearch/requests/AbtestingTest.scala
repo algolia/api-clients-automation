@@ -37,7 +37,6 @@ class AbtestingTest extends AnyFunSuite {
     val (client, echo) = testClient()
     val future = client.addABTests(
       addABTestsRequest = AddABTestsRequest(
-        endAt = "2022-12-31T00:00:00.000Z",
         name = "myABTest",
         variants = Seq(
           AbTestsVariant(
@@ -48,7 +47,8 @@ class AbtestingTest extends AnyFunSuite {
             index = "AB_TEST_2",
             trafficPercentage = 50
           )
-        )
+        ),
+        endAt = "2022-12-31T00:00:00.000Z"
       )
     )
 
@@ -58,7 +58,7 @@ class AbtestingTest extends AnyFunSuite {
     assert(res.path == "/2/abtests")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}"""
+      """{"name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"endAt":"2022-12-31T00:00:00.000Z"}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -661,8 +661,6 @@ class AbtestingTest extends AnyFunSuite {
     val (client, echo) = testClient()
     val future = client.scheduleABTest(
       scheduleABTestsRequest = ScheduleABTestsRequest(
-        endAt = "2022-12-31T00:00:00.000Z",
-        scheduledAt = "2022-11-31T00:00:00.000Z",
         name = "myABTest",
         variants = Seq(
           AbTestsVariant(
@@ -673,7 +671,9 @@ class AbtestingTest extends AnyFunSuite {
             index = "AB_TEST_2",
             trafficPercentage = 50
           )
-        )
+        ),
+        scheduledAt = "2022-11-31T00:00:00.000Z",
+        endAt = "2022-12-31T00:00:00.000Z"
       )
     )
 
@@ -683,7 +683,7 @@ class AbtestingTest extends AnyFunSuite {
     assert(res.path == "/2/abtests/schedule")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"endAt":"2022-12-31T00:00:00.000Z","scheduledAt":"2022-11-31T00:00:00.000Z","name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}"""
+      """{"name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"scheduledAt":"2022-11-31T00:00:00.000Z","endAt":"2022-12-31T00:00:00.000Z"}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)

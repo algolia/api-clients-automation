@@ -1,9 +1,10 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 )
 
 func deleteMultipleIndices() {
@@ -15,7 +16,7 @@ func deleteMultipleIndices() {
 	}
 
 	// List all indices
-	indices, err := client.ListIndices(client.NewApiListIndicesRequest())
+	indices, err := client.ListIndices(context.Background(), nil)
 	if err != nil {
 		panic(err)
 	}
@@ -43,9 +44,7 @@ func deleteMultipleIndices() {
 			})
 		}
 
-		_, err = client.MultipleBatch(client.NewApiMultipleBatchRequest(
-
-			search.NewEmptyBatchParams().SetRequests(requests)))
+		_, err = client.MultipleBatch(context.Background(), requests)
 		if err != nil {
 			panic(err)
 		}
@@ -64,9 +63,7 @@ func deleteMultipleIndices() {
 			})
 		}
 
-		_, err = client.MultipleBatch(client.NewApiMultipleBatchRequest(
-
-			search.NewEmptyBatchParams().SetRequests(requests)))
+		_, err = client.MultipleBatch(context.Background(), requests)
 		if err != nil {
 			panic(err)
 		}

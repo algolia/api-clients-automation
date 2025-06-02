@@ -2,6 +2,7 @@
 package requests
 
 import (
+	"context"
 	"encoding/json"
 	"testing"
 
@@ -10,7 +11,7 @@ import (
 
 	"gotests/tests"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/monitoring"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/monitoring"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
@@ -36,8 +37,7 @@ func TestMonitoring_CustomDelete(t *testing.T) {
 	_ = echo
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"test/minimal"))
+		_, err := client.CustomDelete(context.Background(), "test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -46,8 +46,7 @@ func TestMonitoring_CustomDelete(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("allow del method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters"}))
+		_, err := client.CustomDelete(context.Background(), "test/all", map[string]any{"query": "parameters"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -68,8 +67,7 @@ func TestMonitoring_CustomGet(t *testing.T) {
 	_ = echo
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/minimal"))
+		_, err := client.CustomGet(context.Background(), "test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -78,8 +76,7 @@ func TestMonitoring_CustomGet(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("allow get method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters with space"}))
+		_, err := client.CustomGet(context.Background(), "test/all", map[string]any{"query": "parameters with space"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -94,8 +91,7 @@ func TestMonitoring_CustomGet(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions should be escaped too", func(t *testing.T) {
-		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/all").WithParameters(map[string]any{"query": "to be overriden"}), monitoring.WithQueryParam("query", "parameters with space"), monitoring.WithQueryParam("and an array",
+		_, err := client.CustomGet(context.Background(), "test/all", map[string]any{"query": "to be overriden"}, monitoring.WithQueryParam("query", "parameters with space"), monitoring.WithQueryParam("and an array",
 			[]string{"array", "with spaces"}), monitoring.WithHeaderParam("x-header-1", "spaces are left alone"))
 		require.NoError(t, err)
 
@@ -122,8 +118,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 	_ = echo
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/minimal"))
+		_, err := client.CustomPost(context.Background(), "test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -133,8 +128,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("allow post method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+		_, err := client.CustomPost(context.Background(), "test/all", monitoring.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -150,8 +144,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions can override default query parameters", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("query", "myQueryParameter"))
+		_, err := client.CustomPost(context.Background(), "test/requestOptions", monitoring.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("query", "myQueryParameter"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -167,8 +160,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions merges query parameters with default ones", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("query2", "myQueryParameter"))
+		_, err := client.CustomPost(context.Background(), "test/requestOptions", monitoring.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("query2", "myQueryParameter"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -184,8 +176,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions can override default headers", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		_, err := client.CustomPost(context.Background(), "test/requestOptions", monitoring.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -206,8 +197,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions merges headers with default ones", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		_, err := client.CustomPost(context.Background(), "test/requestOptions", monitoring.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -228,8 +218,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions queryParameters accepts booleans", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("isItWorking", true))
+		_, err := client.CustomPost(context.Background(), "test/requestOptions", monitoring.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("isItWorking", true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -245,8 +234,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions queryParameters accepts integers", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("myParam", 2))
+		_, err := client.CustomPost(context.Background(), "test/requestOptions", monitoring.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("myParam", 2))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -262,8 +250,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of string", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("myParam",
+		_, err := client.CustomPost(context.Background(), "test/requestOptions", monitoring.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("myParam",
 			[]string{"b and c", "d"}))
 		require.NoError(t, err)
 
@@ -280,8 +267,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of booleans", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("myParam",
+		_, err := client.CustomPost(context.Background(), "test/requestOptions", monitoring.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("myParam",
 			[]bool{true, true, false}))
 		require.NoError(t, err)
 
@@ -298,8 +284,7 @@ func TestMonitoring_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of integers", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("myParam",
+		_, err := client.CustomPost(context.Background(), "test/requestOptions", monitoring.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("myParam",
 			[]int32{1, 2}))
 		require.NoError(t, err)
 
@@ -322,8 +307,7 @@ func TestMonitoring_CustomPut(t *testing.T) {
 	_ = echo
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"test/minimal"))
+		_, err := client.CustomPut(context.Background(), "test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -333,8 +317,7 @@ func TestMonitoring_CustomPut(t *testing.T) {
 		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("allow put method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+		_, err := client.CustomPut(context.Background(), "test/all", monitoring.NewCustomPutOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -356,8 +339,7 @@ func TestMonitoring_GetClusterIncidents(t *testing.T) {
 	_ = echo
 
 	t.Run("getClusterIncidents", func(t *testing.T) {
-		_, err := client.GetClusterIncidents(client.NewApiGetClusterIncidentsRequest(
-			"c1-de"))
+		_, err := client.GetClusterIncidents(context.Background(), "c1-de")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/incidents/c1-de", echo.Path)
@@ -372,8 +354,7 @@ func TestMonitoring_GetClusterStatus(t *testing.T) {
 	_ = echo
 
 	t.Run("getClusterStatus", func(t *testing.T) {
-		_, err := client.GetClusterStatus(client.NewApiGetClusterStatusRequest(
-			"c1-de"))
+		_, err := client.GetClusterStatus(context.Background(), "c1-de")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/status/c1-de", echo.Path)
@@ -388,7 +369,7 @@ func TestMonitoring_GetIncidents(t *testing.T) {
 	_ = echo
 
 	t.Run("getIncidents", func(t *testing.T) {
-		_, err := client.GetIncidents()
+		_, err := client.GetIncidents(context.Background())
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/incidents", echo.Path)
@@ -403,8 +384,7 @@ func TestMonitoring_GetIndexingTime(t *testing.T) {
 	_ = echo
 
 	t.Run("getIndexingTime", func(t *testing.T) {
-		_, err := client.GetIndexingTime(client.NewApiGetIndexingTimeRequest(
-			"c1-de"))
+		_, err := client.GetIndexingTime(context.Background(), "c1-de")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexing/c1-de", echo.Path)
@@ -419,8 +399,7 @@ func TestMonitoring_GetLatency(t *testing.T) {
 	_ = echo
 
 	t.Run("getLatency", func(t *testing.T) {
-		_, err := client.GetLatency(client.NewApiGetLatencyRequest(
-			"c1-de"))
+		_, err := client.GetLatency(context.Background(), "c1-de")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/latency/c1-de", echo.Path)
@@ -435,8 +414,7 @@ func TestMonitoring_GetMetrics(t *testing.T) {
 	_ = echo
 
 	t.Run("getMetrics", func(t *testing.T) {
-		_, err := client.GetMetrics(client.NewApiGetMetricsRequest(
-			monitoring.Metric("avg_build_time"), monitoring.Period("minute")))
+		_, err := client.GetMetrics(context.Background(), monitoring.METRIC_AVG_BUILD_TIME, monitoring.PERIOD_MINUTE)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/infrastructure/avg_build_time/period/minute", echo.Path)
@@ -451,8 +429,7 @@ func TestMonitoring_GetReachability(t *testing.T) {
 	_ = echo
 
 	t.Run("getReachability", func(t *testing.T) {
-		_, err := client.GetReachability(client.NewApiGetReachabilityRequest(
-			"c1-de"))
+		_, err := client.GetReachability(context.Background(), "c1-de")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/reachability/c1-de/probes", echo.Path)
@@ -467,7 +444,7 @@ func TestMonitoring_GetServers(t *testing.T) {
 	_ = echo
 
 	t.Run("getInventory", func(t *testing.T) {
-		_, err := client.GetServers()
+		_, err := client.GetServers(context.Background())
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/inventory/servers", echo.Path)
@@ -482,7 +459,7 @@ func TestMonitoring_GetStatus(t *testing.T) {
 	_ = echo
 
 	t.Run("getStatus", func(t *testing.T) {
-		_, err := client.GetStatus()
+		_, err := client.GetStatus(context.Background())
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/status", echo.Path)

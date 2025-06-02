@@ -157,8 +157,9 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "test/minimal"))
+            response, err := client.CustomGet(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -386,8 +387,9 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "test/minimal"))
+            response, err := client.CustomPost(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -615,8 +617,9 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "test/minimal"))
+            response, err := client.CustomPut(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -838,9 +841,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "test/minimal"))
+            response, err := client.CustomDelete(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1064,7 +1067,7 @@ paths:
 
             // Call the API
 
-            response, err := client.GetAllConfigs()
+            response, err := client.GetAllConfigs(context.Background())
 
             if err != nil {
               // handle the eventual error
@@ -1327,9 +1330,7 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.CreateConfig(client.NewApiCreateConfigRequest(
-
+            response, err := client.CreateConfig(context.Background(),
               suggestions.NewEmptyConfigurationWithIndex().SetIndexName("<YOUR_INDEX_NAME>").SetSourceIndices(
                 []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("<YOUR_INDEX_NAME>").SetFacets(
                   []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
@@ -1337,7 +1338,7 @@ paths:
                     []string{"facetA", "facetB"},
                     []string{"facetC"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(
                 []string{"french"})).SetExclude(
-                []string{"test"})))
+                []string{"test"}))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1700,8 +1701,9 @@ paths:
 
             // Call the API
 
-            response, err := client.GetConfig(client.NewApiGetConfigRequest(
-              "<YOUR_INDEX_NAME>"))
+            response, err := client.GetConfig(context.Background(),
+            "<YOUR_INDEX_NAME>")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1967,17 +1969,15 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.UpdateConfig(client.NewApiUpdateConfigRequest(
-              "<YOUR_INDEX_NAME>",
-              suggestions.NewEmptyConfiguration().SetSourceIndices(
-                []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("<YOUR_INDEX_NAME>").SetFacets(
-                  []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
-                  [][]string{
-                    []string{"facetA", "facetB"},
-                    []string{"facetC"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(
-                []string{"french"})).SetExclude(
-                []string{"test"})))
+            response, err := client.UpdateConfig(context.Background(),
+            "<YOUR_INDEX_NAME>",
+              []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("<YOUR_INDEX_NAME>").SetFacets(
+                []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
+                [][]string{
+                  []string{"facetA", "facetB"},
+                  []string{"facetC"}})}, suggestions.NewUpdateConfigOptions().WithLanguages(suggestions.ArrayOfStringAsLanguages(
+                []string{"french"})).WithExclude(
+                []string{"test"}))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2353,9 +2353,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.DeleteConfig(client.NewApiDeleteConfigRequest(
-              "<YOUR_INDEX_NAME>"))
+            response, err := client.DeleteConfig(context.Background(),
+            "<YOUR_INDEX_NAME>")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2620,9 +2620,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetConfigStatus(client.NewApiGetConfigStatusRequest(
-              "<YOUR_INDEX_NAME>"))
+            response, err := client.GetConfigStatus(context.Background(),
+            "<YOUR_INDEX_NAME>")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2881,8 +2881,9 @@ paths:
 
             // Call the API
 
-            response, err := client.GetLogFile(client.NewApiGetLogFileRequest(
-              "<YOUR_INDEX_NAME>"))
+            response, err := client.GetLogFile(context.Background(),
+            "<YOUR_INDEX_NAME>")
+
             if err != nil {
               // handle the eventual error
               panic(err)
