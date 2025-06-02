@@ -5,9 +5,11 @@ from json import loads
 from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
 from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}Sync{{/lambda.pascalcase}}
 from algoliasearch.{{{import}}}.config import {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}
-from algoliasearch.search.models.batch_response import BatchResponse
-from algoliasearch.search.models.updated_at_response import UpdatedAtResponse
-from algoliasearch.search.models.get_task_response import GetTaskResponse
+from algoliasearch.search.models import (
+  BatchResponse,
+  UpdatedAtResponse,
+  GetTaskResponse,
+)
 from ..helpers import Helpers
 from dotenv import load_dotenv
 
