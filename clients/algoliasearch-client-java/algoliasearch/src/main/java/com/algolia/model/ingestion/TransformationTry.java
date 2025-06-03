@@ -26,7 +26,13 @@ public class TransformationTry {
     return this;
   }
 
-  /** The source code of the transformation. */
+  /**
+   * It is deprecated. Use the `input` field with proper `type` instead to specify the
+   * transformation code.
+   *
+   * @deprecated
+   */
+  @Deprecated
   @javax.annotation.Nonnull
   public String getCode() {
     return code;

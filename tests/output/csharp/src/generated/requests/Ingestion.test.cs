@@ -381,7 +381,8 @@ public class IngestionClientRequestTests
     await client.CreateTransformationAsync(
       new TransformationCreate
       {
-        Code = "foo",
+        Input = new TransformationInput(new TransformationCode { Code = "foo" }),
+        Type = Enum.Parse<TransformationType>("Code"),
         Name = "bar",
         Description = "baz",
       }
@@ -391,7 +392,7 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/transformations", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"code\":\"foo\",\"name\":\"bar\",\"description\":\"baz\"}",
+      "{\"input\":{\"code\":\"foo\"},\"type\":\"code\",\"name\":\"bar\",\"description\":\"baz\"}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -1813,7 +1814,8 @@ public class IngestionClientRequestTests
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TransformationCreate
       {
-        Code = "foo",
+        Input = new TransformationInput(new TransformationCode { Code = "foo" }),
+        Type = Enum.Parse<TransformationType>("Code"),
         Name = "bar",
         Description = "baz",
       }
@@ -1823,7 +1825,7 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"code\":\"foo\",\"name\":\"bar\",\"description\":\"baz\"}",
+      "{\"input\":{\"code\":\"foo\"},\"type\":\"code\",\"name\":\"bar\",\"description\":\"baz\"}",
       req.Body,
       new JsonDiffConfig(false)
     );

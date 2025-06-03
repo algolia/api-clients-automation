@@ -14,8 +14,12 @@ module Algolia
       # The authentications associated with the current transformation.
       attr_accessor :authentication_ids
 
-      # The source code of the transformation.
+      # It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
       attr_accessor :code
+
+      attr_accessor :type
+
+      attr_accessor :input
 
       # The uniquely identified name of your transformation.
       attr_accessor :name
@@ -38,6 +42,8 @@ module Algolia
           :transformation_id => :transformationID,
           :authentication_ids => :authenticationIDs,
           :code => :code,
+          :type => :type,
+          :input => :input,
           :name => :name,
           :description => :description,
           :owner => :owner,
@@ -52,6 +58,8 @@ module Algolia
           :transformation_id => :"String",
           :authentication_ids => :"Array<String>",
           :code => :"String",
+          :type => :"TransformationType",
+          :input => :"TransformationInput",
           :name => :"String",
           :description => :"String",
           :owner => :"String",
@@ -110,6 +118,14 @@ module Algolia
           self.code = nil
         end
 
+        if attributes.key?(:type)
+          self.type = attributes[:type]
+        end
+
+        if attributes.key?(:input)
+          self.input = attributes[:input]
+        end
+
         if attributes.key?(:name)
           self.name = attributes[:name]
         else
@@ -145,6 +161,8 @@ module Algolia
           transformation_id == other.transformation_id &&
           authentication_ids == other.authentication_ids &&
           code == other.code &&
+          type == other.type &&
+          input == other.input &&
           name == other.name &&
           description == other.description &&
           owner == other.owner &&
@@ -161,7 +179,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [transformation_id, authentication_ids, code, name, description, owner, created_at, updated_at].hash
+        [transformation_id, authentication_ids, code, type, input, name, description, owner, created_at, updated_at].hash
       end
 
       # Builds the object from hash

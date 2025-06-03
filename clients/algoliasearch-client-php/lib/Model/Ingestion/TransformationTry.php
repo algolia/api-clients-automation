@@ -180,6 +180,8 @@ class TransformationTry extends AbstractModel implements ModelInterface, \ArrayA
      * Gets code.
      *
      * @return string
+     *
+     * @deprecated
      */
     public function getCode()
     {
@@ -189,9 +191,11 @@ class TransformationTry extends AbstractModel implements ModelInterface, \ArrayA
     /**
      * Sets code.
      *
-     * @param string $code the source code of the transformation
+     * @param string $code It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
      *
      * @return self
+     *
+     * @deprecated
      */
     public function setCode($code)
     {

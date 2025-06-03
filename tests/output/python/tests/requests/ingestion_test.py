@@ -343,7 +343,10 @@ class TestIngestionClient:
         """
         _req = await self._client.create_transformation_with_http_info(
             transformation_create={
-                "code": "foo",
+                "input": {
+                    "code": "foo",
+                },
+                "type": "code",
                 "name": "bar",
                 "description": "baz",
             },
@@ -354,7 +357,7 @@ class TestIngestionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"code":"foo","name":"bar","description":"baz"}"""
+            """{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}"""
         )
 
     async def test_custom_delete_(self):
@@ -1654,7 +1657,10 @@ class TestIngestionClient:
         _req = await self._client.update_transformation_with_http_info(
             transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             transformation_create={
-                "code": "foo",
+                "input": {
+                    "code": "foo",
+                },
+                "type": "code",
                 "name": "bar",
                 "description": "baz",
             },
@@ -1665,7 +1671,7 @@ class TestIngestionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"code":"foo","name":"bar","description":"baz"}"""
+            """{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}"""
         )
 
     async def test_validate_source_(self):
@@ -2052,7 +2058,10 @@ class TestIngestionClientSync:
         """
         _req = self._client.create_transformation_with_http_info(
             transformation_create={
-                "code": "foo",
+                "input": {
+                    "code": "foo",
+                },
+                "type": "code",
                 "name": "bar",
                 "description": "baz",
             },
@@ -2063,7 +2072,7 @@ class TestIngestionClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"code":"foo","name":"bar","description":"baz"}"""
+            """{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}"""
         )
 
     def test_custom_delete_(self):
@@ -3363,7 +3372,10 @@ class TestIngestionClientSync:
         _req = self._client.update_transformation_with_http_info(
             transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             transformation_create={
-                "code": "foo",
+                "input": {
+                    "code": "foo",
+                },
+                "type": "code",
                 "name": "bar",
                 "description": "baz",
             },
@@ -3374,7 +3386,7 @@ class TestIngestionClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"code":"foo","name":"bar","description":"baz"}"""
+            """{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}"""
         )
 
     def test_validate_source_(self):

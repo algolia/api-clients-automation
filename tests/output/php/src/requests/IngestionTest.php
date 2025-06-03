@@ -344,7 +344,9 @@ class IngestionTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->createTransformation(
-            ['code' => 'foo',
+            ['input' => ['code' => 'foo',
+            ],
+                'type' => 'code',
                 'name' => 'bar',
                 'description' => 'baz',
             ],
@@ -354,7 +356,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/transformations',
                 'method' => 'POST',
-                'body' => json_decode('{"code":"foo","name":"bar","description":"baz"}'),
+                'body' => json_decode('{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}'),
             ],
         ]);
     }
@@ -1785,7 +1787,9 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $client->updateTransformation(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['code' => 'foo',
+            ['input' => ['code' => 'foo',
+            ],
+                'type' => 'code',
                 'name' => 'bar',
                 'description' => 'baz',
             ],
@@ -1795,7 +1799,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
                 'method' => 'PUT',
-                'body' => json_decode('{"code":"foo","name":"bar","description":"baz"}'),
+                'body' => json_decode('{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}'),
             ],
         ]);
     }

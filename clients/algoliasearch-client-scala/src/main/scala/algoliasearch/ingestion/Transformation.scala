@@ -19,6 +19,8 @@
   */
 package algoliasearch.ingestion
 
+import algoliasearch.ingestion.TransformationType._
+
 /** Transformation
   *
   * @param transformationID
@@ -26,7 +28,7 @@ package algoliasearch.ingestion
   * @param authenticationIDs
   *   The authentications associated with the current transformation.
   * @param code
-  *   The source code of the transformation.
+  *   It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
   * @param name
   *   The uniquely identified name of your transformation.
   * @param description
@@ -42,6 +44,8 @@ case class Transformation(
     transformationID: String,
     authenticationIDs: Option[Seq[String]] = scala.None,
     code: String,
+    `type`: Option[TransformationType] = scala.None,
+    input: Option[TransformationInput] = scala.None,
     name: String,
     description: Option[String] = scala.None,
     owner: Option[String] = scala.None,

@@ -449,7 +449,10 @@ def snippet_for_create_transformation():
     # Call the API
     response = client.create_transformation(
         transformation_create={
-            "code": "foo",
+            "input": {
+                "code": "foo",
+            },
+            "type": "code",
             "name": "bar",
             "description": "baz",
         },
@@ -2403,7 +2406,10 @@ def snippet_for_update_transformation():
     response = client.update_transformation(
         transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         transformation_create={
-            "code": "foo",
+            "input": {
+                "code": "foo",
+            },
+            "type": "code",
             "name": "bar",
             "description": "baz",
         },

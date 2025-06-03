@@ -37,7 +37,7 @@ class TransformationTry(BaseModel):
     """
 
     code: str
-    """ The source code of the transformation. """
+    """ It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code. """
     sample_record: object
     """ The record to apply the given code to. """
     authentications: Optional[List[AuthenticationCreate]] = None
