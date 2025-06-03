@@ -18,6 +18,12 @@ public class TransformationCreate {
   @JsonProperty("name")
   private String name;
 
+  @JsonProperty("type")
+  private TransformationType type;
+
+  @JsonProperty("input")
+  private TransformationInput input;
+
   @JsonProperty("description")
   private String description;
 
@@ -29,8 +35,14 @@ public class TransformationCreate {
     return this;
   }
 
-  /** The source code of the transformation. */
-  @javax.annotation.Nonnull
+  /**
+   * It is deprecated. Use the `input` field with proper `type` instead to specify the
+   * transformation code.
+   *
+   * @deprecated
+   */
+  @Deprecated
+  @javax.annotation.Nullable
   public String getCode() {
     return code;
   }
@@ -44,6 +56,28 @@ public class TransformationCreate {
   @javax.annotation.Nonnull
   public String getName() {
     return name;
+  }
+
+  public TransformationCreate setType(TransformationType type) {
+    this.type = type;
+    return this;
+  }
+
+  /** Get type */
+  @javax.annotation.Nonnull
+  public TransformationType getType() {
+    return type;
+  }
+
+  public TransformationCreate setInput(TransformationInput input) {
+    this.input = input;
+    return this;
+  }
+
+  /** Get input */
+  @javax.annotation.Nonnull
+  public TransformationInput getInput() {
+    return input;
   }
 
   public TransformationCreate setDescription(String description) {
@@ -88,6 +122,8 @@ public class TransformationCreate {
     return (
       Objects.equals(this.code, transformationCreate.code) &&
       Objects.equals(this.name, transformationCreate.name) &&
+      Objects.equals(this.type, transformationCreate.type) &&
+      Objects.equals(this.input, transformationCreate.input) &&
       Objects.equals(this.description, transformationCreate.description) &&
       Objects.equals(this.authenticationIDs, transformationCreate.authenticationIDs)
     );
@@ -95,7 +131,7 @@ public class TransformationCreate {
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, name, description, authenticationIDs);
+    return Objects.hash(code, name, type, input, description, authenticationIDs);
   }
 
   @Override
@@ -104,6 +140,8 @@ public class TransformationCreate {
     sb.append("class TransformationCreate {\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    input: ").append(toIndentedString(input)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    authenticationIDs: ").append(toIndentedString(authenticationIDs)).append("\n");
     sb.append("}");

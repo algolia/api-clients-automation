@@ -19,10 +19,12 @@
   */
 package algoliasearch.ingestion
 
+import algoliasearch.ingestion.TransformationType._
+
 /** API request body for creating a transformation.
   *
   * @param code
-  *   The source code of the transformation.
+  *   It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
   * @param name
   *   The uniquely identified name of your transformation.
   * @param description
@@ -31,8 +33,10 @@ package algoliasearch.ingestion
   *   The authentications associated with the current transformation.
   */
 case class TransformationCreate(
-    code: String,
+    code: Option[String] = scala.None,
     name: String,
+    `type`: TransformationType,
+    input: TransformationInput,
     description: Option[String] = scala.None,
     authenticationIDs: Option[Seq[String]] = scala.None
 )

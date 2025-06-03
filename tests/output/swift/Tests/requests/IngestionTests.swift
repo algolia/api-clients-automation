@@ -488,8 +488,9 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.createTransformationWithHTTPInfo(transformationCreate: TransformationCreate(
-            code: "foo",
             name: "bar",
+            type: TransformationType.code,
+            input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
             description: "baz"
         ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -498,7 +499,9 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"code\":\"foo\",\"name\":\"bar\",\"description\":\"baz\"}".data(using: .utf8)
+        let expectedBodyData =
+            "{\"input\":{\"code\":\"foo\"},\"type\":\"code\",\"name\":\"bar\",\"description\":\"baz\"}"
+                .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -2651,7 +2654,12 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let response = try await client.updateTransformationWithHTTPInfo(
             transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            transformationCreate: TransformationCreate(code: "foo", name: "bar", description: "baz")
+            transformationCreate: TransformationCreate(
+                name: "bar",
+                type: TransformationType.code,
+                input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
+                description: "baz"
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -2659,7 +2667,9 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"code\":\"foo\",\"name\":\"bar\",\"description\":\"baz\"}".data(using: .utf8)
+        let expectedBodyData =
+            "{\"input\":{\"code\":\"foo\"},\"type\":\"code\",\"name\":\"bar\",\"description\":\"baz\"}"
+                .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)

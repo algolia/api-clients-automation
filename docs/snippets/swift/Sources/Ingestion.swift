@@ -278,8 +278,9 @@ final class IngestionClientSnippet {
 
         // Call the API
         let response = try await client.createTransformation(transformationCreate: TransformationCreate(
-            code: "foo",
             name: "bar",
+            type: TransformationType.code,
+            input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
             description: "baz"
         ))
         // >LOG
@@ -1503,7 +1504,12 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.updateTransformation(
             transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            transformationCreate: TransformationCreate(code: "foo", name: "bar", description: "baz")
+            transformationCreate: TransformationCreate(
+                name: "bar",
+                type: TransformationType.code,
+                input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
+                description: "baz"
+            )
         )
         // >LOG
         // SEPARATOR<

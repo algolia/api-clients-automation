@@ -4049,7 +4049,49 @@ components:
         $ref: '#/components/schemas/authenticationID'
     Code:
       type: string
-      description: The source code of the transformation.
+      deprecated: true
+      description: >-
+        It is deprecated. Use the `input` field with proper `type` instead to
+        specify the transformation code.
+    TransformationType:
+      type: string
+      description: The type of transformation, which can be either 'code' or 'noCode'.
+      enum:
+        - code
+        - noCode
+    TransformationCode:
+      type: object
+      additionalProperties: false
+      description: >-
+        Input for a transformation that contains the source code of the
+        transformation.
+      properties:
+        code:
+          type: string
+          description: The source code of the transformation.
+      required:
+        - code
+    TransformationNoCodeStep:
+      type: object
+      description: A step in a no-code transformation.
+    TransformationNoCode:
+      type: object
+      additionalProperties: false
+      description: Input for a no-code transformation that contains a series of steps.
+      properties:
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransformationNoCodeStep'
+      required:
+        - steps
+    TransformationInput:
+      description: >-
+        The input for the transformation, which can be either code or a no-code
+        configuration.
+      oneOf:
+        - $ref: '#/components/schemas/TransformationCode'
+        - $ref: '#/components/schemas/TransformationNoCode'
     Name:
       type: string
       description: The uniquely identified name of your transformation.
@@ -4066,6 +4108,10 @@ components:
           $ref: '#/components/schemas/AuthenticationIDs'
         code:
           $ref: '#/components/schemas/Code'
+        type:
+          $ref: '#/components/schemas/TransformationType'
+        input:
+          $ref: '#/components/schemas/TransformationInput'
         name:
           $ref: '#/components/schemas/Name'
         description:
@@ -4091,13 +4137,18 @@ components:
           $ref: '#/components/schemas/Code'
         name:
           $ref: '#/components/schemas/Name'
+        type:
+          $ref: '#/components/schemas/TransformationType'
+        input:
+          $ref: '#/components/schemas/TransformationInput'
         description:
           $ref: '#/components/schemas/Description'
         authenticationIDs:
           $ref: '#/components/schemas/AuthenticationIDs'
       required:
-        - code
         - name
+        - type
+        - input
     TransformationCreateResponse:
       type: object
       additionalProperties: false

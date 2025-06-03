@@ -467,7 +467,10 @@ class SnippetIngestionClient {
     val response = Await.result(
       client.createTransformation(
         transformationCreate = TransformationCreate(
-          code = "foo",
+          input = TransformationCode(
+            code = "foo"
+          ),
+          `type` = TransformationType.withName("code"),
           name = "bar",
           description = Some("baz")
         )
@@ -2375,7 +2378,10 @@ class SnippetIngestionClient {
       client.updateTransformation(
         transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         transformationCreate = TransformationCreate(
-          code = "foo",
+          input = TransformationCode(
+            code = "foo"
+          ),
+          `type` = TransformationType.withName("code"),
           name = "bar",
           description = Some("baz")
         )

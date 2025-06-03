@@ -358,13 +358,23 @@ class IngestionClientRequestsTests {
   @DisplayName("createTransformation")
   void createTransformationTest() {
     assertDoesNotThrow(() -> {
-      client.createTransformation(new TransformationCreate().setCode("foo").setName("bar").setDescription("baz"));
+      client.createTransformation(
+        new TransformationCreate()
+          .setInput(new TransformationCode().setCode("foo"))
+          .setType(TransformationType.CODE)
+          .setName("bar")
+          .setDescription("baz")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/transformations", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
-      JSONAssert.assertEquals("{\"code\":\"foo\",\"name\":\"bar\",\"description\":\"baz\"}", req.body, JSONCompareMode.STRICT)
+      JSONAssert.assertEquals(
+        "{\"input\":{\"code\":\"foo\"},\"type\":\"code\",\"name\":\"bar\",\"description\":\"baz\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
     );
   }
 
@@ -1862,14 +1872,22 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.updateTransformation(
         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        new TransformationCreate().setCode("foo").setName("bar").setDescription("baz")
+        new TransformationCreate()
+          .setInput(new TransformationCode().setCode("foo"))
+          .setType(TransformationType.CODE)
+          .setName("bar")
+          .setDescription("baz")
       );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
     assertEquals("PUT", req.method);
     assertDoesNotThrow(() ->
-      JSONAssert.assertEquals("{\"code\":\"foo\",\"name\":\"bar\",\"description\":\"baz\"}", req.body, JSONCompareMode.STRICT)
+      JSONAssert.assertEquals(
+        "{\"input\":{\"code\":\"foo\"},\"type\":\"code\",\"name\":\"bar\",\"description\":\"baz\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
     );
   }
 
