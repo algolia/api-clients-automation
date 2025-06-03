@@ -3418,6 +3418,7 @@ components:
         - partial
         - full
     highlightResultOption:
+      title: highlightResultOption
       type: object
       description: Surround words that match the query with HTML tags for highlighting.
       additionalProperties: false
@@ -3444,6 +3445,7 @@ components:
         - matchLevel
         - matchedWords
     highlightResultMap:
+      title: highlightResultMap
       type: object
       description: Surround words that match the query with HTML tags for highlighting.
       x-is-free-form: false
@@ -3456,11 +3458,13 @@ components:
         - $ref: '#/components/schemas/highlightResultMap'
         - $ref: '#/components/schemas/highlightResultArray'
     highlightResultArray:
+      title: highlightResultArray
       type: array
       description: Surround words that match the query with HTML tags for highlighting.
       items:
         $ref: '#/components/schemas/highlightResult'
     snippetResultOption:
+      title: snippetResultOption
       type: object
       description: Snippets that show the context around a matching search query.
       additionalProperties: false
@@ -3475,6 +3479,7 @@ components:
       x-discriminator-fields:
         - matchLevel
     snippetResultMap:
+      title: snippetResultMap
       type: object
       description: Snippets that show the context around a matching search query.
       x-is-free-form: false
@@ -3487,6 +3492,7 @@ components:
         - $ref: '#/components/schemas/snippetResultMap'
         - $ref: '#/components/schemas/snippetResultArray'
     snippetResultArray:
+      title: snippetResultArray
       type: array
       description: Snippets that show the context around a matching search query.
       items:
