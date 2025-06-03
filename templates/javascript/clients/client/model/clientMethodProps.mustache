@@ -24,9 +24,9 @@ import type { CreateIterablePromise } from '@algolia/client-common';
 {{#vendorExtensions}}
 {{#x-create-wrapping-object}}
 /**
- * Properties for the `{{nickname}}` method. {{{x-has-generic-parameter}}}
+ * Properties for the `{{nickname}}` method.
  */
-export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props{{#x-has-generic-parameter}}<T = Record<string, unknown>>{{/x-has-generic-parameter}} = {
+export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props{{#x-has-generic-parameter}}<T extends object>{{/x-has-generic-parameter}} = {
   {{#allParams}}
     {{#description}}
     /**
