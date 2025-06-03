@@ -612,7 +612,7 @@ PushTaskPayload:
   type: object
   properties:
     action:
-      $ref: '#/action'
+      $ref: '../../../common/schemas/Batch.yml#/action'
     records:
       type: array
       items:
@@ -627,12 +627,3 @@ PushTaskPayload:
   required:
     - action
     - records
-
-action:
-  type: string
-  enum:
-    - addObject
-    - updateObject
-    - partialUpdateObject
-    - partialUpdateObjectNoCreate
-  description: Type of indexing operation.
