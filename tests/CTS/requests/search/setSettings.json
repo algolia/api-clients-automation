@@ -4,7 +4,8 @@
     "parameters": {
       "indexName": "cts_e2e_settings",
       "indexSettings": {
-        "paginationLimitedTo": 10
+        "paginationLimitedTo": 10,
+        "typoTolerance": "false"
       },
       "forwardToReplicas": true
     },
@@ -12,7 +13,8 @@
       "path": "/1/indexes/cts_e2e_settings/settings",
       "method": "PUT",
       "body": {
-        "paginationLimitedTo": 10
+        "paginationLimitedTo": 10,
+        "typoTolerance": "false"
       },
       "queryParameters": {
         "forwardToReplicas": "true"

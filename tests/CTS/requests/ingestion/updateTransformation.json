@@ -4,7 +4,8 @@
     "parameters": {
       "transformationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       "transformationCreate": {
-        "code": "foo",
+        "input": {"code": "foo"},
+        "type": "code",
         "name": "bar",
         "description": "baz"
       }
@@ -13,7 +14,8 @@
       "path": "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       "method": "PUT",
       "body": {
-        "code": "foo",
+        "input": {"code": "foo"},
+        "type": "code",
         "name": "bar",
         "description": "baz"
       }

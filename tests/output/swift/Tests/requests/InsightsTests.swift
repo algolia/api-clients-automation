@@ -144,9 +144,8 @@ final class InsightsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}"
-                    .data(using: .utf8)
+            try XCTUnwrap("{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}"
+                .data(using: .utf8)
             )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
@@ -303,9 +302,8 @@ final class InsightsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters = try XCTUnwrap(
-            "{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}"
-                .data(using: .utf8)
+        let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}"
+            .data(using: .utf8)
         )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
@@ -445,9 +443,8 @@ final class InsightsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters = try XCTUnwrap(
-            "{\"query\":\"parameters\",\"isItWorking\":\"true\"}"
-                .data(using: .utf8)
+        let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"isItWorking\":\"true\"}"
+            .data(using: .utf8)
         )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
@@ -530,9 +527,8 @@ final class InsightsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters = try XCTUnwrap(
-            "{\"query\":\"parameters\",\"myParam\":\"b%20and%20c%2Cd\"}"
-                .data(using: .utf8)
+        let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"b%20and%20c%2Cd\"}"
+            .data(using: .utf8)
         )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
@@ -574,9 +570,8 @@ final class InsightsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters = try XCTUnwrap(
-            "{\"query\":\"parameters\",\"myParam\":\"true%2Ctrue%2Cfalse\"}"
-                .data(using: .utf8)
+        let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"true%2Ctrue%2Cfalse\"}"
+            .data(using: .utf8)
         )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
@@ -618,9 +613,8 @@ final class InsightsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters = try XCTUnwrap(
-            "{\"query\":\"parameters\",\"myParam\":\"1%2C2\"}"
-                .data(using: .utf8)
+        let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"1%2C2\"}"
+            .data(using: .utf8)
         )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
@@ -781,7 +775,7 @@ final class InsightsClientRequestsTests: XCTestCase {
                 queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
                 userToken: "user-123456",
                 authenticatedUserToken: "user-123456",
-                timestamp: Int64(1_747_785_600_000)
+                timestamp: Int64(1_748_822_400_000)
             )),
             EventsItems.viewedObjectIDs(ViewedObjectIDs(
                 eventName: "Product Detail Page Viewed",
@@ -790,7 +784,7 @@ final class InsightsClientRequestsTests: XCTestCase {
                 objectIDs: ["9780545139700", "9780439784542"],
                 userToken: "user-123456",
                 authenticatedUserToken: "user-123456",
-                timestamp: Int64(1_747_785_600_000)
+                timestamp: Int64(1_748_822_400_000)
             )),
         ]))
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -800,7 +794,7 @@ final class InsightsClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1747785600000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1747785600000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}"
+            "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1748822400000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1748822400000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 

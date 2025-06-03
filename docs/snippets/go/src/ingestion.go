@@ -420,7 +420,8 @@ func SnippetForCreateTransformationOfIngestion() {
 	// Call the API
 	response, err := client.CreateTransformation(client.NewApiCreateTransformationRequest(
 
-		ingestion.NewEmptyTransformationCreate().SetCode("foo").SetName("bar").SetDescription("baz")))
+		ingestion.NewEmptyTransformationCreate().SetInput(ingestion.TransformationCodeAsTransformationInput(
+			ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetType(ingestion.TransformationType("code")).SetName("bar").SetDescription("baz")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2413,7 +2414,8 @@ func SnippetForUpdateTransformationOfIngestion() {
 	// Call the API
 	response, err := client.UpdateTransformation(client.NewApiUpdateTransformationRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-		ingestion.NewEmptyTransformationCreate().SetCode("foo").SetName("bar").SetDescription("baz")))
+		ingestion.NewEmptyTransformationCreate().SetInput(ingestion.TransformationCodeAsTransformationInput(
+			ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetType(ingestion.TransformationType("code")).SetName("bar").SetDescription("baz")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

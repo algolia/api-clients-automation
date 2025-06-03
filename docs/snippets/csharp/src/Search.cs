@@ -7975,7 +7975,11 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.SetSettingsAsync(
       "<YOUR_INDEX_NAME>",
-      new IndexSettings { PaginationLimitedTo = 10 },
+      new IndexSettings
+      {
+        PaginationLimitedTo = 10,
+        TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>("False")),
+      },
       true
     );
     // >LOG

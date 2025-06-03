@@ -21,6 +21,12 @@ public class Transformation {
   @JsonProperty("code")
   private String code;
 
+  @JsonProperty("type")
+  private TransformationType type;
+
+  @JsonProperty("input")
+  private TransformationInput input;
+
   @JsonProperty("name")
   private String name;
 
@@ -71,10 +77,38 @@ public class Transformation {
     return this;
   }
 
-  /** The source code of the transformation. */
+  /**
+   * It is deprecated. Use the `input` field with proper `type` instead to specify the
+   * transformation code.
+   *
+   * @deprecated
+   */
+  @Deprecated
   @javax.annotation.Nonnull
   public String getCode() {
     return code;
+  }
+
+  public Transformation setType(TransformationType type) {
+    this.type = type;
+    return this;
+  }
+
+  /** Get type */
+  @javax.annotation.Nullable
+  public TransformationType getType() {
+    return type;
+  }
+
+  public Transformation setInput(TransformationInput input) {
+    this.input = input;
+    return this;
+  }
+
+  /** Get input */
+  @javax.annotation.Nullable
+  public TransformationInput getInput() {
+    return input;
   }
 
   public Transformation setName(String name) {
@@ -145,6 +179,8 @@ public class Transformation {
       Objects.equals(this.transformationID, transformation.transformationID) &&
       Objects.equals(this.authenticationIDs, transformation.authenticationIDs) &&
       Objects.equals(this.code, transformation.code) &&
+      Objects.equals(this.type, transformation.type) &&
+      Objects.equals(this.input, transformation.input) &&
       Objects.equals(this.name, transformation.name) &&
       Objects.equals(this.description, transformation.description) &&
       Objects.equals(this.owner, transformation.owner) &&
@@ -155,7 +191,7 @@ public class Transformation {
 
   @Override
   public int hashCode() {
-    return Objects.hash(transformationID, authenticationIDs, code, name, description, owner, createdAt, updatedAt);
+    return Objects.hash(transformationID, authenticationIDs, code, type, input, name, description, owner, createdAt, updatedAt);
   }
 
   @Override
@@ -165,6 +201,8 @@ public class Transformation {
     sb.append("    transformationID: ").append(toIndentedString(transformationID)).append("\n");
     sb.append("    authenticationIDs: ").append(toIndentedString(authenticationIDs)).append("\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    input: ").append(toIndentedString(input)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    owner: ").append(toIndentedString(owner)).append("\n");

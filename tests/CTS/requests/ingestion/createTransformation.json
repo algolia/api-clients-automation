@@ -1,7 +1,8 @@
 [
   {
     "parameters": {
-      "code": "foo",
+      "input": {"code": "foo"},
+      "type": "code",
       "name": "bar",
       "description": "baz"
     },
@@ -9,7 +10,8 @@
       "path": "/1/transformations",
       "method": "POST",
       "body": {
-        "code": "foo",
+        "input": {"code": "foo"},
+        "type": "code",
         "name": "bar",
         "description": "baz"
       }

@@ -27,7 +27,7 @@
       "task shopify": "var response = await client.CreateTaskV1Async(\n  new TaskCreateV1\n  {\n    SourceID = \"search\",\n    DestinationID = \"destinationName\",\n    Trigger = new TaskCreateTrigger(\n      new OnDemandTriggerInput { Type = Enum.Parse<OnDemandTriggerType>(\"OnDemand\") }\n    ),\n    Action = Enum.Parse<ActionType>(\"Replace\"),\n    Input = new TaskInput(\n      new DockerStreamsInput\n      {\n        Streams = new List<DockerStreams>\n        {\n          new DockerStreams\n          {\n            Name = \"foo\",\n            SyncMode = Enum.Parse<DockerStreamsSyncMode>(\"Incremental\"),\n          },\n        },\n      }\n    ),\n  }\n);"
     },
     "createTransformation": {
-      "default": "var response = await client.CreateTransformationAsync(\n  new TransformationCreate\n  {\n    Code = \"foo\",\n    Name = \"bar\",\n    Description = \"baz\",\n  }\n);"
+      "default": "var response = await client.CreateTransformationAsync(\n  new TransformationCreate\n  {\n    Input = new TransformationInput(new TransformationCode { Code = \"foo\" }),\n    Type = Enum.Parse<TransformationType>(\"Code\"),\n    Name = \"bar\",\n    Description = \"baz\",\n  }\n);"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "var response = await client.CustomDeleteAsync(\"test/minimal\");",
@@ -199,7 +199,7 @@
       "default": "var response = await client.UpdateTaskV1Async(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TaskUpdateV1 { Enabled = false }\n);"
     },
     "updateTransformation": {
-      "default": "var response = await client.UpdateTransformationAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TransformationCreate\n  {\n    Code = \"foo\",\n    Name = \"bar\",\n    Description = \"baz\",\n  }\n);"
+      "default": "var response = await client.UpdateTransformationAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TransformationCreate\n  {\n    Input = new TransformationInput(new TransformationCode { Code = \"foo\" }),\n    Type = Enum.Parse<TransformationType>(\"Code\"),\n    Name = \"bar\",\n    Description = \"baz\",\n  }\n);"
     },
     "validateSource": {
       "default": "var response = await client.ValidateSourceAsync(\n  new SourceCreate\n  {\n    Type = Enum.Parse<SourceType>(\"Commercetools\"),\n    Name = \"sourceName\",\n    Input = new SourceInput(\n      new SourceCommercetools\n      {\n        StoreKeys = new List<string> { \"myStore\" },\n        Locales = new List<string> { \"de\" },\n        Url = \"http://commercetools.com\",\n        ProjectKey = \"keyID\",\n      }\n    ),\n    AuthenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  }\n);"
@@ -240,7 +240,7 @@
       "task shopify": "response, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(\n\n  ingestion.NewEmptyTaskCreateV1().SetSourceID(\"search\").SetDestinationID(\"destinationName\").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(\n    ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType(\"onDemand\")))).SetAction(ingestion.ActionType(\"replace\")).SetInput(ingestion.DockerStreamsInputAsTaskInput(\n    ingestion.NewEmptyDockerStreamsInput().SetStreams(\n      []ingestion.DockerStreams{*ingestion.NewEmptyDockerStreams().SetName(\"foo\").SetSyncMode(ingestion.DockerStreamsSyncMode(\"incremental\"))})))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "createTransformation": {
-      "default": "response, err := client.CreateTransformation(client.NewApiCreateTransformationRequest(\n\n  ingestion.NewEmptyTransformationCreate().SetCode(\"foo\").SetName(\"bar\").SetDescription(\"baz\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CreateTransformation(client.NewApiCreateTransformationRequest(\n\n  ingestion.NewEmptyTransformationCreate().SetInput(ingestion.TransformationCodeAsTransformationInput(\n    ingestion.NewEmptyTransformationCode().SetCode(\"foo\"))).SetType(ingestion.TransformationType(\"code\")).SetName(\"bar\").SetDescription(\"baz\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -412,7 +412,7 @@
       "default": "response, err := client.UpdateTaskV1(client.NewApiUpdateTaskV1Request(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyTaskUpdateV1().SetEnabled(false)))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "updateTransformation": {
-      "default": "response, err := client.UpdateTransformation(client.NewApiUpdateTransformationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyTransformationCreate().SetCode(\"foo\").SetName(\"bar\").SetDescription(\"baz\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.UpdateTransformation(client.NewApiUpdateTransformationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyTransformationCreate().SetInput(ingestion.TransformationCodeAsTransformationInput(\n    ingestion.NewEmptyTransformationCode().SetCode(\"foo\"))).SetType(ingestion.TransformationType(\"code\")).SetName(\"bar\").SetDescription(\"baz\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "validateSource": {
       "default": "response, err := client.ValidateSource(client.NewApiValidateSourceRequest().WithSourceCreate(\n  ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType(\"commercetools\")).SetName(\"sourceName\").SetInput(ingestion.SourceCommercetoolsAsSourceInput(\n    ingestion.NewEmptySourceCommercetools().SetStoreKeys(\n      []string{\"myStore\"}).SetLocales(\n      []string{\"de\"}).SetUrl(\"http://commercetools.com\").SetProjectKey(\"keyID\"))).SetAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -452,7 +452,7 @@
       "task shopify": "client.createTaskV1(\n  new TaskCreateV1()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationName\")\n    .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))\n    .setAction(ActionType.REPLACE)\n    .setInput(\n      new DockerStreamsInput()\n        .setStreams(Arrays.asList(new DockerStreams().setName(\"foo\").setSyncMode(DockerStreamsSyncMode.INCREMENTAL)))\n    )\n);"
     },
     "createTransformation": {
-      "default": "client.createTransformation(new TransformationCreate().setCode(\"foo\").setName(\"bar\").setDescription(\"baz\"));"
+      "default": "client.createTransformation(\n  new TransformationCreate()\n    .setInput(new TransformationCode().setCode(\"foo\"))\n    .setType(TransformationType.CODE)\n    .setName(\"bar\")\n    .setDescription(\"baz\")\n);"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "client.customDelete(\"test/minimal\");",
@@ -624,7 +624,7 @@
       "default": "client.updateTaskV1(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", new TaskUpdateV1().setEnabled(false));"
     },
     "updateTransformation": {
-      "default": "client.updateTransformation(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TransformationCreate().setCode(\"foo\").setName(\"bar\").setDescription(\"baz\")\n);"
+      "default": "client.updateTransformation(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TransformationCreate()\n    .setInput(new TransformationCode().setCode(\"foo\"))\n    .setType(TransformationType.CODE)\n    .setName(\"bar\")\n    .setDescription(\"baz\")\n);"
     },
     "validateSource": {
       "default": "client.validateSource(\n  new SourceCreate()\n    .setType(SourceType.COMMERCETOOLS)\n    .setName(\"sourceName\")\n    .setInput(\n      new SourceCommercetools()\n        .setStoreKeys(Arrays.asList(\"myStore\"))\n        .setLocales(Arrays.asList(\"de\"))\n        .setUrl(\"http://commercetools.com\")\n        .setProjectKey(\"keyID\")\n    )\n    .setAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n);"
@@ -664,7 +664,7 @@
       "task shopify": "const response = await client.createTaskV1({\n  sourceID: 'search',\n  destinationID: 'destinationName',\n  trigger: { type: 'onDemand' },\n  action: 'replace',\n  input: { streams: [{ name: 'foo', syncMode: 'incremental' }] },\n});"
     },
     "createTransformation": {
-      "default": "const response = await client.createTransformation({ code: 'foo', name: 'bar', description: 'baz' });"
+      "default": "const response = await client.createTransformation({\n  input: { code: 'foo' },\n  type: 'code',\n  name: 'bar',\n  description: 'baz',\n});"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "const response = await client.customDelete({ path: 'test/minimal' });",
@@ -836,7 +836,7 @@
       "default": "const response = await client.updateTaskV1({\n  taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n  taskUpdate: { enabled: false },\n});"
     },
     "updateTransformation": {
-      "default": "const response = await client.updateTransformation({\n  transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n  transformationCreate: { code: 'foo', name: 'bar', description: 'baz' },\n});"
+      "default": "const response = await client.updateTransformation({\n  transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n  transformationCreate: { input: { code: 'foo' }, type: 'code', name: 'bar', description: 'baz' },\n});"
     },
     "validateSource": {
       "default": "const response = await client.validateSource({\n  type: 'commercetools',\n  name: 'sourceName',\n  input: { storeKeys: ['myStore'], locales: ['de'], url: 'http://commercetools.com', projectKey: 'keyID' },\n  authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});"
@@ -876,7 +876,7 @@
       "task shopify": "var response = client.createTaskV1(\n  taskCreate = TaskCreateV1(\n    sourceID = \"search\",\n    destinationID = \"destinationName\",\n    trigger = OnDemandTriggerInput(\n      type = OnDemandTriggerType.entries.first { it.value == \"onDemand\" },\n    ),\n    action = ActionType.entries.first { it.value == \"replace\" },\n    input = DockerStreamsInput(\n      streams = listOf(\n        DockerStreams(\n          name = \"foo\",\n          syncMode = DockerStreamsSyncMode.entries.first { it.value == \"incremental\" },\n        ),\n      ),\n    ),\n  ),\n)"
     },
     "createTransformation": {
-      "default": "var response = client.createTransformation(\n  transformationCreate = TransformationCreate(\n    code = \"foo\",\n    name = \"bar\",\n    description = \"baz\",\n  ),\n)"
+      "default": "var response = client.createTransformation(\n  transformationCreate = TransformationCreate(\n    input = TransformationCode(\n      code = \"foo\",\n    ),\n    type = TransformationType.entries.first { it.value == \"code\" },\n    name = \"bar\",\n    description = \"baz\",\n  ),\n)"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "var response = client.customDelete(\n  path = \"test/minimal\",\n)",
@@ -1048,7 +1048,7 @@
       "default": "var response = client.updateTaskV1(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  taskUpdate = TaskUpdateV1(\n    enabled = false,\n  ),\n)"
     },
     "updateTransformation": {
-      "default": "var response = client.updateTransformation(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  transformationCreate = TransformationCreate(\n    code = \"foo\",\n    name = \"bar\",\n    description = \"baz\",\n  ),\n)"
+      "default": "var response = client.updateTransformation(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  transformationCreate = TransformationCreate(\n    input = TransformationCode(\n      code = \"foo\",\n    ),\n    type = TransformationType.entries.first { it.value == \"code\" },\n    name = \"bar\",\n    description = \"baz\",\n  ),\n)"
     },
     "validateSource": {
       "default": "var response = client.validateSource(\n  sourceCreate = SourceCreate(\n    type = SourceType.entries.first { it.value == \"commercetools\" },\n    name = \"sourceName\",\n    input = SourceCommercetools(\n      storeKeys = listOf(\"myStore\"),\n      locales = listOf(\"de\"),\n      url = \"http://commercetools.com\",\n      projectKey = \"keyID\",\n    ),\n    authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ),\n)"
@@ -1088,7 +1088,7 @@
       "task shopify": "$response = $client->createTaskV1(\n    ['sourceID' => 'search',\n        'destinationID' => 'destinationName',\n        'trigger' => ['type' => 'onDemand',\n        ],\n        'action' => 'replace',\n        'input' => ['streams' => [\n            ['name' => 'foo',\n                'syncMode' => 'incremental',\n            ],\n        ],\n        ],\n    ],\n);"
     },
     "createTransformation": {
-      "default": "$response = $client->createTransformation(\n    ['code' => 'foo',\n        'name' => 'bar',\n        'description' => 'baz',\n    ],\n);"
+      "default": "$response = $client->createTransformation(\n    ['input' => ['code' => 'foo',\n    ],\n        'type' => 'code',\n        'name' => 'bar',\n        'description' => 'baz',\n    ],\n);"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "$response = $client->customDelete(\n    'test/minimal',\n);",
@@ -1260,7 +1260,7 @@
       "default": "$response = $client->updateTaskV1(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ['enabled' => false,\n    ],\n);"
     },
     "updateTransformation": {
-      "default": "$response = $client->updateTransformation(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ['code' => 'foo',\n        'name' => 'bar',\n        'description' => 'baz',\n    ],\n);"
+      "default": "$response = $client->updateTransformation(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ['input' => ['code' => 'foo',\n    ],\n        'type' => 'code',\n        'name' => 'bar',\n        'description' => 'baz',\n    ],\n);"
     },
     "validateSource": {
       "default": "$response = $client->validateSource(\n    ['type' => 'commercetools',\n        'name' => 'sourceName',\n        'input' => ['storeKeys' => [\n            'myStore',\n        ],\n            'locales' => [\n                'de',\n            ],\n            'url' => 'http://commercetools.com',\n            'projectKey' => 'keyID',\n        ],\n        'authenticationID' => '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ],\n);"
@@ -1300,7 +1300,7 @@
       "task shopify": "response = client.create_task_v1(\n    task_create={\n        \"sourceID\": \"search\",\n        \"destinationID\": \"destinationName\",\n        \"trigger\": {\n            \"type\": \"onDemand\",\n        },\n        \"action\": \"replace\",\n        \"input\": {\n            \"streams\": [\n                {\n                    \"name\": \"foo\",\n                    \"syncMode\": \"incremental\",\n                },\n            ],\n        },\n    },\n)"
     },
     "createTransformation": {
-      "default": "response = client.create_transformation(\n    transformation_create={\n        \"code\": \"foo\",\n        \"name\": \"bar\",\n        \"description\": \"baz\",\n    },\n)"
+      "default": "response = client.create_transformation(\n    transformation_create={\n        \"input\": {\n            \"code\": \"foo\",\n        },\n        \"type\": \"code\",\n        \"name\": \"bar\",\n        \"description\": \"baz\",\n    },\n)"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "response = client.custom_delete(\n    path=\"test/minimal\",\n)",
@@ -1472,7 +1472,7 @@
       "default": "response = client.update_task_v1(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    task_update={\n        \"enabled\": False,\n    },\n)"
     },
     "updateTransformation": {
-      "default": "response = client.update_transformation(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformation_create={\n        \"code\": \"foo\",\n        \"name\": \"bar\",\n        \"description\": \"baz\",\n    },\n)"
+      "default": "response = client.update_transformation(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformation_create={\n        \"input\": {\n            \"code\": \"foo\",\n        },\n        \"type\": \"code\",\n        \"name\": \"bar\",\n        \"description\": \"baz\",\n    },\n)"
     },
     "validateSource": {
       "default": "response = client.validate_source(\n    source_create={\n        \"type\": \"commercetools\",\n        \"name\": \"sourceName\",\n        \"input\": {\n            \"storeKeys\": [\n                \"myStore\",\n            ],\n            \"locales\": [\n                \"de\",\n            ],\n            \"url\": \"http://commercetools.com\",\n            \"projectKey\": \"keyID\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)"
@@ -1512,7 +1512,7 @@
       "task shopify": "response = client.create_task_v1(\n  Algolia::Ingestion::TaskCreateV1.new(\n    source_id: \"search\",\n    destination_id: \"destinationName\",\n    trigger: Algolia::Ingestion::OnDemandTriggerInput.new(type: \"onDemand\"),\n    action: \"replace\",\n    input: Algolia::Ingestion::DockerStreamsInput.new(\n      streams: [Algolia::Ingestion::DockerStreams.new(name: \"foo\", sync_mode: \"incremental\")]\n    )\n  )\n)"
     },
     "createTransformation": {
-      "default": "response = client.create_transformation(\n  Algolia::Ingestion::TransformationCreate.new(code: \"foo\", name: \"bar\", description: \"baz\")\n)"
+      "default": "response = client.create_transformation(\n  Algolia::Ingestion::TransformationCreate.new(\n    input: Algolia::Ingestion::TransformationCode.new(code: \"foo\"),\n    type: \"code\",\n    name: \"bar\",\n    description: \"baz\"\n  )\n)"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "response = client.custom_delete(\"test/minimal\")",
@@ -1684,7 +1684,7 @@
       "default": "response = client.update_task_v1(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  Algolia::Ingestion::TaskUpdateV1.new(enabled: false)\n)"
     },
     "updateTransformation": {
-      "default": "response = client.update_transformation(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  Algolia::Ingestion::TransformationCreate.new(code: \"foo\", name: \"bar\", description: \"baz\")\n)"
+      "default": "response = client.update_transformation(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  Algolia::Ingestion::TransformationCreate.new(\n    input: Algolia::Ingestion::TransformationCode.new(code: \"foo\"),\n    type: \"code\",\n    name: \"bar\",\n    description: \"baz\"\n  )\n)"
     },
     "validateSource": {
       "default": "response = client.validate_source(\n  Algolia::Ingestion::SourceCreate.new(\n    type: \"commercetools\",\n    name: \"sourceName\",\n    input: Algolia::Ingestion::SourceCommercetools.new(\n      store_keys: [\"myStore\"],\n      locales: [\"de\"],\n      url: \"http://commercetools.com\",\n      project_key: \"keyID\"\n    ),\n    authentication_id: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  )\n)"
@@ -1724,7 +1724,7 @@
       "task shopify": "val response = Await.result(\n  client.createTaskV1(\n    taskCreate = TaskCreateV1(\n      sourceID = \"search\",\n      destinationID = \"destinationName\",\n      trigger = OnDemandTriggerInput(\n        `type` = OnDemandTriggerType.withName(\"onDemand\")\n      ),\n      action = ActionType.withName(\"replace\"),\n      input = Some(\n        DockerStreamsInput(\n          streams = Seq(\n            DockerStreams(\n              name = \"foo\",\n              syncMode = DockerStreamsSyncMode.withName(\"incremental\")\n            )\n          )\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "createTransformation": {
-      "default": "val response = Await.result(\n  client.createTransformation(\n    transformationCreate = TransformationCreate(\n      code = \"foo\",\n      name = \"bar\",\n      description = Some(\"baz\")\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+      "default": "val response = Await.result(\n  client.createTransformation(\n    transformationCreate = TransformationCreate(\n      input = TransformationCode(\n        code = \"foo\"\n      ),\n      `type` = TransformationType.withName(\"code\"),\n      name = \"bar\",\n      description = Some(\"baz\")\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "val response = Await.result(\n  client.customDelete[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
@@ -1896,7 +1896,7 @@
       "default": "val response = Await.result(\n  client.updateTaskV1(\n    taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    taskUpdate = TaskUpdateV1(\n      enabled = Some(false)\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "updateTransformation": {
-      "default": "val response = Await.result(\n  client.updateTransformation(\n    transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformationCreate = TransformationCreate(\n      code = \"foo\",\n      name = \"bar\",\n      description = Some(\"baz\")\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+      "default": "val response = Await.result(\n  client.updateTransformation(\n    transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformationCreate = TransformationCreate(\n      input = TransformationCode(\n        code = \"foo\"\n      ),\n      `type` = TransformationType.withName(\"code\"),\n      name = \"bar\",\n      description = Some(\"baz\")\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "validateSource": {
       "default": "val response = Await.result(\n  client.validateSource(\n    sourceCreate = Some(\n      SourceCreate(\n        `type` = SourceType.withName(\"commercetools\"),\n        name = \"sourceName\",\n        input = Some(\n          SourceCommercetools(\n            storeKeys = Some(Seq(\"myStore\")),\n            locales = Some(Seq(\"de\")),\n            url = \"http://commercetools.com\",\n            projectKey = \"keyID\"\n          )\n        ),\n        authenticationID = Some(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
@@ -1936,7 +1936,7 @@
       "task shopify": "let response = try await client.createTaskV1(taskCreate: TaskCreateV1(\n    sourceID: \"search\",\n    destinationID: \"destinationName\",\n    trigger: TaskCreateTrigger.onDemandTriggerInput(OnDemandTriggerInput(type: OnDemandTriggerType.onDemand)),\n    action: ActionType.replace,\n    input: TaskInput.dockerStreamsInput(DockerStreamsInput(streams: [DockerStreams(\n        name: \"foo\",\n        syncMode: DockerStreamsSyncMode.incremental\n    )]))\n))"
     },
     "createTransformation": {
-      "default": "let response = try await client.createTransformation(transformationCreate: TransformationCreate(\n    code: \"foo\",\n    name: \"bar\",\n    description: \"baz\"\n))"
+      "default": "let response = try await client.createTransformation(transformationCreate: TransformationCreate(\n    name: \"bar\",\n    type: TransformationType.code,\n    input: TransformationInput.transformationCode(TransformationCode(code: \"foo\")),\n    description: \"baz\"\n))"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "let response = try await client.customDelete(path: \"test/minimal\")",
@@ -2108,7 +2108,7 @@
       "default": "let response = try await client.updateTaskV1(\n    taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    taskUpdate: TaskUpdateV1(enabled: false)\n)"
     },
     "updateTransformation": {
-      "default": "let response = try await client.updateTransformation(\n    transformationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformationCreate: TransformationCreate(code: \"foo\", name: \"bar\", description: \"baz\")\n)"
+      "default": "let response = try await client.updateTransformation(\n    transformationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformationCreate: TransformationCreate(\n        name: \"bar\",\n        type: TransformationType.code,\n        input: TransformationInput.transformationCode(TransformationCode(code: \"foo\")),\n        description: \"baz\"\n    )\n)"
     },
     "validateSource": {
       "default": "let response = try await client.validateSource(sourceCreate: SourceCreate(\n    type: SourceType.commercetools,\n    name: \"sourceName\",\n    input: SourceInput.sourceCommercetools(SourceCommercetools(\n        storeKeys: [\"myStore\"],\n        locales: [\"de\"],\n        url: \"http://commercetools.com\",\n        projectKey: \"keyID\"\n    )),\n    authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n))"
