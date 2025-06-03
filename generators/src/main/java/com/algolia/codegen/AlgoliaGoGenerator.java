@@ -140,7 +140,7 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
   @Override
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
     OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
-    ModelPruner.removeOrphans(this, operations, models);
+    ModelPruner.removeOrphanModelFiles(this, operations, models);
     Helpers.removeHelpers(operations);
     GenericPropagator.propagateGenericsToOperations(operations, models);
     return operations;

@@ -72,8 +72,8 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
         file.getTemplateFile().equals("api_client.mustache") ||
         file.getTemplateFile().equals("rest.mustache") ||
         file.getTemplateFile().equals("configuration.mustache") ||
-        file.getTemplateFile().equals("__init__.model.mustache") ||
-        file.getTemplateFile().equals("__init__.package.mustache") ||
+        file.getTemplateFile().equals("__init__model.mustache") ||
+        file.getTemplateFile().equals("__init__package.mustache") ||
         file.getTemplateFile().equals("model_anyof.mustache") ||
         file.getTemplateFile().equals("gitlab-ci.mustache")
     );
@@ -83,7 +83,7 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
     supportingFiles.add(new SupportingFile("gitignore.mustache", "../", ".gitignore"));
     supportingFiles.add(new SupportingFile("__init__.mustache", "", "__init__.py"));
     supportingFiles.add(new SupportingFile("__init__.mustache", packageName, "__init__.py"));
-    supportingFiles.add(new SupportingFile("__init__.mustache", packageName + "/models", "__init__.py"));
+    supportingFiles.add(new SupportingFile("__init_model__.mustache", packageName + "/models", "__init__.py"));
     supportingFiles.add(new SupportingFile("__init__.mustache", "http", "__init__.py"));
     supportingFiles.add(new SupportingFile("config.mustache", packageName, "config.py"));
 
@@ -122,7 +122,7 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
   @Override
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
     OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
-    ModelPruner.removeOrphans(this, operations, models);
+    ModelPruner.removeOrphanModelFiles(this, operations, models);
     Helpers.removeHelpers(operations);
 
     List<Map<String, String>> imports = operations.getImports();
@@ -155,6 +155,11 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
     }
 
     return objs;
+  }
+
+  @Override
+  public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
+    return ModelPruner.removeOrphanFromModels(this, super.postProcessSupportingFileData(objs));
   }
 
   @Override
