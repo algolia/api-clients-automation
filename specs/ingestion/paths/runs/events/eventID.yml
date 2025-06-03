@@ -17,6 +17,6 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../common/schemas/event.yml#/Event'
+            $ref: '../../../../common/schemas/ingestion/Observability.yml#/Event'
     '400':
       $ref: '../../../../common/responses/BadRequest.yml'

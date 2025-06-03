@@ -14,7 +14,7 @@ Destination:
     input:
       $ref: '#/DestinationInput'
     createdAt:
-      $ref: './common.yml#/createdAt'
+      $ref: '../../../common/parameters/ingestion.yml#/CreatedAt'
     updatedAt:
       $ref: './common.yml#/updatedAt'
     authenticationID:
@@ -59,7 +59,7 @@ DestinationCreateResponse:
     name:
       $ref: './common.yml#/name'
     createdAt:
-      $ref: './common.yml#/createdAt'
+      $ref: '../../../common/parameters/ingestion.yml#/CreatedAt'
   required:
     - destinationID
     - name

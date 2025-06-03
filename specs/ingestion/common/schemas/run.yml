@@ -4,9 +4,9 @@ RunResponse:
   description: API response for running a task.
   properties:
     runID:
-      $ref: './common.yml#/runID'
+      $ref: '../../../common/parameters/ingestion.yml#/RunID'
     createdAt:
-      $ref: './common.yml#/createdAt'
+      $ref: '../../../common/parameters/ingestion.yml#/CreatedAt'
   required:
     - runID
     - createdAt
@@ -33,7 +33,7 @@ Run:
   additionalProperties: false
   properties:
     runID:
-      $ref: './common.yml#/runID'
+      $ref: '../../../common/parameters/ingestion.yml#/RunID'
     appID:
       type: string
     taskID:
@@ -64,7 +64,7 @@ Run:
     type:
       $ref: '#/RunType'
     createdAt:
-      $ref: './common.yml#/createdAt'
+      $ref: '../../../common/parameters/ingestion.yml#/CreatedAt'
     startedAt:
       $ref: './common.yml#/startedAt'
     finishedAt:

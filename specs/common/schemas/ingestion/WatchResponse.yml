@@ -1,0 +1,24 @@
+type: object
+additionalProperties: false
+properties:
+  runID:
+    $ref: '../../parameters/ingestion.yml#/RunID'
+  eventID:
+    $ref: '../../parameters/ingestion.yml#/EventID'
+  data:
+    type: array
+    description: when used with discovering or validating sources, the sampled data of your source is returned.
+    items:
+      type: object
+  events:
+    description: in case of error, observability events will be added to the response, if any.
+    type: array
+    items:
+      $ref: './Observability.yml#/Event'
+  message:
+    description: a message describing the outcome of a validate run.
+    type: string
+  createdAt:
+    $ref: '../../parameters/ingestion.yml#/CreatedAt'
+required:
+  - runID

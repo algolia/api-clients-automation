@@ -4,13 +4,13 @@ Event:
   additionalProperties: false
   properties:
     eventID:
-      $ref: './common.yml#/eventID'
+      $ref: '../../parameters/ingestion.yml#/EventID'
     runID:
-      $ref: './common.yml#/runID'
+      $ref: '../../parameters/ingestion.yml#/RunID'
     status:
-      $ref: '#/EventStatus'
+      $ref: '../../parameters/ingestion.yml#/EventStatus'
     type:
-      $ref: '#/EventType'
+      $ref: '../../parameters/ingestion.yml#/EventType'
     batchSize:
       type: integer
       description: The extracted record batch size.
@@ -23,7 +23,7 @@ Event:
           additionalProperties: true
         - type: 'null'
     publishedAt:
-      $ref: './common.yml#/publishedAt'
+      $ref: '../../parameters/ingestion.yml#/PublishedAt'
   required:
     - eventID
     - runID
@@ -31,13 +31,3 @@ Event:
     - type
     - batchSize
     - publishedAt
-
-EventStatus:
-  oneOf:
-    - type: string
-      enum: [created, started, retried, failed, succeeded, critical]
-    - type: 'null'
-
-EventType:
-  type: string
-  enum: [fetch, record, log, transform]

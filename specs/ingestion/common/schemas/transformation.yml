@@ -19,7 +19,7 @@ Transformation:
     owner:
       $ref: './common.yml#/owner'
     createdAt:
-      $ref: './common.yml#/createdAt'
+      $ref: '../../../common/parameters/ingestion.yml#/CreatedAt'
     updatedAt:
       $ref: './common.yml#/updatedAt'
   required:
@@ -118,7 +118,7 @@ TransformationCreateResponse:
     transformationID:
       $ref: './common.yml#/transformationID'
     createdAt:
-      $ref: './common.yml#/createdAt'
+      $ref: '../../../common/parameters/ingestion.yml#/CreatedAt'
   required:
     - transformationID
     - createdAt
