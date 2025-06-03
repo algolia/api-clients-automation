@@ -9,7 +9,7 @@ const client = compositionClient(appId, apiKey);
 
 async function testComposition() {
   try {
-    console.log(appId, apiKey)
+    console.log(appId, apiKey);
     // create a new composition
     // const res = await client.multipleBatch({
     //   requests: [
@@ -36,8 +36,7 @@ async function testComposition() {
     // });
     // console.log(`[OK]`, res);
 
-    console.log(await client.search({ compositionID: 'id1', requestBody: {} }))
-
+    console.log(await client.search({ compositionID: 'id1', requestBody: {} }));
   } catch (e) {
     if (e instanceof ApiError) {
       return console.log(`[${e.status}] ${e.message}`, e.stackTrace, e);

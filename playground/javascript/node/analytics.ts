@@ -11,10 +11,13 @@ const client = analyticsClient(appId, apiKey, 'de');
 
 async function testAnalytics() {
   try {
-    const res = await client.getTopFilterForAttribute({
-      attribute: 'myAttribute1,myAttribute2',
-      index: analyticsIndex,
-    }, {timeouts: {read:20000, write: 30000}});
+    const res = await client.getTopFilterForAttribute(
+      {
+        attribute: 'myAttribute1,myAttribute2',
+        index: analyticsIndex,
+      },
+      { timeouts: { read: 20000, write: 30000 } },
+    );
 
     console.log(`[OK]`, res);
   } catch (e) {
