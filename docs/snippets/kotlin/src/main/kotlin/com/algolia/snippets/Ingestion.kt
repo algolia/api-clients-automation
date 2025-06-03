@@ -364,7 +364,10 @@ class SnippetIngestionClient {
     // Call the API
     var response = client.createTransformation(
       transformationCreate = TransformationCreate(
-        code = "foo",
+        input = TransformationCode(
+          code = "foo",
+        ),
+        type = TransformationType.entries.first { it.value == "code" },
         name = "bar",
         description = "baz",
       ),
@@ -1920,7 +1923,10 @@ class SnippetIngestionClient {
     var response = client.updateTransformation(
       transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       transformationCreate = TransformationCreate(
-        code = "foo",
+        input = TransformationCode(
+          code = "foo",
+        ),
+        type = TransformationType.entries.first { it.value == "code" },
         name = "bar",
         description = "baz",
       ),

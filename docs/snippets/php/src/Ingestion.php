@@ -397,7 +397,9 @@ class SnippetIngestionClient
 
         // Call the API
         $response = $client->createTransformation(
-            ['code' => 'foo',
+            ['input' => ['code' => 'foo',
+            ],
+                'type' => 'code',
                 'name' => 'bar',
                 'description' => 'baz',
             ],
@@ -2183,7 +2185,9 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->updateTransformation(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['code' => 'foo',
+            ['input' => ['code' => 'foo',
+            ],
+                'type' => 'code',
                 'name' => 'bar',
                 'description' => 'baz',
             ],

@@ -8,6 +8,10 @@ Transformation:
       $ref: '#/AuthenticationIDs'
     code:
       $ref: '#/Code'
+    type:
+      $ref: '#/TransformationType'
+    input:
+      $ref: '#/TransformationInput'
     name:
       $ref: '#/Name'
     description:
@@ -25,9 +29,50 @@ Transformation:
     - createdAt
     - updatedAt
 
+TransformationType:
+  type: string
+  description: The type of transformation, which can be either 'code' or 'noCode'.
+  enum:
+    - code
+    - noCode
+
+TransformationInput:
+  description: The input for the transformation, which can be either code or a no-code configuration.
+  oneOf:
+    - $ref: '#/TransformationCode'
+    - $ref: '#/TransformationNoCode'
+
+TransformationCode:
+  type: object
+  additionalProperties: false
+  description: Input for a transformation that contains the source code of the transformation.
+  properties:
+    code:
+      type: string
+      description: The source code of the transformation.
+  required:
+    - code
+
+TransformationNoCode:
+  type: object
+  additionalProperties: false
+  description: Input for a no-code transformation that contains a series of steps.
+  properties:
+    steps:
+      type: array
+      items:
+        $ref: '#/TransformationNoCodeStep'
+  required:
+    - steps
+
+TransformationNoCodeStep:
+  type: object
+  description: A step in a no-code transformation.
+
 Code:
   type: string
-  description: The source code of the transformation.
+  deprecated: true
+  description: It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
 
 Name:
   type: string
@@ -52,13 +97,18 @@ TransformationCreate:
       $ref: '#/Code'
     name:
       $ref: '#/Name'
+    type:
+      $ref: '#/TransformationType'
+    input:
+      $ref: '#/TransformationInput'
     description:
       $ref: '#/Description'
     authenticationIDs:
       $ref: '#/AuthenticationIDs'
   required:
-    - code
     - name
+    - type
+    - input
 
 TransformationCreateResponse:
   type: object

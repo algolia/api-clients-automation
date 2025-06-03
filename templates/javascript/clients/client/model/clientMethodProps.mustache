@@ -26,14 +26,14 @@ import type { CreateIterablePromise } from '@algolia/client-common';
 /**
  * Properties for the `{{nickname}}` method.
  */
-export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props = {
+export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props{{#x-has-generic-parameter}}<T extends object>{{/x-has-generic-parameter}} = {
   {{#allParams}}
     {{#description}}
     /**
     * {{{description}}}
     */
     {{/description}}
-    {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};
+    {{paramName}}{{^required}}?{{/required}}: {{#vendorExtensions.x-is-generic}}T{{/vendorExtensions.x-is-generic}}{{^vendorExtensions.x-is-generic}}{{{dataType}}}{{/vendorExtensions.x-is-generic}};
   {{/allParams}}
 }
 {{/x-create-wrapping-object}}

@@ -367,7 +367,12 @@ def snippet_for_create_transformation
 
   # Call the API
   response = client.create_transformation(
-    Algolia::Ingestion::TransformationCreate.new(code: "foo", name: "bar", description: "baz")
+    Algolia::Ingestion::TransformationCreate.new(
+      input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
+      type: "code",
+      name: "bar",
+      description: "baz"
+    )
   )
 
   # >LOG
@@ -1953,7 +1958,12 @@ def snippet_for_update_transformation
   # Call the API
   response = client.update_transformation(
     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    Algolia::Ingestion::TransformationCreate.new(code: "foo", name: "bar", description: "baz")
+    Algolia::Ingestion::TransformationCreate.new(
+      input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
+      type: "code",
+      name: "bar",
+      description: "baz"
+    )
   )
 
   # >LOG

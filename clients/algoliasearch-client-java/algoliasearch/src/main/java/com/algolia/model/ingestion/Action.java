@@ -14,7 +14,13 @@ public enum Action {
 
   PARTIAL_UPDATE_OBJECT("partialUpdateObject"),
 
-  PARTIAL_UPDATE_OBJECT_NO_CREATE("partialUpdateObjectNoCreate");
+  PARTIAL_UPDATE_OBJECT_NO_CREATE("partialUpdateObjectNoCreate"),
+
+  DELETE_OBJECT("deleteObject"),
+
+  DELETE("delete"),
+
+  CLEAR("clear");
 
   private final String value;
 

@@ -12635,7 +12635,8 @@ paths:
             var response = await client.CreateTransformationAsync(
               new TransformationCreate
               {
-                Code = "foo",
+                Input = new TransformationInput(new TransformationCode { Code = "foo" }),
+                Type = Enum.Parse<TransformationType>("Code"),
                 Name = "bar",
                 Description = "baz",
               }
@@ -12661,7 +12662,8 @@ paths:
             response, err :=
             client.CreateTransformation(client.NewApiCreateTransformationRequest(
 
-              ingestion.NewEmptyTransformationCreate().SetCode("foo").SetName("bar").SetDescription("baz")))
+              ingestion.NewEmptyTransformationCreate().SetInput(ingestion.TransformationCodeAsTransformationInput(
+                ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetType(ingestion.TransformationType("code")).SetName("bar").SetDescription("baz")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -12685,8 +12687,13 @@ paths:
 
             // Call the API
 
-            client.createTransformation(new
-            TransformationCreate().setCode("foo").setName("bar").setDescription("baz"));
+            client.createTransformation(
+              new TransformationCreate()
+                .setInput(new TransformationCode().setCode("foo"))
+                .setType(TransformationType.CODE)
+                .setName("bar")
+                .setDescription("baz")
+            );
 
             // >LOG
         - lang: javascript
@@ -12702,8 +12709,12 @@ paths:
 
             // Call the API
 
-            const response = await client.createTransformation({ code: 'foo',
-            name: 'bar', description: 'baz' });
+            const response = await client.createTransformation({
+              input: { code: 'foo' },
+              type: 'code',
+              name: 'bar',
+              description: 'baz',
+            });
 
 
             // >LOG
@@ -12724,7 +12735,10 @@ paths:
 
             var response = client.createTransformation(
               transformationCreate = TransformationCreate(
-                code = "foo",
+                input = TransformationCode(
+                  code = "foo",
+                ),
+                type = TransformationType.entries.first { it.value == "code" },
                 name = "bar",
                 description = "baz",
               ),
@@ -12748,7 +12762,9 @@ paths:
             // Call the API
 
             $response = $client->createTransformation(
-                ['code' => 'foo',
+                ['input' => ['code' => 'foo',
+                ],
+                    'type' => 'code',
                     'name' => 'bar',
                     'description' => 'baz',
                 ],
@@ -12777,7 +12793,10 @@ paths:
 
             response = client.create_transformation(
                 transformation_create={
-                    "code": "foo",
+                    "input": {
+                        "code": "foo",
+                    },
+                    "type": "code",
                     "name": "bar",
                     "description": "baz",
                 },
@@ -12801,7 +12820,12 @@ paths:
             # Call the API
 
             response = client.create_transformation(
-              Algolia::Ingestion::TransformationCreate.new(code: "foo", name: "bar", description: "baz")
+              Algolia::Ingestion::TransformationCreate.new(
+                input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
+                type: "code",
+                name: "bar",
+                description: "baz"
+              )
             )
 
 
@@ -12829,7 +12853,10 @@ paths:
             val response = Await.result(
               client.createTransformation(
                 transformationCreate = TransformationCreate(
-                  code = "foo",
+                  input = TransformationCode(
+                    code = "foo"
+                  ),
+                  `type` = TransformationType.withName("code"),
                   name = "bar",
                   description = Some("baz")
                 )
@@ -12851,8 +12878,9 @@ paths:
             let response = try await
             client.createTransformation(transformationCreate:
             TransformationCreate(
-                code: "foo",
                 name: "bar",
+                type: TransformationType.code,
+                input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
                 description: "baz"
             ))
 
@@ -12866,7 +12894,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"code":"lorem","name":"lorem","description":"lorem","authenticationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'
+              --data '{"code":"lorem","name":"lorem","type":"code","input":{"code":"lorem"},"description":"lorem","authenticationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'
   /1/transformations/try:
     post:
       tags:
@@ -13726,7 +13754,8 @@ paths:
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               new TransformationCreate
               {
-                Code = "foo",
+                Input = new TransformationInput(new TransformationCode { Code = "foo" }),
+                Type = Enum.Parse<TransformationType>("Code"),
                 Name = "bar",
                 Description = "baz",
               }
@@ -13752,7 +13781,8 @@ paths:
             response, err :=
             client.UpdateTransformation(client.NewApiUpdateTransformationRequest(
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              ingestion.NewEmptyTransformationCreate().SetCode("foo").SetName("bar").SetDescription("baz")))
+              ingestion.NewEmptyTransformationCreate().SetInput(ingestion.TransformationCodeAsTransformationInput(
+                ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetType(ingestion.TransformationType("code")).SetName("bar").SetDescription("baz")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -13778,7 +13808,11 @@ paths:
 
             client.updateTransformation(
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              new TransformationCreate().setCode("foo").setName("bar").setDescription("baz")
+              new TransformationCreate()
+                .setInput(new TransformationCode().setCode("foo"))
+                .setType(TransformationType.CODE)
+                .setName("bar")
+                .setDescription("baz")
             );
 
             // >LOG
@@ -13797,7 +13831,7 @@ paths:
 
             const response = await client.updateTransformation({
               transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-              transformationCreate: { code: 'foo', name: 'bar', description: 'baz' },
+              transformationCreate: { input: { code: 'foo' }, type: 'code', name: 'bar', description: 'baz' },
             });
 
 
@@ -13820,7 +13854,10 @@ paths:
             var response = client.updateTransformation(
               transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               transformationCreate = TransformationCreate(
-                code = "foo",
+                input = TransformationCode(
+                  code = "foo",
+                ),
+                type = TransformationType.entries.first { it.value == "code" },
                 name = "bar",
                 description = "baz",
               ),
@@ -13845,7 +13882,9 @@ paths:
 
             $response = $client->updateTransformation(
                 '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                ['code' => 'foo',
+                ['input' => ['code' => 'foo',
+                ],
+                    'type' => 'code',
                     'name' => 'bar',
                     'description' => 'baz',
                 ],
@@ -13875,7 +13914,10 @@ paths:
             response = client.update_transformation(
                 transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 transformation_create={
-                    "code": "foo",
+                    "input": {
+                        "code": "foo",
+                    },
+                    "type": "code",
                     "name": "bar",
                     "description": "baz",
                 },
@@ -13900,7 +13942,12 @@ paths:
 
             response = client.update_transformation(
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              Algolia::Ingestion::TransformationCreate.new(code: "foo", name: "bar", description: "baz")
+              Algolia::Ingestion::TransformationCreate.new(
+                input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
+                type: "code",
+                name: "bar",
+                description: "baz"
+              )
             )
 
 
@@ -13929,7 +13976,10 @@ paths:
               client.updateTransformation(
                 transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 transformationCreate = TransformationCreate(
-                  code = "foo",
+                  input = TransformationCode(
+                    code = "foo"
+                  ),
+                  `type` = TransformationType.withName("code"),
                   name = "bar",
                   description = Some("baz")
                 )
@@ -13950,7 +14000,12 @@ paths:
 
             let response = try await client.updateTransformation(
                 transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                transformationCreate: TransformationCreate(code: "foo", name: "bar", description: "baz")
+                transformationCreate: TransformationCreate(
+                    name: "bar",
+                    type: TransformationType.code,
+                    input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
+                    description: "baz"
+                )
             )
 
             // >LOG
@@ -13963,7 +14018,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"code":"lorem","name":"lorem","description":"lorem","authenticationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'
+              --data '{"code":"lorem","name":"lorem","type":"code","input":{"code":"lorem"},"description":"lorem","authenticationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'
     delete:
       tags:
         - transformations
@@ -15880,6 +15935,9 @@ components:
         - updateObject
         - partialUpdateObject
         - partialUpdateObjectNoCreate
+        - deleteObject
+        - delete
+        - clear
       description: Type of indexing operation.
     objectID:
       type: string
@@ -17735,7 +17793,49 @@ components:
         $ref: '#/components/schemas/authenticationID'
     Code:
       type: string
-      description: The source code of the transformation.
+      deprecated: true
+      description: >-
+        It is deprecated. Use the `input` field with proper `type` instead to
+        specify the transformation code.
+    TransformationType:
+      type: string
+      description: The type of transformation, which can be either 'code' or 'noCode'.
+      enum:
+        - code
+        - noCode
+    TransformationCode:
+      type: object
+      additionalProperties: false
+      description: >-
+        Input for a transformation that contains the source code of the
+        transformation.
+      properties:
+        code:
+          type: string
+          description: The source code of the transformation.
+      required:
+        - code
+    TransformationNoCodeStep:
+      type: object
+      description: A step in a no-code transformation.
+    TransformationNoCode:
+      type: object
+      additionalProperties: false
+      description: Input for a no-code transformation that contains a series of steps.
+      properties:
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransformationNoCodeStep'
+      required:
+        - steps
+    TransformationInput:
+      description: >-
+        The input for the transformation, which can be either code or a no-code
+        configuration.
+      oneOf:
+        - $ref: '#/components/schemas/TransformationCode'
+        - $ref: '#/components/schemas/TransformationNoCode'
     Name:
       type: string
       description: The uniquely identified name of your transformation.
@@ -17752,6 +17852,10 @@ components:
           $ref: '#/components/schemas/AuthenticationIDs'
         code:
           $ref: '#/components/schemas/Code'
+        type:
+          $ref: '#/components/schemas/TransformationType'
+        input:
+          $ref: '#/components/schemas/TransformationInput'
         name:
           $ref: '#/components/schemas/Name'
         description:
@@ -17777,13 +17881,18 @@ components:
           $ref: '#/components/schemas/Code'
         name:
           $ref: '#/components/schemas/Name'
+        type:
+          $ref: '#/components/schemas/TransformationType'
+        input:
+          $ref: '#/components/schemas/TransformationInput'
         description:
           $ref: '#/components/schemas/Description'
         authenticationIDs:
           $ref: '#/components/schemas/AuthenticationIDs'
       required:
-        - code
         - name
+        - type
+        - input
     TransformationCreateResponse:
       type: object
       additionalProperties: false

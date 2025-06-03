@@ -311,14 +311,22 @@ class TestIngestionClient < Test::Unit::TestCase
   # createTransformation
   def test_create_transformation
     req = @client.create_transformation_with_http_info(
-      Algolia::Ingestion::TransformationCreate.new(code: "foo", name: "bar", description: "baz")
+      Algolia::Ingestion::TransformationCreate.new(
+        input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
+        type: "code",
+        name: "bar",
+        description: "baz"
+      )
     )
 
     assert_equal(:post, req.method)
     assert_equal("/1/transformations", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"code\":\"foo\",\"name\":\"bar\",\"description\":\"baz\"}"), JSON.parse(req.body))
+    assert_equal(
+      JSON.parse("{\"input\":{\"code\":\"foo\"},\"type\":\"code\",\"name\":\"bar\",\"description\":\"baz\"}"),
+      JSON.parse(req.body)
+    )
   end
 
   # allow del method for a custom path with minimal parameters
@@ -1371,14 +1379,22 @@ class TestIngestionClient < Test::Unit::TestCase
   def test_update_transformation
     req = @client.update_transformation_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      Algolia::Ingestion::TransformationCreate.new(code: "foo", name: "bar", description: "baz")
+      Algolia::Ingestion::TransformationCreate.new(
+        input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
+        type: "code",
+        name: "bar",
+        description: "baz"
+      )
     )
 
     assert_equal(:put, req.method)
     assert_equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"code\":\"foo\",\"name\":\"bar\",\"description\":\"baz\"}"), JSON.parse(req.body))
+    assert_equal(
+      JSON.parse("{\"input\":{\"code\":\"foo\"},\"type\":\"code\",\"name\":\"bar\",\"description\":\"baz\"}"),
+      JSON.parse(req.body)
+    )
   end
 
   # validateSource

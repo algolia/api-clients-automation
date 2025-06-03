@@ -581,10 +581,16 @@
         "requestBody": {
           "required": true,
           "description": "The record. A schemaless object with attributes that are useful in the context of search and discovery.",
+          "x-is-generic": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object"
+                "type": "object",
+                "example": {
+                  "objectID": "blackTShirt",
+                  "name": "Black T-shirt",
+                  "color": "#000000"
+                }
               }
             }
           }
@@ -746,10 +752,16 @@
         "requestBody": {
           "required": true,
           "description": "The record. A schemaless object with attributes that are useful in the context of search and discovery.",
+          "x-is-generic": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object"
+                "type": "object",
+                "example": {
+                  "objectID": "blackTShirt",
+                  "name": "Black T-shirt",
+                  "color": "#000000"
+                }
               }
             }
           }
@@ -6309,6 +6321,7 @@
         ]
       },
       "highlightResultOption": {
+        "title": "highlightResultOption",
         "type": "object",
         "description": "Surround words that match the query with HTML tags for highlighting.",
         "additionalProperties": false,
@@ -6345,6 +6358,7 @@
         ]
       },
       "highlightResultMap": {
+        "title": "highlightResultMap",
         "type": "object",
         "description": "Surround words that match the query with HTML tags for highlighting.",
         "x-is-free-form": false,
@@ -6367,6 +6381,7 @@
         ]
       },
       "highlightResultArray": {
+        "title": "highlightResultArray",
         "type": "array",
         "description": "Surround words that match the query with HTML tags for highlighting.",
         "items": {
@@ -6374,6 +6389,7 @@
         }
       },
       "snippetResultOption": {
+        "title": "snippetResultOption",
         "type": "object",
         "description": "Snippets that show the context around a matching search query.",
         "additionalProperties": false,
@@ -6394,6 +6410,7 @@
         ]
       },
       "snippetResultMap": {
+        "title": "snippetResultMap",
         "type": "object",
         "description": "Snippets that show the context around a matching search query.",
         "x-is-free-form": false,
@@ -6416,6 +6433,7 @@
         ]
       },
       "snippetResultArray": {
+        "title": "snippetResultArray",
         "type": "array",
         "description": "Snippets that show the context around a matching search query.",
         "items": {
