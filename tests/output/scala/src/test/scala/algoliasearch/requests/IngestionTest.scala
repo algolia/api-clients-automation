@@ -387,7 +387,10 @@ class IngestionTest extends AnyFunSuite {
     val (client, echo) = testClient()
     val future = client.createTransformation(
       transformationCreate = TransformationCreate(
-        code = "foo",
+        input = TransformationCode(
+          code = "foo"
+        ),
+        `type` = TransformationType.withName("code"),
         name = "bar",
         description = Some("baz")
       )
@@ -398,7 +401,7 @@ class IngestionTest extends AnyFunSuite {
 
     assert(res.path == "/1/transformations")
     assert(res.method == "POST")
-    val expectedBody = parse("""{"code":"foo","name":"bar","description":"baz"}""")
+    val expectedBody = parse("""{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
@@ -1818,7 +1821,10 @@ class IngestionTest extends AnyFunSuite {
     val future = client.updateTransformation(
       transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       transformationCreate = TransformationCreate(
-        code = "foo",
+        input = TransformationCode(
+          code = "foo"
+        ),
+        `type` = TransformationType.withName("code"),
         name = "bar",
         description = Some("baz")
       )
@@ -1829,7 +1835,7 @@ class IngestionTest extends AnyFunSuite {
 
     assert(res.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
     assert(res.method == "PUT")
-    val expectedBody = parse("""{"code":"foo","name":"bar","description":"baz"}""")
+    val expectedBody = parse("""{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }

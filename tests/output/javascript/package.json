@@ -12,9 +12,9 @@
     "algoliasearch": "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
   },
   "devDependencies": {
-    "@types/node": "22.15.21",
+    "@types/node": "22.15.29",
     "dotenv": "16.5.0",
     "typescript": "5.8.3",
-    "vitest": "3.1.4"
+    "vitest": "3.2.0"
   }
 }

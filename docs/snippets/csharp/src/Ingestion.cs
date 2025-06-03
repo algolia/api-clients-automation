@@ -426,7 +426,8 @@ public class SnippetIngestionClient
     var response = await client.CreateTransformationAsync(
       new TransformationCreate
       {
-        Code = "foo",
+        Input = new TransformationInput(new TransformationCode { Code = "foo" }),
+        Type = Enum.Parse<TransformationType>("Code"),
         Name = "bar",
         Description = "baz",
       }
@@ -2101,7 +2102,8 @@ public class SnippetIngestionClient
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TransformationCreate
       {
-        Code = "foo",
+        Input = new TransformationInput(new TransformationCode { Code = "foo" }),
+        Type = Enum.Parse<TransformationType>("Code"),
         Name = "bar",
         Description = "baz",
       }

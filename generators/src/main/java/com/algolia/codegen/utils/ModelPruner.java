@@ -103,8 +103,7 @@ public class ModelPruner {
     }
   }
 
-  /** remove all the unused models, most likely the sub models of allOf */
-  public static void removeOrphans(CodegenConfig config, OperationsMap operations, List<ModelMap> allModels) {
+  public static List<String> getOrphanModelNames(CodegenConfig config, OperationsMap operations, List<ModelMap> allModels) {
     // visit all the models that are accessible from:
     // - the properties of a model (needs recursive search)
     // - the return type of an operation
@@ -123,6 +122,34 @@ public class ModelPruner {
       }
     }
 
+    return toRemove;
+  }
+
+  /**
+   * remove all the unused models from the models bundle variable, to be used in pair with
+   * `removeOrphanModelFiles`
+   */
+  public static Map<String, Object> removeOrphanFromModels(CodegenConfig config, Map<String, Object> data) {
+    var models = (List<ModelMap>) data.get("models");
+
+    List<String> toRemove = getOrphanModelNames(
+      config,
+      ((Map<String, List<OperationsMap>>) data.get("apiInfo")).get("apis").get(0),
+      models
+    );
+
+    for (String modelName : toRemove) {
+      models.removeIf(model -> config.toModelName(model.getModel().getName()).equals(modelName));
+    }
+
+    data.put("models", models);
+
+    return data;
+  }
+
+  /** remove all the unused models files, most likely the sub models of allOf */
+  public static void removeOrphanModelFiles(CodegenConfig config, OperationsMap operations, List<ModelMap> allModels) {
+    List<String> toRemove = getOrphanModelNames(config, operations, allModels);
     String templateName = config.modelTemplateFiles().keySet().iterator().next();
 
     for (String modelName : toRemove) {

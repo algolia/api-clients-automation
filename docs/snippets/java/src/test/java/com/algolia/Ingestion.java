@@ -281,7 +281,13 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.createTransformation(new TransformationCreate().setCode("foo").setName("bar").setDescription("baz"));
+    client.createTransformation(
+      new TransformationCreate()
+        .setInput(new TransformationCode().setCode("foo"))
+        .setType(TransformationType.CODE)
+        .setName("bar")
+        .setDescription("baz")
+    );
     // >LOG
     // SEPARATOR<
   }
@@ -1577,7 +1583,11 @@ class SnippetIngestionClient {
     // Call the API
     client.updateTransformation(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      new TransformationCreate().setCode("foo").setName("bar").setDescription("baz")
+      new TransformationCreate()
+        .setInput(new TransformationCode().setCode("foo"))
+        .setType(TransformationType.CODE)
+        .setName("bar")
+        .setDescription("baz")
     );
     // >LOG
     // SEPARATOR<

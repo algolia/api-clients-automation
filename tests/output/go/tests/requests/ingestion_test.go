@@ -244,14 +244,15 @@ func TestIngestion_CreateTransformation(t *testing.T) {
 	t.Run("createTransformation", func(t *testing.T) {
 		_, err := client.CreateTransformation(client.NewApiCreateTransformationRequest(
 
-			ingestion.NewEmptyTransformationCreate().SetCode("foo").SetName("bar").SetDescription("baz")))
+			ingestion.NewEmptyTransformationCreate().SetInput(ingestion.TransformationCodeAsTransformationInput(
+				ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetType(ingestion.TransformationType("code")).SetName("bar").SetDescription("baz")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/transformations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"code":"foo","name":"bar","description":"baz"}`)
+		ja.Assertf(*echo.Body, `{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}`)
 	})
 }
 
@@ -1420,14 +1421,15 @@ func TestIngestion_UpdateTransformation(t *testing.T) {
 	t.Run("updateTransformation", func(t *testing.T) {
 		_, err := client.UpdateTransformation(client.NewApiUpdateTransformationRequest(
 			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-			ingestion.NewEmptyTransformationCreate().SetCode("foo").SetName("bar").SetDescription("baz")))
+			ingestion.NewEmptyTransformationCreate().SetInput(ingestion.TransformationCodeAsTransformationInput(
+				ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetType(ingestion.TransformationType("code")).SetName("bar").SetDescription("baz")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"code":"foo","name":"bar","description":"baz"}`)
+		ja.Assertf(*echo.Body, `{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}`)
 	})
 }
 
