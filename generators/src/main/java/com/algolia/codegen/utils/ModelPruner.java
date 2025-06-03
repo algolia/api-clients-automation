@@ -134,7 +134,7 @@ public class ModelPruner {
 
     List<String> toRemove = getOrphanModelNames(
       config,
-      (OperationsMap) ((Map<String, List>) data.get("apiInfo")).get("apis").get(0),
+      ((Map<String, List<OperationsMap>>) data.get("apiInfo")).get("apis").get(0),
       models
     );
 
