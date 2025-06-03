@@ -16,7 +16,7 @@ async function testAlgoliasearch() {
   // Init client with appId and apiKey
   const client = algoliasearch(appId, apiKey);
   const clientLite = liteClient(appId, apiKey);
-  
+
   client.addAlgoliaAgent('algoliasearch node playground', '0.0.1');
 
   try {
@@ -134,12 +134,21 @@ async function testAlgoliasearch() {
 
 async function testAlgoliasearchBridgeIngestion() {
   // Init client with appId and apiKey
-  const client = algoliasearch(appId, adminApiKey, { transformation: { region: 'eu'}});
+  const client = algoliasearch(appId, adminApiKey, { transformation: { region: 'eu' } });
 
-  await client.saveObjectsWithTransformation({indexName: "foo", objects: [{objectID: "foo", data: {baz: "baz", win: 42}}], waitForTasks: true })
+  await client.saveObjectsWithTransformation({
+    indexName: 'foo',
+    objects: [{ objectID: 'foo', data: { baz: 'baz', win: 42 } }],
+    waitForTasks: true,
+  });
 
-  await client.partialUpdateObjectsWithTransformation({indexName: "foo", objects: [{objectID: "foo", data: {baz: "baz", win: 42}}], waitForTasks: true, createIfNotExists: false })
+  await client.partialUpdateObjectsWithTransformation({
+    indexName: 'foo',
+    objects: [{ objectID: 'foo', data: { baz: 'baz', win: 42 } }],
+    waitForTasks: true,
+    createIfNotExists: false,
+  });
 }
 
 // testAlgoliasearch();
-testAlgoliasearchBridgeIngestion()
+testAlgoliasearchBridgeIngestion();

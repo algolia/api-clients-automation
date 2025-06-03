@@ -1,5 +1,5 @@
 import { liteClient as algoliasearch } from 'algoliasearch/lite';
-import { Hit } from 'instantsearch.js';
+import type { Hit } from 'instantsearch.js';
 import {
   Carousel,
   Configure,

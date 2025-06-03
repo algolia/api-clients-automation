@@ -674,10 +674,15 @@ paths:
         description: >-
           The record. A schemaless object with attributes that are useful in the
           context of search and discovery.
+        x-is-generic: true
         content:
           application/json:
             schema:
               type: object
+              example:
+                objectID: blackTShirt
+                name: Black T-shirt
+                color: '#000000'
       responses:
         '201':
           description: Created
@@ -829,10 +834,15 @@ paths:
         description: >-
           The record. A schemaless object with attributes that are useful in the
           context of search and discovery.
+        x-is-generic: true
         content:
           application/json:
             schema:
               type: object
+              example:
+                objectID: blackTShirt
+                name: Black T-shirt
+                color: '#000000'
       responses:
         '200':
           $ref: '#/components/responses/UpdatedAtWithObjectId'

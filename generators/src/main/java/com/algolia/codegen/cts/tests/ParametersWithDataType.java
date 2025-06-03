@@ -654,6 +654,10 @@ public class ParametersWithDataType {
       case "Boolean":
         output.put("isBoolean", true);
         break;
+      case "oas_any_type_not_mapped":
+        output.put("isAnyType", true);
+        output.put("isFreeFormObject", true);
+        break;
       default:
         throw new CTSException("Unknown primitive: " + getTypeName(spec));
     }

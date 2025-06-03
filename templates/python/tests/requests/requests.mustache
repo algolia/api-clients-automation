@@ -3,13 +3,15 @@ from time import time
 from json import loads
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.http.transporter_sync import EchoTransporterSync
-from algoliasearch.search.models.secured_api_key_restrictions import SecuredApiKeyRestrictions
 from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
 from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}Sync{{/lambda.pascalcase}}
 from algoliasearch.{{{import}}}.config import {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}
-from algoliasearch.search.models.batch_response import BatchResponse
-from algoliasearch.search.models.updated_at_response import UpdatedAtResponse
-from algoliasearch.search.models.get_task_response import GetTaskResponse
+from algoliasearch.search.models import (
+  BatchResponse,
+  UpdatedAtResponse,
+  GetTaskResponse,
+  SecuredApiKeyRestrictions,
+)
 
 {{#modes}}
 class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSyncClient}}Sync{{/isSyncClient}}:

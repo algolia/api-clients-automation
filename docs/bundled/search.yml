@@ -2508,10 +2508,15 @@ paths:
         description: >-
           The record. A schemaless object with attributes that are useful in the
           context of search and discovery.
+        x-is-generic: true
         content:
           application/json:
             schema:
               type: object
+              example:
+                objectID: blackTShirt
+                name: Black T-shirt
+                color: '#000000'
       responses:
         '201':
           description: Created
@@ -2848,7 +2853,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{}'
+              --data '{"objectID":"blackTShirt","name":"Black T-shirt","color":"#000000"}'
     delete:
       tags:
         - Indices
@@ -3454,10 +3459,15 @@ paths:
         description: >-
           The record. A schemaless object with attributes that are useful in the
           context of search and discovery.
+        x-is-generic: true
         content:
           application/json:
             schema:
               type: object
+              example:
+                objectID: blackTShirt
+                name: Black T-shirt
+                color: '#000000'
       responses:
         '200':
           $ref: '#/components/responses/UpdatedAtWithObjectId'
@@ -3734,7 +3744,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{}'
+              --data '{"objectID":"blackTShirt","name":"Black T-shirt","color":"#000000"}'
     delete:
       tags:
         - Records
