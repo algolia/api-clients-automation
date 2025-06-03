@@ -3120,7 +3120,10 @@
           "addObject",
           "updateObject",
           "partialUpdateObject",
-          "partialUpdateObjectNoCreate"
+          "partialUpdateObjectNoCreate",
+          "deleteObject",
+          "delete",
+          "clear"
         ],
         "description": "Type of indexing operation."
       },
