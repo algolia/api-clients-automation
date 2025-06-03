@@ -355,7 +355,10 @@ class IngestionTest {
       call = {
         createTransformation(
           transformationCreate = TransformationCreate(
-            code = "foo",
+            input = TransformationCode(
+              code = "foo",
+            ),
+            type = TransformationType.entries.first { it.value == "code" },
             name = "bar",
             description = "baz",
           ),
@@ -364,7 +367,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/1/transformations".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"code":"foo","name":"bar","description":"baz"}""", it.body)
+        assertJsonBody("""{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}""", it.body)
       },
     )
   }
@@ -1877,7 +1880,10 @@ class IngestionTest {
         updateTransformation(
           transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           transformationCreate = TransformationCreate(
-            code = "foo",
+            input = TransformationCode(
+              code = "foo",
+            ),
+            type = TransformationType.entries.first { it.value == "code" },
             name = "bar",
             description = "baz",
           ),
@@ -1886,7 +1892,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertJsonBody("""{"code":"foo","name":"bar","description":"baz"}""", it.body)
+        assertJsonBody("""{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}""", it.body)
       },
     )
   }

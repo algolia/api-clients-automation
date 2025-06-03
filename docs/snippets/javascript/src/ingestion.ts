@@ -311,7 +311,12 @@ export async function snippetForCreateTransformation(): Promise<void> {
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
 
   // Call the API
-  const response = await client.createTransformation({ code: 'foo', name: 'bar', description: 'baz' });
+  const response = await client.createTransformation({
+    input: { code: 'foo' },
+    type: 'code',
+    name: 'bar',
+    description: 'baz',
+  });
 
   // >LOG
   // use typed response
@@ -1750,7 +1755,7 @@ export async function snippetForUpdateTransformation(): Promise<void> {
   // Call the API
   const response = await client.updateTransformation({
     transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-    transformationCreate: { code: 'foo', name: 'bar', description: 'baz' },
+    transformationCreate: { input: { code: 'foo' }, type: 'code', name: 'bar', description: 'baz' },
   });
 
   // >LOG

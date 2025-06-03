@@ -22,7 +22,7 @@ package algoliasearch.ingestion
 /** TransformationTry
   *
   * @param code
-  *   The source code of the transformation.
+  *   It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
   * @param sampleRecord
   *   The record to apply the given code to.
   */
