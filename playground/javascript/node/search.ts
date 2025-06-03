@@ -1,5 +1,6 @@
 import { ApiError } from '@algolia/client-common';
-import { apiClientVersion, searchClient, SearchQuery } from '@algolia/client-search';
+import type { SearchQuery } from '@algolia/client-search';
+import { apiClientVersion, searchClient } from '@algolia/client-search';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
 const apiKey = process.env.ALGOLIA_ADMIN_KEY || '**** SEARCH_API_KEY *****';
@@ -15,15 +16,31 @@ client.addAlgoliaAgent('Node playground', '0.0.1');
 const requests: SearchQuery[] = [{ indexName: searchIndex, query: searchQuery }];
 console.log('version', apiClientVersion, 'requests', requests);
 
+interface Animal {
+  name: string;
+  age: number;
+  objectID: string;
+}
+
 async function testSearch() {
   try {
     const req = await client.setSettings({
       indexName: 'theIndexName',
       indexSettings: { distinct: true },
-    })
-
+    });
 
     console.log(`[OK]`, req);
+
+    const a: Animal = {
+      name: 'Dog',
+      age: 5,
+      objectID: 'dog-123',
+    };
+
+    const ssss = await client.saveObject({
+      indexName: 'theIndexName',
+      body: a,
+    });
   } catch (e: any) {
     // Instance of
     if (e instanceof ApiError) {
