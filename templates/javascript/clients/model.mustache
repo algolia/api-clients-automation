@@ -34,7 +34,7 @@ export type {{classname}}{{> client/model/types/isGeneric}} = {{^vendorExtension
     */{{/description}}
     {{name}}{{^required}}?{{/required}}: {{> client/model/types/dataType}} ;
 {{/vars}}
-} {{#x-is-SearchForHitsOptions}} & { facet?: never; maxFacetHits?: never; facetQuery?: never }; {{/x-is-SearchForHitsOptions}}
+} {{#x-is-SearchForHitsOptions}} & { facet?: never | undefined; maxFacetHits?: never | undefined; facetQuery?: never | undefined}; {{/x-is-SearchForHitsOptions}}
 {{/vendorExtensions}}
 {{/isEnum}}
 {{#hasEnums}}{{#vars}}{{#isEnum}}export type {{classname}}{{nameInCamelCase}} = {{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}|{{/-last}}{{/enumVars}}{{/allowableValues}}{{/isEnum}}{{/vars}}{{/hasEnums}}

@@ -42,7 +42,7 @@ export type Algoliasearch = SearchClient & {
    * @param saveObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
    * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
    */
-  saveObjectsWithTransformation: (options: SaveObjectsOptions, requestOptions?: RequestOptions) => Promise<WatchResponse>;
+  saveObjectsWithTransformation: (options: SaveObjectsOptions, requestOptions?: RequestOptions | undefined) => Promise<WatchResponse>;
 
   /**
    * Helper: Similar to the `partialUpdateObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client instantiation method.
@@ -56,7 +56,7 @@ export type Algoliasearch = SearchClient & {
    * @param partialUpdateObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
    * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
    */
-  partialUpdateObjectsWithTransformation: (options: PartialUpdateObjectsOptions, requestOptions?: RequestOptions) => Promise<WatchResponse>;
+  partialUpdateObjectsWithTransformation: (options: PartialUpdateObjectsOptions, requestOptions?: RequestOptions | undefined) => Promise<WatchResponse>;
 };
 
 export type TransformationOptions = {
@@ -64,13 +64,13 @@ export type TransformationOptions = {
   transformation?: {
     // The region of your Algolia application ID, used to target the correct hosts of the transformation service.
     region: IngestionRegion;
-  };
+  } | undefined;
 };
 
 export function algoliasearch(
   appId: string,
   apiKey: string,
-  options?: ClientOptions & TransformationOptions,
+  options?: ClientOptions & TransformationOptions | undefined,
 ): Algoliasearch {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
