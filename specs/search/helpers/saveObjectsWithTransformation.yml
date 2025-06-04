@@ -1,6 +1,10 @@
 method:
   get:
     x-helper: true
+    x-available-languages:
+      - javascript
+      - go
+      - python
     tags:
       - Records
     operationId: saveObjectsWithTransformation
