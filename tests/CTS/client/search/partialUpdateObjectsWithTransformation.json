@@ -1,0 +1,50 @@
+[
+  {
+    "testName": "call partialUpdateObjectsWithTransformation with createIfNotExists=true",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "port": 6689
+            }
+          ],
+          "transformationRegion": "us"
+        }
+      },
+      {
+        "type": "method",
+        "method": "partialUpdateObjectsWithTransformation",
+        "parameters": {
+          "indexName": "cts_e2e_partialUpdateObjectsWithTransformation_${{language}}",
+          "objects": [
+            {
+              "objectID": "1",
+              "name": "Adam"
+            },
+            {
+              "objectID": "2",
+              "name": "Benoit"
+            }
+          ],
+          "createIfNotExists": true
+        },
+        "expected": {
+          "type": "response",
+          "match": [
+            {
+              "runID": "b1b7a982-524c-40d2-bb7f-48aab075abda",
+              "eventID": "113b2068-6337-4c85-b5c2-e7b213d82925",
+              "message": "OK",
+              "createdAt": "2022-05-12T06:24:30.049Z"
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

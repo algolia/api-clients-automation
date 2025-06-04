@@ -2,4 +2,7 @@ _config = {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}("{{
         {{#hasCustomHosts}}
         {{#isError}}    {{/isError}}_config.hosts = HostsCollection([{{#customHosts}}Host(url='localhost' if environ.get('CI') == 'true' else 'host.docker.internal', scheme='http', port={{port}}){{^-last}},{{/-last}}{{/customHosts}}])
         {{/hasCustomHosts}}
+        {{#hasTransformationRegion}}
+        {{#isError}}    {{/isError}}_config.with_transformation("{{{transformationRegion}}}")
+        {{/hasTransformationRegion}}
         {{#isError}}    {{/isError}}_client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSyncClient}}Sync{{/isSyncClient}}.create_with_config(config=_config{{#useEchoRequester}}, transporter=EchoTransporter{{#isSyncClient}}Sync{{/isSyncClient}}(_config){{/useEchoRequester}})
