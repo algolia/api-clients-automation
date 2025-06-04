@@ -39,8 +39,6 @@ function addRoutes(app: Express): void {
     const helper = match?.[1] as string;
     const lang = match?.[2] as string;
 
-    console.log(match, helper, lang);
-
     if (!pushMockState[lang]) {
       pushMockState[lang] = {};
     }
@@ -49,9 +47,10 @@ function addRoutes(app: Express): void {
     switch (helper) {
       case 'saveObjectsWithTransformation':
         expect(req.body).to.deep.equal({
-          requests: [
-            { action: 'addObject', body: { objectID: '1', name: 'Adam' } },
-            { action: 'addObject', body: { objectID: '2', name: 'Benoit' } },
+          action: 'addObject',
+          records: [
+            { objectID: '1', name: 'Adam' },
+            { objectID: '2', name: 'Benoit' },
           ],
         });
 
@@ -65,9 +64,10 @@ function addRoutes(app: Express): void {
         break;
       case 'partialUpdateObjectsWithTransformation':
         expect(req.body).to.deep.equal({
-          requests: [
-            { action: 'partialUpdateObject', body: { objectID: '1', name: 'Adam' } },
-            { action: 'partialUpdateObject', body: { objectID: '2', name: 'Benoit' } },
+          action: 'partialUpdateObject',
+          records: [
+            { objectID: '1', name: 'Adam' },
+            { objectID: '2', name: 'Benoit' },
           ],
         });
 
