@@ -38,7 +38,17 @@ object Action {
   case object PartialUpdateObjectNoCreate extends Action {
     override def toString = "partialUpdateObjectNoCreate"
   }
-  val values: Seq[Action] = Seq(AddObject, UpdateObject, PartialUpdateObject, PartialUpdateObjectNoCreate)
+  case object DeleteObject extends Action {
+    override def toString = "deleteObject"
+  }
+  case object Delete extends Action {
+    override def toString = "delete"
+  }
+  case object Clear extends Action {
+    override def toString = "clear"
+  }
+  val values: Seq[Action] =
+    Seq(AddObject, UpdateObject, PartialUpdateObject, PartialUpdateObjectNoCreate, DeleteObject, Delete, Clear)
 
   def withName(name: String): Action = Action.values
     .find(_.toString == name)

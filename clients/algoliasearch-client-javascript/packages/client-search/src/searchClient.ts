@@ -142,7 +142,7 @@ import type {
 
 import type { BatchRequest } from '../model/batchRequest';
 
-export const apiClientVersion = '5.25.0';
+export const apiClientVersion = '5.26.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -1788,7 +1788,7 @@ export function createSearchClient({
      * Retrieves an object with non-null index settings.
      *
      * Required API Key ACLs:
-     *  - search
+     *  - settings
      * @param getSettings - The getSettings object.
      * @param getSettings.indexName - Name of the index on which to perform the operation.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.

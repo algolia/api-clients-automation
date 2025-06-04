@@ -2194,6 +2194,9 @@ components:
         - updateObject
         - partialUpdateObject
         - partialUpdateObjectNoCreate
+        - deleteObject
+        - delete
+        - clear
       description: Type of indexing operation.
     objectID:
       type: string

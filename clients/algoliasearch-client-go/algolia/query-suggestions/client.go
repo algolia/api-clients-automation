@@ -70,13 +70,15 @@ func NewClientWithConfig(cfg QuerySuggestionsConfiguration) (*APIClient, error) 
 		cfg.WriteTimeout = 30000 * time.Millisecond
 	}
 
-	return &APIClient{
+	apiClient := APIClient{
 		appID: cfg.AppID,
 		cfg:   &cfg,
 		transport: transport.New(
 			cfg.Configuration,
 		),
-	}, nil
+	}
+
+	return &apiClient, nil
 }
 
 func getDefaultHosts(r Region) []transport.StatefulHost {
@@ -84,7 +86,7 @@ func getDefaultHosts(r Region) []transport.StatefulHost {
 }
 
 func getUserAgent() string {
-	return fmt.Sprintf("Algolia for Go (4.16.0); Go (%s); QuerySuggestions (4.16.0)", runtime.Version())
+	return fmt.Sprintf("Algolia for Go (4.17.0); Go (%s); QuerySuggestions (4.17.0)", runtime.Version())
 }
 
 // AddDefaultHeader adds a new HTTP header to the default header in the request.

@@ -1,3 +1,14 @@
+## [4.17.0](https://github.com/algolia/algoliasearch-client-java/compare/4.16.0...4.17.0)
+
+- [9db03b532b](https://github.com/algolia/api-clients-automation/commit/9db03b532b) fix(specs): typo ([#4854](https://github.com/algolia/api-clients-automation/pull/4854)) by [@kai687](https://github.com/kai687/)
+- [db02a51d50](https://github.com/algolia/api-clients-automation/commit/db02a51d50) chore(deps): dependencies 2025-05-19 ([#4853](https://github.com/algolia/api-clients-automation/pull/4853)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [969cae23ab](https://github.com/algolia/api-clients-automation/commit/969cae23ab) fix(specs): change fileSize to int64 type ([#4877](https://github.com/algolia/api-clients-automation/pull/4877)) by [@millotp](https://github.com/millotp/)
+- [90b49b1e1b](https://github.com/algolia/api-clients-automation/commit/90b49b1e1b) feat(specs): add global push endpoint ([#4855](https://github.com/algolia/api-clients-automation/pull/4855)) by [@shortcuts](https://github.com/shortcuts/)
+- [cf416e6b91](https://github.com/algolia/api-clients-automation/commit/cf416e6b91) fix(specs): updated watchResponse ([#4879](https://github.com/algolia/api-clients-automation/pull/4879)) by [@shortcuts](https://github.com/shortcuts/)
+- [e46e762c0c](https://github.com/algolia/api-clients-automation/commit/e46e762c0c) chore(deps): dependencies 2025-05-26 ([#4880](https://github.com/algolia/api-clients-automation/pull/4880)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [06ad06e4a8](https://github.com/algolia/api-clients-automation/commit/06ad06e4a8) feat(specs): update transformation specs for no-code ([#4901](https://github.com/algolia/api-clients-automation/pull/4901)) by [@mehmetaligok](https://github.com/mehmetaligok/)
+- [4ec0e13e28](https://github.com/algolia/api-clients-automation/commit/4ec0e13e28) fix(specs): more indexing actions to push ([#4930](https://github.com/algolia/api-clients-automation/pull/4930)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [4.16.0](https://github.com/algolia/algoliasearch-client-java/compare/4.15.5...4.16.0)
 
 - [7e226c4559](https://github.com/algolia/api-clients-automation/commit/7e226c4559) feat(scripts): add push to mcp-node on release ([#4784](https://github.com/algolia/api-clients-automation/pull/4784)) by [@shortcuts](https://github.com/shortcuts/)

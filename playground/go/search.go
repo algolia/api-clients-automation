@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+	// "github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
 func testSearch(appID, apiKey string) int {
@@ -22,6 +23,29 @@ func testSearch(appID, apiKey string) int {
 	if err != nil {
 		panic(err)
 	}
+
+	// config := search.SearchConfiguration{
+	// 	Configuration: transport.Configuration{
+	// 		AppID:  appID,
+	// 		ApiKey: apiKey,
+	// 	},
+	// }
+	//
+	// config.WithTransformation("eu")
+	//
+	// fmt.Println(config.Transformation.Region)
+	//
+	// searchClient, err := search.NewClientWithConfig(config)
+	// if err != nil {
+	// 	panic(err)
+	// }
+	//
+	// watchResponse, err := searchClient.SaveObjectsWithTransformation("foo", []map[string]any{{"objectID": "foobarbaz"}}, search.WithWaitForTasks(true))
+	// if err != nil {
+	// 	panic(err)
+	// }
+	//
+	// fmt.Printf("%#v\n", watchResponse)
 
 	/*
 		response, err := searchClient.AddOrUpdateObject(
