@@ -31,7 +31,7 @@ post:
                 additionalProperties:
                   type: string
               createdAt:
-                $ref: '../../common/schemas/common.yml#/createdAt'
+                $ref: '../../../common/parameters/ingestion.yml#/CreatedAt'
             required:
               - taskWithRunID
               - createdAt

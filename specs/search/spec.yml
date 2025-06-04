@@ -384,11 +384,17 @@ paths:
   /saveObjects:
     $ref: 'helpers/saveObjects.yml#/method'
 
+  /saveObjectsWithTransformation:
+    $ref: 'helpers/saveObjectsWithTransformation.yml#/method'
+
   /deleteObjects:
     $ref: 'helpers/deleteObjects.yml#/method'
 
   /partialUpdateObjects:
     $ref: 'helpers/partialUpdateObjects.yml#/method'
+
+  /partialUpdateObjectsWithTransformation:
+    $ref: 'helpers/partialUpdateObjectsWithTransformation.yml#/method'
 
   /indexExists:
     $ref: 'helpers/indexExists.yml#/method'

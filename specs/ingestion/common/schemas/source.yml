@@ -15,7 +15,7 @@ Source:
     authenticationID:
       $ref: './common.yml#/authenticationID'
     createdAt:
-      $ref: './common.yml#/createdAt'
+      $ref: '../../../common/parameters/ingestion.yml#/CreatedAt'
     updatedAt:
       $ref: './common.yml#/updatedAt'
   required:
@@ -52,7 +52,7 @@ SourceCreateResponse:
       type: string
       description: Descriptive name of the source.
     createdAt:
-      $ref: './common.yml#/createdAt'
+      $ref: '../../../common/parameters/ingestion.yml#/CreatedAt'
   required:
     - sourceID
     - name

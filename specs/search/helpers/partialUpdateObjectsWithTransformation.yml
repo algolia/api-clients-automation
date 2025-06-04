@@ -1,0 +1,60 @@
+method:
+  post:
+    x-helper: true
+    tags:
+      - Records
+    operationId: partialUpdateObjectsWithTransformation
+    summary: Save objects to an Algolia index by leveraging the Transformation pipeline setup using the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+    description: |
+      Helper: Similar to the `partialUpdateObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must have been passed to the client instantiation method.
+    parameters:
+      - in: query
+        name: indexName
+        description: The `indexName` where to update `objects`.
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: objects
+        description: The objects to update.
+        required: true
+        schema:
+          type: array
+          items:
+            type: object
+      - in: query
+        name: createIfNotExists
+        description: To be provided if non-existing objects are passed, otherwise, the call will fail.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: waitForTasks
+        description: Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: batchSize
+        description: The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+        required: false
+        schema:
+          type: integer
+          default: 1000
+      - in: query
+        name: requestOptions
+        description: The request options to pass to the `batch` method.
+        required: false
+        schema:
+          type: object
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '../../common/schemas/ingestion/WatchResponse.yml'
+      '400':
+        $ref: '../../common/responses/IndexNotFound.yml'

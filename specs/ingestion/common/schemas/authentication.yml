@@ -16,7 +16,7 @@ Authentication:
     input:
       $ref: '#/AuthInputPartial'
     createdAt:
-      $ref: './common.yml#/createdAt'
+      $ref: '../../../common/parameters/ingestion.yml#/CreatedAt'
     updatedAt:
       $ref: './common.yml#/updatedAt'
   required:
@@ -55,7 +55,7 @@ AuthenticationCreateResponse:
     name:
       $ref: './common.yml#/name'
     createdAt:
-      $ref: './common.yml#/createdAt'
+      $ref: '../../../common/parameters/ingestion.yml#/CreatedAt'
   required:
     - authenticationID
     - name
