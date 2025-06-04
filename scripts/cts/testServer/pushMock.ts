@@ -39,6 +39,8 @@ function addRoutes(app: Express): void {
     const helper = match?.[1] as string;
     const lang = match?.[2] as string;
 
+    console.log(match, helper, lang);
+
     if (!pushMockState[lang]) {
       pushMockState[lang] = {};
     }
