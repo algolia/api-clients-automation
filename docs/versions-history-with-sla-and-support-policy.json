@@ -706,7 +706,12 @@
       "releaseDate": "2025-04-30"
     },
     "7.17.0": {
-      "releaseDate": "2025-05-12",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2025-05-12"
+    },
+    "7.18.0": {
+      "releaseDate": "2025-06-04",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -1028,7 +1033,12 @@
       "releaseDate": "2025-04-14"
     },
     "1.32.0": {
-      "releaseDate": "2025-05-12",
+      "slaStatus": "eligible",
+      "supportStatus": "eligible",
+      "releaseDate": "2025-05-12"
+    },
+    "1.32.1": {
+      "releaseDate": "2025-06-04",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -1430,13 +1440,13 @@
     },
     "3.16.0": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2021-01-30",
       "slaEndDate": "2026-08-14"
     },
     "3.17.0": {
       "slaStatus": "eligible",
-      "supportStatus": "not eligible",
+      "supportStatus": "eligible",
       "releaseDate": "2021-03-08",
       "slaEndDate": "2026-08-14"
     },
@@ -1850,7 +1860,12 @@
       "releaseDate": "2025-04-30"
     },
     "4.16.0": {
-      "releaseDate": "2025-05-12",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2025-05-12"
+    },
+    "4.17.0": {
+      "releaseDate": "2025-06-04",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -2594,7 +2609,12 @@
       "releaseDate": "2025-04-30"
     },
     "4.16.0": {
-      "releaseDate": "2025-05-12",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2025-05-12"
+    },
+    "4.17.0": {
+      "releaseDate": "2025-06-04",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -3984,7 +4004,12 @@
       "releaseDate": "2025-04-30"
     },
     "5.25.0": {
-      "releaseDate": "2025-05-12",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2025-05-12"
+    },
+    "5.26.0": {
+      "releaseDate": "2025-06-04",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -4467,7 +4492,12 @@
       "releaseDate": "2025-04-30"
     },
     "3.19.0": {
-      "releaseDate": "2025-05-12",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2025-05-12"
+    },
+    "3.20.0": {
+      "releaseDate": "2025-06-04",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -5248,7 +5278,12 @@
       "releaseDate": "2025-04-30"
     },
     "4.19.0": {
-      "releaseDate": "2025-05-12",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2025-05-12"
+    },
+    "4.20.0": {
+      "releaseDate": "2025-06-04",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -5917,7 +5952,12 @@
       "releaseDate": "2025-04-30"
     },
     "4.17.0": {
-      "releaseDate": "2025-05-12",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2025-05-12"
+    },
+    "4.18.0": {
+      "releaseDate": "2025-06-04",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -6642,7 +6682,12 @@
       "releaseDate": "2025-04-30"
     },
     "3.16.0": {
-      "releaseDate": "2025-05-12",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2025-05-12"
+    },
+    "3.17.0": {
+      "releaseDate": "2025-06-04",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -6782,19 +6827,19 @@
     },
     "1.18.0": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2017-02-06",
       "slaEndDate": "2026-08-14"
     },
     "1.19.0": {
       "slaStatus": "eligible",
-      "supportStatus": "not eligible",
+      "supportStatus": "eligible",
       "releaseDate": "2017-03-13",
       "slaEndDate": "2026-08-14"
     },
     "1.19.1": {
       "slaStatus": "eligible",
-      "supportStatus": "not eligible",
+      "supportStatus": "eligible",
       "releaseDate": "2017-03-17",
       "slaEndDate": "2026-08-14"
     },
@@ -7276,7 +7321,12 @@
       "releaseDate": "2025-04-30"
     },
     "2.18.0": {
-      "releaseDate": "2025-05-12",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2025-05-12"
+    },
+    "2.19.0": {
+      "releaseDate": "2025-06-04",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -7742,19 +7792,19 @@
     },
     "8.19.0": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2023-12-07",
       "slaEndDate": "2026-08-14"
     },
     "8.20.0": {
       "slaStatus": "eligible",
-      "supportStatus": "not eligible",
+      "supportStatus": "eligible",
       "releaseDate": "2024-02-02",
       "slaEndDate": "2026-08-14"
     },
     "8.20.1": {
       "slaStatus": "eligible",
-      "supportStatus": "not eligible",
+      "supportStatus": "eligible",
       "releaseDate": "2024-03-04",
       "slaEndDate": "2026-08-14"
     },
@@ -7991,7 +8041,12 @@
       "releaseDate": "2025-04-30"
     },
     "9.19.0": {
-      "releaseDate": "2025-05-12",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2025-05-12"
+    },
+    "9.20.0": {
+      "releaseDate": "2025-06-04",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
