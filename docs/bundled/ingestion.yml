@@ -7088,7 +7088,7 @@ paths:
                     additionalProperties:
                       type: string
                   createdAt:
-                    $ref: '#/components/schemas/createdAt'
+                    $ref: '#/components/schemas/CreatedAt'
                 required:
                   - taskWithRunID
                   - createdAt
@@ -15887,7 +15887,7 @@ components:
       required: true
       description: Unique identifier of a task run.
       schema:
-        $ref: '#/components/schemas/runID'
+        $ref: '#/components/schemas/RunID'
     eventStatus:
       name: status
       in: query
@@ -15917,7 +15917,7 @@ components:
       required: true
       description: Unique identifier of an event.
       schema:
-        $ref: '#/components/schemas/eventID'
+        $ref: '#/components/schemas/EventID'
   schemas:
     ErrorBase:
       description: Error.
@@ -15963,11 +15963,11 @@ components:
       required:
         - action
         - records
-    runID:
+    RunID:
       type: string
       description: Universally unique identifier (UUID) of a task run.
       example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-    eventID:
+    EventID:
       type: string
       description: Universally unique identifier (UUID) of an event.
       example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
@@ -15989,7 +15989,7 @@ components:
         - record
         - log
         - transform
-    publishedAt:
+    PublishedAt:
       type: string
       description: Date of publish RFC 3339 format.
     Event:
@@ -15998,9 +15998,9 @@ components:
       additionalProperties: false
       properties:
         eventID:
-          $ref: '#/components/schemas/eventID'
+          $ref: '#/components/schemas/EventID'
         runID:
-          $ref: '#/components/schemas/runID'
+          $ref: '#/components/schemas/RunID'
         status:
           $ref: '#/components/schemas/EventStatus'
         type:
@@ -16017,7 +16017,7 @@ components:
               additionalProperties: true
             - type: 'null'
         publishedAt:
-          $ref: '#/components/schemas/publishedAt'
+          $ref: '#/components/schemas/PublishedAt'
       required:
         - eventID
         - runID
@@ -16025,7 +16025,7 @@ components:
         - type
         - batchSize
         - publishedAt
-    createdAt:
+    CreatedAt:
       type: string
       description: Date of creation in RFC 3339 format.
     WatchResponse:
@@ -16033,28 +16033,32 @@ components:
       additionalProperties: false
       properties:
         runID:
-          $ref: '#/components/schemas/runID'
+          $ref: '#/components/schemas/RunID'
         eventID:
-          $ref: '#/components/schemas/eventID'
+          $ref: '#/components/schemas/EventID'
         data:
           type: array
-          description: >-
-            when used with discovering or validating sources, the sampled data
-            of your source is returned.
+          description: >
+            This field is always null when used with the Push endpoint.
+
+            When used for a source discover or source validate run, it will
+            include the sampled data of the source.
           items:
             type: object
         events:
           description: >-
             in case of error, observability events will be added to the
-            response, if any.
+            response.
           type: array
           items:
             $ref: '#/components/schemas/Event'
         message:
-          description: a message describing the outcome of a validate run.
+          description: >-
+            a message describing the outcome of the operation that has been ran
+            (push, discover or validate) run.
           type: string
         createdAt:
-          $ref: '#/components/schemas/createdAt'
+          $ref: '#/components/schemas/CreatedAt'
       required:
         - runID
     itemsPerPage:
@@ -16258,7 +16262,7 @@ components:
         input:
           $ref: '#/components/schemas/AuthInputPartial'
         createdAt:
-          $ref: '#/components/schemas/createdAt'
+          $ref: '#/components/schemas/CreatedAt'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
       required:
@@ -16437,7 +16441,7 @@ components:
         name:
           $ref: '#/components/schemas/name'
         createdAt:
-          $ref: '#/components/schemas/createdAt'
+          $ref: '#/components/schemas/CreatedAt'
       required:
         - authenticationID
         - name
@@ -16581,7 +16585,7 @@ components:
         input:
           $ref: '#/components/schemas/DestinationInput'
         createdAt:
-          $ref: '#/components/schemas/createdAt'
+          $ref: '#/components/schemas/CreatedAt'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
         authenticationID:
@@ -16624,7 +16628,7 @@ components:
         name:
           $ref: '#/components/schemas/name'
         createdAt:
-          $ref: '#/components/schemas/createdAt'
+          $ref: '#/components/schemas/CreatedAt'
       required:
         - destinationID
         - name
@@ -17007,7 +17011,7 @@ components:
         authenticationID:
           $ref: '#/components/schemas/authenticationID'
         createdAt:
-          $ref: '#/components/schemas/createdAt'
+          $ref: '#/components/schemas/CreatedAt'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
       required:
@@ -17042,7 +17046,7 @@ components:
           type: string
           description: Descriptive name of the source.
         createdAt:
-          $ref: '#/components/schemas/createdAt'
+          $ref: '#/components/schemas/CreatedAt'
       required:
         - sourceID
         - name
@@ -17464,7 +17468,7 @@ components:
         policies:
           $ref: '#/components/schemas/Policies'
         createdAt:
-          $ref: '#/components/schemas/createdAt'
+          $ref: '#/components/schemas/CreatedAt'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
       required:
@@ -17514,7 +17518,7 @@ components:
         taskID:
           $ref: '#/components/schemas/taskID'
         createdAt:
-          $ref: '#/components/schemas/createdAt'
+          $ref: '#/components/schemas/CreatedAt'
       required:
         - taskID
         - createdAt
@@ -17568,9 +17572,9 @@ components:
       description: API response for running a task.
       properties:
         runID:
-          $ref: '#/components/schemas/runID'
+          $ref: '#/components/schemas/RunID'
         createdAt:
-          $ref: '#/components/schemas/createdAt'
+          $ref: '#/components/schemas/CreatedAt'
       required:
         - runID
         - createdAt
@@ -17680,7 +17684,7 @@ components:
         policies:
           $ref: '#/components/schemas/Policies'
         createdAt:
-          $ref: '#/components/schemas/createdAt'
+          $ref: '#/components/schemas/CreatedAt'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
       required:
@@ -17863,7 +17867,7 @@ components:
         owner:
           $ref: '#/components/schemas/owner'
         createdAt:
-          $ref: '#/components/schemas/createdAt'
+          $ref: '#/components/schemas/CreatedAt'
         updatedAt:
           $ref: '#/components/schemas/updatedAt'
       required:
@@ -17901,7 +17905,7 @@ components:
         transformationID:
           $ref: '#/components/schemas/transformationID'
         createdAt:
-          $ref: '#/components/schemas/createdAt'
+          $ref: '#/components/schemas/CreatedAt'
       required:
         - transformationID
         - createdAt
@@ -18023,7 +18027,7 @@ components:
       additionalProperties: false
       properties:
         runID:
-          $ref: '#/components/schemas/runID'
+          $ref: '#/components/schemas/RunID'
         appID:
           type: string
         taskID:
@@ -18054,7 +18058,7 @@ components:
         type:
           $ref: '#/components/schemas/RunType'
         createdAt:
-          $ref: '#/components/schemas/createdAt'
+          $ref: '#/components/schemas/CreatedAt'
         startedAt:
           $ref: '#/components/schemas/startedAt'
         finishedAt:

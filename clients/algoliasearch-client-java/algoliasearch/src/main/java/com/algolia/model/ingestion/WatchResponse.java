@@ -66,7 +66,8 @@ public class WatchResponse {
   }
 
   /**
-   * when used with discovering or validating sources, the sampled data of your source is returned.
+   * This field is always null when used with the Push endpoint. When used for a source discover or
+   * source validate run, it will include the sampled data of the source.
    */
   @javax.annotation.Nullable
   public List<Object> getData() {
@@ -86,7 +87,7 @@ public class WatchResponse {
     return this;
   }
 
-  /** in case of error, observability events will be added to the response, if any. */
+  /** in case of error, observability events will be added to the response. */
   @javax.annotation.Nullable
   public List<Event> getEvents() {
     return events;
@@ -97,7 +98,10 @@ public class WatchResponse {
     return this;
   }
 
-  /** a message describing the outcome of a validate run. */
+  /**
+   * a message describing the outcome of the operation that has been ran (push, discover or
+   * validate) run.
+   */
   @javax.annotation.Nullable
   public String getMessage() {
     return message;
