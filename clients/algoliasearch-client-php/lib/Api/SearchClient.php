@@ -84,7 +84,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class SearchClient
 {
-    public const VERSION = '4.19.0';
+    public const VERSION = '4.20.0';
 
     /**
      * @var ApiWrapperInterface
@@ -1438,7 +1438,7 @@ class SearchClient
      * Retrieves an object with non-null index settings.
      *
      * Required API Key ACLs:
-     *  - search
+     *  - settings
      *
      * @param string $indexName      Name of the index on which to perform the operation. (required)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
