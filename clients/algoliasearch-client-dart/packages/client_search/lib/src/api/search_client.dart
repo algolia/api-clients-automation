@@ -1164,7 +1164,7 @@ final class SearchClient implements ApiClient {
   /// Retrieves an object with non-null index settings.
   ///
   /// Required API Key ACLs:
-  ///   - search
+  ///   - settings
   ///
   /// Parameters:
   /// * [indexName] Name of the index on which to perform the operation.

@@ -6146,7 +6146,7 @@ paths:
       operationId: getSettings
       x-mcp-tool: true
       x-acl:
-        - search
+        - settings
       description: Retrieves an object with non-null index settings.
       summary: Retrieve index settings
       parameters:
