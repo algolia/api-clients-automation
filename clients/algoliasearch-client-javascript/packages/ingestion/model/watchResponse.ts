@@ -11,25 +11,25 @@ export type WatchResponse = {
   /**
    * Universally unique identifier (UUID) of an event.
    */
-  eventID?: string;
+  eventID?: string | undefined;
 
   /**
    * when used with discovering or validating sources, the sampled data of your source is returned.
    */
-  data?: Array<Record<string, unknown>>;
+  data?: Array<Record<string, unknown>> | undefined;
 
   /**
    * in case of error, observability events will be added to the response, if any.
    */
-  events?: Array<Event>;
+  events?: Array<Event> | undefined;
 
   /**
    * a message describing the outcome of a validate run.
    */
-  message?: string;
+  message?: string | undefined;
 
   /**
    * Date of creation in RFC 3339 format.
    */
-  createdAt?: string;
+  createdAt?: string | undefined;
 };
