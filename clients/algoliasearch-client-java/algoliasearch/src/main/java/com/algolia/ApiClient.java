@@ -28,7 +28,7 @@ public abstract class ApiClient implements Closeable {
 
   private final Requester requester;
   private final ExecutorService executor;
-  private AuthInterceptor authInterceptor;
+  public AuthInterceptor authInterceptor;
 
   /** Constructs a new instance of the {@link ApiClient}. */
   protected ApiClient(
