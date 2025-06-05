@@ -35,7 +35,7 @@ def main():
         environ.get("ALGOLIA_APPLICATION_ID"), environ.get("ALGOLIA_ADMIN_KEY")
     )
 
-    config.with_transformation("eu")
+    config.set_transformation_region("eu")
 
     print("region in playground")
     print(config.region)

@@ -239,7 +239,7 @@ class TestSearchClient:
         _req = await _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.18.0\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.19.0\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     async def test_delete_objects_0(self):
@@ -653,7 +653,7 @@ class TestSearchClient:
                 )
             ]
         )
-        _config.with_transformation("us")
+        _config.set_transformation_region("us")
         _client = SearchClient.create_with_config(config=_config)
         _req = await _client.partial_update_objects_with_transformation(
             index_name="cts_e2e_partialUpdateObjectsWithTransformation_python",
@@ -994,7 +994,7 @@ class TestSearchClient:
                 )
             ]
         )
-        _config.with_transformation("us")
+        _config.set_transformation_region("us")
         _client = SearchClient.create_with_config(config=_config)
         _req = await _client.save_objects_with_transformation(
             index_name="cts_e2e_saveObjectsWithTransformation_python",
@@ -1484,7 +1484,7 @@ class TestSearchClientSync:
         _req = _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.18.0\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.19.0\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     def test_delete_objects_0(self):
@@ -1898,7 +1898,7 @@ class TestSearchClientSync:
                 )
             ]
         )
-        _config.with_transformation("us")
+        _config.set_transformation_region("us")
         _client = SearchClientSync.create_with_config(config=_config)
         _req = _client.partial_update_objects_with_transformation(
             index_name="cts_e2e_partialUpdateObjectsWithTransformation_python",
@@ -2239,7 +2239,7 @@ class TestSearchClientSync:
                 )
             ]
         )
-        _config.with_transformation("us")
+        _config.set_transformation_region("us")
         _client = SearchClientSync.create_with_config(config=_config)
         _req = _client.save_objects_with_transformation(
             index_name="cts_e2e_saveObjectsWithTransformation_python",
