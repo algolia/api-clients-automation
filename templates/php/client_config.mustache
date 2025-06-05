@@ -99,6 +99,7 @@ class {{configClassname}} extends {{#hasRegionalHost}}ConfigWithRegion{{/hasRegi
             'connectTimeout' => {{#lambda.toSeconds}}{{x-timeouts.server.connect}}{{/lambda.toSeconds}},
             'defaultHeaders' => [],
             {{#isSearchClient}}
+            'region' => null,
             'waitTaskTimeBeforeRetry' => $this->defaultWaitTaskTimeBeforeRetry,
             'defaultMaxRetries' => $this->defaultMaxRetries,
             'defaultForwardToReplicas' => null,

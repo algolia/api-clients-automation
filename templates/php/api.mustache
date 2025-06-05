@@ -18,6 +18,10 @@ use {{invokerPackage}}\RetryStrategy\ApiWrapperInterface;
 use {{invokerPackage}}\RetryStrategy\ClusterHosts;
 use {{invokerPackage}}\Support\Helpers;
 
+{{#isSearchClient}}
+use {{invokerPackage}}\Configuration\IngestionConfig;
+{{/isSearchClient}}
+
 use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
 
 /**
@@ -98,17 +102,21 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             self::getClusterHosts($config)
         );
 
+        $client = new static($apiWrapper, $config);
+
+        {{#isSearchClient}}
         if (null !== $config->getTransformationRegion()) {
-          $ingestionConfig = IngestionConfig::create($appId, $apiKey, $config->getTransformationRegion());
+            $ingestionConfig = IngestionConfig::create($config->getAppId(), $config->getAlgoliaApiKey(), $config->getTransformationRegion());
 
-          if (isset($config->hosts)) {
-            $ingestionConfig['hosts'] = $config->hosts;
-          }
+            if (null !== $config->getHosts()) {
+                $ingestionConfig->setHosts($config->getHosts());
+            }
 
-            $this->ingestionTransporter = new IngestionClient($config->appId, $config->apiKey, $config->getTransformationRegion(), $ingestionConfig);
+            $client->ingestionTransporter = IngestionClient::createWithConfig($ingestionConfig);
         }
+        {{/isSearchClient}}
 
-        return new static($apiWrapper, $config);
+        return $client;
     }
 
     /**
@@ -543,7 +551,11 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
      */
     public function saveObjectsWithTransformation($indexName, $objects, $waitForTasks = false, $batchSize = 1000, $requestOptions = [])
     {
-        return $this->ingestionTransporter->push($indexName, 'addObject', $objects, $waitForTasks, $requestOptions);
+        if (null == $this->ingestionTransporter) {
+            throw new \InvalidArgumentException('`setTransformationRegion` must have been called before calling this method.');
+        }
+
+        return $this->ingestionTransporter->push($indexName, ['action'=>'addObject', 'records'=>$objects], $waitForTasks, $requestOptions);
     }
 
     /**
@@ -595,7 +607,11 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
      */
     public function partialUpdateObjectsWithTransformation($indexName, $objects, $createIfNotExists, $waitForTasks = false, $batchSize = 1000, $requestOptions = [])
     {
-        return $this->ingestionTransporter->push($indexName, (true == $createIfNotExists) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $objects, $waitForTasks, $requestOptions);
+        if (null == $this->ingestionTransporter) {
+            throw new \InvalidArgumentException('`setTransformationRegion` must have been called before calling this method.');
+        }
+
+        return $this->ingestionTransporter->push($indexName, ['action'=>(true == $createIfNotExists) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', 'records'=>$objects], $waitForTasks, $requestOptions);
     }
 
     /**
