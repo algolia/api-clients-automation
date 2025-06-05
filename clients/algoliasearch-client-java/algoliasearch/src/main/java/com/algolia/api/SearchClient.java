@@ -8,9 +8,13 @@ import com.algolia.config.*;
 import com.algolia.config.ClientOptions;
 import com.algolia.exceptions.*;
 import com.algolia.internal.JsonSerializer;
+import com.algolia.model.ingestion.PushTaskPayload;
+import com.algolia.model.ingestion.PushTaskRecords;
+import com.algolia.model.ingestion.WatchResponse;
 import com.algolia.model.search.*;
 import com.algolia.utils.*;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -35,6 +39,17 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 public class SearchClient extends ApiClient {
+
+  private IngestionClient ingestionTransporter;
+
+  public void setTransformationRegion(String region) {
+    this.ingestionTransporter = new IngestionClient(
+      this.authInterceptor.getApplicationId(),
+      this.authInterceptor.getApiKey(),
+      region,
+      this.clientOptions
+    );
+  }
 
   public SearchClient(String appId, String apiKey) {
     this(appId, apiKey, null);
@@ -6732,6 +6747,108 @@ public class SearchClient extends ApiClient {
   }
 
   /**
+   * Helper: Similar to the `saveObjects` method but requires a Push connector
+   * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+   * to be created first, in order to transform records before indexing them to Algolia. The
+   * `region` must have been passed to the client instantiation method.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @throws AlgoliaRetryException When the retry has failed on all hosts
+   * @throws AlgoliaApiException When the API sends an http error code
+   * @throws AlgoliaRuntimeException When an error occurred during the serialization
+   */
+  public <T> WatchResponse saveObjectsWithTransformation(String indexName, Iterable<T> objects) {
+    return saveObjectsWithTransformation(indexName, objects, null);
+  }
+
+  /**
+   * Helper: Similar to the `saveObjects` method but requires a Push connector
+   * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+   * to be created first, in order to transform records before indexing them to Algolia. The
+   * `region` must have been passed to the client instantiation method.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public <T> WatchResponse saveObjectsWithTransformation(String indexName, Iterable<T> objects, RequestOptions requestOptions) {
+    return saveObjectsWithTransformation(indexName, objects, false, requestOptions);
+  }
+
+  /**
+   * Helper: Similar to the `saveObjects` method but requires a Push connector
+   * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+   * to be created first, in order to transform records before indexing them to Algolia. The
+   * `region` must have been passed to the client instantiation method.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+   *     processed, this operation may slow the total execution time of this method but is more
+   *     reliable.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public <T> WatchResponse saveObjectsWithTransformation(
+    String indexName,
+    Iterable<T> objects,
+    boolean waitForTasks,
+    RequestOptions requestOptions
+  ) {
+    return saveObjectsWithTransformation(indexName, objects, waitForTasks, 1000, requestOptions);
+  }
+
+  /**
+   * Helper: Similar to the `saveObjects` method but requires a Push connector
+   * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+   * to be created first, in order to transform records before indexing them to Algolia. The
+   * `region` must have been passed to the client instantiation method.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+   *     processed, this operation may slow the total execution time of this method but is more
+   *     reliable.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public <T> WatchResponse saveObjectsWithTransformation(
+    String indexName,
+    Iterable<T> objects,
+    boolean waitForTasks,
+    int batchSize,
+    RequestOptions requestOptions
+  ) {
+    if (this.ingestionTransporter == null) {
+      throw new AlgoliaRuntimeException("`setTransformationRegion` must have been called before calling this method.");
+    }
+
+    return this.ingestionTransporter.push(
+        indexName,
+        new PushTaskPayload().setAction(com.algolia.model.ingestion.Action.ADD_OBJECT).setRecords(this.objectsToPushTaskRecords(objects)),
+        waitForTasks,
+        requestOptions
+      );
+  }
+
+  private <T> List<PushTaskRecords> objectsToPushTaskRecords(Iterable<T> objects) {
+    try {
+      ObjectMapper mapper = new ObjectMapper();
+      String json = mapper.writeValueAsString(objects);
+
+      return mapper.readValue(json, new TypeReference<List<PushTaskRecords>>() {});
+    } catch (Exception e) {
+      throw new AlgoliaRuntimeException(
+        "each object must have an `objectID` key in order to be used with the" + " WithTransformation methods"
+      );
+    }
+  }
+
+  /**
    * Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used
    * under the hood, which creates a `batch` requests with at most 1000 objects in it.
    *
@@ -6865,6 +6982,114 @@ public class SearchClient extends ApiClient {
     }
 
     return chunkedBatch(indexName, objects, Action.DELETE_OBJECT, waitForTasks, batchSize, requestOptions);
+  }
+
+  /**
+   * Helper: Similar to the `partialUpdateObjects` method but requires a Push connector
+   * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+   * to be created first, in order to transform records before indexing them to Algolia. The
+   * `region` must have been passed to the client instantiation method.
+   *
+   * @param indexName The `indexName` to update `objects` in.
+   * @param objects The array of `objects` to update in the given Algolia `indexName`.
+   * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call
+   *     will fail.
+   */
+  public <T> WatchResponse partialUpdateObjectsWithTransformation(String indexName, Iterable<T> objects, boolean createIfNotExists) {
+    return partialUpdateObjectsWithTransformation(indexName, objects, createIfNotExists, false, null);
+  }
+
+  /**
+   * Helper: Similar to the `partialUpdateObjects` method but requires a Push connector
+   * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+   * to be created first, in order to transform records before indexing them to Algolia. The
+   * `region` must have been passed to the client instantiation method.
+   *
+   * @param indexName The `indexName` to update `objects` in.
+   * @param objects The array of `objects` to update in the given Algolia `indexName`.
+   * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call
+   *     will fail.
+   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+   *     processed, this operation may slow the total execution time of this method but is more
+   *     reliable.
+   */
+  public <T> WatchResponse partialUpdateObjectsWithTransformation(
+    String indexName,
+    Iterable<T> objects,
+    boolean createIfNotExists,
+    boolean waitForTasks
+  ) {
+    return partialUpdateObjectsWithTransformation(indexName, objects, createIfNotExists, waitForTasks, null);
+  }
+
+  /**
+   * Helper: Similar to the `partialUpdateObjects` method but requires a Push connector
+   * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+   * to be created first, in order to transform records before indexing them to Algolia. The
+   * `region` must have been passed to the client instantiation method.
+   *
+   * @param indexName The `indexName` to update `objects` in.
+   * @param objects The array of `objects` to update in the given Algolia `indexName`.
+   * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call
+   *     will fail.
+   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+   *     processed, this operation may slow the total execution time of this method but is more
+   *     reliable.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public <T> WatchResponse partialUpdateObjectsWithTransformation(
+    String indexName,
+    Iterable<T> objects,
+    boolean createIfNotExists,
+    boolean waitForTasks,
+    RequestOptions requestOptions
+  ) {
+    return partialUpdateObjectsWithTransformation(indexName, objects, createIfNotExists, waitForTasks, 1000, null);
+  }
+
+  /**
+   * Helper: Similar to the `partialUpdateObjects` method but requires a Push connector
+   * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+   * to be created first, in order to transform records before indexing them to Algolia. The
+   * `region` must have been passed to the client instantiation method.
+   *
+   * @param indexName The `indexName` to update `objects` in.
+   * @param objects The array of `objects` to update in the given Algolia `indexName`.
+   * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call
+   *     will fail.
+   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+   *     processed, this operation may slow the total execution time of this method but is more
+   *     reliable.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public <T> WatchResponse partialUpdateObjectsWithTransformation(
+    String indexName,
+    Iterable<T> objects,
+    boolean createIfNotExists,
+    boolean waitForTasks,
+    int batchSize,
+    RequestOptions requestOptions
+  ) {
+    if (this.ingestionTransporter == null) {
+      throw new AlgoliaRuntimeException("`setTransformationRegion` must have been called before calling this method.");
+    }
+
+    return this.ingestionTransporter.push(
+        indexName,
+        new PushTaskPayload()
+          .setAction(
+            createIfNotExists
+              ? com.algolia.model.ingestion.Action.PARTIAL_UPDATE_OBJECT
+              : com.algolia.model.ingestion.Action.PARTIAL_UPDATE_OBJECT_NO_CREATE
+          )
+          .setRecords(this.objectsToPushTaskRecords(objects)),
+        waitForTasks,
+        requestOptions
+      );
   }
 
   /**

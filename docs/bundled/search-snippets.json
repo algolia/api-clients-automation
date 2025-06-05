@@ -1927,6 +1927,9 @@
       "call partialUpdateObjects with createIfNotExists=true": "client.partialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    }\n  ),\n  true\n);",
       "call partialUpdateObjects with createIfNotExists=false": "client.partialUpdateObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"3\");\n        put(\"name\", \"Cyril\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"4\");\n        put(\"name\", \"David\");\n      }\n    }\n  ),\n  false\n);"
     },
+    "partialUpdateObjectsWithTransformation": {
+      "default": "client.partialUpdateObjectsWithTransformation(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    }\n  ),\n  true\n);"
+    },
     "removeUserId": {
       "default": "client.removeUserId(\"uniqueID\");"
     },
@@ -1949,6 +1952,9 @@
       "saveObjects should report errors": "client.saveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    }\n  )\n);",
       "saveObjectsPlaylist": "client.saveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"visibility\", \"public\");\n        put(\"name\", \"Hot 100 Billboard Charts\");\n        put(\"playlistId\", \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\");\n        put(\"createdAt\", \"1500240452\");\n      }\n    }\n  )\n);",
       "saveObjectsPublicUser": "client.saveObjects(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"visibility\", \"public\");\n        put(\"name\", \"Hot 100 Billboard Charts\");\n        put(\"playlistId\", \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\");\n        put(\"createdAt\", \"1500240452\");\n      }\n    }\n  ),\n  false,\n  1000,\n  new RequestOptions().addExtraHeader(\"X-Algolia-User-ID\", \"*\")\n);"
+    },
+    "saveObjectsWithTransformation": {
+      "default": "client.saveObjectsWithTransformation(\n  \"<YOUR_INDEX_NAME>\",\n  Arrays.asList(\n    new HashMap() {\n      {\n        put(\"objectID\", \"1\");\n        put(\"name\", \"Adam\");\n      }\n    },\n    new HashMap() {\n      {\n        put(\"objectID\", \"2\");\n        put(\"name\", \"Benoit\");\n      }\n    }\n  )\n);"
     },
     "saveRule": {
       "saveRule with minimal parameters": "client.saveRule(\n  \"<YOUR_INDEX_NAME>\",\n  \"id1\",\n  new Rule()\n    .setObjectID(\"id1\")\n    .setConditions(Arrays.asList(new Condition().setPattern(\"apple\").setAnchoring(Anchoring.CONTAINS)))\n    .setConsequence(new Consequence().setParams(new ConsequenceParams().setFilters(\"brand:xiaomi\")))\n);",

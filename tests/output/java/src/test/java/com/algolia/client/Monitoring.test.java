@@ -87,6 +87,7 @@ class MonitoringClientClientTests {
   @DisplayName("use the correct host")
   void parametersTest0() {
     MonitoringClient client = new MonitoringClient("my-app-id", "my-api-key", withEchoRequester());
+
     client.customDelete("test");
     EchoResponse result = echo.getLastResponse();
     assertEquals("status.algolia.com", result.host);
@@ -110,6 +111,7 @@ class MonitoringClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       Object res = client.customGet("check-api-key/1");
 
