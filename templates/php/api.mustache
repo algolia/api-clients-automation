@@ -108,8 +108,8 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         if (null !== $config->getTransformationRegion()) {
             $ingestionConfig = IngestionConfig::create($config->getAppId(), $config->getAlgoliaApiKey(), $config->getTransformationRegion());
 
-            if (null !== $config->getHosts()) {
-                $ingestionConfig->setHosts($config->getHosts());
+            if ($hosts = $config->getHosts()) {
+                $ingestionConfig = $ingestionConfig->setHosts($hosts);
             }
 
             $client->ingestionTransporter = IngestionClient::createWithConfig($ingestionConfig);
