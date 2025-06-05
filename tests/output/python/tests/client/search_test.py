@@ -653,7 +653,7 @@ class TestSearchClient:
                 )
             ]
         )
-        _config.with_transformation("us")
+        _config.set_transformation_region("us")
         _client = SearchClient.create_with_config(config=_config)
         _req = await _client.partial_update_objects_with_transformation(
             index_name="cts_e2e_partialUpdateObjectsWithTransformation_python",
@@ -994,7 +994,7 @@ class TestSearchClient:
                 )
             ]
         )
-        _config.with_transformation("us")
+        _config.set_transformation_region("us")
         _client = SearchClient.create_with_config(config=_config)
         _req = await _client.save_objects_with_transformation(
             index_name="cts_e2e_saveObjectsWithTransformation_python",
@@ -1898,7 +1898,7 @@ class TestSearchClientSync:
                 )
             ]
         )
-        _config.with_transformation("us")
+        _config.set_transformation_region("us")
         _client = SearchClientSync.create_with_config(config=_config)
         _req = _client.partial_update_objects_with_transformation(
             index_name="cts_e2e_partialUpdateObjectsWithTransformation_python",
@@ -2239,7 +2239,7 @@ class TestSearchClientSync:
                 )
             ]
         )
-        _config.with_transformation("us")
+        _config.set_transformation_region("us")
         _client = SearchClientSync.create_with_config(config=_config)
         _req = _client.save_objects_with_transformation(
             index_name="cts_e2e_saveObjectsWithTransformation_python",
