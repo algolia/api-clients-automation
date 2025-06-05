@@ -1,3 +1,7 @@
+## [1.33.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.32.1...1.33.0)
+
+- [835daccb48](https://github.com/algolia/api-clients-automation/commit/835daccb48) feat(specs): add with transformation helpers ([#4931](https://github.com/algolia/api-clients-automation/pull/4931)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [1.32.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.32.0...1.32.1)
 
 - [9db03b532b](https://github.com/algolia/api-clients-automation/commit/9db03b532b) fix(specs): typo ([#4854](https://github.com/algolia/api-clients-automation/pull/4854)) by [@kai687](https://github.com/kai687/)
