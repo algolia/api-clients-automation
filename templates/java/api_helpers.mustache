@@ -742,18 +742,17 @@ public <T> WatchResponse saveObjectsWithTransformation(
     );
 }
 
-private <T> List<PushTaskRecords> objectsToPushTaskRecords(Iterable<T> iterable) {
-  List<PushTaskRecords> payload = new ArrayList<>();
-  for (T item : iterable) {
-    if (item instanceof PushTaskRecords) {
-      payload.add((PushTaskRecords) item);
-    } else {
+private <T> List<PushTaskRecords> objectsToPushTaskRecords(Iterable<T> objects) {
+    try {
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(objects);
+
+        return mapper.readValue(json, new TypeReference<List<PushTaskRecords>>() {});
+    } catch (Exception e) {
       throw new AlgoliaRuntimeException(
         "each object must have an `objectID` key in order to be used with the" + " WithTransformation methods"
       );
     }
-  }
-  return payload;
 }
 
 /**
