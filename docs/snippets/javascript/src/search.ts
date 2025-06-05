@@ -2063,6 +2063,31 @@ export async function snippetForPartialUpdateObjects1(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the partialUpdateObjectsWithTransformation method.
+//
+// call partialUpdateObjectsWithTransformation with createIfNotExists=true
+export async function snippetForPartialUpdateObjectsWithTransformation(): Promise<void> {
+  // >SEPARATOR partialUpdateObjectsWithTransformation default
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.partialUpdateObjectsWithTransformation({
+    indexName: 'cts_e2e_partialUpdateObjectsWithTransformation_javascript',
+    objects: [
+      { objectID: '1', name: 'Adam' },
+      { objectID: '2', name: 'Benoit' },
+    ],
+    createIfNotExists: true,
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the removeUserId method.
 //
 // removeUserId
@@ -2332,6 +2357,30 @@ export async function snippetForSaveObjects3(): Promise<void> {
       headers: { 'X-Algolia-User-ID': '*' },
     },
   );
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveObjectsWithTransformation method.
+//
+// call saveObjectsWithTransformation without error
+export async function snippetForSaveObjectsWithTransformation(): Promise<void> {
+  // >SEPARATOR saveObjectsWithTransformation default
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveObjectsWithTransformation({
+    indexName: 'cts_e2e_saveObjectsWithTransformation_javascript',
+    objects: [
+      { objectID: '1', name: 'Adam' },
+      { objectID: '2', name: 'Benoit' },
+    ],
+  });
 
   // >LOG
   // use typed response

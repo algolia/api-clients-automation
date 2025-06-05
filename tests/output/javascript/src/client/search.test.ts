@@ -513,6 +513,40 @@ describe('partialUpdateObjects', () => {
   }, 25000);
 });
 
+describe('partialUpdateObjectsWithTransformation', () => {
+  test('call partialUpdateObjectsWithTransformation with createIfNotExists=true', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6689,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+      transformation: { region: 'us' },
+    });
+
+    {
+      const result = await client.partialUpdateObjectsWithTransformation({
+        indexName: 'cts_e2e_partialUpdateObjectsWithTransformation_javascript',
+        objects: [
+          { objectID: '1', name: 'Adam' },
+          { objectID: '2', name: 'Benoit' },
+        ],
+        createIfNotExists: true,
+      });
+
+      expect(result).toEqual({
+        runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
+        eventID: '113b2068-6337-4c85-b5c2-e7b213d82925',
+        message: 'OK',
+        createdAt: '2022-05-12T06:24:30.049Z',
+      });
+    }
+  }, 25000);
+});
+
 describe('replaceAllObjects', () => {
   test('call replaceAllObjects without error', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {
@@ -729,6 +763,39 @@ describe('saveObjects', () => {
           headers: { 'X-Algolia-User-ID': '*' },
         },
       );
+    }
+  }, 25000);
+});
+
+describe('saveObjectsWithTransformation', () => {
+  test('call saveObjectsWithTransformation without error', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6689,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+      transformation: { region: 'us' },
+    });
+
+    {
+      const result = await client.saveObjectsWithTransformation({
+        indexName: 'cts_e2e_saveObjectsWithTransformation_javascript',
+        objects: [
+          { objectID: '1', name: 'Adam' },
+          { objectID: '2', name: 'Benoit' },
+        ],
+      });
+
+      expect(result).toEqual({
+        runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
+        eventID: '113b2068-6337-4c85-b5c2-e7b213d82925',
+        message: 'OK',
+        createdAt: '2022-05-12T06:24:30.049Z',
+      });
     }
   }, 25000);
 });

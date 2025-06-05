@@ -3695,6 +3695,10 @@ paths:
   /saveObjectsWithTransformation:
     get:
       x-helper: true
+      x-available-languages:
+        - javascript
+        - go
+        - python
       tags:
         - search
       operationId: saveObjectsWithTransformation
@@ -3895,6 +3899,10 @@ paths:
   /partialUpdateObjectsWithTransformation:
     post:
       x-helper: true
+      x-available-languages:
+        - javascript
+        - go
+        - python
       tags:
         - search
       operationId: partialUpdateObjectsWithTransformation

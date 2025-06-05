@@ -4337,6 +4337,11 @@
     "/saveObjectsWithTransformation": {
       "get": {
         "x-helper": true,
+        "x-available-languages": [
+          "javascript",
+          "go",
+          "python"
+        ],
         "tags": [
           "Records"
         ],
@@ -4585,6 +4590,11 @@
     "/partialUpdateObjectsWithTransformation": {
       "post": {
         "x-helper": true,
+        "x-available-languages": [
+          "javascript",
+          "go",
+          "python"
+        ],
         "tags": [
           "Records"
         ],
