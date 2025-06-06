@@ -4,6 +4,7 @@ import path, { resolve } from 'path';
 import {
   CLIENTS,
   configureGitHubAuthor,
+  ensureGitHubToken,
   exists,
   getOctokit,
   gitBranchExists,
@@ -113,6 +114,8 @@ async function handleGuideFiles(guide: GuidesToPush, tempGitDir: string): Promis
 }
 
 async function pushToRepository(repository: string, config: RepositoryConfiguration): Promise<void> {
+  const token = ensureGitHubToken();
+
   const lastCommitMessage = await run('git log -1 --format="%s"');
   const author = (await run('git log -1 --format="Co-authored-by: %an <%ae>"')).trim();
   const coAuthors = (await run('git log -1 --format="%(trailers:key=Co-authored-by)"'))
@@ -139,6 +142,8 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
   await run(`gh repo clone ${OWNER}/${repository} ${tempGitDir}`);
 
   await configureGitHubAuthor(tempGitDir);
+
+  await run(`git remote set-url origin https://${token}@github.com/${OWNER}/${repository}.git`);
 
   for (const task of config.tasks) {
     console.log(`Handling '${task.files.type}' file(s)`);
