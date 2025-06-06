@@ -333,6 +333,10 @@ jobs:
           language: ${{ matrix.client.language }}
           version: ${{ matrix.client.version }}
 
+      - name: test cancel
+        if: ${{ matrix.client.language == 'php' }}
+        run: exit 1
+
       - name: Generate clients
         run: yarn cli generate ${{ matrix.client.language }}
 
@@ -652,7 +656,7 @@ jobs:
       - codegen
       - swift_build_linux
       - kotlin_build_macos
-    if: ${{ !cancelled() }} 
+    if: always()
     steps:
       - run: |
           if [[ ("${{ needs.codegen.outputs.success }}" != "true") || ("${{ needs.swift_build_linux.result }}" != "skipped" && "${{ needs.swift_build_linux.outputs.success }}" != "true") || ("${{ needs.kotlin_build_macos.result }}" != "skipped" && "${{ needs.kotlin_build_macos.outputs.success }}" != "true")]]; then
