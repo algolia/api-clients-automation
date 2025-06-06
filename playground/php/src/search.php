@@ -89,7 +89,7 @@ $config = SearchConfig::create(
 // }
 // var_dump($rules);
 
-$configForIngestion = $config->setTransformationRegion('eu');
+$configForIngestion = $config->setFullHosts(['http://localhost:6689'])->setTransformationRegion('eu');
 
 $clientWithTransformation = SearchClient::createWithConfig($configForIngestion);
 
