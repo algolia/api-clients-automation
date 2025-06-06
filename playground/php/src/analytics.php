@@ -1,6 +1,6 @@
 <?php
 
-$env = require_once('../loadEnv.php');
+$env = require_once '../loadEnv.php';
 
 use Algolia\AlgoliaSearch\Api\AnalyticsClient;
 
