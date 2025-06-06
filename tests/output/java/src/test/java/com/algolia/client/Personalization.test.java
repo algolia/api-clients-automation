@@ -131,6 +131,7 @@ class PersonalizationClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       Object res = client.customGet("check-api-key/1");
 

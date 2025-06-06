@@ -77,6 +77,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
             null
         );
         $this->assertIsObject($client);
+
         $client->pushEvents(
             ['events' => [
                 ['eventType' => 'click',
@@ -115,6 +116,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
             'us'
         );
         $this->assertIsObject($client);
+
         $client->customDelete(
             'test',
         );

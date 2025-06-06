@@ -2593,6 +2593,38 @@ class SnippetSearchClient
     }
 
     /**
+     * Snippet for the PartialUpdateObjectsWithTransformation method.
+     *
+     * call partialUpdateObjectsWithTransformation with createIfNotExists=true
+     */
+    public function snippetForPartialUpdateObjectsWithTransformation(): void
+    {
+        // >SEPARATOR partialUpdateObjectsWithTransformation default
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->partialUpdateObjectsWithTransformation(
+            '<YOUR_INDEX_NAME>',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+            ],
+            true,
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the RemoveUserId method.
      *
      * removeUserId
@@ -2942,6 +2974,37 @@ class SnippetSearchClient
                     'X-Algolia-User-ID' => '*',
                 ],
             ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveObjectsWithTransformation method.
+     *
+     * call saveObjectsWithTransformation without error
+     */
+    public function snippetForSaveObjectsWithTransformation(): void
+    {
+        // >SEPARATOR saveObjectsWithTransformation default
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveObjectsWithTransformation(
+            '<YOUR_INDEX_NAME>',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+            ],
         );
 
         // >LOG

@@ -88,6 +88,7 @@ class AbtestingClientClientTests {
   @DisplayName("fallbacks to the alias when region is not given")
   void parametersTest0() {
     AbtestingClient client = new AbtestingClient("my-app-id", "my-api-key", withEchoRequester());
+
     client.getABTest(123);
     EchoResponse result = echo.getLastResponse();
     assertEquals("analytics.algolia.com", result.host);
@@ -97,6 +98,7 @@ class AbtestingClientClientTests {
   @DisplayName("uses the correct region")
   void parametersTest1() {
     AbtestingClient client = new AbtestingClient("my-app-id", "my-api-key", "us", withEchoRequester());
+
     client.getABTest(123);
     EchoResponse result = echo.getLastResponse();
     assertEquals("analytics.us.algolia.com", result.host);
@@ -132,6 +134,7 @@ class AbtestingClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       Object res = client.customGet("check-api-key/1");
 
