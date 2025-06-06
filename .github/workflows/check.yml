@@ -108,13 +108,6 @@ jobs:
           yarn eslint --ext=json .
           echo 'Use yarn fix:json to fix issues'
 
-      - name: Push generated files to repositories
-        run: yarn workspace scripts pushToRepository
-        env:
-          GH_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
-          FORCE: true
-
     outputs:
       RUN_SCRIPTS: ${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 }}
 
