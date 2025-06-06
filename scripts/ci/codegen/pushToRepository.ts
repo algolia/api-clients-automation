@@ -4,6 +4,7 @@ import path, { resolve } from 'path';
 import {
   CLIENTS,
   configureGitHubAuthor,
+  ensureGitHubToken,
   exists,
   getOctokit,
   gitBranchExists,
@@ -113,6 +114,8 @@ async function handleGuideFiles(guide: GuidesToPush, tempGitDir: string): Promis
 }
 
 async function pushToRepository(repository: string, config: RepositoryConfiguration): Promise<void> {
+  const token = ensureGitHubToken();
+
   const lastCommitMessage = await run('git log -1 --format="%s"');
   const author = (await run('git log -1 --format="Co-authored-by: %an <%ae>"')).trim();
   const coAuthors = (await run('git log -1 --format="%(trailers:key=Co-authored-by)"'))
@@ -129,9 +132,18 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
   console.log(`Preparing push to ${OWNER}/${repository}`);
 
   const tempGitDir = resolve(process.env.RUNNER_TEMP! || toAbsolutePath('foo/local/test'), repository);
+
+  console.info(`cleaning ${tempGitDir}`);
+
   await fsp.rm(tempGitDir, { force: true, recursive: true });
 
+  console.info(`cloning ${OWNER}/${repository} in ${tempGitDir}`);
+
   await run(`gh repo clone ${OWNER}/${repository} ${tempGitDir}`);
+
+  await configureGitHubAuthor(tempGitDir);
+
+  await run(`git config --global url.https://${token}@github.com/.insteadOf https://github.com/`);
 
   for (const task of config.tasks) {
     console.log(`Handling '${task.files.type}' file(s)`);
@@ -146,7 +158,7 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
       await handleGuideFiles(task.files, tempGitDir);
     }
 
-    if (process.env.DRYRUN) {
+    if (process.env.DRY_RUN) {
       console.log(`asked for a dry run, stopping before push and PR for '${repository}' on task '${task.prBranch}'`);
 
       continue;
@@ -162,8 +174,6 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
 
       continue;
     }
-
-    await configureGitHubAuthor(tempGitDir);
 
     await run('git add .', { cwd: tempGitDir });
     await gitCommit({

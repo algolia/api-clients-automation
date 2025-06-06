@@ -705,4 +705,5 @@ jobs:
       - name: Push generated files to repositories
         run: yarn workspace scripts pushToRepository
         env:
+          GH_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
