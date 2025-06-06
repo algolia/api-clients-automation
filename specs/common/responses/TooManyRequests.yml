@@ -1,0 +1,19 @@
+description: Too Many Requests.
+content:
+  application/json:
+    schema:
+      title: tooManyRequestsResponse
+      type: object
+      additionalProperties: false
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: integer
+          example: 421
+          description: Status code.
+        message:
+          type: string
+          example: Too Many Requests
+          description: Response message.

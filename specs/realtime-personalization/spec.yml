@@ -49,3 +49,6 @@ paths:
 
   /2/realtime/users/{userToken}:
     $ref: 'paths/getUser.yml'
+
+  /2/realtime/users/{userToken}/compute:
+    $ref: 'paths/computeUser.yml'

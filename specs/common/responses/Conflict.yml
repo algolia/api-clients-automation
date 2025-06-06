@@ -1,0 +1,19 @@
+description: Conflict.
+content:
+  application/json:
+    schema:
+      title: conflictResponse
+      type: object
+      additionalProperties: false
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: integer
+          example: 409
+          description: Status code.
+        message:
+          type: string
+          example: Conflict
+          description: Response message.
