@@ -1,8 +1,8 @@
-description: Success
+description: Conflict.
 content:
   application/json:
     schema:
-      title: acceptedResponse
+      title: conflictResponse
       type: object
       additionalProperties: false
       required:
@@ -11,9 +11,9 @@ content:
       properties:
         status:
           type: integer
-          example: 202
+          example: 409
           description: Status code.
         message:
           type: string
-          example: Accepted
+          example: Conflict
           description: Response message.

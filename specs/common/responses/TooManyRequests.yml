@@ -1,4 +1,4 @@
-description: Too Many Requests
+description: Too Many Requests.
 content:
   application/json:
     schema:
