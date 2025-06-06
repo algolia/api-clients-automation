@@ -5,6 +5,7 @@ method:
       - javascript
       - go
       - python
+      - java
     tags:
       - Records
     operationId: saveObjectsWithTransformation

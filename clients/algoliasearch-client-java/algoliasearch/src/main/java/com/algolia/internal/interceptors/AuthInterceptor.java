@@ -23,6 +23,14 @@ public final class AuthInterceptor implements Interceptor {
     this.apiKey = apiKey;
   }
 
+  public String getApiKey() {
+    return this.apiKey;
+  }
+
+  public String getApplicationId() {
+    return this.applicationId;
+  }
+
   @Nonnull
   @Override
   public Response intercept(Chain chain) throws IOException {

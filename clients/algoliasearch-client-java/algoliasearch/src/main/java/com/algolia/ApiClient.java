@@ -28,7 +28,8 @@ public abstract class ApiClient implements Closeable {
 
   private final Requester requester;
   private final ExecutorService executor;
-  private AuthInterceptor authInterceptor;
+  public final ClientOptions clientOptions;
+  public AuthInterceptor authInterceptor;
 
   /** Constructs a new instance of the {@link ApiClient}. */
   protected ApiClient(
@@ -47,11 +48,11 @@ public abstract class ApiClient implements Closeable {
     if (apiKey == null || apiKey.isEmpty()) {
       throw new AlgoliaRuntimeException("`apiKey` is missing.");
     }
-    final ClientOptions clientOptions = options != null ? options : new ClientOptions();
-    this.executor = clientOptions.getExecutor();
-    this.requester = clientOptions.getCustomRequester() != null
-      ? clientOptions.getCustomRequester()
-      : defaultRequester(appId, apiKey, clientName, clientOptions, defaultHosts, connectTimeout, readTimeout, writeTimeout);
+    this.clientOptions = options != null ? options : new ClientOptions();
+    this.executor = this.clientOptions.getExecutor();
+    this.requester = this.clientOptions.getCustomRequester() != null
+      ? this.clientOptions.getCustomRequester()
+      : defaultRequester(appId, apiKey, clientName, this.clientOptions, defaultHosts, connectTimeout, readTimeout, writeTimeout);
   }
 
   /** Creates a default {@link Requester} for executing API requests. */

@@ -10,6 +10,9 @@ import com.algolia.EchoInterceptor;
 import com.algolia.EchoResponse;
 import com.algolia.api.{{client}};
 import com.algolia.model.{{import}}.*;
+{{#isSearchClient}}
+import com.algolia.model.ingestion.WatchResponse;
+{{/isSearchClient}}
 import com.algolia.config.*;
 import java.util.*;
 import java.time.Duration;
