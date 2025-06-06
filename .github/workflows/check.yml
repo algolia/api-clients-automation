@@ -333,10 +333,6 @@ jobs:
           language: ${{ matrix.client.language }}
           version: ${{ matrix.client.version }}
 
-      - name: test cancel
-        if: ${{ matrix.client.language == 'php' }}
-        run: exit 1
-
       - name: Generate clients
         run: yarn cli generate ${{ matrix.client.language }}
 
