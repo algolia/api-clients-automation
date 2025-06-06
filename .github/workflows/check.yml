@@ -178,7 +178,7 @@ jobs:
       - specs
       - scripts
     if: |
-      always() &&
+      !cancelled() &&
       needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
@@ -305,7 +305,7 @@ jobs:
       - specs
       - scripts
     if: |
-      always() &&
+      !cancelled() &&
       needs.setup.outputs.RUN_GEN == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
@@ -426,7 +426,7 @@ jobs:
       - specs
       - scripts
     if: |
-      always() &&
+      !cancelled() &&
       needs.setup.outputs.RUN_GEN == 'true' &&
       needs.setup.outputs.KOTLIN_DATA != '' &&
       !contains(needs.*.result, 'cancelled') &&
@@ -472,7 +472,7 @@ jobs:
       - specs
       - scripts
     if: |
-      always() &&
+      !cancelled() &&
       needs.setup.outputs.RUN_GEN == 'true' &&
       needs.setup.outputs.SWIFT_DATA != '' &&
       !contains(needs.*.result, 'cancelled') &&
@@ -518,7 +518,7 @@ jobs:
       - client_gen
       - client_gen_javascript
     if: |
-      always() &&
+      !cancelled() &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     permissions:
@@ -667,7 +667,7 @@ jobs:
       - codegen
       - check_green
     if: |
-      always() &&
+      !cancelled() &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure') &&
       github.ref == 'refs/heads/main'
