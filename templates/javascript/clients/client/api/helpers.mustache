@@ -18,7 +18,7 @@ waitForTask(
     timeout = (retryCount: number): number =>
       Math.min(retryCount * 200, 5000),
   }: WaitForTaskOptions,
-  requestOptions?: RequestOptions
+  requestOptions?: RequestOptions | undefined
 ): Promise<GetTaskResponse> {
   let retryCount = 0;
 
@@ -52,7 +52,7 @@ waitForAppTask(
     timeout = (retryCount: number): number =>
       Math.min(retryCount * 200, 5000),
   }: WaitForAppTaskOptions,
-  requestOptions?: RequestOptions
+  requestOptions?: RequestOptions | undefined
 ): Promise<GetTaskResponse> {
   let retryCount = 0;
 
@@ -90,7 +90,7 @@ waitForApiKey(
     timeout = (retryCount: number): number =>
       Math.min(retryCount * 200, 5000),
   }: WaitForApiKeyOptions,
-  requestOptions?: RequestOptions
+  requestOptions?: RequestOptions | undefined
 ): Promise<GetApiKeyResponse | undefined> {
   let retryCount = 0;
   const baseIteratorOptions: IterableOptions<
@@ -167,7 +167,7 @@ browseObjects<T>(
     browseParams,
     ...browseObjectsOptions
   }: BrowseOptions<BrowseResponse<T>> & BrowseProps,
-  requestOptions?: RequestOptions
+  requestOptions?: RequestOptions | undefined
 ): Promise<BrowseResponse<T>> {
   return createIterablePromise<BrowseResponse<T>>({
     func: (previousResponse) => {
@@ -205,11 +205,11 @@ browseRules(
     searchRulesParams,
     ...browseRulesOptions
   }: BrowseOptions<SearchRulesResponse> & SearchRulesProps,
-  requestOptions?: RequestOptions
+  requestOptions?: RequestOptions | undefined
 ): Promise<SearchRulesResponse> {
   const params = {
-    hitsPerPage: 1000,
     ...searchRulesParams,
+    hitsPerPage: searchRulesParams?.hitsPerPage || 1000,
   };
 
   return createIterablePromise<SearchRulesResponse>({
@@ -249,11 +249,11 @@ browseSynonyms(
     searchSynonymsParams,
     ...browseSynonymsOptions
   }: BrowseOptions<SearchSynonymsResponse> & SearchSynonymsProps,
-  requestOptions?: RequestOptions
+  requestOptions?: RequestOptions | undefined
 ): Promise<SearchSynonymsResponse> {
   const params = {
-    page: 0,
     ...searchSynonymsParams,
+    page: searchSynonymsParams?.page || 0,
     hitsPerPage: 1000,
   };
 
@@ -324,7 +324,7 @@ async chunkedBatch({ indexName, objects, action = 'addObject', waitForTasks, bat
  */
 async saveObjects(
   { indexName, objects, waitForTasks, batchSize }: SaveObjectsOptions,
-  requestOptions?: RequestOptions
+  requestOptions?: RequestOptions | undefined
 ): Promise<BatchResponse[]> {
   return await this.chunkedBatch(
     { indexName, objects, action: 'addObject', waitForTasks, batchSize },
@@ -345,7 +345,7 @@ async saveObjects(
  */
 async deleteObjects(
   { indexName, objectIDs, waitForTasks, batchSize }: DeleteObjectsOptions,
-  requestOptions?: RequestOptions
+  requestOptions?: RequestOptions | undefined
 ): Promise<BatchResponse[]> {
   return await this.chunkedBatch(
     {
@@ -373,7 +373,7 @@ async deleteObjects(
  */
 async partialUpdateObjects(
   { indexName, objects, createIfNotExists, waitForTasks, batchSize }: PartialUpdateObjectsOptions,
-  requestOptions?: RequestOptions
+  requestOptions?: RequestOptions | undefined
 ): Promise<BatchResponse[]> {
   return await this.chunkedBatch(
     {
@@ -403,7 +403,7 @@ async partialUpdateObjects(
  */
 async replaceAllObjects(
   { indexName, objects, batchSize, scopes }: ReplaceAllObjectsOptions,
-  requestOptions?: RequestOptions
+  requestOptions?: RequestOptions | undefined
 ): Promise<ReplaceAllObjectsResponse> {
   const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
   const tmpIndexName = `${indexName}_tmp_${randomSuffix}`;
@@ -495,7 +495,7 @@ async indexExists({ indexName }: GetSettingsProps): Promise<boolean> {
  */
 searchForHits<T>(
   searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
-  requestOptions?: RequestOptions
+  requestOptions?: RequestOptions | undefined
 ): Promise<{results: Array<SearchResponse<T>>}> {
   return this.search(searchMethodParams, requestOptions) as Promise<{results: Array<SearchResponse<T>>}>;
 },
@@ -510,7 +510,7 @@ searchForHits<T>(
  */
 searchForFacets(
   searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
-  requestOptions?: RequestOptions
+  requestOptions?: RequestOptions | undefined
 ): Promise<{results: Array<SearchForFacetValuesResponse>}> {
   return this.search(searchMethodParams, requestOptions) as Promise<{results: Array<SearchForFacetValuesResponse>}>;
 },

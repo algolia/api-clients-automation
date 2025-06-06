@@ -8,4 +8,4 @@
     {{/bodyParams}}
   {{/x-is-single-body-param}}
 {{/vendorExtensions}}
-requestOptions{{^hasParams}}?{{/hasParams}}{{#hasParams}}{{#hasRequiredParams}}?{{/hasRequiredParams}}{{/hasParams}}: RequestOptions{{#hasParams}}{{^hasRequiredParams}} | undefined = undefined{{/hasRequiredParams}}{{/hasParams}}
+requestOptions{{^hasParams}}?{{/hasParams}}{{#hasParams}}{{#hasRequiredParams}}?{{/hasRequiredParams}}{{/hasParams}}: RequestOptions{{#hasParams}}{{^hasRequiredParams}} | undefined = undefined{{/hasRequiredParams}}{{/hasParams}}{{^hasParams}} | undefined{{/hasParams}}

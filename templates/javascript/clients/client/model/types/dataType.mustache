@@ -17,4 +17,7 @@
   {{#isNullable}}
     | null
   {{/isNullable}}
+  {{^required}}
+    | undefined
+  {{/required}}
 {{/isEnum}}

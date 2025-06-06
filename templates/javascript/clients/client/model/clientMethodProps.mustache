@@ -33,7 +33,7 @@ export type {{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}Props{{#x-has-
     * {{{description}}}
     */
     {{/description}}
-    {{paramName}}{{^required}}?{{/required}}: {{#vendorExtensions.x-is-generic}}T{{/vendorExtensions.x-is-generic}}{{^vendorExtensions.x-is-generic}}{{{dataType}}}{{/vendorExtensions.x-is-generic}};
+    {{paramName}}{{^required}}?{{/required}}: {{#vendorExtensions.x-is-generic}}T{{/vendorExtensions.x-is-generic}}{{^vendorExtensions.x-is-generic}}{{{dataType}}}{{/vendorExtensions.x-is-generic}}{{^required}}|undefined{{/required}};
   {{/allParams}}
 }
 {{/x-create-wrapping-object}}
@@ -117,7 +117,7 @@ export type GenerateSecuredApiKeyOptions = {
   /**
    * A set of properties defining the restrictions of the secured API key.
    */
-  restrictions?: SecuredApiKeyRestrictions;
+  restrictions?: SecuredApiKeyRestrictions | undefined;
 }
 
 export type GetSecuredApiKeyRemainingValidityOptions = {
@@ -148,7 +148,7 @@ export type PartialUpdateObjectsOptions = Pick<
   /**
    *To be provided if non-existing objects are passed, otherwise, the call will fail.
    */
-  createIfNotExists?: boolean;
+  createIfNotExists?: boolean | undefined;
 };
 
 export type SaveObjectsOptions = Pick<
@@ -160,12 +160,12 @@ export type ChunkedBatchOptions = ReplaceAllObjectsOptions & {
   /**
    * The `batch` `action` to perform on the given array of `objects`, defaults to `addObject`.
    */
-  action?: Action;
+  action?: Action | undefined;
 
   /**
    * Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
    */
-  waitForTasks?: boolean;
+  waitForTasks?: boolean | undefined;
 }
 
 export type ReplaceAllObjectsOptions = {
@@ -182,12 +182,12 @@ export type ReplaceAllObjectsOptions = {
   /**
    * The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
    */
-  batchSize?: number;
+  batchSize?: number | undefined;
 
   /**
    * The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
    */
-  scopes?: Array<ScopeType>;
+  scopes?: Array<ScopeType> | undefined;
 }
 
 export type AccountCopyIndexOptions = {
@@ -218,7 +218,7 @@ export type WaitForCompositionTaskOptions = {
   /**
    * The maximum number of retries. 50 by default.
    */
-  maxRetries?: number;
+  maxRetries?: number | undefined;
 
   /**
    * The function to decide how long to wait between retries.
