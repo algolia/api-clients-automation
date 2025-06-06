@@ -1,0 +1,35 @@
+post:
+  tags:
+    - abtest
+  operationId: stopABTest
+  x-acl:
+    - editSettings
+  summary: Stop an A/B test
+  description: |
+    Stops an A/B test by its ID.
+
+    You can't restart stopped A/B tests.
+  parameters:
+    - $ref: '../common/parameters.yml#/ID'
+  responses:
+    '200':
+      description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-reset'
+      content:
+        application/json:
+          schema:
+            $ref: '../common/schemas/ABTestResponse.yml#/ABTestResponse'
+    '400':
+      $ref: '../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../common/responses/IndexNotFound.yml'
