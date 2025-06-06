@@ -1,0 +1,19 @@
+description: Success
+content:
+  application/json:
+    schema:
+      title: acceptedResponse
+      type: object
+      additionalProperties: false
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: integer
+          example: 202
+          description: Status code.
+        message:
+          type: string
+          example: Accepted
+          description: Response message.
