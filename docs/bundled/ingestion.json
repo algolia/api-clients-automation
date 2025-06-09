@@ -1247,7 +1247,7 @@
                       }
                     },
                     "createdAt": {
-                      "$ref": "#/components/schemas/createdAt"
+                      "$ref": "#/components/schemas/CreatedAt"
                     }
                   },
                   "required": [
@@ -3057,7 +3057,7 @@
         "required": true,
         "description": "Unique identifier of a task run.",
         "schema": {
-          "$ref": "#/components/schemas/runID"
+          "$ref": "#/components/schemas/RunID"
         }
       },
       "eventStatus": {
@@ -3097,7 +3097,7 @@
         "required": true,
         "description": "Unique identifier of an event.",
         "schema": {
-          "$ref": "#/components/schemas/eventID"
+          "$ref": "#/components/schemas/EventID"
         }
       }
     },
@@ -3161,12 +3161,12 @@
           "records"
         ]
       },
-      "runID": {
+      "RunID": {
         "type": "string",
         "description": "Universally unique identifier (UUID) of a task run.",
         "example": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
       },
-      "eventID": {
+      "EventID": {
         "type": "string",
         "description": "Universally unique identifier (UUID) of an event.",
         "example": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
@@ -3198,7 +3198,7 @@
           "transform"
         ]
       },
-      "publishedAt": {
+      "PublishedAt": {
         "type": "string",
         "description": "Date of publish RFC 3339 format."
       },
@@ -3208,10 +3208,10 @@
         "additionalProperties": false,
         "properties": {
           "eventID": {
-            "$ref": "#/components/schemas/eventID"
+            "$ref": "#/components/schemas/EventID"
           },
           "runID": {
-            "$ref": "#/components/schemas/runID"
+            "$ref": "#/components/schemas/RunID"
           },
           "status": {
             "$ref": "#/components/schemas/EventStatus"
@@ -3238,7 +3238,7 @@
             ]
           },
           "publishedAt": {
-            "$ref": "#/components/schemas/publishedAt"
+            "$ref": "#/components/schemas/PublishedAt"
           }
         },
         "required": [
@@ -3250,7 +3250,7 @@
           "publishedAt"
         ]
       },
-      "createdAt": {
+      "CreatedAt": {
         "type": "string",
         "description": "Date of creation in RFC 3339 format."
       },
@@ -3259,31 +3259,31 @@
         "additionalProperties": false,
         "properties": {
           "runID": {
-            "$ref": "#/components/schemas/runID"
+            "$ref": "#/components/schemas/RunID"
           },
           "eventID": {
-            "$ref": "#/components/schemas/eventID"
+            "$ref": "#/components/schemas/EventID"
           },
           "data": {
             "type": "array",
-            "description": "when used with discovering or validating sources, the sampled data of your source is returned.",
+            "description": "This field is always null when used with the Push endpoint.\nWhen used for a source discover or source validate run, it will include the sampled data of the source.\n",
             "items": {
               "type": "object"
             }
           },
           "events": {
-            "description": "in case of error, observability events will be added to the response, if any.",
+            "description": "in case of error, observability events will be added to the response.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Event"
             }
           },
           "message": {
-            "description": "a message describing the outcome of a validate run.",
+            "description": "a message describing the outcome of the operation that has been ran (push, discover or validate) run.",
             "type": "string"
           },
           "createdAt": {
-            "$ref": "#/components/schemas/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           }
         },
         "required": [
@@ -3558,7 +3558,7 @@
             "$ref": "#/components/schemas/AuthInputPartial"
           },
           "createdAt": {
-            "$ref": "#/components/schemas/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "updatedAt": {
             "$ref": "#/components/schemas/updatedAt"
@@ -3799,7 +3799,7 @@
             "$ref": "#/components/schemas/name"
           },
           "createdAt": {
-            "$ref": "#/components/schemas/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           }
         },
         "required": [
@@ -3967,7 +3967,7 @@
             "$ref": "#/components/schemas/DestinationInput"
           },
           "createdAt": {
-            "$ref": "#/components/schemas/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "updatedAt": {
             "$ref": "#/components/schemas/updatedAt"
@@ -4027,7 +4027,7 @@
             "$ref": "#/components/schemas/name"
           },
           "createdAt": {
-            "$ref": "#/components/schemas/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           }
         },
         "required": [
@@ -4564,7 +4564,7 @@
             "$ref": "#/components/schemas/authenticationID"
           },
           "createdAt": {
-            "$ref": "#/components/schemas/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "updatedAt": {
             "$ref": "#/components/schemas/updatedAt"
@@ -4613,7 +4613,7 @@
             "description": "Descriptive name of the source."
           },
           "createdAt": {
-            "$ref": "#/components/schemas/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           }
         },
         "required": [
@@ -5167,7 +5167,7 @@
             "$ref": "#/components/schemas/Policies"
           },
           "createdAt": {
-            "$ref": "#/components/schemas/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "updatedAt": {
             "$ref": "#/components/schemas/updatedAt"
@@ -5237,7 +5237,7 @@
             "$ref": "#/components/schemas/taskID"
           },
           "createdAt": {
-            "$ref": "#/components/schemas/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           }
         },
         "required": [
@@ -5315,10 +5315,10 @@
         "description": "API response for running a task.",
         "properties": {
           "runID": {
-            "$ref": "#/components/schemas/runID"
+            "$ref": "#/components/schemas/RunID"
           },
           "createdAt": {
-            "$ref": "#/components/schemas/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           }
         },
         "required": [
@@ -5479,7 +5479,7 @@
             "$ref": "#/components/schemas/Policies"
           },
           "createdAt": {
-            "$ref": "#/components/schemas/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "updatedAt": {
             "$ref": "#/components/schemas/updatedAt"
@@ -5732,7 +5732,7 @@
             "$ref": "#/components/schemas/owner"
           },
           "createdAt": {
-            "$ref": "#/components/schemas/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "updatedAt": {
             "$ref": "#/components/schemas/updatedAt"
@@ -5785,7 +5785,7 @@
             "$ref": "#/components/schemas/transformationID"
           },
           "createdAt": {
-            "$ref": "#/components/schemas/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           }
         },
         "required": [
@@ -5945,7 +5945,7 @@
         "additionalProperties": false,
         "properties": {
           "runID": {
-            "$ref": "#/components/schemas/runID"
+            "$ref": "#/components/schemas/RunID"
           },
           "appID": {
             "type": "string"
@@ -5990,7 +5990,7 @@
             "$ref": "#/components/schemas/RunType"
           },
           "createdAt": {
-            "$ref": "#/components/schemas/createdAt"
+            "$ref": "#/components/schemas/CreatedAt"
           },
           "startedAt": {
             "$ref": "#/components/schemas/startedAt"

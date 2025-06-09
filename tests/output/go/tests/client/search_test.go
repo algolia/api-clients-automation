@@ -290,7 +290,7 @@ func TestSearchcommonApi1(t *testing.T) {
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.17.0\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.18.0\).*`), echo.Header.Get("User-Agent"))
 }
 
 // call deleteObjects without error
@@ -641,6 +641,37 @@ func TestSearchpartialUpdateObjects1(t *testing.T) {
 	}
 }
 
+// call partialUpdateObjectsWithTransformation with createIfNotExists=true
+func TestSearchpartialUpdateObjectsWithTransformation0(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.SearchConfiguration
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6689", call.IsReadWrite)},
+		},
+		Transformation: &search.TransformationConfiguration{Region: "us"},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	{
+		res, err = client.PartialUpdateObjectsWithTransformation(
+			"cts_e2e_partialUpdateObjectsWithTransformation_go",
+			[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}}, search.WithCreateIfNotExists(true))
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}`, string(rawBody))
+	}
+}
+
 // call replaceAllObjects without error
 func TestSearchreplaceAllObjects0(t *testing.T) {
 	var err error
@@ -833,6 +864,37 @@ func TestSearchsaveObjects3(t *testing.T) {
 			"playlists",
 			[]map[string]any{map[string]any{"objectID": "1", "visibility": "public", "name": "Hot 100 Billboard Charts", "playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f", "createdAt": "1500240452"}}, search.WithWaitForTasks(false), search.WithBatchSize(1000), search.WithHeaderParam("X-Algolia-User-ID", "*"))
 		require.NoError(t, err)
+	}
+}
+
+// call saveObjectsWithTransformation without error
+func TestSearchsaveObjectsWithTransformation0(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.SearchConfiguration
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6689", call.IsReadWrite)},
+		},
+		Transformation: &search.TransformationConfiguration{Region: "us"},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	{
+		res, err = client.SaveObjectsWithTransformation(
+			"cts_e2e_saveObjectsWithTransformation_go",
+			[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}})
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}`, string(rawBody))
 	}
 }
 

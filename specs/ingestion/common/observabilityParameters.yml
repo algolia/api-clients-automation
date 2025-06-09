@@ -5,7 +5,7 @@ eventStatus:
   schema:
     type: array
     items:
-      $ref: './schemas/event.yml#/EventStatus'
+      $ref: '../../common/parameters/ingestion.yml#/EventStatus'
 
 eventType:
   name: type
@@ -14,7 +14,7 @@ eventType:
   schema:
     type: array
     items:
-      $ref: './schemas/event.yml#/EventType'
+      $ref: '../../common/parameters/ingestion.yml#/EventType'
 
 runStatus:
   name: status

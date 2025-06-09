@@ -35,7 +35,7 @@ Task:
     policies:
       $ref: '#/Policies'
     createdAt:
-      $ref: './common.yml#/createdAt'
+      $ref: '../../../common/parameters/ingestion.yml#/CreatedAt'
     updatedAt:
       $ref: './common.yml#/updatedAt'
   required:
@@ -77,7 +77,7 @@ TaskV1:
     policies:
       $ref: '#/Policies'
     createdAt:
-      $ref: './common.yml#/createdAt'
+      $ref: '../../../common/parameters/ingestion.yml#/CreatedAt'
     updatedAt:
       $ref: './common.yml#/updatedAt'
   required:
@@ -174,7 +174,7 @@ TaskCreateResponse:
     taskID:
       $ref: './common.yml#/taskID'
     createdAt:
-      $ref: './common.yml#/createdAt'
+      $ref: '../../../common/parameters/ingestion.yml#/CreatedAt'
   required:
     - taskID
     - createdAt

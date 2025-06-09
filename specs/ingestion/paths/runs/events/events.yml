@@ -39,7 +39,7 @@ get:
               events:
                 type: array
                 items:
-                  $ref: '../../../common/schemas/event.yml#/Event'
+                  $ref: '../../../../common/schemas/ingestion/Observability.yml#/Event'
               pagination:
                 $ref: '../../../common/schemas/pagination.yml#/Pagination'
               window:

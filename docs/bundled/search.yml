@@ -23247,6 +23247,104 @@ components:
         - copyOperationResponse
         - batchResponses
         - moveOperationResponse
+    RunID:
+      type: string
+      description: Universally unique identifier (UUID) of a task run.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    EventID:
+      type: string
+      description: Universally unique identifier (UUID) of an event.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    EventStatus:
+      oneOf:
+        - type: string
+          enum:
+            - created
+            - started
+            - retried
+            - failed
+            - succeeded
+            - critical
+        - type: 'null'
+    EventType:
+      type: string
+      enum:
+        - fetch
+        - record
+        - log
+        - transform
+    PublishedAt:
+      type: string
+      description: Date of publish RFC 3339 format.
+    Event:
+      type: object
+      description: An event describe a step of the task execution flow..
+      additionalProperties: false
+      properties:
+        eventID:
+          $ref: '#/components/schemas/EventID'
+        runID:
+          $ref: '#/components/schemas/RunID'
+        status:
+          $ref: '#/components/schemas/EventStatus'
+        type:
+          $ref: '#/components/schemas/EventType'
+        batchSize:
+          type: integer
+          description: The extracted record batch size.
+          example: 10
+          minimum: 0
+          multipleOf: 1
+        data:
+          oneOf:
+            - type: object
+              additionalProperties: true
+            - type: 'null'
+        publishedAt:
+          $ref: '#/components/schemas/PublishedAt'
+      required:
+        - eventID
+        - runID
+        - status
+        - type
+        - batchSize
+        - publishedAt
+    CreatedAt:
+      type: string
+      description: Date of creation in RFC 3339 format.
+    WatchResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        runID:
+          $ref: '#/components/schemas/RunID'
+        eventID:
+          $ref: '#/components/schemas/EventID'
+        data:
+          type: array
+          description: >
+            This field is always null when used with the Push endpoint.
+
+            When used for a source discover or source validate run, it will
+            include the sampled data of the source.
+          items:
+            type: object
+        events:
+          description: >-
+            in case of error, observability events will be added to the
+            response.
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        message:
+          description: >-
+            a message describing the outcome of the operation that has been ran
+            (push, discover or validate) run.
+          type: string
+        createdAt:
+          $ref: '#/components/schemas/CreatedAt'
+      required:
+        - runID
     builtInOperationType:
       type: string
       enum:

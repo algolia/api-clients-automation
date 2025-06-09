@@ -258,7 +258,7 @@ class WatchResponse extends AbstractModel implements ModelInterface, \ArrayAcces
     /**
      * Sets data.
      *
-     * @param null|object[] $data when used with discovering or validating sources, the sampled data of your source is returned
+     * @param null|object[] $data This field is always null when used with the Push endpoint. When used for a source discover or source validate run, it will include the sampled data of the source.
      *
      * @return self
      */
@@ -282,7 +282,7 @@ class WatchResponse extends AbstractModel implements ModelInterface, \ArrayAcces
     /**
      * Sets events.
      *
-     * @param null|Event[] $events in case of error, observability events will be added to the response, if any
+     * @param null|Event[] $events in case of error, observability events will be added to the response
      *
      * @return self
      */
@@ -306,7 +306,7 @@ class WatchResponse extends AbstractModel implements ModelInterface, \ArrayAcces
     /**
      * Sets message.
      *
-     * @param null|string $message a message describing the outcome of a validate run
+     * @param null|string $message a message describing the outcome of the operation that has been ran (push, discover or validate) run
      *
      * @return self
      */

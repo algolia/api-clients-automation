@@ -3692,6 +3692,76 @@ paths:
                   $ref: '#/components/schemas/batchResponse'
         '400':
           $ref: '#/components/responses/IndexNotFound'
+  /saveObjectsWithTransformation:
+    get:
+      x-helper: true
+      x-available-languages:
+        - javascript
+        - go
+        - python
+      tags:
+        - search
+      operationId: saveObjectsWithTransformation
+      summary: >-
+        Save objects to an Algolia index by leveraging the Transformation
+        pipeline setup using the Push connector
+        (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+      description: >
+        Helper: Similar to the `saveObjects` method but requires a Push
+        connector
+        (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+        to be created first, in order to transform records before indexing them
+        to Algolia. The `region` must have been passed to the client
+        instantiation method.
+      parameters:
+        - in: query
+          name: indexName
+          description: The `indexName` to save `objects` into.
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: objects
+          description: The objects to save in the index.
+          required: true
+          schema:
+            type: array
+            items:
+              type: object
+        - in: query
+          name: waitForTasks
+          description: >-
+            Whether or not we should wait until every `batch` tasks has been
+            processed, this operation may slow the total execution time of this
+            method but is more reliable.
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - in: query
+          name: batchSize
+          description: >-
+            The size of the chunk of `objects`. The number of `batch` calls will
+            be equal to `length(objects) / batchSize`. Defaults to 1000.
+          required: false
+          schema:
+            type: integer
+            default: 1000
+        - in: query
+          name: requestOptions
+          description: The request options to pass to the `batch` method.
+          required: false
+          schema:
+            type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WatchResponse'
+        '400':
+          $ref: '#/components/responses/IndexNotFound'
   /deleteObjects:
     post:
       x-helper: true
@@ -3824,6 +3894,85 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/batchResponse'
+        '400':
+          $ref: '#/components/responses/IndexNotFound'
+  /partialUpdateObjectsWithTransformation:
+    post:
+      x-helper: true
+      x-available-languages:
+        - javascript
+        - go
+        - python
+      tags:
+        - search
+      operationId: partialUpdateObjectsWithTransformation
+      summary: >-
+        Save objects to an Algolia index by leveraging the Transformation
+        pipeline setup using the Push connector
+        (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+      description: >
+        Helper: Similar to the `partialUpdateObjects` method but requires a Push
+        connector
+        (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+        to be created first, in order to transform records before indexing them
+        to Algolia. The `region` must have been passed to the client
+        instantiation method.
+      parameters:
+        - in: query
+          name: indexName
+          description: The `indexName` where to update `objects`.
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: objects
+          description: The objects to update.
+          required: true
+          schema:
+            type: array
+            items:
+              type: object
+        - in: query
+          name: createIfNotExists
+          description: >-
+            To be provided if non-existing objects are passed, otherwise, the
+            call will fail.
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - in: query
+          name: waitForTasks
+          description: >-
+            Whether or not we should wait until every `batch` tasks has been
+            processed, this operation may slow the total execution time of this
+            method but is more reliable.
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - in: query
+          name: batchSize
+          description: >-
+            The size of the chunk of `objects`. The number of `batch` calls will
+            be equal to `length(objects) / batchSize`. Defaults to 1000.
+          required: false
+          schema:
+            type: integer
+            default: 1000
+        - in: query
+          name: requestOptions
+          description: The request options to pass to the `batch` method.
+          required: false
+          schema:
+            type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WatchResponse'
         '400':
           $ref: '#/components/responses/IndexNotFound'
   /indexExists:
@@ -8104,6 +8253,104 @@ components:
         - copyOperationResponse
         - batchResponses
         - moveOperationResponse
+    RunID:
+      type: string
+      description: Universally unique identifier (UUID) of a task run.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    EventID:
+      type: string
+      description: Universally unique identifier (UUID) of an event.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    EventStatus:
+      oneOf:
+        - type: string
+          enum:
+            - created
+            - started
+            - retried
+            - failed
+            - succeeded
+            - critical
+        - type: 'null'
+    EventType:
+      type: string
+      enum:
+        - fetch
+        - record
+        - log
+        - transform
+    PublishedAt:
+      type: string
+      description: Date of publish RFC 3339 format.
+    Event:
+      type: object
+      description: An event describe a step of the task execution flow..
+      additionalProperties: false
+      properties:
+        eventID:
+          $ref: '#/components/schemas/EventID'
+        runID:
+          $ref: '#/components/schemas/RunID'
+        status:
+          $ref: '#/components/schemas/EventStatus'
+        type:
+          $ref: '#/components/schemas/EventType'
+        batchSize:
+          type: integer
+          description: The extracted record batch size.
+          example: 10
+          minimum: 0
+          multipleOf: 1
+        data:
+          oneOf:
+            - type: object
+              additionalProperties: true
+            - type: 'null'
+        publishedAt:
+          $ref: '#/components/schemas/PublishedAt'
+      required:
+        - eventID
+        - runID
+        - status
+        - type
+        - batchSize
+        - publishedAt
+    CreatedAt:
+      type: string
+      description: Date of creation in RFC 3339 format.
+    WatchResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        runID:
+          $ref: '#/components/schemas/RunID'
+        eventID:
+          $ref: '#/components/schemas/EventID'
+        data:
+          type: array
+          description: >
+            This field is always null when used with the Push endpoint.
+
+            When used for a source discover or source validate run, it will
+            include the sampled data of the source.
+          items:
+            type: object
+        events:
+          description: >-
+            in case of error, observability events will be added to the
+            response.
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        message:
+          description: >-
+            a message describing the outcome of the operation that has been ran
+            (push, discover or validate) run.
+          type: string
+        createdAt:
+          $ref: '#/components/schemas/CreatedAt'
+      required:
+        - runID
     builtInOperationType:
       type: string
       enum:

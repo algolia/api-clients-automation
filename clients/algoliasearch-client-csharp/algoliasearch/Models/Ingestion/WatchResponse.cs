@@ -46,23 +46,23 @@ public partial class WatchResponse
   public string EventID { get; set; }
 
   /// <summary>
-  /// when used with discovering or validating sources, the sampled data of your source is returned.
+  /// This field is always null when used with the Push endpoint. When used for a source discover or source validate run, it will include the sampled data of the source.
   /// </summary>
-  /// <value>when used with discovering or validating sources, the sampled data of your source is returned.</value>
+  /// <value>This field is always null when used with the Push endpoint. When used for a source discover or source validate run, it will include the sampled data of the source. </value>
   [JsonPropertyName("data")]
   public List<object> Data { get; set; }
 
   /// <summary>
-  /// in case of error, observability events will be added to the response, if any.
+  /// in case of error, observability events will be added to the response.
   /// </summary>
-  /// <value>in case of error, observability events will be added to the response, if any.</value>
+  /// <value>in case of error, observability events will be added to the response.</value>
   [JsonPropertyName("events")]
   public List<Event> Events { get; set; }
 
   /// <summary>
-  /// a message describing the outcome of a validate run.
+  /// a message describing the outcome of the operation that has been ran (push, discover or validate) run.
   /// </summary>
-  /// <value>a message describing the outcome of a validate run.</value>
+  /// <value>a message describing the outcome of the operation that has been ran (push, discover or validate) run.</value>
   [JsonPropertyName("message")]
   public string Message { get; set; }
 

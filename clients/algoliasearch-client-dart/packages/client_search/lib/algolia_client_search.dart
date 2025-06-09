@@ -59,6 +59,9 @@ export 'src/model/dictionary_type.dart';
 export 'src/model/edit.dart';
 export 'src/model/edit_type.dart';
 export 'src/model/error_base.dart';
+export 'src/model/event.dart';
+export 'src/model/event_status.dart';
+export 'src/model/event_type.dart';
 export 'src/model/exact_on_single_word_query.dart';
 export 'src/model/exhaustive.dart';
 export 'src/model/facet_hits.dart';
@@ -159,6 +162,7 @@ export 'src/model/user_highlight_result.dart';
 export 'src/model/user_hit.dart';
 export 'src/model/user_id.dart';
 export 'src/model/value.dart';
+export 'src/model/watch_response.dart';
 export 'src/model/widgets.dart';
 export 'src/model/with_primary.dart';
 

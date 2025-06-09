@@ -63,6 +63,8 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "edit",
     "edittype",
     "errorbase",
+    "event",
+    "eventstatus",
     "eventtype",
     "exactonsinglewordquery",
     "exhaustive",
@@ -120,6 +122,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "typotolerance",
     "typotoleranceenum",
     "value",
+    "watchresponse",
     "widgets"
   );
 

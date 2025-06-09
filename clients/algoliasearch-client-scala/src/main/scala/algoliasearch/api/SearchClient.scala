@@ -70,6 +70,7 @@ import algoliasearch.search.UpdateApiKeyResponse
 import algoliasearch.search.UpdatedAtResponse
 import algoliasearch.search.UpdatedAtWithObjectIdResponse
 import algoliasearch.search.UserId
+import algoliasearch.search.WatchResponse
 import algoliasearch.search._
 import algoliasearch.ApiClient
 import algoliasearch.api.SearchClient.hosts

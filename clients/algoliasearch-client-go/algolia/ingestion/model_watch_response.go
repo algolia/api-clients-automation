@@ -12,11 +12,11 @@ type WatchResponse struct {
 	RunID string `json:"runID"`
 	// Universally unique identifier (UUID) of an event.
 	EventID *string `json:"eventID,omitempty"`
-	// when used with discovering or validating sources, the sampled data of your source is returned.
+	// This field is always null when used with the Push endpoint. When used for a source discover or source validate run, it will include the sampled data of the source.
 	Data []map[string]any `json:"data,omitempty"`
-	// in case of error, observability events will be added to the response, if any.
+	// in case of error, observability events will be added to the response.
 	Events []Event `json:"events,omitempty"`
-	// a message describing the outcome of a validate run.
+	// a message describing the outcome of the operation that has been ran (push, discover or validate) run.
 	Message *string `json:"message,omitempty"`
 	// Date of creation in RFC 3339 format.
 	CreatedAt *string `json:"createdAt,omitempty"`

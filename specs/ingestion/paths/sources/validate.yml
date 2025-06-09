@@ -25,6 +25,6 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/common.yml#/WatchResponse'
+            $ref: '../../../common/schemas/ingestion/WatchResponse.yml'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
