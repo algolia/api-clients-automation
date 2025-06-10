@@ -53,8 +53,8 @@ import type {
 
 export function {{clientName}}(
   appId: string,
-  apiKey: string,{{#hasRegionalHost}}region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region,{{/hasRegionalHost}}
-  options?: ClientOptions
+  apiKey: string,{{#hasRegionalHost}}region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region{{#fallbackToAliasHost}} | undefined {{/fallbackToAliasHost}},{{/hasRegionalHost}}
+  options?: ClientOptions | undefined
 ): {{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}} {
   if (!appId || typeof appId !== 'string') {
     throw new Error("`appId` is missing.");
