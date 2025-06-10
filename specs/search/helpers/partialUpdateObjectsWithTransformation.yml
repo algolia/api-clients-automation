@@ -2,10 +2,11 @@ method:
   post:
     x-helper: true
     x-available-languages:
-      - javascript
       - go
-      - python
       - java
+      - javascript
+      - php
+      - python
     tags:
       - Records
     operationId: partialUpdateObjectsWithTransformation

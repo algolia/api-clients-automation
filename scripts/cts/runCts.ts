@@ -158,7 +158,7 @@ export async function runCts(
     assertValidReplaceAllObjectsFailed(languages.length - skip('dart'));
     assertValidReplaceAllObjectsScopes(languages.length - skip('dart'));
     assertValidWaitForApiKey(languages.length - skip('dart'));
-    assertPushMockValid(only('javascript') + only('go') + only('python') + only('java'));
+    assertPushMockValid(only('javascript') + only('go') + only('python') + only('java') + only('php'));
   }
   if (withBenchmarkServer) {
     printBenchmarkReport();
