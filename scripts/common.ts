@@ -197,11 +197,14 @@ export async function runComposerInstall(): Promise<void> {
 }
 
 export function ensureGitHubToken(): string {
+  const githubToken = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || '';
+
   // use process.env here to mock with vitest
-  if (!process.env.GITHUB_TOKEN) {
-    throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
+  if (githubToken == '') {
+    throw new Error('Environment variable `GITHUB_TOKEN` or `GH_TOKEN` must be set.');
   }
-  return process.env.GITHUB_TOKEN.replaceAll('"', '');
+
+  return githubToken.replaceAll('"', '');
 }
 
 export function getOctokit(): Octokit {

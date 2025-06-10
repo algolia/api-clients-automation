@@ -13,6 +13,6 @@ vi.mock('../../../common.ts', async (importOriginal) => {
 describe('pushGeneratedCode', () => {
   it('throws without GITHUB_TOKEN environment variable', async () => {
     vi.stubEnv('GITHUB_TOKEN', '');
-    await expect(pushGeneratedCode()).rejects.toThrow('Environment variable `GITHUB_TOKEN` does not exist.');
+    await expect(pushGeneratedCode()).rejects.toThrow('Environment variable `GITHUB_TOKEN` or `GH_TOKEN` must be set.');
   });
 });
