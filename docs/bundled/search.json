@@ -4340,7 +4340,8 @@
         "x-available-languages": [
           "javascript",
           "go",
-          "python"
+          "python",
+          "java"
         ],
         "tags": [
           "Records"
@@ -4593,7 +4594,8 @@
         "x-available-languages": [
           "javascript",
           "go",
-          "python"
+          "python",
+          "java"
         ],
         "tags": [
           "Records"

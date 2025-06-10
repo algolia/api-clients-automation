@@ -175,7 +175,8 @@ class IngestionClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/sources", req.path);
     assertEquals("POST", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"type\":\"push\",\"name\":\"pushezpourentrer\"}", req.body, JSONCompareMode.STRICT)
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"type\":\"push\",\"name\":\"pushezpourentrer\"}", req.body, JSONCompareMode.STRICT)
     );
   }
 

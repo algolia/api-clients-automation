@@ -3699,6 +3699,7 @@ paths:
         - javascript
         - go
         - python
+        - java
       tags:
         - search
       operationId: saveObjectsWithTransformation
@@ -3903,6 +3904,7 @@ paths:
         - javascript
         - go
         - python
+        - java
       tags:
         - search
       operationId: partialUpdateObjectsWithTransformation
