@@ -68,6 +68,7 @@ class IngestionClientClientTests {
         false
       )
     );
+
     {
       Exception exception = assertThrows(Exception.class, () -> {
         Object res = client.customGet("1/html-error");
@@ -117,6 +118,7 @@ class IngestionClientClientTests {
         false
       )
     );
+
     Object res = client.customGet("1/long-wait");
 
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"message\":\"OK\"}", json.writeValueAsString(res), JSONCompareMode.STRICT));
@@ -188,6 +190,7 @@ class IngestionClientClientTests {
   @DisplayName("uses the correct region")
   void parametersTest0() {
     IngestionClient client = new IngestionClient("my-app-id", "my-api-key", "us", withEchoRequester());
+
     client.getSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     EchoResponse result = echo.getLastResponse();
     assertEquals("data.us.algolia.com", result.host);
@@ -223,6 +226,7 @@ class IngestionClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       Object res = client.customGet("check-api-key/1");
 
