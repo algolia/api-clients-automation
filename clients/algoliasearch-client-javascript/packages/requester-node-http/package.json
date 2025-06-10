@@ -38,7 +38,7 @@
     "@algolia/client-common": "5.27.0"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.18.1",
+    "@arethetypeswrong/cli": "0.18.2",
     "@types/node": "22.15.30",
     "nock": "14.0.5",
     "publint": "0.3.12",
