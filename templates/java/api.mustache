@@ -6,6 +6,7 @@ import {{invokerPackage}}.ApiClient;
 import {{invokerPackage}}.config.ClientOptions;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.annotation.Nullable;
 
 import okhttp3.Call;
@@ -45,10 +46,21 @@ import java.util.Base64;
 import javax.annotation.Nonnull;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import com.algolia.model.ingestion.PushTaskPayload;
+import com.algolia.model.ingestion.PushTaskRecords;
+import com.algolia.model.ingestion.WatchResponse;
 {{/isSearchClient}}
 
 {{#operations}}
 public class {{classname}} extends ApiClient {
+    {{#isSearchClient}}
+    private IngestionClient ingestionTransporter;
+
+    public void setTransformationRegion(String region) {
+      this.ingestionTransporter = new IngestionClient(this.authInterceptor.getApplicationId(), this.authInterceptor.getApiKey(), region, this.clientOptions);
+    }
+    {{/isSearchClient}}
+
     {{#hasRegionalHost}}
     private static final String[] allowedRegions = { {{#allowedRegions}}"{{.}}"{{^-last}},{{/-last}}{{/allowedRegions}} };
 
