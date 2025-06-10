@@ -4338,10 +4338,11 @@
       "get": {
         "x-helper": true,
         "x-available-languages": [
-          "javascript",
           "go",
-          "python",
-          "java"
+          "java",
+          "javascript",
+          "php",
+          "python"
         ],
         "tags": [
           "Records"
@@ -4592,10 +4593,11 @@
       "post": {
         "x-helper": true,
         "x-available-languages": [
-          "javascript",
           "go",
-          "python",
-          "java"
+          "java",
+          "javascript",
+          "php",
+          "python"
         ],
         "tags": [
           "Records"

@@ -77,6 +77,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             null
         );
         $this->assertIsObject($client);
+
         $client->getABTest(
             123,
         );
@@ -95,6 +96,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             'us'
         );
         $this->assertIsObject($client);
+
         $client->getABTest(
             123,
         );

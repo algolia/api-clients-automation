@@ -3696,10 +3696,11 @@ paths:
     get:
       x-helper: true
       x-available-languages:
-        - javascript
         - go
-        - python
         - java
+        - javascript
+        - php
+        - python
       tags:
         - search
       operationId: saveObjectsWithTransformation
@@ -3901,10 +3902,11 @@ paths:
     post:
       x-helper: true
       x-available-languages:
-        - javascript
         - go
-        - python
         - java
+        - javascript
+        - php
+        - python
       tags:
         - search
       operationId: partialUpdateObjectsWithTransformation
