@@ -49,7 +49,7 @@ generateSecuredApiKey: ({
  */
 async accountCopyIndex(
   { sourceIndexName, destinationAppID, destinationApiKey, destinationIndexName }: AccountCopyIndexOptions,
-  requestOptions?: RequestOptions,
+  requestOptions?: RequestOptions | undefined,
 ): Promise<void> {
   const responses: Array<{ taskID: UpdatedAtResponse['taskID'] }> = [];
 

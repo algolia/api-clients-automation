@@ -41,12 +41,12 @@
     "lint-staged": "16.1.0",
     "oxlint": "0.16.11",
     "prettier": "3.5.3",
-    "prettier-plugin-java": "2.6.7",
+    "prettier-plugin-java": "2.6.8",
     "prettier-plugin-organize-imports": "4.1.0",
     "renovate-config-algolia": "2.2.0",
     "typescript": "5.8.3"
   },
-  "packageManager": "yarn@4.9.1",
+  "packageManager": "yarn@4.9.2",
   "engines": {
     "node": "^22.0.0",
     "yarn": "^4.0.0"

@@ -3696,8 +3696,10 @@ paths:
     get:
       x-helper: true
       x-available-languages:
-        - javascript
         - go
+        - java
+        - javascript
+        - php
         - python
       tags:
         - search
@@ -3900,8 +3902,10 @@ paths:
     post:
       x-helper: true
       x-available-languages:
-        - javascript
         - go
+        - java
+        - javascript
+        - php
         - python
       tags:
         - search

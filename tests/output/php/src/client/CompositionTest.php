@@ -46,6 +46,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             'test-api-key'
         );
         $this->assertIsObject($client);
+
         $client->search(
             'test-composition-id',
             [],
@@ -64,6 +65,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             'test-api-key'
         );
         $this->assertIsObject($client);
+
         $client->search(
             'test-composition-id',
             [],

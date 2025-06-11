@@ -1955,6 +1955,37 @@ class SnippetSearchClient {
     // SEPARATOR<
   }
 
+  // Snippet for the partialUpdateObjectsWithTransformation method.
+  //
+  // call partialUpdateObjectsWithTransformation with createIfNotExists=true
+  void snippetForPartialUpdateObjectsWithTransformation() throws Exception {
+    // >SEPARATOR partialUpdateObjectsWithTransformation default
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.partialUpdateObjectsWithTransformation(
+      "<YOUR_INDEX_NAME>",
+      Arrays.asList(
+        new HashMap() {
+          {
+            put("objectID", "1");
+            put("name", "Adam");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "2");
+            put("name", "Benoit");
+          }
+        }
+      ),
+      true
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
   // Snippet for the removeUserId method.
   //
   // removeUserId
@@ -2274,6 +2305,36 @@ class SnippetSearchClient {
       false,
       1000,
       new RequestOptions().addExtraHeader("X-Algolia-User-ID", "*")
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the saveObjectsWithTransformation method.
+  //
+  // call saveObjectsWithTransformation without error
+  void snippetForSaveObjectsWithTransformation() throws Exception {
+    // >SEPARATOR saveObjectsWithTransformation default
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.saveObjectsWithTransformation(
+      "<YOUR_INDEX_NAME>",
+      Arrays.asList(
+        new HashMap() {
+          {
+            put("objectID", "1");
+            put("name", "Adam");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "2");
+            put("name", "Benoit");
+          }
+        }
+      )
     );
     // >LOG
     // SEPARATOR<

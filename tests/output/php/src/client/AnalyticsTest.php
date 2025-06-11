@@ -77,6 +77,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             null
         );
         $this->assertIsObject($client);
+
         $client->getAverageClickPosition(
             'my-index',
         );
@@ -95,6 +96,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             'de'
         );
         $this->assertIsObject($client);
+
         $client->customPost(
             'test',
         );

@@ -48,6 +48,7 @@ class SearchClientBenchmark {
         false
       )
     );
+
     for (int i = 0; i < 2000; i++) {
       SearchResponses res = client.search(
         new SearchMethodParams()

@@ -4338,8 +4338,10 @@
       "get": {
         "x-helper": true,
         "x-available-languages": [
-          "javascript",
           "go",
+          "java",
+          "javascript",
+          "php",
           "python"
         ],
         "tags": [
@@ -4591,8 +4593,10 @@
       "post": {
         "x-helper": true,
         "x-available-languages": [
-          "javascript",
           "go",
+          "java",
+          "javascript",
+          "php",
           "python"
         ],
         "tags": [
