@@ -42,6 +42,13 @@ public class SearchClient extends ApiClient {
 
   private IngestionClient ingestionTransporter;
 
+  /**
+   * Sets the region of the current algolia application to the configuration, this is required to be
+   * called if you wish to leverage the transformation pipeline (via the *WithTransformation
+   * methods).
+   *
+   * @param region (required)
+   */
   public void setTransformationRegion(String region) {
     this.ingestionTransporter = new IngestionClient(
       this.authInterceptor.getApplicationId(),

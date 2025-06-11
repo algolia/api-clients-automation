@@ -3879,7 +3879,8 @@ class SearchClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/query", req.path);
     assertEquals("POST", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"filters\":\"country:US AND price.gross < 2.0\"}", req.body, JSONCompareMode.STRICT)
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"filters\":\"country:US AND price.gross < 2.0\"}", req.body, JSONCompareMode.STRICT)
     );
   }
 
@@ -4460,7 +4461,8 @@ class SearchClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/query", req.path);
     assertEquals("POST", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"restrictSearchableAttributes\":[\"title_fr\"]}", req.body, JSONCompareMode.STRICT)
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"restrictSearchableAttributes\":[\"title_fr\"]}", req.body, JSONCompareMode.STRICT)
     );
   }
 
@@ -4497,7 +4499,8 @@ class SearchClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/query", req.path);
     assertEquals("POST", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"clickAnalytics\":true,\"userToken\":\"user-1\"}", req.body, JSONCompareMode.STRICT)
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"clickAnalytics\":true,\"userToken\":\"user-1\"}", req.body, JSONCompareMode.STRICT)
     );
   }
 
@@ -4536,7 +4539,8 @@ class SearchClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/query", req.path);
     assertEquals("POST", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"query\":\"query\",\"userToken\":\"user-1234\"}", req.body, JSONCompareMode.STRICT)
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"query\":\"query\",\"userToken\":\"user-1234\"}", req.body, JSONCompareMode.STRICT)
     );
   }
 
@@ -5016,7 +5020,8 @@ class SearchClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/query", req.path);
     assertEquals("POST", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"query\":\"query\",\"sumOrFiltersScores\":true}", req.body, JSONCompareMode.STRICT)
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"query\":\"query\",\"sumOrFiltersScores\":true}", req.body, JSONCompareMode.STRICT)
     );
   }
 
@@ -5145,7 +5150,8 @@ class SearchClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/query", req.path);
     assertEquals("POST", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"query\":\"query\",\"snippetEllipsisText\":\"\"}", req.body, JSONCompareMode.STRICT)
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"query\":\"query\",\"snippetEllipsisText\":\"\"}", req.body, JSONCompareMode.STRICT)
     );
   }
 
@@ -5390,7 +5396,8 @@ class SearchClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/query", req.path);
     assertEquals("POST", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"query\":\"query\",\"minimumAroundRadius\":1000}", req.body, JSONCompareMode.STRICT)
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"query\":\"query\",\"minimumAroundRadius\":1000}", req.body, JSONCompareMode.STRICT)
     );
   }
 
@@ -5721,7 +5728,8 @@ class SearchClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/query", req.path);
     assertEquals("POST", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"query\":\"query\",\"personalizationImpact\":20}", req.body, JSONCompareMode.STRICT)
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"query\":\"query\",\"personalizationImpact\":20}", req.body, JSONCompareMode.STRICT)
     );
   }
 
@@ -5768,7 +5776,8 @@ class SearchClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/query", req.path);
     assertEquals("POST", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"query\":\"query\",\"queryType\":\"prefixAll\"}", req.body, JSONCompareMode.STRICT)
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"query\":\"query\",\"queryType\":\"prefixAll\"}", req.body, JSONCompareMode.STRICT)
     );
   }
 
@@ -6601,7 +6610,8 @@ class SearchClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.path);
     assertEquals("PUT", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"attributesForFaceting\":[\"genre\",\"author\"]}", req.body, JSONCompareMode.STRICT)
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"attributesForFaceting\":[\"genre\",\"author\"]}", req.body, JSONCompareMode.STRICT)
     );
   }
 
@@ -7016,7 +7026,8 @@ class SearchClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/theIndexName/settings", req.path);
     assertEquals("PUT", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"replicas\":[\"virtual(products_price_desc)\"]}", req.body, JSONCompareMode.STRICT)
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"replicas\":[\"virtual(products_price_desc)\"]}", req.body, JSONCompareMode.STRICT)
     );
   }
 
@@ -8288,7 +8299,8 @@ class SearchClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/theIndexName/settings", req.path);
     assertEquals("PUT", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"distinct\":1,\"attributeForDistinct\":\"url\"}", req.body, JSONCompareMode.STRICT)
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"distinct\":1,\"attributeForDistinct\":\"url\"}", req.body, JSONCompareMode.STRICT)
     );
   }
 
@@ -8351,7 +8363,8 @@ class SearchClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/theIndexName/settings", req.path);
     assertEquals("PUT", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"attributeCriteriaComputedByMinProximity\":true}", req.body, JSONCompareMode.STRICT)
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"attributeCriteriaComputedByMinProximity\":true}", req.body, JSONCompareMode.STRICT)
     );
   }
 

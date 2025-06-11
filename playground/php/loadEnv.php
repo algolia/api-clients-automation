@@ -1,4 +1,5 @@
 <?php
+
 require '../../../clients/algoliasearch-client-php/vendor/autoload.php';
 
 // Gets the vars from local environment
