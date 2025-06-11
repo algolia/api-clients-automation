@@ -153,6 +153,10 @@ TransformationTry:
   properties:
     code:
       $ref: '#/Code'
+    type:
+      $ref: '#/TransformationType'
+    input:
+      $ref: '#/TransformationInput'
     sampleRecord:
       description: The record to apply the given code to.
       type: object
@@ -161,7 +165,8 @@ TransformationTry:
       items:
         $ref: './authentication.yml#/AuthenticationCreate'
   required:
-    - code
+    - type
+    - input
     - sampleRecord
 
 TransformationTryResponse:
