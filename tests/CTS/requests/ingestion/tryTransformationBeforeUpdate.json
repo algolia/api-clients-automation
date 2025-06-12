@@ -3,7 +3,8 @@
     "parameters": {
       "transformationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       "transformationTry": {
-        "code": "foo",
+        "type": "code",
+        "input": {"code": "foo"},
         "sampleRecord": {
           "bar": "baz"
         }
@@ -13,7 +14,8 @@
       "path": "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try",
       "method": "POST",
       "body": {
-        "code": "foo",
+        "type": "code",
+        "input": {"code": "foo"},
         "sampleRecord": {
           "bar": "baz"
         }
@@ -25,7 +27,8 @@
     "parameters": {
       "transformationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       "transformationTry": {
-        "code": "foo",
+        "type": "code",
+        "input": {"code": "foo"},
         "sampleRecord": {
           "bar": "baz"
         },
@@ -46,7 +49,8 @@
       "path": "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try",
       "method": "POST",
       "body": {
-        "code": "foo",
+        "type": "code",
+        "input": {"code": "foo"},
         "sampleRecord": {
           "bar": "baz"
         },
