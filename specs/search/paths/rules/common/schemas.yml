@@ -104,7 +104,7 @@ consequence:
       description: |
         Whether promoted records must match an active filter for the consequence to be applied.
 
-        This ensures that user actions (filtering the search) are given a higher precendence.
+        This ensures that user actions (filtering the search) are given a higher precedence.
         For example, if you promote a record with the `color: red` attribute, and the user filters the search for `color: blue`,
         the "red" record won't be shown.
     hide:
@@ -287,7 +287,7 @@ automaticFacetFilter:
       description: |
         Whether the filter is disjunctive or conjunctive.
 
-        If true the filter has multiple matches, multiple occurences are combined with the logical `OR` operation.
-        If false, multiple occurences are combined with the logical `AND` operation.
+        If true the filter has multiple matches, multiple occurrences are combined with the logical `OR` operation.
+        If false, multiple occurrences are combined with the logical `AND` operation.
   required:
     - facet
