@@ -2349,7 +2349,8 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.tryTransformationWithHTTPInfo(transformationTry: TransformationTry(
-            code: "foo",
+            type: TransformationType.code,
+            input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
             sampleRecord: ["bar": "baz"]
         ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -2358,7 +2359,8 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}".data(using: .utf8)
+        let expectedBodyData = "{\"type\":\"code\",\"input\":{\"code\":\"foo\"},\"sampleRecord\":{\"bar\":\"baz\"}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -2380,7 +2382,8 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.tryTransformationWithHTTPInfo(transformationTry: TransformationTry(
-            code: "foo",
+            type: TransformationType.code,
+            input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
             sampleRecord: ["bar": "baz"],
             authentications: [AuthenticationCreate(
                 type: AuthenticationType.oauth,
@@ -2399,7 +2402,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}"
+            "{\"type\":\"code\",\"input\":{\"code\":\"foo\"},\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -2423,7 +2426,11 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let response = try await client.tryTransformationBeforeUpdateWithHTTPInfo(
             transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            transformationTry: TransformationTry(code: "foo", sampleRecord: ["bar": "baz"])
+            transformationTry: TransformationTry(
+                type: TransformationType.code,
+                input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
+                sampleRecord: ["bar": "baz"]
+            )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -2431,7 +2438,8 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}".data(using: .utf8)
+        let expectedBodyData = "{\"type\":\"code\",\"input\":{\"code\":\"foo\"},\"sampleRecord\":{\"bar\":\"baz\"}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -2455,7 +2463,8 @@ final class IngestionClientRequestsTests: XCTestCase {
         let response = try await client.tryTransformationBeforeUpdateWithHTTPInfo(
             transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             transformationTry: TransformationTry(
-                code: "foo",
+                type: TransformationType.code,
+                input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
                 sampleRecord: ["bar": "baz"],
                 authentications: [AuthenticationCreate(
                     type: AuthenticationType.oauth,
@@ -2475,7 +2484,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}"
+            "{\"type\":\"code\",\"input\":{\"code\":\"foo\"},\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 

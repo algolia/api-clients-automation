@@ -1144,19 +1144,21 @@ describe('triggerDockerSourceDiscover', () => {
 describe('tryTransformation', () => {
   test('tryTransformation', async () => {
     const req = (await client.tryTransformation({
-      code: 'foo',
+      type: 'code',
+      input: { code: 'foo' },
       sampleRecord: { bar: 'baz' },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/transformations/try');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({ code: 'foo', sampleRecord: { bar: 'baz' } });
+    expect(req.data).toEqual({ type: 'code', input: { code: 'foo' }, sampleRecord: { bar: 'baz' } });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('with authentications', async () => {
     const req = (await client.tryTransformation({
-      code: 'foo',
+      type: 'code',
+      input: { code: 'foo' },
       sampleRecord: { bar: 'baz' },
       authentications: [
         {
@@ -1170,7 +1172,8 @@ describe('tryTransformation', () => {
     expect(req.path).toEqual('/1/transformations/try');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      code: 'foo',
+      type: 'code',
+      input: { code: 'foo' },
       sampleRecord: { bar: 'baz' },
       authentications: [
         {
@@ -1188,12 +1191,12 @@ describe('tryTransformationBeforeUpdate', () => {
   test('tryTransformationBeforeUpdate', async () => {
     const req = (await client.tryTransformationBeforeUpdate({
       transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-      transformationTry: { code: 'foo', sampleRecord: { bar: 'baz' } },
+      transformationTry: { type: 'code', input: { code: 'foo' }, sampleRecord: { bar: 'baz' } },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({ code: 'foo', sampleRecord: { bar: 'baz' } });
+    expect(req.data).toEqual({ type: 'code', input: { code: 'foo' }, sampleRecord: { bar: 'baz' } });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
@@ -1201,7 +1204,8 @@ describe('tryTransformationBeforeUpdate', () => {
     const req = (await client.tryTransformationBeforeUpdate({
       transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
       transformationTry: {
-        code: 'foo',
+        type: 'code',
+        input: { code: 'foo' },
         sampleRecord: { bar: 'baz' },
         authentications: [
           {
@@ -1216,7 +1220,8 @@ describe('tryTransformationBeforeUpdate', () => {
     expect(req.path).toEqual('/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      code: 'foo',
+      type: 'code',
+      input: { code: 'foo' },
       sampleRecord: { bar: 'baz' },
       authentications: [
         {

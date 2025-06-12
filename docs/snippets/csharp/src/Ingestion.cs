@@ -1857,7 +1857,8 @@ public class SnippetIngestionClient
     var response = await client.TryTransformationAsync(
       new TransformationTry
       {
-        Code = "foo",
+        Type = Enum.Parse<TransformationType>("Code"),
+        Input = new TransformationInput(new TransformationCode { Code = "foo" }),
         SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
       }
     );
@@ -1882,7 +1883,8 @@ public class SnippetIngestionClient
     var response = await client.TryTransformationAsync(
       new TransformationTry
       {
-        Code = "foo",
+        Type = Enum.Parse<TransformationType>("Code"),
+        Input = new TransformationInput(new TransformationCode { Code = "foo" }),
         SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
         Authentications = new List<AuthenticationCreate>
         {
@@ -1924,7 +1926,8 @@ public class SnippetIngestionClient
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TransformationTry
       {
-        Code = "foo",
+        Type = Enum.Parse<TransformationType>("Code"),
+        Input = new TransformationInput(new TransformationCode { Code = "foo" }),
         SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
       }
     );
@@ -1950,7 +1953,8 @@ public class SnippetIngestionClient
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TransformationTry
       {
-        Code = "foo",
+        Type = Enum.Parse<TransformationType>("Code"),
+        Input = new TransformationInput(new TransformationCode { Code = "foo" }),
         SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
         Authentications = new List<AuthenticationCreate>
         {

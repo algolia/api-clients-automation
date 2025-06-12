@@ -2129,7 +2129,10 @@ def snippet_for_try_transformation():
     # Call the API
     response = client.try_transformation(
         transformation_try={
-            "code": "foo",
+            "type": "code",
+            "input": {
+                "code": "foo",
+            },
             "sampleRecord": {
                 "bar": "baz",
             },
@@ -2158,7 +2161,10 @@ def snippet_for_try_transformation1():
     # Call the API
     response = client.try_transformation(
         transformation_try={
-            "code": "foo",
+            "type": "code",
+            "input": {
+                "code": "foo",
+            },
             "sampleRecord": {
                 "bar": "baz",
             },
@@ -2199,7 +2205,10 @@ def snippet_for_try_transformation_before_update():
     response = client.try_transformation_before_update(
         transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         transformation_try={
-            "code": "foo",
+            "type": "code",
+            "input": {
+                "code": "foo",
+            },
             "sampleRecord": {
                 "bar": "baz",
             },
@@ -2229,7 +2238,10 @@ def snippet_for_try_transformation_before_update1():
     response = client.try_transformation_before_update(
         transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         transformation_try={
-            "code": "foo",
+            "type": "code",
+            "input": {
+                "code": "foo",
+            },
             "sampleRecord": {
                 "bar": "baz",
             },

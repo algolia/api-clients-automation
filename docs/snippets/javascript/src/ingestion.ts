@@ -1550,7 +1550,11 @@ export async function snippetForTryTransformation(): Promise<void> {
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
 
   // Call the API
-  const response = await client.tryTransformation({ code: 'foo', sampleRecord: { bar: 'baz' } });
+  const response = await client.tryTransformation({
+    type: 'code',
+    input: { code: 'foo' },
+    sampleRecord: { bar: 'baz' },
+  });
 
   // >LOG
   // use typed response
@@ -1569,7 +1573,8 @@ export async function snippetForTryTransformation1(): Promise<void> {
 
   // Call the API
   const response = await client.tryTransformation({
-    code: 'foo',
+    type: 'code',
+    input: { code: 'foo' },
     sampleRecord: { bar: 'baz' },
     authentications: [
       {
@@ -1598,7 +1603,7 @@ export async function snippetForTryTransformationBeforeUpdate(): Promise<void> {
   // Call the API
   const response = await client.tryTransformationBeforeUpdate({
     transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-    transformationTry: { code: 'foo', sampleRecord: { bar: 'baz' } },
+    transformationTry: { type: 'code', input: { code: 'foo' }, sampleRecord: { bar: 'baz' } },
   });
 
   // >LOG
@@ -1620,7 +1625,8 @@ export async function snippetForTryTransformationBeforeUpdate1(): Promise<void> 
   const response = await client.tryTransformationBeforeUpdate({
     transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     transformationTry: {
-      code: 'foo',
+      type: 'code',
+      input: { code: 'foo' },
       sampleRecord: { bar: 'baz' },
       authentications: [
         {

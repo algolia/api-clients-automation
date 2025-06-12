@@ -4154,8 +4154,6 @@ components:
           $ref: '#/components/schemas/AuthenticationIDs'
       required:
         - name
-        - type
-        - input
     TransformationCreateResponse:
       type: object
       additionalProperties: false
@@ -4174,6 +4172,10 @@ components:
       properties:
         code:
           $ref: '#/components/schemas/Code'
+        type:
+          $ref: '#/components/schemas/TransformationType'
+        input:
+          $ref: '#/components/schemas/TransformationInput'
         sampleRecord:
           description: The record to apply the given code to.
           type: object
@@ -4182,7 +4184,6 @@ components:
           items:
             $ref: '#/components/schemas/AuthenticationCreate'
       required:
-        - code
         - sampleRecord
     TransformationTryResponse:
       type: object

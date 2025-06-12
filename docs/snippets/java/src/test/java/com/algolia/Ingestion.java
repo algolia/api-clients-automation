@@ -1399,7 +1399,8 @@ class SnippetIngestionClient {
     // Call the API
     client.tryTransformation(
       new TransformationTry()
-        .setCode("foo")
+        .setType(TransformationType.CODE)
+        .setInput(new TransformationCode().setCode("foo"))
         .setSampleRecord(
           new HashMap() {
             {
@@ -1423,7 +1424,8 @@ class SnippetIngestionClient {
     // Call the API
     client.tryTransformation(
       new TransformationTry()
-        .setCode("foo")
+        .setType(TransformationType.CODE)
+        .setInput(new TransformationCode().setCode("foo"))
         .setSampleRecord(
           new HashMap() {
             {
@@ -1456,7 +1458,8 @@ class SnippetIngestionClient {
     client.tryTransformationBeforeUpdate(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TransformationTry()
-        .setCode("foo")
+        .setType(TransformationType.CODE)
+        .setInput(new TransformationCode().setCode("foo"))
         .setSampleRecord(
           new HashMap() {
             {
@@ -1481,7 +1484,8 @@ class SnippetIngestionClient {
     client.tryTransformationBeforeUpdate(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TransformationTry()
-        .setCode("foo")
+        .setType(TransformationType.CODE)
+        .setInput(new TransformationCode().setCode("foo"))
         .setSampleRecord(
           new HashMap() {
             {

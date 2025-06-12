@@ -1267,19 +1267,21 @@ func TestIngestion_TryTransformation(t *testing.T) {
 	t.Run("tryTransformation", func(t *testing.T) {
 		_, err := client.TryTransformation(client.NewApiTryTransformationRequest(
 
-			ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"})))
+			ingestion.NewEmptyTransformationTry().SetType(ingestion.TransformationType("code")).SetInput(ingestion.TransformationCodeAsTransformationInput(
+				ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetSampleRecord(map[string]any{"bar": "baz"})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/transformations/try", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"code":"foo","sampleRecord":{"bar":"baz"}}`)
+		ja.Assertf(*echo.Body, `{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"}}`)
 	})
 	t.Run("with authentications", func(t *testing.T) {
 		_, err := client.TryTransformation(client.NewApiTryTransformationRequest(
 
-			ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}).SetAuthentications(
+			ingestion.NewEmptyTransformationTry().SetType(ingestion.TransformationType("code")).SetInput(ingestion.TransformationCodeAsTransformationInput(
+				ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetSampleRecord(map[string]any{"bar": "baz"}).SetAuthentications(
 				[]ingestion.AuthenticationCreate{*ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("oauth")).SetName("authName").SetInput(ingestion.AuthOAuthAsAuthInput(
 					ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret")))})))
 		require.NoError(t, err)
@@ -1288,7 +1290,7 @@ func TestIngestion_TryTransformation(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}`)
+		ja.Assertf(*echo.Body, `{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}`)
 	})
 }
 
@@ -1299,19 +1301,21 @@ func TestIngestion_TryTransformationBeforeUpdate(t *testing.T) {
 	t.Run("tryTransformationBeforeUpdate", func(t *testing.T) {
 		_, err := client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(
 			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-			ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"})))
+			ingestion.NewEmptyTransformationTry().SetType(ingestion.TransformationType("code")).SetInput(ingestion.TransformationCodeAsTransformationInput(
+				ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetSampleRecord(map[string]any{"bar": "baz"})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"code":"foo","sampleRecord":{"bar":"baz"}}`)
+		ja.Assertf(*echo.Body, `{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"}}`)
 	})
 	t.Run("existing with authentications", func(t *testing.T) {
 		_, err := client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(
 			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-			ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}).SetAuthentications(
+			ingestion.NewEmptyTransformationTry().SetType(ingestion.TransformationType("code")).SetInput(ingestion.TransformationCodeAsTransformationInput(
+				ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetSampleRecord(map[string]any{"bar": "baz"}).SetAuthentications(
 				[]ingestion.AuthenticationCreate{*ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("oauth")).SetName("authName").SetInput(ingestion.AuthOAuthAsAuthInput(
 					ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret")))})))
 		require.NoError(t, err)
@@ -1320,7 +1324,7 @@ func TestIngestion_TryTransformationBeforeUpdate(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}`)
+		ja.Assertf(*echo.Body, `{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}`)
 	})
 }
 

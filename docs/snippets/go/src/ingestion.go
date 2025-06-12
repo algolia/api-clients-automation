@@ -2149,7 +2149,8 @@ func SnippetForTryTransformationOfIngestion() {
 	// Call the API
 	response, err := client.TryTransformation(client.NewApiTryTransformationRequest(
 
-		ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"})))
+		ingestion.NewEmptyTransformationTry().SetType(ingestion.TransformationType("code")).SetInput(ingestion.TransformationCodeAsTransformationInput(
+			ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetSampleRecord(map[string]any{"bar": "baz"})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2178,7 +2179,8 @@ func SnippetForTryTransformationOfIngestion1() {
 	// Call the API
 	response, err := client.TryTransformation(client.NewApiTryTransformationRequest(
 
-		ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}).SetAuthentications(
+		ingestion.NewEmptyTransformationTry().SetType(ingestion.TransformationType("code")).SetInput(ingestion.TransformationCodeAsTransformationInput(
+			ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetSampleRecord(map[string]any{"bar": "baz"}).SetAuthentications(
 			[]ingestion.AuthenticationCreate{*ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("oauth")).SetName("authName").SetInput(ingestion.AuthOAuthAsAuthInput(
 				ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret")))})))
 	if err != nil {
@@ -2209,7 +2211,8 @@ func SnippetForTryTransformationBeforeUpdateOfIngestion() {
 	// Call the API
 	response, err := client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-		ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"})))
+		ingestion.NewEmptyTransformationTry().SetType(ingestion.TransformationType("code")).SetInput(ingestion.TransformationCodeAsTransformationInput(
+			ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetSampleRecord(map[string]any{"bar": "baz"})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2238,7 +2241,8 @@ func SnippetForTryTransformationBeforeUpdateOfIngestion1() {
 	// Call the API
 	response, err := client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-		ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"}).SetAuthentications(
+		ingestion.NewEmptyTransformationTry().SetType(ingestion.TransformationType("code")).SetInput(ingestion.TransformationCodeAsTransformationInput(
+			ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetSampleRecord(map[string]any{"bar": "baz"}).SetAuthentications(
 			[]ingestion.AuthenticationCreate{*ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("oauth")).SetName("authName").SetInput(ingestion.AuthOAuthAsAuthInput(
 				ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret")))})))
 	if err != nil {

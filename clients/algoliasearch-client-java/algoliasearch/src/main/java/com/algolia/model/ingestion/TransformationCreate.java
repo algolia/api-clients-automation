@@ -64,7 +64,7 @@ public class TransformationCreate {
   }
 
   /** Get type */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public TransformationType getType() {
     return type;
   }
@@ -75,7 +75,7 @@ public class TransformationCreate {
   }
 
   /** Get input */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public TransformationInput getInput() {
     return input;
   }

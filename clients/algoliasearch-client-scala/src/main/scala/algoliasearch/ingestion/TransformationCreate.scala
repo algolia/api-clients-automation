@@ -35,8 +35,8 @@ import algoliasearch.ingestion.TransformationType._
 case class TransformationCreate(
     code: Option[String] = scala.None,
     name: String,
-    `type`: TransformationType,
-    input: TransformationInput,
+    `type`: Option[TransformationType] = scala.None,
+    input: Option[TransformationInput] = scala.None,
     description: Option[String] = scala.None,
     authenticationIDs: Option[Seq[String]] = scala.None
 )
