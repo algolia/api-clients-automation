@@ -42,8 +42,3 @@ searchFilter:
       items:
         type: string
       example: ['brand:Dyson<score=12>']
-    historical:
-      type: array
-      items:
-        type: string
-      example: ['brand:Dyson<score=12>', 'category:electronics<score=5>']
