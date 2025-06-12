@@ -107,8 +107,6 @@ TransformationCreate:
       $ref: '#/AuthenticationIDs'
   required:
     - name
-    - type
-    - input
 
 TransformationCreateResponse:
   type: object
@@ -165,8 +163,6 @@ TransformationTry:
       items:
         $ref: './authentication.yml#/AuthenticationCreate'
   required:
-    - type
-    - input
     - sampleRecord
 
 TransformationTryResponse:
