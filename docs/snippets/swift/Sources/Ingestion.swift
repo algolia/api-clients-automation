@@ -1329,7 +1329,8 @@ final class IngestionClientSnippet {
 
         // Call the API
         let response = try await client.tryTransformation(transformationTry: TransformationTry(
-            code: "foo",
+            type: TransformationType.code,
+            input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
             sampleRecord: ["bar": "baz"]
         ))
         // >LOG
@@ -1346,7 +1347,8 @@ final class IngestionClientSnippet {
 
         // Call the API
         let response = try await client.tryTransformation(transformationTry: TransformationTry(
-            code: "foo",
+            type: TransformationType.code,
+            input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
             sampleRecord: ["bar": "baz"],
             authentications: [AuthenticationCreate(
                 type: AuthenticationType.oauth,
@@ -1373,7 +1375,11 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.tryTransformationBeforeUpdate(
             transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            transformationTry: TransformationTry(code: "foo", sampleRecord: ["bar": "baz"])
+            transformationTry: TransformationTry(
+                type: TransformationType.code,
+                input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
+                sampleRecord: ["bar": "baz"]
+            )
         )
         // >LOG
         // SEPARATOR<
@@ -1391,7 +1397,8 @@ final class IngestionClientSnippet {
         let response = try await client.tryTransformationBeforeUpdate(
             transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             transformationTry: TransformationTry(
-                code: "foo",
+                type: TransformationType.code,
+                input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
                 sampleRecord: ["bar": "baz"],
                 authentications: [AuthenticationCreate(
                     type: AuthenticationType.oauth,

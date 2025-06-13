@@ -1688,7 +1688,10 @@ class SnippetIngestionClient {
     // Call the API
     var response = client.tryTransformation(
       transformationTry = TransformationTry(
-        code = "foo",
+        type = TransformationType.entries.first { it.value == "code" },
+        input = TransformationCode(
+          code = "foo",
+        ),
         sampleRecord = buildJsonObject {
           put(
             "bar",
@@ -1714,7 +1717,10 @@ class SnippetIngestionClient {
     // Call the API
     var response = client.tryTransformation(
       transformationTry = TransformationTry(
-        code = "foo",
+        type = TransformationType.entries.first { it.value == "code" },
+        input = TransformationCode(
+          code = "foo",
+        ),
         sampleRecord = buildJsonObject {
           put(
             "bar",
@@ -1752,7 +1758,10 @@ class SnippetIngestionClient {
     var response = client.tryTransformationBeforeUpdate(
       transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       transformationTry = TransformationTry(
-        code = "foo",
+        type = TransformationType.entries.first { it.value == "code" },
+        input = TransformationCode(
+          code = "foo",
+        ),
         sampleRecord = buildJsonObject {
           put(
             "bar",
@@ -1779,7 +1788,10 @@ class SnippetIngestionClient {
     var response = client.tryTransformationBeforeUpdate(
       transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       transformationTry = TransformationTry(
-        code = "foo",
+        type = TransformationType.entries.first { it.value == "code" },
+        input = TransformationCode(
+          code = "foo",
+        ),
         sampleRecord = buildJsonObject {
           put(
             "bar",

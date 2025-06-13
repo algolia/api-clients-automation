@@ -19,6 +19,8 @@
   */
 package algoliasearch.ingestion
 
+import algoliasearch.ingestion.TransformationType._
+
 /** TransformationTry
   *
   * @param code
@@ -27,7 +29,9 @@ package algoliasearch.ingestion
   *   The record to apply the given code to.
   */
 case class TransformationTry(
-    code: String,
+    code: Option[String] = scala.None,
+    `type`: Option[TransformationType] = scala.None,
+    input: Option[TransformationInput] = scala.None,
     sampleRecord: Any,
     authentications: Option[Seq[AuthenticationCreate]] = scala.None
 )

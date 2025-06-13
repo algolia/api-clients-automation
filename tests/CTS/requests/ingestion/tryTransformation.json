@@ -1,7 +1,8 @@
 [
   {
     "parameters": {
-      "code": "foo",
+      "type": "code",
+      "input": {"code": "foo"},
       "sampleRecord": {
         "bar": "baz"
       }
@@ -10,7 +11,8 @@
       "path": "/1/transformations/try",
       "method": "POST",
       "body": {
-        "code": "foo",
+        "type": "code",
+        "input": {"code": "foo"},
         "sampleRecord": {
           "bar": "baz"
         }
@@ -20,7 +22,8 @@
   {
     "testName": "with authentications",
     "parameters": {
-      "code": "foo",
+      "type": "code",
+      "input": {"code": "foo"},
       "sampleRecord": {
         "bar": "baz"
       },
@@ -40,7 +43,8 @@
       "path": "/1/transformations/try",
       "method": "POST",
       "body": {
-        "code": "foo",
+        "type": "code",
+        "input": {"code": "foo"},
         "sampleRecord": {
           "bar": "baz"
         },

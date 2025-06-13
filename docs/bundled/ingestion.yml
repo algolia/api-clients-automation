@@ -12853,10 +12853,12 @@ paths:
             val response = Await.result(
               client.createTransformation(
                 transformationCreate = TransformationCreate(
-                  input = TransformationCode(
-                    code = "foo"
+                  input = Some(
+                    TransformationCode(
+                      code = "foo"
+                    )
                   ),
-                  `type` = TransformationType.withName("code"),
+                  `type` = Some(TransformationType.withName("code")),
                   name = "bar",
                   description = Some("baz")
                 )
@@ -12934,7 +12936,8 @@ paths:
             var response = await client.TryTransformationAsync(
               new TransformationTry
               {
-                Code = "foo",
+                Type = Enum.Parse<TransformationType>("Code"),
+                Input = new TransformationInput(new TransformationCode { Code = "foo" }),
                 SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
               }
             );
@@ -12959,7 +12962,8 @@ paths:
             response, err :=
             client.TryTransformation(client.NewApiTryTransformationRequest(
 
-              ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"})))
+              ingestion.NewEmptyTransformationTry().SetType(ingestion.TransformationType("code")).SetInput(ingestion.TransformationCodeAsTransformationInput(
+                ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetSampleRecord(map[string]any{"bar": "baz"})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -12985,7 +12989,8 @@ paths:
 
             client.tryTransformation(
               new TransformationTry()
-                .setCode("foo")
+                .setType(TransformationType.CODE)
+                .setInput(new TransformationCode().setCode("foo"))
                 .setSampleRecord(
                   new HashMap() {
                     {
@@ -13009,8 +13014,11 @@ paths:
 
             // Call the API
 
-            const response = await client.tryTransformation({ code: 'foo',
-            sampleRecord: { bar: 'baz' } });
+            const response = await client.tryTransformation({
+              type: 'code',
+              input: { code: 'foo' },
+              sampleRecord: { bar: 'baz' },
+            });
 
 
             // >LOG
@@ -13031,7 +13039,10 @@ paths:
 
             var response = client.tryTransformation(
               transformationTry = TransformationTry(
-                code = "foo",
+                type = TransformationType.entries.first { it.value == "code" },
+                input = TransformationCode(
+                  code = "foo",
+                ),
                 sampleRecord = buildJsonObject {
                   put(
                     "bar",
@@ -13059,7 +13070,9 @@ paths:
             // Call the API
 
             $response = $client->tryTransformation(
-                ['code' => 'foo',
+                ['type' => 'code',
+                    'input' => ['code' => 'foo',
+                    ],
                     'sampleRecord' => ['bar' => 'baz',
                     ],
                 ],
@@ -13088,7 +13101,10 @@ paths:
 
             response = client.try_transformation(
                 transformation_try={
-                    "code": "foo",
+                    "type": "code",
+                    "input": {
+                        "code": "foo",
+                    },
                     "sampleRecord": {
                         "bar": "baz",
                     },
@@ -13113,7 +13129,11 @@ paths:
             # Call the API
 
             response = client.try_transformation(
-              Algolia::Ingestion::TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
+              Algolia::Ingestion::TransformationTry.new(
+                type: "code",
+                input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
+                sample_record: {bar: "baz"}
+              )
             )
 
 
@@ -13141,7 +13161,12 @@ paths:
             val response = Await.result(
               client.tryTransformation(
                 transformationTry = TransformationTry(
-                  code = "foo",
+                  `type` = Some(TransformationType.withName("code")),
+                  input = Some(
+                    TransformationCode(
+                      code = "foo"
+                    )
+                  ),
                   sampleRecord = JObject(List(JField("bar", JString("baz"))))
                 )
               ),
@@ -13161,7 +13186,8 @@ paths:
 
             let response = try await client.tryTransformation(transformationTry:
             TransformationTry(
-                code: "foo",
+                type: TransformationType.code,
+                input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
                 sampleRecord: ["bar": "baz"]
             ))
 
@@ -13175,7 +13201,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"code":"lorem","sampleRecord":{},"authentications":[{"type":"googleServiceAccount","name":"lorem","platform":"bigcommerce","input":{"clientEmail":"service-account-name@project-id.iam.gserviceaccount.com","privateKey":"lorem"}}]}'
+              --data '{"code":"lorem","type":"code","input":{"code":"lorem"},"sampleRecord":{},"authentications":[{"type":"googleServiceAccount","name":"lorem","platform":"bigcommerce","input":{"clientEmail":"service-account-name@project-id.iam.gserviceaccount.com","privateKey":"lorem"}}]}'
   /1/transformations/search:
     post:
       tags:
@@ -13976,10 +14002,12 @@ paths:
               client.updateTransformation(
                 transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 transformationCreate = TransformationCreate(
-                  input = TransformationCode(
-                    code = "foo"
+                  input = Some(
+                    TransformationCode(
+                      code = "foo"
+                    )
                   ),
-                  `type` = TransformationType.withName("code"),
+                  `type` = Some(TransformationType.withName("code")),
                   name = "bar",
                   description = Some("baz")
                 )
@@ -14297,7 +14325,8 @@ paths:
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               new TransformationTry
               {
-                Code = "foo",
+                Type = Enum.Parse<TransformationType>("Code"),
+                Input = new TransformationInput(new TransformationCode { Code = "foo" }),
                 SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
               }
             );
@@ -14322,7 +14351,8 @@ paths:
             response, err :=
             client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              ingestion.NewEmptyTransformationTry().SetCode("foo").SetSampleRecord(map[string]any{"bar": "baz"})))
+              ingestion.NewEmptyTransformationTry().SetType(ingestion.TransformationType("code")).SetInput(ingestion.TransformationCodeAsTransformationInput(
+                ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetSampleRecord(map[string]any{"bar": "baz"})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -14349,7 +14379,8 @@ paths:
             client.tryTransformationBeforeUpdate(
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               new TransformationTry()
-                .setCode("foo")
+                .setType(TransformationType.CODE)
+                .setInput(new TransformationCode().setCode("foo"))
                 .setSampleRecord(
                   new HashMap() {
                     {
@@ -14375,7 +14406,7 @@ paths:
 
             const response = await client.tryTransformationBeforeUpdate({
               transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-              transformationTry: { code: 'foo', sampleRecord: { bar: 'baz' } },
+              transformationTry: { type: 'code', input: { code: 'foo' }, sampleRecord: { bar: 'baz' } },
             });
 
 
@@ -14398,7 +14429,10 @@ paths:
             var response = client.tryTransformationBeforeUpdate(
               transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               transformationTry = TransformationTry(
-                code = "foo",
+                type = TransformationType.entries.first { it.value == "code" },
+                input = TransformationCode(
+                  code = "foo",
+                ),
                 sampleRecord = buildJsonObject {
                   put(
                     "bar",
@@ -14427,7 +14461,9 @@ paths:
 
             $response = $client->tryTransformationBeforeUpdate(
                 '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                ['code' => 'foo',
+                ['type' => 'code',
+                    'input' => ['code' => 'foo',
+                    ],
                     'sampleRecord' => ['bar' => 'baz',
                     ],
                 ],
@@ -14457,7 +14493,10 @@ paths:
             response = client.try_transformation_before_update(
                 transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 transformation_try={
-                    "code": "foo",
+                    "type": "code",
+                    "input": {
+                        "code": "foo",
+                    },
                     "sampleRecord": {
                         "bar": "baz",
                     },
@@ -14483,7 +14522,11 @@ paths:
 
             response = client.try_transformation_before_update(
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              Algolia::Ingestion::TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
+              Algolia::Ingestion::TransformationTry.new(
+                type: "code",
+                input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
+                sample_record: {bar: "baz"}
+              )
             )
 
 
@@ -14512,7 +14555,12 @@ paths:
               client.tryTransformationBeforeUpdate(
                 transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 transformationTry = TransformationTry(
-                  code = "foo",
+                  `type` = Some(TransformationType.withName("code")),
+                  input = Some(
+                    TransformationCode(
+                      code = "foo"
+                    )
+                  ),
                   sampleRecord = JObject(List(JField("bar", JString("baz"))))
                 )
               ),
@@ -14532,7 +14580,11 @@ paths:
 
             let response = try await client.tryTransformationBeforeUpdate(
                 transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                transformationTry: TransformationTry(code: "foo", sampleRecord: ["bar": "baz"])
+                transformationTry: TransformationTry(
+                    type: TransformationType.code,
+                    input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
+                    sampleRecord: ["bar": "baz"]
+                )
             )
 
             // >LOG
@@ -14545,7 +14597,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"code":"lorem","sampleRecord":{},"authentications":[{"type":"googleServiceAccount","name":"lorem","platform":"bigcommerce","input":{"clientEmail":"service-account-name@project-id.iam.gserviceaccount.com","privateKey":"lorem"}}]}'
+              --data '{"code":"lorem","type":"code","input":{"code":"lorem"},"sampleRecord":{},"authentications":[{"type":"googleServiceAccount","name":"lorem","platform":"bigcommerce","input":{"clientEmail":"service-account-name@project-id.iam.gserviceaccount.com","privateKey":"lorem"}}]}'
   /1/runs:
     get:
       tags:
@@ -17895,8 +17947,6 @@ components:
           $ref: '#/components/schemas/AuthenticationIDs'
       required:
         - name
-        - type
-        - input
     TransformationCreateResponse:
       type: object
       additionalProperties: false
@@ -17915,6 +17965,10 @@ components:
       properties:
         code:
           $ref: '#/components/schemas/Code'
+        type:
+          $ref: '#/components/schemas/TransformationType'
+        input:
+          $ref: '#/components/schemas/TransformationInput'
         sampleRecord:
           description: The record to apply the given code to.
           type: object
@@ -17923,7 +17977,6 @@ components:
           items:
             $ref: '#/components/schemas/AuthenticationCreate'
       required:
-        - code
         - sampleRecord
     TransformationTryResponse:
       type: object

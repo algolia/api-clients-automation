@@ -5771,9 +5771,7 @@
           }
         },
         "required": [
-          "name",
-          "type",
-          "input"
+          "name"
         ]
       },
       "TransformationCreateResponse": {
@@ -5800,6 +5798,12 @@
           "code": {
             "$ref": "#/components/schemas/Code"
           },
+          "type": {
+            "$ref": "#/components/schemas/TransformationType"
+          },
+          "input": {
+            "$ref": "#/components/schemas/TransformationInput"
+          },
           "sampleRecord": {
             "description": "The record to apply the given code to.",
             "type": "object"
@@ -5812,7 +5816,6 @@
           }
         },
         "required": [
-          "code",
           "sampleRecord"
         ]
       },

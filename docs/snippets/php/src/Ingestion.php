@@ -1943,7 +1943,9 @@ class SnippetIngestionClient
 
         // Call the API
         $response = $client->tryTransformation(
-            ['code' => 'foo',
+            ['type' => 'code',
+                'input' => ['code' => 'foo',
+                ],
                 'sampleRecord' => ['bar' => 'baz',
                 ],
             ],
@@ -1968,7 +1970,9 @@ class SnippetIngestionClient
 
         // Call the API
         $response = $client->tryTransformation(
-            ['code' => 'foo',
+            ['type' => 'code',
+                'input' => ['code' => 'foo',
+                ],
                 'sampleRecord' => ['bar' => 'baz',
                 ],
                 'authentications' => [
@@ -2003,7 +2007,9 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->tryTransformationBeforeUpdate(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['code' => 'foo',
+            ['type' => 'code',
+                'input' => ['code' => 'foo',
+                ],
                 'sampleRecord' => ['bar' => 'baz',
                 ],
             ],
@@ -2029,7 +2035,9 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->tryTransformationBeforeUpdate(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['code' => 'foo',
+            ['type' => 'code',
+                'input' => ['code' => 'foo',
+                ],
                 'sampleRecord' => ['bar' => 'baz',
                 ],
                 'authentications' => [

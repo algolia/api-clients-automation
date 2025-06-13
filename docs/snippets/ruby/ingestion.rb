@@ -1724,7 +1724,11 @@ def snippet_for_try_transformation
 
   # Call the API
   response = client.try_transformation(
-    Algolia::Ingestion::TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
+    Algolia::Ingestion::TransformationTry.new(
+      type: "code",
+      input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
+      sample_record: {bar: "baz"}
+    )
   )
 
   # >LOG
@@ -1747,7 +1751,8 @@ def snippet_for_try_transformation1
   # Call the API
   response = client.try_transformation(
     Algolia::Ingestion::TransformationTry.new(
-      code: "foo",
+      type: "code",
+      input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
       sample_record: {bar: "baz"},
       authentications: [
         Algolia::Ingestion::AuthenticationCreate.new(
@@ -1783,7 +1788,11 @@ def snippet_for_try_transformation_before_update
   # Call the API
   response = client.try_transformation_before_update(
     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    Algolia::Ingestion::TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
+    Algolia::Ingestion::TransformationTry.new(
+      type: "code",
+      input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
+      sample_record: {bar: "baz"}
+    )
   )
 
   # >LOG
@@ -1807,7 +1816,8 @@ def snippet_for_try_transformation_before_update1
   response = client.try_transformation_before_update(
     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     Algolia::Ingestion::TransformationTry.new(
-      code: "foo",
+      type: "code",
+      input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
       sample_record: {bar: "baz"},
       authentications: [
         Algolia::Ingestion::AuthenticationCreate.new(

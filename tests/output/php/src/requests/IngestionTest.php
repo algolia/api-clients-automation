@@ -1590,7 +1590,9 @@ class IngestionTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->tryTransformation(
-            ['code' => 'foo',
+            ['type' => 'code',
+                'input' => ['code' => 'foo',
+                ],
                 'sampleRecord' => ['bar' => 'baz',
                 ],
             ],
@@ -1600,7 +1602,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/transformations/try',
                 'method' => 'POST',
-                'body' => json_decode('{"code":"foo","sampleRecord":{"bar":"baz"}}'),
+                'body' => json_decode('{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"}}'),
             ],
         ]);
     }
@@ -1610,7 +1612,9 @@ class IngestionTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->tryTransformation(
-            ['code' => 'foo',
+            ['type' => 'code',
+                'input' => ['code' => 'foo',
+                ],
                 'sampleRecord' => ['bar' => 'baz',
                 ],
                 'authentications' => [
@@ -1629,7 +1633,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/transformations/try',
                 'method' => 'POST',
-                'body' => json_decode('{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}'),
+                'body' => json_decode('{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}'),
             ],
         ]);
     }
@@ -1640,7 +1644,9 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $client->tryTransformationBeforeUpdate(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['code' => 'foo',
+            ['type' => 'code',
+                'input' => ['code' => 'foo',
+                ],
                 'sampleRecord' => ['bar' => 'baz',
                 ],
             ],
@@ -1650,7 +1656,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try',
                 'method' => 'POST',
-                'body' => json_decode('{"code":"foo","sampleRecord":{"bar":"baz"}}'),
+                'body' => json_decode('{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"}}'),
             ],
         ]);
     }
@@ -1661,7 +1667,9 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $client->tryTransformationBeforeUpdate(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['code' => 'foo',
+            ['type' => 'code',
+                'input' => ['code' => 'foo',
+                ],
                 'sampleRecord' => ['bar' => 'baz',
                 ],
                 'authentications' => [
@@ -1680,7 +1688,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try',
                 'method' => 'POST',
-                'body' => json_decode('{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}'),
+                'body' => json_decode('{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}'),
             ],
         ]);
     }

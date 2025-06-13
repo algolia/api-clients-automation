@@ -1649,7 +1649,10 @@ class IngestionTest {
       call = {
         tryTransformation(
           transformationTry = TransformationTry(
-            code = "foo",
+            type = TransformationType.entries.first { it.value == "code" },
+            input = TransformationCode(
+              code = "foo",
+            ),
             sampleRecord = buildJsonObject {
               put(
                 "bar",
@@ -1662,7 +1665,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/1/transformations/try".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"code":"foo","sampleRecord":{"bar":"baz"}}""", it.body)
+        assertJsonBody("""{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"}}""", it.body)
       },
     )
   }
@@ -1673,7 +1676,10 @@ class IngestionTest {
       call = {
         tryTransformation(
           transformationTry = TransformationTry(
-            code = "foo",
+            type = TransformationType.entries.first { it.value == "code" },
+            input = TransformationCode(
+              code = "foo",
+            ),
             sampleRecord = buildJsonObject {
               put(
                 "bar",
@@ -1697,7 +1703,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/1/transformations/try".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}""", it.body)
+        assertJsonBody("""{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}""", it.body)
       },
     )
   }
@@ -1711,7 +1717,10 @@ class IngestionTest {
         tryTransformationBeforeUpdate(
           transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           transformationTry = TransformationTry(
-            code = "foo",
+            type = TransformationType.entries.first { it.value == "code" },
+            input = TransformationCode(
+              code = "foo",
+            ),
             sampleRecord = buildJsonObject {
               put(
                 "bar",
@@ -1724,7 +1733,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"code":"foo","sampleRecord":{"bar":"baz"}}""", it.body)
+        assertJsonBody("""{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"}}""", it.body)
       },
     )
   }
@@ -1736,7 +1745,10 @@ class IngestionTest {
         tryTransformationBeforeUpdate(
           transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           transformationTry = TransformationTry(
-            code = "foo",
+            type = TransformationType.entries.first { it.value == "code" },
+            input = TransformationCode(
+              code = "foo",
+            ),
             sampleRecord = buildJsonObject {
               put(
                 "bar",
@@ -1760,7 +1772,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}""", it.body)
+        assertJsonBody("""{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}""", it.body)
       },
     )
   }
