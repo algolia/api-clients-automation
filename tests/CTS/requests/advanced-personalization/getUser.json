@@ -1,0 +1,8 @@
+[
+  {
+    "request": {
+      "path": "/2/users/user-id",
+      "method": "GET"
+    }
+  }
+]

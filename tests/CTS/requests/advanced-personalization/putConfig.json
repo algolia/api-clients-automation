@@ -1,0 +1,9 @@
+[
+  {
+    "request": {
+      "path": "/2/config",
+      "method": "PUT",
+      "body": {}
+    }
+  }
+]
