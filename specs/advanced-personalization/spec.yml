@@ -114,3 +114,19 @@ paths:
 
   /2/users/{userID}:
     $ref: 'paths/user.yml'
+
+  # #################
+  # ### Real-time ###
+  # #################
+
+  /2/realtime/users/{userToken}:
+    $ref: 'paths/getRealtimeUser.yml'
+
+  /2/realtime/users/{userToken}/compute:
+    $ref: 'paths/computeRealtimeUser.yml'
+
+  # ###############
+  # ### Helpers ###
+  # ###############
+  /setClientApiKey:
+    $ref: '../common/helpers/setClientApiKey.yml#/method'

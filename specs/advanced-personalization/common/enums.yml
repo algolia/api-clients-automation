@@ -21,3 +21,11 @@ sourceType:
   title: type
   type: string
   enum: [insights]
+
+strategy:
+  type: string
+  enum:
+    - session
+    - historical
+    - hybrid
+  example: 'session'

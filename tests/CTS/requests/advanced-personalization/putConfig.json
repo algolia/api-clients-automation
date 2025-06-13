@@ -1,0 +1,28 @@
+[
+  {
+    "parameters": {
+      "indices": [],
+      "personalizationReRanking": "maximum",
+      "profileType": "basic",
+      "features": {
+        "realtime": {
+          "enabled": false
+        }
+      }
+    },
+    "request": {
+      "path": "/2/config",
+      "method": "PUT",
+      "body": {
+        "features": {
+          "realtime": {
+            "enabled": false
+          }
+        },
+        "indices": [],
+        "personalizationReRanking": "maximum",
+        "profileType": "basic"
+      }
+    }
+  }
+]
