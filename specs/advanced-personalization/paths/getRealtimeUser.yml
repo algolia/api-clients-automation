@@ -1,7 +1,7 @@
 get:
   tags:
     - users
-  operationId: getUser
+  operationId: getRealtimeUser
   x-acl:
     - recommendation
   summary: Retrieve the user's personalization profile
