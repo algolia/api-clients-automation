@@ -485,6 +485,78 @@ paths:
           $ref: '#/components/responses/InvalidUserID'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /2/realtime/users/{userToken}:
+    get:
+      tags:
+        - advanced-personalization
+      operationId: getRealtimeUser
+      x-acl:
+        - recommendation
+      summary: Retrieve the user's personalization profile
+      description: Retrieves the user's personalization profiles containing search filters.
+      parameters:
+        - $ref: '#/components/parameters/UserToken'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RealtimeUser_user'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '421':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /2/realtime/users/{userToken}/compute:
+    post:
+      tags:
+        - advanced-personalization
+      operationId: computeRealtimeUser
+      x-acl:
+        - recommendation
+      summary: Compute the user's personalization profile
+      description: Sends a request to compute the user's personalization profile.
+      parameters:
+        - $ref: '#/components/parameters/UserToken'
+      responses:
+        '202':
+          $ref: '#/components/responses/Accepted'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '421':
+          $ref: '#/components/responses/TooManyRequests'
+        '422':
+          $ref: '#/components/responses/StatusUnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /setClientApiKey:
+    get:
+      x-helper: true
+      x-asynchronous-helper: false
+      tags:
+        - advanced-personalization
+      operationId: setClientApiKey
+      summary: Switch the API key used to authenticate requests
+      description: |
+        Switch the API key used to authenticate requests.
+      parameters:
+        - in: query
+          name: apiKey
+          description: API key to be used from now on.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No content.
 components:
   securitySchemes:
     appId:
@@ -619,6 +691,15 @@ components:
       required: true
       schema:
         type: string
+    UserToken:
+      name: userToken
+      in: path
+      required: true
+      description: >-
+        Unique identifier representing a user for which to fetch the
+        personalization profile.
+      schema:
+        $ref: '#/components/schemas/userToken'
   schemas:
     ErrorBase:
       description: Error.
@@ -987,6 +1068,72 @@ components:
           $ref: '#/components/schemas/unprocessableEntity'
         message:
           $ref: '#/components/schemas/invalidUserID'
+    userToken:
+      type: string
+      description: >
+        Unique pseudonymous or anonymous user identifier.
+
+
+        This helps with analytics and click and conversion events.
+
+        For more information, see [user
+        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+      example: test-user-123
+      x-categories:
+        - Personalization
+    strategy:
+      type: string
+      enum:
+        - session
+        - historical
+        - hybrid
+      example: session
+    searchFilter:
+      type: object
+      additionalProperties: false
+      properties:
+        session:
+          type: array
+          items:
+            type: string
+          example:
+            - brand:Dyson<score=12>
+    searchFilters:
+      type: object
+      additionalProperties: false
+      properties:
+        indices:
+          type: array
+          items:
+            type: string
+          example:
+            - storefront
+            - storefront_price_asc
+            - storefront_price_desc
+        strategy:
+          $ref: '#/components/schemas/strategy'
+        filters:
+          $ref: '#/components/schemas/searchFilter'
+    RealtimeUser_user:
+      type: object
+      additionalProperties: false
+      required:
+        - version
+        - userID
+        - search
+      properties:
+        version:
+          type: string
+          description: Version of the response format.
+        userID:
+          type: string
+          description: User ID of the user.
+        search:
+          type: object
+          description: |
+            Index personalization filters by index name.
+          additionalProperties:
+            $ref: '#/components/schemas/searchFilters'
   responses:
     BadRequest:
       description: Bad request or request arguments.
@@ -1060,6 +1207,78 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponses_invalidUserID'
+    TooManyRequests:
+      description: Too Many Requests.
+      content:
+        application/json:
+          schema:
+            title: tooManyRequestsResponse
+            type: object
+            additionalProperties: false
+            required:
+              - status
+              - message
+            properties:
+              status:
+                type: integer
+                example: 421
+                description: Status code.
+              message:
+                type: string
+                example: Too Many Requests
+                description: Response message.
+    InternalError:
+      description: Internal error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    Accepted:
+      description: Accepted.
+      content:
+        application/json:
+          schema:
+            title: acceptedResponse
+            type: object
+            additionalProperties: false
+            required:
+              - status
+              - message
+            properties:
+              status:
+                type: integer
+                example: 202
+                description: Status code.
+              message:
+                type: string
+                example: Accepted
+                description: Response message.
+    Conflict:
+      description: Conflict.
+      content:
+        application/json:
+          schema:
+            title: conflictResponse
+            type: object
+            additionalProperties: false
+            required:
+              - status
+              - message
+            properties:
+              status:
+                type: integer
+                example: 409
+                description: Status code.
+              message:
+                type: string
+                example: Conflict
+                description: Response message.
+    StatusUnprocessableEntity:
+      description: Unprocessable Entity.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
 x-tagGroups:
   - name: Advanced Personalization
     tags:

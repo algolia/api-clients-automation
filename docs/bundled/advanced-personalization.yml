@@ -167,6 +167,29 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'eu' with your Algolia Application Region
+
+            const client =
+            advancedPersonalizationClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'eu');
+
+
+            // Call the API
+
+            const response = await client.customGet({ path: 'test/minimal' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
     post:
       operationId: customPost
       requestBody:
@@ -195,6 +218,29 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'eu' with your Algolia Application Region
+
+            const client =
+            advancedPersonalizationClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'eu');
+
+
+            // Call the API
+
+            const response = await client.customPost({ path: 'test/minimal' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
     put:
       operationId: customPut
       requestBody:
@@ -223,6 +269,29 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'eu' with your Algolia Application Region
+
+            const client =
+            advancedPersonalizationClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'eu');
+
+
+            // Call the API
+
+            const response = await client.customPut({ path: 'test/minimal' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -245,6 +314,30 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'eu' with your Algolia Application Region
+
+            const client =
+            advancedPersonalizationClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'eu');
+
+
+            // Call the API
+
+            const response = await client.customDelete({ path: 'test/minimal'
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
   /2/config:
     get:
       tags:
@@ -267,6 +360,37 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'eu' with your Algolia Application Region
+
+            const client =
+            advancedPersonalizationClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'eu');
+
+
+            // Call the API
+
+            const response = await client.getConfig();
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://ai-personalization.eu.algolia.com/2/config \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     put:
       tags:
         - config
@@ -362,6 +486,44 @@ paths:
           $ref: '#/components/responses/FeatureNotEnabled-2'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'eu' with your Algolia Application Region
+
+            const client =
+            advancedPersonalizationClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'eu');
+
+
+            // Call the API
+
+            const response = await client.putConfig({
+              indices: [],
+              personalizationReRanking: 'maximum',
+              profileType: 'basic',
+              features: { realtime: { enabled: false } },
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PUT \
+              --url https://ai-personalization.eu.algolia.com/2/config \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"indices":[{"index":"lorem","affinities":["lorem"],"source":{"type":"insights","events":{"viewDetails":[{"type":"view","subtype":"addToCart","name":"lorem"}],"viewListing":[{"type":"view","subtype":"addToCart","name":"lorem"}],"addToCart":[{"type":"view","subtype":"addToCart","name":"lorem"}],"purchase":[{"type":"view","subtype":"addToCart","name":"lorem"}]}}}],"personalizationReRanking":"none","profileType":"basic","features":{"realtime":{"enabled":true}}}'
   /2/users:
     get:
       tags:
@@ -408,6 +570,37 @@ paths:
           $ref: '#/components/responses/GenericUnprocessableEntity'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'eu' with your Algolia Application Region
+
+            const client =
+            advancedPersonalizationClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'eu');
+
+
+            // Call the API
+
+            const response = await client.getUsers({ indices: ['indexName'] });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://ai-personalization.eu.algolia.com/2/users?startDate=2024-06-27T08%3A27%3A26Z&endDate=2024-06-28T08%3A27%3A26Z&indices=products_EN&affinity=brand&limit=10&nextPageToken=lorem&previousPageToken=lorem' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /2/users/{userID}:
     get:
       tags:
@@ -438,6 +631,37 @@ paths:
           $ref: '#/components/responses/InvalidUserID'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'eu' with your Algolia Application Region
+
+            const client =
+            advancedPersonalizationClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'eu');
+
+
+            // Call the API
+
+            const response = await client.getUser({ userID: 'user-1' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://ai-personalization.eu.algolia.com/2/users/lorem \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     delete:
       tags:
         - users
@@ -477,6 +701,152 @@ paths:
           $ref: '#/components/responses/InvalidUserID'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'eu' with your Algolia Application Region
+
+            const client =
+            advancedPersonalizationClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'eu');
+
+
+            // Call the API
+
+            const response = await client.deleteUser({ userID: 'user-1' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://ai-personalization.eu.algolia.com/2/users/lorem \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+  /2/realtime/users/{userToken}:
+    get:
+      tags:
+        - users
+      operationId: getRealtimeUser
+      x-acl:
+        - recommendation
+      summary: Retrieve the user's personalization profile
+      description: Retrieves the user's personalization profiles containing search filters.
+      parameters:
+        - $ref: '#/components/parameters/UserToken'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RealtimeUser_user'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '421':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'eu' with your Algolia Application Region
+
+            const client =
+            advancedPersonalizationClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'eu');
+
+
+            // Call the API
+
+            const response = await client.getRealtimeUser({ userToken: 'foo' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://ai-personalization.eu.algolia.com/2/realtime/users/test-user-123 \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+  /2/realtime/users/{userToken}/compute:
+    post:
+      tags:
+        - users
+      operationId: computeRealtimeUser
+      x-acl:
+        - recommendation
+      summary: Compute the user's personalization profile
+      description: Sends a request to compute the user's personalization profile.
+      parameters:
+        - $ref: '#/components/parameters/UserToken'
+      responses:
+        '202':
+          $ref: '#/components/responses/Accepted'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '421':
+          $ref: '#/components/responses/TooManyRequests'
+        '422':
+          $ref: '#/components/responses/StatusUnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'eu' with your Algolia Application Region
+
+            const client =
+            advancedPersonalizationClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'eu');
+
+
+            // Call the API
+
+            const response = await client.computeRealtimeUser({ userToken: 'foo'
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://ai-personalization.eu.algolia.com/2/realtime/users/test-user-123/compute \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
 components:
   securitySchemes:
     appId:
@@ -611,6 +981,15 @@ components:
       required: true
       schema:
         type: string
+    UserToken:
+      name: userToken
+      in: path
+      required: true
+      description: >-
+        Unique identifier representing a user for which to fetch the
+        personalization profile.
+      schema:
+        $ref: '#/components/schemas/userToken'
   schemas:
     ErrorBase:
       description: Error.
@@ -979,6 +1358,72 @@ components:
           $ref: '#/components/schemas/unprocessableEntity'
         message:
           $ref: '#/components/schemas/invalidUserID'
+    userToken:
+      type: string
+      description: >
+        Unique pseudonymous or anonymous user identifier.
+
+
+        This helps with analytics and click and conversion events.
+
+        For more information, see [user
+        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+      example: test-user-123
+      x-categories:
+        - Personalization
+    strategy:
+      type: string
+      enum:
+        - session
+        - historical
+        - hybrid
+      example: session
+    searchFilter:
+      type: object
+      additionalProperties: false
+      properties:
+        session:
+          type: array
+          items:
+            type: string
+          example:
+            - brand:Dyson<score=12>
+    searchFilters:
+      type: object
+      additionalProperties: false
+      properties:
+        indices:
+          type: array
+          items:
+            type: string
+          example:
+            - storefront
+            - storefront_price_asc
+            - storefront_price_desc
+        strategy:
+          $ref: '#/components/schemas/strategy'
+        filters:
+          $ref: '#/components/schemas/searchFilter'
+    RealtimeUser_user:
+      type: object
+      additionalProperties: false
+      required:
+        - version
+        - userID
+        - search
+      properties:
+        version:
+          type: string
+          description: Version of the response format.
+        userID:
+          type: string
+          description: User ID of the user.
+        search:
+          type: object
+          description: |
+            Index personalization filters by index name.
+          additionalProperties:
+            $ref: '#/components/schemas/searchFilters'
   responses:
     BadRequest:
       description: Bad request or request arguments.
@@ -1052,6 +1497,78 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponses_invalidUserID'
+    TooManyRequests:
+      description: Too Many Requests.
+      content:
+        application/json:
+          schema:
+            title: tooManyRequestsResponse
+            type: object
+            additionalProperties: false
+            required:
+              - status
+              - message
+            properties:
+              status:
+                type: integer
+                example: 421
+                description: Status code.
+              message:
+                type: string
+                example: Too Many Requests
+                description: Response message.
+    InternalError:
+      description: Internal error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    Accepted:
+      description: Accepted.
+      content:
+        application/json:
+          schema:
+            title: acceptedResponse
+            type: object
+            additionalProperties: false
+            required:
+              - status
+              - message
+            properties:
+              status:
+                type: integer
+                example: 202
+                description: Status code.
+              message:
+                type: string
+                example: Accepted
+                description: Response message.
+    Conflict:
+      description: Conflict.
+      content:
+        application/json:
+          schema:
+            title: conflictResponse
+            type: object
+            additionalProperties: false
+            required:
+              - status
+              - message
+            properties:
+              status:
+                type: integer
+                example: 409
+                description: Status code.
+              message:
+                type: string
+                example: Conflict
+                description: Response message.
+    StatusUnprocessableEntity:
+      description: Unprocessable Entity.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
 x-tagGroups:
   - name: Advanced Personalization
     tags:
