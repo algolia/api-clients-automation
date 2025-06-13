@@ -1,5 +1,8 @@
 [
   {
+    "parameters": {
+      "userID": "user-1"
+    },
     "request": {
       "path": "/2/users/user-id",
       "method": "GET"
