@@ -1,4 +1,4 @@
-import { advancedPersonalizationClient } from '@algolia/client-advanced-personalization';
+import { advancedPersonalizationClient } from '@algolia/advanced-personalization';
 import { ApiError } from '@algolia/client-common';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';

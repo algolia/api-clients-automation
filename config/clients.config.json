@@ -165,7 +165,7 @@
       },
       {
         "name": "advanced-personalization",
-        "output": "clients/algoliasearch-client-javascript/packages/client-advanced-personalization",
+        "output": "clients/algoliasearch-client-javascript/packages/advanced-personalization",
         "isStandaloneClient": true
       },
       {

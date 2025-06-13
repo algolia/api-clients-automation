@@ -5,9 +5,9 @@ __metadata:
   version: 8
   cacheKey: 10
 
-"@algolia/client-abtesting@npm:5.27.0, @algolia/client-abtesting@workspace:packages/client-abtesting":
+"@algolia/advanced-personalization@workspace:packages/advanced-personalization":
   version: 0.0.0-use.local
-  resolution: "@algolia/client-abtesting@workspace:packages/client-abtesting"
+  resolution: "@algolia/advanced-personalization@workspace:packages/advanced-personalization"
   dependencies:
     "@algolia/client-common": "npm:5.27.0"
     "@algolia/requester-browser-xhr": "npm:5.27.0"
@@ -22,9 +22,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-advanced-personalization@workspace:packages/client-advanced-personalization":
+"@algolia/client-abtesting@npm:5.27.0, @algolia/client-abtesting@workspace:packages/client-abtesting":
   version: 0.0.0-use.local
-  resolution: "@algolia/client-advanced-personalization@workspace:packages/client-advanced-personalization"
+  resolution: "@algolia/client-abtesting@workspace:packages/client-abtesting"
   dependencies:
     "@algolia/client-common": "npm:5.27.0"
     "@algolia/requester-browser-xhr": "npm:5.27.0"
