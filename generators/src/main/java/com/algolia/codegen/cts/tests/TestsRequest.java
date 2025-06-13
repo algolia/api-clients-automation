@@ -83,11 +83,11 @@ public class TestsRequest extends TestsGenerator {
 
     bundle.put(
       "e2eAppID",
-      client.startsWith("composition") || client.startsWith("realtime") ? "METIS_APPLICATION_ID" : "ALGOLIA_APPLICATION_ID"
+      client.startsWith("composition") || client.startsWith("advanced-personalization") ? "METIS_APPLICATION_ID" : "ALGOLIA_APPLICATION_ID"
     );
     bundle.put(
       "e2eApiKey",
-      client.startsWith("composition") || client.startsWith("realtime")
+      client.startsWith("composition") || client.startsWith("advanced-personalization")
         ? "METIS_API_KEY"
         : (client.equals("monitoring") ? "MONITORING_API_KEY" : "ALGOLIA_ADMIN_KEY")
     );
