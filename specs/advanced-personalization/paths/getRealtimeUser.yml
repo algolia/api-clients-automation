@@ -14,7 +14,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../common/schemas/user.yml#/user'
+            $ref: '../common/schemas/RealtimeUser.yml#/user'
     '400':
       $ref: '../../common/responses/BadRequest.yml'
     '402':
