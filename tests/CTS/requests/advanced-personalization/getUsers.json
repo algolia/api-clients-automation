@@ -5,7 +5,10 @@
     },
     "request": {
       "path": "/2/users",
-      "method": "GET"
+      "method": "GET",
+      "queryParameters": {
+        "indices": "indexName"
+      }
     }
   }
 ]

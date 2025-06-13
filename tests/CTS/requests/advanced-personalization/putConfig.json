@@ -12,7 +12,17 @@
     },
     "request": {
       "path": "/2/config",
-      "method": "PUT"
+      "method": "PUT",
+      "body": {
+        "features": {
+          "realtime": {
+            "enabled": false
+          }
+        },
+        "indices": [],
+        "personalizationReRanking": "maximum",
+        "profileType": "basic"
+      }
     }
   }
 ]
