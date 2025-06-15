@@ -4,6 +4,7 @@ get:
   summary: List transformations
   description: Retrieves a list of transformations.
   operationId: listTransformations
+  x-mcp-tool: true
   x-acl:
     - addObject
     - deleteIndex

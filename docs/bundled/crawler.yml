@@ -230,7 +230,7 @@ paths:
         configuration,
 
         you should [update it](#tag/config/operation/patchConfig) instead since
-        cnfiguration changes made here aren't
+        configuration changes made here aren't
         [versioned](#tag/config/operation/listConfigVersions).
 
 
@@ -1675,6 +1675,8 @@ components:
       enum:
         - min
         - strict
+        - 'true'
+        - 'false'
     typoTolerance:
       description: >
         Whether [typo

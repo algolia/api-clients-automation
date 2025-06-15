@@ -1,0 +1,26 @@
+{{> __init__}}
+
+{{{import}}}
+
+{{#models}}
+{{#model}}
+from .{{classFilename}} import {{classname}}
+{{/model}}
+{{/models}}
+
+{{#isSearchClient}}
+from .replace_all_objects_response import ReplaceAllObjectsResponse
+from .secured_api_key_restrictions import SecuredApiKeyRestrictions
+{{/isSearchClient}}
+
+__all__ = (
+  {{#isSearchClient}}
+  "ReplaceAllObjectsResponse",
+  "SecuredApiKeyRestrictions",
+  {{/isSearchClient}}
+{{#models}}
+{{#model}}
+  "{{classname}}",
+{{/model}}
+{{/models}}
+)

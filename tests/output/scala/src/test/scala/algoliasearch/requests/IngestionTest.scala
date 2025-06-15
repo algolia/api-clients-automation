@@ -387,7 +387,12 @@ class IngestionTest extends AnyFunSuite {
     val (client, echo) = testClient()
     val future = client.createTransformation(
       transformationCreate = TransformationCreate(
-        code = "foo",
+        input = Some(
+          TransformationCode(
+            code = "foo"
+          )
+        ),
+        `type` = Some(TransformationType.withName("code")),
         name = "bar",
         description = Some("baz")
       )
@@ -398,7 +403,7 @@ class IngestionTest extends AnyFunSuite {
 
     assert(res.path == "/1/transformations")
     assert(res.method == "POST")
-    val expectedBody = parse("""{"code":"foo","name":"bar","description":"baz"}""")
+    val expectedBody = parse("""{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
@@ -1274,6 +1279,76 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
+  test("global push") {
+    val (client, echo) = testClient()
+    val future = client.push(
+      indexName = "foo",
+      pushTaskPayload = PushTaskPayload(
+        action = Action.withName("addObject"),
+        records = Seq(
+          PushTaskRecords(
+            objectID = "o",
+            additionalProperties = Some(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+          ),
+          PushTaskRecords(
+            objectID = "k",
+            additionalProperties = Some(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/push/foo")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("global push with watch mode1") {
+    val (client, echo) = testClient()
+    val future = client.push(
+      indexName = "bar",
+      pushTaskPayload = PushTaskPayload(
+        action = Action.withName("addObject"),
+        records = Seq(
+          PushTaskRecords(
+            objectID = "o",
+            additionalProperties = Some(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+          ),
+          PushTaskRecords(
+            objectID = "k",
+            additionalProperties = Some(List(JField("key", JString("baz")), JField("foo", JString("2"))))
+          )
+        )
+      ),
+      watch = Some(true)
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/push/bar")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"watch":"true"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
   test("pushTask") {
     val (client, echo) = testClient()
     val future = client.pushTask(
@@ -1543,7 +1618,12 @@ class IngestionTest extends AnyFunSuite {
     val (client, echo) = testClient()
     val future = client.tryTransformation(
       transformationTry = TransformationTry(
-        code = "foo",
+        `type` = Some(TransformationType.withName("code")),
+        input = Some(
+          TransformationCode(
+            code = "foo"
+          )
+        ),
         sampleRecord = JObject(List(JField("bar", JString("baz"))))
       )
     )
@@ -1553,7 +1633,7 @@ class IngestionTest extends AnyFunSuite {
 
     assert(res.path == "/1/transformations/try")
     assert(res.method == "POST")
-    val expectedBody = parse("""{"code":"foo","sampleRecord":{"bar":"baz"}}""")
+    val expectedBody = parse("""{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"}}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
@@ -1562,7 +1642,12 @@ class IngestionTest extends AnyFunSuite {
     val (client, echo) = testClient()
     val future = client.tryTransformation(
       transformationTry = TransformationTry(
-        code = "foo",
+        `type` = Some(TransformationType.withName("code")),
+        input = Some(
+          TransformationCode(
+            code = "foo"
+          )
+        ),
         sampleRecord = JObject(List(JField("bar", JString("baz")))),
         authentications = Some(
           Seq(
@@ -1586,7 +1671,7 @@ class IngestionTest extends AnyFunSuite {
     assert(res.path == "/1/transformations/try")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}"""
+      """{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -1597,7 +1682,12 @@ class IngestionTest extends AnyFunSuite {
     val future = client.tryTransformationBeforeUpdate(
       transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       transformationTry = TransformationTry(
-        code = "foo",
+        `type` = Some(TransformationType.withName("code")),
+        input = Some(
+          TransformationCode(
+            code = "foo"
+          )
+        ),
         sampleRecord = JObject(List(JField("bar", JString("baz"))))
       )
     )
@@ -1607,7 +1697,7 @@ class IngestionTest extends AnyFunSuite {
 
     assert(res.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try")
     assert(res.method == "POST")
-    val expectedBody = parse("""{"code":"foo","sampleRecord":{"bar":"baz"}}""")
+    val expectedBody = parse("""{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"}}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
@@ -1617,7 +1707,12 @@ class IngestionTest extends AnyFunSuite {
     val future = client.tryTransformationBeforeUpdate(
       transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       transformationTry = TransformationTry(
-        code = "foo",
+        `type` = Some(TransformationType.withName("code")),
+        input = Some(
+          TransformationCode(
+            code = "foo"
+          )
+        ),
         sampleRecord = JObject(List(JField("bar", JString("baz")))),
         authentications = Some(
           Seq(
@@ -1641,7 +1736,7 @@ class IngestionTest extends AnyFunSuite {
     assert(res.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}"""
+      """{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -1748,7 +1843,12 @@ class IngestionTest extends AnyFunSuite {
     val future = client.updateTransformation(
       transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       transformationCreate = TransformationCreate(
-        code = "foo",
+        input = Some(
+          TransformationCode(
+            code = "foo"
+          )
+        ),
+        `type` = Some(TransformationType.withName("code")),
         name = "bar",
         description = Some("baz")
       )
@@ -1759,7 +1859,7 @@ class IngestionTest extends AnyFunSuite {
 
     assert(res.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
     assert(res.method == "PUT")
-    val expectedBody = parse("""{"code":"foo","name":"bar","description":"baz"}""")
+    val expectedBody = parse("""{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }

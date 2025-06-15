@@ -47,6 +47,7 @@ class CompositionClientClientTests {
   @DisplayName("calls api with correct read host")
   void apiTest0() {
     CompositionClient client = new CompositionClient("test-app-id", "test-api-key", withEchoRequester());
+
     client.search("test-composition-id", new RequestBody(), Hit.class);
 
     EchoResponse result = echo.getLastResponse();
@@ -57,6 +58,7 @@ class CompositionClientClientTests {
   @DisplayName("calls api with correct write host")
   void apiTest1() {
     CompositionClient client = new CompositionClient("test-app-id", "test-api-key", withEchoRequester());
+
     client.search("test-composition-id", new RequestBody(), Hit.class);
 
     EchoResponse result = echo.getLastResponse();

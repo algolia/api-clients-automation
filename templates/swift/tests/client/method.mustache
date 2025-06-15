@@ -1,13 +1,9 @@
-{{#hasResponse}}let response{{#isGeneric}}: Response<{{#lambda.prefix}}{{{returnType}}}{{/lambda.prefix}}<{{#lambda.prefix}}Hit{{/lambda.prefix}}>>{{/isGeneric}} = {{> tests/method}}{{/hasResponse}}
-{{^hasResponse}}let _{{#isGeneric}}: Response<{{#lambda.prefix}}{{{returnType}}}{{/lambda.prefix}}<{{#lambda.prefix}}Hit{{/lambda.prefix}}>>{{/isGeneric}} = {{> tests/method}}{{/hasResponse}}
+{{#hasResponse}}let response{{#isGeneric}}: {{#useEchoRequester}}Response<{{/useEchoRequester}}{{#lambda.prefix}}{{{returnType}}}{{/lambda.prefix}}<{{#lambda.prefix}}Hit{{/lambda.prefix}}>{{#useEchoRequester}}>{{/useEchoRequester}}{{/isGeneric}} = {{> tests/method}}{{/hasResponse}}
+{{^hasResponse}}let _ = {{> tests/method}}{{/hasResponse}}
 {{^isHelper}}
 {{^isBenchmark}}
-let responseBodyData = try XCTUnwrap(response.bodyData)
 {{#useEchoRequester}}
-let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-{{/useEchoRequester}}
-{{^useEchoRequester}}
-let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
+let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 {{/useEchoRequester}}
 {{/isBenchmark}}
 {{/isHelper}}

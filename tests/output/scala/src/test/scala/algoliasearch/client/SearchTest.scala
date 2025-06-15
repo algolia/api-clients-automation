@@ -205,6 +205,69 @@ class SearchTest extends AnyFunSuite {
     assert(echo.lastResponse.get.responseTimeout == 30000)
   }
 
+  test("can handle unknown response fields") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6686)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.getSettings(
+        indexName = "cts_e2e_unknownField_scala"
+      ),
+      Duration.Inf
+    )
+    assert(parse(write(res)) == parse("{\"minWordSizefor1Typo\":12,\"minWordSizefor2Typos\":13,\"hitsPerPage\":14}"))
+  }
+
+  test("can handle unknown response fields inside a nested oneOf") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6686)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.getRule(
+        indexName = "cts_e2e_unknownFieldNested_scala",
+        objectID = "ruleObjectID"
+      ),
+      Duration.Inf
+    )
+    assert(
+      parse(write(res)) == parse(
+        "{\"objectID\":\"ruleObjectID\",\"consequence\":{\"promote\":[{\"objectID\":\"1\",\"position\":10}]}}"
+      )
+    )
+  }
+
   test("calls api with correct user agent") {
     val (client, echo) = testClient()
 
@@ -229,7 +292,7 @@ class SearchTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.17.5\).*""".r
+    val regexp = """^Algolia for Scala \(2.20.0\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }

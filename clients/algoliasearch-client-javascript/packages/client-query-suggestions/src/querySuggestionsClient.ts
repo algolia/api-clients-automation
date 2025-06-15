@@ -30,7 +30,7 @@ import type {
   UpdateConfigProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '5.24.0';
+export const apiClientVersion = '5.27.0';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -103,7 +103,7 @@ export function createQuerySuggestionsClient({
      * @param segment - The algolia agent (user-agent) segment to add.
      * @param version - The version of the agent.
      */
-    addAlgoliaAgent(segment: string, version?: string): void {
+    addAlgoliaAgent(segment: string, version?: string | undefined): void {
       transporter.algoliaAgent.add({ segment, version });
     },
 
@@ -304,7 +304,7 @@ export function createQuerySuggestionsClient({
      *  - settings
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getAllConfigs(requestOptions?: RequestOptions): Promise<Array<ConfigurationResponse>> {
+    getAllConfigs(requestOptions?: RequestOptions | undefined): Promise<Array<ConfigurationResponse>> {
       const requestPath = '/1/configs';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};

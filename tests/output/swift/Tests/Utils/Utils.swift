@@ -31,14 +31,31 @@ struct TestError: Error {
     let message: String
 }
 
-public func XCTLenientAssertEqual(received: Data, expected: Data) {
+public func XTCJSONEquals(received: some Encodable, expected: String) {
+    let expectedData = expected.data(using: .utf8)!
+    let receivedJSON = try! JSONEncoder().encode(received)
+
+    let dictReceived = try! JSONSerialization.jsonObject(with: receivedJSON) as! NSDictionary
+    let dictExpected = try! JSONSerialization.jsonObject(with: expectedData) as! NSDictionary
+
+    XCTAssertEqual(
+        dictReceived,
+        dictExpected,
+        """
+        Received JSON: \(String(data: receivedJSON, encoding: .utf8) ?? "nil")
+        Expected JSON: \(expected)
+        """
+    )
+}
+
+public func XCTLenientAssertEqual(received: some Encodable, expected: String) {
+    let receivedData = try! JSONEncoder().encode(received)
     guard let unionizedObject = try? union(
-        expected: JSONSerialization.jsonObject(with: expected, options: [.fragmentsAllowed]),
-        received: JSONSerialization.jsonObject(with: received, options: [.fragmentsAllowed])
+        expected: JSONSerialization.jsonObject(with: expected.data(using: .utf8)!, options: [.fragmentsAllowed]),
+        received: JSONSerialization.jsonObject(with: receivedData, options: [.fragmentsAllowed])
     ) else {
-        if let receivedString = String(data: received, encoding: .utf8),
-           let expectedString = String(data: expected, encoding: .utf8) {
-            XCTAssertEqual(receivedString, expectedString)
+        if let receivedString = String(data: receivedData, encoding: .utf8) {
+            XCTAssertEqual(receivedString, expected)
         } else {
             XCTFail("Unable to unionize received and expected objects")
         }
@@ -47,9 +64,11 @@ public func XCTLenientAssertEqual(received: Data, expected: Data) {
 
     guard let unionizedData = try? JSONSerialization.data(withJSONObject: unionizedObject, options: .fragmentsAllowed),
           let unionizedJSON = unionizedData.jsonString?.data(using: .utf8),
-          let expectedJSON = expected.jsonString?.data(using: .utf8),
           let unionizedString = String(data: unionizedJSON, encoding: .utf8),
-          let expectedString = String(data: expectedJSON, encoding: .utf8)
+          let expectedJSON = try? JSONSerialization.jsonObject(with: expected.data(using: .utf8)!, options: .fragmentsAllowed),
+          let expectedData = try? JSONSerialization.data(withJSONObject: expectedJSON, options: .fragmentsAllowed),
+          let expectedMinifiedJSON = expectedData.jsonString?.data(using: .utf8),
+          let expectedString = String(data: expectedMinifiedJSON, encoding: .utf8)
     else {
         XCTFail("Unable to serialize JSON strings")
         return

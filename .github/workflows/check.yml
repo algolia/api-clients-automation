@@ -161,7 +161,7 @@ jobs:
           type: minimal
 
       - name: Building specs
-        run: yarn cli build specs
+        run: yarn cli build specs -s
 
       - name: Store bundled specs
         uses: actions/upload-artifact@v4
@@ -178,7 +178,7 @@ jobs:
       - specs
       - scripts
     if: |
-      always() &&
+      !cancelled() &&
       needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
@@ -305,7 +305,7 @@ jobs:
       - specs
       - scripts
     if: |
-      always() &&
+      !cancelled() &&
       needs.setup.outputs.RUN_GEN == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
@@ -378,7 +378,7 @@ jobs:
         run: yarn cli cts generate ${{ matrix.client.language }} --language-version ${{ matrix.client.version }}
 
       - name: Run unit CTS
-        run: yarn cli cts run ${{ matrix.client.language }} --no-e2e
+        run: yarn cli cts run ${{ matrix.client.language }} --no-e2e -v
 
       - name: Run e2e CTS
         id: cts-e2e
@@ -426,7 +426,7 @@ jobs:
       - specs
       - scripts
     if: |
-      always() &&
+      !cancelled() &&
       needs.setup.outputs.RUN_GEN == 'true' &&
       needs.setup.outputs.KOTLIN_DATA != '' &&
       !contains(needs.*.result, 'cancelled') &&
@@ -472,7 +472,7 @@ jobs:
       - specs
       - scripts
     if: |
-      always() &&
+      !cancelled() &&
       needs.setup.outputs.RUN_GEN == 'true' &&
       needs.setup.outputs.SWIFT_DATA != '' &&
       !contains(needs.*.result, 'cancelled') &&
@@ -518,7 +518,7 @@ jobs:
       - client_gen
       - client_gen_javascript
     if: |
-      always() &&
+      !cancelled() &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     permissions:
@@ -545,7 +545,7 @@ jobs:
           type: minimal
 
       - name: Generate documentation specs with code snippets
-        run: yarn cli build specs --docs
+        run: yarn cli build specs --docs -s
 
       - name: Read benchmark results
         id: benchmark
@@ -667,7 +667,7 @@ jobs:
       - codegen
       - check_green
     if: |
-      always() &&
+      !cancelled() &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure') &&
       github.ref == 'refs/heads/main'
@@ -705,4 +705,5 @@ jobs:
       - name: Push generated files to repositories
         run: yarn workspace scripts pushToRepository
         env:
+          GH_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}

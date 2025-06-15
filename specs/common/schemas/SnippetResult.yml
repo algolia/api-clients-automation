@@ -1,4 +1,5 @@
 snippetResultOption:
+  title: snippetResultOption
   type: object
   description: Snippets that show the context around a matching search query.
   additionalProperties: false
@@ -14,6 +15,7 @@ snippetResultOption:
     - matchLevel
 
 snippetResultMap:
+  title: snippetResultMap
   type: object
   description: Snippets that show the context around a matching search query.
   x-is-free-form: false # openapi-generator thinks this is a free-form object since https://github.com/OpenAPITools/openapi-generator/pull/19605
@@ -22,6 +24,7 @@ snippetResultMap:
     $ref: '#/snippetResult'
 
 snippetResultArray:
+  title: snippetResultArray
   type: array
   description: Snippets that show the context around a matching search query.
   items:

@@ -2862,6 +2862,35 @@ func SnippetForPartialUpdateObjectsOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForPartialUpdateObjectsWithTransformationOfSearch() {
+	/*
+	   Snippet for the partialUpdateObjectsWithTransformation method.
+
+	   call partialUpdateObjectsWithTransformation with createIfNotExists=true
+	*/
+
+	// >SEPARATOR partialUpdateObjectsWithTransformation default
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.PartialUpdateObjectsWithTransformation(
+		"<YOUR_INDEX_NAME>",
+		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}}, search.WithCreateIfNotExists(true))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForRemoveUserIdOfSearch() {
 	/*
 	   Snippet for the removeUserId method.
@@ -3169,6 +3198,35 @@ func SnippetForSaveObjectsOfSearch3() {
 	response, err := client.SaveObjects(
 		"<YOUR_INDEX_NAME>",
 		[]map[string]any{map[string]any{"objectID": "1", "visibility": "public", "name": "Hot 100 Billboard Charts", "playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f", "createdAt": "1500240452"}}, search.WithWaitForTasks(false), search.WithBatchSize(1000), search.WithHeaderParam("X-Algolia-User-ID", "*"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveObjectsWithTransformationOfSearch() {
+	/*
+	   Snippet for the saveObjectsWithTransformation method.
+
+	   call saveObjectsWithTransformation without error
+	*/
+
+	// >SEPARATOR saveObjectsWithTransformation default
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveObjectsWithTransformation(
+		"<YOUR_INDEX_NAME>",
+		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}})
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -8940,7 +8998,7 @@ func SnippetForSetSettingsOfSearch() {
 	// Call the API
 	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
 		"<YOUR_INDEX_NAME>",
-		search.NewEmptyIndexSettings().SetPaginationLimitedTo(10)).WithForwardToReplicas(true))
+		search.NewEmptyIndexSettings().SetPaginationLimitedTo(10).SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("false")))).WithForwardToReplicas(true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

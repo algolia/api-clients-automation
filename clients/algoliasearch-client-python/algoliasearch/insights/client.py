@@ -27,8 +27,7 @@ from algoliasearch.http.transporter import Transporter
 from algoliasearch.http.transporter_sync import TransporterSync
 from algoliasearch.http.verb import Verb
 from algoliasearch.insights.config import InsightsConfig
-from algoliasearch.insights.models.events_response import EventsResponse
-from algoliasearch.insights.models.insights_events import InsightsEvents
+from algoliasearch.insights.models import EventsResponse, InsightsEvents
 
 
 class InsightsClient:
@@ -65,9 +64,9 @@ class InsightsClient:
             config = InsightsConfig(
                 transporter.config.app_id, transporter.config.api_key, region
             )
-
-        if config is None:
+        elif config is None:
             config = InsightsConfig(app_id, api_key, region)
+
         self._config = config
         self._request_options = RequestOptions(config)
 
@@ -95,13 +94,15 @@ class InsightsClient:
         if transporter is None:
             transporter = Transporter(config)
 
-        return InsightsClient(
+        client = InsightsClient(
             app_id=config.app_id,
             api_key=config.api_key,
             region=config.region,
             transporter=transporter,
             config=config,
         )
+
+        return client
 
     async def __aenter__(self) -> Self:
         return self
@@ -472,6 +473,8 @@ class InsightsClient:
         """
         Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
 
+        Required API Key ACLs:
+          - deleteObject
 
         :param user_token: User token for which to delete all associated events. (required)
         :type user_token: str
@@ -511,6 +514,8 @@ class InsightsClient:
         """
         Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
 
+        Required API Key ACLs:
+          - deleteObject
 
         :param user_token: User token for which to delete all associated events. (required)
         :type user_token: str
@@ -527,6 +532,8 @@ class InsightsClient:
         """
         Sends a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
 
+        Required API Key ACLs:
+          - search
 
         :param insights_events: (required)
         :type insights_events: InsightsEvents
@@ -561,6 +568,8 @@ class InsightsClient:
         """
         Sends a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
 
+        Required API Key ACLs:
+          - search
 
         :param insights_events: (required)
         :type insights_events: InsightsEvents
@@ -605,9 +614,9 @@ class InsightsClientSync:
             config = InsightsConfig(
                 transporter.config.app_id, transporter.config.api_key, region
             )
-
-        if config is None:
+        elif config is None:
             config = InsightsConfig(app_id, api_key, region)
+
         self._config = config
         self._request_options = RequestOptions(config)
 
@@ -635,13 +644,15 @@ class InsightsClientSync:
         if transporter is None:
             transporter = TransporterSync(config)
 
-        return InsightsClientSync(
+        client = InsightsClientSync(
             app_id=config.app_id,
             api_key=config.api_key,
             region=config.region,
             transporter=transporter,
             config=config,
         )
+
+        return client
 
     def __enter__(self) -> Self:
         return self
@@ -1005,6 +1016,8 @@ class InsightsClientSync:
         """
         Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
 
+        Required API Key ACLs:
+          - deleteObject
 
         :param user_token: User token for which to delete all associated events. (required)
         :type user_token: str
@@ -1044,6 +1057,8 @@ class InsightsClientSync:
         """
         Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
 
+        Required API Key ACLs:
+          - deleteObject
 
         :param user_token: User token for which to delete all associated events. (required)
         :type user_token: str
@@ -1060,6 +1075,8 @@ class InsightsClientSync:
         """
         Sends a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
 
+        Required API Key ACLs:
+          - search
 
         :param insights_events: (required)
         :type insights_events: InsightsEvents
@@ -1094,6 +1111,8 @@ class InsightsClientSync:
         """
         Sends a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
 
+        Required API Key ACLs:
+          - search
 
         :param insights_events: (required)
         :type insights_events: InsightsEvents

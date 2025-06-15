@@ -85,6 +85,7 @@ servers:
       status `401` and the message: "The log processing region does not match".
     variables:
       region:
+        description: The region where your Algolia application is hosted.
         enum:
           - us
           - eu
@@ -214,6 +215,7 @@ paths:
       tags:
         - query-suggestions
       operationId: getAllConfigs
+      x-mcp-tool: true
       x-acl:
         - settings
       summary: List configurations
@@ -235,6 +237,7 @@ paths:
       tags:
         - query-suggestions
       operationId: createConfig
+      x-mcp-tool: true
       x-acl:
         - editSettings
       summary: Create a configuration
@@ -276,6 +279,7 @@ paths:
       tags:
         - query-suggestions
       operationId: getConfig
+      x-mcp-tool: true
       x-acl:
         - settings
       summary: Retrieve a configuration
@@ -299,6 +303,7 @@ paths:
       tags:
         - query-suggestions
       operationId: updateConfig
+      x-mcp-tool: true
       x-acl:
         - editSettings
       summary: Update a configuration
@@ -370,6 +375,7 @@ paths:
       tags:
         - query-suggestions
       operationId: getConfigStatus
+      x-mcp-tool: true
       x-acl:
         - settings
       summary: Retrieve configuration status
@@ -419,6 +425,7 @@ paths:
       tags:
         - query-suggestions
       operationId: getLogFile
+      x-mcp-tool: true
       x-acl:
         - settings
       summary: Retrieve logs

@@ -51,6 +51,8 @@ object JsonSupport {
     new DictionaryEntryTypeSerializer() :+
     new DictionaryTypeSerializer() :+
     new EditTypeSerializer() :+
+    new EventStatusSerializer() :+
+    new EventTypeSerializer() :+
     new ExactOnSingleWordQuerySerializer() :+
     new LogTypeSerializer() :+
     new MatchLevelSerializer() :+

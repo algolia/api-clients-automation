@@ -4,6 +4,7 @@ get:
   summary: List sources
   description: Retrieves a list of sources.
   operationId: listSources
+  x-mcp-tool: true
   x-acl:
     - addObject
     - deleteIndex

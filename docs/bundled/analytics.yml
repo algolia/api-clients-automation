@@ -114,6 +114,7 @@ servers:
   - url: https://analytics.{region}.algolia.com
     variables:
       region:
+        description: The region where your Algolia application is hosted.
         enum:
           - us
           - de
@@ -1064,6 +1065,7 @@ paths:
       tags:
         - search
       operationId: getTopSearches
+      x-mcp-tool: true
       x-acl:
         - analytics
       summary: Retrieve top searches
@@ -2192,6 +2194,7 @@ paths:
       tags:
         - search
       operationId: getNoResultsRate
+      x-mcp-tool: true
       x-acl:
         - analytics
       summary: Retrieve no results rate
@@ -2772,6 +2775,7 @@ paths:
       tags:
         - search
       operationId: getTopHits
+      x-mcp-tool: true
       x-acl:
         - analytics
       summary: Retrieve top search results
@@ -7400,7 +7404,7 @@ components:
         - ':'
         - <
         - <=
-        - =
+        - '='
         - '!='
         - '>'
         - '>='

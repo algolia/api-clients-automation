@@ -278,8 +278,9 @@ final class IngestionClientSnippet {
 
         // Call the API
         let response = try await client.createTransformation(transformationCreate: TransformationCreate(
-            code: "foo",
             name: "bar",
+            type: TransformationType.code,
+            input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
             description: "baz"
         ))
         // >LOG
@@ -1008,6 +1009,69 @@ final class IngestionClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the push method.
+    ///
+    /// global push
+    func snippetForPush() async throws {
+        // >SEPARATOR push global push
+        // Initialize the client
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.push(
+            indexName: "<YOUR_INDEX_NAME>",
+            pushTaskPayload: PushTaskPayload(
+                action: IngestionAction.addObject,
+                records: [
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("o"),
+                        "key": AnyCodable("bar"),
+                        "foo": AnyCodable("1"),
+                    ]),
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("k"),
+                        "key": AnyCodable("baz"),
+                        "foo": AnyCodable("2"),
+                    ]),
+                ]
+            )
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the push method.
+    ///
+    /// global push with watch mode
+    func snippetForPush1() async throws {
+        // >SEPARATOR push global push with watch mode
+        // Initialize the client
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.push(
+            indexName: "<YOUR_INDEX_NAME>",
+            pushTaskPayload: PushTaskPayload(
+                action: IngestionAction.addObject,
+                records: [
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("o"),
+                        "key": AnyCodable("bar"),
+                        "foo": AnyCodable("1"),
+                    ]),
+                    PushTaskRecords(from: [
+                        "objectID": AnyCodable("k"),
+                        "key": AnyCodable("baz"),
+                        "foo": AnyCodable("2"),
+                    ]),
+                ]
+            ),
+            watch: true
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
     /// Snippet for the pushTask method.
     ///
     /// pushTask
@@ -1265,7 +1329,8 @@ final class IngestionClientSnippet {
 
         // Call the API
         let response = try await client.tryTransformation(transformationTry: TransformationTry(
-            code: "foo",
+            type: TransformationType.code,
+            input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
             sampleRecord: ["bar": "baz"]
         ))
         // >LOG
@@ -1282,7 +1347,8 @@ final class IngestionClientSnippet {
 
         // Call the API
         let response = try await client.tryTransformation(transformationTry: TransformationTry(
-            code: "foo",
+            type: TransformationType.code,
+            input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
             sampleRecord: ["bar": "baz"],
             authentications: [AuthenticationCreate(
                 type: AuthenticationType.oauth,
@@ -1309,7 +1375,11 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.tryTransformationBeforeUpdate(
             transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            transformationTry: TransformationTry(code: "foo", sampleRecord: ["bar": "baz"])
+            transformationTry: TransformationTry(
+                type: TransformationType.code,
+                input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
+                sampleRecord: ["bar": "baz"]
+            )
         )
         // >LOG
         // SEPARATOR<
@@ -1327,7 +1397,8 @@ final class IngestionClientSnippet {
         let response = try await client.tryTransformationBeforeUpdate(
             transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             transformationTry: TransformationTry(
-                code: "foo",
+                type: TransformationType.code,
+                input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
                 sampleRecord: ["bar": "baz"],
                 authentications: [AuthenticationCreate(
                     type: AuthenticationType.oauth,
@@ -1440,7 +1511,12 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.updateTransformation(
             transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            transformationCreate: TransformationCreate(code: "foo", name: "bar", description: "baz")
+            transformationCreate: TransformationCreate(
+                name: "bar",
+                type: TransformationType.code,
+                input: TransformationInput.transformationCode(TransformationCode(code: "foo")),
+                description: "baz"
+            )
         )
         // >LOG
         // SEPARATOR<

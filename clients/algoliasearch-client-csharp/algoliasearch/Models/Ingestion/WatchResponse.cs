@@ -39,25 +39,39 @@ public partial class WatchResponse
   public string RunID { get; set; }
 
   /// <summary>
-  /// when used with discovering or validating sources, the sampled data of your source is returned.
+  /// Universally unique identifier (UUID) of an event.
   /// </summary>
-  /// <value>when used with discovering or validating sources, the sampled data of your source is returned.</value>
+  /// <value>Universally unique identifier (UUID) of an event.</value>
+  [JsonPropertyName("eventID")]
+  public string EventID { get; set; }
+
+  /// <summary>
+  /// This field is always null when used with the Push endpoint. When used for a source discover or source validate run, it will include the sampled data of the source.
+  /// </summary>
+  /// <value>This field is always null when used with the Push endpoint. When used for a source discover or source validate run, it will include the sampled data of the source. </value>
   [JsonPropertyName("data")]
   public List<object> Data { get; set; }
 
   /// <summary>
-  /// in case of error, observability events will be added to the response, if any.
+  /// in case of error, observability events will be added to the response.
   /// </summary>
-  /// <value>in case of error, observability events will be added to the response, if any.</value>
+  /// <value>in case of error, observability events will be added to the response.</value>
   [JsonPropertyName("events")]
   public List<Event> Events { get; set; }
 
   /// <summary>
-  /// a message describing the outcome of a validate run.
+  /// a message describing the outcome of the operation that has been ran (push, discover or validate) run.
   /// </summary>
-  /// <value>a message describing the outcome of a validate run.</value>
+  /// <value>a message describing the outcome of the operation that has been ran (push, discover or validate) run.</value>
   [JsonPropertyName("message")]
   public string Message { get; set; }
+
+  /// <summary>
+  /// Date of creation in RFC 3339 format.
+  /// </summary>
+  /// <value>Date of creation in RFC 3339 format.</value>
+  [JsonPropertyName("createdAt")]
+  public string CreatedAt { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object
@@ -68,9 +82,11 @@ public partial class WatchResponse
     StringBuilder sb = new StringBuilder();
     sb.Append("class WatchResponse {\n");
     sb.Append("  RunID: ").Append(RunID).Append("\n");
+    sb.Append("  EventID: ").Append(EventID).Append("\n");
     sb.Append("  Data: ").Append(Data).Append("\n");
     sb.Append("  Events: ").Append(Events).Append("\n");
     sb.Append("  Message: ").Append(Message).Append("\n");
+    sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
     sb.Append("}\n");
     return sb.ToString();
   }
@@ -97,6 +113,7 @@ public partial class WatchResponse
     }
 
     return (RunID == input.RunID || (RunID != null && RunID.Equals(input.RunID)))
+      && (EventID == input.EventID || (EventID != null && EventID.Equals(input.EventID)))
       && (
         Data == input.Data || Data != null && input.Data != null && Data.SequenceEqual(input.Data)
       )
@@ -104,7 +121,8 @@ public partial class WatchResponse
         Events == input.Events
         || Events != null && input.Events != null && Events.SequenceEqual(input.Events)
       )
-      && (Message == input.Message || (Message != null && Message.Equals(input.Message)));
+      && (Message == input.Message || (Message != null && Message.Equals(input.Message)))
+      && (CreatedAt == input.CreatedAt || (CreatedAt != null && CreatedAt.Equals(input.CreatedAt)));
   }
 
   /// <summary>
@@ -120,6 +138,10 @@ public partial class WatchResponse
       {
         hashCode = (hashCode * 59) + RunID.GetHashCode();
       }
+      if (EventID != null)
+      {
+        hashCode = (hashCode * 59) + EventID.GetHashCode();
+      }
       if (Data != null)
       {
         hashCode = (hashCode * 59) + Data.GetHashCode();
@@ -131,6 +153,10 @@ public partial class WatchResponse
       if (Message != null)
       {
         hashCode = (hashCode * 59) + Message.GetHashCode();
+      }
+      if (CreatedAt != null)
+      {
+        hashCode = (hashCode * 59) + CreatedAt.GetHashCode();
       }
       return hashCode;
     }

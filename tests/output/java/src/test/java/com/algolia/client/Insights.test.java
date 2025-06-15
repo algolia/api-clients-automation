@@ -76,7 +76,7 @@ class InsightsClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.15.5\\).*";
+      String regexp = "^Algolia for Java \\(4.18.0\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
@@ -88,6 +88,7 @@ class InsightsClientClientTests {
   @DisplayName("fallbacks to the alias when region is not given")
   void parametersTest0() {
     InsightsClient client = new InsightsClient("my-app-id", "my-api-key", withEchoRequester());
+
     client.pushEvents(
       new InsightsEvents()
         .setEvents(
@@ -113,6 +114,7 @@ class InsightsClientClientTests {
   @DisplayName("uses the correct region")
   void parametersTest1() {
     InsightsClient client = new InsightsClient("my-app-id", "my-api-key", "us", withEchoRequester());
+
     client.customDelete("test");
     EchoResponse result = echo.getLastResponse();
     assertEquals("insights.us.algolia.io", result.host);
@@ -148,6 +150,7 @@ class InsightsClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       Object res = client.customGet("check-api-key/1");
 

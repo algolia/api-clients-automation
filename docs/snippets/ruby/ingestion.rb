@@ -367,7 +367,12 @@ def snippet_for_create_transformation
 
   # Call the API
   response = client.create_transformation(
-    Algolia::Ingestion::TransformationCreate.new(code: "foo", name: "bar", description: "baz")
+    Algolia::Ingestion::TransformationCreate.new(
+      input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
+      type: "code",
+      name: "bar",
+      description: "baz"
+    )
   )
 
   # >LOG
@@ -1334,6 +1339,65 @@ def snippet_for_list_transformations
   # SEPARATOR<
 end
 
+# Snippet for the push method.
+#
+# global push
+def snippet_for_push
+  # >SEPARATOR push global push
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.push(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Ingestion::PushTaskPayload.new(
+      action: "addObject",
+      records: [
+        Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", algolia_object_id: "o"),
+        Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", algolia_object_id: "k")
+      ]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the push method.
+#
+# global push with watch mode
+def snippet_for_push1
+  # >SEPARATOR push global push with watch mode
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.push(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Ingestion::PushTaskPayload.new(
+      action: "addObject",
+      records: [
+        Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", algolia_object_id: "o"),
+        Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", algolia_object_id: "k")
+      ]
+    ),
+    true
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the pushTask method.
 #
 # pushTask
@@ -1660,7 +1724,11 @@ def snippet_for_try_transformation
 
   # Call the API
   response = client.try_transformation(
-    Algolia::Ingestion::TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
+    Algolia::Ingestion::TransformationTry.new(
+      type: "code",
+      input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
+      sample_record: {bar: "baz"}
+    )
   )
 
   # >LOG
@@ -1683,7 +1751,8 @@ def snippet_for_try_transformation1
   # Call the API
   response = client.try_transformation(
     Algolia::Ingestion::TransformationTry.new(
-      code: "foo",
+      type: "code",
+      input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
       sample_record: {bar: "baz"},
       authentications: [
         Algolia::Ingestion::AuthenticationCreate.new(
@@ -1719,7 +1788,11 @@ def snippet_for_try_transformation_before_update
   # Call the API
   response = client.try_transformation_before_update(
     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    Algolia::Ingestion::TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
+    Algolia::Ingestion::TransformationTry.new(
+      type: "code",
+      input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
+      sample_record: {bar: "baz"}
+    )
   )
 
   # >LOG
@@ -1743,7 +1816,8 @@ def snippet_for_try_transformation_before_update1
   response = client.try_transformation_before_update(
     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     Algolia::Ingestion::TransformationTry.new(
-      code: "foo",
+      type: "code",
+      input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
       sample_record: {bar: "baz"},
       authentications: [
         Algolia::Ingestion::AuthenticationCreate.new(
@@ -1894,7 +1968,12 @@ def snippet_for_update_transformation
   # Call the API
   response = client.update_transformation(
     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    Algolia::Ingestion::TransformationCreate.new(code: "foo", name: "bar", description: "baz")
+    Algolia::Ingestion::TransformationCreate.new(
+      input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
+      type: "code",
+      name: "bar",
+      description: "baz"
+    )
   )
 
   # >LOG

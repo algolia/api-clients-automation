@@ -20,14 +20,12 @@ else:
     from typing_extensions import Self
 
 from algoliasearch.composition.config import CompositionConfig
-from algoliasearch.composition.models.request_body import RequestBody
-from algoliasearch.composition.models.search_for_facet_values_request import (
+from algoliasearch.composition.models import (
+    RequestBody,
     SearchForFacetValuesRequest,
-)
-from algoliasearch.composition.models.search_for_facet_values_response import (
     SearchForFacetValuesResponse,
+    SearchResponse,
 )
-from algoliasearch.composition.models.search_response import SearchResponse
 from algoliasearch.http.api_response import ApiResponse
 from algoliasearch.http.base_config import BaseConfig
 from algoliasearch.http.request_options import RequestOptions
@@ -70,9 +68,9 @@ class CompositionClient:
             config = CompositionConfig(
                 transporter.config.app_id, transporter.config.api_key
             )
-
-        if config is None:
+        elif config is None:
             config = CompositionConfig(app_id, api_key)
+
         self._config = config
         self._request_options = RequestOptions(config)
 
@@ -100,12 +98,14 @@ class CompositionClient:
         if transporter is None:
             transporter = Transporter(config)
 
-        return CompositionClient(
+        client = CompositionClient(
             app_id=config.app_id,
             api_key=config.api_key,
             transporter=transporter,
             config=config,
         )
+
+        return client
 
     async def __aenter__(self) -> Self:
         return self
@@ -328,9 +328,9 @@ class CompositionClientSync:
             config = CompositionConfig(
                 transporter.config.app_id, transporter.config.api_key
             )
-
-        if config is None:
+        elif config is None:
             config = CompositionConfig(app_id, api_key)
+
         self._config = config
         self._request_options = RequestOptions(config)
 
@@ -358,12 +358,14 @@ class CompositionClientSync:
         if transporter is None:
             transporter = TransporterSync(config)
 
-        return CompositionClientSync(
+        client = CompositionClientSync(
             app_id=config.app_id,
             api_key=config.api_key,
             transporter=transporter,
             config=config,
         )
+
+        return client
 
     def __enter__(self) -> Self:
         return self

@@ -926,7 +926,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::DeletedAtResponse")
     end
 
-    # Deletes a record by its object ID.  To delete more than one record, use the [`batch` operation](#tag/Records/operation/batch). To delete records matching a query, use the [`deleteByQuery` operation](#tag/Records/operation/deleteBy).
+    # Deletes a record by its object ID.  To delete more than one record, use the [`batch` operation](#tag/Records/operation/batch). To delete records matching a query, use the [`deleteBy` operation](#tag/Records/operation/deleteBy).
     #
     # Required API Key ACLs:
     #   - deleteObject
@@ -966,7 +966,7 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Deletes a record by its object ID.  To delete more than one record, use the [`batch` operation](#tag/Records/operation/batch). To delete records matching a query, use the [`deleteByQuery` operation](#tag/Records/operation/deleteBy).
+    # Deletes a record by its object ID.  To delete more than one record, use the [`batch` operation](#tag/Records/operation/batch). To delete records matching a query, use the [`deleteBy` operation](#tag/Records/operation/deleteBy).
     #
     # Required API Key ACLs:
     #   - deleteObject
@@ -1501,7 +1501,7 @@ module Algolia
     # Retrieves an object with non-null index settings.
     #
     # Required API Key ACLs:
-    #   - search
+    #   - settings
     # @param index_name [String] Name of the index on which to perform the operation. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1533,7 +1533,7 @@ module Algolia
     # Retrieves an object with non-null index settings.
     #
     # Required API Key ACLs:
-    #   - search
+    #   - settings
     # @param index_name [String] Name of the index on which to perform the operation. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [SettingsResponse]

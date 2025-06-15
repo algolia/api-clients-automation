@@ -142,7 +142,7 @@ import type {
 
 import type { BatchRequest } from '../model/batchRequest';
 
-export const apiClientVersion = '5.24.0';
+export const apiClientVersion = '5.27.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -239,7 +239,7 @@ export function createSearchClient({
      * @param segment - The algolia agent (user-agent) segment to add.
      * @param version - The version of the agent.
      */
-    addAlgoliaAgent(segment: string, version?: string): void {
+    addAlgoliaAgent(segment: string, version?: string | undefined): void {
       transporter.algoliaAgent.add({ segment, version });
     },
 
@@ -275,7 +275,7 @@ export function createSearchClient({
         maxRetries = 50,
         timeout = (retryCount: number): number => Math.min(retryCount * 200, 5000),
       }: WaitForTaskOptions,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<GetTaskResponse> {
       let retryCount = 0;
 
@@ -307,7 +307,7 @@ export function createSearchClient({
         maxRetries = 50,
         timeout = (retryCount: number): number => Math.min(retryCount * 200, 5000),
       }: WaitForAppTaskOptions,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<GetTaskResponse> {
       let retryCount = 0;
 
@@ -343,7 +343,7 @@ export function createSearchClient({
         maxRetries = 50,
         timeout = (retryCount: number): number => Math.min(retryCount * 200, 5000),
       }: WaitForApiKeyOptions,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<GetApiKeyResponse | undefined> {
       let retryCount = 0;
       const baseIteratorOptions: IterableOptions<GetApiKeyResponse | undefined> = {
@@ -407,7 +407,7 @@ export function createSearchClient({
      */
     browseObjects<T>(
       { indexName, browseParams, ...browseObjectsOptions }: BrowseOptions<BrowseResponse<T>> & BrowseProps,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<BrowseResponse<T>> {
       return createIterablePromise<BrowseResponse<T>>({
         func: (previousResponse) => {
@@ -441,11 +441,11 @@ export function createSearchClient({
      */
     browseRules(
       { indexName, searchRulesParams, ...browseRulesOptions }: BrowseOptions<SearchRulesResponse> & SearchRulesProps,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<SearchRulesResponse> {
       const params = {
-        hitsPerPage: 1000,
         ...searchRulesParams,
+        hitsPerPage: searchRulesParams?.hitsPerPage || 1000,
       };
 
       return createIterablePromise<SearchRulesResponse>({
@@ -483,11 +483,11 @@ export function createSearchClient({
         searchSynonymsParams,
         ...browseSynonymsOptions
       }: BrowseOptions<SearchSynonymsResponse> & SearchSynonymsProps,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<SearchSynonymsResponse> {
       const params = {
-        page: 0,
         ...searchSynonymsParams,
+        page: searchSynonymsParams?.page || 0,
         hitsPerPage: 1000,
       };
 
@@ -555,13 +555,13 @@ export function createSearchClient({
      * @param saveObjects - The `saveObjects` object.
      * @param saveObjects.indexName - The `indexName` to save `objects` in.
      * @param saveObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
-     * @param chunkedBatch.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+     * @param saveObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param saveObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
      */
     async saveObjects(
       { indexName, objects, waitForTasks, batchSize }: SaveObjectsOptions,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
         { indexName, objects, action: 'addObject', waitForTasks, batchSize },
@@ -576,13 +576,13 @@ export function createSearchClient({
      * @param deleteObjects - The `deleteObjects` object.
      * @param deleteObjects.indexName - The `indexName` to delete `objectIDs` from.
      * @param deleteObjects.objectIDs - The objectIDs to delete.
-     * @param chunkedBatch.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+     * @param deleteObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param deleteObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
      */
     async deleteObjects(
       { indexName, objectIDs, waitForTasks, batchSize }: DeleteObjectsOptions,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
         {
@@ -604,13 +604,13 @@ export function createSearchClient({
      * @param partialUpdateObjects.indexName - The `indexName` to update `objects` in.
      * @param partialUpdateObjects.objects - The array of `objects` to update in the given Algolia `indexName`.
      * @param partialUpdateObjects.createIfNotExists - To be provided if non-existing objects are passed, otherwise, the call will fail..
-     * @param chunkedBatch.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+     * @param partialUpdateObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param partialUpdateObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
      */
     async partialUpdateObjects(
       { indexName, objects, createIfNotExists, waitForTasks, batchSize }: PartialUpdateObjectsOptions,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
         {
@@ -638,7 +638,7 @@ export function createSearchClient({
      */
     async replaceAllObjects(
       { indexName, objects, batchSize, scopes }: ReplaceAllObjectsOptions,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<ReplaceAllObjectsResponse> {
       const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
       const tmpIndexName = `${indexName}_tmp_${randomSuffix}`;
@@ -729,7 +729,7 @@ export function createSearchClient({
      */
     searchForHits<T>(
       searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<{ results: Array<SearchResponse<T>> }> {
       return this.search(searchMethodParams, requestOptions) as Promise<{ results: Array<SearchResponse<T>> }>;
     },
@@ -744,7 +744,7 @@ export function createSearchClient({
      */
     searchForFacets(
       searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<{ results: Array<SearchForFacetValuesResponse> }> {
       return this.search(searchMethodParams, requestOptions) as Promise<{
         results: Array<SearchForFacetValuesResponse>;
@@ -793,8 +793,8 @@ export function createSearchClient({
      * @param addOrUpdateObject.body - The record. A schemaless object with attributes that are useful in the context of search and discovery.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    addOrUpdateObject(
-      { indexName, objectID, body }: AddOrUpdateObjectProps,
+    addOrUpdateObject<T extends object>(
+      { indexName, objectID, body }: AddOrUpdateObjectProps<T>,
       requestOptions?: RequestOptions,
     ): Promise<UpdatedAtWithObjectIdResponse> {
       if (!indexName) {
@@ -1378,7 +1378,7 @@ export function createSearchClient({
     },
 
     /**
-     * Deletes a record by its object ID.  To delete more than one record, use the [`batch` operation](#tag/Records/operation/batch). To delete records matching a query, use the [`deleteByQuery` operation](#tag/Records/operation/deleteBy).
+     * Deletes a record by its object ID.  To delete more than one record, use the [`batch` operation](#tag/Records/operation/batch). To delete records matching a query, use the [`deleteBy` operation](#tag/Records/operation/deleteBy).
      *
      * Required API Key ACLs:
      *  - deleteObject
@@ -1589,7 +1589,7 @@ export function createSearchClient({
      *  - settings
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getDictionaryLanguages(requestOptions?: RequestOptions): Promise<{ [key: string]: Languages }> {
+    getDictionaryLanguages(requestOptions?: RequestOptions | undefined): Promise<{ [key: string]: Languages }> {
       const requestPath = '/1/dictionaries/*/languages';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -1611,7 +1611,7 @@ export function createSearchClient({
      *  - settings
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getDictionarySettings(requestOptions?: RequestOptions): Promise<GetDictionarySettingsResponse> {
+    getDictionarySettings(requestOptions?: RequestOptions | undefined): Promise<GetDictionarySettingsResponse> {
       const requestPath = '/1/dictionaries/*/settings';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -1788,7 +1788,7 @@ export function createSearchClient({
      * Retrieves an object with non-null index settings.
      *
      * Required API Key ACLs:
-     *  - search
+     *  - settings
      * @param getSettings - The getSettings object.
      * @param getSettings.indexName - Name of the index on which to perform the operation.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1819,7 +1819,7 @@ export function createSearchClient({
      *  - admin
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getSources(requestOptions?: RequestOptions): Promise<Array<Source>> {
+    getSources(requestOptions?: RequestOptions | undefined): Promise<Array<Source>> {
       const requestPath = '/1/security/sources';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -1913,7 +1913,7 @@ export function createSearchClient({
      * @deprecated
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getTopUserIds(requestOptions?: RequestOptions): Promise<GetTopUserIdsResponse> {
+    getTopUserIds(requestOptions?: RequestOptions | undefined): Promise<GetTopUserIdsResponse> {
       const requestPath = '/1/clusters/mapping/top';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -1998,7 +1998,7 @@ export function createSearchClient({
      *  - admin
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    listApiKeys(requestOptions?: RequestOptions): Promise<ListApiKeysResponse> {
+    listApiKeys(requestOptions?: RequestOptions | undefined): Promise<ListApiKeysResponse> {
       const requestPath = '/1/keys';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -2022,7 +2022,7 @@ export function createSearchClient({
      * @deprecated
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    listClusters(requestOptions?: RequestOptions): Promise<ListClustersResponse> {
+    listClusters(requestOptions?: RequestOptions | undefined): Promise<ListClustersResponse> {
       const requestPath = '/1/clusters';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -2330,7 +2330,10 @@ export function createSearchClient({
      * @param saveObject.body - The record. A schemaless object with attributes that are useful in the context of search and discovery.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    saveObject({ indexName, body }: SaveObjectProps, requestOptions?: RequestOptions): Promise<SaveObjectResponse> {
+    saveObject<T extends object>(
+      { indexName, body }: SaveObjectProps<T>,
+      requestOptions?: RequestOptions,
+    ): Promise<SaveObjectResponse> {
       if (!indexName) {
         throw new Error('Parameter `indexName` is required when calling `saveObject`.');
       }

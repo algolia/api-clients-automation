@@ -355,7 +355,10 @@ class IngestionTest {
       call = {
         createTransformation(
           transformationCreate = TransformationCreate(
-            code = "foo",
+            input = TransformationCode(
+              code = "foo",
+            ),
+            type = TransformationType.entries.first { it.value == "code" },
             name = "bar",
             description = "baz",
           ),
@@ -364,7 +367,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/1/transformations".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"code":"foo","name":"bar","description":"baz"}""", it.body)
+        assertJsonBody("""{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}""", it.body)
       },
     )
   }
@@ -1293,6 +1296,80 @@ class IngestionTest {
     )
   }
 
+  // push
+
+  @Test
+  fun `global push`() = runTest {
+    client.runTest(
+      call = {
+        push(
+          indexName = "foo",
+          pushTaskPayload = PushTaskPayload(
+            action = Action.entries.first { it.value == "addObject" },
+            records = listOf(
+              PushTaskRecords(
+                objectID = "o",
+                additionalProperties = mapOf(
+                  "key" to JsonPrimitive("bar"),
+                  "foo" to JsonPrimitive("1"),
+                ),
+              ),
+              PushTaskRecords(
+                objectID = "k",
+                additionalProperties = mapOf(
+                  "key" to JsonPrimitive("baz"),
+                  "foo" to JsonPrimitive("2"),
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/push/foo".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `global push with watch mode1`() = runTest {
+    client.runTest(
+      call = {
+        push(
+          indexName = "bar",
+          pushTaskPayload = PushTaskPayload(
+            action = Action.entries.first { it.value == "addObject" },
+            records = listOf(
+              PushTaskRecords(
+                objectID = "o",
+                additionalProperties = mapOf(
+                  "key" to JsonPrimitive("bar"),
+                  "foo" to JsonPrimitive("1"),
+                ),
+              ),
+              PushTaskRecords(
+                objectID = "k",
+                additionalProperties = mapOf(
+                  "key" to JsonPrimitive("baz"),
+                  "foo" to JsonPrimitive("2"),
+                ),
+              ),
+            ),
+          ),
+          watch = true,
+        )
+      },
+      intercept = {
+        assertEquals("/1/push/bar".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertQueryParams("""{"watch":"true"}""", it.url.encodedParameters)
+        assertJsonBody("""{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}""", it.body)
+      },
+    )
+  }
+
   // pushTask
 
   @Test
@@ -1572,7 +1649,10 @@ class IngestionTest {
       call = {
         tryTransformation(
           transformationTry = TransformationTry(
-            code = "foo",
+            type = TransformationType.entries.first { it.value == "code" },
+            input = TransformationCode(
+              code = "foo",
+            ),
             sampleRecord = buildJsonObject {
               put(
                 "bar",
@@ -1585,7 +1665,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/1/transformations/try".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"code":"foo","sampleRecord":{"bar":"baz"}}""", it.body)
+        assertJsonBody("""{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"}}""", it.body)
       },
     )
   }
@@ -1596,7 +1676,10 @@ class IngestionTest {
       call = {
         tryTransformation(
           transformationTry = TransformationTry(
-            code = "foo",
+            type = TransformationType.entries.first { it.value == "code" },
+            input = TransformationCode(
+              code = "foo",
+            ),
             sampleRecord = buildJsonObject {
               put(
                 "bar",
@@ -1620,7 +1703,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/1/transformations/try".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}""", it.body)
+        assertJsonBody("""{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}""", it.body)
       },
     )
   }
@@ -1634,7 +1717,10 @@ class IngestionTest {
         tryTransformationBeforeUpdate(
           transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           transformationTry = TransformationTry(
-            code = "foo",
+            type = TransformationType.entries.first { it.value == "code" },
+            input = TransformationCode(
+              code = "foo",
+            ),
             sampleRecord = buildJsonObject {
               put(
                 "bar",
@@ -1647,7 +1733,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"code":"foo","sampleRecord":{"bar":"baz"}}""", it.body)
+        assertJsonBody("""{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"}}""", it.body)
       },
     )
   }
@@ -1659,7 +1745,10 @@ class IngestionTest {
         tryTransformationBeforeUpdate(
           transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           transformationTry = TransformationTry(
-            code = "foo",
+            type = TransformationType.entries.first { it.value == "code" },
+            input = TransformationCode(
+              code = "foo",
+            ),
             sampleRecord = buildJsonObject {
               put(
                 "bar",
@@ -1683,7 +1772,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"code":"foo","sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}""", it.body)
+        assertJsonBody("""{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}""", it.body)
       },
     )
   }
@@ -1803,7 +1892,10 @@ class IngestionTest {
         updateTransformation(
           transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           transformationCreate = TransformationCreate(
-            code = "foo",
+            input = TransformationCode(
+              code = "foo",
+            ),
+            type = TransformationType.entries.first { it.value == "code" },
             name = "bar",
             description = "baz",
           ),
@@ -1812,7 +1904,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertJsonBody("""{"code":"foo","name":"bar","description":"baz"}""", it.body)
+        assertJsonBody("""{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}""", it.body)
       },
     )
   }

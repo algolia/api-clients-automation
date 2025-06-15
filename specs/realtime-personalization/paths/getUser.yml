@@ -19,7 +19,7 @@ get:
       $ref: '../../common/responses/BadRequest.yml'
     '402':
       $ref: '../../common/responses/FeatureNotEnabled.yml'
-    '403':
-      $ref: '../../common/responses/MethodNotAllowed.yml'
-    '404':
-      $ref: '../../common/responses/IndexNotFound.yml'
+    '421':
+      $ref: '../../common/responses/TooManyRequests.yml'
+    '500':
+      $ref: '../../common/responses/InternalError.yml'

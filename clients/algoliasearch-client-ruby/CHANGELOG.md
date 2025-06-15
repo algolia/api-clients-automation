@@ -1,3 +1,22 @@
+## [3.18.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.17.0...3.18.0)
+
+- [835daccb48](https://github.com/algolia/api-clients-automation/commit/835daccb48) feat(specs): add with transformation helpers ([#4931](https://github.com/algolia/api-clients-automation/pull/4931)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [3.17.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.16.0...3.17.0)
+
+- [9db03b532b](https://github.com/algolia/api-clients-automation/commit/9db03b532b) fix(specs): typo ([#4854](https://github.com/algolia/api-clients-automation/pull/4854)) by [@kai687](https://github.com/kai687/)
+- [db02a51d50](https://github.com/algolia/api-clients-automation/commit/db02a51d50) chore(deps): dependencies 2025-05-19 ([#4853](https://github.com/algolia/api-clients-automation/pull/4853)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [90b49b1e1b](https://github.com/algolia/api-clients-automation/commit/90b49b1e1b) feat(specs): add global push endpoint ([#4855](https://github.com/algolia/api-clients-automation/pull/4855)) by [@shortcuts](https://github.com/shortcuts/)
+- [cf416e6b91](https://github.com/algolia/api-clients-automation/commit/cf416e6b91) fix(specs): updated watchResponse ([#4879](https://github.com/algolia/api-clients-automation/pull/4879)) by [@shortcuts](https://github.com/shortcuts/)
+- [06ad06e4a8](https://github.com/algolia/api-clients-automation/commit/06ad06e4a8) feat(specs): update transformation specs for no-code ([#4901](https://github.com/algolia/api-clients-automation/pull/4901)) by [@mehmetaligok](https://github.com/mehmetaligok/)
+- [4ec0e13e28](https://github.com/algolia/api-clients-automation/commit/4ec0e13e28) fix(specs): more indexing actions to push ([#4930](https://github.com/algolia/api-clients-automation/pull/4930)) by [@shortcuts](https://github.com/shortcuts/)
+- [1951e4d127](https://github.com/algolia/api-clients-automation/commit/1951e4d127) fix(specs): wrong ACL for getSettings ([#4933](https://github.com/algolia/api-clients-automation/pull/4933)) by [@kai687](https://github.com/kai687/)
+
+## [3.16.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.15.5...3.16.0)
+
+- [bebb56e0b9](https://github.com/algolia/api-clients-automation/commit/bebb56e0b9) fix(specs): add x-acl to insights endpoints ([#4822](https://github.com/algolia/api-clients-automation/pull/4822)) by [@kai687](https://github.com/kai687/)
+- [7e226c4559](https://github.com/algolia/api-clients-automation/commit/7e226c4559) feat(scripts): add push to mcp-node on release ([#4784](https://github.com/algolia/api-clients-automation/pull/4784)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [3.15.5](https://github.com/algolia/algoliasearch-client-ruby/compare/3.15.4...3.15.5)
 
 - [efec6baf1c](https://github.com/algolia/api-clients-automation/commit/efec6baf1c) chore(deps): dependencies 2025-04-21 ([#4762](https://github.com/algolia/api-clients-automation/pull/4762)) by [@algolia-bot](https://github.com/algolia-bot/)

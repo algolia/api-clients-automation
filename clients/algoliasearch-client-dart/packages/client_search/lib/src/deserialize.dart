@@ -52,6 +52,9 @@ import 'package:algolia_client_search/src/model/dictionary_type.dart';
 import 'package:algolia_client_search/src/model/edit.dart';
 import 'package:algolia_client_search/src/model/edit_type.dart';
 import 'package:algolia_client_search/src/model/error_base.dart';
+import 'package:algolia_client_search/src/model/event.dart';
+import 'package:algolia_client_search/src/model/event_status.dart';
+import 'package:algolia_client_search/src/model/event_type.dart';
 import 'package:algolia_client_search/src/model/exact_on_single_word_query.dart';
 import 'package:algolia_client_search/src/model/exhaustive.dart';
 import 'package:algolia_client_search/src/model/facet_hits.dart';
@@ -152,6 +155,7 @@ import 'package:algolia_client_search/src/model/user_highlight_result.dart';
 import 'package:algolia_client_search/src/model/user_hit.dart';
 import 'package:algolia_client_search/src/model/user_id.dart';
 import 'package:algolia_client_search/src/model/value.dart';
+import 'package:algolia_client_search/src/model/watch_response.dart';
 import 'package:algolia_client_search/src/model/widgets.dart';
 import 'package:algolia_client_search/src/model/with_primary.dart';
 
@@ -311,6 +315,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return EditType.fromJson(value) as ReturnType;
     case 'ErrorBase':
       return ErrorBase.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'Event':
+      return Event.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'EventStatus':
+      return EventStatus.fromJson(value) as ReturnType;
+    case 'EventType':
+      return EventType.fromJson(value) as ReturnType;
     case 'ExactOnSingleWordQuery':
       return ExactOnSingleWordQuery.fromJson(value) as ReturnType;
     case 'Exhaustive':
@@ -573,6 +583,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return UserId.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'Value':
       return Value.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'WatchResponse':
+      return WatchResponse.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'Widgets':
       return Widgets.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'WithPrimary':

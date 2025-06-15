@@ -51,6 +51,7 @@ class RecommendClientClientTests {
   @DisplayName("calls api with correct read host")
   void apiTest0() {
     RecommendClient client = new RecommendClient("test-app-id", "test-api-key", withEchoRequester());
+
     client.customGet("test");
     EchoResponse result = echo.getLastResponse();
     assertEquals("test-app-id-dsn.algolia.net", result.host);
@@ -60,6 +61,7 @@ class RecommendClientClientTests {
   @DisplayName("calls api with correct write host")
   void apiTest1() {
     RecommendClient client = new RecommendClient("test-app-id", "test-api-key", withEchoRequester());
+
     client.customPost("test");
     EchoResponse result = echo.getLastResponse();
     assertEquals("test-app-id.algolia.net", result.host);
@@ -93,7 +95,7 @@ class RecommendClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.15.5\\).*";
+      String regexp = "^Algolia for Java \\(4.18.0\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
@@ -119,6 +121,7 @@ class RecommendClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       Object res = client.customGet("check-api-key/1");
 

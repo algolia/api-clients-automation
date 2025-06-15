@@ -113,6 +113,11 @@ import type {
 import type {
   EventType,
 } from '@algolia/client-personalization';
+import type {
+  Event,
+  EventStatus,
+  WatchResponse,
+} from '@algolia/ingestion';
 
 {{#dependencies}}
 export * from '{{{dependencyPackage}}}';
@@ -168,6 +173,8 @@ export type {
   Edit,
   EditType,
   ErrorBase,
+  Event,
+  EventStatus,
   ExactOnSingleWordQuery,
   Exhaustive,
   FacetFilters,
@@ -226,6 +233,7 @@ export type {
   TypoTolerance,
   TypoToleranceEnum,
   Value,
+  WatchResponse,
   Widgets,
 };
 

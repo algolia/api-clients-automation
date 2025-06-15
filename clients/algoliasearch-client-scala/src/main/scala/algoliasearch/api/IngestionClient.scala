@@ -1203,8 +1203,58 @@ class IngestionClient(
     execute[ListTransformationsResponse](request, requestOptions)
   }
 
-  /** Push a `batch` request payload through the Pipeline. You can check the status of task pushes with the
-    * observability endpoints.
+  /** Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the
+    * `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to
+    * see the status of your task. If you want to leverage the [pre-indexing data
+    * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+    * this is the recommended way of ingesting your records. This method is similar to `pushTask`, but requires an
+    * `indexName` instead of a `taskID`. If zero or many tasks are found, an error will be returned.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param indexName
+    *   Name of the index on which to perform the operation.
+    * @param watch
+    *   When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished
+    *   before responding.
+    */
+  def push(
+      indexName: String,
+      pushTaskPayload: PushTaskPayload,
+      watch: Option[Boolean] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[WatchResponse] = Future {
+    requireNotNull(indexName, "Parameter `indexName` is required when calling `push`.")
+    requireNotNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `push`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/1/push/${escape(indexName)}")
+      .withBody(pushTaskPayload)
+      .withQueryParameter("watch", watch)
+      .build()
+    execute[WatchResponse](
+      request,
+      Some(
+        RequestOptions(
+          writeTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+          readTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS)),
+          connectTimeout = Some(Duration(180000, TimeUnit.MILLISECONDS))
+        ) + requestOptions
+      )
+    )
+  }
+
+  /** Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the
+    * `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to
+    * see the status of your task. If you want to leverage the [pre-indexing data
+    * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+    * this is the recommended way of ingesting your records. This method is similar to `push`, but requires a `taskID`
+    * instead of a `indexName`, which is useful when many `destinations` target the same `indexName`.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -1213,8 +1263,6 @@ class IngestionClient(
     *
     * @param taskID
     *   Unique identifier of a task.
-    * @param pushTaskPayload
-    *   Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
     * @param watch
     *   When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished
     *   before responding.

@@ -15,19 +15,19 @@ import (
 	"strings"
 	"time"
 
-	"github.com/go-playground/validator/v10"
-
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/compression"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
 // APIClient manages communication with the Search API API v1.0.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
-	appID     string
-	cfg       *SearchConfiguration
-	transport *transport.Transport
+	appID                string
+	cfg                  *SearchConfiguration
+	transport            *transport.Transport
+	ingestionTransporter *ingestion.APIClient
 }
 
 // NewClient creates a new API client with appID and apiKey.
@@ -67,13 +67,36 @@ func NewClientWithConfig(cfg SearchConfiguration) (*APIClient, error) {
 		cfg.WriteTimeout = 30000 * time.Millisecond
 	}
 
-	return &APIClient{
+	apiClient := APIClient{
 		appID: cfg.AppID,
 		cfg:   &cfg,
 		transport: transport.New(
 			cfg.Configuration,
 		),
-	}, nil
+	}
+
+	if cfg.Transformation != nil && cfg.Transformation.Region != "" {
+		ingestionConfig := ingestion.IngestionConfiguration{
+			Configuration: transport.Configuration{
+				AppID:  cfg.AppID,
+				ApiKey: cfg.ApiKey,
+			},
+			Region: cfg.Transformation.Region,
+		}
+
+		if len(cfg.Hosts) > 0 {
+			ingestionConfig.Hosts = cfg.Hosts
+		}
+
+		ingestionClient, err := ingestion.NewClientWithConfig(ingestionConfig)
+		if err != nil {
+			return nil, err //nolint:wrapcheck
+		}
+
+		apiClient.ingestionTransporter = ingestionClient
+	}
+
+	return &apiClient, nil
 }
 
 func getDefaultHosts(appID string) []transport.StatefulHost {
@@ -92,7 +115,7 @@ func getDefaultHosts(appID string) []transport.StatefulHost {
 }
 
 func getUserAgent() string {
-	return fmt.Sprintf("Algolia for Go (4.15.5); Go (%s); Search (4.15.5)", runtime.Version())
+	return fmt.Sprintf("Algolia for Go (4.18.0); Go (%s); Search (4.18.0)", runtime.Version())
 }
 
 // AddDefaultHeader adds a new HTTP header to the default header in the request.
@@ -254,24 +277,6 @@ func (c *APIClient) decodeError(res *http.Response, body []byte) error {
 // Prevent trying to import "fmt".
 func reportError(format string, a ...any) error {
 	return fmt.Errorf(format, a...)
-}
-
-// A wrapper for strict JSON decoding.
-func newStrictDecoder(data []byte) *json.Decoder { 
-	dec := json.NewDecoder(bytes.NewBuffer(data))
-	dec.DisallowUnknownFields()
-	return dec
-}
-
-// A wrapper for validating a struct, returns nil if value is not a struct.
-func validateStruct(v any) error { 
-	err := validator.New().Struct(v)
-	validationErrors, ok := err.(validator.ValidationErrors)
-	if ok && len(validationErrors) > 0 {
-		return validationErrors
-	}
-
-	return nil
 }
 
 // Set request body from an any.

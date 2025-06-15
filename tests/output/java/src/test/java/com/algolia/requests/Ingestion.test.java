@@ -175,7 +175,8 @@ class IngestionClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/sources", req.path);
     assertEquals("POST", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"type\":\"push\",\"name\":\"pushezpourentrer\"}", req.body, JSONCompareMode.STRICT)
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"type\":\"push\",\"name\":\"pushezpourentrer\"}", req.body, JSONCompareMode.STRICT)
     );
   }
 
@@ -358,13 +359,23 @@ class IngestionClientRequestsTests {
   @DisplayName("createTransformation")
   void createTransformationTest() {
     assertDoesNotThrow(() -> {
-      client.createTransformation(new TransformationCreate().setCode("foo").setName("bar").setDescription("baz"));
+      client.createTransformation(
+        new TransformationCreate()
+          .setInput(new TransformationCode().setCode("foo"))
+          .setType(TransformationType.CODE)
+          .setName("bar")
+          .setDescription("baz")
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/transformations", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
-      JSONAssert.assertEquals("{\"code\":\"foo\",\"name\":\"bar\",\"description\":\"baz\"}", req.body, JSONCompareMode.STRICT)
+      JSONAssert.assertEquals(
+        "{\"input\":{\"code\":\"foo\"},\"type\":\"code\",\"name\":\"bar\",\"description\":\"baz\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
     );
   }
 
@@ -1334,6 +1345,75 @@ class IngestionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("global push")
+  void pushTest() {
+    assertDoesNotThrow(() -> {
+      client.push(
+        "foo",
+        new PushTaskPayload()
+          .setAction(Action.ADD_OBJECT)
+          .setRecords(
+            Arrays.asList(
+              new PushTaskRecords().setAdditionalProperty("key", "bar").setAdditionalProperty("foo", "1").setObjectID("o"),
+              new PushTaskRecords().setAdditionalProperty("key", "baz").setAdditionalProperty("foo", "2").setObjectID("k")
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/push/foo", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("global push with watch mode")
+  void pushTest1() {
+    assertDoesNotThrow(() -> {
+      client.push(
+        "bar",
+        new PushTaskPayload()
+          .setAction(Action.ADD_OBJECT)
+          .setRecords(
+            Arrays.asList(
+              new PushTaskRecords().setAdditionalProperty("key", "bar").setAdditionalProperty("foo", "1").setObjectID("o"),
+              new PushTaskRecords().setAdditionalProperty("key", "baz").setAdditionalProperty("foo", "2").setObjectID("k")
+            )
+          ),
+        true
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/push/bar", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+
+    try {
+      Map<String, String> expectedQuery = json.readValue("{\"watch\":\"true\"}", new TypeReference<HashMap<String, String>>() {});
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
   @DisplayName("pushTask")
   void pushTaskTest() {
     assertDoesNotThrow(() -> {
@@ -1611,7 +1691,8 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.tryTransformation(
         new TransformationTry()
-          .setCode("foo")
+          .setType(TransformationType.CODE)
+          .setInput(new TransformationCode().setCode("foo"))
           .setSampleRecord(
             new HashMap() {
               {
@@ -1625,7 +1706,11 @@ class IngestionClientRequestsTests {
     assertEquals("/1/transformations/try", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
-      JSONAssert.assertEquals("{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}", req.body, JSONCompareMode.STRICT)
+      JSONAssert.assertEquals(
+        "{\"type\":\"code\",\"input\":{\"code\":\"foo\"},\"sampleRecord\":{\"bar\":\"baz\"}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
     );
   }
 
@@ -1635,7 +1720,8 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.tryTransformation(
         new TransformationTry()
-          .setCode("foo")
+          .setType(TransformationType.CODE)
+          .setInput(new TransformationCode().setCode("foo"))
           .setSampleRecord(
             new HashMap() {
               {
@@ -1658,7 +1744,7 @@ class IngestionClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}",
+        "{\"type\":\"code\",\"input\":{\"code\":\"foo\"},\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1672,7 +1758,8 @@ class IngestionClientRequestsTests {
       client.tryTransformationBeforeUpdate(
         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         new TransformationTry()
-          .setCode("foo")
+          .setType(TransformationType.CODE)
+          .setInput(new TransformationCode().setCode("foo"))
           .setSampleRecord(
             new HashMap() {
               {
@@ -1686,7 +1773,11 @@ class IngestionClientRequestsTests {
     assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
-      JSONAssert.assertEquals("{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}", req.body, JSONCompareMode.STRICT)
+      JSONAssert.assertEquals(
+        "{\"type\":\"code\",\"input\":{\"code\":\"foo\"},\"sampleRecord\":{\"bar\":\"baz\"}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
     );
   }
 
@@ -1697,7 +1788,8 @@ class IngestionClientRequestsTests {
       client.tryTransformationBeforeUpdate(
         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         new TransformationTry()
-          .setCode("foo")
+          .setType(TransformationType.CODE)
+          .setInput(new TransformationCode().setCode("foo"))
           .setSampleRecord(
             new HashMap() {
               {
@@ -1720,7 +1812,7 @@ class IngestionClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}",
+        "{\"type\":\"code\",\"input\":{\"code\":\"foo\"},\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1793,14 +1885,22 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.updateTransformation(
         "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        new TransformationCreate().setCode("foo").setName("bar").setDescription("baz")
+        new TransformationCreate()
+          .setInput(new TransformationCode().setCode("foo"))
+          .setType(TransformationType.CODE)
+          .setName("bar")
+          .setDescription("baz")
       );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
     assertEquals("PUT", req.method);
     assertDoesNotThrow(() ->
-      JSONAssert.assertEquals("{\"code\":\"foo\",\"name\":\"bar\",\"description\":\"baz\"}", req.body, JSONCompareMode.STRICT)
+      JSONAssert.assertEquals(
+        "{\"input\":{\"code\":\"foo\"},\"type\":\"code\",\"name\":\"bar\",\"description\":\"baz\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
     );
   }
 

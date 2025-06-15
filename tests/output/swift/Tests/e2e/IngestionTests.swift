@@ -57,12 +57,10 @@ final class IngestionClientRequestsTestsE2E: XCTestCase {
         }
 
         let response = try await client.enableTaskWithHTTPInfo(taskID: "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
-        let responseBody = try XCTUnwrap(response.body)
-        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
-
-        let expectedBodyData = try XCTUnwrap("{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}".data(using: .utf8))
-
-        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
+        try XCTLenientAssertEqual(
+            received: XCTUnwrap(response.body),
+            expected: "{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}"
+        )
 
         XCTAssertEqual(response.statusCode, 200)
     }
@@ -75,12 +73,10 @@ final class IngestionClientRequestsTestsE2E: XCTestCase {
         }
 
         let response = try await client.enableTaskV1WithHTTPInfo(taskID: "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
-        let responseBody = try XCTUnwrap(response.body)
-        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
-
-        let expectedBodyData = try XCTUnwrap("{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}".data(using: .utf8))
-
-        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
+        try XCTLenientAssertEqual(
+            received: XCTUnwrap(response.body),
+            expected: "{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}"
+        )
 
         XCTAssertEqual(response.statusCode, 200)
     }
@@ -93,16 +89,10 @@ final class IngestionClientRequestsTestsE2E: XCTestCase {
         }
 
         let response = try await client.getSourceWithHTTPInfo(sourceID: "75eeb306-51d3-4e5e-a279-3c92bd8893ac")
-        let responseBody = try XCTUnwrap(response.body)
-        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
-
-        let expectedBodyData =
-            try XCTUnwrap(
-                "{\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"name\":\"cts_e2e_browse\",\"type\":\"json\",\"input\":{\"url\":\"https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json\"}}"
-                    .data(using: .utf8)
-            )
-
-        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
+        try XCTLenientAssertEqual(
+            received: XCTUnwrap(response.body),
+            expected: "{\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"name\":\"cts_e2e_browse\",\"type\":\"json\",\"input\":{\"url\":\"https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json\"}}"
+        )
 
         XCTAssertEqual(response.statusCode, 200)
     }
@@ -122,16 +112,10 @@ final class IngestionClientRequestsTestsE2E: XCTestCase {
             sort: AuthenticationSortKeys.createdAt,
             order: OrderKeys.asc
         )
-        let responseBody = try XCTUnwrap(response.body)
-        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
-
-        let expectedBodyData =
-            try XCTUnwrap(
-                "{\"pagination\":{\"page\":1,\"itemsPerPage\":2},\"authentications\":[{\"authenticationID\":\"474f050f-a771-464c-a016-323538029f5f\",\"type\":\"algolia\",\"name\":\"algolia-auth-1677060483885\",\"input\":{},\"createdAt\":\"2023-02-22T10:08:04Z\",\"updatedAt\":\"2023-10-25T08:41:56Z\"},{}]}"
-                    .data(using: .utf8)
-            )
-
-        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
+        try XCTLenientAssertEqual(
+            received: XCTUnwrap(response.body),
+            expected: "{\"pagination\":{\"page\":1,\"itemsPerPage\":2},\"authentications\":[{\"authenticationID\":\"474f050f-a771-464c-a016-323538029f5f\",\"type\":\"algolia\",\"name\":\"algolia-auth-1677060483885\",\"input\":{},\"createdAt\":\"2023-02-22T10:08:04Z\",\"updatedAt\":\"2023-10-25T08:41:56Z\"},{}]}"
+        )
 
         XCTAssertEqual(response.statusCode, 200)
     }
@@ -148,16 +132,10 @@ final class IngestionClientRequestsTestsE2E: XCTestCase {
             "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
             "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
         ]))
-        let responseBody = try XCTUnwrap(response.body)
-        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
-
-        let expectedBodyData =
-            try XCTUnwrap(
-                "[{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"destinationID\":\"506d79fa-e29d-4bcf-907c-6b6a41172153\",\"enabled\":true,\"failureThreshold\":0,\"action\":\"replace\",\"createdAt\":\"2024-01-08T16:47:41Z\"}]"
-                    .data(using: .utf8)
-            )
-
-        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
+        try XCTLenientAssertEqual(
+            received: XCTUnwrap(response.body),
+            expected: "[{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"destinationID\":\"506d79fa-e29d-4bcf-907c-6b6a41172153\",\"enabled\":true,\"failureThreshold\":0,\"action\":\"replace\",\"createdAt\":\"2024-01-08T16:47:41Z\"}]"
+        )
 
         XCTAssertEqual(response.statusCode, 200)
     }
@@ -174,16 +152,10 @@ final class IngestionClientRequestsTestsE2E: XCTestCase {
             "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
             "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
         ]))
-        let responseBody = try XCTUnwrap(response.body)
-        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
-
-        let expectedBodyData =
-            try XCTUnwrap(
-                "[{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"destinationID\":\"506d79fa-e29d-4bcf-907c-6b6a41172153\",\"trigger\":{\"type\":\"onDemand\"},\"enabled\":true,\"failureThreshold\":0,\"action\":\"replace\",\"createdAt\":\"2024-01-08T16:47:41Z\"}]"
-                    .data(using: .utf8)
-            )
-
-        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
+        try XCTLenientAssertEqual(
+            received: XCTUnwrap(response.body),
+            expected: "[{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"destinationID\":\"506d79fa-e29d-4bcf-907c-6b6a41172153\",\"trigger\":{\"type\":\"onDemand\"},\"enabled\":true,\"failureThreshold\":0,\"action\":\"replace\",\"createdAt\":\"2024-01-08T16:47:41Z\"}]"
+        )
 
         XCTAssertEqual(response.statusCode, 200)
     }

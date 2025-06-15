@@ -39,6 +39,10 @@ public class GenericPropagator {
     setVendorExtension(property, "x-has-child-generic", true);
   }
 
+  private static void setHasGenericParameter(CodegenOperation ope) {
+    ope.vendorExtensions.put("x-has-generic-parameter", true);
+  }
+
   /**
    * @return true if the vendor extensions of the property contains either x-propagated-generic or
    *     x-has-child-generic
@@ -224,9 +228,17 @@ public class GenericPropagator {
   public static void propagateGenericsToOperations(String language, String client, OperationsMap operations, List<ModelMap> allModels) {
     Map<String, CodegenModel> models = convertToMap(language, client, allModels);
     for (CodegenOperation ope : operations.getOperations().getOperation()) {
+      for (CodegenParameter param : ope.requiredParams) {
+        if (param.vendorExtensions.containsKey("x-is-generic")) {
+          setHasGenericParameter(ope);
+          break;
+        }
+      }
+
       if (ope.returnType == null) {
         continue;
       }
+
       CodegenModel returnType = models.get(ope.returnType);
       if (returnType != null && hasGeneric(returnType)) {
         ope.vendorExtensions.put("x-is-generic", true);

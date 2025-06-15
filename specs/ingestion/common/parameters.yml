@@ -44,7 +44,7 @@ pathRunID:
   required: true
   description: Unique identifier of a task run.
   schema:
-    $ref: './schemas/common.yml#/runID'
+    $ref: '../../common/parameters/ingestion.yml#/RunID'
 
 pathEventID:
   name: eventID
@@ -52,7 +52,7 @@ pathEventID:
   required: true
   description: Unique identifier of an event.
   schema:
-    $ref: './schemas/common.yml#/eventID'
+    $ref: '../../common/parameters/ingestion.yml#/EventID'
 
 itemsPerPage:
   name: itemsPerPage
@@ -83,3 +83,11 @@ orderKeys:
   description: Ascending or descending sort order.
   default: desc
   enum: [asc, desc]
+
+watch:
+  name: watch
+  in: query
+  description: When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+  required: false
+  schema:
+    type: boolean

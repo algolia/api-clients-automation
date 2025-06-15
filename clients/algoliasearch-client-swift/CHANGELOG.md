@@ -1,3 +1,26 @@
+## [9.21.0](https://github.com/algolia/algoliasearch-client-swift/compare/9.20.0...9.21.0)
+
+- [835daccb48](https://github.com/algolia/api-clients-automation/commit/835daccb48) feat(specs): add with transformation helpers ([#4931](https://github.com/algolia/api-clients-automation/pull/4931)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [9.20.0](https://github.com/algolia/algoliasearch-client-swift/compare/9.19.0...9.20.0)
+
+- [9db03b532b](https://github.com/algolia/api-clients-automation/commit/9db03b532b) fix(specs): typo ([#4854](https://github.com/algolia/api-clients-automation/pull/4854)) by [@kai687](https://github.com/kai687/)
+- [db02a51d50](https://github.com/algolia/api-clients-automation/commit/db02a51d50) chore(deps): dependencies 2025-05-19 ([#4853](https://github.com/algolia/api-clients-automation/pull/4853)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [969cae23ab](https://github.com/algolia/api-clients-automation/commit/969cae23ab) fix(specs): change fileSize to int64 type ([#4877](https://github.com/algolia/api-clients-automation/pull/4877)) by [@millotp](https://github.com/millotp/)
+- [1c947a9fad](https://github.com/algolia/api-clients-automation/commit/1c947a9fad) chore: revert swiftformat ([#4878](https://github.com/algolia/api-clients-automation/pull/4878)) by [@shortcuts](https://github.com/shortcuts/)
+- [90b49b1e1b](https://github.com/algolia/api-clients-automation/commit/90b49b1e1b) feat(specs): add global push endpoint ([#4855](https://github.com/algolia/api-clients-automation/pull/4855)) by [@shortcuts](https://github.com/shortcuts/)
+- [cf416e6b91](https://github.com/algolia/api-clients-automation/commit/cf416e6b91) fix(specs): updated watchResponse ([#4879](https://github.com/algolia/api-clients-automation/pull/4879)) by [@shortcuts](https://github.com/shortcuts/)
+- [e46e762c0c](https://github.com/algolia/api-clients-automation/commit/e46e762c0c) chore(deps): dependencies 2025-05-26 ([#4880](https://github.com/algolia/api-clients-automation/pull/4880)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [06ad06e4a8](https://github.com/algolia/api-clients-automation/commit/06ad06e4a8) feat(specs): update transformation specs for no-code ([#4901](https://github.com/algolia/api-clients-automation/pull/4901)) by [@mehmetaligok](https://github.com/mehmetaligok/)
+- [4ec0e13e28](https://github.com/algolia/api-clients-automation/commit/4ec0e13e28) fix(specs): more indexing actions to push ([#4930](https://github.com/algolia/api-clients-automation/pull/4930)) by [@shortcuts](https://github.com/shortcuts/)
+- [1951e4d127](https://github.com/algolia/api-clients-automation/commit/1951e4d127) fix(specs): wrong ACL for getSettings ([#4933](https://github.com/algolia/api-clients-automation/pull/4933)) by [@kai687](https://github.com/kai687/)
+
+## [9.19.0](https://github.com/algolia/algoliasearch-client-swift/compare/9.18.5...9.19.0)
+
+- [db6e6f2d59](https://github.com/algolia/api-clients-automation/commit/db6e6f2d59) feat(swift): generate composition client ([#4801](https://github.com/algolia/api-clients-automation/pull/4801)) by [@Fluf22](https://github.com/Fluf22/)
+- [bebb56e0b9](https://github.com/algolia/api-clients-automation/commit/bebb56e0b9) fix(specs): add x-acl to insights endpoints ([#4822](https://github.com/algolia/api-clients-automation/pull/4822)) by [@kai687](https://github.com/kai687/)
+- [7e226c4559](https://github.com/algolia/api-clients-automation/commit/7e226c4559) feat(scripts): add push to mcp-node on release ([#4784](https://github.com/algolia/api-clients-automation/pull/4784)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [9.18.5](https://github.com/algolia/algoliasearch-client-swift/compare/9.18.4...9.18.5)
 
 - [53ac749807](https://github.com/algolia/api-clients-automation/commit/53ac749807) chore(deps): dependencies 2025-04-28 ([#4785](https://github.com/algolia/api-clients-automation/pull/4785)) by [@algolia-bot](https://github.com/algolia-bot/)

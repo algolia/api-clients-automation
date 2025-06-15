@@ -8,7 +8,7 @@ $url = 'https://dashboard.algolia.com/api/1/sample_datasets?type=movie';
 $response = file_get_contents($url);
 $movies = json_decode($response ?: '[]', true);
 
-// Connect and authenticate with your Algolia app
+// Connect and authenticate with your Algolia app using your app ID and write API key
 $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
 // Save records in Algolia index

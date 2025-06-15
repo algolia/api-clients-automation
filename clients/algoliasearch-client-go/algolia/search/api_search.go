@@ -21,6 +21,7 @@ import (
 	"time"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/errs"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
@@ -2878,7 +2879,7 @@ DeleteObject calls the API and returns the raw response from it.
 	Deletes a record by its object ID.
 
 To delete more than one record, use the [`batch` operation](#tag/Records/operation/batch).
-To delete records matching a query, use the [`deleteByQuery` operation](#tag/Records/operation/deleteBy).
+To delete records matching a query, use the [`deleteBy` operation](#tag/Records/operation/deleteBy).
 
 	    Required API Key ACLs:
 	    - deleteObject
@@ -2930,7 +2931,7 @@ DeleteObject casts the HTTP response body to a defined struct.
 Deletes a record by its object ID.
 
 To delete more than one record, use the [`batch` operation](#tag/Records/operation/batch).
-To delete records matching a query, use the [`deleteByQuery` operation](#tag/Records/operation/deleteBy).
+To delete records matching a query, use the [`deleteBy` operation](#tag/Records/operation/deleteBy).
 
 Required API Key ACLs:
   - deleteObject
@@ -4379,7 +4380,7 @@ GetSettings calls the API and returns the raw response from it.
 	  Retrieves an object with non-null index settings.
 
 	    Required API Key ACLs:
-	    - search
+	    - settings
 
 	Request can be constructed by NewApiGetSettingsRequest with parameters below.
 	  @param indexName string - Name of the index on which to perform the operation.
@@ -4423,7 +4424,7 @@ GetSettings casts the HTTP response body to a defined struct.
 Retrieves an object with non-null index settings.
 
 Required API Key ACLs:
-  - search
+  - settings
 
 Request can be constructed by NewApiGetSettingsRequest with parameters below.
 
@@ -9447,4 +9448,93 @@ func (c *APIClient) IndexExists(indexName string) (bool, error) {
 	}
 
 	return false, err
+}
+
+/*
+Helper: Similar to the `SaveObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client's config at instantiation.
+
+	@param indexName string - the index name to save objects into.
+	@param objects []map[string]any - List of objects to save.
+	@param opts ...ChunkedBatchOption - Optional parameters for the request.
+	@return []BatchResponse - List of batch responses.
+	@return error - Error if any.
+*/
+func (c *APIClient) SaveObjectsWithTransformation(indexName string, objects []map[string]any, opts ...ChunkedBatchOption) (*ingestion.WatchResponse, error) {
+	if c.ingestionTransporter == nil {
+		return nil, reportError("`region` must be provided at client instantiation before calling this method.")
+	}
+
+	var records []ingestion.PushTaskRecords
+
+	rawObjects, err := json.Marshal(objects)
+	if err != nil {
+		return nil, reportError("unable to marshal the given `objects`: %w", err)
+	}
+
+	err = json.Unmarshal(rawObjects, &records)
+	if err != nil {
+		return nil, reportError("unable to unmarshal the given `objects` to an `[]ingestion.PushTaskRecords` payload: %w", err)
+	}
+
+	return c.ingestionTransporter.Push( //nolint:wrapcheck
+		c.ingestionTransporter.NewApiPushRequest(
+			indexName,
+			ingestion.NewEmptyPushTaskPayload().
+				SetAction(ingestion.ACTION_ADD_OBJECT).
+				SetRecords(records),
+		),
+	)
+}
+
+/*
+Helper: Similar to the `PartialUpdateObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client instantiation method.
+
+	@param indexName string - the index name to save objects into.
+	@param objects []map[string]any - List of objects to save.
+	@param opts ...ChunkedBatchOption - Optional parameters for the request.
+	@return []BatchResponse - List of batch responses.
+	@return error - Error if any.
+*/
+func (c *APIClient) PartialUpdateObjectsWithTransformation(indexName string, objects []map[string]any, opts ...PartialUpdateObjectsOption) (*ingestion.WatchResponse, error) {
+	if c.ingestionTransporter == nil {
+		return nil, reportError("`region` must be provided at client instantiation before calling this method.")
+	}
+
+	conf := config{
+		headerParams:      map[string]string{},
+		createIfNotExists: true,
+	}
+
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var action ingestion.Action
+
+	if conf.createIfNotExists {
+		action = ingestion.ACTION_PARTIAL_UPDATE_OBJECT
+	} else {
+		action = ingestion.ACTION_PARTIAL_UPDATE_OBJECT_NO_CREATE
+	}
+
+	var records []ingestion.PushTaskRecords
+
+	rawObjects, err := json.Marshal(objects)
+	if err != nil {
+		return nil, reportError("unable to marshal the given `objects`: %w", err)
+	}
+
+	err = json.Unmarshal(rawObjects, &records)
+	if err != nil {
+		return nil, reportError("unable to unmarshal the given `objects` to an `[]ingestion.PushTaskRecords` payload: %w", err)
+	}
+
+	return c.ingestionTransporter.Push( //nolint:wrapcheck
+		c.ingestionTransporter.NewApiPushRequest(
+			indexName,
+			ingestion.NewEmptyPushTaskPayload().
+				SetAction(action).
+				SetRecords(records),
+		),
+	)
 }

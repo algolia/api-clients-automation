@@ -1,6 +1,6 @@
 <?php
 
-$env = require_once('../loadEnv.php');
+$env = require_once '../loadEnv.php';
 
 use Algolia\AlgoliaSearch\Api\RecommendClient;
 
@@ -15,8 +15,8 @@ var_dump($client->getRecommendations(
                 'indexName' => $indexName,
                 'model' => 'bought-together',
                 'objectID' => $query,
-                'threshold' => 0
-            ]
-        ]
+                'threshold' => 0,
+            ],
+        ],
     ]
 ));

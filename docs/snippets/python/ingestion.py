@@ -449,7 +449,10 @@ def snippet_for_create_transformation():
     # Call the API
     response = client.create_transformation(
         transformation_create={
-            "code": "foo",
+            "input": {
+                "code": "foo",
+            },
+            "type": "code",
             "name": "bar",
             "description": "baz",
         },
@@ -1646,6 +1649,85 @@ def snippet_for_list_transformations():
     # SEPARATOR<
 
 
+def snippet_for_push():
+    """
+    Snippet for the push method.
+
+    global push
+    """
+    # >SEPARATOR push global push
+    # Initialize the client
+    # In an asynchronous context, you can use IngestionClient instead, which exposes the exact same methods.
+    client = IngestionClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.push(
+        index_name="<YOUR_INDEX_NAME>",
+        push_task_payload={
+            "action": "addObject",
+            "records": [
+                {
+                    "key": "bar",
+                    "foo": "1",
+                    "objectID": "o",
+                },
+                {
+                    "key": "baz",
+                    "foo": "2",
+                    "objectID": "k",
+                },
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_push1():
+    """
+    Snippet for the push method.
+
+    global push with watch mode
+    """
+    # >SEPARATOR push global push with watch mode
+    # Initialize the client
+    # In an asynchronous context, you can use IngestionClient instead, which exposes the exact same methods.
+    client = IngestionClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.push(
+        index_name="<YOUR_INDEX_NAME>",
+        push_task_payload={
+            "action": "addObject",
+            "records": [
+                {
+                    "key": "bar",
+                    "foo": "1",
+                    "objectID": "o",
+                },
+                {
+                    "key": "baz",
+                    "foo": "2",
+                    "objectID": "k",
+                },
+            ],
+        },
+        watch=True,
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_push_task():
     """
     Snippet for the pushTask method.
@@ -2047,7 +2129,10 @@ def snippet_for_try_transformation():
     # Call the API
     response = client.try_transformation(
         transformation_try={
-            "code": "foo",
+            "type": "code",
+            "input": {
+                "code": "foo",
+            },
             "sampleRecord": {
                 "bar": "baz",
             },
@@ -2076,7 +2161,10 @@ def snippet_for_try_transformation1():
     # Call the API
     response = client.try_transformation(
         transformation_try={
-            "code": "foo",
+            "type": "code",
+            "input": {
+                "code": "foo",
+            },
             "sampleRecord": {
                 "bar": "baz",
             },
@@ -2117,7 +2205,10 @@ def snippet_for_try_transformation_before_update():
     response = client.try_transformation_before_update(
         transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         transformation_try={
-            "code": "foo",
+            "type": "code",
+            "input": {
+                "code": "foo",
+            },
             "sampleRecord": {
                 "bar": "baz",
             },
@@ -2147,7 +2238,10 @@ def snippet_for_try_transformation_before_update1():
     response = client.try_transformation_before_update(
         transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         transformation_try={
-            "code": "foo",
+            "type": "code",
+            "input": {
+                "code": "foo",
+            },
             "sampleRecord": {
                 "bar": "baz",
             },
@@ -2324,7 +2418,10 @@ def snippet_for_update_transformation():
     response = client.update_transformation(
         transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         transformation_create={
-            "code": "foo",
+            "input": {
+                "code": "foo",
+            },
+            "type": "code",
             "name": "bar",
             "description": "baz",
         },

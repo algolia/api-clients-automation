@@ -11,6 +11,8 @@ import io.ktor.http.*
 import kotlinx.coroutines.test.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
+import org.skyscreamer.jsonassert.JSONAssert
+import org.skyscreamer.jsonassert.JSONCompareMode
 import kotlin.test.*
 
 class AbtestingTest {
@@ -42,7 +44,7 @@ class AbtestingTest {
         )
       },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.18.5\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.21.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
       },
@@ -97,8 +99,8 @@ class AbtestingTest {
       },
 
       response = {
-        val response = Json.encodeToString(it)
-        assertEquals("{\"headerAPIKeyValue\":\"test-api-key\"}", response)
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"headerAPIKeyValue":"test-api-key"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
     client.runTest(
@@ -118,8 +120,8 @@ class AbtestingTest {
       },
 
       response = {
-        val response = Json.encodeToString(it)
-        assertEquals("{\"headerAPIKeyValue\":\"updated-api-key\"}", response)
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"headerAPIKeyValue":"updated-api-key"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
   }

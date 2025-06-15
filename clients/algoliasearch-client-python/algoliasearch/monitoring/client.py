@@ -27,16 +27,16 @@ from algoliasearch.http.transporter import Transporter
 from algoliasearch.http.transporter_sync import TransporterSync
 from algoliasearch.http.verb import Verb
 from algoliasearch.monitoring.config import MonitoringConfig
-from algoliasearch.monitoring.models.incidents_response import IncidentsResponse
-from algoliasearch.monitoring.models.indexing_time_response import IndexingTimeResponse
-from algoliasearch.monitoring.models.infrastructure_response import (
+from algoliasearch.monitoring.models import (
+    IncidentsResponse,
+    IndexingTimeResponse,
     InfrastructureResponse,
+    InventoryResponse,
+    LatencyResponse,
+    Metric,
+    Period,
+    StatusResponse,
 )
-from algoliasearch.monitoring.models.inventory_response import InventoryResponse
-from algoliasearch.monitoring.models.latency_response import LatencyResponse
-from algoliasearch.monitoring.models.metric import Metric
-from algoliasearch.monitoring.models.period import Period
-from algoliasearch.monitoring.models.status_response import StatusResponse
 
 
 class MonitoringClient:
@@ -72,9 +72,9 @@ class MonitoringClient:
             config = MonitoringConfig(
                 transporter.config.app_id, transporter.config.api_key
             )
-
-        if config is None:
+        elif config is None:
             config = MonitoringConfig(app_id, api_key)
+
         self._config = config
         self._request_options = RequestOptions(config)
 
@@ -102,12 +102,14 @@ class MonitoringClient:
         if transporter is None:
             transporter = Transporter(config)
 
-        return MonitoringClient(
+        client = MonitoringClient(
             app_id=config.app_id,
             api_key=config.api_key,
             transporter=transporter,
             config=config,
         )
+
+        return client
 
     async def __aenter__(self) -> Self:
         return self
@@ -948,9 +950,9 @@ class MonitoringClientSync:
             config = MonitoringConfig(
                 transporter.config.app_id, transporter.config.api_key
             )
-
-        if config is None:
+        elif config is None:
             config = MonitoringConfig(app_id, api_key)
+
         self._config = config
         self._request_options = RequestOptions(config)
 
@@ -978,12 +980,14 @@ class MonitoringClientSync:
         if transporter is None:
             transporter = TransporterSync(config)
 
-        return MonitoringClientSync(
+        client = MonitoringClientSync(
             app_id=config.app_id,
             api_key=config.api_key,
             transporter=transporter,
             config=config,
         )
+
+        return client
 
     def __enter__(self) -> Self:
         return self
