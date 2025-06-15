@@ -20,20 +20,14 @@ else:
     from typing_extensions import Self
 
 from algoliasearch.abtesting.config import AbtestingConfig
-from algoliasearch.abtesting.models.ab_test import ABTest
-from algoliasearch.abtesting.models.ab_test_response import ABTestResponse
-from algoliasearch.abtesting.models.add_ab_tests_request import AddABTestsRequest
-from algoliasearch.abtesting.models.estimate_ab_test_request import (
+from algoliasearch.abtesting.models import (
+    ABTest,
+    ABTestResponse,
+    AddABTestsRequest,
     EstimateABTestRequest,
-)
-from algoliasearch.abtesting.models.estimate_ab_test_response import (
     EstimateABTestResponse,
-)
-from algoliasearch.abtesting.models.list_ab_tests_response import ListABTestsResponse
-from algoliasearch.abtesting.models.schedule_ab_test_response import (
+    ListABTestsResponse,
     ScheduleABTestResponse,
-)
-from algoliasearch.abtesting.models.schedule_ab_tests_request import (
     ScheduleABTestsRequest,
 )
 from algoliasearch.http.api_response import ApiResponse
@@ -79,9 +73,9 @@ class AbtestingClient:
             config = AbtestingConfig(
                 transporter.config.app_id, transporter.config.api_key, region
             )
-
-        if config is None:
+        elif config is None:
             config = AbtestingConfig(app_id, api_key, region)
+
         self._config = config
         self._request_options = RequestOptions(config)
 
@@ -109,13 +103,15 @@ class AbtestingClient:
         if transporter is None:
             transporter = Transporter(config)
 
-        return AbtestingClient(
+        client = AbtestingClient(
             app_id=config.app_id,
             api_key=config.api_key,
             region=config.region,
             transporter=transporter,
             config=config,
         )
+
+        return client
 
     async def __aenter__(self) -> Self:
         return self
@@ -929,9 +925,9 @@ class AbtestingClientSync:
             config = AbtestingConfig(
                 transporter.config.app_id, transporter.config.api_key, region
             )
-
-        if config is None:
+        elif config is None:
             config = AbtestingConfig(app_id, api_key, region)
+
         self._config = config
         self._request_options = RequestOptions(config)
 
@@ -959,13 +955,15 @@ class AbtestingClientSync:
         if transporter is None:
             transporter = TransporterSync(config)
 
-        return AbtestingClientSync(
+        client = AbtestingClientSync(
             app_id=config.app_id,
             api_key=config.api_key,
             region=config.region,
             transporter=transporter,
             config=config,
         )
+
+        return client
 
     def __enter__(self) -> Self:
         return self

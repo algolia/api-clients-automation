@@ -55,6 +55,7 @@ object JsonSupport {
     new SubscriptionTriggerTypeSerializer() :+
     new TaskSortKeysSerializer() :+
     new TransformationSortKeysSerializer() :+
+    new TransformationTypeSerializer() :+
     new TriggerTypeSerializer()
 
   private def oneOfsSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
@@ -65,6 +66,7 @@ object JsonSupport {
     SourceUpdateInputSerializer :+
     TaskCreateTriggerSerializer :+
     TaskInputSerializer :+
+    TransformationInputSerializer :+
     TriggerSerializer
 
   private def classMapSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+

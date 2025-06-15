@@ -8,9 +8,11 @@ import kotlinx.serialization.json.*
  * WatchResponse
  *
  * @param runID Universally unique identifier (UUID) of a task run.
- * @param `data` when used with discovering or validating sources, the sampled data of your source is returned.
- * @param events in case of error, observability events will be added to the response, if any.
- * @param message a message describing the outcome of a validate run.
+ * @param eventID Universally unique identifier (UUID) of an event.
+ * @param `data` This field is always null when used with the Push endpoint. When used for a source discover or source validate run, it will include the sampled data of the source.
+ * @param events in case of error, observability events will be added to the response.
+ * @param message a message describing the outcome of the operation that has been ran (push, discover or validate) run.
+ * @param createdAt Date of creation in RFC 3339 format.
  */
 @Serializable
 public data class WatchResponse(
@@ -18,12 +20,18 @@ public data class WatchResponse(
   /** Universally unique identifier (UUID) of a task run. */
   @SerialName(value = "runID") val runID: String,
 
-  /** when used with discovering or validating sources, the sampled data of your source is returned. */
+  /** Universally unique identifier (UUID) of an event. */
+  @SerialName(value = "eventID") val eventID: String? = null,
+
+  /** This field is always null when used with the Push endpoint. When used for a source discover or source validate run, it will include the sampled data of the source.  */
   @SerialName(value = "data") val `data`: List<JsonObject>? = null,
 
-  /** in case of error, observability events will be added to the response, if any. */
+  /** in case of error, observability events will be added to the response. */
   @SerialName(value = "events") val events: List<Event>? = null,
 
-  /** a message describing the outcome of a validate run. */
+  /** a message describing the outcome of the operation that has been ran (push, discover or validate) run. */
   @SerialName(value = "message") val message: String? = null,
+
+  /** Date of creation in RFC 3339 format. */
+  @SerialName(value = "createdAt") val createdAt: String? = null,
 )

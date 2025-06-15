@@ -1,0 +1,26 @@
+type: object
+additionalProperties: false
+properties:
+  runID:
+    $ref: '../../parameters/ingestion.yml#/RunID'
+  eventID:
+    $ref: '../../parameters/ingestion.yml#/EventID'
+  data:
+    type: array
+    description: |
+      This field is always null when used with the Push endpoint.
+      When used for a source discover or source validate run, it will include the sampled data of the source.
+    items:
+      type: object
+  events:
+    description: in case of error, observability events will be added to the response.
+    type: array
+    items:
+      $ref: './Observability.yml#/Event'
+  message:
+    description: a message describing the outcome of the operation that has been ran (push, discover or validate) run.
+    type: string
+  createdAt:
+    $ref: '../../parameters/ingestion.yml#/CreatedAt'
+required:
+  - runID

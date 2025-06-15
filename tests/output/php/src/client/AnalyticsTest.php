@@ -62,7 +62,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.18.5\).*/',
+                '/^Algolia for PHP \(4.21.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
@@ -77,6 +77,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             null
         );
         $this->assertIsObject($client);
+
         $client->getAverageClickPosition(
             'my-index',
         );
@@ -95,6 +96,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             'de'
         );
         $this->assertIsObject($client);
+
         $client->customPost(
             'test',
         );

@@ -46,6 +46,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             'test-api-key'
         );
         $this->assertIsObject($client);
+
         $client->customGet(
             'test',
         );
@@ -63,6 +64,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             'test-api-key'
         );
         $this->assertIsObject($client);
+
         $client->searchSingleIndex(
             'indexName',
         );
@@ -80,6 +82,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             'test-api-key'
         );
         $this->assertIsObject($client);
+
         $client->customPost(
             'test',
         );
@@ -154,6 +157,35 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('can handle unknown response fields')]
+    public function test8api(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6686']));
+
+        $res = $client->getSettings(
+            'cts_e2e_unknownField_php',
+        );
+        $this->assertEquals(
+            '{"minWordSizefor1Typo":12,"minWordSizefor2Typos":13,"hitsPerPage":14}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('can handle unknown response fields inside a nested oneOf')]
+    public function test9api(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6686']));
+
+        $res = $client->getRule(
+            'cts_e2e_unknownFieldNested_php',
+            'ruleObjectID',
+        );
+        $this->assertEquals(
+            '{"objectID":"ruleObjectID","consequence":{"promote":[{"objectID":"1","position":10}]}}',
+            json_encode($res)
+        );
+    }
+
     #[TestDox('calls api with correct user agent')]
     public function test0commonApi(): void
     {
@@ -178,7 +210,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.18.5\).*/',
+                '/^Algolia for PHP \(4.21.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
@@ -499,6 +531,30 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('call partialUpdateObjectsWithTransformation with createIfNotExists=true')]
+    public function test0partialUpdateObjectsWithTransformation(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6689'])->setTransformationRegion('us'));
+
+        $res = $client->partialUpdateObjectsWithTransformation(
+            'cts_e2e_partialUpdateObjectsWithTransformation_php',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+            ],
+            true,
+        );
+        $this->assertEquals(
+            '{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}',
+            json_encode($res)
+        );
+    }
+
     #[TestDox('call replaceAllObjects without error')]
     public function test0replaceAllObjects(): void
     {
@@ -695,6 +751,29 @@ class SearchTest extends TestCase implements HttpClientInterface
                     'X-Algolia-User-ID' => '*',
                 ],
             ]
+        );
+    }
+
+    #[TestDox('call saveObjectsWithTransformation without error')]
+    public function test0saveObjectsWithTransformation(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6689'])->setTransformationRegion('us'));
+
+        $res = $client->saveObjectsWithTransformation(
+            'cts_e2e_saveObjectsWithTransformation_php',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+            ],
+        );
+        $this->assertEquals(
+            '{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}',
+            json_encode($res)
         );
     }
 

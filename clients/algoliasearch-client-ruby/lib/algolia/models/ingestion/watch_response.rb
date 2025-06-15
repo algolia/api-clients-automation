@@ -11,22 +11,30 @@ module Algolia
       # Universally unique identifier (UUID) of a task run.
       attr_accessor :run_id
 
-      # when used with discovering or validating sources, the sampled data of your source is returned.
+      # Universally unique identifier (UUID) of an event.
+      attr_accessor :event_id
+
+      # This field is always null when used with the Push endpoint. When used for a source discover or source validate run, it will include the sampled data of the source.
       attr_accessor :data
 
-      # in case of error, observability events will be added to the response, if any.
+      # in case of error, observability events will be added to the response.
       attr_accessor :events
 
-      # a message describing the outcome of a validate run.
+      # a message describing the outcome of the operation that has been ran (push, discover or validate) run.
       attr_accessor :message
+
+      # Date of creation in RFC 3339 format.
+      attr_accessor :created_at
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :run_id => :runID,
+          :event_id => :eventID,
           :data => :data,
           :events => :events,
-          :message => :message
+          :message => :message,
+          :created_at => :createdAt
         }
       end
 
@@ -34,9 +42,11 @@ module Algolia
       def self.types_mapping
         {
           :run_id => :"String",
+          :event_id => :"String",
           :data => :"Array<Object>",
           :events => :"Array<Event>",
-          :message => :"String"
+          :message => :"String",
+          :created_at => :"String"
         }
       end
 
@@ -76,6 +86,10 @@ module Algolia
           self.run_id = nil
         end
 
+        if attributes.key?(:event_id)
+          self.event_id = attributes[:event_id]
+        end
+
         if attributes.key?(:data)
           if (value = attributes[:data]).is_a?(Array)
             self.data = value
@@ -91,6 +105,10 @@ module Algolia
         if attributes.key?(:message)
           self.message = attributes[:message]
         end
+
+        if attributes.key?(:created_at)
+          self.created_at = attributes[:created_at]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -99,9 +117,11 @@ module Algolia
         return true if self.equal?(other)
         self.class == other.class &&
           run_id == other.run_id &&
+          event_id == other.event_id &&
           data == other.data &&
           events == other.events &&
-          message == other.message
+          message == other.message &&
+          created_at == other.created_at
       end
 
       # @see the `==` method
@@ -113,7 +133,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [run_id, data, events, message].hash
+        [run_id, event_id, data, events, message, created_at].hash
       end
 
       # Builds the object from hash

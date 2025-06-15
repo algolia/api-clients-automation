@@ -1,7 +1,3 @@
-createdAt:
-  type: string
-  description: Date of creation in RFC 3339 format.
-
 updatedAt:
   type: string
   description: Date of last update in RFC 3339 format.
@@ -13,10 +9,6 @@ startedAt:
 finishedAt:
   type: string
   description: Date of finish in RFC 3339 format.
-
-publishedAt:
-  type: string
-  description: Date of publish RFC 3339 format.
 
 cursor:
   type: string
@@ -66,18 +58,6 @@ transformationID:
   description: Universally unique identifier (UUID) of a transformation.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
 
-runID:
-  type: string
-  # format: uuid
-  description: Universally unique identifier (UUID) of a task run.
-  example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-
-eventID:
-  type: string
-  # format: uuid
-  description: Universally unique identifier (UUID) of an event.
-  example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-
 name:
   type: string
   description: Descriptive name for the resource.
@@ -102,25 +82,3 @@ Window:
   required:
     - startDate
     - endDate
-
-WatchResponse:
-  type: object
-  additionalProperties: false
-  properties:
-    runID:
-      $ref: './common.yml#/runID'
-    data:
-      type: array
-      description: when used with discovering or validating sources, the sampled data of your source is returned.
-      items:
-        type: object
-    events:
-      description: in case of error, observability events will be added to the response, if any.
-      type: array
-      items:
-        $ref: '../../common/schemas/event.yml#/Event'
-    message:
-      description: a message describing the outcome of a validate run.
-      type: string
-  required:
-    - runID

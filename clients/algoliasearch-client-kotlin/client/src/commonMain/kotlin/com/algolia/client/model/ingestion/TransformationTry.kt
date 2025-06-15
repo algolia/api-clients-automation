@@ -7,18 +7,25 @@ import kotlinx.serialization.json.*
 /**
  * TransformationTry
  *
- * @param code The source code of the transformation.
  * @param sampleRecord The record to apply the given code to.
+ * @param code It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
+ * @param type
+ * @param input
  * @param authentications
  */
 @Serializable
 public data class TransformationTry(
 
-  /** The source code of the transformation. */
-  @SerialName(value = "code") val code: String,
-
   /** The record to apply the given code to. */
   @SerialName(value = "sampleRecord") val sampleRecord: JsonObject,
+
+  /** It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code. */
+  @Deprecated(message = "This property is deprecated.")
+  @SerialName(value = "code") val code: String? = null,
+
+  @SerialName(value = "type") val type: TransformationType? = null,
+
+  @SerialName(value = "input") val input: TransformationInput? = null,
 
   @SerialName(value = "authentications") val authentications: List<AuthenticationCreate>? = null,
 )

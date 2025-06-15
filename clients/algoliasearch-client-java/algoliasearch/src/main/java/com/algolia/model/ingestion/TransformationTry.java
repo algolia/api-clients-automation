@@ -15,6 +15,12 @@ public class TransformationTry {
   @JsonProperty("code")
   private String code;
 
+  @JsonProperty("type")
+  private TransformationType type;
+
+  @JsonProperty("input")
+  private TransformationInput input;
+
   @JsonProperty("sampleRecord")
   private Object sampleRecord;
 
@@ -26,10 +32,38 @@ public class TransformationTry {
     return this;
   }
 
-  /** The source code of the transformation. */
-  @javax.annotation.Nonnull
+  /**
+   * It is deprecated. Use the `input` field with proper `type` instead to specify the
+   * transformation code.
+   *
+   * @deprecated
+   */
+  @Deprecated
+  @javax.annotation.Nullable
   public String getCode() {
     return code;
+  }
+
+  public TransformationTry setType(TransformationType type) {
+    this.type = type;
+    return this;
+  }
+
+  /** Get type */
+  @javax.annotation.Nullable
+  public TransformationType getType() {
+    return type;
+  }
+
+  public TransformationTry setInput(TransformationInput input) {
+    this.input = input;
+    return this;
+  }
+
+  /** Get input */
+  @javax.annotation.Nullable
+  public TransformationInput getInput() {
+    return input;
   }
 
   public TransformationTry setSampleRecord(Object sampleRecord) {
@@ -73,6 +107,8 @@ public class TransformationTry {
     TransformationTry transformationTry = (TransformationTry) o;
     return (
       Objects.equals(this.code, transformationTry.code) &&
+      Objects.equals(this.type, transformationTry.type) &&
+      Objects.equals(this.input, transformationTry.input) &&
       Objects.equals(this.sampleRecord, transformationTry.sampleRecord) &&
       Objects.equals(this.authentications, transformationTry.authentications)
     );
@@ -80,7 +116,7 @@ public class TransformationTry {
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, sampleRecord, authentications);
+    return Objects.hash(code, type, input, sampleRecord, authentications);
   }
 
   @Override
@@ -88,6 +124,8 @@ public class TransformationTry {
     StringBuilder sb = new StringBuilder();
     sb.append("class TransformationTry {\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    input: ").append(toIndentedString(input)).append("\n");
     sb.append("    sampleRecord: ").append(toIndentedString(sampleRecord)).append("\n");
     sb.append("    authentications: ").append(toIndentedString(authentications)).append("\n");
     sb.append("}");

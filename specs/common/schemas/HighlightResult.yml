@@ -1,4 +1,5 @@
 highlightResultOption:
+  title: highlightResultOption
   type: object
   description: Surround words that match the query with HTML tags for highlighting.
   additionalProperties: false
@@ -35,12 +36,14 @@ matchLevel:
   enum: [none, partial, full]
 
 highlightResultArray:
+  title: highlightResultArray
   type: array
   description: Surround words that match the query with HTML tags for highlighting.
   items:
     $ref: '#/highlightResult'
 
 highlightResultMap:
+  title: highlightResultMap
   type: object
   description: Surround words that match the query with HTML tags for highlighting.
   x-is-free-form: false # openapi-generator thinks this is a free-form object since https://github.com/OpenAPITools/openapi-generator/pull/19605

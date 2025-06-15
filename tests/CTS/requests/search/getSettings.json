@@ -34,7 +34,8 @@
         "alternativesAsExact": [
           "ignorePlurals",
           "singleWordSynonym"
-        ]
+        ],
+        "typoTolerance": "false"
       }
     }
   }

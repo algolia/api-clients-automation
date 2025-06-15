@@ -1233,6 +1233,7 @@ paths:
       tags:
         - Search
       operationId: searchSingleIndex
+      x-mcp-tool: true
       x-use-read-transporter: true
       x-cacheable: true
       x-acl:
@@ -2470,6 +2471,7 @@ paths:
       tags:
         - Records
       operationId: saveObject
+      x-mcp-tool: true
       x-acl:
         - addObject
       description: >
@@ -2506,10 +2508,15 @@ paths:
         description: >-
           The record. A schemaless object with attributes that are useful in the
           context of search and discovery.
+        x-is-generic: true
         content:
           application/json:
             schema:
               type: object
+              example:
+                objectID: blackTShirt
+                name: Black T-shirt
+                color: '#000000'
       responses:
         '201':
           description: Created
@@ -2846,7 +2853,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{}'
+              --data '{"objectID":"blackTShirt","name":"Black T-shirt","color":"#000000"}'
     delete:
       tags:
         - Indices
@@ -3452,10 +3459,15 @@ paths:
         description: >-
           The record. A schemaless object with attributes that are useful in the
           context of search and discovery.
+        x-is-generic: true
         content:
           application/json:
             schema:
               type: object
+              example:
+                objectID: blackTShirt
+                name: Black T-shirt
+                color: '#000000'
       responses:
         '200':
           $ref: '#/components/responses/UpdatedAtWithObjectId'
@@ -3732,7 +3744,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{}'
+              --data '{"objectID":"blackTShirt","name":"Black T-shirt","color":"#000000"}'
     delete:
       tags:
         - Records
@@ -3747,7 +3759,7 @@ paths:
         To delete more than one record, use the [`batch`
         operation](#tag/Records/operation/batch).
 
-        To delete records matching a query, use the [`deleteByQuery`
+        To delete records matching a query, use the [`deleteBy`
         operation](#tag/Records/operation/deleteBy).
       parameters:
         - $ref: '#/components/parameters/IndexName'
@@ -3999,6 +4011,7 @@ paths:
       tags:
         - Records
       operationId: deleteBy
+      x-mcp-tool: true
       x-acl:
         - deleteIndex
       summary: Delete records matching a filter
@@ -4548,6 +4561,7 @@ paths:
       tags:
         - Records
       operationId: partialUpdateObject
+      x-mcp-tool: true
       x-acl:
         - addObject
       summary: Add or update attributes
@@ -4915,6 +4929,7 @@ paths:
       tags:
         - Records
       operationId: batch
+      x-mcp-tool: true
       summary: Batch indexing operations on one index
       description: >
         Adds, updates, or deletes records in one index with a single API
@@ -5346,6 +5361,7 @@ paths:
       tags:
         - Records
       operationId: multipleBatch
+      x-mcp-tool: true
       description: >
         Adds, updates, or deletes records in multiple indices with a single API
         request.
@@ -6128,8 +6144,9 @@ paths:
       tags:
         - Indices
       operationId: getSettings
+      x-mcp-tool: true
       x-acl:
-        - search
+        - settings
       description: Retrieves an object with non-null index settings.
       summary: Retrieve index settings
       parameters:
@@ -6425,7 +6442,11 @@ paths:
 
             var response = await client.SetSettingsAsync(
               "<YOUR_INDEX_NAME>",
-              new IndexSettings { PaginationLimitedTo = 10 },
+              new IndexSettings
+              {
+                PaginationLimitedTo = 10,
+                TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>("False")),
+              },
               true
             );
 
@@ -6442,6 +6463,7 @@ paths:
               indexName: "<YOUR_INDEX_NAME>",
               indexSettings: IndexSettings(
                 paginationLimitedTo: 10,
+                typoTolerance: TypoToleranceEnum.fromJson("false"),
               ),
               forwardToReplicas: true,
             );
@@ -6464,7 +6486,7 @@ paths:
 
             response, err := client.SetSettings(client.NewApiSetSettingsRequest(
               "<YOUR_INDEX_NAME>",
-              search.NewEmptyIndexSettings().SetPaginationLimitedTo(10)).WithForwardToReplicas(true))
+              search.NewEmptyIndexSettings().SetPaginationLimitedTo(10).SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("false")))).WithForwardToReplicas(true))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6488,7 +6510,8 @@ paths:
             // Call the API
 
             client.setSettings("<YOUR_INDEX_NAME>", new
-            IndexSettings().setPaginationLimitedTo(10), true);
+            IndexSettings().setPaginationLimitedTo(10).setTypoTolerance(TypoToleranceEnum.FALSE),
+            true);
 
             // >LOG
         - lang: javascript
@@ -6506,7 +6529,7 @@ paths:
 
             const response = await client.setSettings({
               indexName: 'cts_e2e_settings',
-              indexSettings: { paginationLimitedTo: 10 },
+              indexSettings: { paginationLimitedTo: 10, typoTolerance: 'false' },
               forwardToReplicas: true,
             });
 
@@ -6531,6 +6554,7 @@ paths:
               indexName = "<YOUR_INDEX_NAME>",
               indexSettings = IndexSettings(
                 paginationLimitedTo = 10,
+                typoTolerance = TypoToleranceEnum.entries.first { it.value == "false" },
               ),
               forwardToReplicas = true,
             )
@@ -6555,6 +6579,7 @@ paths:
             $response = $client->setSettings(
                 '<YOUR_INDEX_NAME>',
                 ['paginationLimitedTo' => 10,
+                    'typoTolerance' => 'false',
                 ],
                 true,
             );
@@ -6583,6 +6608,7 @@ paths:
                 index_name="<YOUR_INDEX_NAME>",
                 index_settings={
                     "paginationLimitedTo": 10,
+                    "typoTolerance": "false",
                 },
                 forward_to_replicas=True,
             )
@@ -6606,7 +6632,7 @@ paths:
 
             response = client.set_settings(
               "<YOUR_INDEX_NAME>",
-              Algolia::Search::IndexSettings.new(pagination_limited_to: 10),
+              Algolia::Search::IndexSettings.new(pagination_limited_to: 10, typo_tolerance: "false"),
               true
             )
 
@@ -6636,7 +6662,8 @@ paths:
               client.setSettings(
                 indexName = "<YOUR_INDEX_NAME>",
                 indexSettings = IndexSettings(
-                  paginationLimitedTo = Some(10)
+                  paginationLimitedTo = Some(10),
+                  typoTolerance = Some(TypoToleranceEnum.withName("false"))
                 ),
                 forwardToReplicas = Some(true)
               ),
@@ -6657,7 +6684,10 @@ paths:
 
             let response = try await client.setSettings(
                 indexName: "<YOUR_INDEX_NAME>",
-                indexSettings: IndexSettings(paginationLimitedTo: 10),
+                indexSettings: IndexSettings(
+                    paginationLimitedTo: 10,
+                    typoTolerance: SearchTypoTolerance.searchTypoToleranceEnum(SearchTypoToleranceEnum.`false`)
+                ),
                 forwardToReplicas: true
             )
 
@@ -8233,6 +8263,7 @@ paths:
       tags:
         - Synonyms
       operationId: searchSynonyms
+      x-mcp-tool: true
       x-use-read-transporter: true
       x-cacheable: true
       x-acl:
@@ -11845,6 +11876,7 @@ paths:
       tags:
         - Rules
       operationId: searchRules
+      x-mcp-tool: true
       x-use-read-transporter: true
       x-cacheable: true
       x-acl:
@@ -18749,6 +18781,7 @@ paths:
       tags:
         - Indices
       operationId: listIndices
+      x-mcp-tool: true
       x-acl:
         - listIndexes
       summary: List indices
@@ -19122,8 +19155,7 @@ components:
 
         `facet:\-value`.
       example:
-        -
-          - category:Book
+        - - category:Book
           - category:-Movie
         - author:John Doe
       oneOf:
@@ -19186,8 +19218,7 @@ components:
 
         The same combination rules apply as for `facetFilters`.
       example:
-        -
-          - inStock = 1
+        - - inStock = 1
           - deliveryDate < 1441755506
         - price < 1000
       oneOf:
@@ -19213,8 +19244,7 @@ components:
 
         The same combination and escaping rules apply as for `facetFilters`.
       example:
-        -
-          - Book
+        - - Book
           - Movie
         - SciFi
       oneOf:
@@ -19351,13 +19381,11 @@ components:
         For more information, see [rectangular
         area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
       example:
-        -
-          - 47.3165
+        - - 47.3165
           - 4.9665
           - 47.3424
           - 5.0201
-        -
-          - 40.9234
+        - - 40.9234
           - 2.1185
           - 38.643
           - 1.9916
@@ -19391,15 +19419,13 @@ components:
 
         This parameter is ignored if you also specify `insideBoundingBox`.
       example:
-        -
-          - 47.3165
+        - - 47.3165
           - 4.9665
           - 47.3424
           - 5.0201
           - 47.32
           - 4.9
-        -
-          - 40.9234
+        - - 40.9234
           - 2.1185
           - 38.643
           - 1.9916
@@ -19765,6 +19791,8 @@ components:
       enum:
         - min
         - strict
+        - 'true'
+        - 'false'
     typoTolerance:
       description: >
         Whether [typo
@@ -21100,6 +21128,7 @@ components:
         - partial
         - full
     highlightResultOption:
+      title: highlightResultOption
       type: object
       description: Surround words that match the query with HTML tags for highlighting.
       additionalProperties: false
@@ -21126,6 +21155,7 @@ components:
         - matchLevel
         - matchedWords
     highlightResultMap:
+      title: highlightResultMap
       type: object
       description: Surround words that match the query with HTML tags for highlighting.
       x-is-free-form: false
@@ -21138,11 +21168,13 @@ components:
         - $ref: '#/components/schemas/highlightResultMap'
         - $ref: '#/components/schemas/highlightResultArray'
     highlightResultArray:
+      title: highlightResultArray
       type: array
       description: Surround words that match the query with HTML tags for highlighting.
       items:
         $ref: '#/components/schemas/highlightResult'
     snippetResultOption:
+      title: snippetResultOption
       type: object
       description: Snippets that show the context around a matching search query.
       additionalProperties: false
@@ -21157,6 +21189,7 @@ components:
       x-discriminator-fields:
         - matchLevel
     snippetResultMap:
+      title: snippetResultMap
       type: object
       description: Snippets that show the context around a matching search query.
       x-is-free-form: false
@@ -21169,6 +21202,7 @@ components:
         - $ref: '#/components/schemas/snippetResultMap'
         - $ref: '#/components/schemas/snippetResultArray'
     snippetResultArray:
+      title: snippetResultArray
       type: array
       description: Snippets that show the context around a matching search query.
       items:
@@ -23047,10 +23081,12 @@ components:
           example: 100
         dataSize:
           type: integer
+          format: int64
           description: Number of bytes of the index in minified format.
           example: 48450
         fileSize:
           type: integer
+          format: int64
           description: Number of bytes of the index binary file.
           example: 112927
         lastBuildTimeS:
@@ -23211,6 +23247,104 @@ components:
         - copyOperationResponse
         - batchResponses
         - moveOperationResponse
+    RunID:
+      type: string
+      description: Universally unique identifier (UUID) of a task run.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    EventID:
+      type: string
+      description: Universally unique identifier (UUID) of an event.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    EventStatus:
+      oneOf:
+        - type: string
+          enum:
+            - created
+            - started
+            - retried
+            - failed
+            - succeeded
+            - critical
+        - type: 'null'
+    EventType:
+      type: string
+      enum:
+        - fetch
+        - record
+        - log
+        - transform
+    PublishedAt:
+      type: string
+      description: Date of publish RFC 3339 format.
+    Event:
+      type: object
+      description: An event describe a step of the task execution flow..
+      additionalProperties: false
+      properties:
+        eventID:
+          $ref: '#/components/schemas/EventID'
+        runID:
+          $ref: '#/components/schemas/RunID'
+        status:
+          $ref: '#/components/schemas/EventStatus'
+        type:
+          $ref: '#/components/schemas/EventType'
+        batchSize:
+          type: integer
+          description: The extracted record batch size.
+          example: 10
+          minimum: 0
+          multipleOf: 1
+        data:
+          oneOf:
+            - type: object
+              additionalProperties: true
+            - type: 'null'
+        publishedAt:
+          $ref: '#/components/schemas/PublishedAt'
+      required:
+        - eventID
+        - runID
+        - status
+        - type
+        - batchSize
+        - publishedAt
+    CreatedAt:
+      type: string
+      description: Date of creation in RFC 3339 format.
+    WatchResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        runID:
+          $ref: '#/components/schemas/RunID'
+        eventID:
+          $ref: '#/components/schemas/EventID'
+        data:
+          type: array
+          description: >
+            This field is always null when used with the Push endpoint.
+
+            When used for a source discover or source validate run, it will
+            include the sampled data of the source.
+          items:
+            type: object
+        events:
+          description: >-
+            in case of error, observability events will be added to the
+            response.
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        message:
+          description: >-
+            a message describing the outcome of the operation that has been ran
+            (push, discover or validate) run.
+          type: string
+        createdAt:
+          $ref: '#/components/schemas/CreatedAt'
+      required:
+        - runID
     builtInOperationType:
       type: string
       enum:

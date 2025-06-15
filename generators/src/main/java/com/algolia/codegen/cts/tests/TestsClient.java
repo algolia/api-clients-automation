@@ -95,6 +95,13 @@ public class TestsClient extends TestsGenerator {
                 stepOut.put("customHosts", step.parameters.get("customHosts"));
               }
 
+              boolean hasTransformationRegion = step.parameters != null && step.parameters.containsKey("transformationRegion");
+              if (hasTransformationRegion) testOut.put("useEchoRequester", false);
+              stepOut.put("hasTransformationRegion", hasTransformationRegion);
+              if (hasTransformationRegion) {
+                stepOut.put("transformationRegion", step.parameters.get("transformationRegion"));
+              }
+
               boolean gzipEncoding = step.parameters != null && step.parameters.getOrDefault("gzip", false).equals(true);
               // many languages don't support gzip yet
               if (

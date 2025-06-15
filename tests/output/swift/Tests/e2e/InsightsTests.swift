@@ -65,7 +65,7 @@ final class InsightsClientRequestsTestsE2E: XCTestCase {
                 queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
                 userToken: "user-123456",
                 authenticatedUserToken: "user-123456",
-                timestamp: Int64(1_745_971_200_000)
+                timestamp: Int64(1_749_600_000_000)
             )),
             EventsItems.viewedObjectIDs(ViewedObjectIDs(
                 eventName: "Product Detail Page Viewed",
@@ -74,15 +74,10 @@ final class InsightsClientRequestsTestsE2E: XCTestCase {
                 objectIDs: ["9780545139700", "9780439784542"],
                 userToken: "user-123456",
                 authenticatedUserToken: "user-123456",
-                timestamp: Int64(1_745_971_200_000)
+                timestamp: Int64(1_749_600_000_000)
             )),
         ]))
-        let responseBody = try XCTUnwrap(response.body)
-        let responseBodyData = try CodableHelper.jsonEncoder.encode(responseBody)
-
-        let expectedBodyData = try XCTUnwrap("{\"message\":\"OK\",\"status\":200}".data(using: .utf8))
-
-        XCTLenientAssertEqual(received: responseBodyData, expected: expectedBodyData)
+        try XCTLenientAssertEqual(received: XCTUnwrap(response.body), expected: "{\"message\":\"OK\",\"status\":200}")
 
         XCTAssertEqual(response.statusCode, 200)
     }

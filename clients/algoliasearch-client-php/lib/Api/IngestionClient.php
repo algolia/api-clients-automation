@@ -69,12 +69,17 @@ use GuzzleHttp\Psr7\Query;
  */
 class IngestionClient
 {
-    public const VERSION = '4.18.5';
+    public const VERSION = '4.21.0';
 
     /**
      * @var ApiWrapperInterface
      */
     protected $api;
+
+    /**
+     * @var IngestionClient
+     */
+    protected $ingestionTransporter;
 
     /**
      * @var IngestionConfig
@@ -116,7 +121,9 @@ class IngestionClient
             self::getClusterHosts($config)
         );
 
-        return new static($apiWrapper, $config);
+        $client = new static($apiWrapper, $config);
+
+        return $client;
     }
 
     /**
@@ -350,8 +357,10 @@ class IngestionClient
      * Creates a new transformation.
      *
      * @param array|TransformationCreate $transformationCreate Request body for creating a transformation. (required)
-     *                                                         - $transformationCreate['code'] => (string) The source code of the transformation. (required)
+     *                                                         - $transformationCreate['code'] => (string) It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
      *                                                         - $transformationCreate['name'] => (string) The uniquely identified name of your transformation. (required)
+     *                                                         - $transformationCreate['type'] => (array)
+     *                                                         - $transformationCreate['input'] => (array)
      *                                                         - $transformationCreate['description'] => (string) A descriptive name for your transformation of what it does.
      *                                                         - $transformationCreate['authenticationIDs'] => (array) The authentications associated with the current transformation.
      *
@@ -1791,7 +1800,73 @@ class IngestionClient
     }
 
     /**
-     * Push a `batch` request payload through the Pipeline. You can check the status of task pushes with the observability endpoints.
+     * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `pushTask`, but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error will be returned.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
+     *
+     * @param string                $indexName       Name of the index on which to perform the operation. (required)
+     * @param array|PushTaskPayload $pushTaskPayload pushTaskPayload (required)
+     *                                               - $pushTaskPayload['action'] => (array)  (required)
+     *                                               - $pushTaskPayload['records'] => (array)  (required)
+     *
+     * @see PushTaskPayload
+     *
+     * @param bool  $watch          When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding. (optional)
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     *
+     * @return array<string, mixed>|WatchResponse
+     */
+    public function push($indexName, $pushTaskPayload, $watch = null, $requestOptions = [])
+    {
+        // verify the required parameter 'indexName' is set
+        if (!isset($indexName)) {
+            throw new \InvalidArgumentException(
+                'Parameter `indexName` is required when calling `push`.'
+            );
+        }
+        // verify the required parameter 'pushTaskPayload' is set
+        if (!isset($pushTaskPayload)) {
+            throw new \InvalidArgumentException(
+                'Parameter `pushTaskPayload` is required when calling `push`.'
+            );
+        }
+
+        $resourcePath = '/1/push/{indexName}';
+        $queryParameters = [];
+        $headers = [];
+        $httpBody = $pushTaskPayload;
+
+        if (null !== $watch) {
+            $queryParameters['watch'] = $watch;
+        }
+
+        // path params
+        if (null !== $indexName) {
+            $resourcePath = str_replace(
+                '{indexName}',
+                ObjectSerializer::toPathValue($indexName),
+                $resourcePath
+            );
+        }
+
+        if (!isset($requestOptions['readTimeout'])) {
+            $requestOptions['readTimeout'] = 180;
+        }
+        if (!isset($requestOptions['writeTimeout'])) {
+            $requestOptions['writeTimeout'] = 180;
+        }
+        if (!isset($requestOptions['connectTimeout'])) {
+            $requestOptions['connectTimeout'] = 180;
+        }
+
+        return $this->sendRequest('POST', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
+    }
+
+    /**
+     * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target the same `indexName`.
      *
      * Required API Key ACLs:
      *  - addObject
@@ -1799,7 +1874,7 @@ class IngestionClient
      *  - editSettings
      *
      * @param string                $taskID          Unique identifier of a task. (required)
-     * @param array|PushTaskPayload $pushTaskPayload Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
+     * @param array|PushTaskPayload $pushTaskPayload pushTaskPayload (required)
      *                                               - $pushTaskPayload['action'] => (array)  (required)
      *                                               - $pushTaskPayload['records'] => (array)  (required)
      *
@@ -2247,7 +2322,9 @@ class IngestionClient
      *  - editSettings
      *
      * @param array|TransformationTry $transformationTry transformationTry (required)
-     *                                                   - $transformationTry['code'] => (string) The source code of the transformation. (required)
+     *                                                   - $transformationTry['code'] => (string) It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
+     *                                                   - $transformationTry['type'] => (array)
+     *                                                   - $transformationTry['input'] => (array)
      *                                                   - $transformationTry['sampleRecord'] => (array) The record to apply the given code to. (required)
      *                                                   - $transformationTry['authentications'] => (array)
      *
@@ -2284,7 +2361,9 @@ class IngestionClient
      *
      * @param string                  $transformationID  Unique identifier of a transformation. (required)
      * @param array|TransformationTry $transformationTry transformationTry (required)
-     *                                                   - $transformationTry['code'] => (string) The source code of the transformation. (required)
+     *                                                   - $transformationTry['code'] => (string) It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
+     *                                                   - $transformationTry['type'] => (array)
+     *                                                   - $transformationTry['input'] => (array)
      *                                                   - $transformationTry['sampleRecord'] => (array) The record to apply the given code to. (required)
      *                                                   - $transformationTry['authentications'] => (array)
      *
@@ -2593,8 +2672,10 @@ class IngestionClient
      *
      * @param string                     $transformationID     Unique identifier of a transformation. (required)
      * @param array|TransformationCreate $transformationCreate transformationCreate (required)
-     *                                                         - $transformationCreate['code'] => (string) The source code of the transformation. (required)
+     *                                                         - $transformationCreate['code'] => (string) It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
      *                                                         - $transformationCreate['name'] => (string) The uniquely identified name of your transformation. (required)
+     *                                                         - $transformationCreate['type'] => (array)
+     *                                                         - $transformationCreate['input'] => (array)
      *                                                         - $transformationCreate['description'] => (string) A descriptive name for your transformation of what it does.
      *                                                         - $transformationCreate['authenticationIDs'] => (array) The authentications associated with the current transformation.
      *

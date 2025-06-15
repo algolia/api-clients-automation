@@ -20,7 +20,7 @@ public class saveObjectsMovies {
     List<JsonNode> movies = mapper.readValue(stream, new TypeReference<List<JsonNode>>() {});
     stream.close();
 
-    // Connect and authenticate with your Algolia app
+    // Connect and authenticate with your Algolia app using your app ID and write API key
     {{> snippets/init}}
 
     // Save records in Algolia index

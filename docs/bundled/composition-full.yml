@@ -1143,8 +1143,7 @@ components:
 
         `facet:\-value`.
       example:
-        -
-          - category:Book
+        - - category:Book
           - category:-Movie
         - author:John Doe
       oneOf:
@@ -1207,8 +1206,7 @@ components:
 
         The same combination rules apply as for `facetFilters`.
       example:
-        -
-          - inStock = 1
+        - - inStock = 1
           - deliveryDate < 1441755506
         - price < 1000
       oneOf:
@@ -1346,13 +1344,11 @@ components:
         For more information, see [rectangular
         area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
       example:
-        -
-          - 47.3165
+        - - 47.3165
           - 4.9665
           - 47.3424
           - 5.0201
-        -
-          - 40.9234
+        - - 40.9234
           - 2.1185
           - 38.643
           - 1.9916
@@ -1386,15 +1382,13 @@ components:
 
         This parameter is ignored if you also specify `insideBoundingBox`.
       example:
-        -
-          - 47.3165
+        - - 47.3165
           - 4.9665
           - 47.3424
           - 5.0201
           - 47.32
           - 4.9
-        -
-          - 40.9234
+        - - 40.9234
           - 2.1185
           - 38.643
           - 1.9916
@@ -2123,6 +2117,7 @@ components:
         - partial
         - full
     highlightResultOption:
+      title: highlightResultOption
       type: object
       description: Surround words that match the query with HTML tags for highlighting.
       additionalProperties: false
@@ -2149,6 +2144,7 @@ components:
         - matchLevel
         - matchedWords
     highlightResultMap:
+      title: highlightResultMap
       type: object
       description: Surround words that match the query with HTML tags for highlighting.
       x-is-free-form: false
@@ -2161,11 +2157,13 @@ components:
         - $ref: '#/components/schemas/highlightResultMap'
         - $ref: '#/components/schemas/highlightResultArray'
     highlightResultArray:
+      title: highlightResultArray
       type: array
       description: Surround words that match the query with HTML tags for highlighting.
       items:
         $ref: '#/components/schemas/highlightResult'
     snippetResultOption:
+      title: snippetResultOption
       type: object
       description: Snippets that show the context around a matching search query.
       additionalProperties: false
@@ -2180,6 +2178,7 @@ components:
       x-discriminator-fields:
         - matchLevel
     snippetResultMap:
+      title: snippetResultMap
       type: object
       description: Snippets that show the context around a matching search query.
       x-is-free-form: false
@@ -2192,6 +2191,7 @@ components:
         - $ref: '#/components/schemas/snippetResultMap'
         - $ref: '#/components/schemas/snippetResultArray'
     snippetResultArray:
+      title: snippetResultArray
       type: array
       description: Snippets that show the context around a matching search query.
       items:
@@ -2495,6 +2495,8 @@ components:
       enum:
         - min
         - strict
+        - 'true'
+        - 'false'
     typoTolerance:
       description: >
         Whether [typo
@@ -4461,9 +4463,24 @@ components:
           type: integer
           description: Number of pages.
           example: 100
+        page:
+          type: integer
+          description: Current page.
+          example: 0
+        hitsPerPage:
+          type: integer
+          description: Number of items per page.
+          example: 20
+        nbHits:
+          type: integer
+          description: Number of items.
+          example: 200
       required:
+        - hitsPerPage
         - items
+        - nbHits
         - nbPages
+        - page
   responses:
     BadRequest:
       description: Bad request or request arguments.

@@ -311,14 +311,22 @@ class TestIngestionClient < Test::Unit::TestCase
   # createTransformation
   def test_create_transformation
     req = @client.create_transformation_with_http_info(
-      Algolia::Ingestion::TransformationCreate.new(code: "foo", name: "bar", description: "baz")
+      Algolia::Ingestion::TransformationCreate.new(
+        input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
+        type: "code",
+        name: "bar",
+        description: "baz"
+      )
     )
 
     assert_equal(:post, req.method)
     assert_equal("/1/transformations", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"code\":\"foo\",\"name\":\"bar\",\"description\":\"baz\"}"), JSON.parse(req.body))
+    assert_equal(
+      JSON.parse("{\"input\":{\"code\":\"foo\"},\"type\":\"code\",\"name\":\"bar\",\"description\":\"baz\"}"),
+      JSON.parse(req.body)
+    )
   end
 
   # allow del method for a custom path with minimal parameters
@@ -920,6 +928,57 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
+  # global push
+  def test_push
+    req = @client.push_with_http_info(
+      "foo",
+      Algolia::Ingestion::PushTaskPayload.new(
+        action: "addObject",
+        records: [
+          Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", algolia_object_id: "o"),
+          Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", algolia_object_id: "k")
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/push/foo", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # global push with watch mode
+  def test_push1
+    req = @client.push_with_http_info(
+      "bar",
+      Algolia::Ingestion::PushTaskPayload.new(
+        action: "addObject",
+        records: [
+          Algolia::Ingestion::PushTaskRecords.new(key: "bar", foo: "1", algolia_object_id: "o"),
+          Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", algolia_object_id: "k")
+        ]
+      ),
+      true
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/push/bar", req.path)
+    assert_equal({:"watch" => "true"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # pushTask
   def test_push_task
     req = @client.push_task_with_http_info(
@@ -1157,21 +1216,29 @@ class TestIngestionClient < Test::Unit::TestCase
   # tryTransformation
   def test_try_transformation
     req = @client.try_transformation_with_http_info(
-      Algolia::Ingestion::TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
+      Algolia::Ingestion::TransformationTry.new(
+        type: "code",
+        input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
+        sample_record: {bar: "baz"}
+      )
     )
 
     assert_equal(:post, req.method)
     assert_equal("/1/transformations/try", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}"), JSON.parse(req.body))
+    assert_equal(
+      JSON.parse("{\"type\":\"code\",\"input\":{\"code\":\"foo\"},\"sampleRecord\":{\"bar\":\"baz\"}}"),
+      JSON.parse(req.body)
+    )
   end
 
   # with authentications
   def test_try_transformation1
     req = @client.try_transformation_with_http_info(
       Algolia::Ingestion::TransformationTry.new(
-        code: "foo",
+        type: "code",
+        input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
         sample_record: {bar: "baz"},
         authentications: [
           Algolia::Ingestion::AuthenticationCreate.new(
@@ -1193,7 +1260,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}"
+        "{\"type\":\"code\",\"input\":{\"code\":\"foo\"},\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}"
       ),
       JSON.parse(req.body)
     )
@@ -1203,14 +1270,21 @@ class TestIngestionClient < Test::Unit::TestCase
   def test_try_transformation_before_update
     req = @client.try_transformation_before_update_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      Algolia::Ingestion::TransformationTry.new(code: "foo", sample_record: {bar: "baz"})
+      Algolia::Ingestion::TransformationTry.new(
+        type: "code",
+        input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
+        sample_record: {bar: "baz"}
+      )
     )
 
     assert_equal(:post, req.method)
     assert_equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}"), JSON.parse(req.body))
+    assert_equal(
+      JSON.parse("{\"type\":\"code\",\"input\":{\"code\":\"foo\"},\"sampleRecord\":{\"bar\":\"baz\"}}"),
+      JSON.parse(req.body)
+    )
   end
 
   # existing with authentications
@@ -1218,7 +1292,8 @@ class TestIngestionClient < Test::Unit::TestCase
     req = @client.try_transformation_before_update_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       Algolia::Ingestion::TransformationTry.new(
-        code: "foo",
+        type: "code",
+        input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
         sample_record: {bar: "baz"},
         authentications: [
           Algolia::Ingestion::AuthenticationCreate.new(
@@ -1240,7 +1315,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}"
+        "{\"type\":\"code\",\"input\":{\"code\":\"foo\"},\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}"
       ),
       JSON.parse(req.body)
     )
@@ -1320,14 +1395,22 @@ class TestIngestionClient < Test::Unit::TestCase
   def test_update_transformation
     req = @client.update_transformation_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      Algolia::Ingestion::TransformationCreate.new(code: "foo", name: "bar", description: "baz")
+      Algolia::Ingestion::TransformationCreate.new(
+        input: Algolia::Ingestion::TransformationCode.new(code: "foo"),
+        type: "code",
+        name: "bar",
+        description: "baz"
+      )
     )
 
     assert_equal(:put, req.method)
     assert_equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"code\":\"foo\",\"name\":\"bar\",\"description\":\"baz\"}"), JSON.parse(req.body))
+    assert_equal(
+      JSON.parse("{\"input\":{\"code\":\"foo\"},\"type\":\"code\",\"name\":\"bar\",\"description\":\"baz\"}"),
+      JSON.parse(req.body)
+    )
   end
 
   # validateSource

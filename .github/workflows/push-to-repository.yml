@@ -30,4 +30,5 @@ jobs:
       - run: yarn workspace scripts pushToRepository ${{ inputs.name }} 
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+          GH_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
           FORCE: true

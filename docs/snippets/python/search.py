@@ -2652,6 +2652,39 @@ def snippet_for_partial_update_objects1():
     # SEPARATOR<
 
 
+def snippet_for_partial_update_objects_with_transformation():
+    """
+    Snippet for the partialUpdateObjectsWithTransformation method.
+
+    call partialUpdateObjectsWithTransformation with createIfNotExists=true
+    """
+    # >SEPARATOR partialUpdateObjectsWithTransformation default
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.partial_update_objects_with_transformation(
+        index_name="<YOUR_INDEX_NAME>",
+        objects=[
+            {
+                "objectID": "1",
+                "name": "Adam",
+            },
+            {
+                "objectID": "2",
+                "name": "Benoit",
+            },
+        ],
+        create_if_not_exists=True,
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_remove_user_id():
     """
     Snippet for the removeUserId method.
@@ -3008,6 +3041,38 @@ def snippet_for_save_objects3():
         request_options={
             "headers": loads("""{"X-Algolia-User-ID":"*"}"""),
         },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_save_objects_with_transformation():
+    """
+    Snippet for the saveObjectsWithTransformation method.
+
+    call saveObjectsWithTransformation without error
+    """
+    # >SEPARATOR saveObjectsWithTransformation default
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.save_objects_with_transformation(
+        index_name="<YOUR_INDEX_NAME>",
+        objects=[
+            {
+                "objectID": "1",
+                "name": "Adam",
+            },
+            {
+                "objectID": "2",
+                "name": "Benoit",
+            },
+        ],
     )
 
     # >LOG
@@ -9019,6 +9084,7 @@ def snippet_for_set_settings():
         index_name="<YOUR_INDEX_NAME>",
         index_settings={
             "paginationLimitedTo": 10,
+            "typoTolerance": "false",
         },
         forward_to_replicas=True,
     )

@@ -8436,7 +8436,8 @@ class SnippetSearchClient {
       client.setSettings(
         indexName = "<YOUR_INDEX_NAME>",
         indexSettings = IndexSettings(
-          paginationLimitedTo = Some(10)
+          paginationLimitedTo = Some(10),
+          typoTolerance = Some(TypoToleranceEnum.withName("false"))
         ),
         forwardToReplicas = Some(true)
       ),

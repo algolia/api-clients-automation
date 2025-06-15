@@ -19,15 +19,19 @@
   */
 package algoliasearch.ingestion
 
+import algoliasearch.ingestion.TransformationType._
+
 /** TransformationTry
   *
   * @param code
-  *   The source code of the transformation.
+  *   It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
   * @param sampleRecord
   *   The record to apply the given code to.
   */
 case class TransformationTry(
-    code: String,
+    code: Option[String] = scala.None,
+    `type`: Option[TransformationType] = scala.None,
+    input: Option[TransformationInput] = scala.None,
     sampleRecord: Any,
     authentications: Option[Seq[AuthenticationCreate]] = scala.None
 )

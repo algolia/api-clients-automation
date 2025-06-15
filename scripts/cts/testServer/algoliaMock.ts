@@ -37,6 +37,51 @@ function addRoutes(app: Express): void {
       processingTimeMS: 0,
     });
   });
+
+  // languages that just put the response in a map, there is no strict parsing or types to match.
+  const isLaxLanguage = (lang: string) => {
+    return lang === 'dart' || lang === 'javascript' || lang === 'python' || lang === 'php';
+  };
+
+  app.get('/1/indexes/:indexName/settings', (req, res) => {
+    const lang = req.params.indexName.match(/^cts_e2e_unknownField_(.*)$/)?.[1] as string;
+    let unknown = {};
+    if (!isLaxLanguage(lang)) {
+      unknown = {
+        unknownFieldNameThatWillNeverBeAddedToTheSpecIHope: 'hello',
+      };
+    }
+
+    res.json({
+      minWordSizefor1Typo: 12,
+      minWordSizefor2Typos: 13,
+      hitsPerPage: 14,
+      ...unknown,
+    });
+  });
+
+  app.get('/1/indexes/:indexName/rules/:objectID', (req, res) => {
+    const lang = req.params.indexName.match(/^cts_e2e_unknownFieldNested_(.*)$/)?.[1] as string;
+    let unknown = {};
+    if (!isLaxLanguage(lang)) {
+      unknown = {
+        unknownFieldNameThatWillNeverBeAddedToTheSpecIHope: 'hello',
+      };
+    }
+
+    res.json({
+      objectID: req.params.objectID,
+      consequence: {
+        promote: [
+          {
+            objectID: '1',
+            position: 10,
+            ...unknown,
+          },
+        ],
+      },
+    });
+  });
 }
 
 export function algoliaMockServer(): Promise<Server> {

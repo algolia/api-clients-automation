@@ -75,7 +75,7 @@ class MonitoringClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.15.5\\).*";
+      String regexp = "^Algolia for Java \\(4.18.0\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
@@ -87,6 +87,7 @@ class MonitoringClientClientTests {
   @DisplayName("use the correct host")
   void parametersTest0() {
     MonitoringClient client = new MonitoringClient("my-app-id", "my-api-key", withEchoRequester());
+
     client.customDelete("test");
     EchoResponse result = echo.getLastResponse();
     assertEquals("status.algolia.com", result.host);
@@ -110,6 +111,7 @@ class MonitoringClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       Object res = client.customGet("check-api-key/1");
 

@@ -20,37 +20,14 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = Distinct.Deserializer.class)
 public interface Distinct {
-  // Distinct as Boolean wrapper.
-  static Distinct of(Boolean value) {
-    return new BooleanWrapper(value);
-  }
-
   // Distinct as Integer wrapper.
   static Distinct of(Integer value) {
     return new IntegerWrapper(value);
   }
 
   // Distinct as Boolean wrapper.
-  @JsonSerialize(using = BooleanWrapper.Serializer.class)
-  class BooleanWrapper implements Distinct {
-
-    private final Boolean value;
-
-    BooleanWrapper(Boolean value) {
-      this.value = value;
-    }
-
-    public Boolean getValue() {
-      return value;
-    }
-
-    static class Serializer extends JsonSerializer<BooleanWrapper> {
-
-      @Override
-      public void serialize(BooleanWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-        gen.writeObject(value.getValue());
-      }
-    }
+  static Distinct of(Boolean value) {
+    return new BooleanWrapper(value);
   }
 
   // Distinct as Integer wrapper.
@@ -76,6 +53,29 @@ public interface Distinct {
     }
   }
 
+  // Distinct as Boolean wrapper.
+  @JsonSerialize(using = BooleanWrapper.Serializer.class)
+  class BooleanWrapper implements Distinct {
+
+    private final Boolean value;
+
+    BooleanWrapper(Boolean value) {
+      this.value = value;
+    }
+
+    public Boolean getValue() {
+      return value;
+    }
+
+    static class Serializer extends JsonSerializer<BooleanWrapper> {
+
+      @Override
+      public void serialize(BooleanWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        gen.writeObject(value.getValue());
+      }
+    }
+  }
+
   class Deserializer extends JsonDeserializer<Distinct> {
 
     private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
@@ -83,16 +83,6 @@ public interface Distinct {
     @Override
     public Distinct deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-      // deserialize Boolean
-      if (tree.isBoolean()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          Boolean value = parser.readValueAs(Boolean.class);
-          return new Distinct.BooleanWrapper(value);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf Boolean (error: " + e.getMessage() + ") (type: Boolean)");
-        }
-      }
       // deserialize Integer
       if (tree.isInt()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -101,6 +91,16 @@ public interface Distinct {
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf Integer (error: " + e.getMessage() + ") (type: Integer)");
+        }
+      }
+      // deserialize Boolean
+      if (tree.isBoolean()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          Boolean value = parser.readValueAs(Boolean.class);
+          return new Distinct.BooleanWrapper(value);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf Boolean (error: " + e.getMessage() + ") (type: Boolean)");
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));

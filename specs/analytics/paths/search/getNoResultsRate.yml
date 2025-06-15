@@ -2,6 +2,7 @@ get:
   tags:
     - search
   operationId: getNoResultsRate
+  x-mcp-tool: true
   x-acl:
     - analytics
   summary: Retrieve no results rate

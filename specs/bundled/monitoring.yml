@@ -209,6 +209,7 @@ paths:
       summary: Retrieve cluster status
       description: Retrieves the status of selected clusters.
       operationId: getClusterStatus
+      x-mcp-tool: true
       tags:
         - monitoring
       security: []
@@ -226,6 +227,7 @@ paths:
       summary: Retrieve all incidents
       description: Retrieves known incidents for all clusters.
       operationId: getIncidents
+      x-mcp-tool: true
       security: []
       tags:
         - monitoring

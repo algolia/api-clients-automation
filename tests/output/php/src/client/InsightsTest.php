@@ -62,7 +62,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.18.5\).*/',
+                '/^Algolia for PHP \(4.21.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
@@ -77,6 +77,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
             null
         );
         $this->assertIsObject($client);
+
         $client->pushEvents(
             ['events' => [
                 ['eventType' => 'click',
@@ -115,6 +116,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
             'us'
         );
         $this->assertIsObject($client);
+
         $client->customDelete(
             'test',
         );

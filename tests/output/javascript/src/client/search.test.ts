@@ -135,6 +135,43 @@ describe('api', () => {
 
     expect(result).toEqual(expect.objectContaining({ connectTimeout: 2000, responseTimeout: 30000 }));
   }, 25000);
+
+  test('can handle unknown response fields', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6686,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.getSettings({ indexName: 'cts_e2e_unknownField_javascript' });
+
+    expect(result).toEqual({ minWordSizefor1Typo: 12, minWordSizefor2Typos: 13, hitsPerPage: 14 });
+  }, 25000);
+
+  test('can handle unknown response fields inside a nested oneOf', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6686,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.getRule({
+      indexName: 'cts_e2e_unknownFieldNested_javascript',
+      objectID: 'ruleObjectID',
+    });
+
+    expect(result).toEqual({ objectID: 'ruleObjectID', consequence: { promote: [{ objectID: '1', position: 10 }] } });
+  }, 25000);
 });
 
 describe('commonApi', () => {
@@ -153,7 +190,7 @@ describe('commonApi', () => {
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.24.0\).*/);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.27.0\).*/);
   }, 25000);
 });
 
@@ -476,6 +513,40 @@ describe('partialUpdateObjects', () => {
   }, 25000);
 });
 
+describe('partialUpdateObjectsWithTransformation', () => {
+  test('call partialUpdateObjectsWithTransformation with createIfNotExists=true', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6689,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+      transformation: { region: 'us' },
+    });
+
+    {
+      const result = await client.partialUpdateObjectsWithTransformation({
+        indexName: 'cts_e2e_partialUpdateObjectsWithTransformation_javascript',
+        objects: [
+          { objectID: '1', name: 'Adam' },
+          { objectID: '2', name: 'Benoit' },
+        ],
+        createIfNotExists: true,
+      });
+
+      expect(result).toEqual({
+        runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
+        eventID: '113b2068-6337-4c85-b5c2-e7b213d82925',
+        message: 'OK',
+        createdAt: '2022-05-12T06:24:30.049Z',
+      });
+    }
+  }, 25000);
+});
+
 describe('replaceAllObjects', () => {
   test('call replaceAllObjects without error', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {
@@ -692,6 +763,39 @@ describe('saveObjects', () => {
           headers: { 'X-Algolia-User-ID': '*' },
         },
       );
+    }
+  }, 25000);
+});
+
+describe('saveObjectsWithTransformation', () => {
+  test('call saveObjectsWithTransformation without error', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6689,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+      transformation: { region: 'us' },
+    });
+
+    {
+      const result = await client.saveObjectsWithTransformation({
+        indexName: 'cts_e2e_saveObjectsWithTransformation_javascript',
+        objects: [
+          { objectID: '1', name: 'Adam' },
+          { objectID: '2', name: 'Benoit' },
+        ],
+      });
+
+      expect(result).toEqual({
+        runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
+        eventID: '113b2068-6337-4c85-b5c2-e7b213d82925',
+        message: 'OK',
+        createdAt: '2022-05-12T06:24:30.049Z',
+      });
     }
   }, 25000);
 });

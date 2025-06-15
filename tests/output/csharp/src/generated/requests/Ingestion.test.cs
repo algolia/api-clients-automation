@@ -381,7 +381,8 @@ public class IngestionClientRequestTests
     await client.CreateTransformationAsync(
       new TransformationCreate
       {
-        Code = "foo",
+        Input = new TransformationInput(new TransformationCode { Code = "foo" }),
+        Type = Enum.Parse<TransformationType>("Code"),
         Name = "bar",
         Description = "baz",
       }
@@ -391,7 +392,7 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/transformations", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"code\":\"foo\",\"name\":\"bar\",\"description\":\"baz\"}",
+      "{\"input\":{\"code\":\"foo\"},\"type\":\"code\",\"name\":\"bar\",\"description\":\"baz\"}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -1215,6 +1216,104 @@ public class IngestionClientRequestTests
     Assert.Null(req.Body);
   }
 
+  [Fact(DisplayName = "global push")]
+  public async Task PushTest()
+  {
+    await client.PushAsync(
+      "foo",
+      new PushTaskPayload
+      {
+        Action = Enum.Parse<Action>("AddObject"),
+        Records = new List<PushTaskRecords>
+        {
+          new PushTaskRecords
+          {
+            ObjectID = "o",
+            AdditionalProperties = new Dictionary<string, object>
+            {
+              { "key", "bar" },
+              { "foo", "1" },
+            },
+          },
+          new PushTaskRecords
+          {
+            ObjectID = "k",
+            AdditionalProperties = new Dictionary<string, object>
+            {
+              { "key", "baz" },
+              { "foo", "2" },
+            },
+          },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/push/foo", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "global push with watch mode")]
+  public async Task PushTest1()
+  {
+    await client.PushAsync(
+      "bar",
+      new PushTaskPayload
+      {
+        Action = Enum.Parse<Action>("AddObject"),
+        Records = new List<PushTaskRecords>
+        {
+          new PushTaskRecords
+          {
+            ObjectID = "o",
+            AdditionalProperties = new Dictionary<string, object>
+            {
+              { "key", "bar" },
+              { "foo", "1" },
+            },
+          },
+          new PushTaskRecords
+          {
+            ObjectID = "k",
+            AdditionalProperties = new Dictionary<string, object>
+            {
+              { "key", "baz" },
+              { "foo", "2" },
+            },
+          },
+        },
+      },
+      true
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/push/bar", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"watch\":\"true\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
+  }
+
   [Fact(DisplayName = "pushTask")]
   public async Task PushTaskTest()
   {
@@ -1522,7 +1621,8 @@ public class IngestionClientRequestTests
     await client.TryTransformationAsync(
       new TransformationTry
       {
-        Code = "foo",
+        Type = Enum.Parse<TransformationType>("Code"),
+        Input = new TransformationInput(new TransformationCode { Code = "foo" }),
         SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
       }
     );
@@ -1531,7 +1631,7 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/transformations/try", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}",
+      "{\"type\":\"code\",\"input\":{\"code\":\"foo\"},\"sampleRecord\":{\"bar\":\"baz\"}}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -1543,7 +1643,8 @@ public class IngestionClientRequestTests
     await client.TryTransformationAsync(
       new TransformationTry
       {
-        Code = "foo",
+        Type = Enum.Parse<TransformationType>("Code"),
+        Input = new TransformationInput(new TransformationCode { Code = "foo" }),
         SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
         Authentications = new List<AuthenticationCreate>
         {
@@ -1568,7 +1669,7 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/transformations/try", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}",
+      "{\"type\":\"code\",\"input\":{\"code\":\"foo\"},\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -1581,7 +1682,8 @@ public class IngestionClientRequestTests
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TransformationTry
       {
-        Code = "foo",
+        Type = Enum.Parse<TransformationType>("Code"),
+        Input = new TransformationInput(new TransformationCode { Code = "foo" }),
         SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
       }
     );
@@ -1590,7 +1692,7 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}",
+      "{\"type\":\"code\",\"input\":{\"code\":\"foo\"},\"sampleRecord\":{\"bar\":\"baz\"}}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -1603,7 +1705,8 @@ public class IngestionClientRequestTests
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TransformationTry
       {
-        Code = "foo",
+        Type = Enum.Parse<TransformationType>("Code"),
+        Input = new TransformationInput(new TransformationCode { Code = "foo" }),
         SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
         Authentications = new List<AuthenticationCreate>
         {
@@ -1628,7 +1731,7 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}",
+      "{\"type\":\"code\",\"input\":{\"code\":\"foo\"},\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -1715,7 +1818,8 @@ public class IngestionClientRequestTests
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TransformationCreate
       {
-        Code = "foo",
+        Input = new TransformationInput(new TransformationCode { Code = "foo" }),
+        Type = Enum.Parse<TransformationType>("Code"),
         Name = "bar",
         Description = "baz",
       }
@@ -1725,7 +1829,7 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"code\":\"foo\",\"name\":\"bar\",\"description\":\"baz\"}",
+      "{\"input\":{\"code\":\"foo\"},\"type\":\"code\",\"name\":\"bar\",\"description\":\"baz\"}",
       req.Body,
       new JsonDiffConfig(false)
     );

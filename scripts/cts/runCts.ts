@@ -9,6 +9,7 @@ import { assertValidAccountCopyIndex } from './testServer/accountCopyIndex.ts';
 import { printBenchmarkReport } from './testServer/benchmark.ts';
 import { assertChunkWrapperValid } from './testServer/chunkWrapper.ts';
 import { startTestServer } from './testServer/index.ts';
+import { assertPushMockValid } from './testServer/pushMock.ts';
 import { assertValidReplaceAllObjects } from './testServer/replaceAllObjects.ts';
 import { assertValidReplaceAllObjectsFailed } from './testServer/replaceAllObjectsFailed.ts';
 import { assertValidReplaceAllObjectsScopes } from './testServer/replaceAllObjectsScopes.ts';
@@ -157,6 +158,7 @@ export async function runCts(
     assertValidReplaceAllObjectsFailed(languages.length - skip('dart'));
     assertValidReplaceAllObjectsScopes(languages.length - skip('dart'));
     assertValidWaitForApiKey(languages.length - skip('dart'));
+    assertPushMockValid(only('javascript') + only('go') + only('python') + only('java') + only('php'));
   }
   if (withBenchmarkServer) {
     printBenchmarkReport();

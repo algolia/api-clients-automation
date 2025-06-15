@@ -272,14 +272,15 @@ describe('createTaskV1', () => {
 describe('createTransformation', () => {
   test('createTransformation', async () => {
     const req = (await client.createTransformation({
-      code: 'foo',
+      input: { code: 'foo' },
+      type: 'code',
       name: 'bar',
       description: 'baz',
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/transformations');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({ code: 'foo', name: 'bar', description: 'baz' });
+    expect(req.data).toEqual({ input: { code: 'foo' }, type: 'code', name: 'bar', description: 'baz' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });
@@ -867,6 +868,57 @@ describe('listTransformations', () => {
   });
 });
 
+describe('push', () => {
+  test('global push', async () => {
+    const req = (await client.push({
+      indexName: 'foo',
+      pushTaskPayload: {
+        action: 'addObject',
+        records: [
+          { key: 'bar', foo: '1', objectID: 'o' },
+          { key: 'baz', foo: '2', objectID: 'k' },
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/push/foo');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      action: 'addObject',
+      records: [
+        { key: 'bar', foo: '1', objectID: 'o' },
+        { key: 'baz', foo: '2', objectID: 'k' },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('global push with watch mode', async () => {
+    const req = (await client.push({
+      indexName: 'bar',
+      pushTaskPayload: {
+        action: 'addObject',
+        records: [
+          { key: 'bar', foo: '1', objectID: 'o' },
+          { key: 'baz', foo: '2', objectID: 'k' },
+        ],
+      },
+      watch: true,
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/push/bar');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      action: 'addObject',
+      records: [
+        { key: 'bar', foo: '1', objectID: 'o' },
+        { key: 'baz', foo: '2', objectID: 'k' },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual({ watch: 'true' });
+  });
+});
+
 describe('pushTask', () => {
   test('pushTask', async () => {
     const req = (await client.pushTask({
@@ -1092,19 +1144,21 @@ describe('triggerDockerSourceDiscover', () => {
 describe('tryTransformation', () => {
   test('tryTransformation', async () => {
     const req = (await client.tryTransformation({
-      code: 'foo',
+      type: 'code',
+      input: { code: 'foo' },
       sampleRecord: { bar: 'baz' },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/transformations/try');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({ code: 'foo', sampleRecord: { bar: 'baz' } });
+    expect(req.data).toEqual({ type: 'code', input: { code: 'foo' }, sampleRecord: { bar: 'baz' } });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('with authentications', async () => {
     const req = (await client.tryTransformation({
-      code: 'foo',
+      type: 'code',
+      input: { code: 'foo' },
       sampleRecord: { bar: 'baz' },
       authentications: [
         {
@@ -1118,7 +1172,8 @@ describe('tryTransformation', () => {
     expect(req.path).toEqual('/1/transformations/try');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      code: 'foo',
+      type: 'code',
+      input: { code: 'foo' },
       sampleRecord: { bar: 'baz' },
       authentications: [
         {
@@ -1136,12 +1191,12 @@ describe('tryTransformationBeforeUpdate', () => {
   test('tryTransformationBeforeUpdate', async () => {
     const req = (await client.tryTransformationBeforeUpdate({
       transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-      transformationTry: { code: 'foo', sampleRecord: { bar: 'baz' } },
+      transformationTry: { type: 'code', input: { code: 'foo' }, sampleRecord: { bar: 'baz' } },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({ code: 'foo', sampleRecord: { bar: 'baz' } });
+    expect(req.data).toEqual({ type: 'code', input: { code: 'foo' }, sampleRecord: { bar: 'baz' } });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
@@ -1149,7 +1204,8 @@ describe('tryTransformationBeforeUpdate', () => {
     const req = (await client.tryTransformationBeforeUpdate({
       transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
       transformationTry: {
-        code: 'foo',
+        type: 'code',
+        input: { code: 'foo' },
         sampleRecord: { bar: 'baz' },
         authentications: [
           {
@@ -1164,7 +1220,8 @@ describe('tryTransformationBeforeUpdate', () => {
     expect(req.path).toEqual('/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      code: 'foo',
+      type: 'code',
+      input: { code: 'foo' },
       sampleRecord: { bar: 'baz' },
       authentications: [
         {
@@ -1252,12 +1309,12 @@ describe('updateTransformation', () => {
   test('updateTransformation', async () => {
     const req = (await client.updateTransformation({
       transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-      transformationCreate: { code: 'foo', name: 'bar', description: 'baz' },
+      transformationCreate: { input: { code: 'foo' }, type: 'code', name: 'bar', description: 'baz' },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
     expect(req.method).toEqual('PUT');
-    expect(req.data).toEqual({ code: 'foo', name: 'bar', description: 'baz' });
+    expect(req.data).toEqual({ input: { code: 'foo' }, type: 'code', name: 'bar', description: 'baz' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });

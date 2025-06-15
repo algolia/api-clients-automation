@@ -3,6 +3,8 @@ post:
     - events
   operationId: pushEvents
   summary: Send events
+  x-acl:
+    - search
   description: |
     Sends a list of events to the Insights API.
 

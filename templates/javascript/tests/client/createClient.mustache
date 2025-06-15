@@ -17,8 +17,11 @@
       protocol: 'http'
     },
     {{/customHosts}}
-    ]
+    ],
     {{/hasCustomHosts}} 
+    {{#hasTransformationRegion}}
+    transformation: { region : "{{{transformationRegion}}}" },
+    {{/hasTransformationRegion}} 
   }
   {{/isStandaloneClient}}
 ){{^isStandaloneClient}}.{{{initMethod}}}(

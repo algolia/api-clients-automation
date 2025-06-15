@@ -13,5 +13,8 @@ cfg = {{clientPrefix}}.{{clientName}}Configuration{
     {{/gzipEncoding}}
   },{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region.value}}
   Region: {{clientPrefix}}.Region("{{parametersWithDataTypeMap.region.value}}"),{{/parametersWithDataTypeMap.region.value}}{{/hasRegionalHost}}
+  {{#hasTransformationRegion}}
+  Transformation: &search.TransformationConfiguration{ Region: "{{{transformationRegion}}}" },
+  {{/hasTransformationRegion}}
 }
 client, err = {{clientPrefix}}.NewClientWithConfig(cfg)

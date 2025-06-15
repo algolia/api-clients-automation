@@ -9,6 +9,7 @@ import com.algolia.EchoInterceptor;
 import com.algolia.EchoResponse;
 import com.algolia.api.SearchClient;
 import com.algolia.config.*;
+import com.algolia.model.ingestion.WatchResponse;
 import com.algolia.model.search.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -52,6 +53,7 @@ class SearchClientClientTests {
   @DisplayName("calls api with correct read host")
   void apiTest0() {
     SearchClient client = new SearchClient("test-app-id", "test-api-key", withEchoRequester());
+
     client.customGet("test");
     EchoResponse result = echo.getLastResponse();
     assertEquals("test-app-id-dsn.algolia.net", result.host);
@@ -61,6 +63,7 @@ class SearchClientClientTests {
   @DisplayName("read transporter with POST method")
   void apiTest1() {
     SearchClient client = new SearchClient("test-app-id", "test-api-key", withEchoRequester());
+
     client.searchSingleIndex("indexName", Hit.class);
     EchoResponse result = echo.getLastResponse();
     assertEquals("test-app-id-dsn.algolia.net", result.host);
@@ -70,6 +73,7 @@ class SearchClientClientTests {
   @DisplayName("calls api with correct write host")
   void apiTest2() {
     SearchClient client = new SearchClient("test-app-id", "test-api-key", withEchoRequester());
+
     client.customPost("test");
     EchoResponse result = echo.getLastResponse();
     assertEquals("test-app-id.algolia.net", result.host);
@@ -105,6 +109,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     Object res = client.customGet("1/test/retry/java");
 
     assertDoesNotThrow(() ->
@@ -130,6 +135,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     {
       Exception exception = assertThrows(Exception.class, () -> {
         Object res = client.customGet("1/test/hang/java");
@@ -159,6 +165,7 @@ class SearchClientClientTests {
         true
       )
     );
+
     Object res = client.customPost(
       "1/test/gzip",
       new HashMap() {
@@ -203,6 +210,66 @@ class SearchClientClientTests {
   }
 
   @Test
+  @DisplayName("can handle unknown response fields")
+  void apiTest8() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6686
+          )
+        ),
+        false
+      )
+    );
+
+    SettingsResponse res = client.getSettings("cts_e2e_unknownField_java");
+
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"minWordSizefor1Typo\":12,\"minWordSizefor2Typos\":13,\"hitsPerPage\":14}",
+        json.writeValueAsString(res),
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("can handle unknown response fields inside a nested oneOf")
+  void apiTest9() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6686
+          )
+        ),
+        false
+      )
+    );
+
+    Rule res = client.getRule("cts_e2e_unknownFieldNested_java", "ruleObjectID");
+
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"ruleObjectID\",\"consequence\":{\"promote\":[{\"objectID\":\"1\",\"position\":10}]}}",
+        json.writeValueAsString(res),
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("calls api with correct user agent")
   void commonApiTest0() {
     SearchClient client = createClient();
@@ -230,7 +297,7 @@ class SearchClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.15.5\\).*";
+      String regexp = "^Algolia for Java \\(4.18.0\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
@@ -256,6 +323,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       List res = client.deleteObjects("cts_e2e_deleteObjects_java", Arrays.asList("1", "2"));
 
@@ -392,6 +460,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       Boolean res = client.indexExists("indexExistsYES");
 
@@ -417,6 +486,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       Boolean res = client.indexExists("indexExistsNO");
 
@@ -442,6 +512,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     {
       Exception exception = assertThrows(Exception.class, () -> {
         Boolean res = client.indexExists("indexExistsERROR");
@@ -545,6 +616,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       List res = client.partialUpdateObjects(
         "cts_e2e_partialUpdateObjects_java",
@@ -589,6 +661,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       List res = client.partialUpdateObjects(
         "cts_e2e_partialUpdateObjects_java",
@@ -616,6 +689,55 @@ class SearchClientClientTests {
   }
 
   @Test
+  @DisplayName("call partialUpdateObjectsWithTransformation with createIfNotExists=true")
+  void partialUpdateObjectsWithTransformationTest0() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6689
+          )
+        ),
+        false
+      )
+    );
+    client.setTransformationRegion("us");
+    assertDoesNotThrow(() -> {
+      WatchResponse res = client.partialUpdateObjectsWithTransformation(
+        "cts_e2e_partialUpdateObjectsWithTransformation_java",
+        Arrays.asList(
+          new HashMap() {
+            {
+              put("objectID", "1");
+              put("name", "Adam");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "2");
+              put("name", "Benoit");
+            }
+          }
+        ),
+        true
+      );
+
+      assertDoesNotThrow(() ->
+        JSONAssert.assertEquals(
+          "{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82925\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"}",
+          json.writeValueAsString(res),
+          JSONCompareMode.STRICT
+        )
+      );
+    });
+  }
+
+  @Test
   @DisplayName("call replaceAllObjects without error")
   void replaceAllObjectsTest0() {
     SearchClient client = new SearchClient(
@@ -633,6 +755,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       ReplaceAllObjectsResponse res = client.replaceAllObjects(
         "cts_e2e_replace_all_objects_java",
@@ -729,6 +852,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       ReplaceAllObjectsResponse res = client.replaceAllObjects(
         "cts_e2e_replace_all_objects_scopes_java",
@@ -778,6 +902,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     {
       Exception exception = assertThrows(Exception.class, () -> {
         ReplaceAllObjectsResponse res = client.replaceAllObjects(
@@ -820,6 +945,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       List res = client.saveObjects(
         "cts_e2e_saveObjects_java",
@@ -863,6 +989,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     {
       Exception exception = assertThrows(Exception.class, () -> {
         List res = client.saveObjects(
@@ -905,6 +1032,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       List res = client.saveObjects(
         "playlists",
@@ -941,6 +1069,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       List res = client.saveObjects(
         "playlists",
@@ -963,6 +1092,54 @@ class SearchClientClientTests {
   }
 
   @Test
+  @DisplayName("call saveObjectsWithTransformation without error")
+  void saveObjectsWithTransformationTest0() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6689
+          )
+        ),
+        false
+      )
+    );
+    client.setTransformationRegion("us");
+    assertDoesNotThrow(() -> {
+      WatchResponse res = client.saveObjectsWithTransformation(
+        "cts_e2e_saveObjectsWithTransformation_java",
+        Arrays.asList(
+          new HashMap() {
+            {
+              put("objectID", "1");
+              put("name", "Adam");
+            }
+          },
+          new HashMap() {
+            {
+              put("objectID", "2");
+              put("name", "Benoit");
+            }
+          }
+        )
+      );
+
+      assertDoesNotThrow(() ->
+        JSONAssert.assertEquals(
+          "{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82925\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"}",
+          json.writeValueAsString(res),
+          JSONCompareMode.STRICT
+        )
+      );
+    });
+  }
+
+  @Test
   @DisplayName("with algolia user id")
   void searchSingleIndexTest0() {
     SearchClient client = new SearchClient(
@@ -980,6 +1157,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     SearchResponse res = client.searchSingleIndex(
       "playlists",
       new SearchParamsObject().setQuery("foo"),
@@ -1006,6 +1184,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       Object res = client.customGet("check-api-key/1");
 
@@ -1043,6 +1222,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       GetApiKeyResponse res = client.waitForApiKey("api-key-add-operation-test-java", ApiKeyOperation.ADD);
 
@@ -1075,6 +1255,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       GetApiKeyResponse res = client.waitForApiKey(
         "api-key-update-operation-test-java",
@@ -1119,6 +1300,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       GetApiKeyResponse res = client.waitForApiKey("api-key-delete-operation-test-java", ApiKeyOperation.DELETE);
 
@@ -1144,6 +1326,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       GetTaskResponse res = client.waitForAppTask(123L);
 
@@ -1169,6 +1352,7 @@ class SearchClientClientTests {
         false
       )
     );
+
     assertDoesNotThrow(() -> {
       GetTaskResponse res = client.waitForTask("wait-task-java", 123L);
 

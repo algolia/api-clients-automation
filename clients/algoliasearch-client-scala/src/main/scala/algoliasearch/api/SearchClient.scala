@@ -70,6 +70,7 @@ import algoliasearch.search.UpdateApiKeyResponse
 import algoliasearch.search.UpdatedAtResponse
 import algoliasearch.search.UpdatedAtWithObjectIdResponse
 import algoliasearch.search.UserId
+import algoliasearch.search.WatchResponse
 import algoliasearch.search._
 import algoliasearch.ApiClient
 import algoliasearch.api.SearchClient.hosts
@@ -616,7 +617,7 @@ class SearchClient(
   }
 
   /** Deletes a record by its object ID. To delete more than one record, use the [`batch`
-    * operation](#tag/Records/operation/batch). To delete records matching a query, use the [`deleteByQuery`
+    * operation](#tag/Records/operation/batch). To delete records matching a query, use the [`deleteBy`
     * operation](#tag/Records/operation/deleteBy).
     *
     * Required API Key ACLs:
@@ -922,7 +923,7 @@ class SearchClient(
   /** Retrieves an object with non-null index settings.
     *
     * Required API Key ACLs:
-    *   - search
+    *   - settings
     *
     * @param indexName
     *   Name of the index on which to perform the operation.

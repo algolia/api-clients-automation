@@ -52,6 +52,7 @@ servers:
   - url: https://data.{region}.algolia.com
     variables:
       region:
+        description: The region where your Algolia application is hosted.
         enum:
           - eu
           - us
@@ -110,6 +111,9 @@ paths:
   # ######################
   /{path}:
     $ref: '../common/paths/customRequest.yml'
+
+  /1/push/{indexName}:
+    $ref: 'paths/push.yml'
 
   # authentications API.
   /1/authentications:

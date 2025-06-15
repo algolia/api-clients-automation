@@ -39,97 +39,78 @@ from algoliasearch.http.serializer import QueryParametersSerializer, body_serial
 from algoliasearch.http.transporter import Transporter
 from algoliasearch.http.transporter_sync import TransporterSync
 from algoliasearch.http.verb import Verb
+from algoliasearch.ingestion.client import IngestionClient, IngestionClientSync
+from algoliasearch.ingestion.config import IngestionConfig
+from algoliasearch.ingestion.models import WatchResponse
 from algoliasearch.search.config import SearchConfig
-from algoliasearch.search.models.action import Action
-from algoliasearch.search.models.add_api_key_response import AddApiKeyResponse
-from algoliasearch.search.models.api_key import ApiKey
-from algoliasearch.search.models.assign_user_id_params import AssignUserIdParams
-from algoliasearch.search.models.batch_assign_user_ids_params import (
+from algoliasearch.search.models import (
+    Action,
+    AddApiKeyResponse,
+    ApiKey,
+    AssignUserIdParams,
     BatchAssignUserIdsParams,
-)
-from algoliasearch.search.models.batch_dictionary_entries_params import (
     BatchDictionaryEntriesParams,
-)
-from algoliasearch.search.models.batch_params import BatchParams
-from algoliasearch.search.models.batch_request import BatchRequest
-from algoliasearch.search.models.batch_response import BatchResponse
-from algoliasearch.search.models.batch_write_params import BatchWriteParams
-from algoliasearch.search.models.browse_params import BrowseParams
-from algoliasearch.search.models.browse_params_object import BrowseParamsObject
-from algoliasearch.search.models.browse_response import BrowseResponse
-from algoliasearch.search.models.created_at_response import CreatedAtResponse
-from algoliasearch.search.models.delete_api_key_response import DeleteApiKeyResponse
-from algoliasearch.search.models.delete_by_params import DeleteByParams
-from algoliasearch.search.models.delete_source_response import DeleteSourceResponse
-from algoliasearch.search.models.deleted_at_response import DeletedAtResponse
-from algoliasearch.search.models.dictionary_settings_params import (
+    BatchParams,
+    BatchRequest,
+    BatchResponse,
+    BatchWriteParams,
+    BrowseParams,
+    BrowseParamsObject,
+    BrowseResponse,
+    CreatedAtResponse,
+    DeleteApiKeyResponse,
+    DeleteByParams,
+    DeletedAtResponse,
+    DeleteSourceResponse,
     DictionarySettingsParams,
-)
-from algoliasearch.search.models.dictionary_type import DictionaryType
-from algoliasearch.search.models.get_api_key_response import GetApiKeyResponse
-from algoliasearch.search.models.get_dictionary_settings_response import (
+    DictionaryType,
+    GetApiKeyResponse,
     GetDictionarySettingsResponse,
-)
-from algoliasearch.search.models.get_logs_response import GetLogsResponse
-from algoliasearch.search.models.get_objects_params import GetObjectsParams
-from algoliasearch.search.models.get_objects_response import GetObjectsResponse
-from algoliasearch.search.models.get_task_response import GetTaskResponse
-from algoliasearch.search.models.get_top_user_ids_response import GetTopUserIdsResponse
-from algoliasearch.search.models.has_pending_mappings_response import (
+    GetLogsResponse,
+    GetObjectsParams,
+    GetObjectsResponse,
+    GetTaskResponse,
+    GetTopUserIdsResponse,
     HasPendingMappingsResponse,
-)
-from algoliasearch.search.models.index_settings import IndexSettings
-from algoliasearch.search.models.languages import Languages
-from algoliasearch.search.models.list_api_keys_response import ListApiKeysResponse
-from algoliasearch.search.models.list_clusters_response import ListClustersResponse
-from algoliasearch.search.models.list_indices_response import ListIndicesResponse
-from algoliasearch.search.models.list_user_ids_response import ListUserIdsResponse
-from algoliasearch.search.models.log_type import LogType
-from algoliasearch.search.models.multiple_batch_response import MultipleBatchResponse
-from algoliasearch.search.models.operation_index_params import OperationIndexParams
-from algoliasearch.search.models.operation_type import OperationType
-from algoliasearch.search.models.remove_user_id_response import RemoveUserIdResponse
-from algoliasearch.search.models.replace_all_objects_response import (
+    IndexSettings,
+    Languages,
+    ListApiKeysResponse,
+    ListClustersResponse,
+    ListIndicesResponse,
+    ListUserIdsResponse,
+    LogType,
+    MultipleBatchResponse,
+    OperationIndexParams,
+    OperationType,
+    RemoveUserIdResponse,
     ReplaceAllObjectsResponse,
-)
-from algoliasearch.search.models.replace_source_response import ReplaceSourceResponse
-from algoliasearch.search.models.rule import Rule
-from algoliasearch.search.models.save_object_response import SaveObjectResponse
-from algoliasearch.search.models.save_synonym_response import SaveSynonymResponse
-from algoliasearch.search.models.search_dictionary_entries_params import (
+    ReplaceSourceResponse,
+    Rule,
+    SaveObjectResponse,
+    SaveSynonymResponse,
     SearchDictionaryEntriesParams,
-)
-from algoliasearch.search.models.search_dictionary_entries_response import (
     SearchDictionaryEntriesResponse,
-)
-from algoliasearch.search.models.search_for_facet_values_request import (
     SearchForFacetValuesRequest,
-)
-from algoliasearch.search.models.search_for_facet_values_response import (
     SearchForFacetValuesResponse,
-)
-from algoliasearch.search.models.search_method_params import SearchMethodParams
-from algoliasearch.search.models.search_params import SearchParams
-from algoliasearch.search.models.search_response import SearchResponse
-from algoliasearch.search.models.search_responses import SearchResponses
-from algoliasearch.search.models.search_rules_params import SearchRulesParams
-from algoliasearch.search.models.search_rules_response import SearchRulesResponse
-from algoliasearch.search.models.search_synonyms_params import SearchSynonymsParams
-from algoliasearch.search.models.search_synonyms_response import SearchSynonymsResponse
-from algoliasearch.search.models.search_user_ids_params import SearchUserIdsParams
-from algoliasearch.search.models.search_user_ids_response import SearchUserIdsResponse
-from algoliasearch.search.models.secured_api_key_restrictions import (
+    SearchMethodParams,
+    SearchParams,
+    SearchResponse,
+    SearchResponses,
+    SearchRulesParams,
+    SearchRulesResponse,
+    SearchSynonymsParams,
+    SearchSynonymsResponse,
+    SearchUserIdsParams,
+    SearchUserIdsResponse,
     SecuredApiKeyRestrictions,
-)
-from algoliasearch.search.models.settings_response import SettingsResponse
-from algoliasearch.search.models.source import Source
-from algoliasearch.search.models.synonym_hit import SynonymHit
-from algoliasearch.search.models.update_api_key_response import UpdateApiKeyResponse
-from algoliasearch.search.models.updated_at_response import UpdatedAtResponse
-from algoliasearch.search.models.updated_at_with_object_id_response import (
+    SettingsResponse,
+    Source,
+    SynonymHit,
+    UpdateApiKeyResponse,
+    UpdatedAtResponse,
     UpdatedAtWithObjectIdResponse,
+    UserId,
 )
-from algoliasearch.search.models.user_id import UserId
 
 
 class SearchClient:
@@ -151,6 +132,7 @@ class SearchClient:
     """
 
     _transporter: Transporter
+    _ingestion_transporter: Optional[IngestionClient]
     _config: BaseConfig
     _request_options: RequestOptions
 
@@ -163,9 +145,9 @@ class SearchClient:
     ) -> None:
         if transporter is not None and config is None:
             config = SearchConfig(transporter.config.app_id, transporter.config.api_key)
-
-        if config is None:
+        elif config is None:
             config = SearchConfig(app_id, api_key)
+
         self._config = config
         self._request_options = RequestOptions(config)
 
@@ -193,12 +175,26 @@ class SearchClient:
         if transporter is None:
             transporter = Transporter(config)
 
-        return SearchClient(
+        client = SearchClient(
             app_id=config.app_id,
             api_key=config.api_key,
             transporter=transporter,
             config=config,
         )
+
+        if config.region is not None:
+            ingestion_config = IngestionConfig(
+                config.app_id, config.api_key, config.region
+            )
+
+            if config.hosts is not None:
+                ingestion_config.hosts = config.hosts
+
+            client._ingestion_transporter = IngestionClient.create_with_config(
+                ingestion_config
+            )
+
+        return client
 
     async def __aenter__(self) -> Self:
         return self
@@ -531,6 +527,32 @@ class SearchClient:
             request_options=request_options,
         )
 
+    async def save_objects_with_transformation(
+        self,
+        index_name: str,
+        objects: List[Dict[str, Any]],
+        wait_for_tasks: bool = False,
+        batch_size: int = 1000,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> WatchResponse:
+        """
+        Helper: Similar to the `save_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client's config at instantiation.
+        """
+        if self._ingestion_transporter is None:
+            raise ValueError(
+                "`region` must be provided at client instantiation before calling this method."
+            )
+
+        return await self._ingestion_transporter.push(
+            index_name=index_name,
+            push_task_payload={
+                "action": Action.ADDOBJECT,
+                "records": objects,
+            },
+            watch=wait_for_tasks,
+            request_options=request_options,
+        )
+
     async def delete_objects(
         self,
         index_name: str,
@@ -571,6 +593,35 @@ class SearchClient:
             else Action.PARTIALUPDATEOBJECTNOCREATE,
             wait_for_tasks=wait_for_tasks,
             batch_size=batch_size,
+            request_options=request_options,
+        )
+
+    async def partial_update_objects_with_transformation(
+        self,
+        index_name: str,
+        objects: List[Dict[str, Any]],
+        create_if_not_exists: bool = False,
+        wait_for_tasks: bool = False,
+        batch_size: int = 1000,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> WatchResponse:
+        """
+        Helper: Similar to the `partial_update_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client instantiation method.
+        """
+        if self._ingestion_transporter is None:
+            raise ValueError(
+                "`region` must be provided at client instantiation before calling this method."
+            )
+
+        return await self._ingestion_transporter.push(
+            index_name=index_name,
+            push_task_payload={
+                "action": Action.PARTIALUPDATEOBJECT
+                if create_if_not_exists
+                else Action.PARTIALUPDATEOBJECTNOCREATE,
+                "records": objects,
+            },
+            watch=wait_for_tasks,
             request_options=request_options,
         )
 
@@ -2046,7 +2097,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Deletes a record by its object ID.  To delete more than one record, use the [`batch` operation](#tag/Records/operation/batch). To delete records matching a query, use the [`deleteByQuery` operation](#tag/Records/operation/deleteBy).
+        Deletes a record by its object ID.  To delete more than one record, use the [`batch` operation](#tag/Records/operation/batch). To delete records matching a query, use the [`deleteBy` operation](#tag/Records/operation/deleteBy).
 
         Required API Key ACLs:
           - deleteObject
@@ -2090,7 +2141,7 @@ class SearchClient:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> DeletedAtResponse:
         """
-        Deletes a record by its object ID.  To delete more than one record, use the [`batch` operation](#tag/Records/operation/batch). To delete records matching a query, use the [`deleteByQuery` operation](#tag/Records/operation/deleteBy).
+        Deletes a record by its object ID.  To delete more than one record, use the [`batch` operation](#tag/Records/operation/batch). To delete records matching a query, use the [`deleteBy` operation](#tag/Records/operation/deleteBy).
 
         Required API Key ACLs:
           - deleteObject
@@ -2879,7 +2930,7 @@ class SearchClient:
         Retrieves an object with non-null index settings.
 
         Required API Key ACLs:
-          - search
+          - settings
 
         :param index_name: Name of the index on which to perform the operation. (required)
         :type index_name: str
@@ -2915,7 +2966,7 @@ class SearchClient:
         Retrieves an object with non-null index settings.
 
         Required API Key ACLs:
-          - search
+          - settings
 
         :param index_name: Name of the index on which to perform the operation. (required)
         :type index_name: str
@@ -5233,6 +5284,7 @@ class SearchClientSync:
     """
 
     _transporter: TransporterSync
+    _ingestion_transporter: Optional[IngestionClientSync]
     _config: BaseConfig
     _request_options: RequestOptions
 
@@ -5245,9 +5297,9 @@ class SearchClientSync:
     ) -> None:
         if transporter is not None and config is None:
             config = SearchConfig(transporter.config.app_id, transporter.config.api_key)
-
-        if config is None:
+        elif config is None:
             config = SearchConfig(app_id, api_key)
+
         self._config = config
         self._request_options = RequestOptions(config)
 
@@ -5275,12 +5327,26 @@ class SearchClientSync:
         if transporter is None:
             transporter = TransporterSync(config)
 
-        return SearchClientSync(
+        client = SearchClientSync(
             app_id=config.app_id,
             api_key=config.api_key,
             transporter=transporter,
             config=config,
         )
+
+        if config.region is not None:
+            ingestion_config = IngestionConfig(
+                config.app_id, config.api_key, config.region
+            )
+
+            if config.hosts is not None:
+                ingestion_config.hosts = config.hosts
+
+            client._ingestion_transporter = IngestionClientSync.create_with_config(
+                ingestion_config
+            )
+
+        return client
 
     def __enter__(self) -> Self:
         return self
@@ -5610,6 +5676,32 @@ class SearchClientSync:
             request_options=request_options,
         )
 
+    def save_objects_with_transformation(
+        self,
+        index_name: str,
+        objects: List[Dict[str, Any]],
+        wait_for_tasks: bool = False,
+        batch_size: int = 1000,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> WatchResponse:
+        """
+        Helper: Similar to the `save_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client's config at instantiation.
+        """
+        if self._ingestion_transporter is None:
+            raise ValueError(
+                "`region` must be provided at client instantiation before calling this method."
+            )
+
+        return self._ingestion_transporter.push(
+            index_name=index_name,
+            push_task_payload={
+                "action": Action.ADDOBJECT,
+                "records": objects,
+            },
+            watch=wait_for_tasks,
+            request_options=request_options,
+        )
+
     def delete_objects(
         self,
         index_name: str,
@@ -5650,6 +5742,35 @@ class SearchClientSync:
             else Action.PARTIALUPDATEOBJECTNOCREATE,
             wait_for_tasks=wait_for_tasks,
             batch_size=batch_size,
+            request_options=request_options,
+        )
+
+    def partial_update_objects_with_transformation(
+        self,
+        index_name: str,
+        objects: List[Dict[str, Any]],
+        create_if_not_exists: bool = False,
+        wait_for_tasks: bool = False,
+        batch_size: int = 1000,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> WatchResponse:
+        """
+        Helper: Similar to the `partial_update_objects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client instantiation method.
+        """
+        if self._ingestion_transporter is None:
+            raise ValueError(
+                "`region` must be provided at client instantiation before calling this method."
+            )
+
+        return self._ingestion_transporter.push(
+            index_name=index_name,
+            push_task_payload={
+                "action": Action.PARTIALUPDATEOBJECT
+                if create_if_not_exists
+                else Action.PARTIALUPDATEOBJECTNOCREATE,
+                "records": objects,
+            },
+            watch=wait_for_tasks,
             request_options=request_options,
         )
 
@@ -7115,7 +7236,7 @@ class SearchClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> ApiResponse[str]:
         """
-        Deletes a record by its object ID.  To delete more than one record, use the [`batch` operation](#tag/Records/operation/batch). To delete records matching a query, use the [`deleteByQuery` operation](#tag/Records/operation/deleteBy).
+        Deletes a record by its object ID.  To delete more than one record, use the [`batch` operation](#tag/Records/operation/batch). To delete records matching a query, use the [`deleteBy` operation](#tag/Records/operation/deleteBy).
 
         Required API Key ACLs:
           - deleteObject
@@ -7159,7 +7280,7 @@ class SearchClientSync:
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> DeletedAtResponse:
         """
-        Deletes a record by its object ID.  To delete more than one record, use the [`batch` operation](#tag/Records/operation/batch). To delete records matching a query, use the [`deleteByQuery` operation](#tag/Records/operation/deleteBy).
+        Deletes a record by its object ID.  To delete more than one record, use the [`batch` operation](#tag/Records/operation/batch). To delete records matching a query, use the [`deleteBy` operation](#tag/Records/operation/deleteBy).
 
         Required API Key ACLs:
           - deleteObject
@@ -7942,7 +8063,7 @@ class SearchClientSync:
         Retrieves an object with non-null index settings.
 
         Required API Key ACLs:
-          - search
+          - settings
 
         :param index_name: Name of the index on which to perform the operation. (required)
         :type index_name: str
@@ -7978,7 +8099,7 @@ class SearchClientSync:
         Retrieves an object with non-null index settings.
 
         Required API Key ACLs:
-          - search
+          - settings
 
         :param index_name: Name of the index on which to perform the operation. (required)
         :type index_name: str

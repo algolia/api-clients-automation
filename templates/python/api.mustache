@@ -2,17 +2,23 @@
 {{> imports}}
 
 {{#isSearchClient}}
-from algoliasearch.search.models.action import Action
-from algoliasearch.search.models.batch_request import BatchRequest
-from algoliasearch.search.models.browse_params_object import BrowseParamsObject
-from algoliasearch.search.models.operation_type import OperationType
-from algoliasearch.search.models.replace_all_objects_response import ReplaceAllObjectsResponse
-from algoliasearch.search.models.scope_type import ScopeType
-from algoliasearch.search.models.secured_api_key_restrictions import SecuredApiKeyRestrictions
+from algoliasearch.search.models import (
+  Action,
+  BatchRequest,
+  BrowseParamsObject,
+  OperationType,
+  ReplaceAllObjectsResponse,
+  ScopeType,
+  SecuredApiKeyRestrictions,
+)
+
+from algoliasearch.ingestion.models import WatchResponse
+from algoliasearch.ingestion.config import IngestionConfig
+from algoliasearch.ingestion.client import (IngestionClient, IngestionClientSync)
 {{/isSearchClient}}
 
 {{#operations}}{{#operation}}{{#imports}}
-from algoliasearch.{{packageName}}.models.{{#lambda.snakecase}}{{{.}}}{{/lambda.snakecase}} import {{{.}}}
+from algoliasearch.{{packageName}}.models import {{{.}}}
 {{/imports}}{{/operation}}{{/operations}}
 
 
@@ -37,15 +43,18 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
     """
 
     _transporter: Transporter{{#isSyncClient}}Sync{{/isSyncClient}}
+    {{#isSearchClient}}
+    _ingestion_transporter: Optional[IngestionClient{{#isSyncClient}}Sync{{/isSyncClient}}]
+    {{/isSearchClient}}
     _config: BaseConfig
     _request_options: RequestOptions
 
     def __init__(self, app_id: Optional[str] = None, api_key: Optional[str] = None, {{#hasRegionalHost}}region: {{#fallbackToAliasHost}}Optional[str] = None{{/fallbackToAliasHost}}{{^fallbackToAliasHost}}str = ""{{/fallbackToAliasHost}}, {{/hasRegionalHost}}transporter: Optional[Transporter{{#isSyncClient}}Sync{{/isSyncClient}}] = None, config: Optional[{{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}] = None) -> None:
         if transporter is not None and config is None:
             config = {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(transporter.config.app_id, transporter.config.api_key{{#hasRegionalHost}}, region{{/hasRegionalHost}})
-
-        if config is None:
+        elif config is None:
             config = {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(app_id, api_key{{#hasRegionalHost}}, region{{/hasRegionalHost}})
+
         self._config = config
         self._request_options = RequestOptions(config)
 
@@ -71,7 +80,19 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         if transporter is None:
             transporter = Transporter{{#isSyncClient}}Sync{{/isSyncClient}}(config)
 
-        return {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}(app_id=config.app_id, api_key=config.api_key, {{#hasRegionalHost}}region=config.region, {{/hasRegionalHost}}transporter=transporter, config=config)
+        client = {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}(app_id=config.app_id, api_key=config.api_key, {{#hasRegionalHost}}region=config.region, {{/hasRegionalHost}}transporter=transporter, config=config)
+
+        {{#isSearchClient}}
+        if config.region is not None:
+            ingestion_config = IngestionConfig(config.app_id, config.api_key, config.region)
+
+            if config.hosts is not None:
+                ingestion_config.hosts = config.hosts
+
+            client._ingestion_transporter = IngestionClient{{#isSyncClient}}Sync{{/isSyncClient}}.create_with_config(ingestion_config)
+        {{/isSearchClient}}
+
+        return client
 
     {{^isSyncClient}}
     async def __aenter__(self) -> Self:

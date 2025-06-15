@@ -117,7 +117,7 @@ class SearchTest extends AnyFunSuite {
 
     val response = Await.result(future, Duration.Inf)
     val expected = parse(
-      """{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":100,"maxValuesPerFacet":100,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"]}"""
+      """{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":100,"maxValuesPerFacet":100,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"typoTolerance":"false"}"""
     )
     val extracted = Extraction.decompose(response)
     val diffRes = expected.diff(extracted)
@@ -394,7 +394,8 @@ class SearchTest extends AnyFunSuite {
     val future = client.setSettings(
       indexName = "cts_e2e_settings",
       indexSettings = IndexSettings(
-        paginationLimitedTo = Some(10)
+        paginationLimitedTo = Some(10),
+        typoTolerance = Some(TypoToleranceEnum.withName("false"))
       ),
       forwardToReplicas = Some(true)
     )
