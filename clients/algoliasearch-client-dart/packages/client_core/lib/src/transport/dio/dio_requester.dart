@@ -123,7 +123,7 @@ class DioRequester implements Requester {
   }
 
   @override
-  get connectTimeout => _client.options.connectTimeout;
+  Duration? get connectTimeout => _client.options.connectTimeout;
 
   @override
   void setConnectTimeout(Duration connectTimeout) {
