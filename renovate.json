@@ -21,35 +21,23 @@
     "custom.regex",
     "sbt"
   ],
-  "baseBranches": [
-    "chore/renovateBaseBranch"
-  ],
-  "postUpdateOptions": [
-    "gomodTidy"
-  ],
+  "baseBranches": ["chore/renovateBaseBranch"],
+  "postUpdateOptions": ["gomodTidy"],
   "packageRules": [
     {
-      "matchDepTypes": [
-        "required_provider"
-      ],
+      "matchDepTypes": ["required_provider"],
       "rangeStrategy": "bump"
     },
     {
       "groupName": "openapi-generator",
-      "matchPackageNames": [
-        "/openapi-generator/"
-      ]
+      "matchPackageNames": ["/openapi-generator/"]
     },
     {
       "allowedVersions": "4.0.0",
-      "matchPackageNames": [
-        "github.com/algolia/algoliasearch-client-go/v4"
-      ]
+      "matchPackageNames": ["github.com/algolia/algoliasearch-client-go/v4"]
     },
     {
-      "matchDatasources": [
-        "dart-version"
-      ],
+      "matchDatasources": ["dart-version"],
       "allowedVersions": "/^[0-9]+\\.[0-9]+\\.[0-9]+$/"
     }
   ],
@@ -57,21 +45,15 @@
     {
       "customType": "regex",
       "description": "Update openapitools-cli version in the generation file",
-      "fileMatch": [
-        "generateOpenapitools.ts"
-      ],
-      "matchStrings": [
-        "\\sversion: '(?<currentValue>.*?)',?\\s"
-      ],
+      "managerFilePatterns": ["/generateOpenapitools.ts/"],
+      "matchStrings": ["\\sversion: '(?<currentValue>.*?)',?\\s"],
       "depNameTemplate": "org.openapitools:openapi-generator-cli",
       "datasourceTemplate": "maven"
     },
     {
       "customType": "regex",
       "description": "Update pyproject.toml mustache devDeps",
-      "fileMatch": [
-        "pyproject.mustache"
-      ],
+      "managerFilePatterns": ["/pyproject.mustache/"],
       "matchStrings": [
         "dependencies][^[]*",
         "(?<depName>.*?)=\\s*\"(?<currentValue>.*?)\""
@@ -82,20 +64,16 @@
     {
       "customType": "regex",
       "description": "Update package.json mustache devDeps",
-      "fileMatch": [
-        "package.mustache"
-      ],
-      "matchStrings": [
-        "\"(?<depName>.*?)\":\\s*\"(?<currentValue>\\d+.*?)\""
-      ],
+      "managerFilePatterns": ["/package.mustache/"],
+      "matchStrings": ["\"(?<depName>.*?)\":\\s*\"(?<currentValue>\\d+.*?)\""],
       "datasourceTemplate": "npm"
     },
     {
       "customType": "regex",
       "description": "Update the java formatter",
-      "fileMatch": [
-        "Dockerfile",
-        ".github/actions/setup/action.yml"
+      "managerFilePatterns": [
+        "/Dockerfile/",
+        "/.github/actions/setup/action.yml/"
       ],
       "matchStrings": [
         "google-java-format/releases/download/v(?<currentValue>.*?)/google-java-format-",
@@ -108,7 +86,7 @@
     {
       "customType": "regex",
       "description": "Update java packages in mustache files",
-      "fileMatch": "build.mustache",
+      "managerFilePatterns": ["/build.mustache/"],
       "matchStrings": [
         "testImplementation '(?<depName>.*):(?<currentValue>\\d.*?)'"
       ],
@@ -117,27 +95,23 @@
     {
       "customType": "regex",
       "description": "Update yarn version",
-      "fileMatch": ".yarnrc.yml",
-      "matchStrings": [
-        ".yarn/releases/yarn-(?<currentValue>.*?)\\.cjs"
-      ],
+      "managerFilePatterns": ["/.yarnrc.yml/"],
+      "matchStrings": [".yarn/releases/yarn-(?<currentValue>.*?)\\.cjs"],
       "depNameTemplate": "yarnpkg/berry",
       "datasourceTemplate": "github-releases"
     },
     {
       "customType": "regex",
       "description": "Update yarn for netlify",
-      "fileMatch": "netlify.toml",
-      "matchStrings": [
-        "YARN_VERSION\\s*=\\s*\"(?<currentValue>.*?)\""
-      ],
+      "managerFilePatterns": ["/netlify.toml/"],
+      "matchStrings": ["YARN_VERSION\\s*=\\s*\"(?<currentValue>.*?)\""],
       "depNameTemplate": "yarnpkg/berry",
       "datasourceTemplate": "github-releases"
     },
     {
       "customType": "regex",
       "description": "Update pubspec.yaml for Dart",
-      "fileMatch": "pubspec.mustache",
+      "managerFilePatterns": ["/pubspec.mustache/"],
       "matchStrings": [
         "(dev_)?dependencies:\\s*[^$]*",
         "  (?<depName>[a-z_]+?): (?<currentValue>.*?)\n"
@@ -149,50 +123,40 @@
     {
       "customType": "regex",
       "description": "Update .csharp-version",
-      "fileMatch": ".csharp-version",
-      "matchStrings": [
-        "(?<currentValue>.*)"
-      ],
+      "managerFilePatterns": ["/.csharp-version/"],
+      "matchStrings": ["(?<currentValue>.*)"],
       "datasourceTemplate": "dotnet-version",
       "depNameTemplate": "dotnet-sdk"
     },
     {
       "customType": "regex",
       "description": "Update .java-version",
-      "fileMatch": ".java-version",
-      "matchStrings": [
-        "(?<currentValue>.*)"
-      ],
+      "managerFilePatterns": ["/.java-version/"],
+      "matchStrings": ["(?<currentValue>.*)"],
       "datasourceTemplate": "java-version",
       "depNameTemplate": "java"
     },
     {
       "customType": "regex",
       "description": "Update .dart-version",
-      "fileMatch": ".dart-version",
-      "matchStrings": [
-        "(?<currentValue>.*)"
-      ],
+      "managerFilePatterns": ["/.dart-version/"],
+      "matchStrings": ["(?<currentValue>.*)"],
       "datasourceTemplate": "dart-version",
       "depNameTemplate": "dart"
     },
     {
       "customType": "regex",
       "description": "Update .go-version",
-      "fileMatch": ".go-version",
-      "matchStrings": [
-        "(?<currentValue>.*)"
-      ],
+      "managerFilePatterns": ["/.go-version/"],
+      "matchStrings": ["(?<currentValue>.*)"],
       "datasourceTemplate": "golang-version",
       "depNameTemplate": "golang"
     },
     {
       "customType": "regex",
       "description": "Update .php-version",
-      "fileMatch": ".php-version",
-      "matchStrings": [
-        "(?<currentValue>.*)"
-      ],
+      "managerFilePatterns": ["/.php-version/"],
+      "matchStrings": ["(?<currentValue>.*)"],
       "datasourceTemplate": "github-tags",
       "depNameTemplate": "php/php-src",
       "extractVersionTemplate": "^php-(?<version>.*)$"
@@ -200,30 +164,26 @@
     {
       "customType": "regex",
       "description": "Update .ruby-version",
-      "fileMatch": ".ruby-version",
-      "matchStrings": [
-        "(?<currentValue>.*)"
-      ],
+      "managerFilePatterns": ["/.ruby-version/"],
+      "matchStrings": ["(?<currentValue>.*)"],
       "datasourceTemplate": "ruby-version",
       "depNameTemplate": "ruby"
     },
     {
       "customType": "regex",
       "description": "Update ruby version on CI",
-      "fileMatch": "clients/algoliasearch-client-ruby/.github/workflows/release.yml",
-      "matchStrings": [
-        "ruby-version: (?<currentValue>.*)"
+      "managerFilePatterns": [
+        "/clients/algoliasearch-client-ruby/.github/workflows/release.yml/"
       ],
+      "matchStrings": ["ruby-version: (?<currentValue>.*)"],
       "datasourceTemplate": "ruby-version",
       "depNameTemplate": "ruby"
     },
     {
       "customType": "regex",
       "description": "Update .swift-version",
-      "fileMatch": ".swift-version",
-      "matchStrings": [
-        "(?<currentValue>.*)"
-      ],
+      "managerFilePatterns": ["/.swift-version/"],
+      "matchStrings": ["(?<currentValue>.*)"],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "swiftlang/swift",
       "extractVersionTemplate": "^swift-(?<version>.*)-RELEASE$"
@@ -231,9 +191,9 @@
     {
       "customType": "regex",
       "description": "Update swiftformat version",
-      "fileMatch": [
-        "Dockerfile",
-        ".github/actions/setup/action.yml"
+      "managerFilePatterns": [
+        "/Dockerfile/",
+        "/.github/actions/setup/action.yml/"
       ],
       "matchStrings": [
         "SWIFTFORMAT_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
@@ -243,9 +203,7 @@
     }
   ],
   "github-actions": {
-    "fileMatch": [
-      "\\.github/workflows/.*\\.ya?ml$"
-    ]
+    "managerFilePatterns": ["/\\.github/workflows/.*\\.ya?ml$/"]
   },
   "ignorePaths": [
     "**/algoliasearch/**",
