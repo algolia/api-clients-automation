@@ -1,25 +1,25 @@
-post:
+get:
   tags:
     - users
-  operationId: computeUser
+  operationId: getRealtimeUser
   x-acl:
     - recommendation
-  summary: Compute the user's personalization profile
-  description: Sends a request to compute the user's personalization profile.
+  summary: Retrieve the user's personalization profile
+  description: Retrieves the user's personalization profiles containing search filters.
   parameters:
     - $ref: '../common/parameters.yml#/UserToken'
   responses:
-    '202':
-      $ref: '../../common/responses/Accepted.yml'
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../common/schemas/RealtimeUser.yml#/user'
     '400':
       $ref: '../../common/responses/BadRequest.yml'
     '402':
       $ref: '../../common/responses/FeatureNotEnabled.yml'
-    '409':
-      $ref: '../../common/responses/Conflict.yml'
     '421':
       $ref: '../../common/responses/TooManyRequests.yml'
-    '422':
-      $ref: '../../common/responses/StatusUnprocessableEntity.yml'
     '500':
       $ref: '../../common/responses/InternalError.yml'

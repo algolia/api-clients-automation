@@ -164,6 +164,11 @@
         "output": "clients/algoliasearch-client-javascript/packages/client-personalization"
       },
       {
+        "name": "advanced-personalization",
+        "output": "clients/algoliasearch-client-javascript/packages/advanced-personalization",
+        "isStandaloneClient": true
+      },
+      {
         "name": "query-suggestions",
         "output": "clients/algoliasearch-client-javascript/packages/client-query-suggestions"
       },
