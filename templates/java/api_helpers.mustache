@@ -738,6 +738,7 @@ public <T> WatchResponse saveObjectsWithTransformation(
       indexName,
       new PushTaskPayload().setAction(com.algolia.model.ingestion.Action.ADD_OBJECT).setRecords(this.objectsToPushTaskRecords(objects)),
       waitForTasks,
+      null,
       requestOptions
     );
 }
@@ -983,6 +984,7 @@ public <T> WatchResponse partialUpdateObjectsWithTransformation(
         )
         .setRecords(this.objectsToPushTaskRecords(objects)),
       waitForTasks,
+      null,
       requestOptions
     );
 }
