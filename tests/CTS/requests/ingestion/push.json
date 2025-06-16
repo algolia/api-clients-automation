@@ -58,13 +58,15 @@
           }
         ]
       },
+      "referenceIndexName": "foo",
       "watch": true
     },
     "request": {
       "path": "/1/push/bar",
       "method": "POST",
       "queryParameters": {
-        "watch": "true"
+        "watch": "true",
+        "referenceIndexName": "foo"
       },
       "body": {
         "action": "addObject",
