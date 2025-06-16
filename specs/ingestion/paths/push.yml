@@ -20,6 +20,12 @@ post:
   parameters:
     - $ref: '../../common/parameters.yml#/IndexName'
     - $ref: '../common/parameters.yml#/watch'
+    - name: referenceIndexName
+      in: query
+      description: This is required to be provided when targeting an index that does not have a push connector setup (e.g. a tmp index), but you wish to attach another index's transformation to it (e.g. the source index name).
+      required: false
+      schema:
+        type: string
   requestBody:
     content:
       application/json:
