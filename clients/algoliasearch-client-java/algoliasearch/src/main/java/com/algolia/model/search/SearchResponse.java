@@ -359,7 +359,7 @@ public class SearchResponse<T> implements SearchResult<T> {
   }
 
   /** Time the server took to process the request, in milliseconds. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getProcessingTimeMS() {
     return processingTimeMS;
   }

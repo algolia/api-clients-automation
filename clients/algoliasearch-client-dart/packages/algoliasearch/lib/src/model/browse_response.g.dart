@@ -48,7 +48,7 @@ BrowseResponse _$BrowseResponseFromJson(Map<String, dynamic> json) =>
               $checkedConvert('nbSortedHits', (v) => (v as num?)?.toInt()),
           parsedQuery: $checkedConvert('parsedQuery', (v) => v as String?),
           processingTimeMS:
-              $checkedConvert('processingTimeMS', (v) => (v as num).toInt()),
+              $checkedConvert('processingTimeMS', (v) => (v as num?)?.toInt()),
           processingTimingsMS: $checkedConvert('processingTimingsMS', (v) => v),
           queryAfterRemoval:
               $checkedConvert('queryAfterRemoval', (v) => v as String?),
@@ -113,7 +113,8 @@ Map<String, dynamic> _$BrowseResponseToJson(BrowseResponse instance) =>
       if (instance.message case final value?) 'message': value,
       if (instance.nbSortedHits case final value?) 'nbSortedHits': value,
       if (instance.parsedQuery case final value?) 'parsedQuery': value,
-      'processingTimeMS': instance.processingTimeMS,
+      if (instance.processingTimeMS case final value?)
+        'processingTimeMS': value,
       if (instance.processingTimingsMS case final value?)
         'processingTimingsMS': value,
       if (instance.queryAfterRemoval case final value?)
