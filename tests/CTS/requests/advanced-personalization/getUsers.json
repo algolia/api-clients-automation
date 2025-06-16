@@ -1,0 +1,14 @@
+[
+  {
+    "parameters": {
+      "indices": ["indexName"]
+    },
+    "request": {
+      "path": "/2/users",
+      "method": "GET",
+      "queryParameters": {
+        "indices": "indexName"
+      }
+    }
+  }
+]
