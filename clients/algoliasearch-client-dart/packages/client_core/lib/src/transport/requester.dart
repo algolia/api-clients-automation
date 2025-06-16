@@ -15,7 +15,7 @@ abstract class Requester {
   void setClientApiKey(String apiKey);
 
   /// Allows to customise the connect timeout for the requester.
-  get connectTimeout => null;
+  Duration? get connectTimeout => null;
   void setConnectTimeout(Duration connectTimeout);
 
   /// Closes any underlying resources that the Requester might be using.

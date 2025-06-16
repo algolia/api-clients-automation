@@ -1,4 +1,4 @@
-import 'dart:html' as web;
+import 'package:web/web.dart' as web;
 
 import 'package:algolia_client_core/src/config/agent_segment.dart';
 import 'package:dio/dio.dart' as dio;

@@ -53,7 +53,8 @@ final class RetryStrategy {
     final List<AlgoliaException> errors = [];
     for (final host in hosts) {
       final httpRequest = _buildRequest(host, request, callType, options);
-      final requesterConnectTimeout = requester.connectTimeout;
+      final requesterConnectTimeout =
+          requester.connectTimeout ?? Duration(seconds: 2);
       if (options?.connectTimeout != null) {
         requester.setConnectTimeout(options!.connectTimeout!);
       }
