@@ -1,0 +1,11 @@
+[
+  {
+    "parameters": {
+      "userToken": "foo"
+    },
+    "request": {
+      "path": "/2/realtime/users/foo/compute",
+      "method": "POST"
+    }
+  }
+]
