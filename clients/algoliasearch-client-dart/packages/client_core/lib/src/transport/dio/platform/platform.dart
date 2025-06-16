@@ -10,7 +10,7 @@ final class Platform {
   static Iterable<AgentSegment> agentSegments() => platformAgentSegments();
 
   /// Set Algolia Agent as User-Agent or as query param depending on the platform.
-  static algoliaAgent(dio.RequestOptions options, String agent) =>
+  static void algoliaAgent(dio.RequestOptions options, String agent) =>
       platformAlgoliaAgent(options, agent);
 
   Platform._();
