@@ -1,0 +1,55 @@
+method:
+  get:
+    x-helper: true
+    tags:
+      - Records
+    x-available-languages:
+      - javascript
+    operationId: chunkedPush
+    summary: Replace all records in an index
+    description: |
+      Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `push` requests by leveraging the Transformation pipeline setup in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
+    parameters:
+      - in: query
+        name: indexName
+        description: The `indexName` to replace `objects` in.
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: objects
+        description: List of objects to replace the current objects with.
+        required: true
+        schema:
+          type: array
+          items:
+            type: object
+      - in: query
+        name: action
+        description: The `batch` `action` to perform on the given array of `objects`, defaults to `addObject`.
+        required: false
+        schema:
+          $ref: '../../common/schemas/Batch.yml#/action'
+      - in: query
+        name: waitForTasks
+        description: Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+        required: false
+        schema:
+          type: boolean
+      - in: query
+        name: batchSize
+        description: The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+        required: false
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../../common/schemas/ingestion/WatchResponse.yml'
+      '400':
+        $ref: '../../common/responses/IndexNotFound.yml'

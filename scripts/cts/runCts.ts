@@ -13,6 +13,7 @@ import { assertPushMockValid } from './testServer/pushMock.ts';
 import { assertValidReplaceAllObjects } from './testServer/replaceAllObjects.ts';
 import { assertValidReplaceAllObjectsFailed } from './testServer/replaceAllObjectsFailed.ts';
 import { assertValidReplaceAllObjectsScopes } from './testServer/replaceAllObjectsScopes.ts';
+import { assertValidReplaceAllObjectsWithTransformation } from './testServer/replaceAllObjectsWithTransformation.ts';
 import { assertValidTimeouts } from './testServer/timeout.ts';
 import { assertValidWaitForApiKey } from './testServer/waitFor.ts';
 
@@ -154,6 +155,7 @@ export async function runCts(
     assertValidTimeouts(languages.length);
     assertChunkWrapperValid(languages.length - skip('dart'));
     assertValidReplaceAllObjects(languages.length - skip('dart'));
+    assertValidReplaceAllObjectsWithTransformation(only('javascript'));
     assertValidAccountCopyIndex(only('javascript'));
     assertValidReplaceAllObjectsFailed(languages.length - skip('dart'));
     assertValidReplaceAllObjectsScopes(languages.length - skip('dart'));
