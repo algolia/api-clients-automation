@@ -58,8 +58,8 @@
           }
         ]
       },
-      "referenceIndexName": "foo",
-      "watch": true
+      "watch": true,
+      "referenceIndexName": "foo"
     },
     "request": {
       "path": "/1/push/bar",
