@@ -1,7 +1,0 @@
-strategy:
-  type: string
-  enum:
-    - session
-    - historical
-    - hybrid
-  example: 'session'
