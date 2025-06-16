@@ -118,7 +118,7 @@ case class SearchResultsItem(
     message: Option[String] = scala.None,
     nbSortedHits: Option[Int] = scala.None,
     parsedQuery: Option[String] = scala.None,
-    processingTimeMS: Int,
+    processingTimeMS: Option[Int] = scala.None,
     processingTimingsMS: Option[Any] = scala.None,
     queryAfterRemoval: Option[String] = scala.None,
     redirect: Option[Redirect] = scala.None,

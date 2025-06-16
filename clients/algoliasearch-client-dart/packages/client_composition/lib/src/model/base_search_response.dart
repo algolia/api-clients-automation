@@ -30,7 +30,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
     this.message,
     this.nbSortedHits,
     this.parsedQuery,
-    required this.processingTimeMS,
+    this.processingTimeMS,
     this.processingTimingsMS,
     this.queryAfterRemoval,
     this.redirect,
@@ -112,7 +112,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
 
   /// Time the server took to process the request, in milliseconds.
   @JsonKey(name: r'processingTimeMS')
-  final int processingTimeMS;
+  final int? processingTimeMS;
 
   /// Experimental. List of processing steps and their times, in milliseconds. You can use this list to investigate performance issues.
   @JsonKey(name: r'processingTimingsMS')

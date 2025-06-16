@@ -1883,8 +1883,6 @@ components:
     baseSearchResponse:
       type: object
       additionalProperties: true
-      required:
-        - processingTimeMS
       properties:
         abTestID:
           type: integer
