@@ -1327,7 +1327,8 @@ class IngestionTest extends AnyFunSuite {
           )
         )
       ),
-      watch = Some(true)
+      watch = Some(true),
+      referenceIndexName = Some("foo")
     )
 
     Await.ready(future, Duration.Inf)
@@ -1340,7 +1341,7 @@ class IngestionTest extends AnyFunSuite {
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
-    val expectedQuery = parse("""{"watch":"true"}""").asInstanceOf[JObject].obj.toMap
+    val expectedQuery = parse("""{"watch":"true","referenceIndexName":"foo"}""").asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
     for ((k, v) <- actualQuery) {

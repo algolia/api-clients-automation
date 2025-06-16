@@ -904,6 +904,7 @@ describe('push', () => {
         ],
       },
       watch: true,
+      referenceIndexName: 'foo',
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/push/bar');
@@ -915,7 +916,7 @@ describe('push', () => {
         { key: 'baz', foo: '2', objectID: 'k' },
       ],
     });
-    expect(req.searchParams).toStrictEqual({ watch: 'true' });
+    expect(req.searchParams).toStrictEqual({ watch: 'true', referenceIndexName: 'foo' });
   });
 });
 

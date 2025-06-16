@@ -1382,6 +1382,7 @@ class SnippetIngestionClient {
         ),
       ),
       watch = true,
+      referenceIndexName = "foo",
     )
 
     // >LOG

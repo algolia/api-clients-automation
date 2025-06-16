@@ -1184,11 +1184,15 @@ class TestIngestionClient:
                 ],
             },
             watch=True,
+            reference_index_name="foo",
         )
 
         assert _req.path == "/1/push/bar"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() == {"watch": "true"}.items()
+        assert (
+            _req.query_parameters.items()
+            == {"watch": "true", "referenceIndexName": "foo"}.items()
+        )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}"""
@@ -2911,11 +2915,15 @@ class TestIngestionClientSync:
                 ],
             },
             watch=True,
+            reference_index_name="foo",
         )
 
         assert _req.path == "/1/push/bar"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() == {"watch": "true"}.items()
+        assert (
+            _req.query_parameters.items()
+            == {"watch": "true", "referenceIndexName": "foo"}.items()
+        )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}"""

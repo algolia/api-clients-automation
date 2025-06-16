@@ -1716,7 +1716,8 @@ class SnippetIngestionClient {
             )
           )
         ),
-        watch = Some(true)
+        watch = Some(true),
+        referenceIndexName = Some("foo")
       ),
       Duration(100, "sec")
     )

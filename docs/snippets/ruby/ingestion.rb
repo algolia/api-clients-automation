@@ -1386,7 +1386,8 @@ def snippet_for_push1
         Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", algolia_object_id: "k")
       ]
     ),
-    true
+    true,
+    "foo"
   )
 
   # >LOG

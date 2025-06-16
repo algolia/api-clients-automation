@@ -1739,7 +1739,7 @@ func SnippetForPushOfIngestion1() {
 	response, err := client.Push(client.NewApiPushRequest(
 		"<YOUR_INDEX_NAME>",
 		ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
-			[]ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})).WithWatch(true))
+			[]ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})).WithWatch(true).WithReferenceIndexName("foo"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

@@ -1057,6 +1057,15 @@ paths:
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/watch'
+        - name: referenceIndexName
+          in: query
+          description: >-
+            This is required when targeting an index that does not have a push
+            connector setup (e.g. a tmp index), but you wish to attach another
+            index's transformation to it (e.g. the source index name).
+          required: false
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -1411,7 +1420,7 @@ paths:
           label: curl
           source: |-
             curl --request POST \
-              --url 'https://data.us.algolia.com/1/push/ALGOLIA_INDEX_NAME?watch=true' \
+              --url 'https://data.us.algolia.com/1/push/ALGOLIA_INDEX_NAME?watch=true&referenceIndexName=lorem' \
               --header 'accept: application/json' \
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \

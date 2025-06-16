@@ -1023,7 +1023,7 @@ func TestIngestion_Push(t *testing.T) {
 		_, err := client.Push(client.NewApiPushRequest(
 			"bar",
 			ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
-				[]ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})).WithWatch(true))
+				[]ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})).WithWatch(true).WithReferenceIndexName("foo"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/push/bar", echo.Path)
@@ -1032,7 +1032,7 @@ func TestIngestion_Push(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}`)
 		queryParams := map[string]string{}
-		require.NoError(t, json.Unmarshal([]byte(`{"watch":"true"}`), &queryParams))
+		require.NoError(t, json.Unmarshal([]byte(`{"watch":"true","referenceIndexName":"foo"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))

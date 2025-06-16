@@ -964,12 +964,13 @@ class TestIngestionClient < Test::Unit::TestCase
           Algolia::Ingestion::PushTaskRecords.new(key: "baz", foo: "2", algolia_object_id: "k")
         ]
       ),
-      true
+      true,
+      "foo"
     )
 
     assert_equal(:post, req.method)
     assert_equal("/1/push/bar", req.path)
-    assert_equal({:"watch" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({:"watch" => "true", :"referenceIndexName" => "foo"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(

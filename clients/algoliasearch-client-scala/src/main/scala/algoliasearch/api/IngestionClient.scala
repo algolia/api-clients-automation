@@ -1220,11 +1220,15 @@ class IngestionClient(
     * @param watch
     *   When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished
     *   before responding.
+    * @param referenceIndexName
+    *   This is required when targeting an index that does not have a push connector setup (e.g. a tmp index), but you
+    *   wish to attach another index's transformation to it (e.g. the source index name).
     */
   def push(
       indexName: String,
       pushTaskPayload: PushTaskPayload,
       watch: Option[Boolean] = None,
+      referenceIndexName: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[WatchResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `push`.")
@@ -1236,6 +1240,7 @@ class IngestionClient(
       .withPath(s"/1/push/${escape(indexName)}")
       .withBody(pushTaskPayload)
       .withQueryParameter("watch", watch)
+      .withQueryParameter("referenceIndexName", referenceIndexName)
       .build()
     execute[WatchResponse](
       request,

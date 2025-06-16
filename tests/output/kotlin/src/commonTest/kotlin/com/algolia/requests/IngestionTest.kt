@@ -1359,12 +1359,13 @@ class IngestionTest {
             ),
           ),
           watch = true,
+          referenceIndexName = "foo",
         )
       },
       intercept = {
         assertEquals("/1/push/bar".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertQueryParams("""{"watch":"true"}""", it.url.encodedParameters)
+        assertQueryParams("""{"watch":"true","referenceIndexName":"foo"}""", it.url.encodedParameters)
         assertJsonBody("""{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}""", it.body)
       },
     )

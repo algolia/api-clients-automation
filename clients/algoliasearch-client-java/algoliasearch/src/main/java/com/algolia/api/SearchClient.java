@@ -6838,6 +6838,7 @@ public class SearchClient extends ApiClient {
         indexName,
         new PushTaskPayload().setAction(com.algolia.model.ingestion.Action.ADD_OBJECT).setRecords(this.objectsToPushTaskRecords(objects)),
         waitForTasks,
+        null,
         requestOptions
       );
   }
@@ -7095,6 +7096,7 @@ public class SearchClient extends ApiClient {
           )
           .setRecords(this.objectsToPushTaskRecords(objects)),
         waitForTasks,
+        null,
         requestOptions
       );
   }

@@ -1138,7 +1138,8 @@ class SnippetIngestionClient {
             new PushTaskRecords().setAdditionalProperty("key", "baz").setAdditionalProperty("foo", "2").setObjectID("k")
           )
         ),
-      true
+      true,
+      "foo"
     );
     // >LOG
     // SEPARATOR<

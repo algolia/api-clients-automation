@@ -1293,6 +1293,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 ],
             ],
             true,
+            'foo',
         );
 
         $this->assertRequests([
@@ -1300,7 +1301,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/push/bar',
                 'method' => 'POST',
                 'body' => json_decode('{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}'),
-                'queryParameters' => json_decode('{"watch":"true"}', true),
+                'queryParameters' => json_decode('{"watch":"true","referenceIndexName":"foo"}', true),
             ],
         ]);
     }

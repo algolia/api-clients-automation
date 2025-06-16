@@ -1066,7 +1066,8 @@ final class IngestionClientSnippet {
                     ]),
                 ]
             ),
-            watch: true
+            watch: true,
+            referenceIndexName: "foo"
         )
         // >LOG
         // SEPARATOR<

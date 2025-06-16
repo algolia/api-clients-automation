@@ -1250,6 +1250,7 @@ export async function snippetForPush1(): Promise<void> {
       ],
     },
     watch: true,
+    referenceIndexName: 'foo',
   });
 
   // >LOG

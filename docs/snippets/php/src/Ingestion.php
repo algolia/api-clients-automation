@@ -1563,6 +1563,7 @@ class SnippetIngestionClient
                 ],
             ],
             true,
+            'foo',
         );
 
         // >LOG

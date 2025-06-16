@@ -1288,7 +1288,8 @@ public class IngestionClientRequestTests
           },
         },
       },
-      true
+      true,
+      "foo"
     );
 
     var req = _echo.LastResponse;
@@ -1300,7 +1301,7 @@ public class IngestionClientRequestTests
       new JsonDiffConfig(false)
     );
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"watch\":\"true\"}"
+      "{\"watch\":\"true\",\"referenceIndexName\":\"foo\"}"
     );
     Assert.NotNull(expectedQuery);
 

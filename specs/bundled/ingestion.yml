@@ -259,6 +259,15 @@ paths:
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/watch'
+        - name: referenceIndexName
+          in: query
+          description: >-
+            This is required when targeting an index that does not have a push
+            connector setup (e.g. a tmp index), but you wish to attach another
+            index's transformation to it (e.g. the source index name).
+          required: false
+          schema:
+            type: string
       requestBody:
         content:
           application/json:

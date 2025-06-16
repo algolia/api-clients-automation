@@ -3133,6 +3133,9 @@ public class IngestionClient extends ApiClient {
    * @param pushTaskPayload (required)
    * @param watch When provided, the push operation will be synchronous and the API will wait for
    *     the ingestion to be finished before responding. (optional)
+   * @param referenceIndexName This is required when targeting an index that does not have a push
+   *     connector setup (e.g. a tmp index), but you wish to attach another index's transformation
+   *     to it (e.g. the source index name). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3141,9 +3144,10 @@ public class IngestionClient extends ApiClient {
     @Nonnull String indexName,
     @Nonnull PushTaskPayload pushTaskPayload,
     Boolean watch,
+    String referenceIndexName,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(pushAsync(indexName, pushTaskPayload, watch, requestOptions));
+    return LaunderThrowable.await(pushAsync(indexName, pushTaskPayload, watch, referenceIndexName, requestOptions));
   }
 
   /**
@@ -3160,11 +3164,14 @@ public class IngestionClient extends ApiClient {
    * @param pushTaskPayload (required)
    * @param watch When provided, the push operation will be synchronous and the API will wait for
    *     the ingestion to be finished before responding. (optional)
+   * @param referenceIndexName This is required when targeting an index that does not have a push
+   *     connector setup (e.g. a tmp index), but you wish to attach another index's transformation
+   *     to it (e.g. the source index name). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public WatchResponse push(@Nonnull String indexName, @Nonnull PushTaskPayload pushTaskPayload, Boolean watch)
+  public WatchResponse push(@Nonnull String indexName, @Nonnull PushTaskPayload pushTaskPayload, Boolean watch, String referenceIndexName)
     throws AlgoliaRuntimeException {
-    return this.push(indexName, pushTaskPayload, watch, null);
+    return this.push(indexName, pushTaskPayload, watch, referenceIndexName, null);
   }
 
   /**
@@ -3185,7 +3192,7 @@ public class IngestionClient extends ApiClient {
    */
   public WatchResponse push(@Nonnull String indexName, @Nonnull PushTaskPayload pushTaskPayload, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return this.push(indexName, pushTaskPayload, null, requestOptions);
+    return this.push(indexName, pushTaskPayload, null, null, requestOptions);
   }
 
   /**
@@ -3203,7 +3210,7 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public WatchResponse push(@Nonnull String indexName, @Nonnull PushTaskPayload pushTaskPayload) throws AlgoliaRuntimeException {
-    return this.push(indexName, pushTaskPayload, null, null);
+    return this.push(indexName, pushTaskPayload, null, null, null);
   }
 
   /**
@@ -3220,6 +3227,9 @@ public class IngestionClient extends ApiClient {
    * @param pushTaskPayload (required)
    * @param watch When provided, the push operation will be synchronous and the API will wait for
    *     the ingestion to be finished before responding. (optional)
+   * @param referenceIndexName This is required when targeting an index that does not have a push
+   *     connector setup (e.g. a tmp index), but you wish to attach another index's transformation
+   *     to it (e.g. the source index name). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3228,6 +3238,7 @@ public class IngestionClient extends ApiClient {
     @Nonnull String indexName,
     @Nonnull PushTaskPayload pushTaskPayload,
     Boolean watch,
+    String referenceIndexName,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `push`.");
@@ -3239,6 +3250,7 @@ public class IngestionClient extends ApiClient {
       .setMethod("POST")
       .setBody(pushTaskPayload)
       .addQueryParameter("watch", watch)
+      .addQueryParameter("referenceIndexName", referenceIndexName)
       .build();
     return executeAsync(
       request,
@@ -3265,11 +3277,18 @@ public class IngestionClient extends ApiClient {
    * @param pushTaskPayload (required)
    * @param watch When provided, the push operation will be synchronous and the API will wait for
    *     the ingestion to be finished before responding. (optional)
+   * @param referenceIndexName This is required when targeting an index that does not have a push
+   *     connector setup (e.g. a tmp index), but you wish to attach another index's transformation
+   *     to it (e.g. the source index name). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<WatchResponse> pushAsync(@Nonnull String indexName, @Nonnull PushTaskPayload pushTaskPayload, Boolean watch)
-    throws AlgoliaRuntimeException {
-    return this.pushAsync(indexName, pushTaskPayload, watch, null);
+  public CompletableFuture<WatchResponse> pushAsync(
+    @Nonnull String indexName,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    Boolean watch,
+    String referenceIndexName
+  ) throws AlgoliaRuntimeException {
+    return this.pushAsync(indexName, pushTaskPayload, watch, referenceIndexName, null);
   }
 
   /**
@@ -3293,7 +3312,7 @@ public class IngestionClient extends ApiClient {
     @Nonnull PushTaskPayload pushTaskPayload,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return this.pushAsync(indexName, pushTaskPayload, null, requestOptions);
+    return this.pushAsync(indexName, pushTaskPayload, null, null, requestOptions);
   }
 
   /**
@@ -3312,7 +3331,7 @@ public class IngestionClient extends ApiClient {
    */
   public CompletableFuture<WatchResponse> pushAsync(@Nonnull String indexName, @Nonnull PushTaskPayload pushTaskPayload)
     throws AlgoliaRuntimeException {
-    return this.pushAsync(indexName, pushTaskPayload, null, null);
+    return this.pushAsync(indexName, pushTaskPayload, null, null, null);
   }
 
   /**

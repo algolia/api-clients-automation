@@ -1386,7 +1386,8 @@ class IngestionClientRequestsTests {
               new PushTaskRecords().setAdditionalProperty("key", "baz").setAdditionalProperty("foo", "2").setObjectID("k")
             )
           ),
-        true
+        true,
+        "foo"
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1401,7 +1402,10 @@ class IngestionClientRequestsTests {
     );
 
     try {
-      Map<String, String> expectedQuery = json.readValue("{\"watch\":\"true\"}", new TypeReference<HashMap<String, String>>() {});
+      Map<String, String> expectedQuery = json.readValue(
+        "{\"watch\":\"true\",\"referenceIndexName\":\"foo\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
       Map<String, Object> actualQuery = req.queryParameters;
 
       assertEquals(expectedQuery.size(), actualQuery.size());

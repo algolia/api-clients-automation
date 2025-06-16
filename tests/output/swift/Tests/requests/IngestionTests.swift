@@ -1896,7 +1896,8 @@ final class IngestionClientRequestsTests: XCTestCase {
                     ]),
                 ]
             ),
-            watch: true
+            watch: true,
+            referenceIndexName: "foo"
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1914,7 +1915,9 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/push/bar")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters = try XCTUnwrap("{\"watch\":\"true\"}".data(using: .utf8))
+        let expectedQueryParameters = try XCTUnwrap("{\"watch\":\"true\",\"referenceIndexName\":\"foo\"}"
+            .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters

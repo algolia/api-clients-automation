@@ -1720,6 +1720,7 @@ def snippet_for_push1():
             ],
         },
         watch=True,
+        reference_index_name="foo",
     )
 
     # >LOG

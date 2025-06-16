@@ -1465,7 +1465,8 @@ public class SnippetIngestionClient
           },
         },
       },
-      true
+      true,
+      "foo"
     );
     // >LOG
     // SEPARATOR<
