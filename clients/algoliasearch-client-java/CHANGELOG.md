@@ -1,3 +1,12 @@
+## [4.19.0](https://github.com/algolia/algoliasearch-client-java/compare/4.18.0...4.19.0)
+
+- [c8efa236ef](https://github.com/algolia/api-clients-automation/commit/c8efa236ef) feat(java): add bridge to transformation on search ([#4939](https://github.com/algolia/api-clients-automation/pull/4939)) by [@shortcuts](https://github.com/shortcuts/)
+- [dc68c76106](https://github.com/algolia/api-clients-automation/commit/dc68c76106) chore(deps): dependencies 2025-06-09 ([#4943](https://github.com/algolia/api-clients-automation/pull/4943)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [46a6045a2a](https://github.com/algolia/api-clients-automation/commit/46a6045a2a) feat(clients): add bridge to transformation on search ([#4940](https://github.com/algolia/api-clients-automation/pull/4940)) by [@shortcuts](https://github.com/shortcuts/)
+- [6031284e24](https://github.com/algolia/api-clients-automation/commit/6031284e24) feat(specs): update try transformation specs for no-code ([#4974](https://github.com/algolia/api-clients-automation/pull/4974)) by [@mehmetaligok](https://github.com/mehmetaligok/)
+- [2561c945f7](https://github.com/algolia/api-clients-automation/commit/2561c945f7) fix(clients): processingTimeMS should be optional ([#5004](https://github.com/algolia/api-clients-automation/pull/5004)) by [@Fluf22](https://github.com/Fluf22/)
+- [973cc0c07e](https://github.com/algolia/api-clients-automation/commit/973cc0c07e) feat(specs): add new ingestion property for push ([#5007](https://github.com/algolia/api-clients-automation/pull/5007)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [4.18.0](https://github.com/algolia/algoliasearch-client-java/compare/4.17.0...4.18.0)
 
 - [835daccb48](https://github.com/algolia/api-clients-automation/commit/835daccb48) feat(specs): add with transformation helpers ([#4931](https://github.com/algolia/api-clients-automation/pull/4931)) by [@shortcuts](https://github.com/shortcuts/)
