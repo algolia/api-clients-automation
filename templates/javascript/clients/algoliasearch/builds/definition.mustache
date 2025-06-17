@@ -86,7 +86,7 @@ export type Algoliasearch = SearchClient & {
    * @param chunkedPush.action - The `batch` `action` to perform on the given array of `objects`, defaults to `addObject`.
    * @param chunkedPush.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
    * @param chunkedPush.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
-   * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
+   * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getEvent` method and merged with the transporter requestOptions.
    */
   chunkedPush: (options: ChunkedBatchOptions, requestOptions?: RequestOptions) => Promise<Array<WatchResponse>>;
 };
@@ -207,7 +207,7 @@ export function algoliasearch(
 
       if (waitForTasks) {
         for (const resp of responses) {
-          if (resp.eventID === undefined || !resp.eventID) {
+          if (!resp.eventID) {
             throw new Error('received unexpected response from the push endpoint, eventID must not be undefined');
           }
 
@@ -231,7 +231,7 @@ export function algoliasearch(
               validate: () => retryCount >= 50,
               message: () => `The maximum number of retries exceeded. (${retryCount}/${50})`,
             },
-            timeout: (): number => Math.min(retryCount * 200, 5000),
+            timeout: (): number => Math.min(retryCount * 500, 5000),
           });
         }
       }
