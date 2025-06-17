@@ -1,3 +1,8 @@
+## [1.33.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.33.0...1.33.1)
+
+- [60ade79465](https://github.com/algolia/api-clients-automation/commit/60ade79465) chore(deps): dependencies 2025-06-16 ([#4977](https://github.com/algolia/api-clients-automation/pull/4977)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [2561c945f7](https://github.com/algolia/api-clients-automation/commit/2561c945f7) fix(clients): processingTimeMS should be optional ([#5004](https://github.com/algolia/api-clients-automation/pull/5004)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [1.33.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.32.1...1.33.0)
 
 - [835daccb48](https://github.com/algolia/api-clients-automation/commit/835daccb48) feat(specs): add with transformation helpers ([#4931](https://github.com/algolia/api-clients-automation/pull/4931)) by [@shortcuts](https://github.com/shortcuts/)
