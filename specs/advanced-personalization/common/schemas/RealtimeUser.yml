@@ -1,4 +1,5 @@
 user:
+  title: RealtimeUser
   type: object
   additionalProperties: false
   required:
