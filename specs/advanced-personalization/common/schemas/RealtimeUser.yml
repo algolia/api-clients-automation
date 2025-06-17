@@ -1,4 +1,4 @@
-user:
+RealtimeUser:
   title: RealtimeUser
   type: object
   additionalProperties: false
