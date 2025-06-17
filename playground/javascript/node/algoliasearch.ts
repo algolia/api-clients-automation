@@ -136,18 +136,24 @@ async function testAlgoliasearchBridgeIngestion() {
   // Init client with appId and apiKey
   const client = algoliasearch(appId, adminApiKey, { transformation: { region: 'eu' } });
 
-  await client.saveObjectsWithTransformation({
-    indexName: 'foo',
-    objects: [{ objectID: 'foo', data: { baz: 'baz', win: 42 } }],
-    waitForTasks: true,
-  });
+  // console.log('saveObjectsWithTransformation', await client.saveObjectsWithTransformation({
+  //   indexName: 'foo',
+  //   objects: [{ objectID: 'foo', data: { baz: 'baz', win: 42 } }],
+  //   waitForTasks: true,
+  // }));
+  //
+  // console.log('partialUpdateObjectsWithTransformation', await client.partialUpdateObjectsWithTransformation({
+  //   indexName: 'foo',
+  //   objects: [{ objectID: 'foo', data: { baz: 'baz', win: 42 } }],
+  //   waitForTasks: true,
+  //   createIfNotExists: false,
+  // }));
 
-  await client.partialUpdateObjectsWithTransformation({
-    indexName: 'foo',
-    objects: [{ objectID: 'foo', data: { baz: 'baz', win: 42 } }],
-    waitForTasks: true,
-    createIfNotExists: false,
-  });
+  console.log('replaceAllObjectsWithTransformation', await client.replaceAllObjectsWithTransformation({
+    indexName: 'boyd',
+    objects: [{ objectID: 'foo', data: { baz: 'baz', win: 42 } }, { objectID: 'bar', data: { baz: 'baz', win: 24 } }],
+    batchSize: 2
+  }));
 }
 
 // testAlgoliasearch();
