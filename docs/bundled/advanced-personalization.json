@@ -585,7 +585,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RealtimeUser_user"
+                  "$ref": "#/components/schemas/RealtimeUser"
                 }
               }
             }
@@ -1393,7 +1393,8 @@
           }
         }
       },
-      "RealtimeUser_user": {
+      "RealtimeUser": {
+        "title": "RealtimeUser",
         "type": "object",
         "additionalProperties": false,
         "required": [

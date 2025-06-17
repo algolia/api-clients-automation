@@ -502,7 +502,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RealtimeUser_user'
+                $ref: '#/components/schemas/RealtimeUser'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1114,7 +1114,8 @@ components:
           $ref: '#/components/schemas/strategy'
         filters:
           $ref: '#/components/schemas/searchFilter'
-    RealtimeUser_user:
+    RealtimeUser:
+      title: RealtimeUser
       type: object
       additionalProperties: false
       required:
