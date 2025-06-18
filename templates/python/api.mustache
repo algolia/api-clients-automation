@@ -8,11 +8,13 @@ from algoliasearch.search.models import (
   BrowseParamsObject,
   OperationType,
   ReplaceAllObjectsResponse,
+  ReplaceAllObjectsWithTransformationResponse,
   ScopeType,
   SecuredApiKeyRestrictions,
+  WatchResponse,
 )
 
-from algoliasearch.ingestion.models import (WatchResponse)
+from algoliasearch.ingestion.models import WatchResponse as IngestionWatchResponse
 from algoliasearch.ingestion.config import IngestionConfig
 from algoliasearch.ingestion.client import (IngestionClient, IngestionClientSync)
 from algoliasearch.ingestion.models import Action as IngestionAction

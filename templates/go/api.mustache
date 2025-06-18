@@ -227,16 +227,23 @@ func toRequestOptions[T RequestOption](opts []T) []RequestOption {
 	return requestOpts
 }
 
-func toIngestionRequestOptions(opts []RequestOption) []ingestion.RequestOption {
-	requestOpts := make([]ingestion.RequestOption, 0, len(opts))
+// toIngestionChunkedBatchOptions converts the current chunked batch opts to ingestion ones.
+func toIngestionChunkedBatchOptions(opts []ChunkedBatchOption) []ingestion.ChunkedBatchOption {
+	conf := config{}
 
 	for _, opt := range opts {
-		if opt, ok := opt.(ingestion.RequestOption); ok {
-			requestOpts = append(requestOpts, opt)
-		}
+		opt.apply(&conf)
 	}
 
-	return requestOpts
+	ingestionOpts := make([]ingestion.ChunkedBatchOption, 0, len(opts))
+
+	if conf.batchSize > 0 {
+		ingestionOpts = append(ingestionOpts, ingestion.WithBatchSize(conf.batchSize))
+	}
+
+	ingestionOpts = append(ingestionOpts, ingestion.WithWaitForTasks(conf.waitForTasks))
+
+	return ingestionOpts
 }
 
 func toIterableOptions(opts []ChunkedBatchOption) []IterableOption {
