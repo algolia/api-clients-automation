@@ -66,6 +66,8 @@ class TransporterSync(BaseTransporter):
             url = self.build_url(host, path)
             proxies = self.get_proxies(url)
 
+            print(url)
+
             req = Request(
                 method=verb,
                 url=url,

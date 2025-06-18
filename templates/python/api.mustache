@@ -86,18 +86,27 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         if transporter is None:
             transporter = Transporter{{#isSyncClient}}Sync{{/isSyncClient}}(config)
 
-        client = {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}(app_id=config.app_id, api_key=config.api_key, {{#hasRegionalHost}}region=config.region, {{/hasRegionalHost}}transporter=transporter, config=config)
-
         {{#isSearchClient}}
+        _ingestion_transporter: Optional[IngestionClient{{#isSyncClient}}Sync{{/isSyncClient}}] = None
+
         if config.region is not None:
             ingestion_config = IngestionConfig(config.app_id, config.api_key, config.region)
 
             if config.hosts is not None:
                 ingestion_config.hosts = config.hosts
 
-            client._ingestion_transporter = IngestionClient{{#isSyncClient}}Sync{{/isSyncClient}}.create_with_config(ingestion_config)
+            _ingestion_transporter = IngestionClient{{#isSyncClient}}Sync{{/isSyncClient}}.create_with_config(ingestion_config)
         {{/isSearchClient}}
 
+        config.set_default_hosts()
+
+        client = {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}(app_id=config.app_id, api_key=config.api_key, {{#hasRegionalHost}}region=config.region, {{/hasRegionalHost}}transporter=transporter, config=config)
+
+        {{#isSearchClient}}
+        if _ingestion_transporter is not None:
+            client._ingestion_transporter = _ingestion_transporter
+        {{/isSearchClient}}
+        
         return client
 
     {{^isSyncClient}}
