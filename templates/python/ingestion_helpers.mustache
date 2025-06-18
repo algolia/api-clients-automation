@@ -1,0 +1,64 @@
+    {{^isSyncClient}}async {{/isSyncClient}}def chunked_push(
+        self,
+        index_name: str,
+        objects: List[Dict[str, Any]],
+        action: Action = Action.ADDOBJECT,
+        wait_for_tasks: bool = False,
+        batch_size: int = 1000,
+        reference_index_name: Optional[str] = None,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> List[WatchResponse]:
+        """
+        Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `push` requests by leveraging the Transformation pipeline setup in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
+        """
+        records: List[PushTaskRecords] = []
+        responses: List[WatchResponse] = []
+        for i, obj in enumerate(objects):
+            records.append(obj)  # pyright: ignore
+            if len(records) == batch_size or i == len(objects) - 1:
+                responses.append(
+                    {{^isSyncClient}}await {{/isSyncClient}}self.push(
+                        index_name=index_name,
+                        push_task_payload={
+                            "action": action,
+                            "records": records,
+                        },
+                        reference_index_name=reference_index_name,
+                        request_options=request_options,
+                    )
+                )
+                requests = []
+        if wait_for_tasks:
+            for response in responses:
+                {{^isSyncClient}}async {{/isSyncClient}}def _func(_: Optional[Event]) -> Event:
+                    if response.event_id is None:
+                        raise ValueError(
+                            "received unexpected response from the push endpoint, eventID must not be undefined"
+                        )
+                    try:
+                        return {{^isSyncClient}}await {{/isSyncClient}}self.get_event(run_id=response.run_id, event_id=response.event_id, request_options=request_options)
+                    except RequestException as e:
+                        if e.status_code == 404:
+                            return None # pyright: ignore
+                        raise e
+
+                _retry_count = 0
+
+                def _aggregator(_: Event | None) -> None:
+                    nonlocal _retry_count
+                    _retry_count += 1
+
+                def _validate(_resp: Event | None) -> bool:
+                    return _resp is not None
+
+                timeout = RetryTimeout()
+
+                {{^isSyncClient}}await {{/isSyncClient}}create_iterable{{#isSyncClient}}_sync{{/isSyncClient}}(
+                    func=_func,
+                    validate=_validate,
+                    aggregator=_aggregator,
+                    timeout=lambda: timeout(_retry_count),
+                    error_validate=lambda _: _retry_count >= 50,
+                    error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${50})",
+                )
+        return responses

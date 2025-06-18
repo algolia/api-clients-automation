@@ -33,6 +33,17 @@ type config struct {
 	headerParams map[string]string
   timeouts transport.RequestConfiguration
 
+  {{#isIngestionClient}}
+  // -- ChunkedPush options
+	waitForTasks bool
+	batchSize    int
+
+	// -- Iterable options
+	maxRetries    int
+	timeout       func(int) time.Duration
+	aggregator    func(any, error)
+  {{/isIngestionClient}}
+
   {{#isSearchClient}}
   // -- ChunkedBatch options
 	waitForTasks bool
@@ -102,42 +113,6 @@ func WithConnectTimeout(timeout time.Duration) requestOption {
 
 {{#isSearchClient}}
 
-// --------- ChunkedBatch options ---------
-
-type ChunkedBatchOption interface {
-	RequestOption
-	chunkedBatch()
-}
-
-type chunkedBatchOption func(*config)
-
-var (
-	_ ChunkedBatchOption = (*chunkedBatchOption)(nil)
-	_ ChunkedBatchOption = (*requestOption)(nil)
-)
-
-func (c chunkedBatchOption) apply(conf *config) {
-	c(conf)
-}
-
-func (c chunkedBatchOption) chunkedBatch() {}
-
-func (r requestOption) chunkedBatch() {}
-
-// WithWaitForTasks whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
-func WithWaitForTasks(waitForTasks bool) chunkedBatchOption {
-	return chunkedBatchOption(func(c *config) {
-		c.waitForTasks = waitForTasks
-	})
-}
-
-// WithBatchSize the size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
-func WithBatchSize(batchSize int) chunkedBatchOption {
-	return chunkedBatchOption(func(c *config) {
-		c.batchSize = batchSize
-	})
-}
-
 // --------- PartialUpdateObjects options ---------
 
 type PartialUpdateObjectsOption interface {
@@ -206,49 +181,6 @@ func WithScopes(scopes []ScopeType) replaceAllObjectsOption {
 	})
 }
 
-// --------- Iterable options ---------.
-
-type IterableOption interface {
-	RequestOption
-	iterable()
-}
-
-type iterableOption func(*config)
-
-var (
-	_ IterableOption = (*iterableOption)(nil)
-	_ IterableOption = (*requestOption)(nil)
-)
-
-func (i iterableOption) apply(c *config) {
-	i(c)
-}
-
-func (r requestOption) iterable() {}
-
-func (i iterableOption) iterable() {}
-
-// WithMaxRetries the maximum number of retry. Default to 50.
-func WithMaxRetries(maxRetries int) iterableOption {
-	return iterableOption(func(c *config) {
-		c.maxRetries = maxRetries
-	})
-}
-
-// WithTimeout he function to decide how long to wait between retries. Default to min(retryCount * 200, 5000)
-func WithTimeout(timeout func(int) time.Duration) iterableOption {
-	return iterableOption(func(c *config) {
-		c.timeout = timeout
-	})
-}
-
-// WithAggregator the function to aggregate the results of the iterable.
-func WithAggregator(aggregator func(any, error)) iterableOption {
-	return iterableOption(func(c *config) {
-		c.aggregator = aggregator
-	})
-}
-
 // --------- WaitForKey options ---------.
 
 type WaitForApiKeyOption interface {
@@ -290,6 +222,18 @@ func toRequestOptions[T RequestOption](opts []T) []RequestOption {
 
 	for _, opt := range opts {
 		requestOpts = append(requestOpts, opt)
+	}
+
+	return requestOpts
+}
+
+func toIngestionRequestOptions(opts []RequestOption) []ingestion.RequestOption {
+	requestOpts := make([]ingestion.RequestOption, 0, len(opts))
+
+	for _, opt := range opts {
+		if opt, ok := opt.(ingestion.RequestOption); ok {
+			requestOpts = append(requestOpts, opt)
+		}
 	}
 
 	return requestOpts
@@ -571,5 +515,13 @@ func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}
 {{/operations}}
 
 {{#isSearchClient}}
+{{> helpers}}
+
 {{> search_helpers}}
 {{/isSearchClient}}
+
+{{#isIngestionClient}}
+{{> helpers}}
+
+{{> ingestion_helpers}}
+{{/isIngestionClient}}

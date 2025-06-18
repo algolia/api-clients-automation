@@ -202,3 +202,6 @@ paths:
   # ###############
   /setClientApiKey:
     $ref: '../common/helpers/setClientApiKey.yml#/method'
+
+  /chunkedPush:
+    $ref: 'helpers/chunkedPush.yml#/method'

@@ -12,6 +12,10 @@ import {
   {{#isCompositionFullClient}}
   createIterablePromise,
   {{/isCompositionFullClient}}
+  {{#isIngestionClient}}
+  createIterablePromise,
+  ApiError,
+  {{/isIngestionClient}}
 } from '@algolia/client-common';
 import type {
   CreateClientOptions,
@@ -31,6 +35,9 @@ import type { {{classname}} } from '{{filename}}';
 
 {{#operations}}
 import type {
+  {{#isIngestionClient}}
+    ChunkedPushOptions,
+  {{/isIngestionClient}}
   {{#isSearchClient}}
     BrowseOptions,
     ChunkedBatchOptions,
@@ -76,4 +83,5 @@ import type {
   import type { SubscriptionTrigger } from '../model/subscriptionTrigger';
   import type { TaskCreateTrigger } from '../model/taskCreateTrigger';
   import type { Trigger } from '../model/trigger';
+  import type { PushTaskRecords } from '../model/pushTaskRecords';
 {{/isIngestionClient}}

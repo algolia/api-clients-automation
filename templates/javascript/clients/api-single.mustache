@@ -7,7 +7,6 @@ export const apiClientVersion = '{{packageVersion}}';
 {{#operations}}
 {{> client/api/hosts}}
 
-
 {{#isIngestionClient}}
   {{> client/api/guards}}
 {{/isIngestionClient}}
@@ -93,6 +92,9 @@ export function create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
       }
     },
 
+    {{#isIngestionClient}}
+    {{> client/api/ingestionHelpers}}
+    {{/isIngestionClient}}
     {{#isSearchClient}}
     {{> client/api/helpers}}
     {{/isSearchClient}}
