@@ -91,7 +91,7 @@ class PersonalizationClient(
   /** This method lets you send requests to the Algolia REST API.
     *
     * @param path
-    *   Path of the endpoint, anything after \"/1\" must be specified.
+    *   Path of the endpoint, for example `1/newFeature`.
     * @param parameters
     *   Query parameters to apply to the current query.
     */
@@ -114,7 +114,7 @@ class PersonalizationClient(
   /** This method lets you send requests to the Algolia REST API.
     *
     * @param path
-    *   Path of the endpoint, anything after \"/1\" must be specified.
+    *   Path of the endpoint, for example `1/newFeature`.
     * @param parameters
     *   Query parameters to apply to the current query.
     */
@@ -137,7 +137,7 @@ class PersonalizationClient(
   /** This method lets you send requests to the Algolia REST API.
     *
     * @param path
-    *   Path of the endpoint, anything after \"/1\" must be specified.
+    *   Path of the endpoint, for example `1/newFeature`.
     * @param parameters
     *   Query parameters to apply to the current query.
     * @param body
@@ -164,7 +164,7 @@ class PersonalizationClient(
   /** This method lets you send requests to the Algolia REST API.
     *
     * @param path
-    *   Path of the endpoint, anything after \"/1\" must be specified.
+    *   Path of the endpoint, for example `1/newFeature`.
     * @param parameters
     *   Query parameters to apply to the current query.
     * @param body

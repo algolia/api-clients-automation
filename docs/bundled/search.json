@@ -8867,7 +8867,7 @@
       "PathInPath": {
         "name": "path",
         "in": "path",
-        "description": "Path of the endpoint, anything after \"/1\" must be specified.",
+        "description": "Path of the endpoint, for example `1/newFeature`.",
         "required": true,
         "schema": {
           "type": "string",
