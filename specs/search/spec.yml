@@ -378,6 +378,9 @@ paths:
   /replaceAllObjects:
     $ref: 'helpers/replaceAllObjects.yml#/method'
 
+  /replaceAllObjectsWithTransformation:
+    $ref: 'helpers/replaceAllObjectsWithTransformation.yml#/method'
+
   /chunkedBatch:
     $ref: 'helpers/chunkedBatch.yml#/method'
 
