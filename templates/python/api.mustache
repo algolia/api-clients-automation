@@ -12,10 +12,14 @@ from algoliasearch.search.models import (
   SecuredApiKeyRestrictions,
 )
 
-from algoliasearch.ingestion.models import WatchResponse
+from algoliasearch.ingestion.models import (WatchResponse)
 from algoliasearch.ingestion.config import IngestionConfig
 from algoliasearch.ingestion.client import (IngestionClient, IngestionClientSync)
+from algoliasearch.ingestion.models import Action as IngestionAction
 {{/isSearchClient}}
+{{#isIngestionClient}}
+from algoliasearch.ingestion.models import (Action, WatchResponse, Event, PushTaskRecords)
+{{/isIngestionClient}}
 
 {{#operations}}{{#operation}}{{#imports}}
 from algoliasearch.{{packageName}}.models import {{{.}}}
@@ -130,6 +134,9 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
     {{#isSearchClient}}
 {{> search_helpers}}
     {{/isSearchClient}}
+    {{#isIngestionClient}}
+{{> ingestion_helpers}}
+    {{/isIngestionClient}}
 
     {{#operation}}
 

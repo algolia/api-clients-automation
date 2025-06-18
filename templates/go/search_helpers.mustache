@@ -1,46 +1,3 @@
-func CreateIterable[T any](execute func(*T, error) (*T, error), validate func(*T, error) (bool, error), opts ...IterableOption) (*T, error) {
-	conf := config{
-		headerParams: map[string]string{},
-		maxRetries: -1,
-		timeout:    func(count int) time.Duration {
-      return 0 * time.Millisecond
-    },
-	}
-
-	for _, opt := range opts {
-		opt.apply(&conf)
-	}
-
-	var executor func(*T, error) (*T, error)
-
-	retryCount := 0
-
-	executor = func(previousResponse *T, previousError error) (*T, error) {
-		response, responseErr := execute(previousResponse, previousError)
-
-		retryCount++
-
-		if conf.aggregator != nil {
-			conf.aggregator(response, responseErr)
-		}
-
-    canStop, err := validate(response, responseErr)
-    if canStop || err != nil {
-      return response, err
-    }
-
-		if conf.maxRetries >= 0 && retryCount >= conf.maxRetries {
-			return nil, errs.NewWaitError(fmt.Sprintf("The maximum number of retries exceeded. (%d/%d)", retryCount, conf.maxRetries))
-		}
-
-		time.Sleep(conf.timeout(retryCount))
-
-		return executor(response, responseErr)
-	}
-
-	return executor(nil, nil)
-}
-
 /*
 SearchForHits calls the `search` method but with certainty that we will only request Algolia records (hits) and not facets.
 Disclaimer: We don't assert that the parameters you pass to this method only contains `hits` requests to prevent impacting search performances, this helper is purely for typing purposes.
@@ -746,31 +703,12 @@ Helper: Similar to the `SaveObjects` method but requires a Push connector (https
 	@return []BatchResponse - List of batch responses.
 	@return error - Error if any.
 */
-func (c *APIClient) SaveObjectsWithTransformation(indexName string, objects []map[string]any, opts ...ChunkedBatchOption) (*ingestion.WatchResponse, error) {
-  if c.ingestionTransporter == nil {
+func (c *APIClient) SaveObjectsWithTransformation(indexName string, objects []map[string]any, opts ...ChunkedBatchOption) ([]ingestion.WatchResponse, error) {
+	if c.ingestionTransporter == nil {
 		return nil, reportError("`region` must be provided at client instantiation before calling this method.")
-  }
+	}
 
-  var records []ingestion.PushTaskRecords
-
-  rawObjects, err := json.Marshal(objects)
-  if err != nil {
-    return nil, reportError("unable to marshal the given `objects`: %w", err)
-  }
-
-  err = json.Unmarshal(rawObjects, &records)
-  if err != nil {
-    return nil, reportError("unable to unmarshal the given `objects` to an `[]ingestion.PushTaskRecords` payload: %w", err)
-  }
-
-  return c.ingestionTransporter.Push( //nolint:wrapcheck
-    c.ingestionTransporter.NewApiPushRequest(
-      indexName,
-      ingestion.NewEmptyPushTaskPayload().
-        SetAction(ingestion.ACTION_ADD_OBJECT).
-        SetRecords(records),
-      ),
-    )
+	return c.ingestionTransporter.ChunkedPush(indexName, objects, ingestion.Action(ACTION_ADD_OBJECT), nil, toIngestionRequestOptions(toRequestOptions(opts))...) //nolint:wrapcheck
 }
 
 /*
@@ -782,47 +720,27 @@ Helper: Similar to the `PartialUpdateObjects` method but requires a Push connect
 	@return []BatchResponse - List of batch responses.
 	@return error - Error if any.
 */
-func (c *APIClient) PartialUpdateObjectsWithTransformation(indexName string, objects []map[string]any, opts ...PartialUpdateObjectsOption) (*ingestion.WatchResponse, error) {
-  if c.ingestionTransporter == nil {
+func (c *APIClient) PartialUpdateObjectsWithTransformation(indexName string, objects []map[string]any, opts ...PartialUpdateObjectsOption) ([]ingestion.WatchResponse, error) {
+	if c.ingestionTransporter == nil {
 		return nil, reportError("`region` must be provided at client instantiation before calling this method.")
-  }
-
-
-	conf := config{
-		headerParams:      map[string]string{},
-		createIfNotExists: true,
 	}
 
-	for _, opt := range opts {
-		opt.apply(&conf)
-	}
-
-	var action ingestion.Action
-
-	if conf.createIfNotExists {
-		action = ingestion.ACTION_PARTIAL_UPDATE_OBJECT
-	} else {
-		action = ingestion.ACTION_PARTIAL_UPDATE_OBJECT_NO_CREATE
-	}
-
-  var records []ingestion.PushTaskRecords
-
-  rawObjects, err := json.Marshal(objects)
-  if err != nil {
-    return nil, reportError("unable to marshal the given `objects`: %w", err)
+  conf := config{
+    headerParams: map[string]string{},
+    createIfNotExists: true,
   }
 
-  err = json.Unmarshal(rawObjects, &records)
-  if err != nil {
-    return nil, reportError("unable to unmarshal the given `objects` to an `[]ingestion.PushTaskRecords` payload: %w", err)
+  for _, opt := range opts {
+    opt.apply(&conf)
   }
 
-  return c.ingestionTransporter.Push( //nolint:wrapcheck
-    c.ingestionTransporter.NewApiPushRequest(
-      indexName,
-      ingestion.NewEmptyPushTaskPayload().
-        SetAction(action).
-        SetRecords(records),
-      ),
-    )
+  var action Action
+
+  if conf.createIfNotExists {
+    action = ACTION_PARTIAL_UPDATE_OBJECT
+  } else {
+    action = ACTION_PARTIAL_UPDATE_OBJECT_NO_CREATE
+  }
+
+	return c.ingestionTransporter.ChunkedPush(indexName, objects, ingestion.Action(action), nil, toIngestionRequestOptions(toRequestOptions(opts))...) //nolint:wrapcheck
 }

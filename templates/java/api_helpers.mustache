@@ -1,3 +1,106 @@
+{{#isIngestionClient}}
+private <T> List<PushTaskRecords> objectsToPushTaskRecords(Iterable<T> objects) {
+    try {
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(objects);
+
+        return mapper.readValue(json, new TypeReference<List<PushTaskRecords>>() {});
+    } catch (Exception e) {
+      throw new AlgoliaRuntimeException(
+        "each object must have an `objectID` key in order to be indexed"
+      );
+    }
+}
+
+/**
+ * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit
+ * in `push` requests by leveraging the Transformation pipeline setup in the Push connector
+ * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
+ *
+ * @summary Helper: Chunks the given `objects` list in subset of 1000 elements max in order to
+ *     make it fit in `batch` requests.
+ * @param indexName - The `indexName` to replace `objects` in.
+ * @param objects - The array of `objects` to store in the given Algolia `indexName`.
+ * @param action - The `batch` `action` to perform on the given array of `objects`.
+ * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+ *     processed, this operation may slow the total execution time of this method but is more
+ *     reliable.
+ * @param batchSize - The size of the chunk of `objects`. The number of `batch` calls will be
+ *     equal to `length(objects) / batchSize`. Defaults to 1000.
+ * @param referenceIndexName - This is required when targeting an index that does not have a push
+ *     connector setup (e.g. a tmp index), but you wish to attach another index's transformation
+ *     to it (e.g. the source index name).
+ * @param requestOptions - The requestOptions to send along with the query, they will be forwarded
+ *     to the `getEvent` method and merged with the transporter requestOptions.
+ */
+public <T> List<WatchResponse> chunkedPush(
+  String indexName,
+  Iterable<T> objects,
+  Action action,
+  boolean waitForTasks,
+  int batchSize,
+  String referenceIndexName,
+  RequestOptions requestOptions
+) {
+  List<WatchResponse> responses = new ArrayList<>();
+  List<T> records = new ArrayList<>();
+
+  for (T item : objects) {
+    if (records.size() == batchSize) {
+      WatchResponse watch =
+        this.push(
+            indexName,
+            new PushTaskPayload().setAction(action).setRecords(this.objectsToPushTaskRecords(records)),
+            waitForTasks,
+            referenceIndexName,
+            requestOptions
+          );
+      responses.add(watch);
+      records.clear();
+    }
+
+    records.add(item);
+  }
+
+  if (records.size() > 0) {
+    WatchResponse watch =
+      this.push(
+          indexName,
+          new PushTaskPayload().setAction(action).setRecords(this.objectsToPushTaskRecords(records)),
+          waitForTasks,
+          referenceIndexName,
+          requestOptions
+        );
+    responses.add(watch);
+  }
+
+  if (waitForTasks) {
+    responses.forEach(response -> {
+        TaskUtils.retryUntil(
+          () -> {
+            try {
+              return this.getEvent(response.getRunID(), response.getEventID());
+            } catch (AlgoliaApiException e) {
+              if (e.getStatusCode() == 404) {
+                return null;
+              }
+
+              throw e;
+            }
+          },
+          (Event resp) -> {
+            return resp != null;
+          },
+          50,
+          null
+        );
+      }
+    );
+  }
+
+  return responses;
+}
+{{/isIngestionClient}}
 {{#isSearchClient}}
 /**
  * Helper: Wait for a task to complete with `indexName` and `taskID`.
@@ -665,7 +768,7 @@ public <T> List<BatchResponse> chunkedBatch(
  * @throws AlgoliaApiException When the API sends an http error code
  * @throws AlgoliaRuntimeException When an error occurred during the serialization
  */
-public <T> WatchResponse saveObjectsWithTransformation(String indexName, Iterable<T> objects) {
+public <T> List<WatchResponse> saveObjectsWithTransformation(String indexName, Iterable<T> objects) {
   return saveObjectsWithTransformation(indexName, objects, null);
 }
 
@@ -680,7 +783,7 @@ public <T> WatchResponse saveObjectsWithTransformation(String indexName, Iterabl
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
  */
-public <T> WatchResponse saveObjectsWithTransformation(String indexName, Iterable<T> objects, RequestOptions requestOptions) {
+public <T> List<WatchResponse> saveObjectsWithTransformation(String indexName, Iterable<T> objects, RequestOptions requestOptions) {
   return saveObjectsWithTransformation(indexName, objects, false, requestOptions);
 }
 
@@ -698,7 +801,7 @@ public <T> WatchResponse saveObjectsWithTransformation(String indexName, Iterabl
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
  */
-public <T> WatchResponse saveObjectsWithTransformation(
+public <T> List<WatchResponse> saveObjectsWithTransformation(
   String indexName,
   Iterable<T> objects,
   boolean waitForTasks,
@@ -723,7 +826,7 @@ public <T> WatchResponse saveObjectsWithTransformation(
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
  */
-public <T> WatchResponse saveObjectsWithTransformation(
+public <T> List<WatchResponse> saveObjectsWithTransformation(
   String indexName,
   Iterable<T> objects,
   boolean waitForTasks,
@@ -734,26 +837,7 @@ public <T> WatchResponse saveObjectsWithTransformation(
     throw new AlgoliaRuntimeException("`setTransformationRegion` must have been called before calling this method.");
   }
 
-  return this.ingestionTransporter.push(
-      indexName,
-      new PushTaskPayload().setAction(com.algolia.model.ingestion.Action.ADD_OBJECT).setRecords(this.objectsToPushTaskRecords(objects)),
-      waitForTasks,
-      null,
-      requestOptions
-    );
-}
-
-private <T> List<PushTaskRecords> objectsToPushTaskRecords(Iterable<T> objects) {
-    try {
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(objects);
-
-        return mapper.readValue(json, new TypeReference<List<PushTaskRecords>>() {});
-    } catch (Exception e) {
-      throw new AlgoliaRuntimeException(
-        "each object must have an `objectID` key in order to be used with the" + " WithTransformation methods"
-      );
-    }
+  return this.ingestionTransporter.chunkedPush(indexName, objects, com.algolia.model.ingestion.Action.ADD_OBJECT, waitForTasks, batchSize, null, requestOptions);
 }
 
 /**
@@ -891,7 +975,7 @@ public List<BatchResponse> deleteObjects(String indexName, List<String> objectID
  * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call
  *     will fail.
  */
-public <T> WatchResponse partialUpdateObjectsWithTransformation(String indexName, Iterable<T> objects, boolean createIfNotExists) {
+public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(String indexName, Iterable<T> objects, boolean createIfNotExists) {
   return partialUpdateObjectsWithTransformation(indexName, objects, createIfNotExists, false, null);
 }
 
@@ -909,7 +993,7 @@ public <T> WatchResponse partialUpdateObjectsWithTransformation(String indexName
  *     processed, this operation may slow the total execution time of this method but is more
  *     reliable.
  */
-public <T> WatchResponse partialUpdateObjectsWithTransformation(
+public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
   String indexName,
   Iterable<T> objects,
   boolean createIfNotExists,
@@ -934,7 +1018,7 @@ public <T> WatchResponse partialUpdateObjectsWithTransformation(
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
  */
-public <T> WatchResponse partialUpdateObjectsWithTransformation(
+public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
   String indexName,
   Iterable<T> objects,
   boolean createIfNotExists,
@@ -962,7 +1046,7 @@ public <T> WatchResponse partialUpdateObjectsWithTransformation(
  * @param requestOptions The requestOptions to send along with the query, they will be merged with
  *     the transporter requestOptions. (optional)
  */
-public <T> WatchResponse partialUpdateObjectsWithTransformation(
+public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
   String indexName,
   Iterable<T> objects,
   boolean createIfNotExists,
@@ -974,19 +1058,15 @@ public <T> WatchResponse partialUpdateObjectsWithTransformation(
     throw new AlgoliaRuntimeException("`setTransformationRegion` must have been called before calling this method.");
   }
 
-  return this.ingestionTransporter.push(
-      indexName,
-      new PushTaskPayload()
-        .setAction(
-          createIfNotExists
-            ? com.algolia.model.ingestion.Action.PARTIAL_UPDATE_OBJECT
-            : com.algolia.model.ingestion.Action.PARTIAL_UPDATE_OBJECT_NO_CREATE
-        )
-        .setRecords(this.objectsToPushTaskRecords(objects)),
-      waitForTasks,
-      null,
-      requestOptions
-    );
+  return this.ingestionTransporter.chunkedPush(
+    indexName,
+    objects,
+    createIfNotExists ? com.algolia.model.ingestion.Action.PARTIAL_UPDATE_OBJECT : com.algolia.model.ingestion.Action.PARTIAL_UPDATE_OBJECT_NO_CREATE,
+    waitForTasks,
+    batchSize,
+    null,
+    requestOptions
+  );
 }
 
 /**
