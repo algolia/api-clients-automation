@@ -8,13 +8,10 @@ import com.algolia.config.*;
 import com.algolia.config.ClientOptions;
 import com.algolia.exceptions.*;
 import com.algolia.internal.JsonSerializer;
-import com.algolia.model.ingestion.PushTaskPayload;
-import com.algolia.model.ingestion.PushTaskRecords;
 import com.algolia.model.ingestion.WatchResponse;
 import com.algolia.model.search.*;
 import com.algolia.utils.*;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -6765,7 +6762,7 @@ public class SearchClient extends ApiClient {
    * @throws AlgoliaApiException When the API sends an http error code
    * @throws AlgoliaRuntimeException When an error occurred during the serialization
    */
-  public <T> WatchResponse saveObjectsWithTransformation(String indexName, Iterable<T> objects) {
+  public <T> List<WatchResponse> saveObjectsWithTransformation(String indexName, Iterable<T> objects) {
     return saveObjectsWithTransformation(indexName, objects, null);
   }
 
@@ -6780,7 +6777,7 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    */
-  public <T> WatchResponse saveObjectsWithTransformation(String indexName, Iterable<T> objects, RequestOptions requestOptions) {
+  public <T> List<WatchResponse> saveObjectsWithTransformation(String indexName, Iterable<T> objects, RequestOptions requestOptions) {
     return saveObjectsWithTransformation(indexName, objects, false, requestOptions);
   }
 
@@ -6798,7 +6795,7 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    */
-  public <T> WatchResponse saveObjectsWithTransformation(
+  public <T> List<WatchResponse> saveObjectsWithTransformation(
     String indexName,
     Iterable<T> objects,
     boolean waitForTasks,
@@ -6823,7 +6820,7 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    */
-  public <T> WatchResponse saveObjectsWithTransformation(
+  public <T> List<WatchResponse> saveObjectsWithTransformation(
     String indexName,
     Iterable<T> objects,
     boolean waitForTasks,
@@ -6834,26 +6831,15 @@ public class SearchClient extends ApiClient {
       throw new AlgoliaRuntimeException("`setTransformationRegion` must have been called before calling this method.");
     }
 
-    return this.ingestionTransporter.push(
+    return this.ingestionTransporter.chunkedPush(
         indexName,
-        new PushTaskPayload().setAction(com.algolia.model.ingestion.Action.ADD_OBJECT).setRecords(this.objectsToPushTaskRecords(objects)),
+        objects,
+        com.algolia.model.ingestion.Action.ADD_OBJECT,
         waitForTasks,
+        batchSize,
         null,
         requestOptions
       );
-  }
-
-  private <T> List<PushTaskRecords> objectsToPushTaskRecords(Iterable<T> objects) {
-    try {
-      ObjectMapper mapper = new ObjectMapper();
-      String json = mapper.writeValueAsString(objects);
-
-      return mapper.readValue(json, new TypeReference<List<PushTaskRecords>>() {});
-    } catch (Exception e) {
-      throw new AlgoliaRuntimeException(
-        "each object must have an `objectID` key in order to be used with the" + " WithTransformation methods"
-      );
-    }
   }
 
   /**
@@ -7003,7 +6989,7 @@ public class SearchClient extends ApiClient {
    * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call
    *     will fail.
    */
-  public <T> WatchResponse partialUpdateObjectsWithTransformation(String indexName, Iterable<T> objects, boolean createIfNotExists) {
+  public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(String indexName, Iterable<T> objects, boolean createIfNotExists) {
     return partialUpdateObjectsWithTransformation(indexName, objects, createIfNotExists, false, null);
   }
 
@@ -7021,7 +7007,7 @@ public class SearchClient extends ApiClient {
    *     processed, this operation may slow the total execution time of this method but is more
    *     reliable.
    */
-  public <T> WatchResponse partialUpdateObjectsWithTransformation(
+  public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
     String indexName,
     Iterable<T> objects,
     boolean createIfNotExists,
@@ -7046,7 +7032,7 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    */
-  public <T> WatchResponse partialUpdateObjectsWithTransformation(
+  public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
     String indexName,
     Iterable<T> objects,
     boolean createIfNotExists,
@@ -7074,7 +7060,7 @@ public class SearchClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    */
-  public <T> WatchResponse partialUpdateObjectsWithTransformation(
+  public <T> List<WatchResponse> partialUpdateObjectsWithTransformation(
     String indexName,
     Iterable<T> objects,
     boolean createIfNotExists,
@@ -7086,16 +7072,14 @@ public class SearchClient extends ApiClient {
       throw new AlgoliaRuntimeException("`setTransformationRegion` must have been called before calling this method.");
     }
 
-    return this.ingestionTransporter.push(
+    return this.ingestionTransporter.chunkedPush(
         indexName,
-        new PushTaskPayload()
-          .setAction(
-            createIfNotExists
-              ? com.algolia.model.ingestion.Action.PARTIAL_UPDATE_OBJECT
-              : com.algolia.model.ingestion.Action.PARTIAL_UPDATE_OBJECT_NO_CREATE
-          )
-          .setRecords(this.objectsToPushTaskRecords(objects)),
+        objects,
+        createIfNotExists
+          ? com.algolia.model.ingestion.Action.PARTIAL_UPDATE_OBJECT
+          : com.algolia.model.ingestion.Action.PARTIAL_UPDATE_OBJECT_NO_CREATE,
         waitForTasks,
+        batchSize,
         null,
         requestOptions
       );

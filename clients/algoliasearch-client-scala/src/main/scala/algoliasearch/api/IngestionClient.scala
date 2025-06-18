@@ -3,6 +3,7 @@
   */
 package algoliasearch.api
 
+import algoliasearch.ingestion.Action._
 import algoliasearch.ingestion.ActionType._
 import algoliasearch.ingestion.Authentication
 import algoliasearch.ingestion.AuthenticationCreate

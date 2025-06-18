@@ -537,12 +537,14 @@ describe('partialUpdateObjectsWithTransformation', () => {
         createIfNotExists: true,
       });
 
-      expect(result).toEqual({
-        runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
-        eventID: '113b2068-6337-4c85-b5c2-e7b213d82925',
-        message: 'OK',
-        createdAt: '2022-05-12T06:24:30.049Z',
-      });
+      expect(result).toEqual([
+        {
+          runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
+          eventID: '113b2068-6337-4c85-b5c2-e7b213d82925',
+          message: 'OK',
+          createdAt: '2022-05-12T06:24:30.049Z',
+        },
+      ]);
     }
   }, 25000);
 });
@@ -856,12 +858,14 @@ describe('saveObjectsWithTransformation', () => {
         ],
       });
 
-      expect(result).toEqual({
-        runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
-        eventID: '113b2068-6337-4c85-b5c2-e7b213d82925',
-        message: 'OK',
-        createdAt: '2022-05-12T06:24:30.049Z',
-      });
+      expect(result).toEqual([
+        {
+          runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
+          eventID: '113b2068-6337-4c85-b5c2-e7b213d82925',
+          message: 'OK',
+          createdAt: '2022-05-12T06:24:30.049Z',
+        },
+      ]);
     }
   }, 25000);
 });

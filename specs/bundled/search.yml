@@ -3844,7 +3844,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WatchResponse'
+                type: array
+                items:
+                  $ref: '#/components/schemas/WatchResponse'
         '400':
           $ref: '#/components/responses/IndexNotFound'
   /deleteObjects:
@@ -4059,7 +4061,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WatchResponse'
+                type: array
+                items:
+                  $ref: '#/components/schemas/WatchResponse'
         '400':
           $ref: '#/components/responses/IndexNotFound'
   /indexExists:

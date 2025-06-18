@@ -9,7 +9,6 @@ import com.algolia.EchoInterceptor;
 import com.algolia.EchoResponse;
 import com.algolia.api.SearchClient;
 import com.algolia.config.*;
-import com.algolia.model.ingestion.WatchResponse;
 import com.algolia.model.search.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -708,7 +707,7 @@ class SearchClientClientTests {
     );
     client.setTransformationRegion("us");
     assertDoesNotThrow(() -> {
-      WatchResponse res = client.partialUpdateObjectsWithTransformation(
+      List res = client.partialUpdateObjectsWithTransformation(
         "cts_e2e_partialUpdateObjectsWithTransformation_java",
         Arrays.asList(
           new HashMap() {
@@ -729,7 +728,7 @@ class SearchClientClientTests {
 
       assertDoesNotThrow(() ->
         JSONAssert.assertEquals(
-          "{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82925\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"}",
+          "[{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82925\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"}]",
           json.writeValueAsString(res),
           JSONCompareMode.STRICT
         )
@@ -1111,7 +1110,7 @@ class SearchClientClientTests {
     );
     client.setTransformationRegion("us");
     assertDoesNotThrow(() -> {
-      WatchResponse res = client.saveObjectsWithTransformation(
+      List res = client.saveObjectsWithTransformation(
         "cts_e2e_saveObjectsWithTransformation_java",
         Arrays.asList(
           new HashMap() {
@@ -1131,7 +1130,7 @@ class SearchClientClientTests {
 
       assertDoesNotThrow(() ->
         JSONAssert.assertEquals(
-          "{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82925\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"}",
+          "[{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82925\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"}]",
           json.writeValueAsString(res),
           JSONCompareMode.STRICT
         )

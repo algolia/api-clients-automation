@@ -10,6 +10,7 @@ import com.algolia.exceptions.*;
 import com.algolia.model.ingestion.*;
 import com.algolia.utils.*;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -4844,5 +4845,104 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<WatchResponse> validateSourceBeforeUpdateAsync(@Nonnull String sourceID, @Nonnull SourceUpdate sourceUpdate)
     throws AlgoliaRuntimeException {
     return this.validateSourceBeforeUpdateAsync(sourceID, sourceUpdate, null);
+  }
+
+  private <T> List<PushTaskRecords> objectsToPushTaskRecords(Iterable<T> objects) {
+    try {
+      ObjectMapper mapper = new ObjectMapper();
+      String json = mapper.writeValueAsString(objects);
+
+      return mapper.readValue(json, new TypeReference<List<PushTaskRecords>>() {});
+    } catch (Exception e) {
+      throw new AlgoliaRuntimeException("each object must have an `objectID` key in order to be indexed");
+    }
+  }
+
+  /**
+   * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit
+   * in `push` requests by leveraging the Transformation pipeline setup in the Push connector
+   * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
+   *
+   * @summary Helper: Chunks the given `objects` list in subset of 1000 elements max in order to
+   *     make it fit in `batch` requests.
+   * @param indexName - The `indexName` to replace `objects` in.
+   * @param objects - The array of `objects` to store in the given Algolia `indexName`.
+   * @param action - The `batch` `action` to perform on the given array of `objects`.
+   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+   *     processed, this operation may slow the total execution time of this method but is more
+   *     reliable.
+   * @param batchSize - The size of the chunk of `objects`. The number of `batch` calls will be
+   *     equal to `length(objects) / batchSize`. Defaults to 1000.
+   * @param referenceIndexName - This is required when targeting an index that does not have a push
+   *     connector setup (e.g. a tmp index), but you wish to attach another index's transformation
+   *     to it (e.g. the source index name).
+   * @param requestOptions - The requestOptions to send along with the query, they will be forwarded
+   *     to the `getEvent` method and merged with the transporter requestOptions.
+   */
+  public <T> List<WatchResponse> chunkedPush(
+    String indexName,
+    Iterable<T> objects,
+    Action action,
+    boolean waitForTasks,
+    int batchSize,
+    String referenceIndexName,
+    RequestOptions requestOptions
+  ) {
+    List<WatchResponse> responses = new ArrayList<>();
+    List<T> records = new ArrayList<>();
+
+    for (T item : objects) {
+      if (records.size() == batchSize) {
+        WatchResponse watch =
+          this.push(
+              indexName,
+              new PushTaskPayload().setAction(action).setRecords(this.objectsToPushTaskRecords(records)),
+              waitForTasks,
+              referenceIndexName,
+              requestOptions
+            );
+        responses.add(watch);
+        records.clear();
+      }
+
+      records.add(item);
+    }
+
+    if (records.size() > 0) {
+      WatchResponse watch =
+        this.push(
+            indexName,
+            new PushTaskPayload().setAction(action).setRecords(this.objectsToPushTaskRecords(records)),
+            waitForTasks,
+            referenceIndexName,
+            requestOptions
+          );
+      responses.add(watch);
+    }
+
+    if (waitForTasks) {
+      responses.forEach(response -> {
+        TaskUtils.retryUntil(
+          () -> {
+            try {
+              return this.getEvent(response.getRunID(), response.getEventID());
+            } catch (AlgoliaApiException e) {
+              if (e.getStatusCode() == 404) {
+                return null;
+              }
+
+              throw e;
+            }
+          },
+          (Event resp) -> {
+            return resp != null;
+          },
+          50,
+          null
+        );
+      });
+    }
+
+    return responses;
   }
 }

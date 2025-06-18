@@ -676,7 +676,7 @@ class TestSearchClient:
             if isinstance(_req, list)
             else _req.to_dict()
         ) == loads(
-            """{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}"""
+            """[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]"""
         )
 
     async def test_replace_all_objects_0(self):
@@ -1016,7 +1016,7 @@ class TestSearchClient:
             if isinstance(_req, list)
             else _req.to_dict()
         ) == loads(
-            """{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}"""
+            """[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]"""
         )
 
     async def test_search_single_index_0(self):
@@ -1921,7 +1921,7 @@ class TestSearchClientSync:
             if isinstance(_req, list)
             else _req.to_dict()
         ) == loads(
-            """{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}"""
+            """[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]"""
         )
 
     def test_replace_all_objects_0(self):
@@ -2261,7 +2261,7 @@ class TestSearchClientSync:
             if isinstance(_req, list)
             else _req.to_dict()
         ) == loads(
-            """{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}"""
+            """[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]"""
         )
 
     def test_search_single_index_0(self):
