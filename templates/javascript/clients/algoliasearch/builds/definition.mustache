@@ -69,7 +69,7 @@ export type Algoliasearch = SearchClient & {
    * @param replaceAllObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
    * @param replaceAllObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `objects.length / batchSize`. Defaults to 1000.
    * @param replaceAllObjects.scopes - The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
-   * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch`, `operationIndex` and `getTask` method and merged with the transporter requestOptions.
+   * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `push`, `operationIndex` and `getEvent` method and merged with the transporter requestOptions.
    */
   replaceAllObjectsWithTransformation: (
     options: ReplaceAllObjectsOptions,
