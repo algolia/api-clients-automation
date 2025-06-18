@@ -47,7 +47,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -61,7 +61,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -72,7 +72,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -84,7 +84,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customDelete(@Nonnull String path) throws AlgoliaRuntimeException {
@@ -94,7 +94,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -114,7 +114,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -125,7 +125,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -138,7 +138,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customDeleteAsync(@Nonnull String path) throws AlgoliaRuntimeException {
@@ -148,7 +148,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -162,7 +162,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -173,7 +173,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -185,7 +185,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customGet(@Nonnull String path) throws AlgoliaRuntimeException {
@@ -195,7 +195,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -215,7 +215,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -226,7 +226,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -239,7 +239,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customGetAsync(@Nonnull String path) throws AlgoliaRuntimeException {
@@ -249,7 +249,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -264,7 +264,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -276,7 +276,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -288,7 +288,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPost(@Nonnull String path) throws AlgoliaRuntimeException {
@@ -298,7 +298,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -325,7 +325,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -338,7 +338,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -351,7 +351,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPostAsync(@Nonnull String path) throws AlgoliaRuntimeException {
@@ -361,7 +361,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -376,7 +376,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -388,7 +388,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -400,7 +400,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPut(@Nonnull String path) throws AlgoliaRuntimeException {
@@ -410,7 +410,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -437,7 +437,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -450,7 +450,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -463,7 +463,7 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
-   * @param path Path of the endpoint, anything after \"/1\" must be specified. (required)
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPutAsync(@Nonnull String path) throws AlgoliaRuntimeException {

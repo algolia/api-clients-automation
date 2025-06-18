@@ -498,7 +498,7 @@ final class SearchClient implements ApiClient {
   /// This method lets you send requests to the Algolia REST API.
   ///
   /// Parameters:
-  /// * [path] Path of the endpoint, anything after \"/1\" must be specified.
+  /// * [path] Path of the endpoint, for example `1/newFeature`.
   /// * [parameters] Query parameters to apply to the current query.
   /// * [requestOptions] additional request configuration.
   Future<Object> customDelete({
@@ -531,7 +531,7 @@ final class SearchClient implements ApiClient {
   /// This method lets you send requests to the Algolia REST API.
   ///
   /// Parameters:
-  /// * [path] Path of the endpoint, anything after \"/1\" must be specified.
+  /// * [path] Path of the endpoint, for example `1/newFeature`.
   /// * [parameters] Query parameters to apply to the current query.
   /// * [requestOptions] additional request configuration.
   Future<Object> customGet({
@@ -564,7 +564,7 @@ final class SearchClient implements ApiClient {
   /// This method lets you send requests to the Algolia REST API.
   ///
   /// Parameters:
-  /// * [path] Path of the endpoint, anything after \"/1\" must be specified.
+  /// * [path] Path of the endpoint, for example `1/newFeature`.
   /// * [parameters] Query parameters to apply to the current query.
   /// * [body] Parameters to send with the custom request.
   /// * [requestOptions] additional request configuration.
@@ -600,7 +600,7 @@ final class SearchClient implements ApiClient {
   /// This method lets you send requests to the Algolia REST API.
   ///
   /// Parameters:
-  /// * [path] Path of the endpoint, anything after \"/1\" must be specified.
+  /// * [path] Path of the endpoint, for example `1/newFeature`.
   /// * [parameters] Query parameters to apply to the current query.
   /// * [body] Parameters to send with the custom request.
   /// * [requestOptions] additional request configuration.
