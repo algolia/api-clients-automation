@@ -89,8 +89,8 @@ $config = SearchConfig::create(
 // }
 // var_dump($rules);
 
-$configForIngestion = $config->setFullHosts(['http://localhost:6689'])->setTransformationRegion('eu');
+$configForIngestion = $config->setTransformationRegion('eu');
 
 $clientWithTransformation = SearchClient::createWithConfig($configForIngestion);
 
-var_dump($clientWithTransformation->saveObjectsWithTransformation('boyd', [['objectID' => '1', 'name' => 'Michel']], true));
+var_dump($clientWithTransformation->replaceAllObjectsWithTransformation('boyd', [['objectID' => '1', 'name' => 'Michel']], true));

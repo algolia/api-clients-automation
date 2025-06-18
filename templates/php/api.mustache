@@ -330,8 +330,8 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         $objects,
         $action = 'addObject',
         $waitForTasks = true,
-        $referenceIndexName = null,
         $batchSize = 1000,
+        $referenceIndexName = null,
         $requestOptions = []
     ) {
         $responses = [];
@@ -357,17 +357,16 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             $timeoutCalculation = 'Algolia\AlgoliaSearch\Support\Helpers::linearTimeout';
 
             foreach ($responses as $response) {
-                $this->waitForTask($indexName, $response['taskID']);
                 $retry = 0;
 
                 while ($retry < 50) {
                     try {
-                        $resp = $this->getEvent($response->runID, $response->eventID);
+                        $this->getEvent($response["runID"], $response["eventID"]);
 
                         break;
                     } catch (NotFoundException $e) {
                         if (404 === $e->getCode()) {
-                            return null;
+                            return $responses;
                         }
                     }
 
