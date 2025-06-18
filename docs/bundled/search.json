@@ -4174,6 +4174,80 @@
         }
       }
     },
+    "/replaceAllObjectsWithTransformation": {
+      "get": {
+        "x-helper": true,
+        "tags": [
+          "Records"
+        ],
+        "x-available-languages": [
+          "javascript"
+        ],
+        "operationId": "replaceAllObjectsWithTransformation",
+        "summary": "Replace all records in an index",
+        "description": "Replace all records from your index with a new set of records by leveraging the Transformation pipeline setup in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).\n\nThis method lets you replace all records in your index without downtime. It performs these operations:\n  1. Copy settings, synonyms, and rules from your original index to a temporary index.\n  2. Add your new records to the temporary index.\n  3. Replace your original index with the temporary index.\n\nUse the safe parameter to ensure that these (asynchronous) operations are performed in sequence.\nIf there's an error duing one of these steps, the temporary index won't be deleted.\nThis operation is rate-limited.\nThis method creates a temporary index: your record count is temporarily doubled. Algolia doesn't count the three days with the highest number of records towards your monthly usage.\nIf you're on a legacy plan (before July 2020), this method counts two operations towards your usage (in addition to the number of records): copySettings and moveIndex.\nThe API key you use for this operation must have access to the index YourIndex and the temporary index YourIndex_tmp.\n",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "indexName",
+            "description": "The `indexName` to replace `objects` in.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "objects",
+            "description": "List of objects to replace the current objects with.",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          },
+          {
+            "in": "query",
+            "name": "batchSize",
+            "description": "The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1000
+            }
+          },
+          {
+            "in": "query",
+            "name": "scopes",
+            "description": "List of scopes to kepp in the index. Defaults to `settings`, `synonyms`, and `rules`.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/scopeType"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/replaceAllObjectsWithTransformationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/IndexNotFound"
+          }
+        }
+      }
+    },
     "/chunkedBatch": {
       "get": {
         "x-helper": true,
@@ -8718,6 +8792,32 @@
         },
         "required": [
           "runID"
+        ]
+      },
+      "replaceAllObjectsWithTransformationResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "copyOperationResponse": {
+            "description": "The response of the `operationIndex` request for the `copy` operation.",
+            "$ref": "#/components/schemas/updatedAtResponse"
+          },
+          "watchResponses": {
+            "type": "array",
+            "description": "The response of the `push` request(s).",
+            "items": {
+              "$ref": "#/components/schemas/WatchResponse"
+            }
+          },
+          "moveOperationResponse": {
+            "description": "The response of the `operationIndex` request for the `move` operation.",
+            "$ref": "#/components/schemas/updatedAtResponse"
+          }
+        },
+        "required": [
+          "copyOperationResponse",
+          "watchResponses",
+          "moveOperationResponse"
         ]
       },
       "builtInOperationType": {

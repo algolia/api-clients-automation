@@ -650,6 +650,72 @@ describe('replaceAllObjects', () => {
   }, 25000);
 });
 
+describe('replaceAllObjectsWithTransformation', () => {
+  test('call replaceAllObjectsWithTransformation without error', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6690,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+      transformation: { region: 'us' },
+    });
+
+    {
+      const result = await client.replaceAllObjectsWithTransformation({
+        indexName: 'cts_e2e_replace_all_objects_with_transformation_javascript',
+        objects: [
+          { objectID: '1', name: 'Adam' },
+          { objectID: '2', name: 'Benoit' },
+          { objectID: '3', name: 'Cyril' },
+          { objectID: '4', name: 'David' },
+          { objectID: '5', name: 'Eva' },
+          { objectID: '6', name: 'Fiona' },
+          { objectID: '7', name: 'Gael' },
+          { objectID: '8', name: 'Hugo' },
+          { objectID: '9', name: 'Igor' },
+          { objectID: '10', name: 'Julia' },
+        ],
+        batchSize: 3,
+      });
+
+      expect(result).toEqual({
+        copyOperationResponse: { taskID: 125, updatedAt: '2021-01-01T00:00:00.000Z' },
+        watchResponses: [
+          {
+            runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
+            eventID: '113b2068-6337-4c85-b5c2-e7b213d82923',
+            message: 'OK',
+            createdAt: '2022-05-12T06:24:30.049Z',
+          },
+          {
+            runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
+            eventID: '113b2068-6337-4c85-b5c2-e7b213d82926',
+            message: 'OK',
+            createdAt: '2022-05-12T06:24:30.049Z',
+          },
+          {
+            runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
+            eventID: '113b2068-6337-4c85-b5c2-e7b213d82929',
+            message: 'OK',
+            createdAt: '2022-05-12T06:24:30.049Z',
+          },
+          {
+            runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
+            eventID: '113b2068-6337-4c85-b5c2-e7b213d829210',
+            message: 'OK',
+            createdAt: '2022-05-12T06:24:30.049Z',
+          },
+        ],
+        moveOperationResponse: { taskID: 777, updatedAt: '2021-01-01T00:00:00.000Z' },
+      });
+    }
+  }, 25000);
+});
+
 describe('saveObjects', () => {
   test('call saveObjects without error', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {

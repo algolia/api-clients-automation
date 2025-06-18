@@ -2521,6 +2521,9 @@
       "call replaceAllObjects with partial scopes": "const response = await client.replaceAllObjects({\n  indexName: 'cts_e2e_replace_all_objects_scopes_javascript',\n  objects: [\n    { objectID: '1', name: 'Adam' },\n    { objectID: '2', name: 'Benoit' },\n  ],\n  batchSize: 77,\n  scopes: ['settings', 'synonyms'],\n});",
       "replaceAllObjects should cleanup on failure": "const response = await client.replaceAllObjects({\n  indexName: 'cts_e2e_replace_all_objects_too_big_javascript',\n  objects: [\n    { objectID: 'fine', body: 'small obj' },\n    { objectID: 'toolarge', body: 'something bigger than 10KB' },\n  ],\n});"
     },
+    "replaceAllObjectsWithTransformation": {
+      "default": "const response = await client.replaceAllObjectsWithTransformation({\n  indexName: 'cts_e2e_replace_all_objects_with_transformation_javascript',\n  objects: [\n    { objectID: '1', name: 'Adam' },\n    { objectID: '2', name: 'Benoit' },\n    { objectID: '3', name: 'Cyril' },\n    { objectID: '4', name: 'David' },\n    { objectID: '5', name: 'Eva' },\n    { objectID: '6', name: 'Fiona' },\n    { objectID: '7', name: 'Gael' },\n    { objectID: '8', name: 'Hugo' },\n    { objectID: '9', name: 'Igor' },\n    { objectID: '10', name: 'Julia' },\n  ],\n  batchSize: 3,\n});"
+    },
     "replaceSources": {
       "default": "const response = await client.replaceSources({ source: [{ source: 'theSource', description: 'theDescription' }] });"
     },

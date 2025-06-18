@@ -23343,6 +23343,29 @@ components:
           $ref: '#/components/schemas/CreatedAt'
       required:
         - runID
+    replaceAllObjectsWithTransformationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        copyOperationResponse:
+          description: >-
+            The response of the `operationIndex` request for the `copy`
+            operation.
+          $ref: '#/components/schemas/updatedAtResponse'
+        watchResponses:
+          type: array
+          description: The response of the `push` request(s).
+          items:
+            $ref: '#/components/schemas/WatchResponse'
+        moveOperationResponse:
+          description: >-
+            The response of the `operationIndex` request for the `move`
+            operation.
+          $ref: '#/components/schemas/updatedAtResponse'
+      required:
+        - copyOperationResponse
+        - watchResponses
+        - moveOperationResponse
     builtInOperationType:
       type: string
       enum:

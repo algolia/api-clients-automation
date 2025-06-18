@@ -43,6 +43,7 @@ import algoliasearch.search.MultipleBatchResponse
 import algoliasearch.search.OperationIndexParams
 import algoliasearch.search.RemoveUserIdResponse
 import algoliasearch.search.ReplaceAllObjectsResponse
+import algoliasearch.search.ReplaceAllObjectsWithTransformationResponse
 import algoliasearch.search.ReplaceSourceResponse
 import algoliasearch.search.Rule
 import algoliasearch.search.SaveObjectResponse

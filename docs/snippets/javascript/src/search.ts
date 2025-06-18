@@ -2189,6 +2189,39 @@ export async function snippetForReplaceAllObjects2(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the replaceAllObjectsWithTransformation method.
+//
+// call replaceAllObjectsWithTransformation without error
+export async function snippetForReplaceAllObjectsWithTransformation(): Promise<void> {
+  // >SEPARATOR replaceAllObjectsWithTransformation default
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.replaceAllObjectsWithTransformation({
+    indexName: 'cts_e2e_replace_all_objects_with_transformation_javascript',
+    objects: [
+      { objectID: '1', name: 'Adam' },
+      { objectID: '2', name: 'Benoit' },
+      { objectID: '3', name: 'Cyril' },
+      { objectID: '4', name: 'David' },
+      { objectID: '5', name: 'Eva' },
+      { objectID: '6', name: 'Fiona' },
+      { objectID: '7', name: 'Gael' },
+      { objectID: '8', name: 'Hugo' },
+      { objectID: '9', name: 'Igor' },
+      { objectID: '10', name: 'Julia' },
+    ],
+    batchSize: 3,
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the replaceSources method.
 //
 // replaceSources
