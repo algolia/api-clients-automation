@@ -47,7 +47,7 @@ def main():
 
     try:
         resp = client.replace_all_objects_with_transformation(
-            "boyd", [{"objectID": "bar"}]
+            "boyd", [{"objectID": "bar"},{"objectID": "bar"},{"objectID": "bar"},{"objectID": "bar"},{"objectID": "bar"}], 2
         )
         print(resp)
     except Exception as e:
