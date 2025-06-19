@@ -340,6 +340,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
 
         foreach ($objects as $object) {
             $records[] = $object;
+            $ok = false;
 
             if (sizeof($records) === $batchSize || $count === sizeof($objects) - 1) {
                 $responses[] = $this->push($indexName, ['action' => $action, 'records' => $records], false, $referenceIndexName, $requestOptions);
@@ -361,13 +362,13 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
 
                 while ($retry < 50) {
                     try {
-                        $this->getEvent($response["runID"], $response["eventID"]);
+                        $this->getEvent($response['runID'], $response['eventID']);
+
+                        $ok = true;
 
                         break;
                     } catch (NotFoundException $e) {
-                        if (404 === $e->getCode()) {
-                            return $responses;
-                        }
+                        // just retry
                     }
 
                     ++$retry;
@@ -376,7 +377,9 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
                     );
                 }
 
-                throw new ExceededRetriesException('Maximum number of retries (50) exceeded.');
+                if (false === $ok) {
+                    throw new ExceededRetriesException('Maximum number of retries (50) exceeded.');
+                }
             }
         }
 
