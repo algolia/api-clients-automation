@@ -1,3 +1,8 @@
+## [1.34.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.33.1...1.34.0)
+
+- [a2ebbf496c](https://github.com/algolia/api-clients-automation/commit/a2ebbf496c) feat(clients): add `replaceAllObjectsWithTransformation` ([#5008](https://github.com/algolia/api-clients-automation/pull/5008)) by [@shortcuts](https://github.com/shortcuts/)
+- [5e3869931b](https://github.com/algolia/api-clients-automation/commit/5e3869931b) chore(spec): fix comment of custom path ([#5014](https://github.com/algolia/api-clients-automation/pull/5014)) by [@millotp](https://github.com/millotp/)
+
 ## [1.33.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.33.0...1.33.1)
 
 - [60ade79465](https://github.com/algolia/api-clients-automation/commit/60ade79465) chore(deps): dependencies 2025-06-16 ([#4977](https://github.com/algolia/api-clients-automation/pull/4977)) by [@algolia-bot](https://github.com/algolia-bot/)

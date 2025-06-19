@@ -1,3 +1,10 @@
+## [4.20.0](https://github.com/algolia/algoliasearch-client-java/compare/4.19.0...4.20.0)
+
+- [a2ebbf496c](https://github.com/algolia/api-clients-automation/commit/a2ebbf496c) feat(clients): add `replaceAllObjectsWithTransformation` ([#5008](https://github.com/algolia/api-clients-automation/pull/5008)) by [@shortcuts](https://github.com/shortcuts/)
+- [5e3869931b](https://github.com/algolia/api-clients-automation/commit/5e3869931b) chore(spec): fix comment of custom path ([#5014](https://github.com/algolia/api-clients-automation/pull/5014)) by [@millotp](https://github.com/millotp/)
+- [9dec2bb122](https://github.com/algolia/api-clients-automation/commit/9dec2bb122) fix(clients): allow chunked requests on WithTransformation methods ([#5011](https://github.com/algolia/api-clients-automation/pull/5011)) by [@shortcuts](https://github.com/shortcuts/)
+- [947a4cac09](https://github.com/algolia/api-clients-automation/commit/947a4cac09) feat(clients): add `replaceAllObjectsWithTransformation` ([#5013](https://github.com/algolia/api-clients-automation/pull/5013)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [4.19.0](https://github.com/algolia/algoliasearch-client-java/compare/4.18.0...4.19.0)
 
 - [c8efa236ef](https://github.com/algolia/api-clients-automation/commit/c8efa236ef) feat(java): add bridge to transformation on search ([#4939](https://github.com/algolia/api-clients-automation/pull/4939)) by [@shortcuts](https://github.com/shortcuts/)
