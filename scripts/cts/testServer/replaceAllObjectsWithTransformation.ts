@@ -92,6 +92,7 @@ function addRoutes(app: Express): void {
     )?.[1] as string;
     expect(raowtState).to.include.keys(lang);
     expect(req.body.action === 'addObject').to.equal(true);
+    expect(req.query.referenceIndexName === `cts_e2e_replace_all_objects_with_transformation_${lang}`).to.equal(true);
 
     raowtState[lang].pushCount += req.body.records.length;
 
@@ -104,7 +105,14 @@ function addRoutes(app: Express): void {
   });
 
   app.get('/1/runs/:runID/events/:eventID', (req, res) => {
-    res.json({ status: 'finished' });
+    res.json({
+      status: 'succeeded',
+      eventID: '113b2068-6337-4c85-b5c2-e7b213d82921',
+      runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
+      type: 'fetch',
+      batchSize: 1,
+      publishedAt: '2022-05-12T06:24:30.049Z',
+    });
   });
 
   app.get('/1/indexes/:indexName/task/:taskID', (req, res) => {

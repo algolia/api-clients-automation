@@ -5,6 +5,10 @@ method:
       - Records
     x-available-languages:
       - javascript
+      - go
+      - java
+      - php
+      - python
     operationId: replaceAllObjectsWithTransformation
     summary: Replace all records in an index
     description: |

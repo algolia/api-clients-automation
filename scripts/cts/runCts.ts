@@ -155,7 +155,9 @@ export async function runCts(
     assertValidTimeouts(languages.length);
     assertChunkWrapperValid(languages.length - skip('dart'));
     assertValidReplaceAllObjects(languages.length - skip('dart'));
-    assertValidReplaceAllObjectsWithTransformation(only('javascript'));
+    assertValidReplaceAllObjectsWithTransformation(
+      only('javascript') + only('go') + only('python') + only('java') + only('php'),
+    );
     assertValidAccountCopyIndex(only('javascript'));
     assertValidReplaceAllObjectsFailed(languages.length - skip('dart'));
     assertValidReplaceAllObjectsScopes(languages.length - skip('dart'));

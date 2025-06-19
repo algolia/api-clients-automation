@@ -27,7 +27,7 @@
                         request_options=request_options,
                     )
                 )
-                requests = []
+                records = []
         if wait_for_tasks:
             for response in responses:
                 {{^isSyncClient}}async {{/isSyncClient}}def _func(_: Optional[Event]) -> Event:

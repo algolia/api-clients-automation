@@ -10,12 +10,14 @@ from .{{classFilename}} import {{classname}}
 
 {{#isSearchClient}}
 from .replace_all_objects_response import ReplaceAllObjectsResponse
+from .replace_all_objects_with_transformation_response import ReplaceAllObjectsWithTransformationResponse
 from .secured_api_key_restrictions import SecuredApiKeyRestrictions
 {{/isSearchClient}}
 
 __all__ = (
   {{#isSearchClient}}
   "ReplaceAllObjectsResponse",
+  "ReplaceAllObjectsWithTransformationResponse",
   "SecuredApiKeyRestrictions",
   {{/isSearchClient}}
 {{#models}}
