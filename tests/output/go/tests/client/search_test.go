@@ -758,6 +758,37 @@ func TestSearchreplaceAllObjects2(t *testing.T) {
 	require.EqualError(t, err, "API error [400] Record is too big")
 }
 
+// call replaceAllObjectsWithTransformation without error
+func TestSearchreplaceAllObjectsWithTransformation0(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.SearchConfiguration
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6690", call.IsReadWrite)},
+		},
+		Transformation: &search.TransformationConfiguration{Region: "us"},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	{
+		res, err = client.ReplaceAllObjectsWithTransformation(
+			"cts_e2e_replace_all_objects_with_transformation_go",
+			[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}, map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}, map[string]any{"objectID": "5", "name": "Eva"}, map[string]any{"objectID": "6", "name": "Fiona"}, map[string]any{"objectID": "7", "name": "Gael"}, map[string]any{"objectID": "8", "name": "Hugo"}, map[string]any{"objectID": "9", "name": "Igor"}, map[string]any{"objectID": "10", "name": "Julia"}}, search.WithBatchSize(3))
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"watchResponses":[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82923","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82926","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82929","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d829210","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}`, string(rawBody))
+	}
+}
+
 // call saveObjects without error
 func TestSearchsaveObjects0(t *testing.T) {
 	var err error

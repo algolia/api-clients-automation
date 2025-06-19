@@ -2841,6 +2841,71 @@ def snippet_for_replace_all_objects2():
     # SEPARATOR<
 
 
+def snippet_for_replace_all_objects_with_transformation():
+    """
+    Snippet for the replaceAllObjectsWithTransformation method.
+
+    call replaceAllObjectsWithTransformation without error
+    """
+    # >SEPARATOR replaceAllObjectsWithTransformation default
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.replace_all_objects_with_transformation(
+        index_name="<YOUR_INDEX_NAME>",
+        objects=[
+            {
+                "objectID": "1",
+                "name": "Adam",
+            },
+            {
+                "objectID": "2",
+                "name": "Benoit",
+            },
+            {
+                "objectID": "3",
+                "name": "Cyril",
+            },
+            {
+                "objectID": "4",
+                "name": "David",
+            },
+            {
+                "objectID": "5",
+                "name": "Eva",
+            },
+            {
+                "objectID": "6",
+                "name": "Fiona",
+            },
+            {
+                "objectID": "7",
+                "name": "Gael",
+            },
+            {
+                "objectID": "8",
+                "name": "Hugo",
+            },
+            {
+                "objectID": "9",
+                "name": "Igor",
+            },
+            {
+                "objectID": "10",
+                "name": "Julia",
+            },
+        ],
+        batch_size=3,
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_replace_sources():
     """
     Snippet for the replaceSources method.

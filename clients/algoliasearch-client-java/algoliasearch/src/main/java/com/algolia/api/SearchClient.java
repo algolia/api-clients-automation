@@ -12,6 +12,7 @@ import com.algolia.model.ingestion.WatchResponse;
 import com.algolia.model.search.*;
 import com.algolia.utils.*;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -7313,6 +7314,176 @@ public class SearchClient extends ApiClient {
       deleteIndex(tmpIndexName);
 
       throw e;
+    }
+  }
+
+  /**
+   * Helper: Similar to the `saveObjects` method but requires a Push connector
+   * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+   * to be created first, in order to transform records before indexing them to Algolia. The
+   * `region` must have been passed to the client instantiation method.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @throws AlgoliaRetryException When the retry has failed on all hosts
+   * @throws AlgoliaApiException When the API sends an http error code
+   * @throws AlgoliaRuntimeException When an error occurred during the serialization
+   */
+  public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTransformation(String indexName, Iterable<T> objects) {
+    return replaceAllObjectsWithTransformation(indexName, objects, -1);
+  }
+
+  /**
+   * Helper: Similar to the `saveObjects` method but requires a Push connector
+   * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+   * to be created first, in order to transform records before indexing them to Algolia. The
+   * `region` must have been passed to the client instantiation method.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @throws AlgoliaRetryException When the retry has failed on all hosts
+   * @throws AlgoliaApiException When the API sends an http error code
+   * @throws AlgoliaRuntimeException When an error occurred during the serialization
+   */
+  public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTransformation(
+    String indexName,
+    Iterable<T> objects,
+    int batchSize
+  ) {
+    return replaceAllObjectsWithTransformation(indexName, objects, batchSize, null, null);
+  }
+
+  /**
+   * Helper: Similar to the `saveObjects` method but requires a Push connector
+   * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+   * to be created first, in order to transform records before indexing them to Algolia. The
+   * `region` must have been passed to the client instantiation method.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param scopes The `scopes` to keep from the index. Defaults to ['settings', 'rules',
+   *     'synonyms'].
+   * @throws AlgoliaRetryException When the retry has failed on all hosts
+   * @throws AlgoliaApiException When the API sends an http error code
+   * @throws AlgoliaRuntimeException When an error occurred during the serialization
+   */
+  public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTransformation(
+    String indexName,
+    Iterable<T> objects,
+    int batchSize,
+    List<ScopeType> scopes
+  ) {
+    return replaceAllObjectsWithTransformation(indexName, objects, batchSize, scopes, null);
+  }
+
+  /**
+   * Helper: Similar to the `saveObjects` method but requires a Push connector
+   * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+   * to be created first, in order to transform records before indexing them to Algolia. The
+   * `region` must have been passed to the client instantiation method.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param scopes The `scopes` to keep from the index. Defaults to ['settings', 'rules',
+   *     'synonyms'].
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   * @throws AlgoliaRetryException When the retry has failed on all hosts
+   * @throws AlgoliaApiException When the API sends an http error code
+   * @throws AlgoliaRuntimeException When an error occurred during the serialization
+   */
+  public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTransformation(
+    String indexName,
+    Iterable<T> objects,
+    int batchSize,
+    List<ScopeType> scopes,
+    RequestOptions requestOptions
+  ) {
+    if (this.ingestionTransporter == null) {
+      throw new AlgoliaRuntimeException("`setTransformationRegion` must have been called before calling this method.");
+    }
+
+    Random rnd = new Random();
+    String tmpIndexName = indexName + "_tmp_" + rnd.nextInt(100);
+
+    if (batchSize == -1) {
+      batchSize = 1000;
+    }
+
+    if (scopes == null) {
+      scopes = new ArrayList<ScopeType>() {
+        {
+          add(ScopeType.SETTINGS);
+          add(ScopeType.RULES);
+          add(ScopeType.SYNONYMS);
+        }
+      };
+    }
+
+    try {
+      // Copy settings, synonyms and rules
+      UpdatedAtResponse copyOperationResponse = operationIndex(
+        indexName,
+        new OperationIndexParams().setOperation(OperationType.COPY).setDestination(tmpIndexName).setScope(scopes),
+        requestOptions
+      );
+
+      // Save new objects
+      List<WatchResponse> watchResponses =
+        this.ingestionTransporter.chunkedPush(
+            tmpIndexName,
+            objects,
+            com.algolia.model.ingestion.Action.ADD_OBJECT,
+            true,
+            batchSize,
+            indexName,
+            requestOptions
+          );
+
+      waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
+
+      copyOperationResponse = operationIndex(
+        indexName,
+        new OperationIndexParams().setOperation(OperationType.COPY).setDestination(tmpIndexName).setScope(scopes),
+        requestOptions
+      );
+      waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
+
+      // Move temporary index to source index
+      UpdatedAtResponse moveOperationResponse = operationIndex(
+        tmpIndexName,
+        new OperationIndexParams().setOperation(OperationType.MOVE).setDestination(indexName),
+        requestOptions
+      );
+      waitForTask(tmpIndexName, moveOperationResponse.getTaskID(), requestOptions);
+
+      return new ReplaceAllObjectsWithTransformationResponse()
+        .setCopyOperationResponse(copyOperationResponse)
+        .setWatchResponses(ingestionResponseToSearchResponse(watchResponses))
+        .setMoveOperationResponse(moveOperationResponse);
+    } catch (Exception e) {
+      deleteIndex(tmpIndexName);
+
+      throw e;
+    }
+  }
+
+  private List<com.algolia.model.search.WatchResponse> ingestionResponseToSearchResponse(
+    List<com.algolia.model.ingestion.WatchResponse> responses
+  ) {
+    try {
+      ObjectMapper mapper = new ObjectMapper();
+      String json = mapper.writeValueAsString(responses);
+
+      return mapper.readValue(json, new TypeReference<List<com.algolia.model.search.WatchResponse>>() {});
+    } catch (Exception e) {
+      throw new AlgoliaRuntimeException("ingestion WatchResponse cannot be converted to a search WatchResponse");
     }
   }
 

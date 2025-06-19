@@ -2779,6 +2779,70 @@ class SnippetSearchClient
     }
 
     /**
+     * Snippet for the ReplaceAllObjectsWithTransformation method.
+     *
+     * call replaceAllObjectsWithTransformation without error
+     */
+    public function snippetForReplaceAllObjectsWithTransformation(): void
+    {
+        // >SEPARATOR replaceAllObjectsWithTransformation default
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->replaceAllObjectsWithTransformation(
+            '<YOUR_INDEX_NAME>',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+
+                ['objectID' => '3',
+                    'name' => 'Cyril',
+                ],
+
+                ['objectID' => '4',
+                    'name' => 'David',
+                ],
+
+                ['objectID' => '5',
+                    'name' => 'Eva',
+                ],
+
+                ['objectID' => '6',
+                    'name' => 'Fiona',
+                ],
+
+                ['objectID' => '7',
+                    'name' => 'Gael',
+                ],
+
+                ['objectID' => '8',
+                    'name' => 'Hugo',
+                ],
+
+                ['objectID' => '9',
+                    'name' => 'Igor',
+                ],
+
+                ['objectID' => '10',
+                    'name' => 'Julia',
+                ],
+            ],
+            3,
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the ReplaceSources method.
      *
      * replaceSources

@@ -2141,6 +2141,85 @@ class SnippetSearchClient {
     // SEPARATOR<
   }
 
+  // Snippet for the replaceAllObjectsWithTransformation method.
+  //
+  // call replaceAllObjectsWithTransformation without error
+  void snippetForReplaceAllObjectsWithTransformation() throws Exception {
+    // >SEPARATOR replaceAllObjectsWithTransformation default
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.replaceAllObjectsWithTransformation(
+      "<YOUR_INDEX_NAME>",
+      Arrays.asList(
+        new HashMap() {
+          {
+            put("objectID", "1");
+            put("name", "Adam");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "2");
+            put("name", "Benoit");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "3");
+            put("name", "Cyril");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "4");
+            put("name", "David");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "5");
+            put("name", "Eva");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "6");
+            put("name", "Fiona");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "7");
+            put("name", "Gael");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "8");
+            put("name", "Hugo");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "9");
+            put("name", "Igor");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "10");
+            put("name", "Julia");
+          }
+        }
+      ),
+      3
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
   // Snippet for the replaceSources method.
   //
   // replaceSources

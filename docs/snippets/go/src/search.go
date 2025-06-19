@@ -3007,6 +3007,35 @@ func SnippetForReplaceAllObjectsOfSearch2() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForReplaceAllObjectsWithTransformationOfSearch() {
+	/*
+	   Snippet for the replaceAllObjectsWithTransformation method.
+
+	   call replaceAllObjectsWithTransformation without error
+	*/
+
+	// >SEPARATOR replaceAllObjectsWithTransformation default
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ReplaceAllObjectsWithTransformation(
+		"<YOUR_INDEX_NAME>",
+		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}, map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}, map[string]any{"objectID": "5", "name": "Eva"}, map[string]any{"objectID": "6", "name": "Fiona"}, map[string]any{"objectID": "7", "name": "Gael"}, map[string]any{"objectID": "8", "name": "Hugo"}, map[string]any{"objectID": "9", "name": "Igor"}, map[string]any{"objectID": "10", "name": "Julia"}}, search.WithBatchSize(3))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForReplaceSourcesOfSearch() {
 	/*
 	   Snippet for the replaceSources method.

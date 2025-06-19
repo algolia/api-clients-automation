@@ -835,6 +835,81 @@ class TestSearchClient:
         except (ValueError, Exception) as e:
             assert str(e) == "Record is too big"
 
+    async def test_replace_all_objects_with_transformation_0(self):
+        """
+        call replaceAllObjectsWithTransformation without error
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6690,
+                )
+            ]
+        )
+        _config.set_transformation_region("us")
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.replace_all_objects_with_transformation(
+            index_name="cts_e2e_replace_all_objects_with_transformation_python",
+            objects=[
+                {
+                    "objectID": "1",
+                    "name": "Adam",
+                },
+                {
+                    "objectID": "2",
+                    "name": "Benoit",
+                },
+                {
+                    "objectID": "3",
+                    "name": "Cyril",
+                },
+                {
+                    "objectID": "4",
+                    "name": "David",
+                },
+                {
+                    "objectID": "5",
+                    "name": "Eva",
+                },
+                {
+                    "objectID": "6",
+                    "name": "Fiona",
+                },
+                {
+                    "objectID": "7",
+                    "name": "Gael",
+                },
+                {
+                    "objectID": "8",
+                    "name": "Hugo",
+                },
+                {
+                    "objectID": "9",
+                    "name": "Igor",
+                },
+                {
+                    "objectID": "10",
+                    "name": "Julia",
+                },
+            ],
+            batch_size=3,
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"watchResponses":[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82923","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82926","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82929","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d829210","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}"""
+        )
+
     async def test_save_objects_0(self):
         """
         call saveObjects without error
@@ -2079,6 +2154,81 @@ class TestSearchClientSync:
             assert False
         except (ValueError, Exception) as e:
             assert str(e) == "Record is too big"
+
+    def test_replace_all_objects_with_transformation_0(self):
+        """
+        call replaceAllObjectsWithTransformation without error
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6690,
+                )
+            ]
+        )
+        _config.set_transformation_region("us")
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.replace_all_objects_with_transformation(
+            index_name="cts_e2e_replace_all_objects_with_transformation_python",
+            objects=[
+                {
+                    "objectID": "1",
+                    "name": "Adam",
+                },
+                {
+                    "objectID": "2",
+                    "name": "Benoit",
+                },
+                {
+                    "objectID": "3",
+                    "name": "Cyril",
+                },
+                {
+                    "objectID": "4",
+                    "name": "David",
+                },
+                {
+                    "objectID": "5",
+                    "name": "Eva",
+                },
+                {
+                    "objectID": "6",
+                    "name": "Fiona",
+                },
+                {
+                    "objectID": "7",
+                    "name": "Gael",
+                },
+                {
+                    "objectID": "8",
+                    "name": "Hugo",
+                },
+                {
+                    "objectID": "9",
+                    "name": "Igor",
+                },
+                {
+                    "objectID": "10",
+                    "name": "Julia",
+                },
+            ],
+            batch_size=3,
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"watchResponses":[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82923","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82926","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82929","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d829210","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}"""
+        )
 
     def test_save_objects_0(self):
         """
