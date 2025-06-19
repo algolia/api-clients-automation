@@ -61,6 +61,8 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         elif config is None:
             config = {{#lambda.pascalcase}}{{client}}Config{{/lambda.pascalcase}}(app_id, api_key{{#hasRegionalHost}}, region{{/hasRegionalHost}})
 
+        config.set_default_hosts()
+
         self._config = config
         self._request_options = RequestOptions(config)
 
@@ -97,8 +99,6 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
 
             _ingestion_transporter = IngestionClient{{#isSyncClient}}Sync{{/isSyncClient}}.create_with_config(ingestion_config)
         {{/isSearchClient}}
-
-        config.set_default_hosts()
 
         client = {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}(app_id=config.app_id, api_key=config.api_key, {{#hasRegionalHost}}region=config.region, {{/hasRegionalHost}}transporter=transporter, config=config)
 
