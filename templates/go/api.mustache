@@ -294,7 +294,7 @@ func partialUpdateObjectsToChunkedBatchOptions(opts []PartialUpdateObjectsOption
 	return chunkedBatchOpts
 }
 
-func replaceAllObjectsToChunkBactchOptions(opts []ReplaceAllObjectsOption) []ChunkedBatchOption {
+func replaceAllObjectsToChunkBatchOptions(opts []ReplaceAllObjectsOption) []ChunkedBatchOption {
   chunkedBatchOpts := make([]ChunkedBatchOption, 0, len(opts))
 
   for _, opt := range opts {
