@@ -1,3 +1,7 @@
+## [4.20.1](https://github.com/algolia/algoliasearch-client-go/compare/4.20.0...4.20.1)
+
+- [e881e3a531](https://github.com/algolia/api-clients-automation/commit/e881e3a531) fix(go): typo on internal helper
+
 ## [4.20.0](https://github.com/algolia/algoliasearch-client-go/compare/4.19.0...4.20.0)
 
 - [a2ebbf496c](https://github.com/algolia/api-clients-automation/commit/a2ebbf496c) feat(clients): add `replaceAllObjectsWithTransformation` ([#5008](https://github.com/algolia/api-clients-automation/pull/5008)) by [@shortcuts](https://github.com/shortcuts/)

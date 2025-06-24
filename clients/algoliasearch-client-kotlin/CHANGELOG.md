@@ -1,3 +1,7 @@
+## [3.23.1](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.23.0...3.23.1)
+
+- [2ca05ef173](https://github.com/algolia/api-clients-automation/commit/2ca05ef173) chore(deps): dependencies 2025-06-23 ([#5016](https://github.com/algolia/api-clients-automation/pull/5016)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [3.23.0](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.22.0...3.23.0)
 
 - [a2ebbf496c](https://github.com/algolia/api-clients-automation/commit/a2ebbf496c) feat(clients): add `replaceAllObjectsWithTransformation` ([#5008](https://github.com/algolia/api-clients-automation/pull/5008)) by [@shortcuts](https://github.com/shortcuts/)
