@@ -231,9 +231,9 @@ paths:
         - ingestion
   /1/push/{indexName}:
     post:
-      summary: >-
-        Pushes records to be transformed through the Pipeline, directly to an
-        index
+      tags:
+        - ingestion
+      summary: Pushes records to be transformed through the Pipeline, by indexName
       description: >
         Pushes records through the Pipeline, directly to an index. You can make
         the call synchronous by providing the `watch` parameter, for
@@ -283,8 +283,6 @@ paths:
                 $ref: '#/components/schemas/WatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
-      tags:
-        - ingestion
   /1/authentications:
     get:
       tags:
@@ -1113,9 +1111,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: >-
-        Pushes records to be transformed through the Pipeline, directly to an
-        index
+      summary: Pushes records to be transformed through the Pipeline, by taskID
       description: >
         Pushes records through the Pipeline, directly to an index. You can make
         the call synchronous by providing the `watch` parameter, for
