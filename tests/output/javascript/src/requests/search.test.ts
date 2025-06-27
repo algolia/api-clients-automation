@@ -5353,7 +5353,7 @@ describe('setSettings', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('set_searchable_attributes', async () => {
+  test('set_attributes_for_faceting', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',
       indexSettings: {

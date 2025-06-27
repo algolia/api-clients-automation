@@ -5040,7 +5040,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"searchableAttributes":["title,alternative_title","author","unordered(text)","emails.personal"]}`)
 	})
-	t.Run("set_searchable_attributes", func(t *testing.T) {
+	t.Run("set_attributes_for_faceting", func(t *testing.T) {
 		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
 			"theIndexName",
 			search.NewEmptyIndexSettings().SetAttributesForFaceting(

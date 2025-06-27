@@ -9968,7 +9968,7 @@ void main() {
 
   // setSettings
   test(
-    'set_searchable_attributes',
+    'set_attributes_for_faceting',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',

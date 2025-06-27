@@ -10812,11 +10812,11 @@ class SnippetSearchClient
     /**
      * Snippet for the SetSettings method.
      *
-     * set_searchable_attributes
+     * set_attributes_for_faceting
      */
     public function snippetForSetSettings65(): void
     {
-        // >SEPARATOR setSettings set_searchable_attributes
+        // >SEPARATOR setSettings set_attributes_for_faceting
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 

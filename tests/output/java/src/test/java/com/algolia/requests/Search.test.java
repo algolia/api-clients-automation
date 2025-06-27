@@ -7492,7 +7492,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("set_searchable_attributes")
+  @DisplayName("set_attributes_for_faceting")
   void setSettingsTest65() {
     assertDoesNotThrow(() -> {
       client.setSettings(

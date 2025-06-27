@@ -9185,9 +9185,9 @@ void snippetForsetSettings64() async {
 
 // Snippet for the setSettings method.
 //
-// set_searchable_attributes
+// set_attributes_for_faceting
 void snippetForsetSettings65() async {
-  // >SEPARATOR setSettings set_searchable_attributes
+  // >SEPARATOR setSettings set_attributes_for_faceting
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');

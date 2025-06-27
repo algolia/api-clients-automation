@@ -9548,11 +9548,11 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the SetSettings method.
   ///
-  /// set_searchable_attributes
+  /// set_attributes_for_faceting
   /// </summary>
   public async Task SnippetForSearchClientSetSettings65()
   {
-    // >SEPARATOR setSettings set_searchable_attributes
+    // >SEPARATOR setSettings set_attributes_for_faceting
     // Initialize the client
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 

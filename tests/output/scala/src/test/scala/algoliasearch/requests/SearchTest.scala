@@ -8523,7 +8523,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_searchable_attributes65") {
+  test("set_attributes_for_faceting65") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",

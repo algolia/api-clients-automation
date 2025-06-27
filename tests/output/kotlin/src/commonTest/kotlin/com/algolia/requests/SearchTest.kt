@@ -7925,7 +7925,7 @@ class SearchTest {
   }
 
   @Test
-  fun `set_searchable_attributes65`() = runTest {
+  fun `set_attributes_for_faceting65`() = runTest {
     client.runTest(
       call = {
         setSettings(

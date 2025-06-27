@@ -11088,9 +11088,9 @@ def snippet_for_set_settings65():
     """
     Snippet for the setSettings method.
 
-    set_searchable_attributes
+    set_attributes_for_faceting
     """
-    # >SEPARATOR setSettings set_searchable_attributes
+    # >SEPARATOR setSettings set_attributes_for_faceting
     # Initialize the client
     # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
     client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")

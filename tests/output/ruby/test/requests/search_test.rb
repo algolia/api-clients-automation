@@ -6116,7 +6116,7 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # set_searchable_attributes
+  # set_attributes_for_faceting
   def test_set_settings65
     req = @client.set_settings_with_http_info(
       "theIndexName",

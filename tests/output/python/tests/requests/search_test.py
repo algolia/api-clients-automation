@@ -8053,7 +8053,7 @@ class TestSearchClient:
 
     async def test_set_settings_65(self):
         """
-        set_searchable_attributes
+        set_attributes_for_faceting
         """
         _req = await self._client.set_settings_with_http_info(
             index_name="theIndexName",
@@ -17378,7 +17378,7 @@ class TestSearchClientSync:
 
     def test_set_settings_65(self):
         """
-        set_searchable_attributes
+        set_attributes_for_faceting
         """
         _req = self._client.set_settings_with_http_info(
             index_name="theIndexName",

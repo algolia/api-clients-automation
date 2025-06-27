@@ -8400,7 +8400,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('set_searchable_attributes')]
+    #[TestDox('set_attributes_for_faceting')]
     public function testSetSettings65(): void
     {
         $client = $this->getClient();

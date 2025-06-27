@@ -9041,9 +9041,9 @@ end
 
 # Snippet for the setSettings method.
 #
-# set_searchable_attributes
+# set_attributes_for_faceting
 def snippet_for_set_settings65
-  # >SEPARATOR setSettings set_searchable_attributes
+  # >SEPARATOR setSettings set_attributes_for_faceting
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 

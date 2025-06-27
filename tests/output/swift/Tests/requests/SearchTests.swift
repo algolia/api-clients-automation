@@ -11761,7 +11761,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// set_searchable_attributes
+    /// set_attributes_for_faceting
     func testSetSettingsTest65() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,

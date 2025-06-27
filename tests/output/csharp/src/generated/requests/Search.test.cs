@@ -8572,7 +8572,7 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "set_searchable_attributes")]
+  [Fact(DisplayName = "set_attributes_for_faceting")]
   public async Task SetSettingsTest65()
   {
     await client.SetSettingsAsync(

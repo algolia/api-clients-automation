@@ -9148,7 +9148,7 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForSetSettings65() {
-    // >SEPARATOR setSettings set_searchable_attributes
+    // >SEPARATOR setSettings set_attributes_for_faceting
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
