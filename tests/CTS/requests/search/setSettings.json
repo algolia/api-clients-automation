@@ -1719,7 +1719,7 @@
     }
   },
   {
-    "testName": "set_searchable_attributes",
+    "testName": "set_attributes_for_faceting",
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
