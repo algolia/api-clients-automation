@@ -35,7 +35,7 @@
     "chalk": "5.4.1",
     "commander": "14.0.0",
     "crc": "4.3.2",
-    "dotenv": "16.6.1",
+    "dotenv": "17.0.0",
     "esbuild": "0.25.5",
     "execa": "9.6.0",
     "express": "5.1.0",
