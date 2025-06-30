@@ -233,7 +233,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     // We only wrap if there is a mix between body parameters and other parameters.
     for (CodegenOperation ope : operations) {
       // Nothing to wrap as there is no parameters
-      if (!ope.hasParams) {
+      if (!ope.getHasParams()) {
         continue;
       }
 
