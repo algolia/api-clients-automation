@@ -630,7 +630,7 @@ components:
     PathInPath:
       name: path
       in: path
-      description: Path of the endpoint, for example `1/newFeature`.
+      description: Path of the endpoint, anything after "/1" must be specified.
       required: true
       schema:
         type: string
@@ -723,11 +723,6 @@ components:
           format: double
           description: Standard deviation for this currency.
           example: 12.3
-        winsorizedAmount:
-          type: number
-          format: double
-          description: The amount of revenue for this currency that was removed after capping purchase amounts to the 95th percentile.
-          example: 115
     currencies:
       type: object
       description: A/B test currencies.
@@ -737,13 +732,11 @@ components:
           revenue: 120
           mean: 53.7
           standardDeviation: 12.3
-          winsorizedAmount: 23
         EUR:
           currency: EUR
           revenue: 100
           mean: 43.7
           standardDeviation: 10.3
-          winsorizedAmount: 10
       additionalProperties:
         $ref: '#/components/schemas/currency'
         x-additionalPropertiesName: currency code
