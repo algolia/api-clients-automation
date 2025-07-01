@@ -888,6 +888,12 @@
             "format": "double",
             "description": "Standard deviation for this currency.",
             "example": 12.3
+          },
+          "winsorizedAmount": {
+            "type": "number",
+            "format": "double",
+            "description": "The amount of revenue for this currency that was removed after capping purchase amounts to the 95th percentile.",
+            "example": 23
           }
         }
       },
@@ -899,13 +905,15 @@
             "currency": "USD",
             "revenue": 120,
             "mean": 53.7,
-            "standardDeviation": 12.3
+            "standardDeviation": 12.3,
+            "winsorizedAmount": 23
           },
           "EUR": {
             "currency": "EUR",
             "revenue": 100,
             "mean": 43.7,
-            "standardDeviation": 10.3
+            "standardDeviation": 10.3,
+            "winsorizedAmount": 10
           }
         },
         "additionalProperties": {

@@ -22,6 +22,9 @@ public class Currency {
   @JsonProperty("standardDeviation")
   private Double standardDeviation;
 
+  @JsonProperty("winsorizedAmount")
+  private Double winsorizedAmount;
+
   public Currency setCurrency(String currency) {
     this.currency = currency;
     return this;
@@ -66,6 +69,20 @@ public class Currency {
     return standardDeviation;
   }
 
+  public Currency setWinsorizedAmount(Double winsorizedAmount) {
+    this.winsorizedAmount = winsorizedAmount;
+    return this;
+  }
+
+  /**
+   * The amount of revenue for this currency that was removed after capping purchase amounts to the
+   * 95th percentile.
+   */
+  @javax.annotation.Nullable
+  public Double getWinsorizedAmount() {
+    return winsorizedAmount;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -79,13 +96,14 @@ public class Currency {
       Objects.equals(this.currency, currency.currency) &&
       Objects.equals(this.revenue, currency.revenue) &&
       Objects.equals(this.mean, currency.mean) &&
-      Objects.equals(this.standardDeviation, currency.standardDeviation)
+      Objects.equals(this.standardDeviation, currency.standardDeviation) &&
+      Objects.equals(this.winsorizedAmount, currency.winsorizedAmount)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(currency, revenue, mean, standardDeviation);
+    return Objects.hash(currency, revenue, mean, standardDeviation, winsorizedAmount);
   }
 
   @Override
@@ -96,6 +114,7 @@ public class Currency {
     sb.append("    revenue: ").append(toIndentedString(revenue)).append("\n");
     sb.append("    mean: ").append(toIndentedString(mean)).append("\n");
     sb.append("    standardDeviation: ").append(toIndentedString(standardDeviation)).append("\n");
+    sb.append("    winsorizedAmount: ").append(toIndentedString(winsorizedAmount)).append("\n");
     sb.append("}");
     return sb.toString();
   }
