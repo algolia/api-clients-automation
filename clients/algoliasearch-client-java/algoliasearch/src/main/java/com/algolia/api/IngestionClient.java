@@ -3532,8 +3532,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Runs all tasks linked to a source, only available for Shopify sources. It will create 1 run per
-   * task.
+   * Runs all tasks linked to a source, only available for Shopify, BigCommerce and commercetools
+   * sources. Creates one run per task.
    *
    * @param sourceID Unique identifier of a source. (required)
    * @param runSourcePayload (optional)
@@ -3547,8 +3547,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Runs all tasks linked to a source, only available for Shopify sources. It will create 1 run per
-   * task.
+   * Runs all tasks linked to a source, only available for Shopify, BigCommerce and commercetools
+   * sources. Creates one run per task.
    *
    * @param sourceID Unique identifier of a source. (required)
    * @param runSourcePayload (optional)
@@ -3559,8 +3559,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Runs all tasks linked to a source, only available for Shopify sources. It will create 1 run per
-   * task.
+   * Runs all tasks linked to a source, only available for Shopify, BigCommerce and commercetools
+   * sources. Creates one run per task.
    *
    * @param sourceID Unique identifier of a source. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3572,8 +3572,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Runs all tasks linked to a source, only available for Shopify sources. It will create 1 run per
-   * task.
+   * Runs all tasks linked to a source, only available for Shopify, BigCommerce and commercetools
+   * sources. Creates one run per task.
    *
    * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3583,8 +3583,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Runs all tasks linked to a source, only available for Shopify sources. It will
-   * create 1 run per task.
+   * (asynchronously) Runs all tasks linked to a source, only available for Shopify, BigCommerce and
+   * commercetools sources. Creates one run per task.
    *
    * @param sourceID Unique identifier of a source. (required)
    * @param runSourcePayload (optional)
@@ -3608,8 +3608,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Runs all tasks linked to a source, only available for Shopify sources. It will
-   * create 1 run per task.
+   * (asynchronously) Runs all tasks linked to a source, only available for Shopify, BigCommerce and
+   * commercetools sources. Creates one run per task.
    *
    * @param sourceID Unique identifier of a source. (required)
    * @param runSourcePayload (optional)
@@ -3621,8 +3621,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Runs all tasks linked to a source, only available for Shopify sources. It will
-   * create 1 run per task.
+   * (asynchronously) Runs all tasks linked to a source, only available for Shopify, BigCommerce and
+   * commercetools sources. Creates one run per task.
    *
    * @param sourceID Unique identifier of a source. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3635,8 +3635,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Runs all tasks linked to a source, only available for Shopify sources. It will
-   * create 1 run per task.
+   * (asynchronously) Runs all tasks linked to a source, only available for Shopify, BigCommerce and
+   * commercetools sources. Creates one run per task.
    *
    * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call

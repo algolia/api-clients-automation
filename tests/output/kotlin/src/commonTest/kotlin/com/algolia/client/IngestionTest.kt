@@ -145,7 +145,7 @@ class IngestionTest {
         )
       },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.23.0\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.24.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
       },

@@ -6,5 +6,5 @@ final class BuildConfig {
     // Empty.
   }
 
-  public static final String VERSION = "4.20.0";
+  public static final String VERSION = "4.21.0";
 }

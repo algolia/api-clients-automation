@@ -34,10 +34,13 @@ package algoliasearch.abtesting
   *   Mean for this currency.
   * @param standardDeviation
   *   Standard deviation for this currency.
+  * @param winsorizedAmount
+  *   The amount of revenue for this currency that was removed after capping purchase amounts to the 95th percentile.
   */
 case class Currency(
     currency: Option[String] = scala.None,
     revenue: Option[Double] = scala.None,
     mean: Option[Double] = scala.None,
-    standardDeviation: Option[Double] = scala.None
+    standardDeviation: Option[Double] = scala.None,
+    winsorizedAmount: Option[Double] = scala.None
 )

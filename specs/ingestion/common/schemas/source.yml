@@ -459,19 +459,19 @@ RunSourcePayload:
   properties:
     indexToInclude:
       type: array
-      description: List of index names to include in reidexing/update.
+      description: List of index names to include in reindex/update.
       items:
         type: string
     indexToExclude:
       type: array
-      description: List of index names to exclude in reidexing/update.
+      description: List of index names to exclude in reindex/update.
       items:
         type: string
     entityIDs:
       type: array
       items:
         type: string
-      description: List of entityID to update.
+      description: List of entityIDs to update.
     entityType:
       $ref: '#/EntityType'
 
