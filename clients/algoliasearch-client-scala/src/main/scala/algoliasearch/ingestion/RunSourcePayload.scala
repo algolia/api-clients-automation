@@ -24,11 +24,11 @@ import algoliasearch.ingestion.EntityType._
 /** RunSourcePayload
   *
   * @param indexToInclude
-  *   List of index names to include in reidexing/update.
+  *   List of index names to include in reindex/update.
   * @param indexToExclude
-  *   List of index names to exclude in reidexing/update.
+  *   List of index names to exclude in reindex/update.
   * @param entityIDs
-  *   List of entityID to update.
+  *   List of entityIDs to update.
   */
 case class RunSourcePayload(
     indexToInclude: Option[Seq[String]] = scala.None,

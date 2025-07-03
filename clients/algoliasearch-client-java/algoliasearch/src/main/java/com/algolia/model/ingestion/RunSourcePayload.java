@@ -37,7 +37,7 @@ public class RunSourcePayload {
     return this;
   }
 
-  /** List of index names to include in reidexing/update. */
+  /** List of index names to include in reindex/update. */
   @javax.annotation.Nullable
   public List<String> getIndexToInclude() {
     return indexToInclude;
@@ -56,7 +56,7 @@ public class RunSourcePayload {
     return this;
   }
 
-  /** List of index names to exclude in reidexing/update. */
+  /** List of index names to exclude in reindex/update. */
   @javax.annotation.Nullable
   public List<String> getIndexToExclude() {
     return indexToExclude;
@@ -75,7 +75,7 @@ public class RunSourcePayload {
     return this;
   }
 
-  /** List of entityID to update. */
+  /** List of entityIDs to update. */
   @javax.annotation.Nullable
   public List<String> getEntityIDs() {
     return entityIDs;
