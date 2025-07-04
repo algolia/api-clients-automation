@@ -16,8 +16,7 @@ info:
 
     - `https://analytics.de.algolia.com`
 
-    - `https://analytics.algolia.com` (routes requests to the closest of the
-    above servers, based on your geographical location)
+    - `https://analytics.algolia.com` (alias of `analytics.us.algolia.com`)
 
 
     Use the URL that matches your [analytics
