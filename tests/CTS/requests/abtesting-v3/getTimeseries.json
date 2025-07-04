@@ -1,0 +1,11 @@
+[
+  {
+    "parameters": {
+      "id": 42
+    },
+    "request": {
+      "path": "/3/abtests/42",
+      "method": "GET"
+    }
+  }
+]
