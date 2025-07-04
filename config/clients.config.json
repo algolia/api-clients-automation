@@ -141,7 +141,8 @@
       {
         "name": "abtesting-v3",
         "output": "clients/algoliasearch-client-javascript/packages/abtesting",
-        "isStandaloneClient": true
+        "isStandaloneClient": true,
+        "clientName": "abtesting"
       },
       {
         "name": "analytics",

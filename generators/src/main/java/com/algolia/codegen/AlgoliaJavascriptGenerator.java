@@ -2,6 +2,7 @@ package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
+import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
@@ -28,7 +29,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
   public void processOpts() {
     super.processOpts();
 
-    CLIENT = Helpers.camelize((String) additionalProperties.get("client"));
+    CLIENT = Helpers.camelize(getClientName((String) additionalProperties.get("client")));
     isAlgoliasearchClient = CLIENT.equals("algoliasearch");
 
     // generator specific options
@@ -146,14 +147,31 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     return output.substring(output.lastIndexOf("/") + 1);
   }
 
+  // Get the clientName from the clients.config.json
+  public static String getClientName(String client) throws ConfigException {
+    JsonNode clientName = StreamSupport.stream(
+      Spliterators.spliteratorUnknownSize(Helpers.getClientConfig("javascript").get("clients").elements(), Spliterator.ORDERED),
+      false
+    )
+      .filter(node -> node.get("name").asText().equals(client))
+      .findFirst()
+      .orElseThrow(() -> new ConfigException("Cannot find client " + client + " in config/clients.config.json"))
+      .get("clientName");
+
+    if (clientName == null) {
+      return client;
+    }
+
+    return clientName.asText();
+  }
+
   /** Set default generator options */
   private void setDefaultGeneratorOptions() {
     String clientName = CLIENT + Helpers.API_SUFFIX;
     String packageName = getPackageName((String) additionalProperties.get("client"));
 
     additionalProperties.put("apiName", CLIENT);
-    // Just so the full client doesn't have the weird Full naming
-    additionalProperties.put("clientName", CLIENT.contains("composition") ? "composition" + Helpers.API_SUFFIX : clientName);
+    additionalProperties.put("clientName", clientName);
     additionalProperties.put("algoliaAgent", Helpers.capitalize(CLIENT));
     additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
     additionalProperties.put("isSearchClient", CLIENT.equals("search") || isAlgoliasearchClient);
