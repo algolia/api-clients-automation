@@ -151,7 +151,8 @@
       {
         "name": "composition",
         "output": "clients/algoliasearch-client-javascript/packages/composition",
-        "isStandaloneClient": true
+        "isStandaloneClient": true,
+        "clientName": "composition"
       },
       {
         "name": "ingestion",
