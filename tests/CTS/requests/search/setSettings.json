@@ -1973,7 +1973,7 @@
     }
   },
   {
-    "testName": "restrict_searchable_attributes",
+    "testName": "set_custom_ranking",
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
