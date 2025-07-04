@@ -3258,6 +3258,41 @@ void main() {
     ),
   );
 
+  // saveRule
+  test(
+    'one sided validity',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRule(
+        indexName: "indexName",
+        objectID: "a-rule-id",
+        rule: Rule(
+          objectID: "a-rule-id",
+          consequence: Consequence(
+            params: ConsequenceParams(
+              aroundRadius: 1000,
+            ),
+          ),
+          validity: [
+            TimeRange(
+              from: 1577836800,
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/rules/a-rule-id');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"a-rule-id","consequence":{"params":{"aroundRadius":1000}},"validity":[{"from":1577836800}]}""");
+      },
+    ),
+  );
+
   // saveRules
   test(
     'saveRules with minimal parameters',
@@ -5672,7 +5707,7 @@ void main() {
 
   // searchSingleIndex
   test(
-    'search_a_query',
+    'similarQuery',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',

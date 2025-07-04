@@ -37,6 +37,6 @@ package algoliasearch.recommend
   *   When the rule should stop to be active, in Unix epoch time.
   */
 case class TimeRange(
-    from: Long,
-    until: Long
+    from: Option[Long] = scala.None,
+    until: Option[Long] = scala.None
 )

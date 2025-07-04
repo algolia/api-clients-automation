@@ -3015,6 +3015,27 @@ class SnippetSearchClient {
     // SEPARATOR<
   }
 
+  // Snippet for the saveRule method.
+  //
+  // one sided validity
+  void snippetForSaveRule22() throws Exception {
+    // >SEPARATOR saveRule one sided validity
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.saveRule(
+      "<YOUR_INDEX_NAME>",
+      "a-rule-id",
+      new Rule()
+        .setObjectID("a-rule-id")
+        .setConsequence(new Consequence().setParams(new ConsequenceParams().setAroundRadius(AroundRadius.of(1000))))
+        .setValidity(Arrays.asList(new TimeRange().setFrom(1577836800L)))
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
   // Snippet for the saveRules method.
   //
   // saveRules with minimal parameters
@@ -4672,9 +4693,9 @@ class SnippetSearchClient {
 
   // Snippet for the searchSingleIndex method.
   //
-  // search_a_query
+  // similarQuery
   void snippetForSearchSingleIndex46() throws Exception {
-    // >SEPARATOR searchSingleIndex search_a_query
+    // >SEPARATOR searchSingleIndex similarQuery
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
