@@ -5,7 +5,6 @@ ABTests:
       items:
         $ref: "#/ABTest"
     - type: "null"
-      description: No A/B tests are configured for this application.
 
 ABTest:
   type: object
