@@ -6,14 +6,6 @@ ABTests:
         $ref: '#/ABTest'
     - type: 'null'
 
-EmptySearch:
-  type: object
-  description: Configuration for handling empty searches.
-  properties:
-    exclude:
-      type: boolean
-      description: Whether to exclude empty searches when calculating A/B test results.
-
 ABTest:
   type: object
   additionalProperties: false

@@ -20,10 +20,8 @@ post:
               type: object
               description: A/B test configuration for estimating the sample size and duration using minimum detectable effect.
               properties:
-                outliers:
-                  $ref: '../common/schemas/ABTest.yml#/Outliers'
-                emptySearch:
-                  $ref: '../common/schemas/ABTest.yml#/EmptySearch'
+                filters:
+                  $ref: '../common/schemas/ABTest.yml#/MetricsFilters'
                 minimumDetectableEffect:
                   $ref: '../common/schemas/ABTest.yml#/MinimumDetectableEffect'
               required:
