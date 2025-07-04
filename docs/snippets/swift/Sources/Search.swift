@@ -2545,6 +2545,30 @@ final class SearchClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the saveRule method.
+    ///
+    /// one sided validity
+    func snippetForSaveRule22() async throws {
+        // >SEPARATOR saveRule one sided validity
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.saveRule(
+            indexName: "<YOUR_INDEX_NAME>",
+            objectID: "a-rule-id",
+            rule: Rule(
+                objectID: "a-rule-id",
+                consequence: SearchConsequence(params: SearchConsequenceParams(aroundRadius: SearchAroundRadius
+                        .int(1000)
+                )),
+                validity: [SearchTimeRange(from: Int64(1_577_836_800))]
+            )
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
     /// Snippet for the saveRules method.
     ///
     /// saveRules with minimal parameters
@@ -4244,9 +4268,9 @@ final class SearchClientSnippet {
 
     /// Snippet for the searchSingleIndex method.
     ///
-    /// search_a_query
+    /// similarQuery
     func snippetForSearchSingleIndex46() async throws {
-        // >SEPARATOR searchSingleIndex search_a_query
+        // >SEPARATOR searchSingleIndex similarQuery
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 

@@ -2677,6 +2677,33 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('one sided validity')]
+    public function testSaveRule22(): void
+    {
+        $client = $this->getClient();
+        $client->saveRule(
+            'indexName',
+            'a-rule-id',
+            ['objectID' => 'a-rule-id',
+                'consequence' => ['params' => ['aroundRadius' => 1000,
+                ],
+                ],
+                'validity' => [
+                    ['from' => 1577836800,
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/rules/a-rule-id',
+                'method' => 'PUT',
+                'body' => json_decode('{"objectID":"a-rule-id","consequence":{"params":{"aroundRadius":1000}},"validity":[{"from":1577836800}]}'),
+            ],
+        ]);
+    }
+
     #[TestDox('saveRules with minimal parameters')]
     public function testSaveRules(): void
     {
@@ -4753,7 +4780,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('search_a_query')]
+    #[TestDox('similarQuery')]
     public function testSearchSingleIndex46(): void
     {
         $client = $this->getClient();

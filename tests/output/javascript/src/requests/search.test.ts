@@ -1778,6 +1778,27 @@ describe('saveRule', () => {
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('one sided validity', async () => {
+    const req = (await client.saveRule({
+      indexName: 'indexName',
+      objectID: 'a-rule-id',
+      rule: {
+        objectID: 'a-rule-id',
+        consequence: { params: { aroundRadius: 1000 } },
+        validity: [{ from: 1577836800 }],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/rules/a-rule-id');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'a-rule-id',
+      consequence: { params: { aroundRadius: 1000 } },
+      validity: [{ from: 1577836800 }],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('saveRules', () => {
@@ -3189,7 +3210,7 @@ describe('searchSingleIndex', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('search_a_query', async () => {
+  test('similarQuery', async () => {
     const req = (await client.searchSingleIndex({
       indexName: 'indexName',
       searchParams: { query: 'shirt' },

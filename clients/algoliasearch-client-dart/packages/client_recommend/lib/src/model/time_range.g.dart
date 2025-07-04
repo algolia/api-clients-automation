@@ -11,14 +11,14 @@ TimeRange _$TimeRangeFromJson(Map<String, dynamic> json) => $checkedCreate(
       json,
       ($checkedConvert) {
         final val = TimeRange(
-          from: $checkedConvert('from', (v) => (v as num).toInt()),
-          until: $checkedConvert('until', (v) => (v as num).toInt()),
+          from: $checkedConvert('from', (v) => (v as num?)?.toInt()),
+          until: $checkedConvert('until', (v) => (v as num?)?.toInt()),
         );
         return val;
       },
     );
 
 Map<String, dynamic> _$TimeRangeToJson(TimeRange instance) => <String, dynamic>{
-      'from': instance.from,
-      'until': instance.until,
+      if (instance.from case final value?) 'from': value,
+      if (instance.until case final value?) 'until': value,
     };

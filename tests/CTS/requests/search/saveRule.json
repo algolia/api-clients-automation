@@ -195,12 +195,17 @@
         "consequence": {
           "params": {
             "query": {
-              "edits": [{
-                "type": "remove",
-                "delete": "article"
-              }]
+              "edits": [
+                {
+                  "type": "remove",
+                  "delete": "article"
+                }
+              ]
             },
-            "restrictSearchableAttributes": ["title", "book_id"]
+            "restrictSearchableAttributes": [
+              "title",
+              "book_id"
+            ]
           }
         }
       }
@@ -219,12 +224,17 @@
         "consequence": {
           "params": {
             "query": {
-              "edits": [{
-                "type": "remove",
-                "delete": "article"
-              }]
+              "edits": [
+                {
+                  "type": "remove",
+                  "delete": "article"
+                }
+              ]
             },
-            "restrictSearchableAttributes": ["title", "book_id"]
+            "restrictSearchableAttributes": [
+              "title",
+              "book_id"
+            ]
           }
         }
       }
@@ -245,15 +255,22 @@
         ],
         "consequence": {
           "params": {
-            "restrictSearchableAttributes": ["title", "book_id"],
-            "automaticFacetFilters": [{
-              "facet":"director"
-            }],
+            "restrictSearchableAttributes": [
+              "title",
+              "book_id"
+            ],
+            "automaticFacetFilters": [
+              {
+                "facet": "director"
+              }
+            ],
             "query": {
-              "edits": [{
-                "type": "remove",
-                "delete": "director"
-              }]
+              "edits": [
+                {
+                  "type": "remove",
+                  "delete": "director"
+                }
+              ]
             }
           }
         }
@@ -272,15 +289,22 @@
         ],
         "consequence": {
           "params": {
-            "restrictSearchableAttributes": ["title", "book_id"],
-            "automaticFacetFilters": [{
-              "facet":"director"
-            }],
+            "restrictSearchableAttributes": [
+              "title",
+              "book_id"
+            ],
+            "automaticFacetFilters": [
+              {
+                "facet": "director"
+              }
+            ],
             "query": {
-              "edits": [{
-                "type": "remove",
-                "delete": "director"
-              }]
+              "edits": [
+                {
+                  "type": "remove",
+                  "delete": "director"
+                }
+              ]
             }
           }
         }
@@ -413,10 +437,12 @@
       "objectID": "tomato-fruit",
       "rule": {
         "objectID": "tomato-fruit",
-        "conditions": [{
-          "pattern": "tomato",
-          "anchoring": "contains"
-        }],
+        "conditions": [
+          {
+            "pattern": "tomato",
+            "anchoring": "contains"
+          }
+        ],
         "consequence": {
           "params": {
             "optionalFilters": "food_group:fruit"
@@ -429,10 +455,12 @@
       "method": "PUT",
       "body": {
         "objectID": "tomato-fruit",
-        "conditions": [{
-          "pattern": "tomato",
-          "anchoring": "contains"
-        }],
+        "conditions": [
+          {
+            "pattern": "tomato",
+            "anchoring": "contains"
+          }
+        ],
         "consequence": {
           "params": {
             "optionalFilters": "food_group:fruit"
@@ -448,14 +476,19 @@
       "objectID": "Promote-Apple-Newest",
       "rule": {
         "objectID": "Promote-Apple-Newest",
-        "conditions": [{
-          "pattern": "apple",
-          "anchoring": "is"
-        }],
+        "conditions": [
+          {
+            "pattern": "apple",
+            "anchoring": "is"
+          }
+        ],
         "consequence": {
           "promote": [
             {
-              "objectIDs": ["iPhone-12345", "watch-123"],
+              "objectIDs": [
+                "iPhone-12345",
+                "watch-123"
+              ],
               "position": 0
             }
           ]
@@ -467,14 +500,19 @@
       "method": "PUT",
       "body": {
         "objectID": "Promote-Apple-Newest",
-        "conditions": [{
-          "pattern": "apple",
-          "anchoring": "is"
-        }],
+        "conditions": [
+          {
+            "pattern": "apple",
+            "anchoring": "is"
+          }
+        ],
         "consequence": {
           "promote": [
             {
-              "objectIDs": ["iPhone-12345", "watch-123"],
+              "objectIDs": [
+                "iPhone-12345",
+                "watch-123"
+              ],
               "position": 0
             }
           ]
@@ -489,10 +527,12 @@
       "objectID": "Promote-iPhone-X",
       "rule": {
         "objectID": "Promote-iPhone-X",
-        "conditions": [{
-          "pattern": "iPhone",
-          "anchoring": "contains"
-        }],
+        "conditions": [
+          {
+            "pattern": "iPhone",
+            "anchoring": "contains"
+          }
+        ],
         "consequence": {
           "promote": [
             {
@@ -508,10 +548,12 @@
       "method": "PUT",
       "body": {
         "objectID": "Promote-iPhone-X",
-        "conditions": [{
-          "pattern": "iPhone",
-          "anchoring": "contains"
-        }],
+        "conditions": [
+          {
+            "pattern": "iPhone",
+            "anchoring": "contains"
+          }
+        ],
         "consequence": {
           "promote": [
             {
@@ -530,15 +572,19 @@
       "objectID": "promote-harry-potter-box-set",
       "rule": {
         "objectID": "promote-harry-potter-box-set",
-        "conditions": [{
-          "pattern": "Harry Potter",
-          "anchoring": "contains"
-        }],
+        "conditions": [
+          {
+            "pattern": "Harry Potter",
+            "anchoring": "contains"
+          }
+        ],
         "consequence": {
-          "promote": [{
-            "objectID": "HP-12345",
-            "position": 0
-          }]
+          "promote": [
+            {
+              "objectID": "HP-12345",
+              "position": 0
+            }
+          ]
         }
       }
     },
@@ -547,10 +593,12 @@
       "method": "PUT",
       "body": {
         "objectID": "promote-harry-potter-box-set",
-        "conditions": [{
-          "pattern": "Harry Potter",
-          "anchoring": "contains"
-        }],
+        "conditions": [
+          {
+            "pattern": "Harry Potter",
+            "anchoring": "contains"
+          }
+        ],
         "consequence": {
           "promote": [
             {
@@ -569,19 +617,26 @@
       "objectID": "article-rule",
       "rule": {
         "objectID": "article-rule",
-        "conditions": [{
-          "pattern": "article",
-          "anchoring": "startsWith"
-        }],
+        "conditions": [
+          {
+            "pattern": "article",
+            "anchoring": "startsWith"
+          }
+        ],
         "consequence": {
           "params": {
             "query": {
-              "edits": [{
-                "type": "remove",
-                "delete": "article"
-              }]
+              "edits": [
+                {
+                  "type": "remove",
+                  "delete": "article"
+                }
+              ]
             },
-            "restrictSearchableAttributes": ["title", "book_id"]
+            "restrictSearchableAttributes": [
+              "title",
+              "book_id"
+            ]
           }
         }
       }
@@ -591,19 +646,26 @@
       "method": "PUT",
       "body": {
         "objectID": "article-rule",
-        "conditions": [{
-          "pattern": "article",
-          "anchoring": "startsWith"
-        }],
+        "conditions": [
+          {
+            "pattern": "article",
+            "anchoring": "startsWith"
+          }
+        ],
         "consequence": {
           "params": {
             "query": {
-              "edits": [{
-                "type": "remove",
-                "delete": "article"
-              }]
+              "edits": [
+                {
+                  "type": "remove",
+                  "delete": "article"
+                }
+              ]
             },
-            "restrictSearchableAttributes": ["title", "book_id"]
+            "restrictSearchableAttributes": [
+              "title",
+              "book_id"
+            ]
           }
         }
       }
@@ -615,18 +677,25 @@
       "indexName": "indexName",
       "objectID": "tagged-brand-rule",
       "rule": {
-        "conditions": [{
-          "pattern": "brand: {facet:brand}",
-          "anchoring": "contains",
-          "alternatives": false
-        }],
+        "conditions": [
+          {
+            "pattern": "brand: {facet:brand}",
+            "anchoring": "contains",
+            "alternatives": false
+          }
+        ],
         "consequence": {
           "params": {
-            "automaticFacetFilters": [{
-              "facet":"brand"
-            }],
+            "automaticFacetFilters": [
+              {
+                "facet": "brand"
+              }
+            ],
             "query": {
-              "remove": ["brand:", "{facet:brand}"]
+              "remove": [
+                "brand:",
+                "{facet:brand}"
+              ]
             }
           }
         },
@@ -638,18 +707,25 @@
       "path": "/1/indexes/indexName/rules/tagged-brand-rule",
       "method": "PUT",
       "body": {
-        "conditions": [{
-          "pattern": "brand: {facet:brand}",
-          "anchoring": "contains",
-          "alternatives": false
-        }],
+        "conditions": [
+          {
+            "pattern": "brand: {facet:brand}",
+            "anchoring": "contains",
+            "alternatives": false
+          }
+        ],
         "consequence": {
           "params": {
-            "automaticFacetFilters": [{
-              "facet":"brand"
-            }],
+            "automaticFacetFilters": [
+              {
+                "facet": "brand"
+              }
+            ],
             "query": {
-              "remove": ["brand:", "{facet:brand}"]
+              "remove": [
+                "brand:",
+                "{facet:brand}"
+              ]
             }
           }
         },
@@ -665,14 +741,18 @@
       "objectID": "color-facets",
       "rule": {
         "objectID": "color-facets",
-        "conditions": [{
-          "pattern": "{facet:color}"
-        }],
+        "conditions": [
+          {
+            "pattern": "{facet:color}"
+          }
+        ],
         "consequence": {
           "params": {
-            "automaticFacetFilters": [{
-              "facet":"color"
-            }]
+            "automaticFacetFilters": [
+              {
+                "facet": "color"
+              }
+            ]
           }
         }
       }
@@ -682,14 +762,18 @@
       "method": "PUT",
       "body": {
         "objectID": "color-facets",
-        "conditions": [{
-          "pattern": "{facet:color}"
-        }],
+        "conditions": [
+          {
+            "pattern": "{facet:color}"
+          }
+        ],
         "consequence": {
           "params": {
-            "automaticFacetFilters": [{
-              "facet":"color"
-            }]
+            "automaticFacetFilters": [
+              {
+                "facet": "color"
+              }
+            ]
           }
         }
       }
@@ -702,14 +786,18 @@
       "objectID": "hide-12345",
       "rule": {
         "objectID": "hide-12345",
-        "conditions": [{
-          "pattern": "cheap",
-          "anchoring": "contains"
-        }],
+        "conditions": [
+          {
+            "pattern": "cheap",
+            "anchoring": "contains"
+          }
+        ],
         "consequence": {
-          "hide": [{
-            "objectID": "to-hide-12345"
-          }]
+          "hide": [
+            {
+              "objectID": "to-hide-12345"
+            }
+          ]
         }
       }
     },
@@ -718,14 +806,18 @@
       "method": "PUT",
       "body": {
         "objectID": "hide-12345",
-        "conditions": [{
-          "pattern": "cheap",
-          "anchoring": "contains"
-        }],
+        "conditions": [
+          {
+            "pattern": "cheap",
+            "anchoring": "contains"
+          }
+        ],
         "consequence": {
-          "hide": [{
-            "objectID": "to-hide-12345"
-          }]
+          "hide": [
+            {
+              "objectID": "to-hide-12345"
+            }
+          ]
         }
       }
     }
@@ -737,14 +829,18 @@
       "objectID": "red-color",
       "rule": {
         "objectID": "red-color",
-        "conditions": [{
-          "pattern": "red",
-          "anchoring": "contains"
-        }],
+        "conditions": [
+          {
+            "pattern": "red",
+            "anchoring": "contains"
+          }
+        ],
         "consequence": {
           "params": {
             "query": {
-              "remove": ["red"]
+              "remove": [
+                "red"
+              ]
             },
             "filters": "color:red"
           }
@@ -756,14 +852,18 @@
       "method": "PUT",
       "body": {
         "objectID": "red-color",
-        "conditions": [{
-          "pattern": "red",
-          "anchoring": "contains"
-        }],
+        "conditions": [
+          {
+            "pattern": "red",
+            "anchoring": "contains"
+          }
+        ],
         "consequence": {
           "params": {
             "query": {
-              "remove": ["red"]
+              "remove": [
+                "red"
+              ]
             },
             "filters": "color:red"
           }
@@ -778,14 +878,18 @@
       "objectID": "cheap",
       "rule": {
         "objectID": "cheap",
-        "conditions": [{
-          "pattern": "cheap",
-          "anchoring": "contains"
-        }],
+        "conditions": [
+          {
+            "pattern": "cheap",
+            "anchoring": "contains"
+          }
+        ],
         "consequence": {
           "params": {
             "query": {
-              "remove": ["cheap"]
+              "remove": [
+                "cheap"
+              ]
             },
             "filters": "price < 10"
           }
@@ -797,14 +901,18 @@
       "method": "PUT",
       "body": {
         "objectID": "cheap",
-        "conditions": [{
-          "pattern": "cheap",
-          "anchoring": "contains"
-        }],
+        "conditions": [
+          {
+            "pattern": "cheap",
+            "anchoring": "contains"
+          }
+        ],
         "consequence": {
           "params": {
             "query": {
-              "remove": ["cheap"]
+              "remove": [
+                "cheap"
+              ]
             },
             "filters": "price < 10"
           }
@@ -819,10 +927,12 @@
       "objectID": "gluten-free-rule",
       "rule": {
         "objectID": "gluten-free-rule",
-        "conditions": [{
-          "pattern": "gluten-free",
-          "anchoring": "contains"
-        }],
+        "conditions": [
+          {
+            "pattern": "gluten-free",
+            "anchoring": "contains"
+          }
+        ],
         "consequence": {
           "params": {
             "filters": "NOT allergens:gluten",
@@ -843,10 +953,12 @@
       "method": "PUT",
       "body": {
         "objectID": "gluten-free-rule",
-        "conditions": [{
-          "pattern": "gluten-free",
-          "anchoring": "contains"
-        }],
+        "conditions": [
+          {
+            "pattern": "gluten-free",
+            "anchoring": "contains"
+          }
+        ],
         "consequence": {
           "params": {
             "filters": "NOT allergens:gluten",
@@ -870,10 +982,12 @@
       "objectID": "diet-rule",
       "rule": {
         "objectID": "diet-rule",
-        "conditions": [{
-          "pattern": "diet",
-          "anchoring": "contains"
-        }],
+        "conditions": [
+          {
+            "pattern": "diet",
+            "anchoring": "contains"
+          }
+        ],
         "consequence": {
           "params": {
             "filters": "'low-carb' OR 'low-fat'",
@@ -894,10 +1008,12 @@
       "method": "PUT",
       "body": {
         "objectID": "diet-rule",
-        "conditions": [{
-          "pattern": "diet",
-          "anchoring": "contains"
-        }],
+        "conditions": [
+          {
+            "pattern": "diet",
+            "anchoring": "contains"
+          }
+        ],
         "consequence": {
           "params": {
             "filters": "'low-carb' OR 'low-fat'",
@@ -964,9 +1080,11 @@
       "objectID": "a-rule-id",
       "rule": {
         "objectID": "a-rule-id",
-        "conditions": [{
-          "context": "mobile"
-        }],
+        "conditions": [
+          {
+            "context": "mobile"
+          }
+        ],
         "consequence": {
           "params": {
             "filters": "release_date >= 1577836800"
@@ -979,9 +1097,11 @@
       "method": "PUT",
       "body": {
         "objectID": "a-rule-id",
-        "conditions": [{
-          "context": "mobile"
-        }],
+        "conditions": [
+          {
+            "context": "mobile"
+          }
+        ],
         "consequence": {
           "params": {
             "filters": "release_date >= 1577836800"
@@ -1024,6 +1144,43 @@
           {
             "from": 1577836800,
             "until": 1577836800
+          }
+        ]
+      }
+    }
+  },
+  {
+    "testName": "one sided validity",
+    "parameters": {
+      "indexName": "indexName",
+      "objectID": "a-rule-id",
+      "rule": {
+        "objectID": "a-rule-id",
+        "consequence": {
+          "params": {
+            "aroundRadius": 1000
+          }
+        },
+        "validity": [
+          {
+            "from": 1577836800
+          }
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/rules/a-rule-id",
+      "method": "PUT",
+      "body": {
+        "objectID": "a-rule-id",
+        "consequence": {
+          "params": {
+            "aroundRadius": 1000
+          }
+        },
+        "validity": [
+          {
+            "from": 1577836800
           }
         ]
       }

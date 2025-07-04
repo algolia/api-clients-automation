@@ -2763,8 +2763,8 @@ class SnippetSearchClient {
           validity = Some(
             Seq(
               TimeRange(
-                from = 1656670273L,
-                until = 1656670277L
+                from = Some(1656670273L),
+                until = Some(1656670277L)
               )
             )
           )
@@ -3652,8 +3652,46 @@ class SnippetSearchClient {
           validity = Some(
             Seq(
               TimeRange(
-                from = 1577836800L,
-                until = 1577836800L
+                from = Some(1577836800L),
+                until = Some(1577836800L)
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRule method.
+    *
+    * one sided validity
+    */
+  def snippetForSearchClientSaveRule22(): Unit = {
+    // >SEPARATOR saveRule one sided validity
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        objectID = "a-rule-id",
+        rule = Rule(
+          objectID = "a-rule-id",
+          consequence = Consequence(
+            params = Some(
+              ConsequenceParams(
+                aroundRadius = Some(AroundRadius(1000))
+              )
+            )
+          ),
+          validity = Some(
+            Seq(
+              TimeRange(
+                from = Some(1577836800L)
               )
             )
           )
@@ -3803,8 +3841,8 @@ class SnippetSearchClient {
             validity = Some(
               Seq(
                 TimeRange(
-                  from = 1656670273L,
-                  until = 1656670277L
+                  from = Some(1656670273L),
+                  until = Some(1656670277L)
                 )
               )
             )
@@ -5983,10 +6021,10 @@ class SnippetSearchClient {
 
   /** Snippet for the searchSingleIndex method.
     *
-    * search_a_query
+    * similarQuery
     */
   def snippetForSearchClientSearchSingleIndex46(): Unit = {
-    // >SEPARATOR searchSingleIndex search_a_query
+    // >SEPARATOR searchSingleIndex similarQuery
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 

@@ -3932,6 +3932,38 @@ class SnippetSearchClient
     }
 
     /**
+     * Snippet for the SaveRule method.
+     *
+     * one sided validity
+     */
+    public function snippetForSaveRule22(): void
+    {
+        // >SEPARATOR saveRule one sided validity
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRule(
+            '<YOUR_INDEX_NAME>',
+            'a-rule-id',
+            ['objectID' => 'a-rule-id',
+                'consequence' => ['params' => ['aroundRadius' => 1000,
+                ],
+                ],
+                'validity' => [
+                    ['from' => 1577836800,
+                    ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the SaveRules method.
      *
      * saveRules with minimal parameters
@@ -6376,11 +6408,11 @@ class SnippetSearchClient
     /**
      * Snippet for the SearchSingleIndex method.
      *
-     * search_a_query
+     * similarQuery
      */
     public function snippetForSearchSingleIndex46(): void
     {
-        // >SEPARATOR searchSingleIndex search_a_query
+        // >SEPARATOR searchSingleIndex similarQuery
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 

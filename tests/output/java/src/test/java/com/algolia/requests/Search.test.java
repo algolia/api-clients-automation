@@ -2817,6 +2817,31 @@ class SearchClientRequestsTests {
   }
 
   @Test
+  @DisplayName("one sided validity")
+  void saveRuleTest22() {
+    assertDoesNotThrow(() -> {
+      client.saveRule(
+        "indexName",
+        "a-rule-id",
+        new Rule()
+          .setObjectID("a-rule-id")
+          .setConsequence(new Consequence().setParams(new ConsequenceParams().setAroundRadius(AroundRadius.of(1000))))
+          .setValidity(Arrays.asList(new TimeRange().setFrom(1577836800L)))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/rules/a-rule-id", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"a-rule-id\",\"consequence\":{\"params\":{\"aroundRadius\":1000}},\"validity\":[{\"from\":1577836800}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("saveRules with minimal parameters")
   void saveRulesTest() {
     assertDoesNotThrow(() -> {
@@ -4641,7 +4666,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("search_a_query")
+  @DisplayName("similarQuery")
   void searchSingleIndexTest46() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex("indexName", new SearchParamsObject().setQuery("shirt"), Hit.class);

@@ -1,6 +1,9 @@
 package main
 
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+import (
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
+)
 
 func useConditionlessRule() {
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -16,9 +19,10 @@ func useConditionlessRule() {
 		*search.NewConsequence( /* Set relevant consequence */ ),
 	). // Set validity (optional)
 		SetValidity(
-			[]search.TimeRange{
-				*search.NewTimeRange(1_688_774_400, 1_738_972_800),
-			},
+			[]search.TimeRange{{
+				From:  utils.ToPtr(int64(1_688_774_400)),
+				Until: utils.ToPtr(int64(1_738_972_800)),
+			}},
 		)
 
 	_, err = client.SaveRule(client.NewApiSaveRuleRequest(
