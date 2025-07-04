@@ -4720,7 +4720,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search_a_query46`() = runTest {
+  fun `similarQuery46`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(

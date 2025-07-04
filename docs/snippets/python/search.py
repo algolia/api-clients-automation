@@ -6598,9 +6598,9 @@ def snippet_for_search_single_index46():
     """
     Snippet for the searchSingleIndex method.
 
-    search_a_query
+    similarQuery
     """
-    # >SEPARATOR searchSingleIndex search_a_query
+    # >SEPARATOR searchSingleIndex similarQuery
     # Initialize the client
     # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
     client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")

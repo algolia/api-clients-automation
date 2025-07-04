@@ -5004,7 +5004,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search_a_query46") {
+  test("similarQuery46") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
