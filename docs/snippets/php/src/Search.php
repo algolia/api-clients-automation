@@ -6376,11 +6376,11 @@ class SnippetSearchClient
     /**
      * Snippet for the SearchSingleIndex method.
      *
-     * search_a_query
+     * similarQuery
      */
     public function snippetForSearchSingleIndex46(): void
     {
-        // >SEPARATOR searchSingleIndex search_a_query
+        // >SEPARATOR searchSingleIndex similarQuery
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 

@@ -5672,7 +5672,7 @@ void main() {
 
   // searchSingleIndex
   test(
-    'search_a_query',
+    'similarQuery',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',

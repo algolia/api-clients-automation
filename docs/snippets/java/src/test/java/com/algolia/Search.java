@@ -4672,9 +4672,9 @@ class SnippetSearchClient {
 
   // Snippet for the searchSingleIndex method.
   //
-  // search_a_query
+  // similarQuery
   void snippetForSearchSingleIndex46() throws Exception {
-    // >SEPARATOR searchSingleIndex search_a_query
+    // >SEPARATOR searchSingleIndex similarQuery
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 

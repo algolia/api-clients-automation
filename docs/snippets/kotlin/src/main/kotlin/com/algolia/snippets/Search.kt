@@ -5634,7 +5634,7 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForSearchSingleIndex46() {
-    // >SEPARATOR searchSingleIndex search_a_query
+    // >SEPARATOR searchSingleIndex similarQuery
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 

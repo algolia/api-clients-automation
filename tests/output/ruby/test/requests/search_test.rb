@@ -3599,7 +3599,7 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # search_a_query
+  # similarQuery
   def test_search_single_index46
     req = @client.search_single_index_with_http_info(
       "indexName",
