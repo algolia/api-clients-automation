@@ -42,7 +42,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     super.processOpts();
 
     language = (String) additionalProperties.get("language");
-    client = (String) additionalProperties.get("client");
+    client = Helpers.getClientName((String) additionalProperties.get("client"));
     mode = (String) additionalProperties.get("mode");
     ctsManager = CTSManagerFactory.getManager(language, client);
 
