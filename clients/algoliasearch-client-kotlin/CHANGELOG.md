@@ -1,3 +1,8 @@
+## [3.24.1](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.24.0...3.24.1)
+
+- [4c9416a9f](https://github.com/algolia/api-clients-automation/commit/4c9416a9f) fix(specs): update sourceRun docs ([#5057](https://github.com/algolia/api-clients-automation/pull/5057)) by [@DevinCodes](https://github.com/DevinCodes/)
+- [754efceb8](https://github.com/algolia/api-clients-automation/commit/754efceb8) fix(specs): allow one sided rule validity ([#5060](https://github.com/algolia/api-clients-automation/pull/5060)) by [@millotp](https://github.com/millotp/)
+
 ## [3.24.0](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.23.0...3.24.0)
 
 - [2ca05ef173](https://github.com/algolia/api-clients-automation/commit/2ca05ef173) chore(deps): dependencies 2025-06-23 ([#5016](https://github.com/algolia/api-clients-automation/pull/5016)) by [@algolia-bot](https://github.com/algolia-bot/)
