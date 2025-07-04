@@ -1,0 +1,137 @@
+post:
+  tags:
+    - abtest
+  operationId: addABTests
+  x-acl:
+    - editSettings
+  summary: Create an A/B test
+  description: Creates a new A/B test.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          title: addABTestsRequest
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              $ref: '../common/parameters.yml#/name'
+            variants:
+              type: array
+              description: A/B test variants.
+              minItems: 2
+              items:
+                $ref: '../common/schemas/AddABTestsVariant.yml#/AddABTestsVariant'
+            metrics:
+              type: array
+              description: A/B test metrics involved in the test. Only these metrics will be considered when calculating results. 
+              items:
+                $ref: '../common/parameters.yml#/metric'
+            configuration:
+              $ref: '../common/schemas/ABTest.yml#/ABTestConfiguration'
+            endAt:
+              $ref: '../common/parameters.yml#/endAt'
+          required:
+            - name
+            - variants
+            - metrics
+            - endAt
+  responses:
+    '200':
+      description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-reset'
+      content:
+        application/json:
+          schema:
+            $ref: '../common/schemas/ABTestResponse.yml#/ABTestResponse'
+    '400':
+      $ref: '../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../common/responses/IndexNotFound.yml'
+
+get:
+  tags:
+    - abtest
+  operationId: listABTests
+  x-acl:
+    - analytics
+  summary: List all A/B tests
+  description: Lists all A/B tests you configured for this application.
+  parameters:
+    - name: offset
+      in: query
+      description: Position of the first item to return.
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    - name: limit
+      in: query
+      description: Number of items to return.
+      required: false
+      schema:
+        type: integer
+        default: 10
+    - name: indexPrefix
+      in: query
+      description: Index name prefix. Only A/B tests for indices starting with this string are included in the response.
+      example: 'dev_'
+      schema:
+        type: string
+    - name: indexSuffix
+      in: query
+      description: Index name suffix. Only A/B tests for indices ending with this string are included in the response.
+      example: '_development'
+      schema:
+        type: string
+  responses:
+    '200':
+      description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-reset'
+      content:
+        application/json:
+          schema:
+            title: listABTestsResponse
+            type: object
+            additionalProperties: false
+            properties:
+              abtests:
+                $ref: '../common/schemas/ABTest.yml#/ABTests'
+              count:
+                type: integer
+                description: Number of A/B tests.
+                example: 10
+              total:
+                type: integer
+                description: Number of retrievable A/B tests.
+                example: 12
+            required:
+              - abtests
+              - count
+              - total
+    '400':
+      $ref: '../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../common/responses/IndexNotFound.yml'

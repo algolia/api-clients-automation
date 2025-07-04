@@ -73,7 +73,7 @@ export const LANGUAGES = [...new Set(Object.values(GENERATORS).map((gen) => gen.
 
 // `crawler` is manually added so we can still bundled and validate the specs
 // the entry can be removed once at least one client is generated
-export const CLIENTS = [...new Set(Object.values(GENERATORS).map((gen) => gen.client)), 'crawler'];
+export const CLIENTS = [...new Set(Object.values(GENERATORS).map((gen) => gen.client)), 'crawler', 'abtesting-v3'];
 
 export async function run(command: string, { errorMessage, cwd, language }: RunOptions = {}): Promise<string> {
   const realCwd = path.resolve(ROOT_DIR, cwd ?? '.');

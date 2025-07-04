@@ -1,0 +1,137 @@
+ABTests:
+  oneOf:
+    - type: array
+      description: A/B tests.
+      items:
+        $ref: '#/ABTest'
+    - type: 'null'
+
+ABTest:
+  type: object
+  additionalProperties: false
+  properties:
+    abTestID:
+      $ref: '../parameters.yml#/abTestID'
+    updatedAt:
+      $ref: '../parameters.yml#/updatedAt'
+    createdAt:
+      $ref: '../parameters.yml#/createdAt'
+    endAt:
+      $ref: '../parameters.yml#/endAt'
+    name:
+      $ref: '../parameters.yml#/name'
+    status:
+      $ref: '#/Status'
+    variants:
+      $ref: 'Variant.yml#/variants'
+    configuration:
+      $ref: '#/ABTestConfiguration'
+    migratedAbTestID:
+      $ref: '#/MigratedABTestId'
+  required:
+    - status
+    - name
+    - createdAt
+    - endAt
+    - updatedAt
+    - abTestID
+    - variants
+
+Status:
+  type: string
+  description: |
+    A/B test status.
+
+    - `active`. The A/B test is live and search traffic is split between the two variants.
+    - `stopped`. You stopped the A/B test. The A/B test data is still available for analysis.
+    - `expired`. The A/B test was automatically stopped after reaching its end date.
+    - `failed`. Creating the A/B test failed.
+  example: active
+  enum:
+    - active
+    - stopped
+    - expired
+    - failed
+
+ABTestConfiguration:
+  title: configuration
+  type: object
+  description: A/B test configuration.
+  properties:
+    minimumDetectableEffect:
+      $ref: '#/MinimumDetectableEffect'
+    filters:
+      $ref: '#/MetricsFilters'
+    errorCorrection:
+      $ref: '#/ErrorCorrectionType'
+
+MinimumDetectableEffect:
+  type: object
+  description: Configuration for the smallest difference between test variants you want to detect.
+  properties:
+    size:
+      type: number
+      format: double
+      minimum: 0
+      maximum: 1
+      description: |
+        Smallest difference in an observable metric between variants.
+        For example, to detect a 10% difference between variants, set this value to 0.1.
+    metric:
+      $ref: '#/EffectMetric'
+  required:
+    - size
+    - metric
+
+EffectMetric:
+  type: string
+  description: Metric for which you want to detect the smallest relative difference.
+  enum:
+    - addToCartRate
+    - clickThroughRate
+    - conversionRate
+    - purchaseRate
+    - noResultsRate
+
+MigratedABTestId:
+  type: integer
+  description: Unique migrated A/B test identifier.
+  example: 224
+
+MetricsFilter:
+  type: object
+  additionalProperties: false
+  description: |
+    Boolean filter applied to the A/B test population. Each filter targets a boolean metric
+    and decides whether to include (true) or exclude (false) matching records.
+  properties:
+    domain:
+      type: string
+      description: Metric domain (for example `abtesting`, `personalization`).
+      example: abtesting
+    name:
+      type: string
+      description: Public metric name.
+      example: isOutlier
+    trackEffects:
+      type: boolean
+      description: Whether the experiment should record the effects of this filter.
+    includes:
+      type: boolean
+      description: If true, keep items that match the filter; if false, exclude them.
+  required:
+    - domain
+    - name
+
+MetricsFilters:
+  type: array
+  description: List of metric filters applied to the test population.
+  items:
+    $ref: '#/MetricsFilter'
+
+ErrorCorrectionType:
+  type: string
+  description: Multiple-testing correction method applied when evaluating metric significance.
+  enum:
+    - bonferroni
+    - benjamini-hochberg
