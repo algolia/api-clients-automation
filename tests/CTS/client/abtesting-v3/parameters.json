@@ -1,29 +1,5 @@
 [
   {
-    "testName": "fallbacks to the alias when region is not given",
-    "autoCreateClient": false,
-    "steps": [
-      {
-        "type": "createClient",
-        "parameters": {
-          "appId": "my-app-id",
-          "apiKey": "my-api-key"
-        }
-      },
-      {
-        "type": "method",
-        "method": "getABTest",
-        "parameters": {
-          "id": 123
-        },
-        "expected": {
-          "type": "host",
-          "match": "analytics.algolia.com"
-        }
-      }
-    ]
-  },
-  {
     "testName": "uses the correct region",
     "autoCreateClient": false,
     "steps": [

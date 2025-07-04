@@ -5,6 +5,7 @@
       "endAt": "2022-12-31T00:00:00.000Z",
       "scheduledAt": "2022-11-31T00:00:00.000Z",
       "name": "myABTest",
+      "metrics": [{"name": "myMetric"}],
       "variants": [
         {
           "index": "AB_TEST_1",
@@ -23,6 +24,7 @@
         "endAt": "2022-12-31T00:00:00.000Z",
         "scheduledAt": "2022-11-31T00:00:00.000Z",
         "name": "myABTest",
+        "metrics": [{"name": "myMetric"}],
         "variants": [
           {
             "index": "AB_TEST_1",
