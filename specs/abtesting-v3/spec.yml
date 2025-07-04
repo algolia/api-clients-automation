@@ -58,9 +58,9 @@ info:
 components:
   securitySchemes:
     appId:
-      $ref: "../common/securitySchemes.yml#/appId"
+      $ref: '../common/securitySchemes.yml#/appId'
     apiKey:
-      $ref: "../common/securitySchemes.yml#/apiKey"
+      $ref: '../common/securitySchemes.yml#/apiKey'
 servers:
   - url: https://analytics.{region}.algolia.com
     variables:
@@ -89,23 +89,23 @@ paths:
   # ### Custom request ###
   # ######################
   /{path}:
-    $ref: "../common/paths/customRequest.yml"
+    $ref: '../common/paths/customRequest.yml'
 
   /3/abtests:
-    $ref: "paths/abtests.yml"
+    $ref: 'paths/abtests.yml'
   /3/abtests/{id}:
-    $ref: "paths/abtest.yml"
+    $ref: 'paths/abtest.yml'
   /3/abtests/{id}/stop:
-    $ref: "paths/stopABTest.yml"
+    $ref: 'paths/stopABTest.yml'
   /3/abtests/schedule:
-    $ref: "paths/scheduleABTest.yml"
+    $ref: 'paths/scheduleABTest.yml'
   /3/abtests/estimate:
-    $ref: "paths/estimate.yml"
+    $ref: 'paths/estimate.yml'
   /3/abtests/{id}/timeseries:
-    $ref: "paths/timeseries.yml"
+    $ref: 'paths/timeseries.yml'
 
   # ###############
   # ### Helpers ###
   # ###############
   /setClientApiKey:
-    $ref: "../common/helpers/setClientApiKey.yml#/method"
+    $ref: '../common/helpers/setClientApiKey.yml#/method'

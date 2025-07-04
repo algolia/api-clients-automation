@@ -16,49 +16,49 @@ post:
           additionalProperties: false
           properties:
             name:
-              $ref: "../common/parameters.yml#/name"
+              $ref: '../common/parameters.yml#/name'
             variants:
               type: array
               description: A/B test variants.
               minItems: 2
               items:
-                $ref: "../common/schemas/AddABTestsVariant.yml#/AddABTestsVariant"
+                $ref: '../common/schemas/AddABTestsVariant.yml#/AddABTestsVariant'
             metrics:
               type: array
               description: A/B test metrics involved in the test. Only these metrics will be considered when calculating results. 
               items:
-                $ref: "../common/parameters.yml#/metric"
+                $ref: '../common/parameters.yml#/metric'
             configuration:
-              $ref: "../common/schemas/ABTest.yml#/ABTestConfiguration"
+              $ref: '../common/schemas/ABTest.yml#/ABTestConfiguration'
             endAt:
-              $ref: "../common/parameters.yml#/endAt"
+              $ref: '../common/parameters.yml#/endAt'
           required:
             - name
             - variants
             - metrics
             - endAt
   responses:
-    "200":
+    '200':
       description: OK
       headers:
         x-ratelimit-limit:
-          $ref: "../../common/responses/rateLimit.yml#/x-ratelimit-limit"
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-limit'
         x-ratelimit-remaining:
-          $ref: "../../common/responses/rateLimit.yml#/x-ratelimit-remaining"
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-remaining'
         x-ratelimit-reset:
-          $ref: "../../common/responses/rateLimit.yml#/x-ratelimit-reset"
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:
-            $ref: "../common/schemas/ABTestResponse.yml#/ABTestResponse"
-    "400":
-      $ref: "../../common/responses/BadRequest.yml"
-    "402":
-      $ref: "../../common/responses/FeatureNotEnabled.yml"
-    "403":
-      $ref: "../../common/responses/MethodNotAllowed.yml"
-    "404":
-      $ref: "../../common/responses/IndexNotFound.yml"
+            $ref: '../common/schemas/ABTestResponse.yml#/ABTestResponse'
+    '400':
+      $ref: '../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../common/responses/IndexNotFound.yml'
 
 get:
   tags:
@@ -87,25 +87,25 @@ get:
     - name: indexPrefix
       in: query
       description: Index name prefix. Only A/B tests for indices starting with this string are included in the response.
-      example: "dev_"
+      example: 'dev_'
       schema:
         type: string
     - name: indexSuffix
       in: query
       description: Index name suffix. Only A/B tests for indices ending with this string are included in the response.
-      example: "_development"
+      example: '_development'
       schema:
         type: string
   responses:
-    "200":
+    '200':
       description: OK
       headers:
         x-ratelimit-limit:
-          $ref: "../../common/responses/rateLimit.yml#/x-ratelimit-limit"
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-limit'
         x-ratelimit-remaining:
-          $ref: "../../common/responses/rateLimit.yml#/x-ratelimit-remaining"
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-remaining'
         x-ratelimit-reset:
-          $ref: "../../common/responses/rateLimit.yml#/x-ratelimit-reset"
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:
@@ -114,7 +114,7 @@ get:
             additionalProperties: false
             properties:
               abtests:
-                $ref: "../common/schemas/ABTest.yml#/ABTests"
+                $ref: '../common/schemas/ABTest.yml#/ABTests'
               count:
                 type: integer
                 description: Number of A/B tests.
@@ -127,11 +127,11 @@ get:
               - abtests
               - count
               - total
-    "400":
-      $ref: "../../common/responses/BadRequest.yml"
-    "402":
-      $ref: "../../common/responses/FeatureNotEnabled.yml"
-    "403":
-      $ref: "../../common/responses/MethodNotAllowed.yml"
-    "404":
-      $ref: "../../common/responses/IndexNotFound.yml"
+    '400':
+      $ref: '../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../common/responses/IndexNotFound.yml'

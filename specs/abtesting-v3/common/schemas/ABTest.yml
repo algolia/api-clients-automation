@@ -3,31 +3,39 @@ ABTests:
     - type: array
       description: A/B tests.
       items:
-        $ref: "#/ABTest"
-    - type: "null"
+        $ref: '#/ABTest'
+    - type: 'null'
+
+EmptySearch:
+  type: object
+  description: Configuration for handling empty searches.
+  properties:
+    exclude:
+      type: boolean
+      description: Whether to exclude empty searches when calculating A/B test results.
 
 ABTest:
   type: object
   additionalProperties: false
   properties:
     abTestID:
-      $ref: "../parameters.yml#/abTestID"
+      $ref: '../parameters.yml#/abTestID'
     updatedAt:
-      $ref: "../parameters.yml#/updatedAt"
+      $ref: '../parameters.yml#/updatedAt'
     createdAt:
-      $ref: "../parameters.yml#/createdAt"
+      $ref: '../parameters.yml#/createdAt'
     endAt:
-      $ref: "../parameters.yml#/endAt"
+      $ref: '../parameters.yml#/endAt'
     name:
-      $ref: "../parameters.yml#/name"
+      $ref: '../parameters.yml#/name'
     status:
-      $ref: "#/Status"
+      $ref: '#/Status'
     variants:
-      $ref: "Variant.yml#/variants"
+      $ref: 'Variant.yml#/variants'
     configuration:
-      $ref: "#/ABTestConfiguration"
+      $ref: '#/ABTestConfiguration'
     migratedAbTestID:
-      $ref: "#/MigratedABTestId"
+      $ref: '#/MigratedABTestId'
   required:
     - status
     - name
@@ -59,11 +67,11 @@ ABTestConfiguration:
   description: A/B test configuration.
   properties:
     minimumDetectableEffect:
-      $ref: "#/MinimumDetectableEffect"
+      $ref: '#/MinimumDetectableEffect'
     filters:
-      $ref: "#/MetricsFilters"
+      $ref: '#/MetricsFilters'
     errorCorrection:
-      $ref: "#/ErrorCorrectionType"
+      $ref: '#/ErrorCorrectionType'
 
 MinimumDetectableEffect:
   type: object
@@ -78,7 +86,7 @@ MinimumDetectableEffect:
         Smallest difference in an observable metric between variants.
         For example, to detect a 10% difference between variants, set this value to 0.1.
     metric:
-      $ref: "#/EffectMetric"
+      $ref: '#/EffectMetric'
   required:
     - size
     - metric
@@ -127,7 +135,7 @@ MetricsFilters:
   type: array
   description: List of metric filters applied to the test population.
   items:
-    $ref: "#/MetricsFilter"
+    $ref: '#/MetricsFilter'
 
 ErrorCorrectionType:
   type: string
