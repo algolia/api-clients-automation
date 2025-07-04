@@ -58,29 +58,12 @@ ABTestConfiguration:
   type: object
   description: A/B test configuration.
   properties:
-    outliers:
-      $ref: "#/Outliers"
-    emptySearch:
-      $ref: "#/EmptySearch"
     minimumDetectableEffect:
       $ref: "#/MinimumDetectableEffect"
-
-Outliers:
-  type: object
-  description: Configuration for handling outliers.
-  properties:
-    exclude:
-      type: boolean
-      description: Whether to exclude outliers when calculating A/B test results.
-      default: true
-
-EmptySearch:
-  type: object
-  description: Configuration for handling empty searches.
-  properties:
-    exclude:
-      type: boolean
-      description: Whether to exclude empty searches when calculating A/B test results.
+    filters:
+      $ref: "#/MetricsFilters"
+    errorCorrection:
+      $ref: "#/ErrorCorrectionType"
 
 MinimumDetectableEffect:
   type: object
@@ -113,3 +96,41 @@ MigratedABTestId:
   type: integer
   description: Unique migrated A/B test identifier.
   example: 224
+
+MetricsFilter:
+  type: object
+  additionalProperties: false
+  description: |
+    Boolean filter applied to the A/B test population. Each filter targets a boolean metric
+    and decides whether to include (true) or exclude (false) matching records.
+  properties:
+    domain:
+      type: string
+      description: Metric domain (for example `abtesting`, `personalization`).
+      example: abtesting
+    name:
+      type: string
+      description: Public metric name.
+      example: isOutlier
+    trackEffects:
+      type: boolean
+      description: Whether the experiment should record the effects of this filter.
+    includes:
+      type: boolean
+      description: If true, keep items that match the filter; if false, exclude them.
+  required:
+    - domain
+    - name
+
+MetricsFilters:
+  type: array
+  description: List of metric filters applied to the test population.
+  items:
+    $ref: "#/MetricsFilter"
+
+ErrorCorrectionType:
+  type: string
+  description: Multiple-testing correction method applied when evaluating metric significance.
+  enum:
+    - bonferroni
+    - benjamini-hochberg
