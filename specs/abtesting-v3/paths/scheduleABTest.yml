@@ -24,6 +24,13 @@ post:
               minItems: 2
               items:
                 $ref: '../common/schemas/AddABTestsVariant.yml#/AddABTestsVariant'
+            metrics:
+              type: array
+              description: A/B test metrics involved in the test. Only these metrics will be considered when calculating results.
+              items:
+                $ref: '../common/parameters.yml#/metric'
+            configuration:
+              $ref: '../common/schemas/ABTest.yml#/ABTestConfiguration'
             scheduledAt:
               $ref: '../common/parameters.yml#/scheduledAt'
             endAt:
@@ -31,6 +38,7 @@ post:
           required:
             - name
             - variants
+            - metrics
             - scheduledAt
             - endAt
   responses:
