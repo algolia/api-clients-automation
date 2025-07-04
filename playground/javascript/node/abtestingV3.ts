@@ -12,6 +12,7 @@ async function testABTesting() {
     const res = await client.addABTests({
       endAt: '2022-02-01',
       name: 'testing',
+      metrics: [],
       variants: [
         {
           index: 'test1',
