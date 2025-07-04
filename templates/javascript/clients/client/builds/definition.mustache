@@ -15,7 +15,7 @@ import {
 
 import type { RequestOptions, ClientOptions } from '@algolia/client-common';
 
-import { create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}, apiClientVersion } from '../src/{{#isCompositionFullClient}}compositionFullClient{{/isCompositionFullClient}}{{^isCompositionFullClient}}{{clientName}}{{/isCompositionFullClient}}';
+import { create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}, apiClientVersion } from '../src/{{clientName}}';
 
 {{#hasRegionalHost}}
 import { REGIONS } from '../src/{{clientName}}';
@@ -32,7 +32,7 @@ export {
   isScheduleTrigger,
   isSubscriptionTrigger,
   {{/isIngestionClient}}
-} from '../src/{{#isCompositionFullClient}}compositionFullClient{{/isCompositionFullClient}}{{^isCompositionFullClient}}{{clientName}}{{/isCompositionFullClient}}';
+} from '../src/{{clientName}}';
 
 export * from '../model';
 

@@ -7,6 +7,7 @@
     "start": "tsc && node --env-file=../../.env dist/$0.js"
   },
   "dependencies": {
+    "@algolia/abtesting": "link:../../../clients/algoliasearch-client-javascript/packages/abtesting",
     "@algolia/advanced-personalization": "link:../../../clients/algoliasearch-client-javascript/packages/advanced-personalization",
     "@algolia/client-abtesting": "link:../../../clients/algoliasearch-client-javascript/packages/client-abtesting",
     "@algolia/client-analytics": "link:../../../clients/algoliasearch-client-javascript/packages/client-analytics",

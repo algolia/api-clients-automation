@@ -1,0 +1,44 @@
+[
+  {
+    "testName": "uses the correct region",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "my-app-id",
+          "apiKey": "my-api-key",
+          "region": "us"
+        }
+      },
+      {
+        "type": "method",
+        "method": "getABTest",
+        "parameters": {
+          "id": 123
+        },
+        "expected": {
+          "type": "host",
+          "match": "analytics.us.algolia.com"
+        }
+      }
+    ]
+  },
+  {
+    "testName": "throws when incorrect region is given",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "my-app-id",
+          "apiKey": "my-api-key",
+          "region": "not_a_region"
+        },
+        "expected": {
+          "error": "`region` must be one of the following: de, us"
+        }
+      }
+    ]
+  }
+]
