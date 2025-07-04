@@ -2028,8 +2028,8 @@ class SearchTest extends AnyFunSuite {
         validity = Some(
           Seq(
             TimeRange(
-              from = 1656670273L,
-              until = 1656670277L
+              from = Some(1656670273L),
+              until = Some(1656670277L)
             )
           )
         )
@@ -2884,8 +2884,8 @@ class SearchTest extends AnyFunSuite {
         validity = Some(
           Seq(
             TimeRange(
-              from = 1577836800L,
-              until = 1577836800L
+              from = Some(1577836800L),
+              until = Some(1577836800L)
             )
           )
         )
@@ -2899,6 +2899,42 @@ class SearchTest extends AnyFunSuite {
     assert(res.method == "PUT")
     val expectedBody = parse(
       """{"objectID":"a-rule-id","consequence":{"params":{"aroundRadius":1000}},"validity":[{"from":1577836800,"until":1577836800}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("one sided validity22") {
+    val (client, echo) = testClient()
+    val future = client.saveRule(
+      indexName = "indexName",
+      objectID = "a-rule-id",
+      rule = Rule(
+        objectID = "a-rule-id",
+        consequence = Consequence(
+          params = Some(
+            ConsequenceParams(
+              aroundRadius = Some(AroundRadius(1000))
+            )
+          )
+        ),
+        validity = Some(
+          Seq(
+            TimeRange(
+              from = Some(1577836800L)
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/indexName/rules/a-rule-id")
+    assert(res.method == "PUT")
+    val expectedBody = parse(
+      """{"objectID":"a-rule-id","consequence":{"params":{"aroundRadius":1000}},"validity":[{"from":1577836800}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -3039,8 +3075,8 @@ class SearchTest extends AnyFunSuite {
           validity = Some(
             Seq(
               TimeRange(
-                from = 1656670273L,
-                until = 1656670277L
+                from = Some(1656670273L),
+                until = Some(1656670277L)
               )
             )
           )

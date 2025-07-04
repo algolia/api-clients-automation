@@ -4004,6 +4004,38 @@ func SnippetForSaveRuleOfSearch21() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForSaveRuleOfSearch22() {
+	/*
+	   Snippet for the saveRule method.
+
+	   one sided validity
+	*/
+
+	// >SEPARATOR saveRule one sided validity
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
+		"<YOUR_INDEX_NAME>", "a-rule-id",
+		search.NewEmptyRule().SetObjectID("a-rule-id").SetConsequence(
+			search.NewEmptyConsequence().SetParams(
+				search.NewEmptyConsequenceParams().SetAroundRadius(search.Int32AsAroundRadius(1000)))).SetValidity(
+			[]search.TimeRange{*search.NewEmptyTimeRange().SetFrom(1577836800)})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForSaveRulesOfSearch() {
 	/*
 	   Snippet for the saveRules method.

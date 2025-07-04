@@ -2755,6 +2755,33 @@ public class SearchClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "one sided validity")]
+  public async Task SaveRuleTest22()
+  {
+    await client.SaveRuleAsync(
+      "indexName",
+      "a-rule-id",
+      new Rule
+      {
+        ObjectID = "a-rule-id",
+        Consequence = new Consequence
+        {
+          Params = new ConsequenceParams { AroundRadius = new AroundRadius(1000) },
+        },
+        Validity = new List<TimeRange> { new TimeRange { From = 1577836800L } },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/rules/a-rule-id", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"objectID\":\"a-rule-id\",\"consequence\":{\"params\":{\"aroundRadius\":1000}},\"validity\":[{\"from\":1577836800}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "saveRules with minimal parameters")]
   public async Task SaveRulesTest()
   {

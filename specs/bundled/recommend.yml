@@ -3794,9 +3794,6 @@ components:
           type: integer
           format: int64
           description: When the rule should stop to be active, in Unix epoch time.
-      required:
-        - from
-        - until
     RecommendRule:
       type: object
       description: Recommend rule.

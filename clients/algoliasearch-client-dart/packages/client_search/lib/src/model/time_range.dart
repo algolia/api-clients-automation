@@ -9,17 +9,17 @@ part 'time_range.g.dart';
 final class TimeRange {
   /// Returns a new [TimeRange] instance.
   const TimeRange({
-    required this.from,
-    required this.until,
+    this.from,
+    this.until,
   });
 
   /// When the rule should start to be active, in Unix epoch time.
   @JsonKey(name: r'from')
-  final int from;
+  final int? from;
 
   /// When the rule should stop to be active, in Unix epoch time.
   @JsonKey(name: r'until')
-  final int until;
+  final int? until;
 
   @override
   bool operator ==(Object other) =>

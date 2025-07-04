@@ -21,8 +21,8 @@ def useConditionlessRule(): Future[Unit] = {
     validity = Some(
       Seq(
         TimeRange(
-          from = 1_688_774_400,
-          until = 1_738_972_800
+          from = Some(1_688_774_400),
+          until = Some(1_738_972_800)
         )
       )
     )

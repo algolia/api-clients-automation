@@ -2899,6 +2899,36 @@ class SearchTest {
     )
   }
 
+  @Test
+  fun `one sided validity22`() = runTest {
+    client.runTest(
+      call = {
+        saveRule(
+          indexName = "indexName",
+          objectID = "a-rule-id",
+          rule = Rule(
+            objectID = "a-rule-id",
+            consequence = Consequence(
+              params = ConsequenceParams(
+                aroundRadius = AroundRadius.of(1000),
+              ),
+            ),
+            validity = listOf(
+              TimeRange(
+                from = 1577836800L,
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/rules/a-rule-id".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"a-rule-id","consequence":{"params":{"aroundRadius":1000}},"validity":[{"from":1577836800}]}""", it.body)
+      },
+    )
+  }
+
   // saveRules
 
   @Test

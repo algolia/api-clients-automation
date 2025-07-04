@@ -3685,6 +3685,38 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForSaveRule22() {
+    // >SEPARATOR saveRule one sided validity
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRule(
+      indexName = "<YOUR_INDEX_NAME>",
+      objectID = "a-rule-id",
+      rule = Rule(
+        objectID = "a-rule-id",
+        consequence = Consequence(
+          params = ConsequenceParams(
+            aroundRadius = AroundRadius.of(1000),
+          ),
+        ),
+        validity = listOf(
+          TimeRange(
+            from = 1577836800L,
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForSaveRules() {
     // >SEPARATOR saveRules saveRules with minimal parameters
     // Initialize the client

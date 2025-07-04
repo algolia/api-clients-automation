@@ -1842,6 +1842,21 @@ func TestSearch_SaveRule(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"objectID":"a-rule-id","consequence":{"params":{"aroundRadius":1000}},"validity":[{"from":1577836800,"until":1577836800}]}`)
 	})
+	t.Run("one sided validity", func(t *testing.T) {
+		_, err := client.SaveRule(client.NewApiSaveRuleRequest(
+			"indexName", "a-rule-id",
+			search.NewEmptyRule().SetObjectID("a-rule-id").SetConsequence(
+				search.NewEmptyConsequence().SetParams(
+					search.NewEmptyConsequenceParams().SetAroundRadius(search.Int32AsAroundRadius(1000)))).SetValidity(
+				[]search.TimeRange{*search.NewEmptyTimeRange().SetFrom(1577836800)})))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/rules/a-rule-id", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"objectID":"a-rule-id","consequence":{"params":{"aroundRadius":1000}},"validity":[{"from":1577836800}]}`)
+	})
 }
 
 func TestSearch_SaveRules(t *testing.T) {

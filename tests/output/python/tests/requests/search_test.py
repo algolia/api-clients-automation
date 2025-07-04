@@ -2598,6 +2598,36 @@ class TestSearchClient:
             """{"objectID":"a-rule-id","consequence":{"params":{"aroundRadius":1000}},"validity":[{"from":1577836800,"until":1577836800}]}"""
         )
 
+    async def test_save_rule_22(self):
+        """
+        one sided validity
+        """
+        _req = await self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="a-rule-id",
+            rule={
+                "objectID": "a-rule-id",
+                "consequence": {
+                    "params": {
+                        "aroundRadius": 1000,
+                    },
+                },
+                "validity": [
+                    {
+                        "from": 1577836800,
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/a-rule-id"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"a-rule-id","consequence":{"params":{"aroundRadius":1000}},"validity":[{"from":1577836800}]}"""
+        )
+
     async def test_save_rules_(self):
         """
         saveRules with minimal parameters
@@ -11921,6 +11951,36 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"objectID":"a-rule-id","consequence":{"params":{"aroundRadius":1000}},"validity":[{"from":1577836800,"until":1577836800}]}"""
+        )
+
+    def test_save_rule_22(self):
+        """
+        one sided validity
+        """
+        _req = self._client.save_rule_with_http_info(
+            index_name="indexName",
+            object_id="a-rule-id",
+            rule={
+                "objectID": "a-rule-id",
+                "consequence": {
+                    "params": {
+                        "aroundRadius": 1000,
+                    },
+                },
+                "validity": [
+                    {
+                        "from": 1577836800,
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/rules/a-rule-id"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"a-rule-id","consequence":{"params":{"aroundRadius":1000}},"validity":[{"from":1577836800}]}"""
         )
 
     def test_save_rules_(self):

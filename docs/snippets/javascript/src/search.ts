@@ -3039,6 +3039,28 @@ export async function snippetForSaveRule21(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the saveRule method.
+//
+// one sided validity
+export async function snippetForSaveRule22(): Promise<void> {
+  // >SEPARATOR saveRule one sided validity
+  // Initialize the client
+  //
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRule({
+    indexName: 'indexName',
+    objectID: 'a-rule-id',
+    rule: { objectID: 'a-rule-id', consequence: { params: { aroundRadius: 1000 } }, validity: [{ from: 1577836800 }] },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the saveRules method.
 //
 // saveRules with minimal parameters

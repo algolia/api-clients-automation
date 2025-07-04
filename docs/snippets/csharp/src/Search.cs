@@ -3365,6 +3365,35 @@ public class SnippetSearchClient
   }
 
   /// <summary>
+  /// Snippet for the SaveRule method.
+  ///
+  /// one sided validity
+  /// </summary>
+  public async Task SnippetForSearchClientSaveRule22()
+  {
+    // >SEPARATOR saveRule one sided validity
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SaveRuleAsync(
+      "<YOUR_INDEX_NAME>",
+      "a-rule-id",
+      new Rule
+      {
+        ObjectID = "a-rule-id",
+        Consequence = new Consequence
+        {
+          Params = new ConsequenceParams { AroundRadius = new AroundRadius(1000) },
+        },
+        Validity = new List<TimeRange> { new TimeRange { From = 1577836800L } },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the SaveRules method.
   ///
   /// saveRules with minimal parameters

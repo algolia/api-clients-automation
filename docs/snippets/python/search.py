@@ -4105,6 +4105,42 @@ def snippet_for_save_rule21():
     # SEPARATOR<
 
 
+def snippet_for_save_rule22():
+    """
+    Snippet for the saveRule method.
+
+    one sided validity
+    """
+    # >SEPARATOR saveRule one sided validity
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.save_rule(
+        index_name="<YOUR_INDEX_NAME>",
+        object_id="a-rule-id",
+        rule={
+            "objectID": "a-rule-id",
+            "consequence": {
+                "params": {
+                    "aroundRadius": 1000,
+                },
+            },
+            "validity": [
+                {
+                    "from": 1577836800,
+                },
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_save_rules():
     """
     Snippet for the saveRules method.

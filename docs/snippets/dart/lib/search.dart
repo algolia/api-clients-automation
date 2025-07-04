@@ -3345,6 +3345,37 @@ void snippetForsaveRule21() async {
   // SEPARATOR<
 }
 
+// Snippet for the saveRule method.
+//
+// one sided validity
+void snippetForsaveRule22() async {
+  // >SEPARATOR saveRule one sided validity
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    objectID: "a-rule-id",
+    rule: Rule(
+      objectID: "a-rule-id",
+      consequence: Consequence(
+        params: ConsequenceParams(
+          aroundRadius: 1000,
+        ),
+      ),
+      validity: [
+        TimeRange(
+          from: 1577836800,
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the saveRules method.
 //
 // saveRules with minimal parameters

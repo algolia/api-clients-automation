@@ -3258,6 +3258,34 @@ def snippet_for_save_rule21
   # SEPARATOR<
 end
 
+# Snippet for the saveRule method.
+#
+# one sided validity
+def snippet_for_save_rule22
+  # >SEPARATOR saveRule one sided validity
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rule(
+    "<YOUR_INDEX_NAME>",
+    "a-rule-id",
+    Algolia::Search::Rule.new(
+      algolia_object_id: "a-rule-id",
+      consequence: Algolia::Search::Consequence.new(params: Algolia::Search::ConsequenceParams.new(around_radius: 1000)),
+      validity: [Algolia::Search::TimeRange.new(from: 1577836800)]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the saveRules method.
 #
 # saveRules with minimal parameters
