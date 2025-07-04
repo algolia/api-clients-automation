@@ -7545,9 +7545,9 @@ class SnippetSearchClient {
 
   // Snippet for the setSettings method.
   //
-  // restrict_searchable_attributes
+  // set_custom_ranking
   void snippetForSetSettings75() throws Exception {
-    // >SEPARATOR setSettings restrict_searchable_attributes
+    // >SEPARATOR setSettings set_custom_ranking
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 

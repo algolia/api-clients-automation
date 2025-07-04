@@ -12143,7 +12143,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// restrict_searchable_attributes
+    /// set_custom_ranking
     func testSetSettingsTest75() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,

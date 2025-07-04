@@ -7690,7 +7690,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("restrict_searchable_attributes")
+  @DisplayName("set_custom_ranking")
   void setSettingsTest75() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setCustomRanking(Arrays.asList("desc(popularity)", "asc(price)")));

@@ -8145,7 +8145,7 @@ class SearchTest {
   }
 
   @Test
-  fun `restrict_searchable_attributes75`() = runTest {
+  fun `set_custom_ranking75`() = runTest {
     client.runTest(
       call = {
         setSettings(

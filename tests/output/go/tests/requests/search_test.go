@@ -5183,7 +5183,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"ranking":["desc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}`)
 	})
-	t.Run("restrict_searchable_attributes", func(t *testing.T) {
+	t.Run("set_custom_ranking", func(t *testing.T) {
 		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
 			"theIndexName",
 			search.NewEmptyIndexSettings().SetCustomRanking(

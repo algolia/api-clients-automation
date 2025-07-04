@@ -8695,7 +8695,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('restrict_searchable_attributes')]
+    #[TestDox('set_custom_ranking')]
     public function testSetSettings75(): void
     {
         $client = $this->getClient();

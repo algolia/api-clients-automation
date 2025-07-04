@@ -10287,7 +10287,7 @@ void main() {
 
   // setSettings
   test(
-    'restrict_searchable_attributes',
+    'set_custom_ranking',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
