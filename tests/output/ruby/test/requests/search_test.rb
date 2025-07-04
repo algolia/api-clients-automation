@@ -6310,7 +6310,7 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # restrict_searchable_attributes
+  # set_custom_ranking
   def test_set_settings75
     req = @client.set_settings_with_http_info(
       "theIndexName",

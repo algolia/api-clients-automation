@@ -8433,9 +8433,9 @@ export async function snippetForSetSettings74(): Promise<void> {
 
 // Snippet for the setSettings method.
 //
-// restrict_searchable_attributes
+// set_custom_ranking
 export async function snippetForSetSettings75(): Promise<void> {
-  // >SEPARATOR setSettings restrict_searchable_attributes
+  // >SEPARATOR setSettings set_custom_ranking
   // Initialize the client
   //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');

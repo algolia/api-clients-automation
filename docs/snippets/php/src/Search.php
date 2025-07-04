@@ -11162,11 +11162,11 @@ class SnippetSearchClient
     /**
      * Snippet for the SetSettings method.
      *
-     * restrict_searchable_attributes
+     * set_custom_ranking
      */
     public function snippetForSetSettings75(): void
     {
-        // >SEPARATOR setSettings restrict_searchable_attributes
+        // >SEPARATOR setSettings set_custom_ranking
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 

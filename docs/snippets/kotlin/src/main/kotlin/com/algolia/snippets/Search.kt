@@ -9390,7 +9390,7 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForSetSettings75() {
-    // >SEPARATOR setSettings restrict_searchable_attributes
+    // >SEPARATOR setSettings set_custom_ranking
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 

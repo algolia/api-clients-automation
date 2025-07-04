@@ -8836,7 +8836,7 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "restrict_searchable_attributes")]
+  [Fact(DisplayName = "set_custom_ranking")]
   public async Task SetSettingsTest75()
   {
     await client.SetSettingsAsync(

@@ -11311,10 +11311,10 @@ func SnippetForSetSettingsOfSearch75() {
 	/*
 	   Snippet for the setSettings method.
 
-	   restrict_searchable_attributes
+	   set_custom_ranking
 	*/
 
-	// >SEPARATOR setSettings restrict_searchable_attributes
+	// >SEPARATOR setSettings set_custom_ranking
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {

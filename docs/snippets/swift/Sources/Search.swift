@@ -7612,9 +7612,9 @@ final class SearchClientSnippet {
 
     /// Snippet for the setSettings method.
     ///
-    /// restrict_searchable_attributes
+    /// set_custom_ranking
     func snippetForSetSettings75() async throws {
-        // >SEPARATOR setSettings restrict_searchable_attributes
+        // >SEPARATOR setSettings set_custom_ranking
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 

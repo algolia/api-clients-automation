@@ -5520,7 +5520,7 @@ describe('setSettings', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('restrict_searchable_attributes', async () => {
+  test('set_custom_ranking', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',
       indexSettings: { customRanking: ['desc(popularity)', 'asc(price)'] },

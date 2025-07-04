@@ -9463,9 +9463,9 @@ void snippetForsetSettings74() async {
 
 // Snippet for the setSettings method.
 //
-// restrict_searchable_attributes
+// set_custom_ranking
 void snippetForsetSettings75() async {
-  // >SEPARATOR setSettings restrict_searchable_attributes
+  // >SEPARATOR setSettings set_custom_ranking
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');

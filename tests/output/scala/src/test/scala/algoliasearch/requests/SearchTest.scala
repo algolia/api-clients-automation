@@ -8764,7 +8764,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("restrict_searchable_attributes75") {
+  test("set_custom_ranking75") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
