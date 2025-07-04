@@ -91,6 +91,7 @@ EffectMetric:
     - clickThroughRate
     - conversionRate
     - purchaseRate
+    - noResultsRate
 
 MigratedABTestId:
   type: integer
