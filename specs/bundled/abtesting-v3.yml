@@ -1,0 +1,1361 @@
+openapi: 3.0.2
+info:
+  title: A/B Testing API
+  description: >
+    The Algolia A/B Testing API lets you manage your Algolia A/B tests to
+    optimize your search experience.
+
+
+    ## Base URLs
+
+
+    The base URLs for requests to the A/B testing API are:
+
+
+    - `https://analytics.us.algolia.com`
+
+    - `https://analytics.de.algolia.com`
+
+    - `https://analytics.algolia.com` (routes requests to the closest of the
+    above servers, based on your geographical location)
+
+
+    Use the URL that matches your [analytics
+    region](https://dashboard.algolia.com/account/infrastructure/analytics).
+
+
+    **All requests must use HTTPS.**
+
+
+    ## Availability and authentication
+
+
+    Access to the A/B testing API is available as part of the [Premium or
+    Elevate plans](https://www.algolia.com/pricing).
+
+
+    To authenticate your API requests, add these headers:
+
+
+    - `x-algolia-application-id`. Your Algolia application ID.
+
+    - `x-algolia-api-key`. An API key with the necessary permissions to make the
+    request.
+      The required access control list (ACL) to make a request is listed in each endpoint's reference.
+
+    You can find your application ID and API key in the [Algolia
+    dashboard](https://dashboard.algolia.com/account).
+
+
+    ## Rate limits
+
+
+    You can make up to **100 requests per minute per app** to the A/B testing
+    API.
+
+    The response includes headers with information about the limits.
+
+
+    ## Parameters
+
+
+    Query parameters must be
+    [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).
+
+    Non-ASCII characters must be UTF-8 encoded.
+
+    Plus characters (`+`) are interpreted as spaces.
+
+
+    ## Response status and errors
+
+
+    The A/B testing API returns JSON responses.
+
+    Since JSON doesn't guarantee any specific ordering, don't rely on the order
+    of attributes in the API response.
+
+
+    Successful responses return a `2xx` status. Client errors return a `4xx`
+    status. Server errors are indicated by a `5xx` status.
+
+    Error responses have a `message` property with more information.
+
+
+    ## Version
+
+
+    The current version of the A/B Testing API is version 3, as indicated by the
+    `/3/` in each endpoint's URL.
+  version: 3.0.0
+servers:
+  - url: https://analytics.{region}.algolia.com
+    variables:
+      region:
+        enum:
+          - us
+          - de
+        default: us
+  - url: https://analytics.algolia.com
+security:
+  - appId: []
+    apiKey: []
+tags:
+  - name: abtest
+    x-displayName: A/B testing
+    description: >
+      Manage A/B tests.
+
+
+      A/B tests are configurations one or more indices, usually your production
+      index and an index with different settings that you want to test.
+externalDocs:
+  url: https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/
+  description: |
+    Related guide: A/B testing.
+paths:
+  /{path}:
+    get:
+      operationId: customGet
+      summary: Send requests to the Algolia REST API
+      description: This method lets you send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - abtesting-v3
+    post:
+      operationId: customPost
+      requestBody:
+        description: Parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API
+      description: This method lets you send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - abtesting-v3
+    put:
+      operationId: customPut
+      requestBody:
+        description: Parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API
+      description: This method lets you send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - abtesting-v3
+    delete:
+      operationId: customDelete
+      summary: Send requests to the Algolia REST API
+      description: This method lets you send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - abtesting-v3
+  /3/abtests:
+    post:
+      tags:
+        - abtesting-v3
+      operationId: addABTests
+      x-acl:
+        - editSettings
+      summary: Create an A/B test
+      description: Creates a new A/B test.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              title: addABTestsRequest
+              type: object
+              additionalProperties: false
+              properties:
+                name:
+                  $ref: '#/components/schemas/name'
+                variants:
+                  type: array
+                  description: A/B test variants.
+                  minItems: 2
+                  items:
+                    $ref: '#/components/schemas/AddABTestsVariant'
+                metrics:
+                  type: array
+                  description: >-
+                    A/B test metrics involved in the test. Only these metrics
+                    will be considered when calculating results.
+                  items:
+                    $ref: '#/components/schemas/parameters_metric'
+                configuration:
+                  $ref: '#/components/schemas/ABTestConfiguration'
+                endAt:
+                  $ref: '#/components/schemas/endAt'
+              required:
+                - name
+                - variants
+                - metrics
+                - endAt
+      responses:
+        '200':
+          description: OK
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/x-ratelimit-limit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/x-ratelimit-remaining'
+            x-ratelimit-reset:
+              $ref: '#/components/headers/x-ratelimit-reset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ABTestResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+    get:
+      tags:
+        - abtesting-v3
+      operationId: listABTests
+      x-acl:
+        - analytics
+      summary: List all A/B tests
+      description: Lists all A/B tests you configured for this application.
+      parameters:
+        - name: offset
+          in: query
+          description: Position of the first item to return.
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - name: limit
+          in: query
+          description: Number of items to return.
+          required: false
+          schema:
+            type: integer
+            default: 10
+        - name: indexPrefix
+          in: query
+          description: >-
+            Index name prefix. Only A/B tests for indices starting with this
+            string are included in the response.
+          example: dev_
+          schema:
+            type: string
+        - name: indexSuffix
+          in: query
+          description: >-
+            Index name suffix. Only A/B tests for indices ending with this
+            string are included in the response.
+          example: _development
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/x-ratelimit-limit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/x-ratelimit-remaining'
+            x-ratelimit-reset:
+              $ref: '#/components/headers/x-ratelimit-reset'
+          content:
+            application/json:
+              schema:
+                title: listABTestsResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  abtests:
+                    $ref: '#/components/schemas/ABTests'
+                  count:
+                    type: integer
+                    description: Number of A/B tests.
+                    example: 10
+                  total:
+                    type: integer
+                    description: Number of retrievable A/B tests.
+                    example: 12
+                required:
+                  - abtests
+                  - count
+                  - total
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+  /3/abtests/{id}:
+    get:
+      tags:
+        - abtesting-v3
+      operationId: getABTest
+      x-acl:
+        - analytics
+      summary: Retrieve A/B test details
+      description: Retrieves the details for an A/B test by its ID.
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      responses:
+        '200':
+          description: OK
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/x-ratelimit-limit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/x-ratelimit-remaining'
+            x-ratelimit-reset:
+              $ref: '#/components/headers/x-ratelimit-reset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ABTest'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+    delete:
+      tags:
+        - abtesting-v3
+      operationId: deleteABTest
+      x-acl:
+        - editSettings
+      summary: Delete an A/B test
+      description: Deletes an A/B test by its ID.
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      responses:
+        '200':
+          description: OK
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/x-ratelimit-limit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/x-ratelimit-remaining'
+            x-ratelimit-reset:
+              $ref: '#/components/headers/x-ratelimit-reset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ABTestResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+  /3/abtests/{id}/stop:
+    post:
+      tags:
+        - abtesting-v3
+      operationId: stopABTest
+      x-acl:
+        - editSettings
+      summary: Stop an A/B test
+      description: |
+        Stops an A/B test by its ID.
+
+        You can't restart stopped A/B tests.
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      responses:
+        '200':
+          description: OK
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/x-ratelimit-limit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/x-ratelimit-remaining'
+            x-ratelimit-reset:
+              $ref: '#/components/headers/x-ratelimit-reset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ABTestResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+  /3/abtests/schedule:
+    post:
+      tags:
+        - abtesting-v3
+      operationId: scheduleABTest
+      x-acl:
+        - editSettings
+      summary: Schedule an A/B test
+      description: |
+        Schedule an A/B test to be started at a later time.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              title: scheduleABTestsRequest
+              type: object
+              additionalProperties: false
+              properties:
+                name:
+                  $ref: '#/components/schemas/name'
+                variants:
+                  type: array
+                  description: A/B test variants.
+                  minItems: 2
+                  items:
+                    $ref: '#/components/schemas/AddABTestsVariant'
+                metrics:
+                  type: array
+                  description: >-
+                    A/B test metrics involved in the test. Only these metrics
+                    will be considered when calculating results.
+                  items:
+                    $ref: '#/components/schemas/parameters_metric'
+                configuration:
+                  $ref: '#/components/schemas/ABTestConfiguration'
+                scheduledAt:
+                  $ref: '#/components/schemas/scheduledAt'
+                endAt:
+                  $ref: '#/components/schemas/endAt'
+              required:
+                - name
+                - variants
+                - metrics
+                - scheduledAt
+                - endAt
+      responses:
+        '200':
+          description: OK
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/x-ratelimit-limit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/x-ratelimit-remaining'
+            x-ratelimit-reset:
+              $ref: '#/components/headers/x-ratelimit-reset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleABTestResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+  /3/abtests/estimate:
+    post:
+      tags:
+        - abtesting-v3
+      operationId: estimateABTest
+      x-acl:
+        - analytics
+      summary: Estimate the sample size and duration of an A/B test
+      description: >-
+        Given the traffic percentage and the expected effect size, this endpoint
+        estimates the sample size and duration of an A/B test based on
+        historical traffic.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              title: estimateABTestRequest
+              type: object
+              additionalProperties: false
+              properties:
+                configuration:
+                  title: estimateConfiguration
+                  type: object
+                  description: >-
+                    A/B test configuration for estimating the sample size and
+                    duration using minimum detectable effect.
+                  properties:
+                    filters:
+                      $ref: '#/components/schemas/MetricsFilters'
+                    minimumDetectableEffect:
+                      $ref: '#/components/schemas/MinimumDetectableEffect'
+                  required:
+                    - minimumDetectableEffect
+                variants:
+                  type: array
+                  description: A/B test variants.
+                  minItems: 2
+                  items:
+                    $ref: '#/components/schemas/AddABTestsVariant'
+              required:
+                - configuration
+                - variants
+      responses:
+        '200':
+          description: OK
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/x-ratelimit-limit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/x-ratelimit-remaining'
+            x-ratelimit-reset:
+              $ref: '#/components/headers/x-ratelimit-reset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstimateABTestResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+  /3/abtests/{id}/timeseries:
+    get:
+      tags:
+        - abtesting-v3
+      operationId: getTimeseries
+      x-acl:
+        - analytics
+      summary: Retrieve timeseries of an A/B test
+      description: Retrieves timeseries for an A/B test by its ID.
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/StartDate'
+        - $ref: '#/components/parameters/EndDate'
+        - in: query
+          name: metric
+          description: >-
+            List of metrics to retrieve. If not specified, all metrics are
+            returned.
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Metric'
+      responses:
+        '200':
+          description: OK
+          headers:
+            x-ratelimit-limit:
+              $ref: '#/components/headers/x-ratelimit-limit'
+            x-ratelimit-remaining:
+              $ref: '#/components/headers/x-ratelimit-remaining'
+            x-ratelimit-reset:
+              $ref: '#/components/headers/x-ratelimit-reset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Timeseries'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /setClientApiKey:
+    get:
+      x-helper: true
+      x-asynchronous-helper: false
+      tags:
+        - abtesting-v3
+      operationId: setClientApiKey
+      summary: Switch the API key used to authenticate requests
+      description: |
+        Switch the API key used to authenticate requests.
+      parameters:
+        - in: query
+          name: apiKey
+          description: API key to be used from now on.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No content.
+components:
+  securitySchemes:
+    appId:
+      type: apiKey
+      in: header
+      name: x-algolia-application-id
+      description: Your Algolia application ID.
+    apiKey:
+      type: apiKey
+      in: header
+      name: x-algolia-api-key
+      description: >
+        Your Algolia API key with the necessary permissions to make the request.
+
+        Permissions are controlled through access control lists (ACL) and access
+        restrictions.
+
+        The required ACL to make a request is listed in each endpoint's
+        reference.
+  parameters:
+    PathInPath:
+      name: path
+      in: path
+      description: Path of the endpoint, for example `1/newFeature`.
+      required: true
+      schema:
+        type: string
+        example: /keys
+    Parameters:
+      name: parameters
+      in: query
+      description: Query parameters to apply to the current query.
+      schema:
+        type: object
+        additionalProperties: true
+    ID:
+      in: path
+      name: id
+      description: Unique A/B test identifier.
+      required: true
+      schema:
+        $ref: '#/components/schemas/abTestID'
+    StartDate:
+      in: query
+      name: startDate
+      description: Start date of the period to analyze, in `YYYY-MM-DD` format.
+      schema:
+        type: string
+        example: '2022-09-19'
+    EndDate:
+      in: query
+      name: endDate
+      description: End date of the period to analyze, in `YYYY-MM-DD` format.
+      schema:
+        type: string
+        example: '2023-01-21'
+  schemas:
+    ErrorBase:
+      description: Error.
+      type: object
+      x-keep-model: true
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
+    abTestID:
+      type: integer
+      description: Unique A/B test identifier.
+      example: 224
+    updatedAt:
+      type: string
+      description: Date and time when the A/B test was last updated, in RFC 3339 format.
+      example: '2023-06-15T15:06:44.400601Z'
+    createdAt:
+      type: string
+      description: Date and time when the A/B test was created, in RFC 3339 format.
+      example: '2023-06-15T15:06:04.249906Z'
+    endAt:
+      type: string
+      description: End date and time of the A/B test, in RFC 3339 format.
+      example: '2023-06-17T00:00:00Z'
+    name:
+      type: string
+      description: A/B test name.
+      example: Custom ranking sales rank test
+    Status:
+      type: string
+      description: >
+        A/B test status.
+
+
+        - `active`. The A/B test is live and search traffic is split between the
+        two variants.
+
+        - `stopped`. You stopped the A/B test. The A/B test data is still
+        available for analysis.
+
+        - `expired`. The A/B test was automatically stopped after reaching its
+        end date.
+
+        - `failed`. Creating the A/B test failed.
+      example: active
+      enum:
+        - active
+        - stopped
+        - expired
+        - failed
+    description:
+      type: string
+      description: Description for this variant.
+      example: Current production index
+    index:
+      type: string
+      description: Index name of the A/B test variant (case-sensitive).
+      example: delcourt_production
+    trafficPercentage:
+      type: integer
+      description: Percentage of search requests each variant receives.
+      minimum: 1
+      maximum: 99
+      example: 60
+    metricMetadata:
+      type: object
+      description: Metric specific metadata.
+      properties:
+        winsorizedValue:
+          type: number
+          format: double
+          description: >
+            Only present in case the metric is 'revenue'. 
+
+            It is the amount exceeding the 95th percentile of global revenue
+            transactions involved in the AB Test. This amount is not considered
+            when calculating statistical significance.
+
+            It is tied to a per revenue-currency pair contrary to other 
+
+            global filter effects (such as outliers and empty search count).
+      example:
+        winsorizedValue: 888.8
+    metric:
+      type: object
+      properties:
+        name:
+          type: string
+        updatedAt:
+          type: string
+          description: Date and time when the metric was last updated, in RFC 3339 format.
+        value:
+          type: number
+          format: double
+        valueCIHigh:
+          type: number
+          format: double
+          description: >
+            The upper bound of the 95% confidence interval for the metric value.
+            The confidence interval is calculated using 
+
+            either the relative ratio or relative difference between the metric
+            values for the control and the variant.
+
+            Relative ratio is used for metrics that are ratios (e.g.,
+            click-through rate, conversion rate), 
+
+            while relative difference is used for continuous metrics (e.g.,
+            revenue).
+        valueCILow:
+          type: number
+          format: double
+          description: >
+            The lower bound of the 95% confidence interval for the metric value.
+            The confidence interval is calculated using 
+
+            either the relative ratio or relative difference between the metric
+            values for the control and the variant.
+
+            Relative ratio is used for metrics that are ratios (e.g.,
+            click-through rate, conversion rate), 
+
+            while relative difference is used for continuous metrics (e.g.,
+            revenue).
+        pValue:
+          type: number
+          format: double
+          description: >-
+            PValue for the first variant (control) will always be 0. For the
+            other variants, pValue is calculated for the current variant based
+            on the control.
+        dimension:
+          type: string
+          description: Dimension defined during test creation.
+        metadata:
+          $ref: '#/components/schemas/metricMetadata'
+        criticalValue:
+          type: number
+          format: double
+          description: >
+            The value that was computed during error correction. It is used to
+            determine significance of the metric pValue.
+
+            The critical value is calculated using Bonferroni or
+            Benjamini-Hochberg corrections, based on the given 
+
+            configuration during the A/B test creation.
+        significant:
+          type: boolean
+          description: >
+            Whether the pValue is significant or not based on the critical value
+            and the error correction algorithm used.
+      required:
+        - name
+        - updatedAt
+        - value
+        - pValue
+      example:
+        - name: addToCartCount
+          updatedAt: '2025-06-15T15:06:44.400601Z'
+          value: 5
+          pValue: 0.01
+        - name: clickThroughRate
+          updatedAt: '2025-05-15T17:52:15.644906Z'
+          value: 0.20869847452125934
+          pValue: 0.004
+        - name: revenue
+          dimension: USD
+          updatedAt: '2025-05-15T17:52:15.644906Z'
+          value: 1200.5
+          pValue: 0.04
+          metadata:
+            winsorizedValue: 80.2
+        - name: revenue
+          dimension: EUR
+          updatedAt: '2025-05-15T17:52:15.644906Z'
+          value: 999.66
+          pValue: 0.04
+          metadata:
+            winsorizedValue: 888.8
+    metrics:
+      type: array
+      description: All ABTest metrics that were defined during test creation.
+      items:
+        $ref: '#/components/schemas/metric'
+    filterEffects:
+      type: object
+      description: A/B test filter effects resulting from configuration settings.
+      properties:
+        outliers:
+          title: outliersFilter
+          type: object
+          description: >-
+            Outliers removed from the A/B test as a result of configuration
+            settings.
+          example:
+            usersCount: 1
+            trackedSearchesCount: 237
+          properties:
+            usersCount:
+              type: integer
+              description: Number of users removed from the A/B test.
+              example: 1
+            trackedSearchesCount:
+              type: integer
+              description: Number of tracked searches removed from the A/B test.
+              example: 237
+        emptySearch:
+          title: emptySearchFilter
+          type: object
+          description: >-
+            Empty searches removed from the A/B test as a result of
+            configuration settings.
+          example:
+            usersCount: 1
+            trackedSearchesCount: 237
+          properties:
+            usersCount:
+              type: integer
+              description: Number of users removed from the A/B test.
+              example: 1
+            trackedSearchesCount:
+              type: integer
+              description: Number of tracked searches removed from the A/B test.
+              example: 237
+    variantMetadata:
+      type: object
+      description: Variant specific metadata.
+      properties:
+        filterEffects:
+          $ref: '#/components/schemas/filterEffects'
+    variant:
+      type: object
+      additionalProperties: false
+      properties:
+        description:
+          $ref: '#/components/schemas/description'
+        estimatedSampleSize:
+          type: integer
+          description: >
+            Estimated number of searches required to achieve the desired
+            statistical significance.
+
+
+            The A/B test configuration must include a `minimumDetectableEffect`
+            setting for this number to be included in the response.
+          example: 0
+        index:
+          $ref: '#/components/schemas/index'
+        trafficPercentage:
+          $ref: '#/components/schemas/trafficPercentage'
+        metrics:
+          $ref: '#/components/schemas/metrics'
+        metadata:
+          $ref: '#/components/schemas/variantMetadata'
+      required:
+        - index
+        - description
+        - trafficPercentage
+        - metrics
+    variants:
+      type: array
+      description: >
+        A/B test variants.
+
+
+        The first variant is your _control_ index, typically your production
+        index.
+
+        All of the additional variants are indexes with changed settings that
+        you want to test against the control.
+      items:
+        $ref: '#/components/schemas/variant'
+    EffectMetric:
+      type: string
+      description: Metric for which you want to detect the smallest relative difference.
+      enum:
+        - addToCartRate
+        - clickThroughRate
+        - conversionRate
+        - purchaseRate
+        - noResultsRate
+    MinimumDetectableEffect:
+      type: object
+      description: >-
+        Configuration for the smallest difference between test variants you want
+        to detect.
+      properties:
+        size:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 1
+          description: >
+            Smallest difference in an observable metric between variants.
+
+            For example, to detect a 10% difference between variants, set this
+            value to 0.1.
+        metric:
+          $ref: '#/components/schemas/EffectMetric'
+      required:
+        - size
+        - metric
+    MetricsFilter:
+      type: object
+      additionalProperties: false
+      description: >
+        Boolean filter applied to the A/B test population. Each filter targets a
+        boolean metric
+
+        and decides whether to include (true) or exclude (false) matching
+        records.
+      properties:
+        domain:
+          type: string
+          description: Metric domain (for example `abtesting`, `personalization`).
+          example: abtesting
+        name:
+          type: string
+          description: Public metric name.
+          example: isOutlier
+        trackEffects:
+          type: boolean
+          description: Whether the experiment should record the effects of this filter.
+        includes:
+          type: boolean
+          description: If true, keep items that match the filter; if false, exclude them.
+      required:
+        - domain
+        - name
+    MetricsFilters:
+      type: array
+      description: List of metric filters applied to the test population.
+      items:
+        $ref: '#/components/schemas/MetricsFilter'
+    ErrorCorrectionType:
+      type: string
+      description: >-
+        Multiple-testing correction method applied when evaluating metric
+        significance.
+      enum:
+        - bonferroni
+        - benjamini-hochberg
+    ABTestConfiguration:
+      title: configuration
+      type: object
+      description: A/B test configuration.
+      properties:
+        minimumDetectableEffect:
+          $ref: '#/components/schemas/MinimumDetectableEffect'
+        filters:
+          $ref: '#/components/schemas/MetricsFilters'
+        errorCorrection:
+          $ref: '#/components/schemas/ErrorCorrectionType'
+    MigratedABTestId:
+      type: integer
+      description: Unique migrated A/B test identifier.
+      example: 224
+    ABTest:
+      type: object
+      additionalProperties: false
+      properties:
+        abTestID:
+          $ref: '#/components/schemas/abTestID'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        endAt:
+          $ref: '#/components/schemas/endAt'
+        name:
+          $ref: '#/components/schemas/name'
+        status:
+          $ref: '#/components/schemas/Status'
+        variants:
+          $ref: '#/components/schemas/variants'
+        configuration:
+          $ref: '#/components/schemas/ABTestConfiguration'
+        migratedAbTestID:
+          $ref: '#/components/schemas/MigratedABTestId'
+      required:
+        - status
+        - name
+        - createdAt
+        - endAt
+        - updatedAt
+        - abTestID
+        - variants
+    ABTests:
+      oneOf:
+        - type: array
+          description: A/B tests.
+          items:
+            $ref: '#/components/schemas/ABTest'
+        - type: 'null'
+    abTestsVariant:
+      type: object
+      additionalProperties: false
+      properties:
+        index:
+          $ref: '#/components/schemas/index'
+        trafficPercentage:
+          $ref: '#/components/schemas/trafficPercentage'
+        description:
+          $ref: '#/components/schemas/description'
+      required:
+        - index
+        - trafficPercentage
+    customSearchParams:
+      type: object
+      description: |
+        Search parameters to add to the test variant.
+        Only use this parameter if the two variants use the same index.
+      example:
+        typoTolerance: false
+        synonyms: false
+      additionalProperties: false
+      properties:
+        customSearchParameters:
+          type: object
+      required:
+        - customSearchParameters
+      x-discriminator-fields:
+        - customSearchParameters
+    abTestsVariantSearchParams:
+      allOf:
+        - $ref: '#/components/schemas/abTestsVariant'
+        - $ref: '#/components/schemas/customSearchParams'
+    AddABTestsVariant:
+      oneOf:
+        - $ref: '#/components/schemas/abTestsVariant'
+        - $ref: '#/components/schemas/abTestsVariantSearchParams'
+    parameters_metric:
+      type: object
+      description: Defines a metric to be retrieved during an A/B test.
+      properties:
+        name:
+          type: string
+          description: Name of the metric.
+        dimension:
+          type: string
+          description: >-
+            Dimension of the metric, for example, in case of a revenue metric it
+            could be USD, EUR...
+      required:
+        - name
+      example:
+        - name: revenue
+          dimension: USD
+        - name: conversionRate
+        - name: clickThroughRate
+        - name: trackedSearchCount
+    taskID:
+      type: integer
+      format: int64
+      example: 1514562690001
+      description: >
+        Unique identifier of a task.
+
+
+        A successful API response means that a task was added to a queue. It
+        might not run immediately. You can check the task's progress with the
+        [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.
+    ABTestResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        index:
+          $ref: '#/components/schemas/index'
+        abTestID:
+          $ref: '#/components/schemas/abTestID'
+        taskID:
+          $ref: '#/components/schemas/taskID'
+      required:
+        - abTestID
+        - index
+        - taskID
+    scheduledAt:
+      type: string
+      description: >-
+        Date and time when the A/B test is scheduled to start, in RFC 3339
+        format.
+      example: '2023-06-15T15:06:44.400601Z'
+    abTestScheduleID:
+      type: integer
+      description: Unique scheduled A/B test identifier.
+      example: 224
+    ScheduleABTestResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        abTestScheduleID:
+          $ref: '#/components/schemas/abTestScheduleID'
+      required:
+        - abTestScheduleID
+    EstimateABTestResponse:
+      type: object
+      properties:
+        durationDays:
+          type: integer
+          format: int64
+          description: >-
+            Estimated number of days needed to reach the sample sizes required
+            for detecting the configured effect. This value is based on
+            historical traffic.
+          example: 21
+        sampleSizes:
+          type: array
+          description: >
+            Sample size estimates for each variant. The first element is the
+            control variant.
+
+            Each element is the estimated number of searches required to achieve
+            the desired statistical significance.
+          items:
+            type: integer
+            format: int64
+            description: >-
+              Number of tracked searches needed to be able to detect the
+              configured effect for the control variant.
+            example: 23415
+    Metric:
+      type: string
+      enum:
+        - search_count
+        - tracked_search_count
+        - user_count
+        - tracked_user_count
+        - no_result_count
+        - add_to_cart_count
+        - purchase_count
+        - clicked_search_count
+        - converted_search_count
+        - click_through_rate
+        - conversion_rate
+        - add_to_cart_rate
+        - purchase_rate
+        - average_click_position
+        - revenue
+    metricDate:
+      type: object
+      properties:
+        date:
+          type: string
+          description: Date where the metric was updated, in RFC 3339 format.
+          format: date
+          example: '2025-06-15'
+        metrics:
+          $ref: '#/components/schemas/metrics'
+    metricDates:
+      type: array
+      items:
+        $ref: '#/components/schemas/metricDate'
+    timeseriesVariant:
+      type: object
+      properties:
+        dates:
+          $ref: '#/components/schemas/metricDates'
+    timeseriesVariants:
+      type: array
+      description: >
+        A/B test timeseries variants.
+
+
+        The first variant is your _control_ index, typically your production
+        index.
+
+        All of the additional variants are indexes with changed settings that
+        you want to test against the control.
+      items:
+        $ref: '#/components/schemas/timeseriesVariant'
+    Timeseries:
+      type: object
+      additionalProperties: false
+      properties:
+        abTestID:
+          $ref: '#/components/schemas/abTestID'
+        variants:
+          $ref: '#/components/schemas/timeseriesVariants'
+      required:
+        - abTestID
+        - variants
+  responses:
+    BadRequest:
+      description: Bad request or request arguments.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    FeatureNotEnabled:
+      description: This feature is not enabled on your Algolia account.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    MethodNotAllowed:
+      description: Method not allowed with this API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    IndexNotFound:
+      description: Index not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    UnprocessableEntity:
+      description: Unprocessable Entity.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+  headers:
+    x-ratelimit-limit:
+      description: Number of allowed requests per one minute.
+      example: 100
+      schema:
+        type: integer
+    x-ratelimit-remaining:
+      description: Number of remaining requests in the current period.
+      example: 99
+      schema:
+        type: integer
+    x-ratelimit-reset:
+      description: >-
+        Timstamp when the rate limit will reset, measured in seconds since the
+        Unix epoch.
+      example: 1710682486
+      schema:
+        type: integer
+x-tagGroups:
+  - name: General
+    tags:
+      - abtest
