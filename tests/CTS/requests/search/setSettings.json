@@ -2305,7 +2305,7 @@
     }
   },
   {
-    "testName": "set_languages_using_querylanguages",
+    "testName": "set_querylanguage_ignoreplurals",
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -2355,7 +2355,7 @@
     }
   },
   {
-    "testName": "set_languages_using_querylanguages",
+    "testName": "set_querylanguage_removestopwords",
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -2495,7 +2495,7 @@
     }
   },
   {
-    "testName": "set_languages_using_querylanguages",
+    "testName": "set_querylanguage_both",
     "parameters": {
       "indexName": "theIndexName",
       "indexSettings": {
@@ -2731,22 +2731,6 @@
           "ignorePlurals",
           "singleWordSynonym"
         ]
-      }
-    }
-  },
-  {
-    "testName": "enable_advanced_syntax_by_default",
-    "parameters": {
-      "indexName": "theIndexName",
-      "indexSettings": {
-        "advancedSyntax": true
-      }
-    },
-    "request": {
-      "path": "/1/indexes/theIndexName/settings",
-      "method": "PUT",
-      "body": {
-        "advancedSyntax": true
       }
     }
   },
