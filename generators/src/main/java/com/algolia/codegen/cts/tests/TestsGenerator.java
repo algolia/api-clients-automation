@@ -102,7 +102,7 @@ public abstract class TestsGenerator {
       .replace("${{language}}", language)
       .replace("${{languageCased}}", ctsManager.getLanguageCased())
       .replace("${{languageVersion}}", ctsManager.getVersion())
-      .replace("${{clientPascalCase}}", Helpers.capitalize(Helpers.camelize(client)))
+      .replace("${{clientPascalCase}}", Helpers.capitalize(Helpers.camelize(Helpers.getClientConfigClientName(client))))
       .replace("\"${{nowRounded}}\"", String.valueOf(Math.round(System.currentTimeMillis() / threeDays) * threeDays));
   }
 

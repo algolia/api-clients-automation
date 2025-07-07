@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.*;
+import java.util.stream.StreamSupport;
 import org.apache.commons.lang3.StringUtils;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.CodegenServer;
@@ -197,6 +198,29 @@ public class Helpers {
     } catch (ConfigException e) {
       return "0.0.1-alpha.0";
     }
+  }
+
+  // Get the clientName from the clients.config.json
+  public static String getClientConfigClientName(String client) throws ConfigException {
+    JsonNode clientField = StreamSupport.stream(
+      Spliterators.spliteratorUnknownSize(Helpers.getClientConfig("javascript").get("clients").elements(), Spliterator.ORDERED),
+      false
+    )
+      .filter(node -> node.get("name").asText().equals(client))
+      .findFirst()
+      .orElse(null);
+
+    if (clientField == null) {
+      return client;
+    }
+
+    JsonNode clientName = clientField.get("clientName");
+
+    if (clientName == null) {
+      return client;
+    }
+
+    return clientName.asText();
   }
 
   /** Get the `field` value in the `config/clients.config.json` file for the given language */

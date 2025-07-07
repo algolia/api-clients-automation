@@ -3,18 +3,7 @@ import { createRule } from 'eslint-plugin-yml/lib/utils';
 
 import { isPairWithKey, isScalar } from '../utils.js';
 
-const allSpecs = [
-  'abtesting',
-  'analytics',
-  'crawler',
-  'ingestion',
-  'insights',
-  'monitoring',
-  'personalization',
-  'query-suggestions',
-  'recommend',
-  'search',
-];
+import clientsConfig from '../../../config/clients.config.json' with { type: 'json' };
 
 export const refCommon = createRule('refCommon', {
   meta: {
@@ -58,7 +47,13 @@ export const refCommon = createRule('refCommon', {
         while (ref.startsWith('../')) {
           ref = ref.slice(3);
         }
-        if (allSpecs.filter((s) => s !== spec).every((s) => !ref.startsWith(s))) {
+
+        if (clientsConfig.javascript.clients.filter((s) => s.name !== spec).every((s) => !ref.startsWith(s.name))) {
+          return;
+        }
+
+        // it's expected for composition to import the full version
+        if (spec === 'composition' && ref.includes('composition-full')) {
           return;
         }
 
