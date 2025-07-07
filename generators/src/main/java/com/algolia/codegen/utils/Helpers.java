@@ -201,7 +201,7 @@ public class Helpers {
   }
 
   // Get the clientName from the clients.config.json
-  public static String getClientName(String client) throws ConfigException {
+  public static String getClientConfigClientName(String client) throws ConfigException {
     JsonNode clientField = StreamSupport.stream(
       Spliterators.spliteratorUnknownSize(Helpers.getClientConfig("javascript").get("clients").elements(), Spliterator.ORDERED),
       false

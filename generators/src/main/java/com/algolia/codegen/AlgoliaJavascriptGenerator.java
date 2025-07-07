@@ -28,7 +28,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
   public void processOpts() {
     super.processOpts();
 
-    CLIENT = Helpers.camelize(Helpers.getClientName((String) additionalProperties.get("client")));
+    CLIENT = Helpers.camelize(Helpers.getClientConfigClientName((String) additionalProperties.get("client")));
     isAlgoliasearchClient = CLIENT.equals("algoliasearch");
 
     // generator specific options
