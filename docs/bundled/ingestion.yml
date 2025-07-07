@@ -1031,7 +1031,7 @@ paths:
     post:
       tags:
         - tasks
-      summary: Pushes records to be transformed through the Pipeline, by indexName
+      summary: Push records by indexName
       description: >
         Pushes records through the Pipeline, directly to an index. You can make
         the call synchronous by providing the `watch` parameter, for
@@ -9180,7 +9180,7 @@ paths:
     post:
       tags:
         - tasks
-      summary: Pushes records to be transformed through the Pipeline, by taskID
+      summary: Push records by taskID
       description: >
         Pushes records through the Pipeline, directly to an index. You can make
         the call synchronous by providing the `watch` parameter, for
