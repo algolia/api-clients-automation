@@ -119,8 +119,6 @@ public class TestsClient extends TestsGenerator {
                   continue skipTest;
                 }
 
-                System.out.println("Warning: Operation not found for method: " + client);
-
                 throw new CTSException("Cannot find operation for method: " + step.method, test.testName);
               }
 
