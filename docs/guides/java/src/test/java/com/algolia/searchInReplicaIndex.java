@@ -7,7 +7,7 @@ import com.algolia.model.search.*;
 public class searchInReplicaIndex {
 
   public static void main(String[] args) throws Exception {
-    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");) {
+    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")) {
       String query = "query";
 
       // 1. Change the sort dynamically based on the UI events

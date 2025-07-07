@@ -7,14 +7,16 @@ import java.util.List;
 
 public class searchWithOptionalFilters {
 
-  private static final List<String> labels = List.of(/* Your labels */);
+  private static final List<String> labels = List.of(
+    /* Your labels */
+  );
 
   private static OptionalFilters reduceLabelsToFilters(List<String> labels) {
     return OptionalFilters.of(""); // Implement your logic here
   }
 
   public static void main(String[] args) throws Exception {
-    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");) {
+    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")) {
       OptionalFilters optionalFilters = reduceLabelsToFilters(labels);
       SearchParams searchParams = new SearchParamsObject().setQuery("<YOUR_SEARCH_QUERY>").setOptionalFilters(optionalFilters);
 

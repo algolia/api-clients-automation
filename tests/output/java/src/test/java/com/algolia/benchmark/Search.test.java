@@ -51,12 +51,11 @@ class SearchClientBenchmark {
 
     for (int i = 0; i < 2000; i++) {
       SearchResponses res = client.search(
-        new SearchMethodParams()
-          .setRequests(
-            Arrays.asList(
-              new SearchForHits().setIndexName("cts_e2e_benchmark_search_java").setQuery("iphone 15 pro max 512gb").setHitsPerPage(50)
-            )
-          ),
+        new SearchMethodParams().setRequests(
+          Arrays.asList(
+            new SearchForHits().setIndexName("cts_e2e_benchmark_search_java").setQuery("iphone 15 pro max 512gb").setHitsPerPage(50)
+          )
+        ),
         Hit.class
       );
     }

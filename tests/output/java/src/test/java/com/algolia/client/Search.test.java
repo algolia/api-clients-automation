@@ -41,7 +41,9 @@ class SearchClientClientTests {
   }
 
   private ClientOptions withEchoRequester() {
-    return ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
+    return ClientOptions.builder()
+      .setRequesterConfig(requester -> requester.addInterceptor(echo))
+      .build();
   }
 
   private ClientOptions withCustomHosts(List<Host> hosts, boolean gzipEncoding) {

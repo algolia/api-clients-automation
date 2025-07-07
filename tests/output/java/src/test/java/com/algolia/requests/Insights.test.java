@@ -31,7 +31,9 @@ class InsightsClientRequestsTests {
   void init() {
     this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
     this.echo = new EchoInterceptor();
-    ClientOptions options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
+    ClientOptions options = ClientOptions.builder()
+      .setRequesterConfig(requester -> requester.addInterceptor(echo))
+      .build();
     this.client = new InsightsClient("appId", "apiKey", "us", options);
   }
 
@@ -676,21 +678,20 @@ class InsightsClientRequestsTests {
   void pushEventsTest() {
     assertDoesNotThrow(() -> {
       client.pushEvents(
-        new InsightsEvents()
-          .setEvents(
-            Arrays.asList(
-              new ClickedObjectIDsAfterSearch()
-                .setEventType(ClickEvent.CLICK)
-                .setEventName("Product Clicked")
-                .setIndex("products")
-                .setUserToken("user-123456")
-                .setAuthenticatedUserToken("user-123456")
-                .setTimestamp(1641290601962L)
-                .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
-                .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
-                .setPositions(Arrays.asList(7, 6))
-            )
+        new InsightsEvents().setEvents(
+          Arrays.asList(
+            new ClickedObjectIDsAfterSearch()
+              .setEventType(ClickEvent.CLICK)
+              .setEventName("Product Clicked")
+              .setIndex("products")
+              .setUserToken("user-123456")
+              .setAuthenticatedUserToken("user-123456")
+              .setTimestamp(1641290601962L)
+              .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
+              .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
+              .setPositions(Arrays.asList(7, 6))
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -711,28 +712,27 @@ class InsightsClientRequestsTests {
   void pushEventsTest1() {
     assertDoesNotThrow(() -> {
       client.pushEvents(
-        new InsightsEvents()
-          .setEvents(
-            Arrays.asList(
-              new ConvertedObjectIDsAfterSearch()
-                .setEventType(ConversionEvent.CONVERSION)
-                .setEventName("Product Purchased")
-                .setIndex("products")
-                .setUserToken("user-123456")
-                .setAuthenticatedUserToken("user-123456")
-                .setTimestamp(1751414400000L)
-                .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
-                .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7"),
-              new ViewedObjectIDs()
-                .setEventType(ViewEvent.VIEW)
-                .setEventName("Product Detail Page Viewed")
-                .setIndex("products")
-                .setUserToken("user-123456")
-                .setAuthenticatedUserToken("user-123456")
-                .setTimestamp(1751414400000L)
-                .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
-            )
+        new InsightsEvents().setEvents(
+          Arrays.asList(
+            new ConvertedObjectIDsAfterSearch()
+              .setEventType(ConversionEvent.CONVERSION)
+              .setEventName("Product Purchased")
+              .setIndex("products")
+              .setUserToken("user-123456")
+              .setAuthenticatedUserToken("user-123456")
+              .setTimestamp(1751673600000L)
+              .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
+              .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7"),
+            new ViewedObjectIDs()
+              .setEventType(ViewEvent.VIEW)
+              .setEventName("Product Detail Page Viewed")
+              .setIndex("products")
+              .setUserToken("user-123456")
+              .setAuthenticatedUserToken("user-123456")
+              .setTimestamp(1751673600000L)
+              .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -741,9 +741,9 @@ class InsightsClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product" +
-        " Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1751414400000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product" +
+        " Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1751673600000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product" +
         " Detail Page" +
-        " Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1751414400000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
+        " Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1751673600000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -755,20 +755,19 @@ class InsightsClientRequestsTests {
   void pushEventsTest2() {
     assertDoesNotThrow(() -> {
       client.pushEvents(
-        new InsightsEvents()
-          .setEvents(
-            Arrays.asList(
-              new ConvertedObjectIDsAfterSearch()
-                .setEventType(ConversionEvent.CONVERSION)
-                .setEventName("Product Purchased")
-                .setIndex("products")
-                .setUserToken("user-123456")
-                .setAuthenticatedUserToken("user-123456")
-                .setTimestamp(1641290601962L)
-                .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
-                .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
-            )
+        new InsightsEvents().setEvents(
+          Arrays.asList(
+            new ConvertedObjectIDsAfterSearch()
+              .setEventType(ConversionEvent.CONVERSION)
+              .setEventName("Product Purchased")
+              .setIndex("products")
+              .setUserToken("user-123456")
+              .setAuthenticatedUserToken("user-123456")
+              .setTimestamp(1641290601962L)
+              .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
+              .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -789,19 +788,18 @@ class InsightsClientRequestsTests {
   void pushEventsTest3() {
     assertDoesNotThrow(() -> {
       client.pushEvents(
-        new InsightsEvents()
-          .setEvents(
-            Arrays.asList(
-              new ViewedObjectIDs()
-                .setEventType(ViewEvent.VIEW)
-                .setEventName("Product Detail Page Viewed")
-                .setIndex("products")
-                .setUserToken("user-123456")
-                .setAuthenticatedUserToken("user-123456")
-                .setTimestamp(1641290601962L)
-                .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
-            )
+        new InsightsEvents().setEvents(
+          Arrays.asList(
+            new ViewedObjectIDs()
+              .setEventType(ViewEvent.VIEW)
+              .setEventName("Product Detail Page Viewed")
+              .setIndex("products")
+              .setUserToken("user-123456")
+              .setAuthenticatedUserToken("user-123456")
+              .setTimestamp(1641290601962L)
+              .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -822,28 +820,27 @@ class InsightsClientRequestsTests {
   void pushEventsTest4() {
     assertDoesNotThrow(() -> {
       client.pushEvents(
-        new InsightsEvents()
-          .setEvents(
-            Arrays.asList(
-              new AddedToCartObjectIDsAfterSearch()
-                .setEventType(ConversionEvent.CONVERSION)
-                .setEventSubtype(AddToCartEvent.ADD_TO_CART)
-                .setEventName("Product Added To Cart")
-                .setIndex("products")
-                .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
-                .setUserToken("user-123456")
-                .setAuthenticatedUserToken("user-123456")
-                .setTimestamp(1641290601962L)
-                .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
-                .setObjectData(
-                  Arrays.asList(
-                    new ObjectDataAfterSearch().setPrice(Price.of(19.99)).setQuantity(10).setDiscount(Discount.of(2.5)),
-                    new ObjectDataAfterSearch().setPrice(Price.of("8$")).setQuantity(7).setDiscount(Discount.of("30%"))
-                  )
+        new InsightsEvents().setEvents(
+          Arrays.asList(
+            new AddedToCartObjectIDsAfterSearch()
+              .setEventType(ConversionEvent.CONVERSION)
+              .setEventSubtype(AddToCartEvent.ADD_TO_CART)
+              .setEventName("Product Added To Cart")
+              .setIndex("products")
+              .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
+              .setUserToken("user-123456")
+              .setAuthenticatedUserToken("user-123456")
+              .setTimestamp(1641290601962L)
+              .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
+              .setObjectData(
+                Arrays.asList(
+                  new ObjectDataAfterSearch().setPrice(Price.of(19.99)).setQuantity(10).setDiscount(Discount.of(2.5)),
+                  new ObjectDataAfterSearch().setPrice(Price.of("8$")).setQuantity(7).setDiscount(Discount.of("30%"))
                 )
-                .setCurrency("USD")
-            )
+              )
+              .setCurrency("USD")
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();

@@ -1376,10 +1376,8 @@ public class IngestionClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Authentication> getAuthenticationAsync(
-    @Nonnull String authenticationID,
-    @Nullable RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
+  public CompletableFuture<Authentication> getAuthenticationAsync(@Nonnull String authenticationID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
     Parameters.requireNonNull(authenticationID, "Parameter `authenticationID` is required when calling `getAuthentication`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/authentications/{authenticationID}", authenticationID).setMethod("GET").build();
@@ -1735,10 +1733,8 @@ public class IngestionClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Transformation> getTransformationAsync(
-    @Nonnull String transformationID,
-    @Nullable RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
+  public CompletableFuture<Transformation> getTransformationAsync(@Nonnull String transformationID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
     Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `getTransformation`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/transformations/{transformationID}", transformationID).setMethod("GET").build();
@@ -2656,19 +2652,19 @@ public class IngestionClient extends ApiClient {
     OrderKeys order
   ) throws AlgoliaRuntimeException {
     return this.listTasks(
-        itemsPerPage,
-        page,
-        action,
-        enabled,
-        sourceID,
-        sourceType,
-        destinationID,
-        triggerType,
-        withEmailNotifications,
-        sort,
-        order,
-        null
-      );
+      itemsPerPage,
+      page,
+      action,
+      enabled,
+      sourceID,
+      sourceType,
+      destinationID,
+      triggerType,
+      withEmailNotifications,
+      sort,
+      order,
+      null
+    );
   }
 
   /**
@@ -2773,19 +2769,19 @@ public class IngestionClient extends ApiClient {
     OrderKeys order
   ) throws AlgoliaRuntimeException {
     return this.listTasksAsync(
-        itemsPerPage,
-        page,
-        action,
-        enabled,
-        sourceID,
-        sourceType,
-        destinationID,
-        triggerType,
-        withEmailNotifications,
-        sort,
-        order,
-        null
-      );
+      itemsPerPage,
+      page,
+      action,
+      enabled,
+      sourceID,
+      sourceType,
+      destinationID,
+      triggerType,
+      withEmailNotifications,
+      sort,
+      order,
+      null
+    );
   }
 
   /**
@@ -4893,14 +4889,13 @@ public class IngestionClient extends ApiClient {
 
     for (T item : objects) {
       if (records.size() == batchSize) {
-        WatchResponse watch =
-          this.push(
-              indexName,
-              new PushTaskPayload().setAction(action).setRecords(this.objectsToPushTaskRecords(records)),
-              waitForTasks,
-              referenceIndexName,
-              requestOptions
-            );
+        WatchResponse watch = this.push(
+          indexName,
+          new PushTaskPayload().setAction(action).setRecords(this.objectsToPushTaskRecords(records)),
+          waitForTasks,
+          referenceIndexName,
+          requestOptions
+        );
         responses.add(watch);
         records.clear();
       }
@@ -4909,14 +4904,13 @@ public class IngestionClient extends ApiClient {
     }
 
     if (records.size() > 0) {
-      WatchResponse watch =
-        this.push(
-            indexName,
-            new PushTaskPayload().setAction(action).setRecords(this.objectsToPushTaskRecords(records)),
-            waitForTasks,
-            referenceIndexName,
-            requestOptions
-          );
+      WatchResponse watch = this.push(
+        indexName,
+        new PushTaskPayload().setAction(action).setRecords(this.objectsToPushTaskRecords(records)),
+        waitForTasks,
+        referenceIndexName,
+        requestOptions
+      );
       responses.add(watch);
     }
 

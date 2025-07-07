@@ -451,21 +451,20 @@ class SnippetInsightsClient {
 
     // Call the API
     client.pushEvents(
-      new InsightsEvents()
-        .setEvents(
-          Arrays.asList(
-            new ClickedObjectIDsAfterSearch()
-              .setEventType(ClickEvent.CLICK)
-              .setEventName("Product Clicked")
-              .setIndex("products")
-              .setUserToken("user-123456")
-              .setAuthenticatedUserToken("user-123456")
-              .setTimestamp(1641290601962L)
-              .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
-              .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
-              .setPositions(Arrays.asList(7, 6))
-          )
+      new InsightsEvents().setEvents(
+        Arrays.asList(
+          new ClickedObjectIDsAfterSearch()
+            .setEventType(ClickEvent.CLICK)
+            .setEventName("Product Clicked")
+            .setIndex("products")
+            .setUserToken("user-123456")
+            .setAuthenticatedUserToken("user-123456")
+            .setTimestamp(1641290601962L)
+            .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
+            .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
+            .setPositions(Arrays.asList(7, 6))
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -481,28 +480,27 @@ class SnippetInsightsClient {
 
     // Call the API
     client.pushEvents(
-      new InsightsEvents()
-        .setEvents(
-          Arrays.asList(
-            new ConvertedObjectIDsAfterSearch()
-              .setEventType(ConversionEvent.CONVERSION)
-              .setEventName("Product Purchased")
-              .setIndex("products")
-              .setUserToken("user-123456")
-              .setAuthenticatedUserToken("user-123456")
-              .setTimestamp(1751414400000L)
-              .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
-              .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7"),
-            new ViewedObjectIDs()
-              .setEventType(ViewEvent.VIEW)
-              .setEventName("Product Detail Page Viewed")
-              .setIndex("products")
-              .setUserToken("user-123456")
-              .setAuthenticatedUserToken("user-123456")
-              .setTimestamp(1751414400000L)
-              .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
-          )
+      new InsightsEvents().setEvents(
+        Arrays.asList(
+          new ConvertedObjectIDsAfterSearch()
+            .setEventType(ConversionEvent.CONVERSION)
+            .setEventName("Product Purchased")
+            .setIndex("products")
+            .setUserToken("user-123456")
+            .setAuthenticatedUserToken("user-123456")
+            .setTimestamp(1751673600000L)
+            .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
+            .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7"),
+          new ViewedObjectIDs()
+            .setEventType(ViewEvent.VIEW)
+            .setEventName("Product Detail Page Viewed")
+            .setIndex("products")
+            .setUserToken("user-123456")
+            .setAuthenticatedUserToken("user-123456")
+            .setTimestamp(1751673600000L)
+            .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -518,20 +516,19 @@ class SnippetInsightsClient {
 
     // Call the API
     client.pushEvents(
-      new InsightsEvents()
-        .setEvents(
-          Arrays.asList(
-            new ConvertedObjectIDsAfterSearch()
-              .setEventType(ConversionEvent.CONVERSION)
-              .setEventName("Product Purchased")
-              .setIndex("products")
-              .setUserToken("user-123456")
-              .setAuthenticatedUserToken("user-123456")
-              .setTimestamp(1641290601962L)
-              .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
-              .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
-          )
+      new InsightsEvents().setEvents(
+        Arrays.asList(
+          new ConvertedObjectIDsAfterSearch()
+            .setEventType(ConversionEvent.CONVERSION)
+            .setEventName("Product Purchased")
+            .setIndex("products")
+            .setUserToken("user-123456")
+            .setAuthenticatedUserToken("user-123456")
+            .setTimestamp(1641290601962L)
+            .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
+            .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -547,19 +544,18 @@ class SnippetInsightsClient {
 
     // Call the API
     client.pushEvents(
-      new InsightsEvents()
-        .setEvents(
-          Arrays.asList(
-            new ViewedObjectIDs()
-              .setEventType(ViewEvent.VIEW)
-              .setEventName("Product Detail Page Viewed")
-              .setIndex("products")
-              .setUserToken("user-123456")
-              .setAuthenticatedUserToken("user-123456")
-              .setTimestamp(1641290601962L)
-              .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
-          )
+      new InsightsEvents().setEvents(
+        Arrays.asList(
+          new ViewedObjectIDs()
+            .setEventType(ViewEvent.VIEW)
+            .setEventName("Product Detail Page Viewed")
+            .setIndex("products")
+            .setUserToken("user-123456")
+            .setAuthenticatedUserToken("user-123456")
+            .setTimestamp(1641290601962L)
+            .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -575,28 +571,27 @@ class SnippetInsightsClient {
 
     // Call the API
     client.pushEvents(
-      new InsightsEvents()
-        .setEvents(
-          Arrays.asList(
-            new AddedToCartObjectIDsAfterSearch()
-              .setEventType(ConversionEvent.CONVERSION)
-              .setEventSubtype(AddToCartEvent.ADD_TO_CART)
-              .setEventName("Product Added To Cart")
-              .setIndex("products")
-              .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
-              .setUserToken("user-123456")
-              .setAuthenticatedUserToken("user-123456")
-              .setTimestamp(1641290601962L)
-              .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
-              .setObjectData(
-                Arrays.asList(
-                  new ObjectDataAfterSearch().setPrice(Price.of(19.99)).setQuantity(10).setDiscount(Discount.of(2.5)),
-                  new ObjectDataAfterSearch().setPrice(Price.of("8$")).setQuantity(7).setDiscount(Discount.of("30%"))
-                )
+      new InsightsEvents().setEvents(
+        Arrays.asList(
+          new AddedToCartObjectIDsAfterSearch()
+            .setEventType(ConversionEvent.CONVERSION)
+            .setEventSubtype(AddToCartEvent.ADD_TO_CART)
+            .setEventName("Product Added To Cart")
+            .setIndex("products")
+            .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
+            .setUserToken("user-123456")
+            .setAuthenticatedUserToken("user-123456")
+            .setTimestamp(1641290601962L)
+            .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
+            .setObjectData(
+              Arrays.asList(
+                new ObjectDataAfterSearch().setPrice(Price.of(19.99)).setQuantity(10).setDiscount(Discount.of(2.5)),
+                new ObjectDataAfterSearch().setPrice(Price.of("8$")).setQuantity(7).setDiscount(Discount.of("30%"))
               )
-              .setCurrency("USD")
-          )
+            )
+            .setCurrency("USD")
         )
+      )
     );
     // >LOG
     // SEPARATOR<

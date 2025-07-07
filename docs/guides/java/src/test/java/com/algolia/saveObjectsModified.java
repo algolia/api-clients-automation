@@ -14,7 +14,7 @@ import java.util.Map;
 public class saveObjectsModified {
 
   public static void main(String[] args) throws Exception {
-    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");) {
+    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")) {
       JsonNode content = new ObjectMapper().readTree(new File("products.json"));
       List<Map<String, Object>> products = new ObjectMapper().readerForListOf(Map.class).readValue(content);
 
