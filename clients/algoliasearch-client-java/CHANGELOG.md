@@ -1,3 +1,10 @@
+## [4.21.1](https://github.com/algolia/algoliasearch-client-java/compare/4.21.0...4.21.1)
+
+- [fab1a9413c](https://github.com/algolia/api-clients-automation/commit/fab1a9413c) fix(clients): upgrade to maven central publishing ([#5055](https://github.com/algolia/api-clients-automation/pull/5055)) by [@millotp](https://github.com/millotp/)
+- [4c9416a9fe](https://github.com/algolia/api-clients-automation/commit/4c9416a9fe) fix(specs): update sourceRun docs ([#5057](https://github.com/algolia/api-clients-automation/pull/5057)) by [@DevinCodes](https://github.com/DevinCodes/)
+- [754efceb80](https://github.com/algolia/api-clients-automation/commit/754efceb80) fix(specs): allow one sided rule validity ([#5060](https://github.com/algolia/api-clients-automation/pull/5060)) by [@millotp](https://github.com/millotp/)
+- [2ba91d1df9](https://github.com/algolia/api-clients-automation/commit/2ba91d1df9) chore(deps): dependencies 2025-07-07 ([#5063](https://github.com/algolia/api-clients-automation/pull/5063)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [4.21.0](https://github.com/algolia/algoliasearch-client-java/compare/4.20.0...4.21.0)
 
 - [2ca05ef173](https://github.com/algolia/api-clients-automation/commit/2ca05ef173) chore(deps): dependencies 2025-06-23 ([#5016](https://github.com/algolia/api-clients-automation/pull/5016)) by [@algolia-bot](https://github.com/algolia-bot/)
