@@ -443,13 +443,13 @@
     "createTask": {
       "task without cron": "client.createTask(new TaskCreate().setSourceID(\"search\").setDestinationID(\"destinationName\").setAction(ActionType.REPLACE));",
       "task with cron": "client.createTask(\n  new TaskCreate()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationName\")\n    .setCron(\"* * * * *\")\n    .setAction(ActionType.REPLACE)\n    .setNotifications(new Notifications().setEmail(new EmailNotifications().setEnabled(true)))\n    .setPolicies(new Policies().setCriticalThreshold(8))\n);",
-      "task shopify": "client.createTask(\n  new TaskCreate()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationName\")\n    .setCron(\"* * * * *\")\n    .setAction(ActionType.REPLACE)\n    .setInput(\n      new DockerStreamsInput()\n        .setStreams(Arrays.asList(new DockerStreams().setName(\"foo\").setSyncMode(DockerStreamsSyncMode.INCREMENTAL)))\n    )\n);"
+      "task shopify": "client.createTask(\n  new TaskCreate()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationName\")\n    .setCron(\"* * * * *\")\n    .setAction(ActionType.REPLACE)\n    .setInput(\n      new DockerStreamsInput().setStreams(\n        Arrays.asList(new DockerStreams().setName(\"foo\").setSyncMode(DockerStreamsSyncMode.INCREMENTAL))\n      )\n    )\n);"
     },
     "createTaskV1": {
       "createTaskOnDemand": "client.createTaskV1(\n  new TaskCreateV1()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationName\")\n    .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))\n    .setAction(ActionType.REPLACE)\n);",
       "createTaskSchedule": "client.createTaskV1(\n  new TaskCreateV1()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationName\")\n    .setTrigger(new ScheduleTriggerInput().setType(ScheduleTriggerType.SCHEDULE).setCron(\"* * * * *\"))\n    .setAction(ActionType.REPLACE)\n);",
       "createTaskSubscription": "client.createTaskV1(\n  new TaskCreateV1()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationName\")\n    .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))\n    .setAction(ActionType.REPLACE)\n);",
-      "task shopify": "client.createTaskV1(\n  new TaskCreateV1()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationName\")\n    .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))\n    .setAction(ActionType.REPLACE)\n    .setInput(\n      new DockerStreamsInput()\n        .setStreams(Arrays.asList(new DockerStreams().setName(\"foo\").setSyncMode(DockerStreamsSyncMode.INCREMENTAL)))\n    )\n);"
+      "task shopify": "client.createTaskV1(\n  new TaskCreateV1()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationName\")\n    .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))\n    .setAction(ActionType.REPLACE)\n    .setInput(\n      new DockerStreamsInput().setStreams(\n        Arrays.asList(new DockerStreams().setName(\"foo\").setSyncMode(DockerStreamsSyncMode.INCREMENTAL))\n      )\n    )\n);"
     },
     "createTransformation": {
       "default": "client.createTransformation(\n  new TransformationCreate()\n    .setInput(new TransformationCode().setCode(\"foo\"))\n    .setType(TransformationType.CODE)\n    .setName(\"bar\")\n    .setDescription(\"baz\")\n);"
@@ -577,22 +577,22 @@
       "default": "client.runTaskV1(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "searchAuthentications": {
-      "default": "client.searchAuthentications(\n  new AuthenticationSearch()\n    .setAuthenticationIDs(Arrays.asList(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"))\n);"
+      "default": "client.searchAuthentications(\n  new AuthenticationSearch().setAuthenticationIDs(\n    Arrays.asList(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\")\n  )\n);"
     },
     "searchDestinations": {
-      "default": "client.searchDestinations(\n  new DestinationSearch()\n    .setDestinationIDs(Arrays.asList(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"))\n);"
+      "default": "client.searchDestinations(\n  new DestinationSearch().setDestinationIDs(\n    Arrays.asList(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\")\n  )\n);"
     },
     "searchSources": {
       "default": "client.searchSources(\n  new SourceSearch().setSourceIDs(Arrays.asList(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"))\n);"
     },
     "searchTasks": {
-      "default": "client.searchTasks(\n  new TaskSearch()\n    .setTaskIDs(\n      Arrays.asList(\n        \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n        \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n      )\n    )\n);"
+      "default": "client.searchTasks(\n  new TaskSearch().setTaskIDs(\n    Arrays.asList(\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    )\n  )\n);"
     },
     "searchTasksV1": {
-      "default": "client.searchTasksV1(\n  new TaskSearch()\n    .setTaskIDs(\n      Arrays.asList(\n        \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n        \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n      )\n    )\n);"
+      "default": "client.searchTasksV1(\n  new TaskSearch().setTaskIDs(\n    Arrays.asList(\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    )\n  )\n);"
     },
     "searchTransformations": {
-      "default": "client.searchTransformations(\n  new TransformationSearch()\n    .setTransformationIDs(\n      Arrays.asList(\n        \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n        \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n      )\n    )\n);"
+      "default": "client.searchTransformations(\n  new TransformationSearch().setTransformationIDs(\n    Arrays.asList(\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    )\n  )\n);"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(\"updated-api-key\");"

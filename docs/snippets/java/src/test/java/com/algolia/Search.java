@@ -119,8 +119,7 @@ class SnippetSearchClient {
     // Call the API
     client.batch(
       "<YOUR_INDEX_NAME>",
-      new BatchWriteParams()
-        .setRequests(
+      new BatchWriteParams().setRequests(
           Arrays.asList(
             new BatchRequest()
               .setAction(Action.ADD_OBJECT)
@@ -160,8 +159,7 @@ class SnippetSearchClient {
     // Call the API
     client.batch(
       "<YOUR_INDEX_NAME>",
-      new BatchWriteParams()
-        .setRequests(
+      new BatchWriteParams().setRequests(
           Arrays.asList(
             new BatchRequest()
               .setAction(Action.CLEAR)
@@ -190,8 +188,7 @@ class SnippetSearchClient {
     // Call the API
     client.batch(
       "<YOUR_INDEX_NAME>",
-      new BatchWriteParams()
-        .setRequests(
+      new BatchWriteParams().setRequests(
           Arrays.asList(
             new BatchRequest()
               .setAction(Action.DELETE)
@@ -220,8 +217,7 @@ class SnippetSearchClient {
     // Call the API
     client.batch(
       "<YOUR_INDEX_NAME>",
-      new BatchWriteParams()
-        .setRequests(
+      new BatchWriteParams().setRequests(
           Arrays.asList(
             new BatchRequest()
               .setAction(Action.DELETE_OBJECT)
@@ -250,8 +246,7 @@ class SnippetSearchClient {
     // Call the API
     client.batch(
       "<YOUR_INDEX_NAME>",
-      new BatchWriteParams()
-        .setRequests(
+      new BatchWriteParams().setRequests(
           Arrays.asList(
             new BatchRequest()
               .setAction(Action.PARTIAL_UPDATE_OBJECT)
@@ -280,8 +275,7 @@ class SnippetSearchClient {
     // Call the API
     client.batch(
       "<YOUR_INDEX_NAME>",
-      new BatchWriteParams()
-        .setRequests(
+      new BatchWriteParams().setRequests(
           Arrays.asList(
             new BatchRequest()
               .setAction(Action.PARTIAL_UPDATE_OBJECT_NO_CREATE)
@@ -310,8 +304,7 @@ class SnippetSearchClient {
     // Call the API
     client.batch(
       "<YOUR_INDEX_NAME>",
-      new BatchWriteParams()
-        .setRequests(
+      new BatchWriteParams().setRequests(
           Arrays.asList(
             new BatchRequest()
               .setAction(Action.UPDATE_OBJECT)
@@ -410,16 +403,13 @@ class SnippetSearchClient {
     // Call the API
     client.batchDictionaryEntries(
       DictionaryType.STOPWORDS,
-      new BatchDictionaryEntriesParams()
-        .setRequests(
-          Arrays.asList(
-            new BatchDictionaryEntriesRequest()
-              .setAction(DictionaryAction.ADD_ENTRY)
-              .setBody(
-                new DictionaryEntry().setObjectID("1").setLanguage(SupportedLanguage.EN).setAdditionalProperty("additional", "try me")
-              )
-          )
+      new BatchDictionaryEntriesParams().setRequests(
+        Arrays.asList(
+          new BatchDictionaryEntriesRequest()
+            .setAction(DictionaryAction.ADD_ENTRY)
+            .setBody(new DictionaryEntry().setObjectID("1").setLanguage(SupportedLanguage.EN).setAdditionalProperty("additional", "try me"))
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -1320,13 +1310,12 @@ class SnippetSearchClient {
 
     // Call the API
     client.getObjects(
-      new GetObjectsParams()
-        .setRequests(
-          Arrays.asList(
-            new GetObjectsRequest().setObjectID("uniqueID1").setIndexName("<YOUR_INDEX_NAME>"),
-            new GetObjectsRequest().setObjectID("uniqueID2").setIndexName("<YOUR_INDEX_NAME>")
-          )
-        ),
+      new GetObjectsParams().setRequests(
+        Arrays.asList(
+          new GetObjectsRequest().setObjectID("uniqueID1").setIndexName("<YOUR_INDEX_NAME>"),
+          new GetObjectsRequest().setObjectID("uniqueID2").setIndexName("<YOUR_INDEX_NAME>")
+        )
+      ),
       Hit.class
     );
     // >LOG
@@ -1343,15 +1332,14 @@ class SnippetSearchClient {
 
     // Call the API
     client.getObjects(
-      new GetObjectsParams()
-        .setRequests(
-          Arrays.asList(
-            new GetObjectsRequest()
-              .setAttributesToRetrieve(Arrays.asList("attr1", "attr2"))
-              .setObjectID("uniqueID")
-              .setIndexName("<YOUR_INDEX_NAME>")
-          )
-        ),
+      new GetObjectsParams().setRequests(
+        Arrays.asList(
+          new GetObjectsRequest()
+            .setAttributesToRetrieve(Arrays.asList("attr1", "attr2"))
+            .setObjectID("uniqueID")
+            .setIndexName("<YOUR_INDEX_NAME>")
+        )
+      ),
       Hit.class
     );
     // >LOG
@@ -1620,8 +1608,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.multipleBatch(
-      new BatchParams()
-        .setRequests(
+      new BatchParams().setRequests(
           Arrays.asList(
             new MultipleBatchRequest()
               .setAction(Action.ADD_OBJECT)
@@ -2514,12 +2501,11 @@ class SnippetSearchClient {
         .setObjectID("article-rule")
         .setConditions(Arrays.asList(new Condition().setPattern("article").setAnchoring(Anchoring.STARTS_WITH)))
         .setConsequence(
-          new Consequence()
-            .setParams(
-              new ConsequenceParams()
-                .setQuery(new ConsequenceQueryObject().setEdits(Arrays.asList(new Edit().setType(EditType.REMOVE).setDelete("article"))))
-                .setRestrictSearchableAttributes(Arrays.asList("title", "book_id"))
-            )
+          new Consequence().setParams(
+            new ConsequenceParams()
+              .setQuery(new ConsequenceQueryObject().setEdits(Arrays.asList(new Edit().setType(EditType.REMOVE).setDelete("article"))))
+              .setRestrictSearchableAttributes(Arrays.asList("title", "book_id"))
+          )
         )
     );
     // >LOG
@@ -2542,15 +2528,14 @@ class SnippetSearchClient {
         .setObjectID("director-rule")
         .setConditions(Arrays.asList(new Condition().setPattern("{facet:director} director").setAnchoring(Anchoring.CONTAINS)))
         .setConsequence(
-          new Consequence()
-            .setParams(
-              new ConsequenceParams()
-                .setRestrictSearchableAttributes(Arrays.asList("title", "book_id"))
-                .setAutomaticFacetFilters(
-                  AutomaticFacetFilters.ofListOfAutomaticFacetFilter(Arrays.asList(new AutomaticFacetFilter().setFacet("director")))
-                )
-                .setQuery(new ConsequenceQueryObject().setEdits(Arrays.asList(new Edit().setType(EditType.REMOVE).setDelete("director"))))
-            )
+          new Consequence().setParams(
+            new ConsequenceParams()
+              .setRestrictSearchableAttributes(Arrays.asList("title", "book_id"))
+              .setAutomaticFacetFilters(
+                AutomaticFacetFilters.ofListOfAutomaticFacetFilter(Arrays.asList(new AutomaticFacetFilter().setFacet("director")))
+              )
+              .setQuery(new ConsequenceQueryObject().setEdits(Arrays.asList(new Edit().setType(EditType.REMOVE).setDelete("director"))))
+          )
         )
     );
     // >LOG
@@ -2573,8 +2558,7 @@ class SnippetSearchClient {
         .setObjectID("harry-potter-rule")
         .setConditions(Arrays.asList(new Condition().setPattern("harry potter").setAnchoring(Anchoring.CONTAINS)))
         .setConsequence(
-          new Consequence()
-            .setUserData(
+          new Consequence().setUserData(
               new HashMap() {
                 {
                   put("promo_content", "20% OFF on all Harry Potter books!");
@@ -2624,8 +2608,7 @@ class SnippetSearchClient {
         .setObjectID("redirect-help-rule")
         .setConditions(Arrays.asList(new Condition().setPattern("help").setAnchoring(Anchoring.CONTAINS)))
         .setConsequence(
-          new Consequence()
-            .setUserData(
+          new Consequence().setUserData(
               new HashMap() {
                 {
                   put("redirect", "https://www.algolia.com/support");
@@ -2675,8 +2658,9 @@ class SnippetSearchClient {
         .setObjectID("Promote-Apple-Newest")
         .setConditions(Arrays.asList(new Condition().setPattern("apple").setAnchoring(Anchoring.IS)))
         .setConsequence(
-          new Consequence()
-            .setPromote(Arrays.asList(new PromoteObjectIDs().setObjectIDs(Arrays.asList("iPhone-12345", "watch-123")).setPosition(0)))
+          new Consequence().setPromote(
+            Arrays.asList(new PromoteObjectIDs().setObjectIDs(Arrays.asList("iPhone-12345", "watch-123")).setPosition(0))
+          )
         )
     );
     // >LOG
@@ -2741,12 +2725,11 @@ class SnippetSearchClient {
         .setObjectID("article-rule")
         .setConditions(Arrays.asList(new Condition().setPattern("article").setAnchoring(Anchoring.STARTS_WITH)))
         .setConsequence(
-          new Consequence()
-            .setParams(
-              new ConsequenceParams()
-                .setQuery(new ConsequenceQueryObject().setEdits(Arrays.asList(new Edit().setType(EditType.REMOVE).setDelete("article"))))
-                .setRestrictSearchableAttributes(Arrays.asList("title", "book_id"))
-            )
+          new Consequence().setParams(
+            new ConsequenceParams()
+              .setQuery(new ConsequenceQueryObject().setEdits(Arrays.asList(new Edit().setType(EditType.REMOVE).setDelete("article"))))
+              .setRestrictSearchableAttributes(Arrays.asList("title", "book_id"))
+          )
         )
     );
     // >LOG
@@ -2770,14 +2753,13 @@ class SnippetSearchClient {
           Arrays.asList(new Condition().setPattern("brand: {facet:brand}").setAnchoring(Anchoring.CONTAINS).setAlternatives(false))
         )
         .setConsequence(
-          new Consequence()
-            .setParams(
-              new ConsequenceParams()
-                .setAutomaticFacetFilters(
-                  AutomaticFacetFilters.ofListOfAutomaticFacetFilter(Arrays.asList(new AutomaticFacetFilter().setFacet("brand")))
-                )
-                .setQuery(new ConsequenceQueryObject().setRemove(Arrays.asList("brand:", "{facet:brand}")))
-            )
+          new Consequence().setParams(
+            new ConsequenceParams()
+              .setAutomaticFacetFilters(
+                AutomaticFacetFilters.ofListOfAutomaticFacetFilter(Arrays.asList(new AutomaticFacetFilter().setFacet("brand")))
+              )
+              .setQuery(new ConsequenceQueryObject().setRemove(Arrays.asList("brand:", "{facet:brand}")))
+          )
         )
         .setDescription("filter on brand: {brand}")
         .setObjectID("tagged-brand-rule")
@@ -2802,13 +2784,11 @@ class SnippetSearchClient {
         .setObjectID("color-facets")
         .setConditions(Arrays.asList(new Condition().setPattern("{facet:color}")))
         .setConsequence(
-          new Consequence()
-            .setParams(
-              new ConsequenceParams()
-                .setAutomaticFacetFilters(
-                  AutomaticFacetFilters.ofListOfAutomaticFacetFilter(Arrays.asList(new AutomaticFacetFilter().setFacet("color")))
-                )
+          new Consequence().setParams(
+            new ConsequenceParams().setAutomaticFacetFilters(
+              AutomaticFacetFilters.ofListOfAutomaticFacetFilter(Arrays.asList(new AutomaticFacetFilter().setFacet("color")))
             )
+          )
         )
     );
     // >LOG
@@ -2852,10 +2832,9 @@ class SnippetSearchClient {
         .setObjectID("red-color")
         .setConditions(Arrays.asList(new Condition().setPattern("red").setAnchoring(Anchoring.CONTAINS)))
         .setConsequence(
-          new Consequence()
-            .setParams(
-              new ConsequenceParams().setQuery(new ConsequenceQueryObject().setRemove(Arrays.asList("red"))).setFilters("color:red")
-            )
+          new Consequence().setParams(
+            new ConsequenceParams().setQuery(new ConsequenceQueryObject().setRemove(Arrays.asList("red"))).setFilters("color:red")
+          )
         )
     );
     // >LOG
@@ -2878,10 +2857,9 @@ class SnippetSearchClient {
         .setObjectID("cheap")
         .setConditions(Arrays.asList(new Condition().setPattern("cheap").setAnchoring(Anchoring.CONTAINS)))
         .setConsequence(
-          new Consequence()
-            .setParams(
-              new ConsequenceParams().setQuery(new ConsequenceQueryObject().setRemove(Arrays.asList("cheap"))).setFilters("price < 10")
-            )
+          new Consequence().setParams(
+            new ConsequenceParams().setQuery(new ConsequenceQueryObject().setRemove(Arrays.asList("cheap"))).setFilters("price < 10")
+          )
         )
     );
     // >LOG
@@ -2904,14 +2882,11 @@ class SnippetSearchClient {
         .setObjectID("gluten-free-rule")
         .setConditions(Arrays.asList(new Condition().setPattern("gluten-free").setAnchoring(Anchoring.CONTAINS)))
         .setConsequence(
-          new Consequence()
-            .setParams(
-              new ConsequenceParams()
-                .setFilters("NOT allergens:gluten")
-                .setQuery(
-                  new ConsequenceQueryObject().setEdits(Arrays.asList(new Edit().setType(EditType.REMOVE).setDelete("gluten-free")))
-                )
-            )
+          new Consequence().setParams(
+            new ConsequenceParams()
+              .setFilters("NOT allergens:gluten")
+              .setQuery(new ConsequenceQueryObject().setEdits(Arrays.asList(new Edit().setType(EditType.REMOVE).setDelete("gluten-free"))))
+          )
         )
     );
     // >LOG
@@ -2934,12 +2909,11 @@ class SnippetSearchClient {
         .setObjectID("diet-rule")
         .setConditions(Arrays.asList(new Condition().setPattern("diet").setAnchoring(Anchoring.CONTAINS)))
         .setConsequence(
-          new Consequence()
-            .setParams(
-              new ConsequenceParams()
-                .setFilters("'low-carb' OR 'low-fat'")
-                .setQuery(new ConsequenceQueryObject().setEdits(Arrays.asList(new Edit().setType(EditType.REMOVE).setDelete("diet"))))
-            )
+          new Consequence().setParams(
+            new ConsequenceParams()
+              .setFilters("'low-carb' OR 'low-fat'")
+              .setQuery(new ConsequenceQueryObject().setEdits(Arrays.asList(new Edit().setType(EditType.REMOVE).setDelete("diet"))))
+          )
         )
     );
     // >LOG
@@ -2961,12 +2935,11 @@ class SnippetSearchClient {
       new Rule()
         .setObjectID("diet-rule")
         .setConsequence(
-          new Consequence()
-            .setParams(
-              new ConsequenceParams()
-                .setFilters("'low-carb' OR 'low-fat'")
-                .setQuery(new ConsequenceQueryObject().setEdits(Arrays.asList(new Edit().setType(EditType.REMOVE).setDelete("diet"))))
-            )
+          new Consequence().setParams(
+            new ConsequenceParams()
+              .setFilters("'low-carb' OR 'low-fat'")
+              .setQuery(new ConsequenceQueryObject().setEdits(Arrays.asList(new Edit().setType(EditType.REMOVE).setDelete("diet"))))
+          )
         )
     );
     // >LOG
@@ -3140,21 +3113,19 @@ class SnippetSearchClient {
           .setObjectID("toaster")
           .setConditions(Arrays.asList(new Condition().setPattern("toaster").setAnchoring(Anchoring.CONTAINS)))
           .setConsequence(
-            new Consequence()
-              .setParams(
-                new ConsequenceParams()
-                  .setQuery(new ConsequenceQueryObject().setRemove(Arrays.asList("toaster")))
-                  .setFilters("product_type:toaster")
-              )
+            new Consequence().setParams(
+              new ConsequenceParams()
+                .setQuery(new ConsequenceQueryObject().setRemove(Arrays.asList("toaster")))
+                .setFilters("product_type:toaster")
+            )
           ),
         new Rule()
           .setObjectID("cheap")
           .setConditions(Arrays.asList(new Condition().setPattern("cheap").setAnchoring(Anchoring.CONTAINS)))
           .setConsequence(
-            new Consequence()
-              .setParams(
-                new ConsequenceParams().setQuery(new ConsequenceQueryObject().setRemove(Arrays.asList("cheap"))).setFilters("price < 15")
-              )
+            new Consequence().setParams(
+              new ConsequenceParams().setQuery(new ConsequenceQueryObject().setRemove(Arrays.asList("cheap"))).setFilters("price < 15")
+            )
           )
       )
     );
@@ -3243,8 +3214,9 @@ class SnippetSearchClient {
 
     // Call the API
     client.search(
-      new SearchMethodParams()
-        .setRequests(Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setHitsPerPage(50))),
+      new SearchMethodParams().setRequests(
+        Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setHitsPerPage(50))
+      ),
       Hit.class
     );
     // >LOG
@@ -3261,12 +3233,9 @@ class SnippetSearchClient {
 
     // Call the API
     client.search(
-      new SearchMethodParams()
-        .setRequests(
-          Arrays.asList(
-            new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFilters("actor:Scarlett Johansson")
-          )
-        ),
+      new SearchMethodParams().setRequests(
+        Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFilters("actor:Scarlett Johansson"))
+      ),
       Hit.class
     );
     // >LOG
@@ -3283,15 +3252,14 @@ class SnippetSearchClient {
 
     // Call the API
     client.search(
-      new SearchMethodParams()
-        .setRequests(
-          Arrays.asList(
-            new SearchForHits()
-              .setIndexName("<YOUR_INDEX_NAME>")
-              .setQuery("<YOUR_QUERY>")
-              .setFilters("actor:Tom Cruise OR actor:Scarlett Johansson")
-          )
-        ),
+      new SearchMethodParams().setRequests(
+        Arrays.asList(
+          new SearchForHits()
+            .setIndexName("<YOUR_INDEX_NAME>")
+            .setQuery("<YOUR_QUERY>")
+            .setFilters("actor:Tom Cruise OR actor:Scarlett Johansson")
+        )
+      ),
       Hit.class
     );
     // >LOG
@@ -3308,10 +3276,9 @@ class SnippetSearchClient {
 
     // Call the API
     client.search(
-      new SearchMethodParams()
-        .setRequests(
-          Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFilters("NOT actor:Nicolas Cage"))
-        ),
+      new SearchMethodParams().setRequests(
+        Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFilters("NOT actor:Nicolas Cage"))
+      ),
       Hit.class
     );
     // >LOG
@@ -3342,17 +3309,16 @@ class SnippetSearchClient {
 
     // Call the API
     client.search(
-      new SearchMethodParams()
-        .setRequests(
-          Arrays.asList(
-            new SearchForHits()
-              .setIndexName("<YOUR_INDEX_NAME>")
-              .setQuery("vim")
-              .setAttributesToSnippet(Arrays.asList("*:20"))
-              .setAttributesToHighlight(Arrays.asList("*"))
-              .setAttributesToRetrieve(Arrays.asList("*"))
-          )
-        ),
+      new SearchMethodParams().setRequests(
+        Arrays.asList(
+          new SearchForHits()
+            .setIndexName("<YOUR_INDEX_NAME>")
+            .setQuery("vim")
+            .setAttributesToSnippet(Arrays.asList("*:20"))
+            .setAttributesToHighlight(Arrays.asList("*"))
+            .setAttributesToRetrieve(Arrays.asList("*"))
+        )
+      ),
       Hit.class
     );
     // >LOG
@@ -3369,12 +3335,11 @@ class SnippetSearchClient {
 
     // Call the API
     client.search(
-      new SearchMethodParams()
-        .setRequests(
-          Arrays.asList(
-            new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFacets(Arrays.asList("author", "genre"))
-          )
-        ),
+      new SearchMethodParams().setRequests(
+        Arrays.asList(
+          new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFacets(Arrays.asList("author", "genre"))
+        )
+      ),
       Hit.class
     );
     // >LOG
@@ -3391,10 +3356,9 @@ class SnippetSearchClient {
 
     // Call the API
     client.search(
-      new SearchMethodParams()
-        .setRequests(
-          Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFacets(Arrays.asList("*")))
-        ),
+      new SearchMethodParams().setRequests(
+        Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFacets(Arrays.asList("*")))
+      ),
       Hit.class
     );
     // >LOG
@@ -3432,12 +3396,11 @@ class SnippetSearchClient {
 
     // Call the API
     client.search(
-      new SearchMethodParams()
-        .setRequests(
-          Arrays.asList(
-            new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("myQuery").setHitsPerPage(50).setType(SearchTypeDefault.DEFAULT)
-          )
-        ),
+      new SearchMethodParams().setRequests(
+        Arrays.asList(
+          new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("myQuery").setHitsPerPage(50).setType(SearchTypeDefault.DEFAULT)
+        )
+      ),
       Hit.class
     );
     // >LOG
@@ -3539,62 +3502,58 @@ class SnippetSearchClient {
 
     // Call the API
     client.search(
-      new SearchMethodParams()
-        .setRequests(
-          Arrays.asList(
-            new SearchForHits()
-              .setIndexName("<YOUR_INDEX_NAME>")
-              .setFacetFilters(FacetFilters.of("mySearch:filters"))
-              .setReRankingApplyFilter(ReRankingApplyFilter.of("mySearch:filters"))
-              .setTagFilters(TagFilters.of("mySearch:filters"))
-              .setNumericFilters(NumericFilters.of("mySearch:filters"))
-              .setOptionalFilters(OptionalFilters.of("mySearch:filters")),
-            new SearchForHits()
-              .setIndexName("<YOUR_INDEX_NAME>")
-              .setFacetFilters(
-                FacetFilters.of(
-                  Arrays.asList(
-                    FacetFilters.of("mySearch:filters"),
-                    FacetFilters.of(
-                      Arrays.asList(
-                        FacetFilters.of("mySearch:filters"),
-                        FacetFilters.of(Arrays.asList(FacetFilters.of("mySearch:filters")))
-                      )
-                    )
+      new SearchMethodParams().setRequests(
+        Arrays.asList(
+          new SearchForHits()
+            .setIndexName("<YOUR_INDEX_NAME>")
+            .setFacetFilters(FacetFilters.of("mySearch:filters"))
+            .setReRankingApplyFilter(ReRankingApplyFilter.of("mySearch:filters"))
+            .setTagFilters(TagFilters.of("mySearch:filters"))
+            .setNumericFilters(NumericFilters.of("mySearch:filters"))
+            .setOptionalFilters(OptionalFilters.of("mySearch:filters")),
+          new SearchForHits()
+            .setIndexName("<YOUR_INDEX_NAME>")
+            .setFacetFilters(
+              FacetFilters.of(
+                Arrays.asList(
+                  FacetFilters.of("mySearch:filters"),
+                  FacetFilters.of(
+                    Arrays.asList(FacetFilters.of("mySearch:filters"), FacetFilters.of(Arrays.asList(FacetFilters.of("mySearch:filters"))))
                   )
                 )
               )
-              .setReRankingApplyFilter(
-                ReRankingApplyFilter.of(
-                  Arrays.asList(
-                    ReRankingApplyFilter.of("mySearch:filters"),
-                    ReRankingApplyFilter.of(Arrays.asList(ReRankingApplyFilter.of("mySearch:filters")))
-                  )
+            )
+            .setReRankingApplyFilter(
+              ReRankingApplyFilter.of(
+                Arrays.asList(
+                  ReRankingApplyFilter.of("mySearch:filters"),
+                  ReRankingApplyFilter.of(Arrays.asList(ReRankingApplyFilter.of("mySearch:filters")))
                 )
               )
-              .setTagFilters(
-                TagFilters.of(
-                  Arrays.asList(TagFilters.of("mySearch:filters"), TagFilters.of(Arrays.asList(TagFilters.of("mySearch:filters"))))
+            )
+            .setTagFilters(
+              TagFilters.of(
+                Arrays.asList(TagFilters.of("mySearch:filters"), TagFilters.of(Arrays.asList(TagFilters.of("mySearch:filters"))))
+              )
+            )
+            .setNumericFilters(
+              NumericFilters.of(
+                Arrays.asList(
+                  NumericFilters.of("mySearch:filters"),
+                  NumericFilters.of(Arrays.asList(NumericFilters.of("mySearch:filters")))
                 )
               )
-              .setNumericFilters(
-                NumericFilters.of(
-                  Arrays.asList(
-                    NumericFilters.of("mySearch:filters"),
-                    NumericFilters.of(Arrays.asList(NumericFilters.of("mySearch:filters")))
-                  )
+            )
+            .setOptionalFilters(
+              OptionalFilters.of(
+                Arrays.asList(
+                  OptionalFilters.of("mySearch:filters"),
+                  OptionalFilters.of(Arrays.asList(OptionalFilters.of("mySearch:filters")))
                 )
               )
-              .setOptionalFilters(
-                OptionalFilters.of(
-                  Arrays.asList(
-                    OptionalFilters.of("mySearch:filters"),
-                    OptionalFilters.of(Arrays.asList(OptionalFilters.of("mySearch:filters")))
-                  )
-                )
-              )
-          )
-        ),
+            )
+        )
+      ),
       Hit.class
     );
     // >LOG
@@ -3611,34 +3570,33 @@ class SnippetSearchClient {
 
     // Call the API
     client.search(
-      new SearchMethodParams()
-        .setRequests(
-          Arrays.asList(
-            new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setFilters("editor:'visual studio' OR editor:neovim"),
-            new SearchForHits()
-              .setIndexName("<YOUR_INDEX_NAME>")
-              .setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("editor:'visual studio'"), FacetFilters.of("editor:neovim")))),
-            new SearchForHits()
-              .setIndexName("<YOUR_INDEX_NAME>")
-              .setFacetFilters(
-                FacetFilters.of(
-                  Arrays.asList(FacetFilters.of("editor:'visual studio'"), FacetFilters.of(Arrays.asList(FacetFilters.of("editor:neovim"))))
-                )
-              ),
-            new SearchForHits()
-              .setIndexName("<YOUR_INDEX_NAME>")
-              .setFacetFilters(
-                FacetFilters.of(
-                  Arrays.asList(
-                    FacetFilters.of("editor:'visual studio'"),
-                    FacetFilters.of(
-                      Arrays.asList(FacetFilters.of("editor:neovim"), FacetFilters.of(Arrays.asList(FacetFilters.of("editor:goland"))))
-                    )
+      new SearchMethodParams().setRequests(
+        Arrays.asList(
+          new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setFilters("editor:'visual studio' OR editor:neovim"),
+          new SearchForHits()
+            .setIndexName("<YOUR_INDEX_NAME>")
+            .setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("editor:'visual studio'"), FacetFilters.of("editor:neovim")))),
+          new SearchForHits()
+            .setIndexName("<YOUR_INDEX_NAME>")
+            .setFacetFilters(
+              FacetFilters.of(
+                Arrays.asList(FacetFilters.of("editor:'visual studio'"), FacetFilters.of(Arrays.asList(FacetFilters.of("editor:neovim"))))
+              )
+            ),
+          new SearchForHits()
+            .setIndexName("<YOUR_INDEX_NAME>")
+            .setFacetFilters(
+              FacetFilters.of(
+                Arrays.asList(
+                  FacetFilters.of("editor:'visual studio'"),
+                  FacetFilters.of(
+                    Arrays.asList(FacetFilters.of("editor:neovim"), FacetFilters.of(Arrays.asList(FacetFilters.of("editor:goland"))))
                   )
                 )
               )
-          )
-        ),
+            )
+        )
+      ),
       Hit.class
     );
     // >LOG
@@ -3655,8 +3613,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.search(
-      new SearchMethodParams()
-        .setRequests(
+      new SearchMethodParams().setRequests(
           Arrays.asList(
             new SearchForHits()
               .setAdvancedSyntax(true)
@@ -3727,8 +3684,7 @@ class SnippetSearchClient {
               .setRemoveStopWords(RemoveStopWords.of(true))
               .setRemoveWordsIfNoResults(RemoveWordsIfNoResults.ALL_OPTIONAL)
               .setRenderingContent(
-                new RenderingContent()
-                  .setFacetOrdering(
+                new RenderingContent().setFacetOrdering(
                     new FacetOrdering()
                       .setFacets(new Facets().setOrder(Arrays.asList("a", "b")))
                       .setValues(
@@ -4106,15 +4062,14 @@ class SnippetSearchClient {
     // Call the API
     client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
-      new SearchParamsObject()
-        .setFacetFilters(
-          FacetFilters.of(
-            Arrays.asList(
-              FacetFilters.of("publisher:Penguin"),
-              FacetFilters.of(Arrays.asList(FacetFilters.of("author:Stephen King"), FacetFilters.of("genre:Horror")))
-            )
+      new SearchParamsObject().setFacetFilters(
+        FacetFilters.of(
+          Arrays.asList(
+            FacetFilters.of("publisher:Penguin"),
+            FacetFilters.of(Arrays.asList(FacetFilters.of("author:Stephen King"), FacetFilters.of("genre:Horror")))
           )
-        ),
+        )
+      ),
       Hit.class
     );
     // >LOG
@@ -4343,10 +4298,9 @@ class SnippetSearchClient {
     // Call the API
     client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
-      new SearchParamsObject()
-        .setInsideBoundingBox(
-          InsideBoundingBox.of(Arrays.asList(Arrays.asList(49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875)))
-        ),
+      new SearchParamsObject().setInsideBoundingBox(
+        InsideBoundingBox.of(Arrays.asList(Arrays.asList(49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875)))
+      ),
       Hit.class
     );
     // >LOG
@@ -4364,25 +4318,24 @@ class SnippetSearchClient {
     // Call the API
     client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
-      new SearchParamsObject()
-        .setInsidePolygon(
+      new SearchParamsObject().setInsidePolygon(
+        Arrays.asList(
           Arrays.asList(
-            Arrays.asList(
-              42.01,
-              -124.31,
-              48.835509470063045,
-              -124.40453125000005,
-              45.01082951668149,
-              -65.95726562500005,
-              31.247243545293433,
-              -81.06578125000004,
-              25.924152577235226,
-              -97.68234374999997,
-              32.300311895879545,
-              -117.54828125
-            )
+            42.01,
+            -124.31,
+            48.835509470063045,
+            -124.40453125000005,
+            45.01082951668149,
+            -65.95726562500005,
+            31.247243545293433,
+            -81.06578125000004,
+            25.924152577235226,
+            -97.68234374999997,
+            32.300311895879545,
+            -117.54828125
           )
-        ),
+        )
+      ),
       Hit.class
     );
     // >LOG
@@ -4400,25 +4353,24 @@ class SnippetSearchClient {
     // Call the API
     client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
-      new SearchParamsObject()
-        .setInsidePolygon(
+      new SearchParamsObject().setInsidePolygon(
+        Arrays.asList(
           Arrays.asList(
-            Arrays.asList(
-              42.01,
-              -124.31,
-              48.835509470063045,
-              -124.40453125000005,
-              45.01082951668149,
-              -65.95726562500005,
-              31.247243545293433,
-              -81.06578125000004,
-              25.924152577235226,
-              -97.68234374999997,
-              32.300311895879545,
-              -117.54828125
-            )
+            42.01,
+            -124.31,
+            48.835509470063045,
+            -124.40453125000005,
+            45.01082951668149,
+            -65.95726562500005,
+            31.247243545293433,
+            -81.06578125000004,
+            25.924152577235226,
+            -97.68234374999997,
+            32.300311895879545,
+            -117.54828125
           )
-        ),
+        )
+      ),
       Hit.class
     );
     // >LOG
@@ -4454,16 +4406,15 @@ class SnippetSearchClient {
     // Call the API
     client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
-      new SearchParamsObject()
-        .setOptionalFilters(
-          OptionalFilters.of(
-            Arrays.asList(
-              OptionalFilters.of("brand:Apple<score=3>"),
-              OptionalFilters.of("brand:Samsung<score=2>"),
-              OptionalFilters.of("brand:-Huawei")
-            )
+      new SearchParamsObject().setOptionalFilters(
+        OptionalFilters.of(
+          Arrays.asList(
+            OptionalFilters.of("brand:Apple<score=3>"),
+            OptionalFilters.of("brand:Samsung<score=2>"),
+            OptionalFilters.of("brand:-Huawei")
           )
-        ),
+        )
+      ),
       Hit.class
     );
     // >LOG
@@ -4481,10 +4432,9 @@ class SnippetSearchClient {
     // Call the API
     client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
-      new SearchParamsObject()
-        .setOptionalFilters(
-          OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:Apple<score=2>"), OptionalFilters.of("type:tablet")))
-        ),
+      new SearchParamsObject().setOptionalFilters(
+        OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:Apple<score=2>"), OptionalFilters.of("type:tablet")))
+      ),
       Hit.class
     );
     // >LOG
@@ -4626,8 +4576,9 @@ class SnippetSearchClient {
     // Call the API
     client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
-      new SearchParamsObject()
-        .setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("user:user42"), FacetFilters.of("user:public")))),
+      new SearchParamsObject().setFacetFilters(
+        FacetFilters.of(Arrays.asList(FacetFilters.of("user:user42"), FacetFilters.of("user:public")))
+      ),
       Hit.class
     );
     // >LOG
@@ -5336,8 +5287,10 @@ class SnippetSearchClient {
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setAroundLatLngViaIP(true),
       Hit.class,
-      new RequestOptions()
-        .addExtraHeader("x-forwarded-for", "94.228.178.246 // should be replaced with the actual IP you would like to search" + " around")
+      new RequestOptions().addExtraHeader(
+        "x-forwarded-for",
+        "94.228.178.246 // should be replaced with the actual IP you would like to search" + " around"
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -6240,10 +6193,8 @@ class SnippetSearchClient {
 
     // Call the API
     client.setDictionarySettings(
-      new DictionarySettingsParams()
-        .setDisableStandardEntries(
-          new StandardEntries()
-            .setPlurals(
+      new DictionarySettingsParams().setDisableStandardEntries(
+          new StandardEntries().setPlurals(
               new HashMap() {
                 {
                   put("fr", false);
@@ -6268,8 +6219,7 @@ class SnippetSearchClient {
 
     // Call the API
     client.setDictionarySettings(
-      new DictionarySettingsParams()
-        .setDisableStandardEntries(
+      new DictionarySettingsParams().setDisableStandardEntries(
           new StandardEntries()
             .setPlurals(
               new HashMap() {
@@ -6820,8 +6770,9 @@ class SnippetSearchClient {
     // Call the API
     client.setSettings(
       "<YOUR_INDEX_NAME>",
-      new IndexSettings()
-        .setRanking(Arrays.asList("desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"))
+      new IndexSettings().setRanking(
+        Arrays.asList("desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom")
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -6838,8 +6789,9 @@ class SnippetSearchClient {
     // Call the API
     client.setSettings(
       "<YOUR_INDEX_NAME>",
-      new IndexSettings()
-        .setRanking(Arrays.asList("desc(is_popular)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"))
+      new IndexSettings().setRanking(
+        Arrays.asList("desc(is_popular)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom")
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -7035,8 +6987,9 @@ class SnippetSearchClient {
     // Call the API
     client.setSettings(
       "<YOUR_INDEX_NAME>",
-      new IndexSettings()
-        .setRanking(Arrays.asList("asc(date_timestamp)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"))
+      new IndexSettings().setRanking(
+        Arrays.asList("asc(date_timestamp)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom")
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -7183,8 +7136,7 @@ class SnippetSearchClient {
         .setRemoveStopWords(RemoveStopWords.of(false))
         .setRemoveWordsIfNoResults(RemoveWordsIfNoResults.LAST_WORDS)
         .setRenderingContent(
-          new RenderingContent()
-            .setFacetOrdering(
+          new RenderingContent().setFacetOrdering(
               new FacetOrdering()
                 .setFacets(new Facets().setOrder(Arrays.asList("a", "b")))
                 .setValues(
@@ -7391,16 +7343,15 @@ class SnippetSearchClient {
     // Call the API
     client.setSettings(
       "<YOUR_INDEX_NAME>",
-      new IndexSettings()
-        .setAttributesForFaceting(
-          Arrays.asList(
-            "author",
-            "filterOnly(isbn)",
-            "searchable(edition)",
-            "afterDistinct(category)",
-            "afterDistinct(searchable(publisher))"
-          )
+      new IndexSettings().setAttributesForFaceting(
+        Arrays.asList(
+          "author",
+          "filterOnly(isbn)",
+          "searchable(edition)",
+          "afterDistinct(category)",
+          "afterDistinct(searchable(publisher))"
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -7518,8 +7469,9 @@ class SnippetSearchClient {
     // Call the API
     client.setSettings(
       "<YOUR_INDEX_NAME>",
-      new IndexSettings()
-        .setRanking(Arrays.asList("asc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"))
+      new IndexSettings().setRanking(
+        Arrays.asList("asc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom")
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -7536,8 +7488,9 @@ class SnippetSearchClient {
     // Call the API
     client.setSettings(
       "<YOUR_INDEX_NAME>",
-      new IndexSettings()
-        .setRanking(Arrays.asList("desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"))
+      new IndexSettings().setRanking(
+        Arrays.asList("desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom")
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -7890,8 +7843,7 @@ class SnippetSearchClient {
     // Call the API
     client.setSettings(
       "<YOUR_INDEX_NAME>",
-      new IndexSettings()
-        .setDecompoundedAttributes(
+      new IndexSettings().setDecompoundedAttributes(
           new HashMap() {
             {
               put("de", Arrays.asList("name"));
@@ -7914,8 +7866,7 @@ class SnippetSearchClient {
     // Call the API
     client.setSettings(
       "<YOUR_INDEX_NAME>",
-      new IndexSettings()
-        .setDecompoundedAttributes(
+      new IndexSettings().setDecompoundedAttributes(
           new HashMap() {
             {
               put("de", Arrays.asList("name_de", "description_de"));
@@ -7953,8 +7904,7 @@ class SnippetSearchClient {
     // Call the API
     client.setSettings(
       "<YOUR_INDEX_NAME>",
-      new IndexSettings()
-        .setCustomNormalization(
+      new IndexSettings().setCustomNormalization(
           new HashMap() {
             {
               put(
@@ -8315,8 +8265,7 @@ class SnippetSearchClient {
     // Call the API
     client.setSettings(
       "<YOUR_INDEX_NAME>",
-      new IndexSettings()
-        .setUserData(
+      new IndexSettings().setUserData(
           new HashMap() {
             {
               put("extraData", "This is the custom data that you want to store in your index");
@@ -8339,10 +8288,8 @@ class SnippetSearchClient {
     // Call the API
     client.setSettings(
       "<YOUR_INDEX_NAME>",
-      new IndexSettings()
-        .setRenderingContent(
-          new RenderingContent()
-            .setFacetOrdering(
+      new IndexSettings().setRenderingContent(
+          new RenderingContent().setFacetOrdering(
               new FacetOrdering()
                 .setFacets(new Facets().setOrder(Arrays.asList("size", "brand")))
                 .setValues(

@@ -209,7 +209,10 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     Collections.reverse(enumVars);
     enumVars.forEach(v -> {
       String name = (String) v.get("name");
-      long count = enumVars.stream().filter(v1 -> ((String) v1.get("name")).equalsIgnoreCase(name)).count();
+      long count = enumVars
+        .stream()
+        .filter(v1 -> ((String) v1.get("name")).equalsIgnoreCase(name))
+        .count();
       if (count > 1L) {
         String uniqueEnumName = this.getUniqueEnumName(name, enumVars);
         Object var10001 = v.get("name");
@@ -221,7 +224,10 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
   }
 
   private String getUniqueEnumName(String name, List<Map<String, Object>> enumVars) {
-    long count = enumVars.stream().filter(v -> ((String) v.get("name")).equalsIgnoreCase(name)).count();
+    long count = enumVars
+      .stream()
+      .filter(v -> ((String) v.get("name")).equalsIgnoreCase(name))
+      .count();
     return count > 1L ? this.getUniqueEnumName(name + "Alt", enumVars) : name;
   }
 

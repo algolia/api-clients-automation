@@ -11,7 +11,7 @@ public class searchWithGAToken {
   }
 
   public static void main(String[] args) throws Exception {
-    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");) {
+    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")) {
       String userToken = getGoogleAnalyticsUserIdFromBrowserCookie("_ga");
       SearchParamsObject searchParams = new SearchParamsObject().setQuery("<YOUR_SEARCH_QUERY>").setUserToken(userToken);
 

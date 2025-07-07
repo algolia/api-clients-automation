@@ -8,10 +8,14 @@ import java.util.Map;
 
 public class saveObjectsMCM {
 
-  private static final List<Map<String, Object>> playlists = List.of(/* Your records */);
+  private static final List<Map<String, Object>> playlists = List.of(
+    /* Your records */
+  );
 
   private static List<Map<String, String>> getAllAppIDConfigurations() {
-    return List.of(/* A list of your MCM AppID/ApiKey pairs */);
+    return List.of(
+      /* A list of your MCM AppID/ApiKey pairs */
+    );
   }
 
   public static void main(String[] args) throws Exception {

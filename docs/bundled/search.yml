@@ -1664,8 +1664,9 @@ paths:
             // Call the API
 
             client.search(
-              new SearchMethodParams()
-                .setRequests(Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setHitsPerPage(50))),
+              new SearchMethodParams().setRequests(
+                Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setHitsPerPage(50))
+              ),
               Hit.class
             );
 
@@ -5078,8 +5079,7 @@ paths:
 
             client.batch(
               "<YOUR_INDEX_NAME>",
-              new BatchWriteParams()
-                .setRequests(
+              new BatchWriteParams().setRequests(
                   Arrays.asList(
                     new BatchRequest()
                       .setAction(Action.ADD_OBJECT)
@@ -5544,8 +5544,7 @@ paths:
             // Call the API
 
             client.multipleBatch(
-              new BatchParams()
-                .setRequests(
+              new BatchParams().setRequests(
                   Arrays.asList(
                     new MultipleBatchRequest()
                       .setAction(Action.ADD_OBJECT)
@@ -13357,10 +13356,8 @@ paths:
             // Call the API
 
             client.setDictionarySettings(
-              new DictionarySettingsParams()
-                .setDisableStandardEntries(
-                  new StandardEntries()
-                    .setPlurals(
+              new DictionarySettingsParams().setDisableStandardEntries(
+                  new StandardEntries().setPlurals(
                       new HashMap() {
                         {
                           put("fr", false);

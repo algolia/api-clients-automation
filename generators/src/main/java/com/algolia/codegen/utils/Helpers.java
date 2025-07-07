@@ -132,7 +132,11 @@ public class Helpers {
           continue;
         }
         hasVariables = true;
-        CodegenServerVariable regionVar = server.variables.stream().filter(v -> v.name.equals("region")).findFirst().orElse(null);
+        CodegenServerVariable regionVar = server.variables
+          .stream()
+          .filter(v -> v.name.equals("region"))
+          .findFirst()
+          .orElse(null);
         if (regionVar == null || regionVar.enumValues == null || regionVar.enumValues.isEmpty()) {
           continue;
         }
@@ -170,7 +174,10 @@ public class Helpers {
   }
 
   public static void removeHelpers(OperationsMap operations) {
-    operations.getOperations().getOperation().removeIf(entry -> (boolean) entry.vendorExtensions.getOrDefault("x-helper", false));
+    operations
+      .getOperations()
+      .getOperation()
+      .removeIf(entry -> (boolean) entry.vendorExtensions.getOrDefault("x-helper", false));
   }
 
   /**
@@ -288,7 +295,13 @@ public class Helpers {
    * `ofListofList`.
    */
   public static boolean shouldUseExplicitOneOfName(Collection<String> oneOf) {
-    return oneOf.stream().filter(type -> type != null && type.startsWith("List")).count() >= 2;
+    return (
+      oneOf
+        .stream()
+        .filter(type -> type != null && type.startsWith("List"))
+        .count() >=
+      2
+    );
   }
 
   /**

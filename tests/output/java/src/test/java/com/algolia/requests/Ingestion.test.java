@@ -31,7 +31,9 @@ class IngestionClientRequestsTests {
   void init() {
     this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
     this.echo = new EchoInterceptor();
-    ClientOptions options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
+    ClientOptions options = ClientOptions.builder()
+      .setRequesterConfig(requester -> requester.addInterceptor(echo))
+      .build();
     this.client = new IngestionClient("appId", "apiKey", "us", options);
   }
 
@@ -236,8 +238,9 @@ class IngestionClientRequestsTests {
           .setCron("* * * * *")
           .setAction(ActionType.REPLACE)
           .setInput(
-            new DockerStreamsInput()
-              .setStreams(Arrays.asList(new DockerStreams().setName("foo").setSyncMode(DockerStreamsSyncMode.INCREMENTAL)))
+            new DockerStreamsInput().setStreams(
+              Arrays.asList(new DockerStreams().setName("foo").setSyncMode(DockerStreamsSyncMode.INCREMENTAL))
+            )
           )
       );
     });
@@ -338,8 +341,9 @@ class IngestionClientRequestsTests {
           .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))
           .setAction(ActionType.REPLACE)
           .setInput(
-            new DockerStreamsInput()
-              .setStreams(Arrays.asList(new DockerStreams().setName("foo").setSyncMode(DockerStreamsSyncMode.INCREMENTAL)))
+            new DockerStreamsInput().setStreams(
+              Arrays.asList(new DockerStreams().setName("foo").setSyncMode(DockerStreamsSyncMode.INCREMENTAL))
+            )
           )
       );
     });
@@ -1539,8 +1543,9 @@ class IngestionClientRequestsTests {
   void searchAuthenticationsTest() {
     assertDoesNotThrow(() -> {
       client.searchAuthentications(
-        new AuthenticationSearch()
-          .setAuthenticationIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
+        new AuthenticationSearch().setAuthenticationIDs(
+          Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1560,8 +1565,9 @@ class IngestionClientRequestsTests {
   void searchDestinationsTest() {
     assertDoesNotThrow(() -> {
       client.searchDestinations(
-        new DestinationSearch()
-          .setDestinationIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
+        new DestinationSearch().setDestinationIDs(
+          Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1601,14 +1607,13 @@ class IngestionClientRequestsTests {
   void searchTasksTest() {
     assertDoesNotThrow(() -> {
       client.searchTasks(
-        new TaskSearch()
-          .setTaskIDs(
-            Arrays.asList(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-              "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
-            )
+        new TaskSearch().setTaskIDs(
+          Arrays.asList(
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+            "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1628,14 +1633,13 @@ class IngestionClientRequestsTests {
   void searchTasksV1Test() {
     assertDoesNotThrow(() -> {
       client.searchTasksV1(
-        new TaskSearch()
-          .setTaskIDs(
-            Arrays.asList(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-              "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
-            )
+        new TaskSearch().setTaskIDs(
+          Arrays.asList(
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+            "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1655,14 +1659,13 @@ class IngestionClientRequestsTests {
   void searchTransformationsTest() {
     assertDoesNotThrow(() -> {
       client.searchTransformations(
-        new TransformationSearch()
-          .setTransformationIDs(
-            Arrays.asList(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-              "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
-            )
+        new TransformationSearch().setTransformationIDs(
+          Arrays.asList(
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+            "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();

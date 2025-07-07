@@ -41,28 +41,27 @@ class InsightsClientRequestsTestsE2E {
   @DisplayName("Many events type")
   void pushEventsTest1() {
     EventsResponse res = client.pushEvents(
-      new InsightsEvents()
-        .setEvents(
-          Arrays.asList(
-            new ConvertedObjectIDsAfterSearch()
-              .setEventType(ConversionEvent.CONVERSION)
-              .setEventName("Product Purchased")
-              .setIndex("products")
-              .setUserToken("user-123456")
-              .setAuthenticatedUserToken("user-123456")
-              .setTimestamp(1751414400000L)
-              .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
-              .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7"),
-            new ViewedObjectIDs()
-              .setEventType(ViewEvent.VIEW)
-              .setEventName("Product Detail Page Viewed")
-              .setIndex("products")
-              .setUserToken("user-123456")
-              .setAuthenticatedUserToken("user-123456")
-              .setTimestamp(1751414400000L)
-              .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
-          )
+      new InsightsEvents().setEvents(
+        Arrays.asList(
+          new ConvertedObjectIDsAfterSearch()
+            .setEventType(ConversionEvent.CONVERSION)
+            .setEventName("Product Purchased")
+            .setIndex("products")
+            .setUserToken("user-123456")
+            .setAuthenticatedUserToken("user-123456")
+            .setTimestamp(1751673600000L)
+            .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
+            .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7"),
+          new ViewedObjectIDs()
+            .setEventType(ViewEvent.VIEW)
+            .setEventName("Product Detail Page Viewed")
+            .setIndex("products")
+            .setUserToken("user-123456")
+            .setAuthenticatedUserToken("user-123456")
+            .setTimestamp(1751673600000L)
+            .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
         )
+      )
     );
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals("{\"message\":\"OK\",\"status\":200}", json.writeValueAsString(res), JSONCompareMode.LENIENT)
