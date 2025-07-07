@@ -665,52 +665,6 @@
     }
   },
   {
-    "testName": "insidePolygon",
-    "parameters": {
-      "indexName": "indexName",
-      "searchParams": {
-        "insidePolygon": [
-          [
-            42.01,
-            -124.31,
-            48.835509470063045,
-            -124.40453125000005,
-            45.01082951668149,
-            -65.95726562500005,
-            31.247243545293433,
-            -81.06578125000004,
-            25.924152577235226,
-            -97.68234374999997,
-            32.300311895879545,
-            -117.54828125
-          ]
-        ]
-      }
-    },
-    "request": {
-      "path": "/1/indexes/indexName/query",
-      "method": "POST",
-      "body": {
-        "insidePolygon": [
-          [
-            42.01,
-            -124.31,
-            48.835509470063045,
-            -124.40453125000005,
-            45.01082951668149,
-            -65.95726562500005,
-            31.247243545293433,
-            -81.06578125000004,
-            25.924152577235226,
-            -97.68234374999997,
-            32.300311895879545,
-            -117.54828125
-          ]
-        ]
-      }
-    }
-  },
-  {
     "testName": "optionalFilters",
     "parameters": {
       "indexName": "indexName",
@@ -1255,7 +1209,7 @@
     }
   },
   {
-    "testName": "apply_filters",
+    "testName": "apply_optional_filters",
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -1385,7 +1339,7 @@
     }
   },
   {
-    "testName": "apply_filters",
+    "testName": "set_sum_or_filters_scores",
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -2080,54 +2034,6 @@
       "body": {
         "query": "query",
         "ignorePlurals": [
-          "ca",
-          "es"
-        ]
-      }
-    }
-  },
-  {
-    "testName": "set_querylanguages_override",
-    "parameters": {
-      "indexName": "indexName",
-      "searchParams": {
-        "query": "query",
-        "removeStopWords": [
-          "ca",
-          "es"
-        ]
-      }
-    },
-    "request": {
-      "path": "/1/indexes/indexName/query",
-      "method": "POST",
-      "body": {
-        "query": "query",
-        "removeStopWords": [
-          "ca",
-          "es"
-        ]
-      }
-    }
-  },
-  {
-    "testName": "set_querylanguages_override",
-    "parameters": {
-      "indexName": "indexName",
-      "searchParams": {
-        "query": "query",
-        "removeStopWords": [
-          "ca",
-          "es"
-        ]
-      }
-    },
-    "request": {
-      "path": "/1/indexes/indexName/query",
-      "method": "POST",
-      "body": {
-        "query": "query",
-        "removeStopWords": [
           "ca",
           "es"
         ]
