@@ -13,9 +13,9 @@ services:
         - PHP_VERSION=${PHP_VERSION}
         - PYTHON_VERSION=${PYTHON_VERSION}
     command: tail -f /dev/null
-    volumes: [ ./:/app ]
-#    ports:
-#      - "5009:5009" # So we can debug the OpenAPI Generator process
+    volumes: [./:/app]
+  #    ports:
+  #      - "5009:5009" # So we can debug the OpenAPI Generator process
 
   ruby:
     container_name: apic_ruby
@@ -27,7 +27,7 @@ services:
         - NODE_VERSION=${NODE_VERSION}
         - RUBY_VERSION=${RUBY_VERSION}
     command: tail -f /dev/null
-    volumes: [ ./:/app ]
+    volumes: [./:/app]
 
   swift:
     container_name: apic_swift
@@ -39,4 +39,4 @@ services:
         - NODE_VERSION=${NODE_VERSION}
         - SWIFT_VERSION=${SWIFT_VERSION}
     command: tail -f /dev/null
-    volumes: [ ./:/app ]
+    volumes: [./:/app]
