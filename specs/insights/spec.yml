@@ -18,7 +18,7 @@ info:
 
     - `https://insights.us.algolia.io`
     - `https://insights.de.algolia.io`
-    - `https//insights.algolia.io` (routes requests to the closest of the above servers, based on your geographical location)
+    - `https//insights.algolia.io` (alias of `insights.us.algolia.io`)
 
     **All requests must use HTTPS.**
 
