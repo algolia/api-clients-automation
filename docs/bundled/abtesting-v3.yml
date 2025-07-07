@@ -137,6 +137,28 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'us');
+
+
+            // Call the API
+
+            const response = await client.customGet({ path: 'test/minimal' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
     post:
       operationId: customPost
       requestBody:
@@ -165,6 +187,28 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'us');
+
+
+            // Call the API
+
+            const response = await client.customPost({ path: 'test/minimal' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
     put:
       operationId: customPut
       requestBody:
@@ -193,6 +237,28 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'us');
+
+
+            // Call the API
+
+            const response = await client.customPut({ path: 'test/minimal' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -215,6 +281,29 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'us');
+
+
+            // Call the API
+
+            const response = await client.customDelete({ path: 'test/minimal'
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
   /3/abtests:
     post:
       tags:
@@ -279,6 +368,46 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'us');
+
+
+            // Call the API
+
+            const response = await client.addABTests({
+              endAt: '2022-12-31T00:00:00.000Z',
+              name: 'myABTest',
+              metrics: [{ name: 'myMetric' }],
+              variants: [
+                { index: 'AB_TEST_1', trafficPercentage: 30 },
+                { index: 'AB_TEST_2', trafficPercentage: 50 },
+              ],
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://analytics.us.algolia.com/3/abtests \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"name":"Custom ranking sales rank test","variants":[{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"},{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"}],"metrics":[[{"name":"revenue","dimension":"USD"},{"name":"conversionRate"},{"name":"clickThroughRate"},{"name":"trackedSearchCount"}]],"configuration":{"minimumDetectableEffect":{"size":0,"metric":"addToCartRate"},"filters":[{"domain":"abtesting","name":"isOutlier","trackEffects":true,"includes":true}],"errorCorrection":"bonferroni"},"endAt":"2023-06-17T00:00:00Z"}'
     get:
       tags:
         - abtest
@@ -358,6 +487,36 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'us');
+
+
+            // Call the API
+
+            const response = await client.listABTests();
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/3/abtests?offset=0&limit=10&indexPrefix=dev_&indexSuffix=_development' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /3/abtests/{id}:
     get:
       tags:
@@ -391,6 +550,36 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'us');
+
+
+            // Call the API
+
+            const response = await client.getABTest({ id: 42 });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://analytics.us.algolia.com/3/abtests/224 \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
     delete:
       tags:
         - abtest
@@ -423,6 +612,36 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'us');
+
+
+            // Call the API
+
+            const response = await client.deleteABTest({ id: 42 });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://analytics.us.algolia.com/3/abtests/224 \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /3/abtests/{id}/stop:
     post:
       tags:
@@ -459,6 +678,36 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'us');
+
+
+            // Call the API
+
+            const response = await client.stopABTest({ id: 42 });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://analytics.us.algolia.com/3/abtests/224/stop \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /3/abtests/schedule:
     post:
       tags:
@@ -527,6 +776,47 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'us');
+
+
+            // Call the API
+
+            const response = await client.scheduleABTest({
+              endAt: '2022-12-31T00:00:00.000Z',
+              scheduledAt: '2022-11-31T00:00:00.000Z',
+              name: 'myABTest',
+              metrics: [{ name: 'myMetric' }],
+              variants: [
+                { index: 'AB_TEST_1', trafficPercentage: 30 },
+                { index: 'AB_TEST_2', trafficPercentage: 50 },
+              ],
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://analytics.us.algolia.com/3/abtests/schedule \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"name":"Custom ranking sales rank test","variants":[{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"},{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"}],"metrics":[[{"name":"revenue","dimension":"USD"},{"name":"conversionRate"},{"name":"clickThroughRate"},{"name":"trackedSearchCount"}]],"configuration":{"minimumDetectableEffect":{"size":0,"metric":"addToCartRate"},"filters":[{"domain":"abtesting","name":"isOutlier","trackEffects":true,"includes":true}],"errorCorrection":"bonferroni"},"scheduledAt":"2023-06-15T15:06:44.400601Z","endAt":"2023-06-17T00:00:00Z"}'
   /3/abtests/estimate:
     post:
       tags:
@@ -592,6 +882,44 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'us');
+
+
+            // Call the API
+
+            const response = await client.estimateABTest({
+              configuration: { minimumDetectableEffect: { size: 0.03, metric: 'conversionRate' } },
+              variants: [
+                { index: 'AB_TEST_1', trafficPercentage: 50 },
+                { index: 'AB_TEST_2', trafficPercentage: 50 },
+              ],
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://analytics.us.algolia.com/3/abtests/estimate \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"configuration":{"filters":[{"domain":"abtesting","name":"isOutlier","trackEffects":true,"includes":true}],"minimumDetectableEffect":{"size":0,"metric":"addToCartRate"}},"variants":[{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"},{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"}]}'
   /3/abtests/{id}/timeseries:
     get:
       tags:
@@ -638,6 +966,36 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'us');
+
+
+            // Call the API
+
+            const response = await client.getTimeseries({ id: 42 });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://analytics.us.algolia.com/3/abtests/224/timeseries?startDate=2022-09-19&endDate=2023-01-21&metric=search_count' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
 components:
   securitySchemes:
     appId:

@@ -2,7 +2,7 @@
 /* eslint-disable eslint/no-unused-vars */
 import { describe, expect, test } from 'vitest';
 
-import { compositionClient } from '@algolia/client-composition';
+import { abtestingClient } from '@algolia/abtesting';
 import type { EchoResponse } from '@algolia/requester-testing';
 import { nodeEchoRequester } from '@algolia/requester-testing';
 
@@ -10,30 +10,8 @@ const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
 function createClient() {
-  return compositionClient(appId, apiKey, { requester: nodeEchoRequester() });
+  return abtestingClient(appId, apiKey, 'us', { requester: nodeEchoRequester() });
 }
-
-describe('api', () => {
-  test('calls api with correct read host', async () => {
-    const client = compositionClient('test-app-id', 'test-api-key', {
-      requester: nodeEchoRequester(),
-    });
-
-    const result = (await client.customGet({ path: 'test' })) as unknown as EchoResponse;
-
-    expect(result.host).toEqual('test-app-id-dsn.algolia.net');
-  }, 25000);
-
-  test('calls api with correct write host', async () => {
-    const client = compositionClient('test-app-id', 'test-api-key', {
-      requester: nodeEchoRequester(),
-    });
-
-    const result = (await client.customPost({ path: 'test' })) as unknown as EchoResponse;
-
-    expect(result.host).toEqual('test-app-id.algolia.net');
-  }, 25000);
-});
 
 describe('commonApi', () => {
   test('calls api with correct user agent', async () => {
@@ -42,7 +20,7 @@ describe('commonApi', () => {
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
     expect(decodeURIComponent(result.algoliaAgent)).toMatch(
-      /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Composition (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/,
+      /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Abtesting (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/,
     );
   }, 25000);
 
@@ -51,13 +29,37 @@ describe('commonApi', () => {
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.6.0\).*/);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(0.0.1-alpha.1\).*/);
+  }, 25000);
+});
+
+describe('parameters', () => {
+  test('uses the correct region', async () => {
+    const client = abtestingClient('my-app-id', 'my-api-key', 'us', {
+      requester: nodeEchoRequester(),
+    });
+
+    const result = (await client.getABTest({ id: 123 })) as unknown as EchoResponse;
+
+    expect(result.host).toEqual('analytics.us.algolia.com');
+  }, 25000);
+
+  test('throws when incorrect region is given', async () => {
+    try {
+      // @ts-ignore
+      const client = abtestingClient('my-app-id', 'my-api-key', 'not_a_region', {
+        requester: nodeEchoRequester(),
+      });
+      throw new Error('test is expected to throw error');
+    } catch (e) {
+      expect((e as Error).message).toMatch('`region` must be one of the following: de, us');
+    }
   }, 25000);
 });
 
 describe('setClientApiKey', () => {
   test('switch API key', async () => {
-    const client = compositionClient('test-app-id', 'test-api-key', {
+    const client = abtestingClient('test-app-id', 'test-api-key', 'us', {
       hosts: [
         {
           url: 'localhost',
@@ -86,11 +88,14 @@ describe('setClientApiKey', () => {
 
 describe('init', () => {
   test('sets authMode', async () => {
-    const qpClient = compositionClient('foo', 'bar', {
+    const qpClient = abtestingClient('foo', 'bar', 'us', {
       requester: nodeEchoRequester(),
       authMode: 'WithinQueryParameters',
     });
-    const headerClient = compositionClient('foo', 'bar', { requester: nodeEchoRequester(), authMode: 'WithinHeaders' });
+    const headerClient = abtestingClient('foo', 'bar', 'us', {
+      requester: nodeEchoRequester(),
+      authMode: 'WithinHeaders',
+    });
 
     const qpResult = (await qpClient.customGet({
       path: '1/foo',
