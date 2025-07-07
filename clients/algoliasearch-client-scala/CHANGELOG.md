@@ -1,3 +1,10 @@
+## [2.23.1](https://github.com/algolia/algoliasearch-client-scala/compare/2.23.0...2.23.1)
+
+- [4c9416a9fe](https://github.com/algolia/api-clients-automation/commit/4c9416a9fe) fix(specs): update sourceRun docs ([#5057](https://github.com/algolia/api-clients-automation/pull/5057)) by [@DevinCodes](https://github.com/DevinCodes/)
+- [f1a36e9a5f](https://github.com/algolia/api-clients-automation/commit/f1a36e9a5f) fix(specs): analytics base url correction ([#5059](https://github.com/algolia/api-clients-automation/pull/5059)) by [@kai687](https://github.com/kai687/)
+- [754efceb80](https://github.com/algolia/api-clients-automation/commit/754efceb80) fix(specs): allow one sided rule validity ([#5060](https://github.com/algolia/api-clients-automation/pull/5060)) by [@millotp](https://github.com/millotp/)
+- [2ba91d1df9](https://github.com/algolia/api-clients-automation/commit/2ba91d1df9) chore(deps): dependencies 2025-07-07 ([#5063](https://github.com/algolia/api-clients-automation/pull/5063)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [2.23.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.22.0...2.23.0)
 
 - [791a0c045d](https://github.com/algolia/api-clients-automation/commit/791a0c045d) feat(specs): abtesting winsorizedAmount ([#5053](https://github.com/algolia/api-clients-automation/pull/5053)) by [@cdhawke](https://github.com/cdhawke/)
