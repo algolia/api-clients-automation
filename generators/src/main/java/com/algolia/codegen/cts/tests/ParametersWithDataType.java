@@ -400,7 +400,11 @@ public class ParametersWithDataType {
             "' not found in '" +
             paramName +
             "'. Available properties are: " +
-            spec.getVars().stream().map(v -> v.baseName).collect(Collectors.joining(", ")) +
+            spec
+              .getVars()
+              .stream()
+              .map(v -> v.baseName)
+              .collect(Collectors.joining(", ")) +
             (spec.getAdditionalPropertiesIsAnyType() ? " (and any additional properties)" : "") +
             ". Or you might have a type conflict in the spec for '" +
             baseType +
@@ -415,7 +419,11 @@ public class ParametersWithDataType {
 
     if (language.equals("swift")) {
       // Store ordered params from the spec
-      var orderedParams = spec.getVars().stream().map(v -> v.baseName).toList();
+      var orderedParams = spec
+        .getVars()
+        .stream()
+        .map(v -> v.baseName)
+        .toList();
 
       // Create a map to store the indices of each string in orderedParams
       Map<String, Integer> indexMap = IntStream.range(0, orderedParams.size())

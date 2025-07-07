@@ -34,7 +34,7 @@ public class DynamicTemplateLambda implements Mustache.Lambda {
   @Override
   public void execute(Template.Fragment fragment, Writer writer) throws IOException {
     Map<String, Object> context = (Map<String, Object>) fragment.context();
-    for (int contextIndex = 1;; contextIndex++) {
+    for (int contextIndex = 1; ; contextIndex++) {
       try {
         Map<String, Object> parent = (Map<String, Object>) fragment.context(contextIndex);
         parent.forEach((key, value) -> context.putIfAbsent(key, value));

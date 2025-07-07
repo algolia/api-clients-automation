@@ -168,7 +168,11 @@ class SchemaSupport {
   }
 
   public Collection<String> imports() {
-    return oneOfs.values().stream().map(e -> e.imprt).collect(Collectors.toSet());
+    return oneOfs
+      .values()
+      .stream()
+      .map(e -> e.imprt)
+      .collect(Collectors.toSet());
   }
 
   Map<String, ModelsMap> clearOneOfFromModels(String libName, Map<String, ModelsMap> modelsMap) {
@@ -245,7 +249,8 @@ class SchemaSupport {
   private Set<String> getOneOfType(String type) {
     if (oneOfs.containsKey(type)) {
       return oneOfs.get(type).types;
-    } else if (type.startsWith("List<")) { // only lists are supported for now.
+    } else if (type.startsWith("List<")) {
+      // only lists are supported for now.
       String innerType = type.substring(5, type.length() - 1);
       return getOneOfTypesList(innerType);
     } else {
@@ -255,7 +260,11 @@ class SchemaSupport {
 
   private Set<String> getOneOfTypesList(String type) {
     if (oneOfs.containsKey(type)) {
-      return oneOfs.get(type).types.stream().map(e -> "List<" + e + ">").collect(Collectors.toSet());
+      return oneOfs
+        .get(type)
+        .types.stream()
+        .map(e -> "List<" + e + ">")
+        .collect(Collectors.toSet());
     } else {
       return Collections.singleton("List<" + type + ">");
     }

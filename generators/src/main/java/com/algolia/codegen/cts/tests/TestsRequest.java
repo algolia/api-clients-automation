@@ -187,7 +187,10 @@ public class TestsRequest extends TestsGenerator {
       blocks.add(testObj);
 
       // extract e2e
-      List<Map<String, Object>> e2e = tests.stream().filter(t -> t.get("response") != null).toList();
+      List<Map<String, Object>> e2e = tests
+        .stream()
+        .filter(t -> t.get("response") != null)
+        .toList();
       if (e2e.size() > 0) {
         Map<String, Object> e2eObj = new HashMap<>();
         e2eObj.put("tests", e2e);
