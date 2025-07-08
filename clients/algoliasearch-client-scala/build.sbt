@@ -3,7 +3,6 @@ name := "algoliasearch-scala"
 description := "Scala client for Algolia Search API"
 scalaVersion := "2.13.16"
 crossScalaVersions := Seq("2.13.12", "3.6.3")
-publishMavenStyle := true
 Test / publishArtifact := false
 licenses += ("MIT", url("https://opensource.org/licenses/MIT"))
 homepage := Some(url("https://github.com/algolia/algoliasearch-client-scala/"))
@@ -22,8 +21,6 @@ developers += Developer(
   "contact@algolia.com",
   url("https://github.com/algolia/algoliasearch-client-scala/")
 )
-
-publishTo := sonatypePublishToBundle.value
 
 lazy val root = project
   .in(file("."))
