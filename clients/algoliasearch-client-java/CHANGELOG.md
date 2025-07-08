@@ -1,3 +1,7 @@
+## [4.21.2](https://github.com/algolia/algoliasearch-client-java/compare/4.21.1...4.21.2)
+
+- [7238519bc9](https://github.com/algolia/api-clients-automation/commit/7238519bc9) chore(clients): correctly upgrade to maven central publishing ([#5085](https://github.com/algolia/api-clients-automation/pull/5085)) by [@millotp](https://github.com/millotp/)
+
 ## [4.21.1](https://github.com/algolia/algoliasearch-client-java/compare/4.21.0...4.21.1)
 
 - [fab1a9413c](https://github.com/algolia/api-clients-automation/commit/fab1a9413c) fix(clients): upgrade to maven central publishing ([#5055](https://github.com/algolia/api-clients-automation/pull/5055)) by [@millotp](https://github.com/millotp/)
