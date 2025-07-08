@@ -627,3 +627,14 @@ PushTaskPayload:
   required:
     - action
     - records
+
+RunTaskPayload:
+  type: object
+  additionalProperties: false
+  properties:
+    runInput:
+      type:
+        - type: string
+        - type: object
+        - type: array
+      description: Additional information that will be passed to the created run.
