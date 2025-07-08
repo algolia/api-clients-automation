@@ -7,7 +7,7 @@ on:
 
 jobs:
   release:
-    name: Publish to Sonatype
+    name: Publish to Maven Central
     runs-on: ubuntu-22.04
     if: "startsWith(github.event.head_commit.message, 'chore: release')"
     steps:
@@ -24,23 +24,9 @@ jobs:
       - name: Compile
         run: sbt +compile
 
-      - name: Import GPG Key
-        uses: crazy-max/ghaction-import-gpg@v6
-        with:
-          gpg_private_key: ${{ secrets.SIGNING_PRIVATE_KEY }}
-          passphrase: ${{ secrets.SIGNING_PRIVATE_KEY_PASSWORD }}
-          fingerprint: ${{ secrets.SIGNING_PRIVATE_KEY_FINGERPRINT }}
-
-      - name: List GPG keys
-        run: gpg -K
-
-      - name: Publish Signed Artifacts
+      - run: sbt ci-release
         env:
           PGP_PASSPHRASE: ${{ secrets.SIGNING_PRIVATE_KEY_PASSWORD }}
-        run: sbt +publishSigned
-
-      - name: Release Bundle to Sonatype
-        env:
-          SONATYPE_USERNAME: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
-          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
-        run: sbt sonatypeBundleRelease
+          PGP_SECRET_KEY: ${{ secrets.SIGNING_PRIVATE_KEY }}
+          SONATYPE_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
