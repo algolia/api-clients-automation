@@ -150,14 +150,16 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     CodegenProperty property
   ) {
     if (p == null) {
-      this.logger.severe("Undefined property/schema for `" + name + "`. Default to type:string.");
+      // this.logger.severe("Undefined property/schema for `" + name + "`. Default to
+      // type:string.");
       return null;
     } else {
-      this.logger.severe("debugging fromProperty for " + name + ": " + p);
+      // this.logger.severe("debugging fromProperty for " + name + ": " + p);
       NamedSchema ns = new NamedSchema(name, p, required, schemaIsFromAdditionalProperties);
       CodegenProperty cpc = (CodegenProperty) this.schemaCodegenPropertyCache.get(ns);
       if (cpc != null) {
-        this.logger.info("Cached fromProperty for " + name + " : " + p.getName() + " required=" + required);
+        // this.logger.info("Cached fromProperty for " + name + " : " + p.getName() + " required=" +
+        // required);
         return cpc;
       } else {
         Schema refToPropertiesSchema = ModelUtils.getSchemaFromRefToSchemaWithProperties(this.openAPI, p.get$ref());
