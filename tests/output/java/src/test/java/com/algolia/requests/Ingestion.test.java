@@ -1523,7 +1523,7 @@ class IngestionClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", req.path);
     assertEquals("POST", req.method);
-    assertEquals("{}", req.body);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT));
   }
 
   @Test
@@ -1535,7 +1535,7 @@ class IngestionClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", req.path);
     assertEquals("POST", req.method);
-    assertEquals("{}", req.body);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT));
   }
 
   @Test

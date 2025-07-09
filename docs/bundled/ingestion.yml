@@ -7388,7 +7388,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"indexToInclude":["lorem"],"indexToExclude":["lorem"],"entityIDs":["lorem"],"entityType":"product"}'
+              --data '{"indexToInclude":["lorem"],"indexToExclude":["lorem"],"entityIDs":["lorem"],"entityType":"product","runMetadata":{}}'
   /2/tasks:
     get:
       tags:
@@ -8951,6 +8951,12 @@ paths:
         - editSettings
       parameters:
         - $ref: '#/components/parameters/pathTaskID'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunTaskPayload'
       responses:
         '200':
           description: OK
@@ -9174,8 +9180,10 @@ paths:
             curl --request POST \
               --url https://data.us.algolia.com/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"runMetadata":{}}'
   /2/tasks/{taskID}/push:
     post:
       tags:
@@ -11657,6 +11665,12 @@ paths:
         - editSettings
       parameters:
         - $ref: '#/components/parameters/pathTaskID'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunTaskPayload'
       responses:
         '200':
           description: OK
@@ -11881,8 +11895,10 @@ paths:
             curl --request POST \
               --url https://data.us.algolia.com/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"runMetadata":{}}'
   /1/tasks/{taskID}/enable:
     put:
       tags:
@@ -17226,6 +17242,10 @@ components:
           description: List of entityIDs to update.
         entityType:
           $ref: '#/components/schemas/EntityType'
+        runMetadata:
+          type: object
+          additionalProperties: true
+          description: Additional information that will be passed to the created runs.
     ActionType:
       type: string
       description: Action to perform on the Algolia index.
@@ -17624,6 +17644,14 @@ components:
       required:
         - taskID
         - updatedAt
+    RunTaskPayload:
+      type: object
+      additionalProperties: false
+      properties:
+        runMetadata:
+          type: object
+          additionalProperties: true
+          description: Additional information that will be passed to the created run.
     RunResponse:
       type: object
       additionalProperties: false

@@ -2079,8 +2079,12 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
+        let expectedBodyData = "{}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
@@ -2103,8 +2107,12 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
+        let expectedBodyData = "{}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)

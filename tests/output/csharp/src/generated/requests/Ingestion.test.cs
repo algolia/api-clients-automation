@@ -1444,7 +1444,7 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    Assert.Equal("{}", req.Body);
+    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "runTaskV1")]
@@ -1455,7 +1455,7 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    Assert.Equal("{}", req.Body);
+    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
   }
 
   [Fact(DisplayName = "searchAuthentications")]
