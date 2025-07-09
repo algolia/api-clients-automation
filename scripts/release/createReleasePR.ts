@@ -1,7 +1,4 @@
-import path from 'path';
-
 import chalk from 'chalk';
-import dotenv from 'dotenv';
 import semver from 'semver';
 
 import generationCommitText, {
@@ -20,7 +17,6 @@ import {
   MAIN_BRANCH,
   OWNER,
   REPO,
-  ROOT_DIR,
   run,
   setVerbose,
   TODAY,
@@ -33,8 +29,6 @@ import TEXT from './text.ts';
 import type { Changelog, Commit, CommitType, ParsedCommit, Scope, Versions } from './types.ts';
 import { updateAPIVersions } from './updateAPIVersions.ts';
 import { generateVersionsHistory } from './versionsHistory.ts';
-
-dotenv.config({ path: path.resolve(ROOT_DIR, '.env') });
 
 // python pre-releases have a pattern like `X.Y.ZaN` for alpha or `X.Y.ZbN` for beta
 // see https://peps.python.org/pep-0440/
