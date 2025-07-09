@@ -632,9 +632,7 @@ RunTaskPayload:
   type: object
   additionalProperties: false
   properties:
-    runInput:
-      type:
-        - type: string
-        - type: object
-        - type: array
+    runMetadata:
+      type: object
+      additionalProperties: true
       description: Additional information that will be passed to the created run.
