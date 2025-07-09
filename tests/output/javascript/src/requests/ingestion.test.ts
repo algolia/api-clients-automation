@@ -999,7 +999,7 @@ describe('runTask', () => {
 
     expect(req.path).toEqual('/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual(undefined);
+    expect(req.data).toEqual({});
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });
@@ -1010,7 +1010,7 @@ describe('runTaskV1', () => {
 
     expect(req.path).toEqual('/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual(undefined);
+    expect(req.data).toEqual({});
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });

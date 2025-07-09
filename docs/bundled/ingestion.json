@@ -1557,6 +1557,16 @@
             "$ref": "#/components/parameters/pathTaskID"
           }
         ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunTaskPayload"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -1980,6 +1990,16 @@
             "$ref": "#/components/parameters/pathTaskID"
           }
         ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunTaskPayload"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -4885,6 +4905,11 @@
           },
           "entityType": {
             "$ref": "#/components/schemas/EntityType"
+          },
+          "runMetadata": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Additional information that will be passed to the created runs."
           }
         }
       },
@@ -5406,6 +5431,17 @@
           "taskID",
           "updatedAt"
         ]
+      },
+      "RunTaskPayload": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "runMetadata": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Additional information that will be passed to the created run."
+          }
+        }
       },
       "RunResponse": {
         "type": "object",

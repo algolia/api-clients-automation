@@ -19,23 +19,11 @@
   */
 package algoliasearch.ingestion
 
-import algoliasearch.ingestion.EntityType._
-
-/** RunSourcePayload
+/** RunTaskPayload
   *
-  * @param indexToInclude
-  *   List of index names to include in reindex/update.
-  * @param indexToExclude
-  *   List of index names to exclude in reindex/update.
-  * @param entityIDs
-  *   List of entityIDs to update.
   * @param runMetadata
-  *   Additional information that will be passed to the created runs.
+  *   Additional information that will be passed to the created run.
   */
-case class RunSourcePayload(
-    indexToInclude: Option[Seq[String]] = scala.None,
-    indexToExclude: Option[Seq[String]] = scala.None,
-    entityIDs: Option[Seq[String]] = scala.None,
-    entityType: Option[EntityType] = scala.None,
+case class RunTaskPayload(
     runMetadata: Option[Map[String, Any]] = scala.None
 )

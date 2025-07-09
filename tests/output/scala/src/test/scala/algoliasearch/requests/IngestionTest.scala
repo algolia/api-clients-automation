@@ -1455,7 +1455,9 @@ class IngestionTest extends AnyFunSuite {
 
     assert(res.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run")
     assert(res.method == "POST")
-    assert(res.body.contains("{}"))
+    val expectedBody = parse("""{}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
   }
 
   test("runTaskV1") {
@@ -1469,7 +1471,9 @@ class IngestionTest extends AnyFunSuite {
 
     assert(res.path == "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run")
     assert(res.method == "POST")
-    assert(res.body.contains("{}"))
+    val expectedBody = parse("""{}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
   }
 
   test("searchAuthentications") {
