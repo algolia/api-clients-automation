@@ -42,7 +42,7 @@ metricDate:
     metrics:
       $ref: 'Variant.yml#/metrics'
 
-Metric:
+MetricName:
   type: string
   enum:
     - search_count

@@ -16,7 +16,7 @@ get:
       schema:
         type: array
         items:
-          $ref: '../common/schemas/Timeseries.yml#/Metric'
+          $ref: '../common/schemas/Timeseries.yml#/MetricName'
   responses:
     '200':
       description: OK

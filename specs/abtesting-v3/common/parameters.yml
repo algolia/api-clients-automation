@@ -138,7 +138,7 @@ filterEffects:
           description: Number of tracked searches removed from the A/B test.
           example: 237
 
-metric:
+createMetric:
   type: object
   description: Defines a metric to be retrieved during an A/B test.
   properties:

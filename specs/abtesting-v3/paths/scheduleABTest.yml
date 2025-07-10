@@ -28,7 +28,7 @@ post:
               type: array
               description: A/B test metrics involved in the test. Only these metrics will be considered when calculating results.
               items:
-                $ref: '../common/parameters.yml#/metric'
+                $ref: '../common/parameters.yml#/createMetric'
             configuration:
               $ref: '../common/schemas/ABTest.yml#/ABTestConfiguration'
             scheduledAt:
