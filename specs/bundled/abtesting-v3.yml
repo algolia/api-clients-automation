@@ -255,7 +255,7 @@ paths:
                     A/B test metrics involved in the test. Only these metrics
                     will be considered when calculating results.
                   items:
-                    $ref: '#/components/schemas/parameters_metric'
+                    $ref: '#/components/schemas/createMetric'
                 configuration:
                   $ref: '#/components/schemas/ABTestConfiguration'
                 endAt:
@@ -500,7 +500,7 @@ paths:
                     A/B test metrics involved in the test. Only these metrics
                     will be considered when calculating results.
                   items:
-                    $ref: '#/components/schemas/parameters_metric'
+                    $ref: '#/components/schemas/createMetric'
                 configuration:
                   $ref: '#/components/schemas/ABTestConfiguration'
                 scheduledAt:
@@ -621,7 +621,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/Metric'
+              $ref: '#/components/schemas/MetricName'
       responses:
         '200':
           description: OK
@@ -807,7 +807,7 @@ components:
             global filter effects (such as outliers and empty search count).
       example:
         winsorizedValue: 888.8
-    metric:
+    metricResult:
       type: object
       properties:
         name:
@@ -908,7 +908,7 @@ components:
       type: array
       description: All ABTest metrics that were defined during test creation.
       items:
-        $ref: '#/components/schemas/metric'
+        $ref: '#/components/schemas/metricResult'
     filterEffects:
       type: object
       description: A/B test filter effects resulting from configuration settings.
@@ -1156,7 +1156,7 @@ components:
       oneOf:
         - $ref: '#/components/schemas/abTestsVariant'
         - $ref: '#/components/schemas/abTestsVariantSearchParams'
-    parameters_metric:
+    createMetric:
       type: object
       description: Defines a metric to be retrieved during an A/B test.
       properties:
@@ -1245,7 +1245,7 @@ components:
               Number of tracked searches needed to be able to detect the
               configured effect for the control variant.
             example: 23415
-    Metric:
+    MetricName:
       type: string
       enum:
         - search_count
