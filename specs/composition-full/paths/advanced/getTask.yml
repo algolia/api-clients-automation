@@ -12,7 +12,7 @@ get:
     Checks the status of a given task.
   summary: Check task status
   parameters:
-    - $ref: '../../common/parameters.yml#/compositionID'
+    - $ref: '../urlParams.yml#/compositionID'
     - name: taskID
       in: path
       description: Unique task identifier.

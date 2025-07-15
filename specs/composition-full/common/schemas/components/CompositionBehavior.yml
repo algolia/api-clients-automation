@@ -27,7 +27,7 @@ compositionBehavior:
                       description: Composition Main Index name.
                       example: Products
                     params:
-                      $ref: './SearchParams.yml#/mainInjectionQueryParameters'
+                      $ref: './Injection.yml#/mainInjectionQueryParameters'
                   required:
                     - index
               required:
@@ -68,7 +68,7 @@ injectedItem:
               description: Composition Main Index name.
               example: Products
             params:
-              $ref: './SearchParams.yml#/injectedItemsQueryParameters'
+              $ref: './Injection.yml#/injectedItemsQueryParameters'
           required:
             - index
       required:

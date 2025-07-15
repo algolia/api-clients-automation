@@ -9,7 +9,7 @@ post:
   summary: Run a Composition
   description: Runs a query on a single composition and returns matching results.
   parameters:
-    - $ref: '../../common/parameters.yml#/compositionID'
+    - $ref: '../urlParams.yml#/compositionID'
   requestBody:
     required: true
     content:
