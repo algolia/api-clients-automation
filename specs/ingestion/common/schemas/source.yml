@@ -474,6 +474,10 @@ RunSourcePayload:
       description: List of entityIDs to update.
     entityType:
       $ref: '#/EntityType'
+    runMetadata:
+      type: object
+      additionalProperties: true
+      description: Additional information that will be passed to the created runs.
 
 EntityType:
   type: string

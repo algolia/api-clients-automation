@@ -1,3 +1,20 @@
+## [5.33.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.32.0...5.33.0)
+
+- [a7a3c5fc95](https://github.com/algolia/api-clients-automation/commit/a7a3c5fc95) feat(specs): document runMetadata parameter ([#5087](https://github.com/algolia/api-clients-automation/pull/5087)) by [@DevinCodes](https://github.com/DevinCodes/)
+- [c23e62ed53](https://github.com/algolia/api-clients-automation/commit/c23e62ed53) chore(deps): dependencies 2025-07-14 ([#5091](https://github.com/algolia/api-clients-automation/pull/5091)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [fe3312f9e5](https://github.com/algolia/api-clients-automation/commit/fe3312f9e5) fix(specs): abtest v3 naming conflict with Metric type ([#5090](https://github.com/algolia/api-clients-automation/pull/5090)) by [@cdhawke](https://github.com/cdhawke/)
+
+## [5.32.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.31.0...5.32.0)
+
+- [6a90357d7d](https://github.com/algolia/api-clients-automation/commit/6a90357d7d) feat(templates): use headers in js advanced perso client ([#5083](https://github.com/algolia/api-clients-automation/pull/5083)) by [@bengreenbank](https://github.com/bengreenbank/)
+
+## [5.31.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.30.0...5.31.0)
+
+- [4c9416a9fe](https://github.com/algolia/api-clients-automation/commit/4c9416a9fe) fix(specs): update sourceRun docs ([#5057](https://github.com/algolia/api-clients-automation/pull/5057)) by [@DevinCodes](https://github.com/DevinCodes/)
+- [754efceb80](https://github.com/algolia/api-clients-automation/commit/754efceb80) fix(specs): allow one sided rule validity ([#5060](https://github.com/algolia/api-clients-automation/pull/5060)) by [@millotp](https://github.com/millotp/)
+- [2ba91d1df9](https://github.com/algolia/api-clients-automation/commit/2ba91d1df9) chore(deps): dependencies 2025-07-07 ([#5063](https://github.com/algolia/api-clients-automation/pull/5063)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [fd5dcdf800](https://github.com/algolia/api-clients-automation/commit/fd5dcdf800) feat(javascript): generate abtesting v3 alpha client ([#4783](https://github.com/algolia/api-clients-automation/pull/4783)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.30.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.29.0...5.30.0)
 
 - [2ca05ef173](https://github.com/algolia/api-clients-automation/commit/2ca05ef173) chore(deps): dependencies 2025-06-23 ([#5016](https://github.com/algolia/api-clients-automation/pull/5016)) by [@algolia-bot](https://github.com/algolia-bot/)

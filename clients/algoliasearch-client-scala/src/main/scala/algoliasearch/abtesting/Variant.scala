@@ -75,7 +75,7 @@ package algoliasearch.abtesting
 case class Variant(
     addToCartCount: Int,
     addToCartRate: Option[Double] = scala.None,
-    averageClickPosition: Option[Int] = scala.None,
+    averageClickPosition: Option[Double] = scala.None,
     clickCount: Int,
     clickThroughRate: Option[Double] = scala.None,
     conversionCount: Int,

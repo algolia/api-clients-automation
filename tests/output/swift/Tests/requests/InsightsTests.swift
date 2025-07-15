@@ -143,10 +143,10 @@ final class InsightsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/test/all")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap("{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}"
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}"
                 .data(using: .utf8)
-            )
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -743,9 +743,8 @@ final class InsightsClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"events\":[{\"eventType\":\"click\",\"eventName\":\"Product Clicked\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1641290601962,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\",\"positions\":[7,6]}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"events\":[{\"eventType\":\"click\",\"eventName\":\"Product Clicked\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1641290601962,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\",\"positions\":[7,6]}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -775,7 +774,7 @@ final class InsightsClientRequestsTests: XCTestCase {
                 queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
                 userToken: "user-123456",
                 authenticatedUserToken: "user-123456",
-                timestamp: Int64(1_751_673_600_000)
+                timestamp: Int64(1_752_451_200_000)
             )),
             EventsItems.viewedObjectIDs(ViewedObjectIDs(
                 eventName: "Product Detail Page Viewed",
@@ -784,7 +783,7 @@ final class InsightsClientRequestsTests: XCTestCase {
                 objectIDs: ["9780545139700", "9780439784542"],
                 userToken: "user-123456",
                 authenticatedUserToken: "user-123456",
-                timestamp: Int64(1_751_673_600_000)
+                timestamp: Int64(1_752_451_200_000)
             )),
         ]))
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -793,9 +792,8 @@ final class InsightsClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1751673600000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1751673600000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1752451200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1752451200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -836,9 +834,8 @@ final class InsightsClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1641290601962,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1641290601962,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -875,9 +872,8 @@ final class InsightsClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"events\":[{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1641290601962,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"events\":[{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1641290601962,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -932,9 +928,8 @@ final class InsightsClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"events\":[{\"eventType\":\"conversion\",\"eventSubtype\":\"addToCart\",\"eventName\":\"Product Added To Cart\",\"index\":\"products\",\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1641290601962,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"objectData\":[{\"price\":19.99,\"quantity\":10,\"discount\":2.5},{\"price\":\"8$\",\"quantity\":7,\"discount\":\"30%\"}],\"currency\":\"USD\"}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"events\":[{\"eventType\":\"conversion\",\"eventSubtype\":\"addToCart\",\"eventName\":\"Product Added To Cart\",\"index\":\"products\",\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1641290601962,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"objectData\":[{\"price\":19.99,\"quantity\":10,\"discount\":2.5},{\"price\":\"8$\",\"quantity\":7,\"discount\":\"30%\"}],\"currency\":\"USD\"}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)

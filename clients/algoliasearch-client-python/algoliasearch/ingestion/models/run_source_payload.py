@@ -25,6 +25,7 @@ _ALIASES = {
     "index_to_exclude": "indexToExclude",
     "entity_ids": "entityIDs",
     "entity_type": "entityType",
+    "run_metadata": "runMetadata",
 }
 
 
@@ -44,6 +45,8 @@ class RunSourcePayload(BaseModel):
     entity_ids: Optional[List[str]] = None
     """ List of entityIDs to update. """
     entity_type: Optional[EntityType] = None
+    run_metadata: Optional[Dict[str, object]] = None
+    """ Additional information that will be passed to the created runs. """
 
     model_config = ConfigDict(
         strict=False,

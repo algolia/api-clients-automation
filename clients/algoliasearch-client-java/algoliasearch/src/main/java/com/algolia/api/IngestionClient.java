@@ -3645,12 +3645,37 @@ public class IngestionClient extends ApiClient {
    * Runs a task. You can check the status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param runTaskPayload (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RunResponse runTask(@Nonnull String taskID, RunTaskPayload runTaskPayload, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(runTaskAsync(taskID, runTaskPayload, requestOptions));
+  }
+
+  /**
+   * Runs a task. You can check the status of task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param runTaskPayload (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RunResponse runTask(@Nonnull String taskID, RunTaskPayload runTaskPayload) throws AlgoliaRuntimeException {
+    return this.runTask(taskID, runTaskPayload, null);
+  }
+
+  /**
+   * Runs a task. You can check the status of task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RunResponse runTask(@Nonnull String taskID, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(runTaskAsync(taskID, requestOptions));
+    return this.runTask(taskID, null, requestOptions);
   }
 
   /**
@@ -3660,7 +3685,40 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RunResponse runTask(@Nonnull String taskID) throws AlgoliaRuntimeException {
-    return this.runTask(taskID, null);
+    return this.runTask(taskID, null, null);
+  }
+
+  /**
+   * (asynchronously) Runs a task. You can check the status of task runs with the observability
+   * endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param runTaskPayload (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RunResponse> runTaskAsync(
+    @Nonnull String taskID,
+    RunTaskPayload runTaskPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `runTask`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/run", taskID).setMethod("POST").setBody(runTaskPayload).build();
+    return executeAsync(request, requestOptions, new TypeReference<RunResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Runs a task. You can check the status of task runs with the observability
+   * endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param runTaskPayload (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RunResponse> runTaskAsync(@Nonnull String taskID, RunTaskPayload runTaskPayload) throws AlgoliaRuntimeException {
+    return this.runTaskAsync(taskID, runTaskPayload, null);
   }
 
   /**
@@ -3674,11 +3732,7 @@ public class IngestionClient extends ApiClient {
    */
   public CompletableFuture<RunResponse> runTaskAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `runTask`.");
-
-    HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/run", taskID).setMethod("POST").build();
-
-    return executeAsync(request, requestOptions, new TypeReference<RunResponse>() {});
+    return this.runTaskAsync(taskID, null, requestOptions);
   }
 
   /**
@@ -3689,7 +3743,38 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<RunResponse> runTaskAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
-    return this.runTaskAsync(taskID, null);
+    return this.runTaskAsync(taskID, null, null);
+  }
+
+  /**
+   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
+   * task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param runTaskPayload (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public RunResponse runTaskV1(@Nonnull String taskID, RunTaskPayload runTaskPayload, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(runTaskV1Async(taskID, runTaskPayload, requestOptions));
+  }
+
+  /**
+   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
+   * task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param runTaskPayload (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public RunResponse runTaskV1(@Nonnull String taskID, RunTaskPayload runTaskPayload) throws AlgoliaRuntimeException {
+    return this.runTaskV1(taskID, runTaskPayload, null);
   }
 
   /**
@@ -3700,11 +3785,9 @@ public class IngestionClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
-   * @deprecated
    */
-  @Deprecated
   public RunResponse runTaskV1(@Nonnull String taskID, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(runTaskV1Async(taskID, requestOptions));
+    return this.runTaskV1(taskID, null, requestOptions);
   }
 
   /**
@@ -3713,11 +3796,9 @@ public class IngestionClient extends ApiClient {
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
-   * @deprecated
    */
-  @Deprecated
   public RunResponse runTaskV1(@Nonnull String taskID) throws AlgoliaRuntimeException {
-    return this.runTaskV1(taskID, null);
+    return this.runTaskV1(taskID, null, null);
   }
 
   /**
@@ -3725,18 +3806,21 @@ public class IngestionClient extends ApiClient {
    * the status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param runTaskPayload (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    * @deprecated
    */
   @Deprecated
-  public CompletableFuture<RunResponse> runTaskV1Async(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<RunResponse> runTaskV1Async(
+    @Nonnull String taskID,
+    RunTaskPayload runTaskPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `runTaskV1`.");
 
-    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/run", taskID).setMethod("POST").build();
-
+    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/run", taskID).setMethod("POST").setBody(runTaskPayload).build();
     return executeAsync(request, requestOptions, new TypeReference<RunResponse>() {});
   }
 
@@ -3745,12 +3829,39 @@ public class IngestionClient extends ApiClient {
    * the status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param runTaskPayload (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    * @deprecated
    */
   @Deprecated
+  public CompletableFuture<RunResponse> runTaskV1Async(@Nonnull String taskID, RunTaskPayload runTaskPayload)
+    throws AlgoliaRuntimeException {
+    return this.runTaskV1Async(taskID, runTaskPayload, null);
+  }
+
+  /**
+   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
+   * the status of task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RunResponse> runTaskV1Async(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.runTaskV1Async(taskID, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
+   * the status of task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
   public CompletableFuture<RunResponse> runTaskV1Async(@Nonnull String taskID) throws AlgoliaRuntimeException {
-    return this.runTaskV1Async(taskID, null);
+    return this.runTaskV1Async(taskID, null, null);
   }
 
   /**

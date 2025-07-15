@@ -11597,11 +11597,10 @@ paths:
             let response = try await client.saveRules(
                 indexName: "<YOUR_INDEX_NAME>",
                 rules: [
-                    Rule(
-                        objectID: "a-rule-id",
-                        conditions: [SearchCondition(pattern: "smartphone", anchoring: SearchAnchoring.contains)],
-                        consequence: SearchConsequence(params: SearchConsequenceParams(filters: "brand:apple"))
-                    ),
+                    Rule(objectID: "a-rule-id", conditions: [SearchCondition(
+                        pattern: "smartphone",
+                        anchoring: SearchAnchoring.contains
+                    )], consequence: SearchConsequence(params: SearchConsequenceParams(filters: "brand:apple"))),
                     Rule(
                         objectID: "a-second-rule-id",
                         conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)],

@@ -1,3 +1,20 @@
+## [4.22.0](https://github.com/algolia/algoliasearch-client-java/compare/4.21.2...4.22.0)
+
+- [a7a3c5fc95](https://github.com/algolia/api-clients-automation/commit/a7a3c5fc95) feat(specs): document runMetadata parameter ([#5087](https://github.com/algolia/api-clients-automation/pull/5087)) by [@DevinCodes](https://github.com/DevinCodes/)
+- [f3717177c5](https://github.com/algolia/api-clients-automation/commit/f3717177c5) fix(specs): `averageClickPosition` return type ([#5089](https://github.com/algolia/api-clients-automation/pull/5089)) by [@shortcuts](https://github.com/shortcuts/)
+- [c23e62ed53](https://github.com/algolia/api-clients-automation/commit/c23e62ed53) chore(deps): dependencies 2025-07-14 ([#5091](https://github.com/algolia/api-clients-automation/pull/5091)) by [@algolia-bot](https://github.com/algolia-bot/)
+
+## [4.21.2](https://github.com/algolia/algoliasearch-client-java/compare/4.21.1...4.21.2)
+
+- [7238519bc9](https://github.com/algolia/api-clients-automation/commit/7238519bc9) chore(clients): correctly upgrade to maven central publishing ([#5085](https://github.com/algolia/api-clients-automation/pull/5085)) by [@millotp](https://github.com/millotp/)
+
+## [4.21.1](https://github.com/algolia/algoliasearch-client-java/compare/4.21.0...4.21.1)
+
+- [fab1a9413c](https://github.com/algolia/api-clients-automation/commit/fab1a9413c) fix(clients): upgrade to maven central publishing ([#5055](https://github.com/algolia/api-clients-automation/pull/5055)) by [@millotp](https://github.com/millotp/)
+- [4c9416a9fe](https://github.com/algolia/api-clients-automation/commit/4c9416a9fe) fix(specs): update sourceRun docs ([#5057](https://github.com/algolia/api-clients-automation/pull/5057)) by [@DevinCodes](https://github.com/DevinCodes/)
+- [754efceb80](https://github.com/algolia/api-clients-automation/commit/754efceb80) fix(specs): allow one sided rule validity ([#5060](https://github.com/algolia/api-clients-automation/pull/5060)) by [@millotp](https://github.com/millotp/)
+- [2ba91d1df9](https://github.com/algolia/api-clients-automation/commit/2ba91d1df9) chore(deps): dependencies 2025-07-07 ([#5063](https://github.com/algolia/api-clients-automation/pull/5063)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [4.21.0](https://github.com/algolia/algoliasearch-client-java/compare/4.20.0...4.21.0)
 
 - [2ca05ef173](https://github.com/algolia/api-clients-automation/commit/2ca05ef173) chore(deps): dependencies 2025-06-23 ([#5016](https://github.com/algolia/api-clients-automation/pull/5016)) by [@algolia-bot](https://github.com/algolia-bot/)

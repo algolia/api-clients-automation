@@ -4,9 +4,6 @@ import { describe, expect, test } from 'vitest';
 import { union } from '../helpers.js';
 
 import { algoliasearch } from 'algoliasearch';
-import * as dotenv from 'dotenv';
-
-dotenv.config({ path: '../../.env' });
 
 if (!process.env.ALGOLIA_APPLICATION_ID) {
   throw new Error('please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests');
@@ -30,7 +27,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1751673600000,
+          timestamp: 1752451200000,
           objectIDs: ['9780545139700', '9780439784542'],
           queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
         },
@@ -40,7 +37,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1751673600000,
+          timestamp: 1752451200000,
           objectIDs: ['9780545139700', '9780439784542'],
         },
       ],

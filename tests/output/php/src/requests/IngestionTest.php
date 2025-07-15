@@ -1409,7 +1409,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run',
                 'method' => 'POST',
-                'body' => json_decode(''),
+                'body' => json_decode('{}'),
             ],
         ]);
     }
@@ -1426,7 +1426,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run',
                 'method' => 'POST',
-                'body' => json_decode(''),
+                'body' => json_decode('{}'),
             ],
         ]);
     }

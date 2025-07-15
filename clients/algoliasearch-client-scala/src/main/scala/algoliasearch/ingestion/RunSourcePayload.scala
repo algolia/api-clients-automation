@@ -29,10 +29,13 @@ import algoliasearch.ingestion.EntityType._
   *   List of index names to exclude in reindex/update.
   * @param entityIDs
   *   List of entityIDs to update.
+  * @param runMetadata
+  *   Additional information that will be passed to the created runs.
   */
 case class RunSourcePayload(
     indexToInclude: Option[Seq[String]] = scala.None,
     indexToExclude: Option[Seq[String]] = scala.None,
     entityIDs: Option[Seq[String]] = scala.None,
-    entityType: Option[EntityType] = scala.None
+    entityType: Option[EntityType] = scala.None,
+    runMetadata: Option[Map[String, Any]] = scala.None
 )

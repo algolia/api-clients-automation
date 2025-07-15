@@ -1062,6 +1062,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert_equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{}"), JSON.parse(req.body))
   end
 
   # runTaskV1
@@ -1072,6 +1073,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert_equal("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{}"), JSON.parse(req.body))
   end
 
   # searchAuthentications

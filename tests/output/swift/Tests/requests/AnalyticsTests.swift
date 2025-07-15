@@ -143,10 +143,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/test/all")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap("{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}"
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}"
                 .data(using: .utf8)
-            )
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -742,11 +742,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/2/conversions/addToCartRate")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
-                    .data(using: .utf8)
-            )
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -807,11 +806,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/2/clicks/averageClickPosition")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
-                    .data(using: .utf8)
-            )
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -872,11 +870,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/2/clicks/positions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
-                    .data(using: .utf8)
-            )
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -937,11 +934,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/2/clicks/clickThroughRate")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
-                    .data(using: .utf8)
-            )
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1002,11 +998,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/2/conversions/conversionRate")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
-                    .data(using: .utf8)
-            )
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1067,11 +1062,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/2/searches/noClickRate")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
-                    .data(using: .utf8)
-            )
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1132,11 +1126,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/2/searches/noResultRate")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
-                    .data(using: .utf8)
-            )
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1197,11 +1190,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/2/conversions/purchaseRate")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
-                    .data(using: .utf8)
-            )
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1262,11 +1254,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/2/conversions/revenue")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
-                    .data(using: .utf8)
-            )
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1327,11 +1318,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/2/searches/count")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
-                    .data(using: .utf8)
-            )
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1394,11 +1384,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/2/searches/noClicks")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
-                    .data(using: .utf8)
-            )
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1461,11 +1450,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/2/searches/noResults")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
-                    .data(using: .utf8)
-            )
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1556,11 +1544,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/2/countries")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
-                    .data(using: .utf8)
-            )
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1624,11 +1611,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/2/filters")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
-                    .data(using: .utf8)
-            )
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1724,11 +1710,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/2/filters/myAttribute")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
-                    .data(using: .utf8)
-            )
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1765,11 +1750,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/2/filters/myAttribute1%2CmyAttribute2")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
-                    .data(using: .utf8)
-            )
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1833,11 +1817,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/2/filters/noResults")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
-                    .data(using: .utf8)
-            )
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1903,11 +1886,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/2/hits")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"index\":\"index\",\"search\":\"mySearch\",\"clickAnalytics\":\"true\",\"revenueAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
-                    .data(using: .utf8)
-            )
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"index\":\"index\",\"search\":\"mySearch\",\"clickAnalytics\":\"true\",\"revenueAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1974,11 +1956,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/2/searches")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"index\":\"index\",\"clickAnalytics\":\"true\",\"revenueAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"orderBy\":\"searchCount\",\"direction\":\"asc\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
-                    .data(using: .utf8)
-            )
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"index\":\"index\",\"clickAnalytics\":\"true\",\"revenueAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"orderBy\":\"searchCount\",\"direction\":\"asc\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -2039,11 +2020,10 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/2/users/count")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap(
-                "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
-                    .data(using: .utf8)
-            )
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters

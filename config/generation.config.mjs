@@ -11,6 +11,7 @@ export const patterns = [
   '!clients/README.md',
   '!clients/**/.openapi-generator-ignore',
   'clients/**/.github/**',
+  '!clients/**/.github/workflows/release.yml',
 
   // C#
   'clients/algoliasearch-client-csharp/**',
@@ -38,7 +39,6 @@ export const patterns = [
   'clients/algoliasearch-client-dart/packages/client_core/lib/src/version.dart',
   '!clients/algoliasearch-client-dart/packages/*/lib/src/extension.dart',
   '!clients/algoliasearch-client-dart/packages/algoliasearch/lib/algoliasearch.dart',
-  '!clients/algoliasearch-client-dart/.github/workflows/release.yml',
 
   // GO
   'clients/algoliasearch-client-go/algolia/**',
@@ -64,7 +64,6 @@ export const patterns = [
   // JavaScript
   '!clients/algoliasearch-client-javascript/*',
   '!clients/algoliasearch-client-javascript/.yarn/**',
-  '!clients/algoliasearch-client-javascript/.github/workflows/release.yml',
   '!clients/algoliasearch-client-javascript/scripts/**',
   '!clients/algoliasearch-client-javascript/tests/**',
   // the release process is allowed to push changes to this file, but in general we don't because those files are generated

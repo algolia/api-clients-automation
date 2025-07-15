@@ -627,3 +627,12 @@ PushTaskPayload:
   required:
     - action
     - records
+
+RunTaskPayload:
+  type: object
+  additionalProperties: false
+  properties:
+    runMetadata:
+      type: object
+      additionalProperties: true
+      description: Additional information that will be passed to the created run.
