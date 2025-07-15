@@ -1,0 +1,79 @@
+compositionRule:
+  type: object
+  additionalProperties: false
+  properties:
+    objectID:
+      $ref: '../../../common/parameters.yml#/objectID'
+    conditions:
+      type: array
+      minItems: 0
+      maxItems: 25
+      description: Conditions that trigger a composition rule.
+      items:
+        $ref: '#/condition'
+    consequence:
+      title: compositionRuleConsequence
+      type: object
+      description: Effect of the rule.
+      additionalProperties: false
+      properties:
+        behavior:
+          $ref: './compositionBehavior.yml#/compositionBehavior'
+      required:
+        - behavior
+    description:
+      type: string
+      description: Description of the rule's purpose to help you distinguish between different rules.
+      example: Display a promotional banner
+    enabled:
+      type: boolean
+      default: true
+      description: Whether the rule is active.
+    validity:
+      type: array
+      description: Time periods when the rule is active.
+      items:
+        $ref: '../../../common/schemas/Rule.yml#/timeRange'
+  required:
+    - objectID
+    - conditions
+    - consequence
+
+condition:
+  type: object
+  additionalProperties: false
+  properties:
+    pattern:
+      type: string
+      description: |
+        Query pattern that triggers the rule.
+
+        You can use either a literal string, or a special pattern `{facet:ATTRIBUTE}`, where `ATTRIBUTE` is a facet name.
+        The rule is triggered if the query matches the literal string or a value of the specified facet.
+        For example, with `pattern: {facet:genre}`, the rule is triggered when users search for a genre, such as "comedy".
+      example: '{facet:genre}'
+    anchoring:
+      $ref: '#/anchoring'
+    context:
+      $ref: '../../../common/schemas/Rule.yml#/context'
+    filters:
+      type: string
+      description: |
+        Filters that trigger the rule.
+
+        You can add add filters using the syntax `facet:value` so that the rule is triggered, when the specific filter is selected.
+        You can use `filters` on its own or combine it with the `pattern` parameter.
+      example: 'genre:comedy'
+
+anchoring:
+  type: string
+  description: |
+    Which part of the search query the pattern should match:
+
+    - `startsWith`. The pattern must match the beginning of the query.
+    - `endsWith`. The pattern must match the end of the query.
+    - `is`. The pattern must match the query exactly.
+    - `contains`. The pattern must match anywhere in the query.
+
+    Empty queries are only allowed as patterns with `anchoring: is`.
+  enum: [is, startsWith, endsWith, contains]

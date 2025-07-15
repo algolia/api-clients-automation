@@ -1,0 +1,31 @@
+listCompositionsResponse:
+  type: object
+  additionalProperties: false
+  properties:
+    items:
+      type: array
+      description: All compositions in your Algolia application.
+      items:
+        $ref: './Composition.yml#/composition'
+    nbPages:
+      type: integer
+      description: Number of pages.
+      example: 100
+    page:
+      type: integer
+      description: Current page.
+      example: 0
+    hitsPerPage:
+      type: integer
+      description: Number of items per page.
+      example: 20
+    nbHits:
+      type: integer
+      description: Number of items.
+      example: 200
+  required:
+    - hitsPerPage
+    - items
+    - nbHits
+    - nbPages
+    - page
