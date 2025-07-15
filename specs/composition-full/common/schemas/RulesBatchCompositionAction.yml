@@ -10,5 +10,5 @@ deleteCompositionRuleAction:
 
 rulesBatchCompositionAction:
   oneOf:
-    - $ref: './compositionRule.yml#/compositionRule'
+    - $ref: './CompositionRule.yml#/compositionRule'
     - $ref: '#/deleteCompositionRuleAction'
