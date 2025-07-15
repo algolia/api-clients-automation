@@ -1,0 +1,80 @@
+injectionBehaviour:
+  title: compositionInjectionBehavior
+  description: |
+    The injection behaviour allow to inject a dynamic list of items within a result set.
+    The injected items are defined in the `injectedItems` property of the Composition entity.
+    The `main` property defines the main source to query to retrieve the main feed results.
+  type: object
+  additionalProperties: false
+  properties:
+    main:
+      title: mainResultFeed
+      description: Main result feed source of the injection behaviour.
+      type: object
+      additionalProperties: false
+      properties:
+        source:
+          title: compositionSource
+          type: object
+          additionalProperties: false
+          properties:
+            search:
+              title: compositionSourceSearch
+              type: object
+              additionalProperties: false
+              properties:
+                index:
+                  type: string
+                  description: Composition Main Index name.
+                  example: Products
+                params:
+                  $ref: './SearchParams.yml#/mainInjectionQueryParameters'
+              required:
+                - index
+          required:
+            - search
+      required:
+        - source
+    injectedItems:
+      type: array
+      description: list of injected items of the current Composition.
+      minItems: 0
+      maxItems: 2
+      items:
+        $ref: '#/injectedItem'
+  required:
+    - main
+
+injectedItem:
+  type: object
+  additionalProperties: false
+  properties:
+    key:
+      type: string
+      description: |
+        Injected item key identifier.
+
+        The key must be uniq within the Composition entity only.
+        Multiple compositions can have injected items with the same key.
+    source:
+      title: injectedItemSource
+      type: object
+      additionalProperties: false
+      properties:
+        search:
+          $ref: './Sources.yml#/searchSource'
+      required:
+        - search
+    position:
+      type: integer
+      minimum: 0
+      maximum: 19
+    length:
+      type: integer
+      minimum: 0
+      maximum: 20
+  required:
+    - key
+    - source
+    - position
+    - length

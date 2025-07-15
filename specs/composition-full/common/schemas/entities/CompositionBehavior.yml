@@ -1,0 +1,8 @@
+compositionBehavior:
+  type: object
+  additionalProperties: false
+  properties:
+    injection:
+      $ref: './Injection.yml#/injectionBehaviour'
+  required:
+    - injection

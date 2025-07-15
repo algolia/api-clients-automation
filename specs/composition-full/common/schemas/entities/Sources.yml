@@ -1,0 +1,15 @@
+searchSource:
+  title: Search source
+  description: |
+    The search source is dedicated to launch sub-queries toward an Algolia index.
+  type: object
+  additionalProperties: false
+  properties:
+    index:
+      type: string
+      description: Index targeted by the source.
+      example: 'my-products-index'
+      params:
+        $ref: './SearchParams.yml#/injectedItemsQueryParameters'
+      required:
+        - index
