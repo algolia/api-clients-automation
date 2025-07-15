@@ -27,7 +27,7 @@ post:
                   action:
                     $ref: '../../common/schemas/Batch.yml#/action'
                   body:
-                    $ref: '../../common/schemas/batchCompositionAction.yml#/batchCompositionAction'
+                    $ref: '../../common/schemas/BatchCompositionAction.yml#/batchCompositionAction'
                 required:
                   - action
                   - body

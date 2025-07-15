@@ -30,7 +30,7 @@ post:
                   action:
                     $ref: '../../common/schemas/Batch.yml#/action'
                   body:
-                    $ref: '../../common/schemas/rulesBatchCompositionAction.yml#/rulesBatchCompositionAction'
+                    $ref: '../../common/schemas/RulesBatchCompositionAction.yml#/rulesBatchCompositionAction'
                 required:
                   - action
                   - body
