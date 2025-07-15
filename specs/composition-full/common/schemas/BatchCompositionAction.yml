@@ -10,5 +10,5 @@ deleteCompositionAction:
 
 batchCompositionAction:
   oneOf:
-    - $ref: './listCompositionsResponse.yml#/composition'
+    - $ref: './Composition.yml#/composition'
     - $ref: '#/deleteCompositionAction'
