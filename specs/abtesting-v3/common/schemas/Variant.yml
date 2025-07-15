@@ -40,9 +40,9 @@ metrics:
   type: array
   description: All ABTest metrics that were defined during test creation.
   items:
-    $ref: '#/metric'
+    $ref: '#/metricResult'
 
-metric:
+metricResult:
   type: object
   properties:
     name:
