@@ -938,7 +938,10 @@ final class SearchClientSnippet {
                     hitsPerPage: 10,
                     typoTolerance: SearchTypoTolerance.searchTypoToleranceEnum(SearchTypoToleranceEnum.strict),
                     mode: SearchMode.neuralSearch,
-                    optionalWords: SearchOptionalWords.arrayOfString(["one", "two"])
+                    optionalWords: SearchOptionalWords.arrayOfString([
+                        "one",
+                        "two",
+                    ])
                 ),
                 filters: "category:Book OR category:Ebook AND _tags:published",
                 validUntil: Int64(2_524_604_400),
@@ -1990,14 +1993,13 @@ final class SearchClientSnippet {
                 consequence: SearchConsequence(
                     params: SearchConsequenceParams(
                         filters: "brand:apple",
-                        query: SearchConsequenceQuery
-                            .searchConsequenceQueryObject(SearchConsequenceQueryObject(
-                                remove: ["algolia"],
-                                edits: [
-                                    SearchEdit(type: SearchEditType.remove, delete: "abc", insert: "cde"),
-                                    SearchEdit(type: SearchEditType.replace, delete: "abc", insert: "cde"),
-                                ]
-                            ))
+                        query: SearchConsequenceQuery.searchConsequenceQueryObject(SearchConsequenceQueryObject(
+                            remove: ["algolia"],
+                            edits: [
+                                SearchEdit(type: SearchEditType.remove, delete: "abc", insert: "cde"),
+                                SearchEdit(type: SearchEditType.replace, delete: "abc", insert: "cde"),
+                            ]
+                        ))
                     ),
                     promote: [
                         SearchPromote.searchPromoteObjectID(SearchPromoteObjectID(objectID: "abc", position: 3)),
@@ -2581,11 +2583,10 @@ final class SearchClientSnippet {
         let response = try await client.saveRules(
             indexName: "<YOUR_INDEX_NAME>",
             rules: [
-                Rule(
-                    objectID: "a-rule-id",
-                    conditions: [SearchCondition(pattern: "smartphone", anchoring: SearchAnchoring.contains)],
-                    consequence: SearchConsequence(params: SearchConsequenceParams(filters: "brand:apple"))
-                ),
+                Rule(objectID: "a-rule-id", conditions: [SearchCondition(
+                    pattern: "smartphone",
+                    anchoring: SearchAnchoring.contains
+                )], consequence: SearchConsequence(params: SearchConsequenceParams(filters: "brand:apple"))),
                 Rule(
                     objectID: "a-second-rule-id",
                     conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)],
@@ -2621,14 +2622,13 @@ final class SearchClientSnippet {
                 consequence: SearchConsequence(
                     params: SearchConsequenceParams(
                         filters: "brand:apple",
-                        query: SearchConsequenceQuery
-                            .searchConsequenceQueryObject(SearchConsequenceQueryObject(
-                                remove: ["algolia"],
-                                edits: [
-                                    SearchEdit(type: SearchEditType.remove, delete: "abc", insert: "cde"),
-                                    SearchEdit(type: SearchEditType.replace, delete: "abc", insert: "cde"),
-                                ]
-                            ))
+                        query: SearchConsequenceQuery.searchConsequenceQueryObject(SearchConsequenceQueryObject(
+                            remove: ["algolia"],
+                            edits: [
+                                SearchEdit(type: SearchEditType.remove, delete: "abc", insert: "cde"),
+                                SearchEdit(type: SearchEditType.replace, delete: "abc", insert: "cde"),
+                            ]
+                        ))
                     ),
                     promote: [
                         SearchPromote.searchPromoteObjectID(SearchPromoteObjectID(objectID: "abc", position: 3)),
@@ -2664,15 +2664,14 @@ final class SearchClientSnippet {
         let response = try await client.saveRules(
             indexName: "<YOUR_INDEX_NAME>",
             rules: [
-                Rule(
-                    objectID: "toaster",
-                    conditions: [SearchCondition(pattern: "toaster", anchoring: SearchAnchoring.contains)],
-                    consequence: SearchConsequence(params: SearchConsequenceParams(
-                        filters: "product_type:toaster",
-                        query: SearchConsequenceQuery
-                            .searchConsequenceQueryObject(SearchConsequenceQueryObject(remove: ["toaster"]))
-                    ))
-                ),
+                Rule(objectID: "toaster", conditions: [SearchCondition(
+                    pattern: "toaster",
+                    anchoring: SearchAnchoring.contains
+                )], consequence: SearchConsequence(params: SearchConsequenceParams(
+                    filters: "product_type:toaster",
+                    query: SearchConsequenceQuery
+                        .searchConsequenceQueryObject(SearchConsequenceQueryObject(remove: ["toaster"]))
+                ))),
                 Rule(
                     objectID: "cheap",
                     conditions: [SearchCondition(pattern: "cheap", anchoring: SearchAnchoring.contains)],
@@ -2700,11 +2699,10 @@ final class SearchClientSnippet {
         let response = try await client.saveRules(
             indexName: "<YOUR_INDEX_NAME>",
             rules: [
-                Rule(
-                    objectID: "country",
-                    conditions: [SearchCondition(pattern: "{facet:country}", anchoring: SearchAnchoring.contains)],
-                    consequence: SearchConsequence(params: SearchConsequenceParams(aroundLatLngViaIP: false))
-                ),
+                Rule(objectID: "country", conditions: [SearchCondition(
+                    pattern: "{facet:country}",
+                    anchoring: SearchAnchoring.contains
+                )], consequence: SearchConsequence(params: SearchConsequenceParams(aroundLatLngViaIP: false))),
                 Rule(
                     objectID: "city",
                     conditions: [SearchCondition(pattern: "{facet:city}", anchoring: SearchAnchoring.contains)],
@@ -2992,14 +2990,15 @@ final class SearchClientSnippet {
         let response: SearchResponses<Hit> = try await client.search(searchMethodParams: SearchMethodParams(
             requests: [
                 SearchQuery.searchForHits(SearchForHits(indexName: "<YOUR_INDEX_NAME>")),
-                SearchQuery
-                    .searchForFacets(SearchForFacets(
-                        facet: "theFacet",
-                        indexName: "<YOUR_INDEX_NAME>",
-                        type: SearchTypeFacet.facet
-                    )),
-                SearchQuery
-                    .searchForHits(SearchForHits(indexName: "<YOUR_INDEX_NAME>", type: SearchTypeDefault.`default`)),
+                SearchQuery.searchForFacets(SearchForFacets(
+                    facet: "theFacet",
+                    indexName: "<YOUR_INDEX_NAME>",
+                    type: SearchTypeFacet.facet
+                )),
+                SearchQuery.searchForHits(SearchForHits(
+                    indexName: "<YOUR_INDEX_NAME>",
+                    type: SearchTypeDefault.`default`
+                )),
             ],
             strategy: SearchStrategy.stopIfEnoughMatches
         ))
@@ -8419,8 +8418,11 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(renderingContent: SearchRenderingContent(facetOrdering: SearchFacetOrdering(
                 facets: SearchFacets(order: ["size", "brand"]),
                 values: [
-                    "brand": SearchValue(order: ["uniqlo"], sortRemainingBy: SearchSortRemainingBy.count,
-                                         hide: ["muji"]),
+                    "brand": SearchValue(
+                        order: ["uniqlo"],
+                        sortRemainingBy: SearchSortRemainingBy.count,
+                        hide: ["muji"]
+                    ),
                     "size": SearchValue(order: ["S", "M", "L"], sortRemainingBy: SearchSortRemainingBy.hidden),
                 ]
             )))
