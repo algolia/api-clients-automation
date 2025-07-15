@@ -245,7 +245,7 @@
                     "type": "array",
                     "description": "A/B test metrics involved in the test. Only these metrics will be considered when calculating results.",
                     "items": {
-                      "$ref": "#/components/schemas/parameters_metric"
+                      "$ref": "#/components/schemas/createMetric"
                     }
                   },
                   "configuration": {
@@ -603,7 +603,7 @@
                     "type": "array",
                     "description": "A/B test metrics involved in the test. Only these metrics will be considered when calculating results.",
                     "items": {
-                      "$ref": "#/components/schemas/parameters_metric"
+                      "$ref": "#/components/schemas/createMetric"
                     }
                   },
                   "configuration": {
@@ -782,7 +782,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/components/schemas/Metric"
+                "$ref": "#/components/schemas/MetricName"
               }
             }
           }
@@ -999,7 +999,7 @@
           "winsorizedValue": 888.8
         }
       },
-      "metric": {
+      "metricResult": {
         "type": "object",
         "properties": {
           "name": {
@@ -1090,7 +1090,7 @@
         "type": "array",
         "description": "All ABTest metrics that were defined during test creation.",
         "items": {
-          "$ref": "#/components/schemas/metric"
+          "$ref": "#/components/schemas/metricResult"
         }
       },
       "filterEffects": {
@@ -1400,7 +1400,7 @@
           }
         ]
       },
-      "parameters_metric": {
+      "createMetric": {
         "type": "object",
         "description": "Defines a metric to be retrieved during an A/B test.",
         "properties": {
@@ -1501,7 +1501,7 @@
           }
         }
       },
-      "Metric": {
+      "MetricName": {
         "type": "string",
         "enum": [
           "search_count",
