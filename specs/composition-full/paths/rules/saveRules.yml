@@ -9,7 +9,7 @@ post:
     Create or update or delete multiple composition rules.
   x-codegen-request-body-name: rules
   parameters:
-    - $ref: '../../common/parameters.yml#/compositionID'
+    - $ref: '../urlParams.yml#/compositionID'
   requestBody:
     required: true
     content:
@@ -28,9 +28,9 @@ post:
                 additionalProperties: false
                 properties:
                   action:
-                    $ref: '../../common/schemas/Batch.yml#/action'
+                    $ref: '../../common/schemas/requestBodies/Batch.yml#/action'
                   body:
-                    $ref: '../../common/schemas/RulesBatchCompositionAction.yml#/rulesBatchCompositionAction'
+                    $ref: '../../common/schemas/requestBodies/RulesBatchCompositionAction.yml#/rulesBatchCompositionAction'
                 required:
                   - action
                   - body
