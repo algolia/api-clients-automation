@@ -184,26 +184,11 @@ baseSearchParamsWithoutQuery:
       x-categories:
         - Advanced
     clickAnalytics:
-      type: boolean
-      description: |
-        Whether to include a `queryID` attribute in the response.
-
-        The query ID is a unique identifier for a search query and is required for tracking [click and conversion events](https://www.algolia.com/guides/sending-events/getting-started/).
-      default: false
-      x-categories:
-        - Analytics
+      $ref: '#/clickAnalytics'
     analytics:
-      type: boolean
-      description: Whether this search will be included in Analytics.
-      default: true
-      x-categories:
-        - Analytics
+      $ref: '#/analyticsTags'
     analyticsTags:
-      type: array
-      items:
-        type: string
-      description: Tags to apply to the query for [segmenting analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-      default: []
+      $ref: '#/analyticsTags'
       x-categories:
         - Analytics
     percentileComputation:
@@ -213,11 +198,7 @@ baseSearchParamsWithoutQuery:
       x-categories:
         - Advanced
     enableABTest:
-      type: boolean
-      description: Whether to enable A/B testing for this search.
-      default: true
-      x-categories:
-        - Advanced
+      $ref: '#/enableABTest'
 
 searchParamsString:
   type: object
@@ -261,6 +242,20 @@ page:
   minimum: 0
   x-categories:
     - Pagination
+
+analytics:
+  type: boolean
+  description: Whether this search will be included in Analytics.
+  default: true
+  x-categories:
+    - Analytics
+
+analyticsTags:
+  type: array
+  items:
+    type: string
+  description: Tags to apply to the query for [segmenting analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+  default: []
 
 aroundRadius:
   description: |
@@ -335,6 +330,22 @@ aroundLatLngViaIP:
   default: false
   x-categories:
     - Geo-Search
+
+clickAnalytics:
+  type: boolean
+  description: |
+    Whether to include a `queryID` attribute in the response
+    The query ID is a unique identifier for a search query and is required for tracking [click and conversion events](https://www.algolia.com/guides/sending-events/getting-started/).
+  default: false
+  x-categories:
+    - Analytics
+
+enableABTest:
+  type: boolean
+  description: Whether to enable A/B testing for this search.
+  default: true
+  x-categories:
+    - Advanced
 
 insideBoundingBox:
   oneOf:
