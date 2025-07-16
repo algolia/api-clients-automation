@@ -454,7 +454,7 @@ paths:
           label: curl
           source: |-
             curl --request POST \
-              --url https://algolia_application_id.algolia.net/1/compositions/lorem/run \
+              --url https://algolia_application_id.algolia.net/1/compositions/my_composition_object_id/run \
               --header 'accept: application/json' \
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
@@ -802,7 +802,7 @@ paths:
           label: curl
           source: |-
             curl --request POST \
-              --url https://algolia_application_id.algolia.net/1/compositions/lorem/facets/lorem/query \
+              --url https://algolia_application_id.algolia.net/1/compositions/my_composition_object_id/facets/lorem/query \
               --header 'accept: application/json' \
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
@@ -830,7 +830,8 @@ components:
   schemas:
     compositionObjectID:
       type: string
-      description: Unique Composition ObjectID.
+      example: my_composition_object_id
+      description: Composition unique identifier.
     query:
       type: string
       description: Search query.

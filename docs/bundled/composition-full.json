@@ -1035,7 +1035,8 @@
       },
       "compositionObjectID": {
         "type": "string",
-        "description": "Unique Composition ObjectID."
+        "example": "my_composition_object_id",
+        "description": "Composition unique identifier."
       },
       "query": {
         "type": "string",
@@ -3755,7 +3756,7 @@
         "additionalProperties": false,
         "properties": {
           "objectID": {
-            "$ref": "#/components/schemas/objectID"
+            "$ref": "#/components/schemas/compositionObjectID"
           },
           "name": {
             "type": "string",
@@ -3791,7 +3792,7 @@
         "additionalProperties": false,
         "properties": {
           "objectID": {
-            "$ref": "#/components/schemas/objectID"
+            "$ref": "#/components/schemas/compositionObjectID"
           }
         },
         "required": [
@@ -3818,6 +3819,11 @@
         "title": "objectID",
         "type": "string",
         "description": "Unique identifier of a rule object."
+      },
+      "compositionRuleObjectID": {
+        "type": "string",
+        "example": "my_composition_rule_object_id",
+        "description": "Composition rule unique identifier."
       },
       "anchoring": {
         "type": "string",
@@ -3878,7 +3884,7 @@
         "additionalProperties": false,
         "properties": {
           "objectID": {
-            "$ref": "#/components/schemas/objectID"
+            "$ref": "#/components/schemas/compositionRuleObjectID"
           },
           "conditions": {
             "type": "array",
@@ -3933,7 +3939,7 @@
         "additionalProperties": false,
         "properties": {
           "objectID": {
-            "$ref": "#/components/schemas/objectID"
+            "$ref": "#/components/schemas/compositionRuleObjectID"
           }
         },
         "required": [
