@@ -1,4 +1,4 @@
-deleteCompositionAction:
+deleteCompositionRuleAction:
   type: object
   description: Operation arguments when deleting.
   additionalProperties: false
@@ -8,7 +8,7 @@ deleteCompositionAction:
   required:
     - objectID
 
-batchCompositionAction:
+rulesBatchCompositionAction:
   oneOf:
-    - $ref: './listCompositionsResponse.yml#/composition'
-    - $ref: '#/deleteCompositionAction'
+    - $ref: './CompositionRule.yml#/compositionRule'
+    - $ref: '#/deleteCompositionRuleAction'

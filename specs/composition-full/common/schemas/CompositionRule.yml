@@ -18,7 +18,7 @@ compositionRule:
       additionalProperties: false
       properties:
         behavior:
-          $ref: './compositionBehavior.yml#/compositionBehavior'
+          $ref: './CompositionBehavior.yml#/compositionBehavior'
       required:
         - behavior
     description:
@@ -54,10 +54,6 @@ condition:
       example: '{facet:genre}'
     anchoring:
       $ref: '#/anchoring'
-    alternatives:
-      type: boolean
-      description: Whether the pattern should match plurals, synonyms, and typos.
-      default: false
     context:
       $ref: '../../../common/schemas/Rule.yml#/context'
     filters:

@@ -6,7 +6,7 @@ listCompositionsResponse:
       type: array
       description: All compositions in your Algolia application.
       items:
-        $ref: '#/composition'
+        $ref: './Composition.yml#/composition'
     nbPages:
       type: integer
       description: Number of pages.
@@ -29,24 +29,3 @@ listCompositionsResponse:
     - nbHits
     - nbPages
     - page
-
-composition:
-  type: object
-  additionalProperties: false
-  properties:
-    objectID:
-      $ref: '../../../common/parameters.yml#/objectID'
-    name:
-      type: string
-      description: Composition name.
-      example: 'my lovely crafted composition'
-    description:
-      type: string
-      description: Composition description.
-      example: 'my lovely crafted composition that is used for X purpose'
-    behavior:
-      $ref: './compositionBehavior.yml#/compositionBehavior'
-  required:
-    - objectID
-    - behavior
-    - name

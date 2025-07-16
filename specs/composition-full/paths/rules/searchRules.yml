@@ -20,7 +20,7 @@ post:
             query:
               $ref: './parameters.yml#/query'
             anchoring:
-              $ref: '../../common/schemas/compositionRule.yml#/anchoring'
+              $ref: '../../common/schemas/CompositionRule.yml#/anchoring'
             context:
               type: string
               description: Only return composition rules that match the context (exact match).
@@ -57,7 +57,7 @@ post:
                 type: array
                 description: Composition rules that matched the search criteria.
                 items:
-                  $ref: '../../common/schemas/compositionRule.yml#/compositionRule'
+                  $ref: '../../common/schemas/CompositionRule.yml#/compositionRule'
               nbHits:
                 type: integer
                 description: Number of composition rules that matched the search criteria.

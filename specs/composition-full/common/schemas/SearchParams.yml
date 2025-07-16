@@ -240,7 +240,7 @@ mainInjectionQueryParameters:
       type: array
       items:
         type: string
-      example: [author, title, conten, content]
+      example: [author, title, content]
       description: |
         Attributes to highlight.
 
@@ -705,7 +705,7 @@ injectedItemsQueryParameters:
       type: array
       items:
         type: string
-      example: [author, title, conten, content]
+      example: [author, title, content]
       description: |
         Attributes to highlight.
 
