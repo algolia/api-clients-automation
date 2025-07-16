@@ -41,7 +41,7 @@ post:
                 maxFacetHits:
                   $ref: '../../../common/schemas/IndexSettings.yml#/maxFacetHits'
                 searchQuery:
-                  $ref: '../../common/schemas/SearchParams.yml#/params'
+                  $ref: '../../common/schemas/requestBodies/RunParams.yml#/params'
   responses:
     '200':
       description: OK
