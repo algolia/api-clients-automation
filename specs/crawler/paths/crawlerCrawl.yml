@@ -5,6 +5,8 @@ post:
     Crawls the specified URLs, extracts records from them, and adds them to the index.
     If a crawl is currently running (the crawler's `reindexing` property is `true`),
     the records are added to a temporary index.
+
+    This operation is rate-limited to 500 requests every 24 hours.
   tags:
     - actions
   parameters:
