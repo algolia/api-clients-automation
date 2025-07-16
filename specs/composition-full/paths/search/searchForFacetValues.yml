@@ -48,7 +48,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/SearchForFacetValuesResponse.yml#/searchForFacetValuesResponse'
+            $ref: '../../common/schemas/responses/SearchForFacetValuesResponse.yml#/searchForFacetValuesResponse'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

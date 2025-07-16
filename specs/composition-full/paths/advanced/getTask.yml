@@ -27,7 +27,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/GetTaskResponse.yml'
+            $ref: '../../common/schemas/responses/GetTaskResponse.yml'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

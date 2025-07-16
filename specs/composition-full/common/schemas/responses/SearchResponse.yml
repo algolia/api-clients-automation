@@ -18,7 +18,7 @@ searchResults:
 
 searchResultsItem:
   allOf:
-    - $ref: '../../../common/schemas/SearchResponse.yml#/baseSearchResponse'
+    - $ref: '../../../../common/schemas/SearchResponse.yml#/baseSearchResponse'
     - $ref: '#/SearchPagination'
     - $ref: '#/searchHits'
     - $ref: '#/resultsCompositionsResponse'
@@ -28,13 +28,13 @@ SearchPagination:
   additionalProperties: false
   properties:
     page:
-      $ref: '../../../common/schemas/SearchParams.yml#/page'
+      $ref: '../../../../common/schemas/SearchParams.yml#/page'
     nbHits:
-      $ref: '../../../common/schemas/SearchResponse.yml#/nbHits'
+      $ref: '../../../../common/schemas/SearchResponse.yml#/nbHits'
     nbPages:
-      $ref: '../../../common/schemas/SearchResponse.yml#/nbPages'
+      $ref: '../../../../common/schemas/SearchResponse.yml#/nbPages'
     hitsPerPage:
-      $ref: '../../../common/schemas/IndexSettings.yml#/hitsPerPage'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/hitsPerPage'
   required:
     - page
     - nbHits
@@ -54,7 +54,7 @@ searchHits:
       items:
         $ref: 'Hit.yml#/hit'
     query:
-      $ref: '../../../common/schemas/SearchParams.yml#/query'
+      $ref: '../../../../common/schemas/SearchParams.yml#/query'
     params:
       type: string
       description: URL-encoded string of all search parameters.
@@ -98,7 +98,7 @@ resultsInjectedItemInfoResponse:
         type: object
         properties:
           objectID:
-            $ref: '../../../common/parameters.yml#/objectID'
+            $ref: '../../../../common/parameters.yml#/objectID'
         required:
           - objectID
   required:
@@ -130,7 +130,7 @@ compositionRunSearchResponse:
   additionalProperties: true
   properties:
     objectID:
-      $ref: '../../../common/parameters.yml#/objectID'
+      $ref: '../../../../common/parameters.yml#/objectID'
     appliedRules:
       type: array
       items:
@@ -138,7 +138,7 @@ compositionRunSearchResponse:
         type: object
         properties:
           objectID:
-            $ref: '../../../common/parameters.yml#/objectID'
+            $ref: '../../../../common/parameters.yml#/objectID'
         required:
           - objectID
   required:
