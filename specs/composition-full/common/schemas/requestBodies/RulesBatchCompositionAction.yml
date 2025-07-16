@@ -4,7 +4,7 @@ deleteCompositionRuleAction:
   additionalProperties: false
   properties:
     objectID:
-      $ref: '../components/CompositionRule.yml#/objectID'
+      $ref: '../Identifiers.yml#/compositionRuleObjectID'
   required:
     - objectID
 

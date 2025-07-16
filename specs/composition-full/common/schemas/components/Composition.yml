@@ -3,7 +3,7 @@ composition:
   additionalProperties: false
   properties:
     objectID:
-      $ref: '#/objectID'
+      $ref: '../Identifiers.yml#/compositionObjectID'
     name:
       type: string
       description: Composition name.
@@ -18,8 +18,3 @@ composition:
     - objectID
     - behavior
     - name
-
-objectID:
-  type: string
-  example: 'my_composition_object_id'
-  description: Composition unique identifier.

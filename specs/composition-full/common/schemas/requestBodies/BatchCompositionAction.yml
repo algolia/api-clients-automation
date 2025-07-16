@@ -4,7 +4,7 @@ deleteCompositionAction:
   additionalProperties: false
   properties:
     objectID:
-      $ref: '../components/Composition.yml#/objectID'
+      $ref: '../Identifiers.yml#/compositionObjectID'
   required:
     - objectID
 
