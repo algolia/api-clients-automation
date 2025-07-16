@@ -25,9 +25,9 @@ post:
                 additionalProperties: false
                 properties:
                   action:
-                    $ref: '../../common/schemas/Batch.yml#/action'
+                    $ref: '../../common/schemas/requestBodies/Batch.yml#/action'
                   body:
-                    $ref: '../../common/schemas/BatchCompositionAction.yml#/batchCompositionAction'
+                    $ref: '../../common/schemas/requestBodies/BatchCompositionAction.yml#/batchCompositionAction'
                 required:
                   - action
                   - body

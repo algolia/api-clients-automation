@@ -77,3 +77,8 @@ anchoring:
 
     Empty queries are only allowed as patterns with `anchoring: is`.
   enum: [is, startsWith, endsWith, contains]
+
+objectID:
+  type: string
+  example: 'my_composition_rule_object_id'
+  description: Composition rule unique identifier.
