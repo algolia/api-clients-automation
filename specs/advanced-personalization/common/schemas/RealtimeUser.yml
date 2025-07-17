@@ -5,6 +5,7 @@ RealtimeUser:
   required:
     - version
     - userID
+    - lastUpdatedAt
     - search
   properties:
     version:
@@ -13,6 +14,8 @@ RealtimeUser:
     userID:
       type: string
       description: User ID of the user.
+    lastUpdatedAt:
+      type: string
     search:
       type: object
       description: |
