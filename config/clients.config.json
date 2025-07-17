@@ -196,7 +196,7 @@
     ],
     "folder": "clients/algoliasearch-client-javascript",
     "gitRepoId": "algoliasearch-client-javascript",
-    "packageVersion": "5.33.0",
+    "packageVersion": "5.34.0",
     "modelFolder": "model",
     "apiFolder": "src",
     "tests": {
