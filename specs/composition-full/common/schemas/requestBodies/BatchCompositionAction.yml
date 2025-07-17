@@ -4,11 +4,11 @@ deleteCompositionAction:
   additionalProperties: false
   properties:
     objectID:
-      $ref: '../../../common/parameters.yml#/objectID'
+      $ref: '../Identifiers.yml#/compositionObjectID'
   required:
     - objectID
 
 batchCompositionAction:
   oneOf:
-    - $ref: './Composition.yml#/composition'
+    - $ref: '../components/Composition.yml#/composition'
     - $ref: '#/deleteCompositionAction'

@@ -14,7 +14,7 @@ post:
       You can adjust this with the `sortFacetValueBy` parameter.
     - Searching for facet values doesn't work if you have **more than 65 searchable facets and searchable attributes combined**.
   parameters:
-    - $ref: '../../common/parameters.yml#/compositionID'
+    - $ref: '../urlParams.yml#/compositionID'
     - name: facetName
       description: |
         Facet attribute in which to search for values.
@@ -48,7 +48,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/SearchForFacetValuesResponse.yml#/searchForFacetValuesResponse'
+            $ref: '../../common/schemas/responses/SearchForFacetValuesResponse.yml#/searchForFacetValuesResponse'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

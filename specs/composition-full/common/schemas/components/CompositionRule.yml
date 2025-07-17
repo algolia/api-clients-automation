@@ -3,7 +3,7 @@ compositionRule:
   additionalProperties: false
   properties:
     objectID:
-      $ref: '../../../common/parameters.yml#/objectID'
+      $ref: '../Identifiers.yml#/compositionRuleObjectID'
     conditions:
       type: array
       minItems: 0
@@ -33,7 +33,7 @@ compositionRule:
       type: array
       description: Time periods when the rule is active.
       items:
-        $ref: '../../../common/schemas/Rule.yml#/timeRange'
+        $ref: '../../../../common/schemas/Rule.yml#/timeRange'
   required:
     - objectID
     - conditions
@@ -55,7 +55,7 @@ condition:
     anchoring:
       $ref: '#/anchoring'
     context:
-      $ref: '../../../common/schemas/Rule.yml#/context'
+      $ref: '../../../../common/schemas/Rule.yml#/context'
     filters:
       type: string
       description: |

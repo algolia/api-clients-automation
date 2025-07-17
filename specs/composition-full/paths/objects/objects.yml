@@ -9,14 +9,14 @@ get:
   description: |
     Retrieve a single composition in the current Algolia application.
   parameters:
-    - $ref: '../../common/parameters.yml#/compositionID'
+    - $ref: '../urlParams.yml#/compositionID'
   responses:
     '200':
       description: OK
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/Composition.yml#/composition'
+            $ref: '../../common/schemas/components/Composition.yml#/composition'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

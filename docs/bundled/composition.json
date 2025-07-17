@@ -229,7 +229,8 @@
     "schemas": {
       "compositionObjectID": {
         "type": "string",
-        "description": "Unique Composition ObjectID."
+        "example": "my_composition_object_id",
+        "description": "Composition unique identifier."
       },
       "query": {
         "type": "string",

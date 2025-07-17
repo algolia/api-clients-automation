@@ -4,8 +4,4 @@ compositionID:
   description: Unique Composition ObjectID.
   required: true
   schema:
-    $ref: '#/compositionObjectID'
-
-compositionObjectID:
-  type: string
-  description: Unique Composition ObjectID.
+    $ref: '../common/schemas/Identifiers.yml#/compositionObjectID'
