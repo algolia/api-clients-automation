@@ -741,9 +741,9 @@
       "releaseDate": "2025-07-07"
     },
     "7.23.0": {
-      "releaseDate": "2025-07-15",
       "slaStatus": "eligible",
-      "supportStatus": "eligible"
+      "supportStatus": "eligible",
+      "releaseDate": "2025-07-15"
     }
   },
   "dart": {
@@ -1945,9 +1945,9 @@
       "releaseDate": "2025-07-07"
     },
     "4.22.0": {
-      "releaseDate": "2025-07-15",
       "slaStatus": "eligible",
-      "supportStatus": "eligible"
+      "supportStatus": "eligible",
+      "releaseDate": "2025-07-15"
     }
   },
   "java": {
@@ -2729,9 +2729,9 @@
       "releaseDate": "2025-07-08"
     },
     "4.22.0": {
-      "releaseDate": "2025-07-15",
       "slaStatus": "eligible",
-      "supportStatus": "eligible"
+      "supportStatus": "eligible",
+      "releaseDate": "2025-07-15"
     }
   },
   "javascript": {
@@ -4179,7 +4179,12 @@
       "releaseDate": "2025-07-08"
     },
     "5.33.0": {
-      "releaseDate": "2025-07-15",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2025-07-15"
+    },
+    "5.34.0": {
+      "releaseDate": "2025-07-17",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -4702,9 +4707,9 @@
       "releaseDate": "2025-07-08"
     },
     "3.25.0": {
-      "releaseDate": "2025-07-15",
       "slaStatus": "eligible",
-      "supportStatus": "eligible"
+      "supportStatus": "eligible",
+      "releaseDate": "2025-07-15"
     }
   },
   "php": {
@@ -5518,9 +5523,9 @@
       "releaseDate": "2025-07-07"
     },
     "4.25.0": {
-      "releaseDate": "2025-07-15",
       "slaStatus": "eligible",
-      "supportStatus": "eligible"
+      "supportStatus": "eligible",
+      "releaseDate": "2025-07-15"
     }
   },
   "python": {
@@ -6222,9 +6227,9 @@
       "releaseDate": "2025-07-07"
     },
     "4.23.0": {
-      "releaseDate": "2025-07-15",
       "slaStatus": "eligible",
-      "supportStatus": "eligible"
+      "supportStatus": "eligible",
+      "releaseDate": "2025-07-15"
     }
   },
   "ruby": {
@@ -6982,9 +6987,9 @@
       "releaseDate": "2025-07-07"
     },
     "3.22.0": {
-      "releaseDate": "2025-07-15",
       "slaStatus": "eligible",
-      "supportStatus": "eligible"
+      "supportStatus": "eligible",
+      "releaseDate": "2025-07-15"
     }
   },
   "scala": {
@@ -7656,9 +7661,9 @@
       "releaseDate": "2025-07-08"
     },
     "2.24.0": {
-      "releaseDate": "2025-07-15",
       "slaStatus": "eligible",
-      "supportStatus": "eligible"
+      "supportStatus": "eligible",
+      "releaseDate": "2025-07-15"
     }
   },
   "swift": {
@@ -8406,9 +8411,9 @@
       "releaseDate": "2025-07-07"
     },
     "9.25.0": {
-      "releaseDate": "2025-07-15",
       "slaStatus": "eligible",
-      "supportStatus": "eligible"
+      "supportStatus": "eligible",
+      "releaseDate": "2025-07-15"
     }
   }
 }
