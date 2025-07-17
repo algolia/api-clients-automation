@@ -4,5 +4,7 @@
 specs/ @algolia/doc-approvers
 website/ @algolia/doc-approvers
 specs/advanced-personalization @algolia/predict-fe
+specs/composition @algolia/composition
+specs/composition-full @algolia/composition
 
 * @algolia/api-clients-automation
