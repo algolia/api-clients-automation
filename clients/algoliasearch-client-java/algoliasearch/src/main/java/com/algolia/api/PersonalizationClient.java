@@ -667,9 +667,8 @@ public class PersonalizationClient extends ApiClient {
    * @param personalizationStrategyParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public SetPersonalizationStrategyResponse setPersonalizationStrategy(
-    @Nonnull PersonalizationStrategyParams personalizationStrategyParams
-  ) throws AlgoliaRuntimeException {
+  public SetPersonalizationStrategyResponse setPersonalizationStrategy(@Nonnull PersonalizationStrategyParams personalizationStrategyParams)
+    throws AlgoliaRuntimeException {
     return this.setPersonalizationStrategy(personalizationStrategyParams, null);
   }
 

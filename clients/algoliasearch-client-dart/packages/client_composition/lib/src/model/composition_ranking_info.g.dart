@@ -27,9 +27,16 @@ CompositionRankingInfo _$CompositionRankingInfoFromJson(
     );
 
 Map<String, dynamic> _$CompositionRankingInfoToJson(
-        CompositionRankingInfo instance) =>
-    <String, dynamic>{
-      if (instance.composed?.map((k, e) => MapEntry(k, e.toJson()))
-          case final value?)
-        'composed': value,
-    };
+    CompositionRankingInfo instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull(
+      'composed', instance.composed?.map((k, e) => MapEntry(k, e.toJson())));
+  return val;
+}

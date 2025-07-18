@@ -41,17 +41,16 @@ class RecommendClientRequestsTestsE2E {
   @DisplayName("get recommendations with e2e to check oneOf model")
   void getRecommendationsTest1() {
     GetRecommendationsResponse res = client.getRecommendations(
-      new GetRecommendationsParams()
-        .setRequests(
-          Arrays.asList(
-            new RelatedQuery()
-              .setIndexName("cts_e2e_browse")
-              .setObjectID("Æon Flux")
-              .setModel(RelatedModel.RELATED_PRODUCTS)
-              .setThreshold(20.0)
-              .setMaxRecommendations(2)
-          )
+      new GetRecommendationsParams().setRequests(
+        Arrays.asList(
+          new RelatedQuery()
+            .setIndexName("cts_e2e_browse")
+            .setObjectID("Æon Flux")
+            .setModel(RelatedModel.RELATED_PRODUCTS)
+            .setThreshold(20.0)
+            .setMaxRecommendations(2)
         )
+      )
     );
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(

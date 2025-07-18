@@ -1110,7 +1110,8 @@ func TestIngestion_RunTask(t *testing.T) {
 		require.Equal(t, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		require.Empty(t, echo.Body)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{}`)
 	})
 }
 
@@ -1126,7 +1127,8 @@ func TestIngestion_RunTaskV1(t *testing.T) {
 		require.Equal(t, "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		require.Empty(t, echo.Body)
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{}`)
 	})
 }
 

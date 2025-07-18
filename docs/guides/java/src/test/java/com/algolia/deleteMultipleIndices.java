@@ -9,13 +9,21 @@ public class deleteMultipleIndices {
 
   public static void main(String[] args) throws Exception {
     // You need an API key with `deleteIndex`
-    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");) {
+    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")) {
       // List all indices
       ListIndicesResponse indices = client.listIndices();
 
       // Primary indices don't have a `primary` key
-      List<FetchedIndex> primaryIndices = indices.getItems().stream().filter(item -> item.getPrimary() == null).toList();
-      List<FetchedIndex> replicaIndices = indices.getItems().stream().filter(item -> item.getPrimary() != null).toList();
+      List<FetchedIndex> primaryIndices = indices
+        .getItems()
+        .stream()
+        .filter(item -> item.getPrimary() == null)
+        .toList();
+      List<FetchedIndex> replicaIndices = indices
+        .getItems()
+        .stream()
+        .filter(item -> item.getPrimary() != null)
+        .toList();
 
       // Delete primary indices first
       if (!primaryIndices.isEmpty()) {

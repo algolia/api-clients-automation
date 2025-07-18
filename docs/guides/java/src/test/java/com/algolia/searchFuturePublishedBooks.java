@@ -7,7 +7,7 @@ import com.algolia.model.search.*;
 public class searchFuturePublishedBooks {
 
   public static void main(String[] args) throws Exception {
-    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");) {
+    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")) {
       long dateTimestamp = System.currentTimeMillis();
       SearchParams searchParams = new SearchParamsObject().setQuery("<YOUR_SEARCH_QUERY>").setFilters("date_timestamp > " + dateTimestamp);
 

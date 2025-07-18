@@ -12,7 +12,7 @@ public class searchWithRuleContextBuyer {
   }
 
   public static void main(String[] args) throws Exception {
-    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");) {
+    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")) {
       // get the buyer account information
       String buyer = getBuyerAccountId();
       SearchParams searchParams = new SearchParamsObject().setQuery("<YOUR_SEARCH_QUERY>").setRuleContexts(List.of(buyer));

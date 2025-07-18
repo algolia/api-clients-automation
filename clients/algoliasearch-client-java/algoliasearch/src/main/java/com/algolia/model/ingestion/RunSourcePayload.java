@@ -6,7 +6,9 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /** RunSourcePayload */
@@ -23,6 +25,9 @@ public class RunSourcePayload {
 
   @JsonProperty("entityType")
   private EntityType entityType;
+
+  @JsonProperty("runMetadata")
+  private Map<String, Object> runMetadata;
 
   public RunSourcePayload setIndexToInclude(List<String> indexToInclude) {
     this.indexToInclude = indexToInclude;
@@ -92,6 +97,25 @@ public class RunSourcePayload {
     return entityType;
   }
 
+  public RunSourcePayload setRunMetadata(Map<String, Object> runMetadata) {
+    this.runMetadata = runMetadata;
+    return this;
+  }
+
+  public RunSourcePayload putRunMetadata(String key, Object runMetadataItem) {
+    if (this.runMetadata == null) {
+      this.runMetadata = new HashMap<>();
+    }
+    this.runMetadata.put(key, runMetadataItem);
+    return this;
+  }
+
+  /** Additional information that will be passed to the created runs. */
+  @javax.annotation.Nullable
+  public Map<String, Object> getRunMetadata() {
+    return runMetadata;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -105,13 +129,14 @@ public class RunSourcePayload {
       Objects.equals(this.indexToInclude, runSourcePayload.indexToInclude) &&
       Objects.equals(this.indexToExclude, runSourcePayload.indexToExclude) &&
       Objects.equals(this.entityIDs, runSourcePayload.entityIDs) &&
-      Objects.equals(this.entityType, runSourcePayload.entityType)
+      Objects.equals(this.entityType, runSourcePayload.entityType) &&
+      Objects.equals(this.runMetadata, runSourcePayload.runMetadata)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(indexToInclude, indexToExclude, entityIDs, entityType);
+    return Objects.hash(indexToInclude, indexToExclude, entityIDs, entityType, runMetadata);
   }
 
   @Override
@@ -122,6 +147,7 @@ public class RunSourcePayload {
     sb.append("    indexToExclude: ").append(toIndentedString(indexToExclude)).append("\n");
     sb.append("    entityIDs: ").append(toIndentedString(entityIDs)).append("\n");
     sb.append("    entityType: ").append(toIndentedString(entityType)).append("\n");
+    sb.append("    runMetadata: ").append(toIndentedString(runMetadata)).append("\n");
     sb.append("}");
     return sb.toString();
   }

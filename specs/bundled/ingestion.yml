@@ -233,7 +233,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Pushes records to be transformed through the Pipeline, by indexName
+      summary: Push records by indexName
       description: >
         Pushes records through the Pipeline, directly to an index. You can make
         the call synchronous by providing the `watch` parameter, for
@@ -1098,6 +1098,12 @@ paths:
         - editSettings
       parameters:
         - $ref: '#/components/parameters/pathTaskID'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunTaskPayload'
       responses:
         '200':
           description: OK
@@ -1111,7 +1117,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Pushes records to be transformed through the Pipeline, by taskID
+      summary: Push records by taskID
       description: >
         Pushes records through the Pipeline, directly to an index. You can make
         the call synchronous by providing the `watch` parameter, for
@@ -1388,6 +1394,12 @@ paths:
         - editSettings
       parameters:
         - $ref: '#/components/parameters/pathTaskID'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunTaskPayload'
       responses:
         '200':
           description: OK
@@ -3501,6 +3513,10 @@ components:
           description: List of entityIDs to update.
         entityType:
           $ref: '#/components/schemas/EntityType'
+        runMetadata:
+          type: object
+          additionalProperties: true
+          description: Additional information that will be passed to the created runs.
     ActionType:
       type: string
       description: Action to perform on the Algolia index.
@@ -3899,6 +3915,14 @@ components:
       required:
         - taskID
         - updatedAt
+    RunTaskPayload:
+      type: object
+      additionalProperties: false
+      properties:
+        runMetadata:
+          type: object
+          additionalProperties: true
+          description: Additional information that will be passed to the created run.
     RunResponse:
       type: object
       additionalProperties: false

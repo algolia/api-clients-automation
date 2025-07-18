@@ -143,10 +143,10 @@ final class PersonalizationClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/test/all")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap("{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}"
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}"
                 .data(using: .utf8)
-            )
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -780,9 +780,8 @@ final class PersonalizationClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"eventsScoring\":[{\"score\":42,\"eventName\":\"Algolia\",\"eventType\":\"click\"}],\"facetsScoring\":[{\"score\":42,\"facetName\":\"Event\"}],\"personalizationImpact\":42}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"eventsScoring\":[{\"score\":42,\"eventName\":\"Algolia\",\"eventType\":\"click\"}],\"facetsScoring\":[{\"score\":42,\"facetName\":\"Event\"}],\"personalizationImpact\":42}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)

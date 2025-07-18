@@ -11,7 +11,7 @@ import java.util.Map;
 public class savePopularRecords {
 
   public static void main(String[] args) throws Exception {
-    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");) {
+    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")) {
       List<Map<String, Object>> records = new ArrayList<>();
 
       client

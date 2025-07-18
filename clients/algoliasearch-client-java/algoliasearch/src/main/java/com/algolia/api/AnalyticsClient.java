@@ -1040,10 +1040,8 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetClickPositionsResponse> getClickPositionsAsync(
-    @Nonnull String index,
-    @Nullable RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
+  public CompletableFuture<GetClickPositionsResponse> getClickPositionsAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
     return this.getClickPositionsAsync(index, null, null, null, requestOptions);
   }
 
@@ -1398,10 +1396,8 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetConversionRateResponse> getConversionRateAsync(
-    @Nonnull String index,
-    @Nullable RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
+  public CompletableFuture<GetConversionRateResponse> getConversionRateAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
     return this.getConversionRateAsync(index, null, null, null, requestOptions);
   }
 
@@ -1540,12 +1536,8 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetNoClickRateResponse> getNoClickRateAsync(
-    @Nonnull String index,
-    String startDate,
-    String endDate,
-    String tags
-  ) throws AlgoliaRuntimeException {
+  public CompletableFuture<GetNoClickRateResponse> getNoClickRateAsync(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
     return this.getNoClickRateAsync(index, startDate, endDate, tags, null);
   }
 
@@ -3208,10 +3200,8 @@ public class AnalyticsClient extends ApiClient {
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetTopFilterForAttributeResponse> getTopFilterForAttributeAsync(
-    @Nonnull String attribute,
-    @Nonnull String index
-  ) throws AlgoliaRuntimeException {
+  public CompletableFuture<GetTopFilterForAttributeResponse> getTopFilterForAttributeAsync(@Nonnull String attribute, @Nonnull String index)
+    throws AlgoliaRuntimeException {
     return this.getTopFilterForAttributeAsync(attribute, index, null, null, null, null, null, null, null);
   }
 
@@ -3956,18 +3946,18 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getTopSearchesAsync(
-        index,
-        clickAnalytics,
-        revenueAnalytics,
-        startDate,
-        endDate,
-        orderBy,
-        direction,
-        limit,
-        offset,
-        tags,
-        null
-      );
+      index,
+      clickAnalytics,
+      revenueAnalytics,
+      startDate,
+      endDate,
+      orderBy,
+      direction,
+      limit,
+      offset,
+      tags,
+      null
+    );
   }
 
   /**

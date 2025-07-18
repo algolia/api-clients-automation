@@ -18,7 +18,15 @@ BannerImageUrl _$BannerImageUrlFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$BannerImageUrlToJson(BannerImageUrl instance) =>
-    <String, dynamic>{
-      if (instance.url case final value?) 'url': value,
-    };
+Map<String, dynamic> _$BannerImageUrlToJson(BannerImageUrl instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('url', instance.url);
+  return val;
+}

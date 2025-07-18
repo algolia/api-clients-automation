@@ -19,13 +19,17 @@ module Algolia
 
       attr_accessor :entity_type
 
+      # Additional information that will be passed to the created runs.
+      attr_accessor :run_metadata
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :index_to_include => :indexToInclude,
           :index_to_exclude => :indexToExclude,
           :entity_ids => :entityIDs,
-          :entity_type => :entityType
+          :entity_type => :entityType,
+          :run_metadata => :runMetadata
         }
       end
 
@@ -35,7 +39,8 @@ module Algolia
           :index_to_include => :"Array<String>",
           :index_to_exclude => :"Array<String>",
           :entity_ids => :"Array<String>",
-          :entity_type => :"EntityType"
+          :entity_type => :"EntityType",
+          :run_metadata => :"Hash<String, Object>"
         }
       end
 
@@ -90,6 +95,12 @@ module Algolia
         if attributes.key?(:entity_type)
           self.entity_type = attributes[:entity_type]
         end
+
+        if attributes.key?(:run_metadata)
+          if (value = attributes[:run_metadata]).is_a?(Hash)
+            self.run_metadata = value
+          end
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -100,7 +111,8 @@ module Algolia
           index_to_include == other.index_to_include &&
           index_to_exclude == other.index_to_exclude &&
           entity_ids == other.entity_ids &&
-          entity_type == other.entity_type
+          entity_type == other.entity_type &&
+          run_metadata == other.run_metadata
       end
 
       # @see the `==` method
@@ -112,7 +124,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [index_to_include, index_to_exclude, entity_ids, entity_type].hash
+        [index_to_include, index_to_exclude, entity_ids, entity_type, run_metadata].hash
       end
 
       # Builds the object from hash

@@ -138,10 +138,10 @@ final class MonitoringClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/test/all")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap("{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}"
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}"
                 .data(using: .utf8)
-            )
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters

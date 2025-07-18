@@ -4301,40 +4301,6 @@ class TestSearchClient:
 
     async def test_search_single_index_30(self):
         """
-        insidePolygon
-        """
-        _req = await self._client.search_single_index_with_http_info(
-            index_name="indexName",
-            search_params={
-                "insidePolygon": [
-                    [
-                        42.01,
-                        -124.31,
-                        48.835509470063045,
-                        -124.40453125000005,
-                        45.01082951668149,
-                        -65.95726562500005,
-                        31.247243545293433,
-                        -81.06578125000004,
-                        25.924152577235226,
-                        -97.68234374999997,
-                        32.300311895879545,
-                        -117.54828125,
-                    ],
-                ],
-            },
-        )
-
-        assert _req.path == "/1/indexes/indexName/query"
-        assert _req.verb == "POST"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads(
-            """{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}"""
-        )
-
-    async def test_search_single_index_31(self):
-        """
         optionalFilters
         """
         _req = await self._client.search_single_index_with_http_info(
@@ -4354,7 +4320,7 @@ class TestSearchClient:
             """{"optionalFilters":["can_deliver_quickly:true"]}"""
         )
 
-    async def test_search_single_index_32(self):
+    async def test_search_single_index_31(self):
         """
         optionalFiltersMany
         """
@@ -4377,7 +4343,7 @@ class TestSearchClient:
             """{"optionalFilters":["brand:Apple<score=3>","brand:Samsung<score=2>","brand:-Huawei"]}"""
         )
 
-    async def test_search_single_index_33(self):
+    async def test_search_single_index_32(self):
         """
         optionalFiltersSimple
         """
@@ -4399,7 +4365,7 @@ class TestSearchClient:
             """{"optionalFilters":["brand:Apple<score=2>","type:tablet"]}"""
         )
 
-    async def test_search_single_index_34(self):
+    async def test_search_single_index_33(self):
         """
         restrictSearchableAttributes
         """
@@ -4420,7 +4386,7 @@ class TestSearchClient:
             """{"restrictSearchableAttributes":["title_fr"]}"""
         )
 
-    async def test_search_single_index_35(self):
+    async def test_search_single_index_34(self):
         """
         getRankingInfo
         """
@@ -4437,7 +4403,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"getRankingInfo":true}""")
 
-    async def test_search_single_index_36(self):
+    async def test_search_single_index_35(self):
         """
         clickAnalytics
         """
@@ -4454,7 +4420,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"clickAnalytics":true}""")
 
-    async def test_search_single_index_37(self):
+    async def test_search_single_index_36(self):
         """
         clickAnalyticsUserToken
         """
@@ -4474,7 +4440,7 @@ class TestSearchClient:
             """{"clickAnalytics":true,"userToken":"user-1"}"""
         )
 
-    async def test_search_single_index_38(self):
+    async def test_search_single_index_37(self):
         """
         enablePersonalization
         """
@@ -4494,7 +4460,7 @@ class TestSearchClient:
             """{"enablePersonalization":true,"userToken":"user-1"}"""
         )
 
-    async def test_search_single_index_39(self):
+    async def test_search_single_index_38(self):
         """
         userToken
         """
@@ -4511,7 +4477,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"userToken":"user-1"}""")
 
-    async def test_search_single_index_40(self):
+    async def test_search_single_index_39(self):
         """
         userToken1234
         """
@@ -4531,7 +4497,7 @@ class TestSearchClient:
             """{"query":"query","userToken":"user-1234"}"""
         )
 
-    async def test_search_single_index_41(self):
+    async def test_search_single_index_40(self):
         """
         analyticsTag
         """
@@ -4550,7 +4516,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"analyticsTags":["YOUR_ANALYTICS_TAG"]}""")
 
-    async def test_search_single_index_42(self):
+    async def test_search_single_index_41(self):
         """
         facetFiltersUsers
         """
@@ -4572,7 +4538,7 @@ class TestSearchClient:
             """{"facetFilters":["user:user42","user:public"]}"""
         )
 
-    async def test_search_single_index_43(self):
+    async def test_search_single_index_42(self):
         """
         buildTheQuery
         """
@@ -4595,7 +4561,7 @@ class TestSearchClient:
             """{"filters":"categoryPageId: Men's Clothing","hitsPerPage":50,"analyticsTags":["mens-clothing"]}"""
         )
 
-    async def test_search_single_index_44(self):
+    async def test_search_single_index_43(self):
         """
         attributesToHighlightOverride
         """
@@ -4618,7 +4584,7 @@ class TestSearchClient:
             """{"query":"query","attributesToHighlight":["title","content"]}"""
         )
 
-    async def test_search_single_index_45(self):
+    async def test_search_single_index_44(self):
         """
         disableTypoToleranceOnAttributes
         """
@@ -4640,7 +4606,7 @@ class TestSearchClient:
             """{"query":"query","disableTypoToleranceOnAttributes":["serial_number"]}"""
         )
 
-    async def test_search_single_index_46(self):
+    async def test_search_single_index_45(self):
         """
         similarQuery
         """
@@ -4657,7 +4623,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"shirt"}""")
 
-    async def test_search_single_index_47(self):
+    async def test_search_single_index_46(self):
         """
         search_everything
         """
@@ -4674,7 +4640,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":""}""")
 
-    async def test_search_single_index_48(self):
+    async def test_search_single_index_47(self):
         """
         api_filtering_range_example
         """
@@ -4694,7 +4660,7 @@ class TestSearchClient:
             """{"query":"books","filters":"price:10 TO 20"}"""
         )
 
-    async def test_search_single_index_49(self):
+    async def test_search_single_index_48(self):
         """
         search_a_query
         """
@@ -4715,7 +4681,7 @@ class TestSearchClient:
             """{"query":"","similarQuery":"Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen","filters":"year:1991 TO 2001"}"""
         )
 
-    async def test_search_single_index_50(self):
+    async def test_search_single_index_49(self):
         """
         override_retrievable_attributes
         """
@@ -4738,7 +4704,7 @@ class TestSearchClient:
             """{"query":"query","attributesToRetrieve":["title","content"]}"""
         )
 
-    async def test_search_single_index_51(self):
+    async def test_search_single_index_50(self):
         """
         restrict_searchable_attributes
         """
@@ -4761,7 +4727,7 @@ class TestSearchClient:
             """{"query":"query","restrictSearchableAttributes":["title","author"]}"""
         )
 
-    async def test_search_single_index_52(self):
+    async def test_search_single_index_51(self):
         """
         override_default_relevancy
         """
@@ -4781,7 +4747,7 @@ class TestSearchClient:
             """{"query":"query","relevancyStrictness":70}"""
         )
 
-    async def test_search_single_index_53(self):
+    async def test_search_single_index_52(self):
         """
         apply_filters
         """
@@ -4801,7 +4767,7 @@ class TestSearchClient:
             """{"query":"query","filters":"(category:Book OR category:Ebook) AND _tags:published"}"""
         )
 
-    async def test_search_single_index_54(self):
+    async def test_search_single_index_53(self):
         """
         apply_all_filters
         """
@@ -4821,7 +4787,7 @@ class TestSearchClient:
             """{"query":"query","filters":"available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\\"John Doe\\""}"""
         )
 
-    async def test_search_single_index_55(self):
+    async def test_search_single_index_54(self):
         """
         escape_spaces
         """
@@ -4841,7 +4807,7 @@ class TestSearchClient:
             """{"query":"query","filters":"category:\\"Books and Comics\\""}"""
         )
 
-    async def test_search_single_index_56(self):
+    async def test_search_single_index_55(self):
         """
         escape_keywords
         """
@@ -4861,7 +4827,7 @@ class TestSearchClient:
             """{"query":"query","filters":"keyword:\\"OR\\""}"""
         )
 
-    async def test_search_single_index_57(self):
+    async def test_search_single_index_56(self):
         """
         escape_single_quotes
         """
@@ -4881,7 +4847,7 @@ class TestSearchClient:
             """{"query":"query","filters":"content:\\"It's a wonderful day\\""}"""
         )
 
-    async def test_search_single_index_58(self):
+    async def test_search_single_index_57(self):
         """
         escape_double_quotes
         """
@@ -4901,9 +4867,9 @@ class TestSearchClient:
             """{"query":"query","filters":"content:\\"She said \\"Hello World\\""}"""
         )
 
-    async def test_search_single_index_59(self):
+    async def test_search_single_index_58(self):
         """
-        apply_filters
+        apply_optional_filters
         """
         _req = await self._client.search_single_index_with_http_info(
             index_name="indexName",
@@ -4924,7 +4890,7 @@ class TestSearchClient:
             """{"query":"query","optionalFilters":["category:Book","author:John Doe"]}"""
         )
 
-    async def test_search_single_index_60(self):
+    async def test_search_single_index_59(self):
         """
         apply_negative_filters
         """
@@ -4947,7 +4913,7 @@ class TestSearchClient:
             """{"query":"query","optionalFilters":["category:Book","author:-John Doe"]}"""
         )
 
-    async def test_search_single_index_61(self):
+    async def test_search_single_index_60(self):
         """
         apply_negative_filters_restaurants
         """
@@ -4969,7 +4935,7 @@ class TestSearchClient:
             """{"query":"query","optionalFilters":["restaurant:-Bert's Inn"]}"""
         )
 
-    async def test_search_single_index_62(self):
+    async def test_search_single_index_61(self):
         """
         apply_numeric_filters
         """
@@ -4995,7 +4961,7 @@ class TestSearchClient:
             """{"query":"query","numericFilters":["price < 1000",["inStock = 1","deliveryDate < 1441755506"]]}"""
         )
 
-    async def test_search_single_index_63(self):
+    async def test_search_single_index_62(self):
         """
         apply_tag_filters
         """
@@ -5021,9 +4987,9 @@ class TestSearchClient:
             """{"query":"query","tagFilters":["SciFi",["Book","Movie"]]}"""
         )
 
-    async def test_search_single_index_64(self):
+    async def test_search_single_index_63(self):
         """
-        apply_filters
+        set_sum_or_filters_scores
         """
         _req = await self._client.search_single_index_with_http_info(
             index_name="indexName",
@@ -5041,7 +5007,7 @@ class TestSearchClient:
             """{"query":"query","sumOrFiltersScores":true}"""
         )
 
-    async def test_search_single_index_65(self):
+    async def test_search_single_index_64(self):
         """
         facets_all
         """
@@ -5061,7 +5027,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","facets":["*"]}""")
 
-    async def test_search_single_index_66(self):
+    async def test_search_single_index_65(self):
         """
         retrieve_only_some_facets
         """
@@ -5084,7 +5050,7 @@ class TestSearchClient:
             """{"query":"query","facets":["category","author"]}"""
         )
 
-    async def test_search_single_index_67(self):
+    async def test_search_single_index_66(self):
         """
         override_default_max_values_per_facet
         """
@@ -5102,7 +5068,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","maxValuesPerFacet":20}""")
 
-    async def test_search_single_index_68(self):
+    async def test_search_single_index_67(self):
         """
         enable_faceting_after_distinct
         """
@@ -5122,7 +5088,7 @@ class TestSearchClient:
             """{"query":"query","facetingAfterDistinct":true}"""
         )
 
-    async def test_search_single_index_69(self):
+    async def test_search_single_index_68(self):
         """
         sort_facet_values_alphabetically
         """
@@ -5142,7 +5108,7 @@ class TestSearchClient:
             """{"query":"query","sortFacetValuesBy":"count"}"""
         )
 
-    async def test_search_single_index_70(self):
+    async def test_search_single_index_69(self):
         """
         override_attributes_to_snippet
         """
@@ -5165,7 +5131,7 @@ class TestSearchClient:
             """{"query":"query","attributesToSnippet":["title","content:80"]}"""
         )
 
-    async def test_search_single_index_71(self):
+    async def test_search_single_index_70(self):
         """
         override_default_highlight_pre_tag
         """
@@ -5185,7 +5151,7 @@ class TestSearchClient:
             """{"query":"query","highlightPreTag":"<strong>"}"""
         )
 
-    async def test_search_single_index_72(self):
+    async def test_search_single_index_71(self):
         """
         override_default_highlight_post_tag
         """
@@ -5205,7 +5171,7 @@ class TestSearchClient:
             """{"query":"query","highlightPostTag":"</strong>"}"""
         )
 
-    async def test_search_single_index_73(self):
+    async def test_search_single_index_72(self):
         """
         override_default_snippet_ellipsis_text
         """
@@ -5225,7 +5191,7 @@ class TestSearchClient:
             """{"query":"query","snippetEllipsisText":""}"""
         )
 
-    async def test_search_single_index_74(self):
+    async def test_search_single_index_73(self):
         """
         enable_restrict_highlight_and_snippet_arrays
         """
@@ -5245,7 +5211,7 @@ class TestSearchClient:
             """{"query":"query","restrictHighlightAndSnippetArrays":false}"""
         )
 
-    async def test_search_single_index_75(self):
+    async def test_search_single_index_74(self):
         """
         access_page
         """
@@ -5263,7 +5229,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","page":0}""")
 
-    async def test_search_single_index_76(self):
+    async def test_search_single_index_75(self):
         """
         override_default_hits_per_page
         """
@@ -5281,7 +5247,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","hitsPerPage":10}""")
 
-    async def test_search_single_index_77(self):
+    async def test_search_single_index_76(self):
         """
         get_nth_hit
         """
@@ -5299,7 +5265,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","offset":4}""")
 
-    async def test_search_single_index_78(self):
+    async def test_search_single_index_77(self):
         """
         get_n_results
         """
@@ -5317,7 +5283,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","length":4}""")
 
-    async def test_search_single_index_79(self):
+    async def test_search_single_index_78(self):
         """
         override_default_min_word_size_for_one_typo
         """
@@ -5337,7 +5303,7 @@ class TestSearchClient:
             """{"query":"query","minWordSizefor1Typo":2}"""
         )
 
-    async def test_search_single_index_80(self):
+    async def test_search_single_index_79(self):
         """
         override_default_min_word_size_for_two_typos
         """
@@ -5357,7 +5323,7 @@ class TestSearchClient:
             """{"query":"query","minWordSizefor2Typos":2}"""
         )
 
-    async def test_search_single_index_81(self):
+    async def test_search_single_index_80(self):
         """
         override_default_typo_tolerance_mode
         """
@@ -5375,7 +5341,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","typoTolerance":false}""")
 
-    async def test_search_single_index_82(self):
+    async def test_search_single_index_81(self):
         """
         disable_typos_on_numeric_tokens_at_search_time
         """
@@ -5395,7 +5361,7 @@ class TestSearchClient:
             """{"query":"query","allowTyposOnNumericTokens":false}"""
         )
 
-    async def test_search_single_index_83(self):
+    async def test_search_single_index_82(self):
         """
         search_around_a_position
         """
@@ -5415,7 +5381,7 @@ class TestSearchClient:
             """{"query":"query","aroundLatLng":"40.71, -74.01"}"""
         )
 
-    async def test_search_single_index_84(self):
+    async def test_search_single_index_83(self):
         """
         search_around_server_ip
         """
@@ -5445,7 +5411,7 @@ class TestSearchClient:
             """{"query":"query","aroundLatLngViaIP":true}"""
         )
 
-    async def test_search_single_index_85(self):
+    async def test_search_single_index_84(self):
         """
         set_around_radius
         """
@@ -5463,7 +5429,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","aroundRadius":1000}""")
 
-    async def test_search_single_index_86(self):
+    async def test_search_single_index_85(self):
         """
         disable_automatic_radius
         """
@@ -5481,7 +5447,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","aroundRadius":"all"}""")
 
-    async def test_search_single_index_87(self):
+    async def test_search_single_index_86(self):
         """
         set_geo_search_precision
         """
@@ -5499,7 +5465,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","aroundPrecision":100}""")
 
-    async def test_search_single_index_88(self):
+    async def test_search_single_index_87(self):
         """
         set_geo_search_precision_non_linear
         """
@@ -5528,7 +5494,7 @@ class TestSearchClient:
             """{"query":"query","aroundPrecision":[{"from":0,"value":25},{"from":2000,"value":1000}]}"""
         )
 
-    async def test_search_single_index_89(self):
+    async def test_search_single_index_88(self):
         """
         set_minimum_geo_search_radius
         """
@@ -5548,7 +5514,7 @@ class TestSearchClient:
             """{"query":"query","minimumAroundRadius":1000}"""
         )
 
-    async def test_search_single_index_90(self):
+    async def test_search_single_index_89(self):
         """
         search_inside_rectangular_area
         """
@@ -5575,7 +5541,7 @@ class TestSearchClient:
             """{"query":"query","insideBoundingBox":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625]]}"""
         )
 
-    async def test_search_single_index_91(self):
+    async def test_search_single_index_90(self):
         """
         search_inside_multiple_rectangular_areas
         """
@@ -5608,7 +5574,7 @@ class TestSearchClient:
             """{"query":"query","insideBoundingBox":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875]]}"""
         )
 
-    async def test_search_single_index_92(self):
+    async def test_search_single_index_91(self):
         """
         search_inside_polygon_area
         """
@@ -5637,7 +5603,7 @@ class TestSearchClient:
             """{"query":"query","insidePolygon":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625]]}"""
         )
 
-    async def test_search_single_index_93(self):
+    async def test_search_single_index_92(self):
         """
         search_inside_multiple_polygon_areas
         """
@@ -5676,7 +5642,7 @@ class TestSearchClient:
             """{"query":"query","insidePolygon":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875,45.17210966999772,1.009765625,50.62626704081,4.6181640625]]}"""
         )
 
-    async def test_search_single_index_94(self):
+    async def test_search_single_index_93(self):
         """
         set_querylanguages_override
         """
@@ -5699,53 +5665,7 @@ class TestSearchClient:
             """{"query":"query","ignorePlurals":["ca","es"]}"""
         )
 
-    async def test_search_single_index_95(self):
-        """
-        set_querylanguages_override
-        """
-        _req = await self._client.search_single_index_with_http_info(
-            index_name="indexName",
-            search_params={
-                "query": "query",
-                "removeStopWords": [
-                    "ca",
-                    "es",
-                ],
-            },
-        )
-
-        assert _req.path == "/1/indexes/indexName/query"
-        assert _req.verb == "POST"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads(
-            """{"query":"query","removeStopWords":["ca","es"]}"""
-        )
-
-    async def test_search_single_index_96(self):
-        """
-        set_querylanguages_override
-        """
-        _req = await self._client.search_single_index_with_http_info(
-            index_name="indexName",
-            search_params={
-                "query": "query",
-                "removeStopWords": [
-                    "ca",
-                    "es",
-                ],
-            },
-        )
-
-        assert _req.path == "/1/indexes/indexName/query"
-        assert _req.verb == "POST"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads(
-            """{"query":"query","removeStopWords":["ca","es"]}"""
-        )
-
-    async def test_search_single_index_97(self):
+    async def test_search_single_index_94(self):
         """
         set_querylanguages_with_japanese_query
         """
@@ -5768,7 +5688,7 @@ class TestSearchClient:
             """{"query":"query","queryLanguages":["ja","en"]}"""
         )
 
-    async def test_search_single_index_98(self):
+    async def test_search_single_index_95(self):
         """
         set_natural_languages
         """
@@ -5788,7 +5708,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"","naturalLanguages":["fr"]}""")
 
-    async def test_search_single_index_99(self):
+    async def test_search_single_index_96(self):
         """
         override_natural_languages_with_query
         """
@@ -5811,7 +5731,7 @@ class TestSearchClient:
             """{"query":"","naturalLanguages":["fr"],"removeWordsIfNoResults":"firstWords"}"""
         )
 
-    async def test_search_single_index_100(self):
+    async def test_search_single_index_97(self):
         """
         enable_decompound_query_search_time
         """
@@ -5829,7 +5749,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","decompoundQuery":true}""")
 
-    async def test_search_single_index_101(self):
+    async def test_search_single_index_98(self):
         """
         enable_rules_search_time
         """
@@ -5847,7 +5767,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","enableRules":true}""")
 
-    async def test_search_single_index_102(self):
+    async def test_search_single_index_99(self):
         """
         set_rule_contexts
         """
@@ -5870,7 +5790,7 @@ class TestSearchClient:
             """{"query":"query","ruleContexts":["front_end","website2"]}"""
         )
 
-    async def test_search_single_index_103(self):
+    async def test_search_single_index_100(self):
         """
         enable_personalization
         """
@@ -5890,7 +5810,7 @@ class TestSearchClient:
             """{"query":"query","enablePersonalization":true}"""
         )
 
-    async def test_search_single_index_104(self):
+    async def test_search_single_index_101(self):
         """
         enable_personalization_with_user_token
         """
@@ -5911,7 +5831,7 @@ class TestSearchClient:
             """{"query":"query","enablePersonalization":true,"userToken":"123456"}"""
         )
 
-    async def test_search_single_index_105(self):
+    async def test_search_single_index_102(self):
         """
         personalization_impact
         """
@@ -5931,7 +5851,7 @@ class TestSearchClient:
             """{"query":"query","personalizationImpact":20}"""
         )
 
-    async def test_search_single_index_106(self):
+    async def test_search_single_index_103(self):
         """
         set_user_token
         """
@@ -5949,7 +5869,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","userToken":"123456"}""")
 
-    async def test_search_single_index_107(self):
+    async def test_search_single_index_104(self):
         """
         set_user_token_with_personalization
         """
@@ -5970,7 +5890,7 @@ class TestSearchClient:
             """{"query":"query","enablePersonalization":true,"userToken":"123456"}"""
         )
 
-    async def test_search_single_index_108(self):
+    async def test_search_single_index_105(self):
         """
         override_default_query_type
         """
@@ -5990,7 +5910,7 @@ class TestSearchClient:
             """{"query":"query","queryType":"prefixAll"}"""
         )
 
-    async def test_search_single_index_109(self):
+    async def test_search_single_index_106(self):
         """
         override_default_remove_words_if_no_results
         """
@@ -6010,7 +5930,7 @@ class TestSearchClient:
             """{"query":"query","removeWordsIfNoResults":"lastWords"}"""
         )
 
-    async def test_search_single_index_110(self):
+    async def test_search_single_index_107(self):
         """
         enable_advanced_syntax_search_time
         """
@@ -6028,7 +5948,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","advancedSyntax":true}""")
 
-    async def test_search_single_index_111(self):
+    async def test_search_single_index_108(self):
         """
         overide_default_optional_words
         """
@@ -6051,7 +5971,7 @@ class TestSearchClient:
             """{"query":"query","optionalWords":["toyota","2020 2021"]}"""
         )
 
-    async def test_search_single_index_112(self):
+    async def test_search_single_index_109(self):
         """
         disabling_exact_for_some_attributes_search_time
         """
@@ -6073,7 +5993,7 @@ class TestSearchClient:
             """{"query":"query","disableExactOnAttributes":["description"]}"""
         )
 
-    async def test_search_single_index_113(self):
+    async def test_search_single_index_110(self):
         """
         override_default_exact_single_word_query
         """
@@ -6093,7 +6013,7 @@ class TestSearchClient:
             """{"query":"query","exactOnSingleWordQuery":"none"}"""
         )
 
-    async def test_search_single_index_114(self):
+    async def test_search_single_index_111(self):
         """
         override_default_aternative_as_exact
         """
@@ -6115,7 +6035,7 @@ class TestSearchClient:
             """{"query":"query","alternativesAsExact":["multiWordsSynonym"]}"""
         )
 
-    async def test_search_single_index_115(self):
+    async def test_search_single_index_112(self):
         """
         enable_advanced_syntax_exact_phrase
         """
@@ -6138,7 +6058,7 @@ class TestSearchClient:
             """{"query":"query","advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"]}"""
         )
 
-    async def test_search_single_index_116(self):
+    async def test_search_single_index_113(self):
         """
         enable_advanced_syntax_exclude_words
         """
@@ -6161,7 +6081,7 @@ class TestSearchClient:
             """{"query":"query","advancedSyntax":true,"advancedSyntaxFeatures":["excludeWords"]}"""
         )
 
-    async def test_search_single_index_117(self):
+    async def test_search_single_index_114(self):
         """
         override_distinct
         """
@@ -6179,7 +6099,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","distinct":0}""")
 
-    async def test_search_single_index_118(self):
+    async def test_search_single_index_115(self):
         """
         get_ranking_info
         """
@@ -6197,7 +6117,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","getRankingInfo":true}""")
 
-    async def test_search_single_index_119(self):
+    async def test_search_single_index_116(self):
         """
         disable_click_analytics
         """
@@ -6215,7 +6135,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","clickAnalytics":false}""")
 
-    async def test_search_single_index_120(self):
+    async def test_search_single_index_117(self):
         """
         enable_click_analytics
         """
@@ -6233,7 +6153,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","clickAnalytics":true}""")
 
-    async def test_search_single_index_121(self):
+    async def test_search_single_index_118(self):
         """
         disable_analytics
         """
@@ -6251,7 +6171,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","analytics":false}""")
 
-    async def test_search_single_index_122(self):
+    async def test_search_single_index_119(self):
         """
         add_analytics_tags
         """
@@ -6274,7 +6194,7 @@ class TestSearchClient:
             """{"query":"query","analyticsTags":["front_end","website2"]}"""
         )
 
-    async def test_search_single_index_123(self):
+    async def test_search_single_index_120(self):
         """
         disable_synonyms
         """
@@ -6292,7 +6212,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","synonyms":false}""")
 
-    async def test_search_single_index_124(self):
+    async def test_search_single_index_121(self):
         """
         override_replace_synonyms_in_highlights
         """
@@ -6312,7 +6232,7 @@ class TestSearchClient:
             """{"query":"query","replaceSynonymsInHighlight":true}"""
         )
 
-    async def test_search_single_index_125(self):
+    async def test_search_single_index_122(self):
         """
         override_min_proximity
         """
@@ -6330,7 +6250,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","minProximity":2}""")
 
-    async def test_search_single_index_126(self):
+    async def test_search_single_index_123(self):
         """
         override_default_field
         """
@@ -6353,7 +6273,7 @@ class TestSearchClient:
             """{"query":"query","responseFields":["hits","facets"]}"""
         )
 
-    async def test_search_single_index_127(self):
+    async def test_search_single_index_124(self):
         """
         override_percentile_computation
         """
@@ -6373,7 +6293,7 @@ class TestSearchClient:
             """{"query":"query","percentileComputation":false}"""
         )
 
-    async def test_search_single_index_128(self):
+    async def test_search_single_index_125(self):
         """
         set_ab_test
         """
@@ -6391,7 +6311,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","enableABTest":false}""")
 
-    async def test_search_single_index_129(self):
+    async def test_search_single_index_126(self):
         """
         set_enable_re_ranking
         """
@@ -6411,7 +6331,7 @@ class TestSearchClient:
             """{"query":"query","enableReRanking":false}"""
         )
 
-    async def test_search_single_index_130(self):
+    async def test_search_single_index_127(self):
         """
         with algolia user id
         """
@@ -6431,7 +6351,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query"}""")
 
-    async def test_search_single_index_131(self):
+    async def test_search_single_index_128(self):
         """
         mcm with algolia user id
         """
@@ -8661,7 +8581,7 @@ class TestSearchClient:
 
     async def test_set_settings_94(self):
         """
-        set_languages_using_querylanguages
+        set_querylanguage_ignoreplurals
         """
         _req = await self._client.set_settings_with_http_info(
             index_name="theIndexName",
@@ -8708,7 +8628,7 @@ class TestSearchClient:
 
     async def test_set_settings_96(self):
         """
-        set_languages_using_querylanguages
+        set_querylanguage_removestopwords
         """
         _req = await self._client.set_settings_with_http_info(
             index_name="theIndexName",
@@ -8840,7 +8760,7 @@ class TestSearchClient:
 
     async def test_set_settings_102(self):
         """
-        set_languages_using_querylanguages
+        set_querylanguage_both
         """
         _req = await self._client.set_settings_with_http_info(
             index_name="theIndexName",
@@ -9083,23 +9003,6 @@ class TestSearchClient:
 
     async def test_set_settings_115(self):
         """
-        enable_advanced_syntax_by_default
-        """
-        _req = await self._client.set_settings_with_http_info(
-            index_name="theIndexName",
-            index_settings={
-                "advancedSyntax": True,
-            },
-        )
-
-        assert _req.path == "/1/indexes/theIndexName/settings"
-        assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"advancedSyntax":true}""")
-
-    async def test_set_settings_116(self):
-        """
         set_numeric_attributes_for_filtering
         """
         _req = await self._client.set_settings_with_http_info(
@@ -9120,7 +9023,7 @@ class TestSearchClient:
             """{"numericAttributesForFiltering":["quantity","popularity"]}"""
         )
 
-    async def test_set_settings_117(self):
+    async def test_set_settings_116(self):
         """
         enable_compression_of_integer_array
         """
@@ -9137,7 +9040,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"allowCompressionOfIntegerArray":true}""")
 
-    async def test_set_settings_118(self):
+    async def test_set_settings_117(self):
         """
         set_attributes_for_distinct
         """
@@ -9154,7 +9057,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"attributeForDistinct":"url"}""")
 
-    async def test_set_settings_119(self):
+    async def test_set_settings_118(self):
         """
         set_distinct
         """
@@ -9174,7 +9077,7 @@ class TestSearchClient:
             """{"distinct":1,"attributeForDistinct":"url"}"""
         )
 
-    async def test_set_settings_120(self):
+    async def test_set_settings_119(self):
         """
         set_replace_synonyms_in_highlights
         """
@@ -9191,7 +9094,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"replaceSynonymsInHighlight":false}""")
 
-    async def test_set_settings_121(self):
+    async def test_set_settings_120(self):
         """
         set_min_proximity
         """
@@ -9208,7 +9111,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"minProximity":1}""")
 
-    async def test_set_settings_122(self):
+    async def test_set_settings_121(self):
         """
         set_default_field
         """
@@ -9232,7 +9135,7 @@ class TestSearchClient:
             """{"responseFields":["hits","hitsPerPage","nbPages","page"]}"""
         )
 
-    async def test_set_settings_123(self):
+    async def test_set_settings_122(self):
         """
         set_max_facet_hits
         """
@@ -9249,7 +9152,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"maxFacetHits":10}""")
 
-    async def test_set_settings_124(self):
+    async def test_set_settings_123(self):
         """
         set_attribute_criteria_computed_by_min_proximity
         """
@@ -9268,7 +9171,7 @@ class TestSearchClient:
             """{"attributeCriteriaComputedByMinProximity":true}"""
         )
 
-    async def test_set_settings_125(self):
+    async def test_set_settings_124(self):
         """
         set_user_data
         """
@@ -9289,7 +9192,7 @@ class TestSearchClient:
             """{"userData":{"extraData":"This is the custom data that you want to store in your index"}}"""
         )
 
-    async def test_set_settings_126(self):
+    async def test_set_settings_125(self):
         """
         set_rendering_content
         """
@@ -13656,40 +13559,6 @@ class TestSearchClientSync:
 
     def test_search_single_index_30(self):
         """
-        insidePolygon
-        """
-        _req = self._client.search_single_index_with_http_info(
-            index_name="indexName",
-            search_params={
-                "insidePolygon": [
-                    [
-                        42.01,
-                        -124.31,
-                        48.835509470063045,
-                        -124.40453125000005,
-                        45.01082951668149,
-                        -65.95726562500005,
-                        31.247243545293433,
-                        -81.06578125000004,
-                        25.924152577235226,
-                        -97.68234374999997,
-                        32.300311895879545,
-                        -117.54828125,
-                    ],
-                ],
-            },
-        )
-
-        assert _req.path == "/1/indexes/indexName/query"
-        assert _req.verb == "POST"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads(
-            """{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}"""
-        )
-
-    def test_search_single_index_31(self):
-        """
         optionalFilters
         """
         _req = self._client.search_single_index_with_http_info(
@@ -13709,7 +13578,7 @@ class TestSearchClientSync:
             """{"optionalFilters":["can_deliver_quickly:true"]}"""
         )
 
-    def test_search_single_index_32(self):
+    def test_search_single_index_31(self):
         """
         optionalFiltersMany
         """
@@ -13732,7 +13601,7 @@ class TestSearchClientSync:
             """{"optionalFilters":["brand:Apple<score=3>","brand:Samsung<score=2>","brand:-Huawei"]}"""
         )
 
-    def test_search_single_index_33(self):
+    def test_search_single_index_32(self):
         """
         optionalFiltersSimple
         """
@@ -13754,7 +13623,7 @@ class TestSearchClientSync:
             """{"optionalFilters":["brand:Apple<score=2>","type:tablet"]}"""
         )
 
-    def test_search_single_index_34(self):
+    def test_search_single_index_33(self):
         """
         restrictSearchableAttributes
         """
@@ -13775,7 +13644,7 @@ class TestSearchClientSync:
             """{"restrictSearchableAttributes":["title_fr"]}"""
         )
 
-    def test_search_single_index_35(self):
+    def test_search_single_index_34(self):
         """
         getRankingInfo
         """
@@ -13792,7 +13661,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"getRankingInfo":true}""")
 
-    def test_search_single_index_36(self):
+    def test_search_single_index_35(self):
         """
         clickAnalytics
         """
@@ -13809,7 +13678,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"clickAnalytics":true}""")
 
-    def test_search_single_index_37(self):
+    def test_search_single_index_36(self):
         """
         clickAnalyticsUserToken
         """
@@ -13829,7 +13698,7 @@ class TestSearchClientSync:
             """{"clickAnalytics":true,"userToken":"user-1"}"""
         )
 
-    def test_search_single_index_38(self):
+    def test_search_single_index_37(self):
         """
         enablePersonalization
         """
@@ -13849,7 +13718,7 @@ class TestSearchClientSync:
             """{"enablePersonalization":true,"userToken":"user-1"}"""
         )
 
-    def test_search_single_index_39(self):
+    def test_search_single_index_38(self):
         """
         userToken
         """
@@ -13866,7 +13735,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"userToken":"user-1"}""")
 
-    def test_search_single_index_40(self):
+    def test_search_single_index_39(self):
         """
         userToken1234
         """
@@ -13886,7 +13755,7 @@ class TestSearchClientSync:
             """{"query":"query","userToken":"user-1234"}"""
         )
 
-    def test_search_single_index_41(self):
+    def test_search_single_index_40(self):
         """
         analyticsTag
         """
@@ -13905,7 +13774,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"analyticsTags":["YOUR_ANALYTICS_TAG"]}""")
 
-    def test_search_single_index_42(self):
+    def test_search_single_index_41(self):
         """
         facetFiltersUsers
         """
@@ -13927,7 +13796,7 @@ class TestSearchClientSync:
             """{"facetFilters":["user:user42","user:public"]}"""
         )
 
-    def test_search_single_index_43(self):
+    def test_search_single_index_42(self):
         """
         buildTheQuery
         """
@@ -13950,7 +13819,7 @@ class TestSearchClientSync:
             """{"filters":"categoryPageId: Men's Clothing","hitsPerPage":50,"analyticsTags":["mens-clothing"]}"""
         )
 
-    def test_search_single_index_44(self):
+    def test_search_single_index_43(self):
         """
         attributesToHighlightOverride
         """
@@ -13973,7 +13842,7 @@ class TestSearchClientSync:
             """{"query":"query","attributesToHighlight":["title","content"]}"""
         )
 
-    def test_search_single_index_45(self):
+    def test_search_single_index_44(self):
         """
         disableTypoToleranceOnAttributes
         """
@@ -13995,7 +13864,7 @@ class TestSearchClientSync:
             """{"query":"query","disableTypoToleranceOnAttributes":["serial_number"]}"""
         )
 
-    def test_search_single_index_46(self):
+    def test_search_single_index_45(self):
         """
         similarQuery
         """
@@ -14012,7 +13881,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"shirt"}""")
 
-    def test_search_single_index_47(self):
+    def test_search_single_index_46(self):
         """
         search_everything
         """
@@ -14029,7 +13898,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":""}""")
 
-    def test_search_single_index_48(self):
+    def test_search_single_index_47(self):
         """
         api_filtering_range_example
         """
@@ -14049,7 +13918,7 @@ class TestSearchClientSync:
             """{"query":"books","filters":"price:10 TO 20"}"""
         )
 
-    def test_search_single_index_49(self):
+    def test_search_single_index_48(self):
         """
         search_a_query
         """
@@ -14070,7 +13939,7 @@ class TestSearchClientSync:
             """{"query":"","similarQuery":"Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen","filters":"year:1991 TO 2001"}"""
         )
 
-    def test_search_single_index_50(self):
+    def test_search_single_index_49(self):
         """
         override_retrievable_attributes
         """
@@ -14093,7 +13962,7 @@ class TestSearchClientSync:
             """{"query":"query","attributesToRetrieve":["title","content"]}"""
         )
 
-    def test_search_single_index_51(self):
+    def test_search_single_index_50(self):
         """
         restrict_searchable_attributes
         """
@@ -14116,7 +13985,7 @@ class TestSearchClientSync:
             """{"query":"query","restrictSearchableAttributes":["title","author"]}"""
         )
 
-    def test_search_single_index_52(self):
+    def test_search_single_index_51(self):
         """
         override_default_relevancy
         """
@@ -14136,7 +14005,7 @@ class TestSearchClientSync:
             """{"query":"query","relevancyStrictness":70}"""
         )
 
-    def test_search_single_index_53(self):
+    def test_search_single_index_52(self):
         """
         apply_filters
         """
@@ -14156,7 +14025,7 @@ class TestSearchClientSync:
             """{"query":"query","filters":"(category:Book OR category:Ebook) AND _tags:published"}"""
         )
 
-    def test_search_single_index_54(self):
+    def test_search_single_index_53(self):
         """
         apply_all_filters
         """
@@ -14176,7 +14045,7 @@ class TestSearchClientSync:
             """{"query":"query","filters":"available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\\"John Doe\\""}"""
         )
 
-    def test_search_single_index_55(self):
+    def test_search_single_index_54(self):
         """
         escape_spaces
         """
@@ -14196,7 +14065,7 @@ class TestSearchClientSync:
             """{"query":"query","filters":"category:\\"Books and Comics\\""}"""
         )
 
-    def test_search_single_index_56(self):
+    def test_search_single_index_55(self):
         """
         escape_keywords
         """
@@ -14216,7 +14085,7 @@ class TestSearchClientSync:
             """{"query":"query","filters":"keyword:\\"OR\\""}"""
         )
 
-    def test_search_single_index_57(self):
+    def test_search_single_index_56(self):
         """
         escape_single_quotes
         """
@@ -14236,7 +14105,7 @@ class TestSearchClientSync:
             """{"query":"query","filters":"content:\\"It's a wonderful day\\""}"""
         )
 
-    def test_search_single_index_58(self):
+    def test_search_single_index_57(self):
         """
         escape_double_quotes
         """
@@ -14256,9 +14125,9 @@ class TestSearchClientSync:
             """{"query":"query","filters":"content:\\"She said \\"Hello World\\""}"""
         )
 
-    def test_search_single_index_59(self):
+    def test_search_single_index_58(self):
         """
-        apply_filters
+        apply_optional_filters
         """
         _req = self._client.search_single_index_with_http_info(
             index_name="indexName",
@@ -14279,7 +14148,7 @@ class TestSearchClientSync:
             """{"query":"query","optionalFilters":["category:Book","author:John Doe"]}"""
         )
 
-    def test_search_single_index_60(self):
+    def test_search_single_index_59(self):
         """
         apply_negative_filters
         """
@@ -14302,7 +14171,7 @@ class TestSearchClientSync:
             """{"query":"query","optionalFilters":["category:Book","author:-John Doe"]}"""
         )
 
-    def test_search_single_index_61(self):
+    def test_search_single_index_60(self):
         """
         apply_negative_filters_restaurants
         """
@@ -14324,7 +14193,7 @@ class TestSearchClientSync:
             """{"query":"query","optionalFilters":["restaurant:-Bert's Inn"]}"""
         )
 
-    def test_search_single_index_62(self):
+    def test_search_single_index_61(self):
         """
         apply_numeric_filters
         """
@@ -14350,7 +14219,7 @@ class TestSearchClientSync:
             """{"query":"query","numericFilters":["price < 1000",["inStock = 1","deliveryDate < 1441755506"]]}"""
         )
 
-    def test_search_single_index_63(self):
+    def test_search_single_index_62(self):
         """
         apply_tag_filters
         """
@@ -14376,9 +14245,9 @@ class TestSearchClientSync:
             """{"query":"query","tagFilters":["SciFi",["Book","Movie"]]}"""
         )
 
-    def test_search_single_index_64(self):
+    def test_search_single_index_63(self):
         """
-        apply_filters
+        set_sum_or_filters_scores
         """
         _req = self._client.search_single_index_with_http_info(
             index_name="indexName",
@@ -14396,7 +14265,7 @@ class TestSearchClientSync:
             """{"query":"query","sumOrFiltersScores":true}"""
         )
 
-    def test_search_single_index_65(self):
+    def test_search_single_index_64(self):
         """
         facets_all
         """
@@ -14416,7 +14285,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","facets":["*"]}""")
 
-    def test_search_single_index_66(self):
+    def test_search_single_index_65(self):
         """
         retrieve_only_some_facets
         """
@@ -14439,7 +14308,7 @@ class TestSearchClientSync:
             """{"query":"query","facets":["category","author"]}"""
         )
 
-    def test_search_single_index_67(self):
+    def test_search_single_index_66(self):
         """
         override_default_max_values_per_facet
         """
@@ -14457,7 +14326,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","maxValuesPerFacet":20}""")
 
-    def test_search_single_index_68(self):
+    def test_search_single_index_67(self):
         """
         enable_faceting_after_distinct
         """
@@ -14477,7 +14346,7 @@ class TestSearchClientSync:
             """{"query":"query","facetingAfterDistinct":true}"""
         )
 
-    def test_search_single_index_69(self):
+    def test_search_single_index_68(self):
         """
         sort_facet_values_alphabetically
         """
@@ -14497,7 +14366,7 @@ class TestSearchClientSync:
             """{"query":"query","sortFacetValuesBy":"count"}"""
         )
 
-    def test_search_single_index_70(self):
+    def test_search_single_index_69(self):
         """
         override_attributes_to_snippet
         """
@@ -14520,7 +14389,7 @@ class TestSearchClientSync:
             """{"query":"query","attributesToSnippet":["title","content:80"]}"""
         )
 
-    def test_search_single_index_71(self):
+    def test_search_single_index_70(self):
         """
         override_default_highlight_pre_tag
         """
@@ -14540,7 +14409,7 @@ class TestSearchClientSync:
             """{"query":"query","highlightPreTag":"<strong>"}"""
         )
 
-    def test_search_single_index_72(self):
+    def test_search_single_index_71(self):
         """
         override_default_highlight_post_tag
         """
@@ -14560,7 +14429,7 @@ class TestSearchClientSync:
             """{"query":"query","highlightPostTag":"</strong>"}"""
         )
 
-    def test_search_single_index_73(self):
+    def test_search_single_index_72(self):
         """
         override_default_snippet_ellipsis_text
         """
@@ -14580,7 +14449,7 @@ class TestSearchClientSync:
             """{"query":"query","snippetEllipsisText":""}"""
         )
 
-    def test_search_single_index_74(self):
+    def test_search_single_index_73(self):
         """
         enable_restrict_highlight_and_snippet_arrays
         """
@@ -14600,7 +14469,7 @@ class TestSearchClientSync:
             """{"query":"query","restrictHighlightAndSnippetArrays":false}"""
         )
 
-    def test_search_single_index_75(self):
+    def test_search_single_index_74(self):
         """
         access_page
         """
@@ -14618,7 +14487,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","page":0}""")
 
-    def test_search_single_index_76(self):
+    def test_search_single_index_75(self):
         """
         override_default_hits_per_page
         """
@@ -14636,7 +14505,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","hitsPerPage":10}""")
 
-    def test_search_single_index_77(self):
+    def test_search_single_index_76(self):
         """
         get_nth_hit
         """
@@ -14654,7 +14523,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","offset":4}""")
 
-    def test_search_single_index_78(self):
+    def test_search_single_index_77(self):
         """
         get_n_results
         """
@@ -14672,7 +14541,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","length":4}""")
 
-    def test_search_single_index_79(self):
+    def test_search_single_index_78(self):
         """
         override_default_min_word_size_for_one_typo
         """
@@ -14692,7 +14561,7 @@ class TestSearchClientSync:
             """{"query":"query","minWordSizefor1Typo":2}"""
         )
 
-    def test_search_single_index_80(self):
+    def test_search_single_index_79(self):
         """
         override_default_min_word_size_for_two_typos
         """
@@ -14712,7 +14581,7 @@ class TestSearchClientSync:
             """{"query":"query","minWordSizefor2Typos":2}"""
         )
 
-    def test_search_single_index_81(self):
+    def test_search_single_index_80(self):
         """
         override_default_typo_tolerance_mode
         """
@@ -14730,7 +14599,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","typoTolerance":false}""")
 
-    def test_search_single_index_82(self):
+    def test_search_single_index_81(self):
         """
         disable_typos_on_numeric_tokens_at_search_time
         """
@@ -14750,7 +14619,7 @@ class TestSearchClientSync:
             """{"query":"query","allowTyposOnNumericTokens":false}"""
         )
 
-    def test_search_single_index_83(self):
+    def test_search_single_index_82(self):
         """
         search_around_a_position
         """
@@ -14770,7 +14639,7 @@ class TestSearchClientSync:
             """{"query":"query","aroundLatLng":"40.71, -74.01"}"""
         )
 
-    def test_search_single_index_84(self):
+    def test_search_single_index_83(self):
         """
         search_around_server_ip
         """
@@ -14800,7 +14669,7 @@ class TestSearchClientSync:
             """{"query":"query","aroundLatLngViaIP":true}"""
         )
 
-    def test_search_single_index_85(self):
+    def test_search_single_index_84(self):
         """
         set_around_radius
         """
@@ -14818,7 +14687,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","aroundRadius":1000}""")
 
-    def test_search_single_index_86(self):
+    def test_search_single_index_85(self):
         """
         disable_automatic_radius
         """
@@ -14836,7 +14705,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","aroundRadius":"all"}""")
 
-    def test_search_single_index_87(self):
+    def test_search_single_index_86(self):
         """
         set_geo_search_precision
         """
@@ -14854,7 +14723,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","aroundPrecision":100}""")
 
-    def test_search_single_index_88(self):
+    def test_search_single_index_87(self):
         """
         set_geo_search_precision_non_linear
         """
@@ -14883,7 +14752,7 @@ class TestSearchClientSync:
             """{"query":"query","aroundPrecision":[{"from":0,"value":25},{"from":2000,"value":1000}]}"""
         )
 
-    def test_search_single_index_89(self):
+    def test_search_single_index_88(self):
         """
         set_minimum_geo_search_radius
         """
@@ -14903,7 +14772,7 @@ class TestSearchClientSync:
             """{"query":"query","minimumAroundRadius":1000}"""
         )
 
-    def test_search_single_index_90(self):
+    def test_search_single_index_89(self):
         """
         search_inside_rectangular_area
         """
@@ -14930,7 +14799,7 @@ class TestSearchClientSync:
             """{"query":"query","insideBoundingBox":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625]]}"""
         )
 
-    def test_search_single_index_91(self):
+    def test_search_single_index_90(self):
         """
         search_inside_multiple_rectangular_areas
         """
@@ -14963,7 +14832,7 @@ class TestSearchClientSync:
             """{"query":"query","insideBoundingBox":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875]]}"""
         )
 
-    def test_search_single_index_92(self):
+    def test_search_single_index_91(self):
         """
         search_inside_polygon_area
         """
@@ -14992,7 +14861,7 @@ class TestSearchClientSync:
             """{"query":"query","insidePolygon":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625]]}"""
         )
 
-    def test_search_single_index_93(self):
+    def test_search_single_index_92(self):
         """
         search_inside_multiple_polygon_areas
         """
@@ -15031,7 +14900,7 @@ class TestSearchClientSync:
             """{"query":"query","insidePolygon":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875,45.17210966999772,1.009765625,50.62626704081,4.6181640625]]}"""
         )
 
-    def test_search_single_index_94(self):
+    def test_search_single_index_93(self):
         """
         set_querylanguages_override
         """
@@ -15054,53 +14923,7 @@ class TestSearchClientSync:
             """{"query":"query","ignorePlurals":["ca","es"]}"""
         )
 
-    def test_search_single_index_95(self):
-        """
-        set_querylanguages_override
-        """
-        _req = self._client.search_single_index_with_http_info(
-            index_name="indexName",
-            search_params={
-                "query": "query",
-                "removeStopWords": [
-                    "ca",
-                    "es",
-                ],
-            },
-        )
-
-        assert _req.path == "/1/indexes/indexName/query"
-        assert _req.verb == "POST"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads(
-            """{"query":"query","removeStopWords":["ca","es"]}"""
-        )
-
-    def test_search_single_index_96(self):
-        """
-        set_querylanguages_override
-        """
-        _req = self._client.search_single_index_with_http_info(
-            index_name="indexName",
-            search_params={
-                "query": "query",
-                "removeStopWords": [
-                    "ca",
-                    "es",
-                ],
-            },
-        )
-
-        assert _req.path == "/1/indexes/indexName/query"
-        assert _req.verb == "POST"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads(
-            """{"query":"query","removeStopWords":["ca","es"]}"""
-        )
-
-    def test_search_single_index_97(self):
+    def test_search_single_index_94(self):
         """
         set_querylanguages_with_japanese_query
         """
@@ -15123,7 +14946,7 @@ class TestSearchClientSync:
             """{"query":"query","queryLanguages":["ja","en"]}"""
         )
 
-    def test_search_single_index_98(self):
+    def test_search_single_index_95(self):
         """
         set_natural_languages
         """
@@ -15143,7 +14966,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"","naturalLanguages":["fr"]}""")
 
-    def test_search_single_index_99(self):
+    def test_search_single_index_96(self):
         """
         override_natural_languages_with_query
         """
@@ -15166,7 +14989,7 @@ class TestSearchClientSync:
             """{"query":"","naturalLanguages":["fr"],"removeWordsIfNoResults":"firstWords"}"""
         )
 
-    def test_search_single_index_100(self):
+    def test_search_single_index_97(self):
         """
         enable_decompound_query_search_time
         """
@@ -15184,7 +15007,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","decompoundQuery":true}""")
 
-    def test_search_single_index_101(self):
+    def test_search_single_index_98(self):
         """
         enable_rules_search_time
         """
@@ -15202,7 +15025,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","enableRules":true}""")
 
-    def test_search_single_index_102(self):
+    def test_search_single_index_99(self):
         """
         set_rule_contexts
         """
@@ -15225,7 +15048,7 @@ class TestSearchClientSync:
             """{"query":"query","ruleContexts":["front_end","website2"]}"""
         )
 
-    def test_search_single_index_103(self):
+    def test_search_single_index_100(self):
         """
         enable_personalization
         """
@@ -15245,7 +15068,7 @@ class TestSearchClientSync:
             """{"query":"query","enablePersonalization":true}"""
         )
 
-    def test_search_single_index_104(self):
+    def test_search_single_index_101(self):
         """
         enable_personalization_with_user_token
         """
@@ -15266,7 +15089,7 @@ class TestSearchClientSync:
             """{"query":"query","enablePersonalization":true,"userToken":"123456"}"""
         )
 
-    def test_search_single_index_105(self):
+    def test_search_single_index_102(self):
         """
         personalization_impact
         """
@@ -15286,7 +15109,7 @@ class TestSearchClientSync:
             """{"query":"query","personalizationImpact":20}"""
         )
 
-    def test_search_single_index_106(self):
+    def test_search_single_index_103(self):
         """
         set_user_token
         """
@@ -15304,7 +15127,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","userToken":"123456"}""")
 
-    def test_search_single_index_107(self):
+    def test_search_single_index_104(self):
         """
         set_user_token_with_personalization
         """
@@ -15325,7 +15148,7 @@ class TestSearchClientSync:
             """{"query":"query","enablePersonalization":true,"userToken":"123456"}"""
         )
 
-    def test_search_single_index_108(self):
+    def test_search_single_index_105(self):
         """
         override_default_query_type
         """
@@ -15345,7 +15168,7 @@ class TestSearchClientSync:
             """{"query":"query","queryType":"prefixAll"}"""
         )
 
-    def test_search_single_index_109(self):
+    def test_search_single_index_106(self):
         """
         override_default_remove_words_if_no_results
         """
@@ -15365,7 +15188,7 @@ class TestSearchClientSync:
             """{"query":"query","removeWordsIfNoResults":"lastWords"}"""
         )
 
-    def test_search_single_index_110(self):
+    def test_search_single_index_107(self):
         """
         enable_advanced_syntax_search_time
         """
@@ -15383,7 +15206,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","advancedSyntax":true}""")
 
-    def test_search_single_index_111(self):
+    def test_search_single_index_108(self):
         """
         overide_default_optional_words
         """
@@ -15406,7 +15229,7 @@ class TestSearchClientSync:
             """{"query":"query","optionalWords":["toyota","2020 2021"]}"""
         )
 
-    def test_search_single_index_112(self):
+    def test_search_single_index_109(self):
         """
         disabling_exact_for_some_attributes_search_time
         """
@@ -15428,7 +15251,7 @@ class TestSearchClientSync:
             """{"query":"query","disableExactOnAttributes":["description"]}"""
         )
 
-    def test_search_single_index_113(self):
+    def test_search_single_index_110(self):
         """
         override_default_exact_single_word_query
         """
@@ -15448,7 +15271,7 @@ class TestSearchClientSync:
             """{"query":"query","exactOnSingleWordQuery":"none"}"""
         )
 
-    def test_search_single_index_114(self):
+    def test_search_single_index_111(self):
         """
         override_default_aternative_as_exact
         """
@@ -15470,7 +15293,7 @@ class TestSearchClientSync:
             """{"query":"query","alternativesAsExact":["multiWordsSynonym"]}"""
         )
 
-    def test_search_single_index_115(self):
+    def test_search_single_index_112(self):
         """
         enable_advanced_syntax_exact_phrase
         """
@@ -15493,7 +15316,7 @@ class TestSearchClientSync:
             """{"query":"query","advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"]}"""
         )
 
-    def test_search_single_index_116(self):
+    def test_search_single_index_113(self):
         """
         enable_advanced_syntax_exclude_words
         """
@@ -15516,7 +15339,7 @@ class TestSearchClientSync:
             """{"query":"query","advancedSyntax":true,"advancedSyntaxFeatures":["excludeWords"]}"""
         )
 
-    def test_search_single_index_117(self):
+    def test_search_single_index_114(self):
         """
         override_distinct
         """
@@ -15534,7 +15357,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","distinct":0}""")
 
-    def test_search_single_index_118(self):
+    def test_search_single_index_115(self):
         """
         get_ranking_info
         """
@@ -15552,7 +15375,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","getRankingInfo":true}""")
 
-    def test_search_single_index_119(self):
+    def test_search_single_index_116(self):
         """
         disable_click_analytics
         """
@@ -15570,7 +15393,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","clickAnalytics":false}""")
 
-    def test_search_single_index_120(self):
+    def test_search_single_index_117(self):
         """
         enable_click_analytics
         """
@@ -15588,7 +15411,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","clickAnalytics":true}""")
 
-    def test_search_single_index_121(self):
+    def test_search_single_index_118(self):
         """
         disable_analytics
         """
@@ -15606,7 +15429,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","analytics":false}""")
 
-    def test_search_single_index_122(self):
+    def test_search_single_index_119(self):
         """
         add_analytics_tags
         """
@@ -15629,7 +15452,7 @@ class TestSearchClientSync:
             """{"query":"query","analyticsTags":["front_end","website2"]}"""
         )
 
-    def test_search_single_index_123(self):
+    def test_search_single_index_120(self):
         """
         disable_synonyms
         """
@@ -15647,7 +15470,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","synonyms":false}""")
 
-    def test_search_single_index_124(self):
+    def test_search_single_index_121(self):
         """
         override_replace_synonyms_in_highlights
         """
@@ -15667,7 +15490,7 @@ class TestSearchClientSync:
             """{"query":"query","replaceSynonymsInHighlight":true}"""
         )
 
-    def test_search_single_index_125(self):
+    def test_search_single_index_122(self):
         """
         override_min_proximity
         """
@@ -15685,7 +15508,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","minProximity":2}""")
 
-    def test_search_single_index_126(self):
+    def test_search_single_index_123(self):
         """
         override_default_field
         """
@@ -15708,7 +15531,7 @@ class TestSearchClientSync:
             """{"query":"query","responseFields":["hits","facets"]}"""
         )
 
-    def test_search_single_index_127(self):
+    def test_search_single_index_124(self):
         """
         override_percentile_computation
         """
@@ -15728,7 +15551,7 @@ class TestSearchClientSync:
             """{"query":"query","percentileComputation":false}"""
         )
 
-    def test_search_single_index_128(self):
+    def test_search_single_index_125(self):
         """
         set_ab_test
         """
@@ -15746,7 +15569,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query","enableABTest":false}""")
 
-    def test_search_single_index_129(self):
+    def test_search_single_index_126(self):
         """
         set_enable_re_ranking
         """
@@ -15766,7 +15589,7 @@ class TestSearchClientSync:
             """{"query":"query","enableReRanking":false}"""
         )
 
-    def test_search_single_index_130(self):
+    def test_search_single_index_127(self):
         """
         with algolia user id
         """
@@ -15786,7 +15609,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"query"}""")
 
-    def test_search_single_index_131(self):
+    def test_search_single_index_128(self):
         """
         mcm with algolia user id
         """
@@ -18016,7 +17839,7 @@ class TestSearchClientSync:
 
     def test_set_settings_94(self):
         """
-        set_languages_using_querylanguages
+        set_querylanguage_ignoreplurals
         """
         _req = self._client.set_settings_with_http_info(
             index_name="theIndexName",
@@ -18063,7 +17886,7 @@ class TestSearchClientSync:
 
     def test_set_settings_96(self):
         """
-        set_languages_using_querylanguages
+        set_querylanguage_removestopwords
         """
         _req = self._client.set_settings_with_http_info(
             index_name="theIndexName",
@@ -18195,7 +18018,7 @@ class TestSearchClientSync:
 
     def test_set_settings_102(self):
         """
-        set_languages_using_querylanguages
+        set_querylanguage_both
         """
         _req = self._client.set_settings_with_http_info(
             index_name="theIndexName",
@@ -18438,23 +18261,6 @@ class TestSearchClientSync:
 
     def test_set_settings_115(self):
         """
-        enable_advanced_syntax_by_default
-        """
-        _req = self._client.set_settings_with_http_info(
-            index_name="theIndexName",
-            index_settings={
-                "advancedSyntax": True,
-            },
-        )
-
-        assert _req.path == "/1/indexes/theIndexName/settings"
-        assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads("""{"advancedSyntax":true}""")
-
-    def test_set_settings_116(self):
-        """
         set_numeric_attributes_for_filtering
         """
         _req = self._client.set_settings_with_http_info(
@@ -18475,7 +18281,7 @@ class TestSearchClientSync:
             """{"numericAttributesForFiltering":["quantity","popularity"]}"""
         )
 
-    def test_set_settings_117(self):
+    def test_set_settings_116(self):
         """
         enable_compression_of_integer_array
         """
@@ -18492,7 +18298,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"allowCompressionOfIntegerArray":true}""")
 
-    def test_set_settings_118(self):
+    def test_set_settings_117(self):
         """
         set_attributes_for_distinct
         """
@@ -18509,7 +18315,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"attributeForDistinct":"url"}""")
 
-    def test_set_settings_119(self):
+    def test_set_settings_118(self):
         """
         set_distinct
         """
@@ -18529,7 +18335,7 @@ class TestSearchClientSync:
             """{"distinct":1,"attributeForDistinct":"url"}"""
         )
 
-    def test_set_settings_120(self):
+    def test_set_settings_119(self):
         """
         set_replace_synonyms_in_highlights
         """
@@ -18546,7 +18352,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"replaceSynonymsInHighlight":false}""")
 
-    def test_set_settings_121(self):
+    def test_set_settings_120(self):
         """
         set_min_proximity
         """
@@ -18563,7 +18369,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"minProximity":1}""")
 
-    def test_set_settings_122(self):
+    def test_set_settings_121(self):
         """
         set_default_field
         """
@@ -18587,7 +18393,7 @@ class TestSearchClientSync:
             """{"responseFields":["hits","hitsPerPage","nbPages","page"]}"""
         )
 
-    def test_set_settings_123(self):
+    def test_set_settings_122(self):
         """
         set_max_facet_hits
         """
@@ -18604,7 +18410,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"maxFacetHits":10}""")
 
-    def test_set_settings_124(self):
+    def test_set_settings_123(self):
         """
         set_attribute_criteria_computed_by_min_proximity
         """
@@ -18623,7 +18429,7 @@ class TestSearchClientSync:
             """{"attributeCriteriaComputedByMinProximity":true}"""
         )
 
-    def test_set_settings_125(self):
+    def test_set_settings_124(self):
         """
         set_user_data
         """
@@ -18644,7 +18450,7 @@ class TestSearchClientSync:
             """{"userData":{"extraData":"This is the custom data that you want to store in your index"}}"""
         )
 
-    def test_set_settings_126(self):
+    def test_set_settings_125(self):
         """
         set_rendering_content
         """

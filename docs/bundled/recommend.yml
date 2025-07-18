@@ -1244,16 +1244,15 @@ paths:
             // Call the API
 
             client.getRecommendations(
-              new GetRecommendationsParams()
-                .setRequests(
-                  Arrays.asList(
-                    new RelatedQuery()
-                      .setIndexName("<YOUR_INDEX_NAME>")
-                      .setObjectID("objectID")
-                      .setModel(RelatedModel.RELATED_PRODUCTS)
-                      .setThreshold(42.1)
-                  )
+              new GetRecommendationsParams().setRequests(
+                Arrays.asList(
+                  new RelatedQuery()
+                    .setIndexName("<YOUR_INDEX_NAME>")
+                    .setObjectID("objectID")
+                    .setModel(RelatedModel.RELATED_PRODUCTS)
+                    .setThreshold(42.1)
                 )
+              )
             );
 
             // >LOG

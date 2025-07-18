@@ -14,8 +14,7 @@ SearchForFacetValuesParams _$SearchForFacetValuesParamsFromJson(
       ($checkedConvert) {
         final val = SearchForFacetValuesParams(
           query: $checkedConvert('query', (v) => v as String?),
-          maxFacetHits:
-              $checkedConvert('maxFacetHits', (v) => (v as num?)?.toInt()),
+          maxFacetHits: $checkedConvert('maxFacetHits', (v) => v as int?),
           searchQuery: $checkedConvert(
               'searchQuery',
               (v) => v == null
@@ -27,10 +26,17 @@ SearchForFacetValuesParams _$SearchForFacetValuesParamsFromJson(
     );
 
 Map<String, dynamic> _$SearchForFacetValuesParamsToJson(
-        SearchForFacetValuesParams instance) =>
-    <String, dynamic>{
-      if (instance.query case final value?) 'query': value,
-      if (instance.maxFacetHits case final value?) 'maxFacetHits': value,
-      if (instance.searchQuery?.toJson() case final value?)
-        'searchQuery': value,
-    };
+    SearchForFacetValuesParams instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('query', instance.query);
+  writeNotNull('maxFacetHits', instance.maxFacetHits);
+  writeNotNull('searchQuery', instance.searchQuery?.toJson());
+  return val;
+}

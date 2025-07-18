@@ -4678,36 +4678,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("insidePolygon30") {
-    val (client, echo) = testClient()
-    val future = client.searchSingleIndex(
-      indexName = "indexName",
-      searchParams = Some(
-        SearchParamsObject(
-          insidePolygon = Some(
-            Seq(
-              Seq(42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005,
-                31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545,
-                -117.54828125)
-            )
-          )
-        )
-      )
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/1/indexes/indexName/query")
-    assert(res.method == "POST")
-    val expectedBody = parse(
-      """{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}"""
-    )
-    val actualBody = parse(res.body.get)
-    assert(actualBody == expectedBody)
-  }
-
-  test("optionalFilters31") {
+  test("optionalFilters30") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -4728,7 +4699,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("optionalFiltersMany32") {
+  test("optionalFiltersMany31") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -4758,7 +4729,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("optionalFiltersSimple33") {
+  test("optionalFiltersSimple32") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -4780,7 +4751,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("restrictSearchableAttributes34") {
+  test("restrictSearchableAttributes33") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -4801,7 +4772,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("getRankingInfo35") {
+  test("getRankingInfo34") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -4822,7 +4793,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("clickAnalytics36") {
+  test("clickAnalytics35") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -4843,7 +4814,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("clickAnalyticsUserToken37") {
+  test("clickAnalyticsUserToken36") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -4865,7 +4836,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("enablePersonalization38") {
+  test("enablePersonalization37") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -4887,7 +4858,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("userToken39") {
+  test("userToken38") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -4908,7 +4879,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("userToken123440") {
+  test("userToken123439") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -4930,7 +4901,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("analyticsTag41") {
+  test("analyticsTag40") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -4951,7 +4922,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("facetFiltersUsers42") {
+  test("facetFiltersUsers41") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -4972,7 +4943,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("buildTheQuery43") {
+  test("buildTheQuery42") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -4996,7 +4967,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("attributesToHighlightOverride44") {
+  test("attributesToHighlightOverride43") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5018,7 +4989,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("disableTypoToleranceOnAttributes45") {
+  test("disableTypoToleranceOnAttributes44") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5040,7 +5011,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("similarQuery46") {
+  test("similarQuery45") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5061,7 +5032,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search_everything47") {
+  test("search_everything46") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5082,7 +5053,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("api_filtering_range_example48") {
+  test("api_filtering_range_example47") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5104,7 +5075,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search_a_query49") {
+  test("search_a_query48") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5129,7 +5100,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("override_retrievable_attributes50") {
+  test("override_retrievable_attributes49") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5151,7 +5122,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("restrict_searchable_attributes51") {
+  test("restrict_searchable_attributes50") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5173,7 +5144,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("override_default_relevancy52") {
+  test("override_default_relevancy51") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5195,7 +5166,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("apply_filters53") {
+  test("apply_filters52") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5217,7 +5188,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("apply_all_filters54") {
+  test("apply_all_filters53") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5243,7 +5214,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("escape_spaces55") {
+  test("escape_spaces54") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5265,7 +5236,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("escape_keywords56") {
+  test("escape_keywords55") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5287,7 +5258,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("escape_single_quotes57") {
+  test("escape_single_quotes56") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5309,7 +5280,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("escape_double_quotes58") {
+  test("escape_double_quotes57") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5331,7 +5302,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("apply_filters59") {
+  test("apply_optional_filters58") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5354,7 +5325,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("apply_negative_filters60") {
+  test("apply_negative_filters59") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5377,7 +5348,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("apply_negative_filters_restaurants61") {
+  test("apply_negative_filters_restaurants60") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5399,7 +5370,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("apply_numeric_filters62") {
+  test("apply_numeric_filters61") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5429,7 +5400,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("apply_tag_filters63") {
+  test("apply_tag_filters62") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5452,7 +5423,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("apply_filters64") {
+  test("set_sum_or_filters_scores63") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5474,7 +5445,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("facets_all65") {
+  test("facets_all64") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5496,7 +5467,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("retrieve_only_some_facets66") {
+  test("retrieve_only_some_facets65") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5518,7 +5489,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("override_default_max_values_per_facet67") {
+  test("override_default_max_values_per_facet66") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5540,7 +5511,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("enable_faceting_after_distinct68") {
+  test("enable_faceting_after_distinct67") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5562,7 +5533,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("sort_facet_values_alphabetically69") {
+  test("sort_facet_values_alphabetically68") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5584,7 +5555,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("override_attributes_to_snippet70") {
+  test("override_attributes_to_snippet69") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5606,7 +5577,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("override_default_highlight_pre_tag71") {
+  test("override_default_highlight_pre_tag70") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5628,7 +5599,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("override_default_highlight_post_tag72") {
+  test("override_default_highlight_post_tag71") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5650,7 +5621,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("override_default_snippet_ellipsis_text73") {
+  test("override_default_snippet_ellipsis_text72") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5672,7 +5643,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("enable_restrict_highlight_and_snippet_arrays74") {
+  test("enable_restrict_highlight_and_snippet_arrays73") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5694,7 +5665,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("access_page75") {
+  test("access_page74") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5716,7 +5687,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("override_default_hits_per_page76") {
+  test("override_default_hits_per_page75") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5738,7 +5709,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("get_nth_hit77") {
+  test("get_nth_hit76") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5760,7 +5731,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("get_n_results78") {
+  test("get_n_results77") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5782,7 +5753,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("override_default_min_word_size_for_one_typo79") {
+  test("override_default_min_word_size_for_one_typo78") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5804,7 +5775,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("override_default_min_word_size_for_two_typos80") {
+  test("override_default_min_word_size_for_two_typos79") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5826,7 +5797,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("override_default_typo_tolerance_mode81") {
+  test("override_default_typo_tolerance_mode80") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5848,7 +5819,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("disable_typos_on_numeric_tokens_at_search_time82") {
+  test("disable_typos_on_numeric_tokens_at_search_time81") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5870,7 +5841,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search_around_a_position83") {
+  test("search_around_a_position82") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5892,7 +5863,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search_around_server_ip84") {
+  test("search_around_server_ip83") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5931,7 +5902,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("set_around_radius85") {
+  test("set_around_radius84") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5953,7 +5924,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("disable_automatic_radius86") {
+  test("disable_automatic_radius85") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5975,7 +5946,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_geo_search_precision87") {
+  test("set_geo_search_precision86") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5997,7 +5968,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_geo_search_precision_non_linear88") {
+  test("set_geo_search_precision_non_linear87") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6033,7 +6004,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_minimum_geo_search_radius89") {
+  test("set_minimum_geo_search_radius88") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6055,7 +6026,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search_inside_rectangular_area90") {
+  test("search_inside_rectangular_area89") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6080,7 +6051,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search_inside_multiple_rectangular_areas91") {
+  test("search_inside_multiple_rectangular_areas90") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6111,7 +6082,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search_inside_polygon_area92") {
+  test("search_inside_polygon_area91") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6137,7 +6108,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search_inside_multiple_polygon_areas93") {
+  test("search_inside_multiple_polygon_areas92") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6167,7 +6138,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_querylanguages_override94") {
+  test("set_querylanguages_override93") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6189,53 +6160,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_querylanguages_override95") {
-    val (client, echo) = testClient()
-    val future = client.searchSingleIndex(
-      indexName = "indexName",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          removeStopWords =
-            Some(RemoveStopWords(Seq(SupportedLanguage.withName("ca"), SupportedLanguage.withName("es"))))
-        )
-      )
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/1/indexes/indexName/query")
-    assert(res.method == "POST")
-    val expectedBody = parse("""{"query":"query","removeStopWords":["ca","es"]}""")
-    val actualBody = parse(res.body.get)
-    assert(actualBody == expectedBody)
-  }
-
-  test("set_querylanguages_override96") {
-    val (client, echo) = testClient()
-    val future = client.searchSingleIndex(
-      indexName = "indexName",
-      searchParams = Some(
-        SearchParamsObject(
-          query = Some("query"),
-          removeStopWords =
-            Some(RemoveStopWords(Seq(SupportedLanguage.withName("ca"), SupportedLanguage.withName("es"))))
-        )
-      )
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/1/indexes/indexName/query")
-    assert(res.method == "POST")
-    val expectedBody = parse("""{"query":"query","removeStopWords":["ca","es"]}""")
-    val actualBody = parse(res.body.get)
-    assert(actualBody == expectedBody)
-  }
-
-  test("set_querylanguages_with_japanese_query97") {
+  test("set_querylanguages_with_japanese_query94") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6257,7 +6182,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_natural_languages98") {
+  test("set_natural_languages95") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6279,7 +6204,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("override_natural_languages_with_query99") {
+  test("override_natural_languages_with_query96") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6302,7 +6227,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("enable_decompound_query_search_time100") {
+  test("enable_decompound_query_search_time97") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6324,7 +6249,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("enable_rules_search_time101") {
+  test("enable_rules_search_time98") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6346,7 +6271,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_rule_contexts102") {
+  test("set_rule_contexts99") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6368,7 +6293,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("enable_personalization103") {
+  test("enable_personalization100") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6390,7 +6315,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("enable_personalization_with_user_token104") {
+  test("enable_personalization_with_user_token101") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6413,7 +6338,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("personalization_impact105") {
+  test("personalization_impact102") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6435,7 +6360,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_user_token106") {
+  test("set_user_token103") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6457,7 +6382,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_user_token_with_personalization107") {
+  test("set_user_token_with_personalization104") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6480,7 +6405,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("override_default_query_type108") {
+  test("override_default_query_type105") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6502,7 +6427,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("override_default_remove_words_if_no_results109") {
+  test("override_default_remove_words_if_no_results106") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6524,7 +6449,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("enable_advanced_syntax_search_time110") {
+  test("enable_advanced_syntax_search_time107") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6546,7 +6471,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("overide_default_optional_words111") {
+  test("overide_default_optional_words108") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6568,7 +6493,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("disabling_exact_for_some_attributes_search_time112") {
+  test("disabling_exact_for_some_attributes_search_time109") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6590,7 +6515,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("override_default_exact_single_word_query113") {
+  test("override_default_exact_single_word_query110") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6612,7 +6537,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("override_default_aternative_as_exact114") {
+  test("override_default_aternative_as_exact111") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6634,7 +6559,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("enable_advanced_syntax_exact_phrase115") {
+  test("enable_advanced_syntax_exact_phrase112") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6657,7 +6582,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("enable_advanced_syntax_exclude_words116") {
+  test("enable_advanced_syntax_exclude_words113") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6680,7 +6605,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("override_distinct117") {
+  test("override_distinct114") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6702,7 +6627,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("get_ranking_info118") {
+  test("get_ranking_info115") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6724,7 +6649,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("disable_click_analytics119") {
+  test("disable_click_analytics116") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6746,7 +6671,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("enable_click_analytics120") {
+  test("enable_click_analytics117") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6768,7 +6693,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("disable_analytics121") {
+  test("disable_analytics118") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6790,7 +6715,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("add_analytics_tags122") {
+  test("add_analytics_tags119") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6812,7 +6737,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("disable_synonyms123") {
+  test("disable_synonyms120") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6834,7 +6759,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("override_replace_synonyms_in_highlights124") {
+  test("override_replace_synonyms_in_highlights121") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6856,7 +6781,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("override_min_proximity125") {
+  test("override_min_proximity122") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6878,7 +6803,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("override_default_field126") {
+  test("override_default_field123") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6900,7 +6825,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("override_percentile_computation127") {
+  test("override_percentile_computation124") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6922,7 +6847,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_ab_test128") {
+  test("set_ab_test125") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6944,7 +6869,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_enable_re_ranking129") {
+  test("set_enable_re_ranking126") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6966,7 +6891,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("with algolia user id130") {
+  test("with algolia user id127") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -6993,7 +6918,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("mcm with algolia user id131") {
+  test("mcm with algolia user id128") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "playlists",
@@ -9125,7 +9050,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_languages_using_querylanguages94") {
+  test("set_querylanguage_ignoreplurals94") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9165,7 +9090,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_languages_using_querylanguages96") {
+  test("set_querylanguage_removestopwords96") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9288,7 +9213,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_languages_using_querylanguages102") {
+  test("set_querylanguage_both102") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9538,26 +9463,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("enable_advanced_syntax_by_default115") {
-    val (client, echo) = testClient()
-    val future = client.setSettings(
-      indexName = "theIndexName",
-      indexSettings = IndexSettings(
-        advancedSyntax = Some(true)
-      )
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/1/indexes/theIndexName/settings")
-    assert(res.method == "PUT")
-    val expectedBody = parse("""{"advancedSyntax":true}""")
-    val actualBody = parse(res.body.get)
-    assert(actualBody == expectedBody)
-  }
-
-  test("set_numeric_attributes_for_filtering116") {
+  test("set_numeric_attributes_for_filtering115") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9576,7 +9482,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("enable_compression_of_integer_array117") {
+  test("enable_compression_of_integer_array116") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9595,7 +9501,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_attributes_for_distinct118") {
+  test("set_attributes_for_distinct117") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9614,7 +9520,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_distinct119") {
+  test("set_distinct118") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9634,7 +9540,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_replace_synonyms_in_highlights120") {
+  test("set_replace_synonyms_in_highlights119") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9653,7 +9559,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_min_proximity121") {
+  test("set_min_proximity120") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9672,7 +9578,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_default_field122") {
+  test("set_default_field121") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9691,7 +9597,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_max_facet_hits123") {
+  test("set_max_facet_hits122") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9710,7 +9616,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_attribute_criteria_computed_by_min_proximity124") {
+  test("set_attribute_criteria_computed_by_min_proximity123") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9729,7 +9635,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_user_data125") {
+  test("set_user_data124") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9755,7 +9661,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_rendering_content126") {
+  test("set_rendering_content125") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",

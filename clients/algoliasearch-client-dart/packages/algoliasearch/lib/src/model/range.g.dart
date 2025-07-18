@@ -11,14 +11,23 @@ Range _$RangeFromJson(Map<String, dynamic> json) => $checkedCreate(
       json,
       ($checkedConvert) {
         final val = Range(
-          from: $checkedConvert('from', (v) => (v as num?)?.toInt()),
-          value: $checkedConvert('value', (v) => (v as num?)?.toInt()),
+          from: $checkedConvert('from', (v) => v as int?),
+          value: $checkedConvert('value', (v) => v as int?),
         );
         return val;
       },
     );
 
-Map<String, dynamic> _$RangeToJson(Range instance) => <String, dynamic>{
-      if (instance.from case final value?) 'from': value,
-      if (instance.value case final value?) 'value': value,
-    };
+Map<String, dynamic> _$RangeToJson(Range instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('from', instance.from);
+  writeNotNull('value', instance.value);
+  return val;
+}

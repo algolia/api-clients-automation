@@ -18,7 +18,17 @@ Source _$SourceFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$SourceToJson(Source instance) => <String, dynamic>{
-      'source': instance.source,
-      if (instance.description case final value?) 'description': value,
-    };
+Map<String, dynamic> _$SourceToJson(Source instance) {
+  final val = <String, dynamic>{
+    'source': instance.source,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('description', instance.description);
+  return val;
+}

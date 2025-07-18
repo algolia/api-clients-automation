@@ -44,6 +44,7 @@ import algoliasearch.ingestion.RunSortKeys._
 import algoliasearch.ingestion.RunSourcePayload
 import algoliasearch.ingestion.RunSourceResponse
 import algoliasearch.ingestion.RunStatus._
+import algoliasearch.ingestion.RunTaskPayload
 import algoliasearch.ingestion.RunType._
 import algoliasearch.ingestion.Source
 import algoliasearch.ingestion.SourceCreate
@@ -1338,16 +1339,20 @@ class IngestionClient(
     *
     * @param taskID
     *   Unique identifier of a task.
+    * @param runTaskPayload
     */
-  def runTask(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
-      ec: ExecutionContext
-  ): Future[RunResponse] = Future {
+  def runTask(
+      taskID: String,
+      runTaskPayload: Option[RunTaskPayload] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[RunResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `runTask`.")
 
     val request = HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/2/tasks/${escape(taskID)}/run")
+      .withBody(runTaskPayload)
       .build()
     execute[RunResponse](request, requestOptions)
   }
@@ -1364,16 +1369,20 @@ class IngestionClient(
     *
     * @param taskID
     *   Unique identifier of a task.
+    * @param runTaskPayload
     */
-  def runTaskV1(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
-      ec: ExecutionContext
-  ): Future[RunResponse] = Future {
+  def runTaskV1(
+      taskID: String,
+      runTaskPayload: Option[RunTaskPayload] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[RunResponse] = Future {
     requireNotNull(taskID, "Parameter `taskID` is required when calling `runTaskV1`.")
 
     val request = HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/tasks/${escape(taskID)}/run")
+      .withBody(runTaskPayload)
       .build()
     execute[RunResponse](request, requestOptions)
   }

@@ -14,15 +14,23 @@ PromoteConsequenceObject _$PromoteConsequenceObjectFromJson(
       ($checkedConvert) {
         final val = PromoteConsequenceObject(
           objectID: $checkedConvert('objectID', (v) => v as String?),
-          position: $checkedConvert('position', (v) => (v as num?)?.toInt()),
+          position: $checkedConvert('position', (v) => v as int?),
         );
         return val;
       },
     );
 
 Map<String, dynamic> _$PromoteConsequenceObjectToJson(
-        PromoteConsequenceObject instance) =>
-    <String, dynamic>{
-      if (instance.objectID case final value?) 'objectID': value,
-      if (instance.position case final value?) 'position': value,
-    };
+    PromoteConsequenceObject instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('objectID', instance.objectID);
+  writeNotNull('position', instance.position);
+  return val;
+}

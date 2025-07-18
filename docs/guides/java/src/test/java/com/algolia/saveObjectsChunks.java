@@ -12,7 +12,7 @@ import java.util.Map;
 public class saveObjectsChunks {
 
   public static void main(String[] args) throws Exception {
-    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");) {
+    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")) {
       JsonNode content = new ObjectMapper().readTree(new File("actors.json"));
       List<Map<String, Object>> records = new ObjectMapper().readerForListOf(Map.class).readValue(content);
 

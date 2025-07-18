@@ -13,22 +13,21 @@ Params _$ParamsFromJson(Map<String, dynamic> json) => $checkedCreate(
         final val = Params(
           query: $checkedConvert('query', (v) => v as String?),
           filters: $checkedConvert('filters', (v) => v as String?),
-          page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
+          page: $checkedConvert('page', (v) => v as int?),
           getRankingInfo: $checkedConvert('getRankingInfo', (v) => v as bool?),
-          relevancyStrictness: $checkedConvert(
-              'relevancyStrictness', (v) => (v as num?)?.toInt()),
+          relevancyStrictness:
+              $checkedConvert('relevancyStrictness', (v) => v as int?),
           facetFilters: $checkedConvert('facetFilters', (v) => v),
           optionalFilters: $checkedConvert('optionalFilters', (v) => v),
           numericFilters: $checkedConvert('numericFilters', (v) => v),
-          hitsPerPage:
-              $checkedConvert('hitsPerPage', (v) => (v as num?)?.toInt()),
+          hitsPerPage: $checkedConvert('hitsPerPage', (v) => v as int?),
           aroundLatLng: $checkedConvert('aroundLatLng', (v) => v as String?),
           aroundLatLngViaIP:
               $checkedConvert('aroundLatLngViaIP', (v) => v as bool?),
           aroundRadius: $checkedConvert('aroundRadius', (v) => v),
           aroundPrecision: $checkedConvert('aroundPrecision', (v) => v),
-          minimumAroundRadius: $checkedConvert(
-              'minimumAroundRadius', (v) => (v as num?)?.toInt()),
+          minimumAroundRadius:
+              $checkedConvert('minimumAroundRadius', (v) => v as int?),
           insideBoundingBox: $checkedConvert('insideBoundingBox', (v) => v),
           insidePolygon: $checkedConvert(
               'insidePolygon',
@@ -63,42 +62,45 @@ Params _$ParamsFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$ParamsToJson(Params instance) => <String, dynamic>{
-      if (instance.query case final value?) 'query': value,
-      if (instance.filters case final value?) 'filters': value,
-      if (instance.page case final value?) 'page': value,
-      if (instance.getRankingInfo case final value?) 'getRankingInfo': value,
-      if (instance.relevancyStrictness case final value?)
-        'relevancyStrictness': value,
-      if (instance.facetFilters case final value?) 'facetFilters': value,
-      if (instance.optionalFilters case final value?) 'optionalFilters': value,
-      if (instance.numericFilters case final value?) 'numericFilters': value,
-      if (instance.hitsPerPage case final value?) 'hitsPerPage': value,
-      if (instance.aroundLatLng case final value?) 'aroundLatLng': value,
-      if (instance.aroundLatLngViaIP case final value?)
-        'aroundLatLngViaIP': value,
-      if (instance.aroundRadius case final value?) 'aroundRadius': value,
-      if (instance.aroundPrecision case final value?) 'aroundPrecision': value,
-      if (instance.minimumAroundRadius case final value?)
-        'minimumAroundRadius': value,
-      if (instance.insideBoundingBox case final value?)
-        'insideBoundingBox': value,
-      if (instance.insidePolygon case final value?) 'insidePolygon': value,
-      if (instance.queryLanguages?.map((e) => e.toJson()).toList()
-          case final value?)
-        'queryLanguages': value,
-      if (instance.naturalLanguages?.map((e) => e.toJson()).toList()
-          case final value?)
-        'naturalLanguages': value,
-      if (instance.enableRules case final value?) 'enableRules': value,
-      if (instance.ruleContexts case final value?) 'ruleContexts': value,
-      if (instance.userToken case final value?) 'userToken': value,
-      if (instance.clickAnalytics case final value?) 'clickAnalytics': value,
-      if (instance.analytics case final value?) 'analytics': value,
-      if (instance.analyticsTags case final value?) 'analyticsTags': value,
-      if (instance.enableABTest case final value?) 'enableABTest': value,
-      if (instance.enableReRanking case final value?) 'enableReRanking': value,
-    };
+Map<String, dynamic> _$ParamsToJson(Params instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('query', instance.query);
+  writeNotNull('filters', instance.filters);
+  writeNotNull('page', instance.page);
+  writeNotNull('getRankingInfo', instance.getRankingInfo);
+  writeNotNull('relevancyStrictness', instance.relevancyStrictness);
+  writeNotNull('facetFilters', instance.facetFilters);
+  writeNotNull('optionalFilters', instance.optionalFilters);
+  writeNotNull('numericFilters', instance.numericFilters);
+  writeNotNull('hitsPerPage', instance.hitsPerPage);
+  writeNotNull('aroundLatLng', instance.aroundLatLng);
+  writeNotNull('aroundLatLngViaIP', instance.aroundLatLngViaIP);
+  writeNotNull('aroundRadius', instance.aroundRadius);
+  writeNotNull('aroundPrecision', instance.aroundPrecision);
+  writeNotNull('minimumAroundRadius', instance.minimumAroundRadius);
+  writeNotNull('insideBoundingBox', instance.insideBoundingBox);
+  writeNotNull('insidePolygon', instance.insidePolygon);
+  writeNotNull('queryLanguages',
+      instance.queryLanguages?.map((e) => e.toJson()).toList());
+  writeNotNull('naturalLanguages',
+      instance.naturalLanguages?.map((e) => e.toJson()).toList());
+  writeNotNull('enableRules', instance.enableRules);
+  writeNotNull('ruleContexts', instance.ruleContexts);
+  writeNotNull('userToken', instance.userToken);
+  writeNotNull('clickAnalytics', instance.clickAnalytics);
+  writeNotNull('analytics', instance.analytics);
+  writeNotNull('analyticsTags', instance.analyticsTags);
+  writeNotNull('enableABTest', instance.enableABTest);
+  writeNotNull('enableReRanking', instance.enableReRanking);
+  return val;
+}
 
 const _$SupportedLanguageEnumMap = {
   SupportedLanguage.af: 'af',

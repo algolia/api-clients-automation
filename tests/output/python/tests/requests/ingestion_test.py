@@ -1300,6 +1300,7 @@ class TestIngestionClient:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{}""")
 
     async def test_run_task_v1_(self):
         """
@@ -1313,6 +1314,7 @@ class TestIngestionClient:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{}""")
 
     async def test_search_authentications_(self):
         """
@@ -3031,6 +3033,7 @@ class TestIngestionClientSync:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{}""")
 
     def test_run_task_v1_(self):
         """
@@ -3044,6 +3047,7 @@ class TestIngestionClientSync:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{}""")
 
     def test_search_authentications_(self):
         """

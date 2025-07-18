@@ -41,7 +41,7 @@ import type {
   WaitForCompositionTaskOptions,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '1.6.0';
+export const apiClientVersion = '1.10.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -91,7 +91,7 @@ export function createCompositionClient({
     ...options,
     algoliaAgent: getAlgoliaAgent({
       algoliaAgents,
-      client: 'CompositionFull',
+      client: 'Composition',
       version: apiClientVersion,
     }),
     baseHeaders: {

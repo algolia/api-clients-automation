@@ -41,7 +41,9 @@ class InsightsClientClientTests {
   }
 
   private ClientOptions withEchoRequester() {
-    return ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
+    return ClientOptions.builder()
+      .setRequesterConfig(requester -> requester.addInterceptor(echo))
+      .build();
   }
 
   private ClientOptions withCustomHosts(List<Host> hosts, boolean gzipEncoding) {
@@ -76,7 +78,7 @@ class InsightsClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.21.0\\).*";
+      String regexp = "^Algolia for Java \\(4.22.0\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp
@@ -90,21 +92,20 @@ class InsightsClientClientTests {
     InsightsClient client = new InsightsClient("my-app-id", "my-api-key", withEchoRequester());
 
     client.pushEvents(
-      new InsightsEvents()
-        .setEvents(
-          Arrays.asList(
-            new ClickedObjectIDsAfterSearch()
-              .setEventType(ClickEvent.CLICK)
-              .setEventName("Product Clicked")
-              .setIndex("products")
-              .setUserToken("user-123456")
-              .setAuthenticatedUserToken("user-123456")
-              .setTimestamp(1641290601962L)
-              .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
-              .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
-              .setPositions(Arrays.asList(7, 6))
-          )
+      new InsightsEvents().setEvents(
+        Arrays.asList(
+          new ClickedObjectIDsAfterSearch()
+            .setEventType(ClickEvent.CLICK)
+            .setEventName("Product Clicked")
+            .setIndex("products")
+            .setUserToken("user-123456")
+            .setAuthenticatedUserToken("user-123456")
+            .setTimestamp(1641290601962L)
+            .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
+            .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
+            .setPositions(Arrays.asList(7, 6))
         )
+      )
     );
     EchoResponse result = echo.getLastResponse();
     assertEquals("insights.algolia.io", result.host);

@@ -112,17 +112,16 @@ class SearchClientRequestsTestsE2E {
   @DisplayName("search with highlight and snippet results")
   void searchTest5() {
     SearchResponses res = client.search(
-      new SearchMethodParams()
-        .setRequests(
-          Arrays.asList(
-            new SearchForHits()
-              .setIndexName("cts_e2e_highlight_snippet_results")
-              .setQuery("vim")
-              .setAttributesToSnippet(Arrays.asList("*:20"))
-              .setAttributesToHighlight(Arrays.asList("*"))
-              .setAttributesToRetrieve(Arrays.asList("*"))
-          )
-        ),
+      new SearchMethodParams().setRequests(
+        Arrays.asList(
+          new SearchForHits()
+            .setIndexName("cts_e2e_highlight_snippet_results")
+            .setQuery("vim")
+            .setAttributesToSnippet(Arrays.asList("*:20"))
+            .setAttributesToHighlight(Arrays.asList("*"))
+            .setAttributesToRetrieve(Arrays.asList("*"))
+        )
+      ),
       Hit.class
     );
     assertDoesNotThrow(() ->
@@ -160,34 +159,33 @@ class SearchClientRequestsTestsE2E {
   @DisplayName("search filters end to end")
   void searchTest14() {
     SearchResponses res = client.search(
-      new SearchMethodParams()
-        .setRequests(
-          Arrays.asList(
-            new SearchForHits().setIndexName("cts_e2e_search_facet").setFilters("editor:'visual studio' OR editor:neovim"),
-            new SearchForHits()
-              .setIndexName("cts_e2e_search_facet")
-              .setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("editor:'visual studio'"), FacetFilters.of("editor:neovim")))),
-            new SearchForHits()
-              .setIndexName("cts_e2e_search_facet")
-              .setFacetFilters(
-                FacetFilters.of(
-                  Arrays.asList(FacetFilters.of("editor:'visual studio'"), FacetFilters.of(Arrays.asList(FacetFilters.of("editor:neovim"))))
-                )
-              ),
-            new SearchForHits()
-              .setIndexName("cts_e2e_search_facet")
-              .setFacetFilters(
-                FacetFilters.of(
-                  Arrays.asList(
-                    FacetFilters.of("editor:'visual studio'"),
-                    FacetFilters.of(
-                      Arrays.asList(FacetFilters.of("editor:neovim"), FacetFilters.of(Arrays.asList(FacetFilters.of("editor:goland"))))
-                    )
+      new SearchMethodParams().setRequests(
+        Arrays.asList(
+          new SearchForHits().setIndexName("cts_e2e_search_facet").setFilters("editor:'visual studio' OR editor:neovim"),
+          new SearchForHits()
+            .setIndexName("cts_e2e_search_facet")
+            .setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("editor:'visual studio'"), FacetFilters.of("editor:neovim")))),
+          new SearchForHits()
+            .setIndexName("cts_e2e_search_facet")
+            .setFacetFilters(
+              FacetFilters.of(
+                Arrays.asList(FacetFilters.of("editor:'visual studio'"), FacetFilters.of(Arrays.asList(FacetFilters.of("editor:neovim"))))
+              )
+            ),
+          new SearchForHits()
+            .setIndexName("cts_e2e_search_facet")
+            .setFacetFilters(
+              FacetFilters.of(
+                Arrays.asList(
+                  FacetFilters.of("editor:'visual studio'"),
+                  FacetFilters.of(
+                    Arrays.asList(FacetFilters.of("editor:neovim"), FacetFilters.of(Arrays.asList(FacetFilters.of("editor:goland"))))
                   )
                 )
               )
-          )
-        ),
+            )
+        )
+      ),
       Hit.class
     );
     assertDoesNotThrow(() ->

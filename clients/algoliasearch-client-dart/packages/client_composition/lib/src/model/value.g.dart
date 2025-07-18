@@ -22,12 +22,20 @@ Value _$ValueFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$ValueToJson(Value instance) => <String, dynamic>{
-      if (instance.order case final value?) 'order': value,
-      if (instance.sortRemainingBy?.toJson() case final value?)
-        'sortRemainingBy': value,
-      if (instance.hide case final value?) 'hide': value,
-    };
+Map<String, dynamic> _$ValueToJson(Value instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('order', instance.order);
+  writeNotNull('sortRemainingBy', instance.sortRemainingBy?.toJson());
+  writeNotNull('hide', instance.hide);
+  return val;
+}
 
 const _$SortRemainingByEnumMap = {
   SortRemainingBy.count: 'count',

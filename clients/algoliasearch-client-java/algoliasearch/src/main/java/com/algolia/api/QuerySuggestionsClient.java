@@ -800,11 +800,8 @@ public class QuerySuggestionsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public BaseResponse updateConfig(
-    @Nonnull String indexName,
-    @Nonnull Configuration configuration,
-    @Nullable RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
+  public BaseResponse updateConfig(@Nonnull String indexName, @Nonnull Configuration configuration, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
     return LaunderThrowable.await(updateConfigAsync(indexName, configuration, requestOptions));
   }
 

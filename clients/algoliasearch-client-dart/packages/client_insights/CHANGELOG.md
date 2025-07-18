@@ -1,3 +1,7 @@
+## [1.34.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.34.0...1.34.1)
+
+- [754efceb80](https://github.com/algolia/api-clients-automation/commit/754efceb80) fix(specs): allow one sided rule validity ([#5060](https://github.com/algolia/api-clients-automation/pull/5060)) by [@millotp](https://github.com/millotp/)
+
 ## [1.34.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.33.1...1.34.0)
 
 - [a2ebbf496c](https://github.com/algolia/api-clients-automation/commit/a2ebbf496c) feat(clients): add `replaceAllObjectsWithTransformation` ([#5008](https://github.com/algolia/api-clients-automation/pull/5008)) by [@shortcuts](https://github.com/shortcuts/)

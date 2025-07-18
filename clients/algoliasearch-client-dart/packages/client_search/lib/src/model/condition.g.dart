@@ -22,13 +22,22 @@ Condition _$ConditionFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$ConditionToJson(Condition instance) => <String, dynamic>{
-      if (instance.pattern case final value?) 'pattern': value,
-      if (instance.anchoring?.toJson() case final value?) 'anchoring': value,
-      if (instance.alternatives case final value?) 'alternatives': value,
-      if (instance.context case final value?) 'context': value,
-      if (instance.filters case final value?) 'filters': value,
-    };
+Map<String, dynamic> _$ConditionToJson(Condition instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('pattern', instance.pattern);
+  writeNotNull('anchoring', instance.anchoring?.toJson());
+  writeNotNull('alternatives', instance.alternatives);
+  writeNotNull('context', instance.context);
+  writeNotNull('filters', instance.filters);
+  return val;
+}
 
 const _$AnchoringEnumMap = {
   Anchoring.is_: 'is',

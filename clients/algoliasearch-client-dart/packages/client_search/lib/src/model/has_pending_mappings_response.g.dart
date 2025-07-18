@@ -26,8 +26,17 @@ HasPendingMappingsResponse _$HasPendingMappingsResponseFromJson(
     );
 
 Map<String, dynamic> _$HasPendingMappingsResponseToJson(
-        HasPendingMappingsResponse instance) =>
-    <String, dynamic>{
-      'pending': instance.pending,
-      if (instance.clusters case final value?) 'clusters': value,
-    };
+    HasPendingMappingsResponse instance) {
+  final val = <String, dynamic>{
+    'pending': instance.pending,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('clusters', instance.clusters);
+  return val;
+}

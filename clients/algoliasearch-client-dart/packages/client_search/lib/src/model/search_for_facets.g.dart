@@ -29,16 +29,16 @@ SearchForFacets _$SearchForFacetsFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           facetingAfterDistinct:
               $checkedConvert('facetingAfterDistinct', (v) => v as bool?),
-          page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
-          offset: $checkedConvert('offset', (v) => (v as num?)?.toInt()),
-          length: $checkedConvert('length', (v) => (v as num?)?.toInt()),
+          page: $checkedConvert('page', (v) => v as int?),
+          offset: $checkedConvert('offset', (v) => v as int?),
+          length: $checkedConvert('length', (v) => v as int?),
           aroundLatLng: $checkedConvert('aroundLatLng', (v) => v as String?),
           aroundLatLngViaIP:
               $checkedConvert('aroundLatLngViaIP', (v) => v as bool?),
           aroundRadius: $checkedConvert('aroundRadius', (v) => v),
           aroundPrecision: $checkedConvert('aroundPrecision', (v) => v),
-          minimumAroundRadius: $checkedConvert(
-              'minimumAroundRadius', (v) => (v as num?)?.toInt()),
+          minimumAroundRadius:
+              $checkedConvert('minimumAroundRadius', (v) => v as int?),
           insideBoundingBox: $checkedConvert('insideBoundingBox', (v) => v),
           insidePolygon: $checkedConvert(
               'insidePolygon',
@@ -54,8 +54,8 @@ SearchForFacets _$SearchForFacetsFromJson(Map<String, dynamic> json) =>
                   .toList()),
           ruleContexts: $checkedConvert('ruleContexts',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          personalizationImpact: $checkedConvert(
-              'personalizationImpact', (v) => (v as num?)?.toInt()),
+          personalizationImpact:
+              $checkedConvert('personalizationImpact', (v) => v as int?),
           userToken: $checkedConvert('userToken', (v) => v as String?),
           getRankingInfo: $checkedConvert('getRankingInfo', (v) => v as bool?),
           synonyms: $checkedConvert('synonyms', (v) => v as bool?),
@@ -70,8 +70,8 @@ SearchForFacets _$SearchForFacetsFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           ranking: $checkedConvert('ranking',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          relevancyStrictness: $checkedConvert(
-              'relevancyStrictness', (v) => (v as num?)?.toInt()),
+          relevancyStrictness:
+              $checkedConvert('relevancyStrictness', (v) => v as int?),
           attributesToHighlight: $checkedConvert('attributesToHighlight',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           attributesToSnippet: $checkedConvert('attributesToSnippet',
@@ -84,12 +84,11 @@ SearchForFacets _$SearchForFacetsFromJson(Map<String, dynamic> json) =>
               $checkedConvert('snippetEllipsisText', (v) => v as String?),
           restrictHighlightAndSnippetArrays: $checkedConvert(
               'restrictHighlightAndSnippetArrays', (v) => v as bool?),
-          hitsPerPage:
-              $checkedConvert('hitsPerPage', (v) => (v as num?)?.toInt()),
-          minWordSizefor1Typo: $checkedConvert(
-              'minWordSizefor1Typo', (v) => (v as num?)?.toInt()),
-          minWordSizefor2Typos: $checkedConvert(
-              'minWordSizefor2Typos', (v) => (v as num?)?.toInt()),
+          hitsPerPage: $checkedConvert('hitsPerPage', (v) => v as int?),
+          minWordSizefor1Typo:
+              $checkedConvert('minWordSizefor1Typo', (v) => v as int?),
+          minWordSizefor2Typos:
+              $checkedConvert('minWordSizefor2Typos', (v) => v as int?),
           typoTolerance: $checkedConvert('typoTolerance', (v) => v),
           allowTyposOnNumericTokens:
               $checkedConvert('allowTyposOnNumericTokens', (v) => v as bool?),
@@ -138,12 +137,11 @@ SearchForFacets _$SearchForFacetsFromJson(Map<String, dynamic> json) =>
           distinct: $checkedConvert('distinct', (v) => v),
           replaceSynonymsInHighlight:
               $checkedConvert('replaceSynonymsInHighlight', (v) => v as bool?),
-          minProximity:
-              $checkedConvert('minProximity', (v) => (v as num?)?.toInt()),
+          minProximity: $checkedConvert('minProximity', (v) => v as int?),
           responseFields: $checkedConvert('responseFields',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           maxValuesPerFacet:
-              $checkedConvert('maxValuesPerFacet', (v) => (v as num?)?.toInt()),
+              $checkedConvert('maxValuesPerFacet', (v) => v as int?),
           sortFacetValuesBy:
               $checkedConvert('sortFacetValuesBy', (v) => v as String?),
           attributeCriteriaComputedByMinProximity: $checkedConvert(
@@ -160,8 +158,7 @@ SearchForFacets _$SearchForFacetsFromJson(Map<String, dynamic> json) =>
           facet: $checkedConvert('facet', (v) => v as String),
           indexName: $checkedConvert('indexName', (v) => v as String),
           facetQuery: $checkedConvert('facetQuery', (v) => v as String?),
-          maxFacetHits:
-              $checkedConvert('maxFacetHits', (v) => (v as num?)?.toInt()),
+          maxFacetHits: $checkedConvert('maxFacetHits', (v) => v as int?),
           type: $checkedConvert(
               'type', (v) => $enumDecode(_$SearchTypeFacetEnumMap, v)),
         );
@@ -169,126 +166,107 @@ SearchForFacets _$SearchForFacetsFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$SearchForFacetsToJson(SearchForFacets instance) =>
-    <String, dynamic>{
-      if (instance.params case final value?) 'params': value,
-      if (instance.query case final value?) 'query': value,
-      if (instance.similarQuery case final value?) 'similarQuery': value,
-      if (instance.filters case final value?) 'filters': value,
-      if (instance.facetFilters case final value?) 'facetFilters': value,
-      if (instance.optionalFilters case final value?) 'optionalFilters': value,
-      if (instance.numericFilters case final value?) 'numericFilters': value,
-      if (instance.tagFilters case final value?) 'tagFilters': value,
-      if (instance.sumOrFiltersScores case final value?)
-        'sumOrFiltersScores': value,
-      if (instance.restrictSearchableAttributes case final value?)
-        'restrictSearchableAttributes': value,
-      if (instance.facets case final value?) 'facets': value,
-      if (instance.facetingAfterDistinct case final value?)
-        'facetingAfterDistinct': value,
-      if (instance.page case final value?) 'page': value,
-      if (instance.offset case final value?) 'offset': value,
-      if (instance.length case final value?) 'length': value,
-      if (instance.aroundLatLng case final value?) 'aroundLatLng': value,
-      if (instance.aroundLatLngViaIP case final value?)
-        'aroundLatLngViaIP': value,
-      if (instance.aroundRadius case final value?) 'aroundRadius': value,
-      if (instance.aroundPrecision case final value?) 'aroundPrecision': value,
-      if (instance.minimumAroundRadius case final value?)
-        'minimumAroundRadius': value,
-      if (instance.insideBoundingBox case final value?)
-        'insideBoundingBox': value,
-      if (instance.insidePolygon case final value?) 'insidePolygon': value,
-      if (instance.naturalLanguages?.map((e) => e.toJson()).toList()
-          case final value?)
-        'naturalLanguages': value,
-      if (instance.ruleContexts case final value?) 'ruleContexts': value,
-      if (instance.personalizationImpact case final value?)
-        'personalizationImpact': value,
-      if (instance.userToken case final value?) 'userToken': value,
-      if (instance.getRankingInfo case final value?) 'getRankingInfo': value,
-      if (instance.synonyms case final value?) 'synonyms': value,
-      if (instance.clickAnalytics case final value?) 'clickAnalytics': value,
-      if (instance.analytics case final value?) 'analytics': value,
-      if (instance.analyticsTags case final value?) 'analyticsTags': value,
-      if (instance.percentileComputation case final value?)
-        'percentileComputation': value,
-      if (instance.enableABTest case final value?) 'enableABTest': value,
-      if (instance.attributesToRetrieve case final value?)
-        'attributesToRetrieve': value,
-      if (instance.ranking case final value?) 'ranking': value,
-      if (instance.relevancyStrictness case final value?)
-        'relevancyStrictness': value,
-      if (instance.attributesToHighlight case final value?)
-        'attributesToHighlight': value,
-      if (instance.attributesToSnippet case final value?)
-        'attributesToSnippet': value,
-      if (instance.highlightPreTag case final value?) 'highlightPreTag': value,
-      if (instance.highlightPostTag case final value?)
-        'highlightPostTag': value,
-      if (instance.snippetEllipsisText case final value?)
-        'snippetEllipsisText': value,
-      if (instance.restrictHighlightAndSnippetArrays case final value?)
-        'restrictHighlightAndSnippetArrays': value,
-      if (instance.hitsPerPage case final value?) 'hitsPerPage': value,
-      if (instance.minWordSizefor1Typo case final value?)
-        'minWordSizefor1Typo': value,
-      if (instance.minWordSizefor2Typos case final value?)
-        'minWordSizefor2Typos': value,
-      if (instance.typoTolerance case final value?) 'typoTolerance': value,
-      if (instance.allowTyposOnNumericTokens case final value?)
-        'allowTyposOnNumericTokens': value,
-      if (instance.disableTypoToleranceOnAttributes case final value?)
-        'disableTypoToleranceOnAttributes': value,
-      if (instance.ignorePlurals case final value?) 'ignorePlurals': value,
-      if (instance.removeStopWords case final value?) 'removeStopWords': value,
-      if (instance.queryLanguages?.map((e) => e.toJson()).toList()
-          case final value?)
-        'queryLanguages': value,
-      if (instance.decompoundQuery case final value?) 'decompoundQuery': value,
-      if (instance.enableRules case final value?) 'enableRules': value,
-      if (instance.enablePersonalization case final value?)
-        'enablePersonalization': value,
-      if (instance.queryType?.toJson() case final value?) 'queryType': value,
-      if (instance.removeWordsIfNoResults?.toJson() case final value?)
-        'removeWordsIfNoResults': value,
-      if (instance.mode?.toJson() case final value?) 'mode': value,
-      if (instance.semanticSearch?.toJson() case final value?)
-        'semanticSearch': value,
-      if (instance.advancedSyntax case final value?) 'advancedSyntax': value,
-      if (instance.optionalWords case final value?) 'optionalWords': value,
-      if (instance.disableExactOnAttributes case final value?)
-        'disableExactOnAttributes': value,
-      if (instance.exactOnSingleWordQuery?.toJson() case final value?)
-        'exactOnSingleWordQuery': value,
-      if (instance.alternativesAsExact?.map((e) => e.toJson()).toList()
-          case final value?)
-        'alternativesAsExact': value,
-      if (instance.advancedSyntaxFeatures?.map((e) => e.toJson()).toList()
-          case final value?)
-        'advancedSyntaxFeatures': value,
-      if (instance.distinct case final value?) 'distinct': value,
-      if (instance.replaceSynonymsInHighlight case final value?)
-        'replaceSynonymsInHighlight': value,
-      if (instance.minProximity case final value?) 'minProximity': value,
-      if (instance.responseFields case final value?) 'responseFields': value,
-      if (instance.maxValuesPerFacet case final value?)
-        'maxValuesPerFacet': value,
-      if (instance.sortFacetValuesBy case final value?)
-        'sortFacetValuesBy': value,
-      if (instance.attributeCriteriaComputedByMinProximity case final value?)
-        'attributeCriteriaComputedByMinProximity': value,
-      if (instance.renderingContent?.toJson() case final value?)
-        'renderingContent': value,
-      if (instance.enableReRanking case final value?) 'enableReRanking': value,
-      if (instance.reRankingApplyFilter case final value?)
-        'reRankingApplyFilter': value,
-      'facet': instance.facet,
-      'indexName': instance.indexName,
-      if (instance.facetQuery case final value?) 'facetQuery': value,
-      if (instance.maxFacetHits case final value?) 'maxFacetHits': value,
-      'type': instance.type.toJson(),
-    };
+Map<String, dynamic> _$SearchForFacetsToJson(SearchForFacets instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('params', instance.params);
+  writeNotNull('query', instance.query);
+  writeNotNull('similarQuery', instance.similarQuery);
+  writeNotNull('filters', instance.filters);
+  writeNotNull('facetFilters', instance.facetFilters);
+  writeNotNull('optionalFilters', instance.optionalFilters);
+  writeNotNull('numericFilters', instance.numericFilters);
+  writeNotNull('tagFilters', instance.tagFilters);
+  writeNotNull('sumOrFiltersScores', instance.sumOrFiltersScores);
+  writeNotNull(
+      'restrictSearchableAttributes', instance.restrictSearchableAttributes);
+  writeNotNull('facets', instance.facets);
+  writeNotNull('facetingAfterDistinct', instance.facetingAfterDistinct);
+  writeNotNull('page', instance.page);
+  writeNotNull('offset', instance.offset);
+  writeNotNull('length', instance.length);
+  writeNotNull('aroundLatLng', instance.aroundLatLng);
+  writeNotNull('aroundLatLngViaIP', instance.aroundLatLngViaIP);
+  writeNotNull('aroundRadius', instance.aroundRadius);
+  writeNotNull('aroundPrecision', instance.aroundPrecision);
+  writeNotNull('minimumAroundRadius', instance.minimumAroundRadius);
+  writeNotNull('insideBoundingBox', instance.insideBoundingBox);
+  writeNotNull('insidePolygon', instance.insidePolygon);
+  writeNotNull('naturalLanguages',
+      instance.naturalLanguages?.map((e) => e.toJson()).toList());
+  writeNotNull('ruleContexts', instance.ruleContexts);
+  writeNotNull('personalizationImpact', instance.personalizationImpact);
+  writeNotNull('userToken', instance.userToken);
+  writeNotNull('getRankingInfo', instance.getRankingInfo);
+  writeNotNull('synonyms', instance.synonyms);
+  writeNotNull('clickAnalytics', instance.clickAnalytics);
+  writeNotNull('analytics', instance.analytics);
+  writeNotNull('analyticsTags', instance.analyticsTags);
+  writeNotNull('percentileComputation', instance.percentileComputation);
+  writeNotNull('enableABTest', instance.enableABTest);
+  writeNotNull('attributesToRetrieve', instance.attributesToRetrieve);
+  writeNotNull('ranking', instance.ranking);
+  writeNotNull('relevancyStrictness', instance.relevancyStrictness);
+  writeNotNull('attributesToHighlight', instance.attributesToHighlight);
+  writeNotNull('attributesToSnippet', instance.attributesToSnippet);
+  writeNotNull('highlightPreTag', instance.highlightPreTag);
+  writeNotNull('highlightPostTag', instance.highlightPostTag);
+  writeNotNull('snippetEllipsisText', instance.snippetEllipsisText);
+  writeNotNull('restrictHighlightAndSnippetArrays',
+      instance.restrictHighlightAndSnippetArrays);
+  writeNotNull('hitsPerPage', instance.hitsPerPage);
+  writeNotNull('minWordSizefor1Typo', instance.minWordSizefor1Typo);
+  writeNotNull('minWordSizefor2Typos', instance.minWordSizefor2Typos);
+  writeNotNull('typoTolerance', instance.typoTolerance);
+  writeNotNull('allowTyposOnNumericTokens', instance.allowTyposOnNumericTokens);
+  writeNotNull('disableTypoToleranceOnAttributes',
+      instance.disableTypoToleranceOnAttributes);
+  writeNotNull('ignorePlurals', instance.ignorePlurals);
+  writeNotNull('removeStopWords', instance.removeStopWords);
+  writeNotNull('queryLanguages',
+      instance.queryLanguages?.map((e) => e.toJson()).toList());
+  writeNotNull('decompoundQuery', instance.decompoundQuery);
+  writeNotNull('enableRules', instance.enableRules);
+  writeNotNull('enablePersonalization', instance.enablePersonalization);
+  writeNotNull('queryType', instance.queryType?.toJson());
+  writeNotNull(
+      'removeWordsIfNoResults', instance.removeWordsIfNoResults?.toJson());
+  writeNotNull('mode', instance.mode?.toJson());
+  writeNotNull('semanticSearch', instance.semanticSearch?.toJson());
+  writeNotNull('advancedSyntax', instance.advancedSyntax);
+  writeNotNull('optionalWords', instance.optionalWords);
+  writeNotNull('disableExactOnAttributes', instance.disableExactOnAttributes);
+  writeNotNull(
+      'exactOnSingleWordQuery', instance.exactOnSingleWordQuery?.toJson());
+  writeNotNull('alternativesAsExact',
+      instance.alternativesAsExact?.map((e) => e.toJson()).toList());
+  writeNotNull('advancedSyntaxFeatures',
+      instance.advancedSyntaxFeatures?.map((e) => e.toJson()).toList());
+  writeNotNull('distinct', instance.distinct);
+  writeNotNull(
+      'replaceSynonymsInHighlight', instance.replaceSynonymsInHighlight);
+  writeNotNull('minProximity', instance.minProximity);
+  writeNotNull('responseFields', instance.responseFields);
+  writeNotNull('maxValuesPerFacet', instance.maxValuesPerFacet);
+  writeNotNull('sortFacetValuesBy', instance.sortFacetValuesBy);
+  writeNotNull('attributeCriteriaComputedByMinProximity',
+      instance.attributeCriteriaComputedByMinProximity);
+  writeNotNull('renderingContent', instance.renderingContent?.toJson());
+  writeNotNull('enableReRanking', instance.enableReRanking);
+  writeNotNull('reRankingApplyFilter', instance.reRankingApplyFilter);
+  val['facet'] = instance.facet;
+  val['indexName'] = instance.indexName;
+  writeNotNull('facetQuery', instance.facetQuery);
+  writeNotNull('maxFacetHits', instance.maxFacetHits);
+  val['type'] = instance.type.toJson();
+  return val;
+}
 
 const _$SupportedLanguageEnumMap = {
   SupportedLanguage.af: 'af',

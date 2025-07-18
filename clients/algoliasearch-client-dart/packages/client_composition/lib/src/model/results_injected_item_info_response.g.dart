@@ -32,10 +32,18 @@ const _$ResultsInjectedItemInfoResponseFieldMap = <String, String>{
 };
 
 Map<String, dynamic> _$ResultsInjectedItemInfoResponseToJson(
-        ResultsInjectedItemInfoResponse instance) =>
-    <String, dynamic>{
-      'key': instance.key,
-      if (instance.appliedRules?.map((e) => e.toJson()).toList()
-          case final value?)
-        'appliedRules': value,
-    };
+    ResultsInjectedItemInfoResponse instance) {
+  final val = <String, dynamic>{
+    'key': instance.key,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull(
+      'appliedRules', instance.appliedRules?.map((e) => e.toJson()).toList());
+  return val;
+}

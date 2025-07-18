@@ -19,7 +19,7 @@ public class Variant {
   private Double addToCartRate;
 
   @JsonProperty("averageClickPosition")
-  private Integer averageClickPosition;
+  private Double averageClickPosition;
 
   @JsonProperty("clickCount")
   private Integer clickCount;
@@ -98,7 +98,7 @@ public class Variant {
     return addToCartRate;
   }
 
-  public Variant setAverageClickPosition(Integer averageClickPosition) {
+  public Variant setAverageClickPosition(Double averageClickPosition) {
     this.averageClickPosition = averageClickPosition;
     return this;
   }
@@ -109,7 +109,7 @@ public class Variant {
    * for this variant.
    */
   @javax.annotation.Nullable
-  public Integer getAverageClickPosition() {
+  public Double getAverageClickPosition() {
     return averageClickPosition;
   }
 

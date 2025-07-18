@@ -8,7 +8,7 @@ import Search
 
 func saveObjectsMovies() async throws {
     let url = URL(string: "https://dashboard.algolia.com/api/1/sample_datasets?type=movie")!
-    var data: Data?
+    var data: Data? = nil
     #if os(Linux) // For linux interop
         (data, _) = try await URLSession.shared.asyncData(for: URLRequest(url: url))
     #else

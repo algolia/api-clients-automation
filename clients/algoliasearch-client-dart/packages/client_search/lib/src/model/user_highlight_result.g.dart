@@ -19,9 +19,16 @@ UserHighlightResult _$UserHighlightResultFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$UserHighlightResultToJson(
-        UserHighlightResult instance) =>
-    <String, dynamic>{
-      if (instance.userID case final value?) 'userID': value,
-      if (instance.clusterName case final value?) 'clusterName': value,
-    };
+Map<String, dynamic> _$UserHighlightResultToJson(UserHighlightResult instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('userID', instance.userID);
+  writeNotNull('clusterName', instance.clusterName);
+  return val;
+}

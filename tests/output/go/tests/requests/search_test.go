@@ -2770,20 +2770,6 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}`)
 	})
-	t.Run("insidePolygon", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetInsidePolygon(
-				[][]float64{
-					[]float64{42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005, 31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545, -117.54828125}}))))
-		require.NoError(t, err)
-
-		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
-		require.Equal(t, "POST", echo.Method)
-
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}`)
-	})
 	t.Run("optionalFilters", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
@@ -3131,7 +3117,7 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"query":"query","filters":"content:\"She said \"Hello World\""}`)
 	})
-	t.Run("apply_filters", func(t *testing.T) {
+	t.Run("apply_optional_filters", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetOptionalFilters(search.ArrayOfOptionalFiltersAsOptionalFilters(
@@ -3198,7 +3184,7 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"query":"query","tagFilters":["SciFi",["Book","Movie"]]}`)
 	})
-	t.Run("apply_filters", func(t *testing.T) {
+	t.Run("set_sum_or_filters_scores", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("query").SetSumOrFiltersScores(true))))
@@ -3589,32 +3575,6 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"query":"query","ignorePlurals":["ca","es"]}`)
-	})
-	t.Run("set_querylanguages_override", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetRemoveStopWords(search.ArrayOfSupportedLanguageAsRemoveStopWords(
-				[]search.SupportedLanguage{search.SupportedLanguage("ca"), search.SupportedLanguage("es")})))))
-		require.NoError(t, err)
-
-		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
-		require.Equal(t, "POST", echo.Method)
-
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"query":"query","removeStopWords":["ca","es"]}`)
-	})
-	t.Run("set_querylanguages_override", func(t *testing.T) {
-		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("query").SetRemoveStopWords(search.ArrayOfSupportedLanguageAsRemoveStopWords(
-				[]search.SupportedLanguage{search.SupportedLanguage("ca"), search.SupportedLanguage("es")})))))
-		require.NoError(t, err)
-
-		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
-		require.Equal(t, "POST", echo.Method)
-
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"query":"query","removeStopWords":["ca","es"]}`)
 	})
 	t.Run("set_querylanguages_with_japanese_query", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
@@ -5416,7 +5376,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"separatorsToIndex":"+#"}`)
 	})
-	t.Run("set_languages_using_querylanguages", func(t *testing.T) {
+	t.Run("set_querylanguage_ignoreplurals", func(t *testing.T) {
 		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
 			"theIndexName",
 			search.NewEmptyIndexSettings().SetQueryLanguages(
@@ -5443,7 +5403,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"indexLanguages":["ja"],"attributesToTransliterate":["name","description"]}`)
 	})
-	t.Run("set_languages_using_querylanguages", func(t *testing.T) {
+	t.Run("set_querylanguage_removestopwords", func(t *testing.T) {
 		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
 			"theIndexName",
 			search.NewEmptyIndexSettings().SetQueryLanguages(
@@ -5517,7 +5477,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"customNormalization":{"default":{"ä":"ae"}}}`)
 	})
-	t.Run("set_languages_using_querylanguages", func(t *testing.T) {
+	t.Run("set_querylanguage_both", func(t *testing.T) {
 		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
 			"theIndexName",
 			search.NewEmptyIndexSettings().SetQueryLanguages(
@@ -5678,18 +5638,6 @@ func TestSearch_SetSettings(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"alternativesAsExact":["ignorePlurals","singleWordSynonym"]}`)
-	})
-	t.Run("enable_advanced_syntax_by_default", func(t *testing.T) {
-		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
-			"theIndexName",
-			search.NewEmptyIndexSettings().SetAdvancedSyntax(true)))
-		require.NoError(t, err)
-
-		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
-		require.Equal(t, "PUT", echo.Method)
-
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"advancedSyntax":true}`)
 	})
 	t.Run("set_numeric_attributes_for_filtering", func(t *testing.T) {
 		_, err := client.SetSettings(client.NewApiSetSettingsRequest(

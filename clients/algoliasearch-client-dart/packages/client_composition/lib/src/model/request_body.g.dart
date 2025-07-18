@@ -21,7 +21,15 @@ RequestBody _$RequestBodyFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$RequestBodyToJson(RequestBody instance) =>
-    <String, dynamic>{
-      if (instance.params?.toJson() case final value?) 'params': value,
-    };
+Map<String, dynamic> _$RequestBodyToJson(RequestBody instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('params', instance.params?.toJson());
+  return val;
+}

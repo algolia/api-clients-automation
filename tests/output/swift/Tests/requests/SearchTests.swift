@@ -64,9 +64,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"acl\":[\"search\",\"addObject\"],\"description\":\"my new api key\",\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"acl\":[\"search\",\"addObject\"],\"description\":\"my new api key\",\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -236,9 +235,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"bar\",\"foo\":\"1\"}},{\"action\":\"addObject\",\"body\":{\"key\":\"baz\",\"foo\":\"2\"}}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"bar\",\"foo\":\"1\"}},{\"action\":\"addObject\",\"body\":{\"key\":\"baz\",\"foo\":\"2\"}}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -406,9 +404,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"requests\":[{\"action\":\"partialUpdateObjectNoCreate\",\"body\":{\"key\":\"value\"}}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"action\":\"partialUpdateObjectNoCreate\",\"body\":{\"key\":\"value\"}}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -523,9 +520,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"clearExistingDictionaryEntries\":true,\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"word\":\"fancy\",\"words\":[\"believe\",\"algolia\"],\"decomposition\":[\"trust\",\"algolia\"],\"state\":\"enabled\"}}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"clearExistingDictionaryEntries\":true,\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"word\":\"fancy\",\"words\":[\"believe\",\"algolia\"],\"decomposition\":[\"trust\",\"algolia\"],\"state\":\"enabled\"}}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -561,9 +557,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"clearExistingDictionaryEntries\":true,\"requests\":[{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"1\"}}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"clearExistingDictionaryEntries\":true,\"requests\":[{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"1\"}}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -600,9 +595,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"additional\":\"try me\"}}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"additional\":\"try me\"}}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -899,10 +893,10 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/test/all")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap("{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}"
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}"
                 .data(using: .utf8)
-            )
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1738,10 +1732,10 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/logs")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters =
-            try XCTUnwrap("{\"offset\":\"5\",\"length\":\"10\",\"indexName\":\"theIndexName\",\"type\":\"all\"}"
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"offset\":\"5\",\"length\":\"10\",\"indexName\":\"theIndexName\",\"type\":\"all\"}"
                 .data(using: .utf8)
-            )
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1854,9 +1848,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"requests\":[{\"objectID\":\"uniqueID1\",\"indexName\":\"theIndexName1\"},{\"objectID\":\"uniqueID2\",\"indexName\":\"theIndexName2\"}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"objectID\":\"uniqueID1\",\"indexName\":\"theIndexName1\"},{\"objectID\":\"uniqueID2\",\"indexName\":\"theIndexName2\"}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -1888,9 +1881,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"requests\":[{\"attributesToRetrieve\":[\"attr1\",\"attr2\"],\"objectID\":\"uniqueID\",\"indexName\":\"theIndexName\"}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"attributesToRetrieve\":[\"attr1\",\"attr2\"],\"objectID\":\"uniqueID\",\"indexName\":\"theIndexName\"}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -2255,9 +2247,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"value\"},\"indexName\":\"theIndexName\"}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"value\"},\"indexName\":\"theIndexName\"}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -2291,9 +2282,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"operation\":\"move\",\"destination\":\"<DESTINATION_INDEX_NAME>\",\"scope\":[\"rules\",\"settings\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"operation\":\"move\",\"destination\":\"<DESTINATION_INDEX_NAME>\",\"scope\":[\"rules\",\"settings\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -2721,9 +2711,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"name\":\"Black T-shirt\",\"color\":\"#000000||black\",\"availableIn\":\"https://source.unsplash.com/100x100/?paris||Paris\",\"objectID\":\"myID\"}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"name\":\"Black T-shirt\",\"color\":\"#000000||black\",\"availableIn\":\"https://source.unsplash.com/100x100/?paris||Paris\",\"objectID\":\"myID\"}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -2758,9 +2747,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:xiaomi\"}}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:xiaomi\"}}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -2794,14 +2782,13 @@ final class SearchClientRequestsTests: XCTestCase {
                 consequence: SearchConsequence(
                     params: SearchConsequenceParams(
                         filters: "brand:apple",
-                        query: SearchConsequenceQuery
-                            .searchConsequenceQueryObject(SearchConsequenceQueryObject(
-                                remove: ["algolia"],
-                                edits: [
-                                    SearchEdit(type: SearchEditType.remove, delete: "abc", insert: "cde"),
-                                    SearchEdit(type: SearchEditType.replace, delete: "abc", insert: "cde"),
-                                ]
-                            ))
+                        query: SearchConsequenceQuery.searchConsequenceQueryObject(SearchConsequenceQueryObject(
+                            remove: ["algolia"],
+                            edits: [
+                                SearchEdit(type: SearchEditType.remove, delete: "abc", insert: "cde"),
+                                SearchEdit(type: SearchEditType.replace, delete: "abc", insert: "cde"),
+                            ]
+                        ))
                     ),
                     promote: [
                         SearchPromote.searchPromoteObjectID(SearchPromoteObjectID(objectID: "abc", position: 3)),
@@ -2826,9 +2813,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\",\"alternatives\":false,\"context\":\"search\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\",\"query\":{\"remove\":[\"algolia\"],\"edits\":[{\"type\":\"remove\",\"delete\":\"abc\",\"insert\":\"cde\"},{\"type\":\"replace\",\"delete\":\"abc\",\"insert\":\"cde\"}]}},\"hide\":[{\"objectID\":\"321\"}],\"filterPromotes\":false,\"userData\":{\"algolia\":\"aloglia\"},\"promote\":[{\"objectID\":\"abc\",\"position\":3},{\"objectIDs\":[\"abc\",\"def\"],\"position\":1}]},\"description\":\"test\",\"enabled\":true,\"validity\":[{\"from\":1656670273,\"until\":1656670277}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\",\"alternatives\":false,\"context\":\"search\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\",\"query\":{\"remove\":[\"algolia\"],\"edits\":[{\"type\":\"remove\",\"delete\":\"abc\",\"insert\":\"cde\"},{\"type\":\"replace\",\"delete\":\"abc\",\"insert\":\"cde\"}]}},\"hide\":[{\"objectID\":\"321\"}],\"filterPromotes\":false,\"userData\":{\"algolia\":\"aloglia\"},\"promote\":[{\"objectID\":\"abc\",\"position\":3},{\"objectIDs\":[\"abc\",\"def\"],\"position\":1}]},\"description\":\"test\",\"enabled\":true,\"validity\":[{\"from\":1656670273,\"until\":1656670277}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -2876,9 +2862,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"article-rule\",\"conditions\":[{\"pattern\":\"article\",\"anchoring\":\"startsWith\"}],\"consequence\":{\"params\":{\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"article\"}]},\"restrictSearchableAttributes\":[\"title\",\"book_id\"]}}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"article-rule\",\"conditions\":[{\"pattern\":\"article\",\"anchoring\":\"startsWith\"}],\"consequence\":{\"params\":{\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"article\"}]},\"restrictSearchableAttributes\":[\"title\",\"book_id\"]}}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -2925,9 +2910,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"director-rule\",\"conditions\":[{\"pattern\":\"{facet:director} director\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"restrictSearchableAttributes\":[\"title\",\"book_id\"],\"automaticFacetFilters\":[{\"facet\":\"director\"}],\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"director\"}]}}}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"director-rule\",\"conditions\":[{\"pattern\":\"{facet:director} director\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"restrictSearchableAttributes\":[\"title\",\"book_id\"],\"automaticFacetFilters\":[{\"facet\":\"director\"}],\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"director\"}]}}}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -2962,9 +2946,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"harry-potter-rule\",\"conditions\":[{\"pattern\":\"harry potter\",\"anchoring\":\"contains\"}],\"consequence\":{\"userData\":{\"promo_content\":\"20% OFF on all Harry Potter books!\"}}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"harry-potter-rule\",\"conditions\":[{\"pattern\":\"harry potter\",\"anchoring\":\"contains\"}],\"consequence\":{\"userData\":{\"promo_content\":\"20% OFF on all Harry Potter books!\"}}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3001,9 +2984,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"clearance-category-filter\",\"conditions\":[{\"pattern\":\"\",\"anchoring\":\"is\",\"context\":\"landing\"}],\"consequence\":{\"params\":{\"optionalFilters\":\"clearance:true\"}}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"clearance-category-filter\",\"conditions\":[{\"pattern\":\"\",\"anchoring\":\"is\",\"context\":\"landing\"}],\"consequence\":{\"params\":{\"optionalFilters\":\"clearance:true\"}}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3038,9 +3020,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"redirect-help-rule\",\"conditions\":[{\"pattern\":\"help\",\"anchoring\":\"contains\"}],\"consequence\":{\"userData\":{\"redirect\":\"https://www.algolia.com/support\"}}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"redirect-help-rule\",\"conditions\":[{\"pattern\":\"help\",\"anchoring\":\"contains\"}],\"consequence\":{\"userData\":{\"redirect\":\"https://www.algolia.com/support\"}}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3077,9 +3058,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"tomato-fruit\",\"conditions\":[{\"pattern\":\"tomato\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"optionalFilters\":\"food_group:fruit\"}}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"tomato-fruit\",\"conditions\":[{\"pattern\":\"tomato\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"optionalFilters\":\"food_group:fruit\"}}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3117,9 +3097,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"Promote-Apple-Newest\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"is\"}],\"consequence\":{\"promote\":[{\"objectIDs\":[\"iPhone-12345\",\"watch-123\"],\"position\":0}]}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"Promote-Apple-Newest\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"is\"}],\"consequence\":{\"promote\":[{\"objectIDs\":[\"iPhone-12345\",\"watch-123\"],\"position\":0}]}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3157,9 +3136,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"Promote-iPhone-X\",\"conditions\":[{\"pattern\":\"iPhone\",\"anchoring\":\"contains\"}],\"consequence\":{\"promote\":[{\"objectID\":\"iPhone-12345\",\"position\":0}]}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"Promote-iPhone-X\",\"conditions\":[{\"pattern\":\"iPhone\",\"anchoring\":\"contains\"}],\"consequence\":{\"promote\":[{\"objectID\":\"iPhone-12345\",\"position\":0}]}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3197,9 +3175,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"promote-harry-potter-box-set\",\"conditions\":[{\"pattern\":\"Harry Potter\",\"anchoring\":\"contains\"}],\"consequence\":{\"promote\":[{\"objectID\":\"HP-12345\",\"position\":0}]}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"promote-harry-potter-box-set\",\"conditions\":[{\"pattern\":\"Harry Potter\",\"anchoring\":\"contains\"}],\"consequence\":{\"promote\":[{\"objectID\":\"HP-12345\",\"position\":0}]}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3241,9 +3218,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"article-rule\",\"conditions\":[{\"pattern\":\"article\",\"anchoring\":\"startsWith\"}],\"consequence\":{\"params\":{\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"article\"}]},\"restrictSearchableAttributes\":[\"title\",\"book_id\"]}}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"article-rule\",\"conditions\":[{\"pattern\":\"article\",\"anchoring\":\"startsWith\"}],\"consequence\":{\"params\":{\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"article\"}]},\"restrictSearchableAttributes\":[\"title\",\"book_id\"]}}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3290,9 +3266,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"conditions\":[{\"pattern\":\"brand: {facet:brand}\",\"anchoring\":\"contains\",\"alternatives\":false}],\"consequence\":{\"params\":{\"automaticFacetFilters\":[{\"facet\":\"brand\"}],\"query\":{\"remove\":[\"brand:\",\"{facet:brand}\"]}}},\"description\":\"filter on brand: {brand}\",\"objectID\":\"tagged-brand-rule\"}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"conditions\":[{\"pattern\":\"brand: {facet:brand}\",\"anchoring\":\"contains\",\"alternatives\":false}],\"consequence\":{\"params\":{\"automaticFacetFilters\":[{\"facet\":\"brand\"}],\"query\":{\"remove\":[\"brand:\",\"{facet:brand}\"]}}},\"description\":\"filter on brand: {brand}\",\"objectID\":\"tagged-brand-rule\"}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3331,9 +3306,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"color-facets\",\"conditions\":[{\"pattern\":\"{facet:color}\"}],\"consequence\":{\"params\":{\"automaticFacetFilters\":[{\"facet\":\"color\"}]}}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"color-facets\",\"conditions\":[{\"pattern\":\"{facet:color}\"}],\"consequence\":{\"params\":{\"automaticFacetFilters\":[{\"facet\":\"color\"}]}}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3368,9 +3342,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"hide-12345\",\"conditions\":[{\"pattern\":\"cheap\",\"anchoring\":\"contains\"}],\"consequence\":{\"hide\":[{\"objectID\":\"to-hide-12345\"}]}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"hide-12345\",\"conditions\":[{\"pattern\":\"cheap\",\"anchoring\":\"contains\"}],\"consequence\":{\"hide\":[{\"objectID\":\"to-hide-12345\"}]}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3409,9 +3382,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"red-color\",\"conditions\":[{\"pattern\":\"red\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"red\"]},\"filters\":\"color:red\"}}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"red-color\",\"conditions\":[{\"pattern\":\"red\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"red\"]},\"filters\":\"color:red\"}}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3450,9 +3422,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"cheap\",\"conditions\":[{\"pattern\":\"cheap\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"cheap\"]},\"filters\":\"price < 10\"}}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"cheap\",\"conditions\":[{\"pattern\":\"cheap\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"cheap\"]},\"filters\":\"price < 10\"}}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3494,9 +3465,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"gluten-free-rule\",\"conditions\":[{\"pattern\":\"gluten-free\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"NOT allergens:gluten\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"gluten-free\"}]}}}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"gluten-free-rule\",\"conditions\":[{\"pattern\":\"gluten-free\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"NOT allergens:gluten\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"gluten-free\"}]}}}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3538,9 +3508,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"diet-rule\",\"conditions\":[{\"pattern\":\"diet\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"'low-carb' OR 'low-fat'\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"diet\"}]}}}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"diet-rule\",\"conditions\":[{\"pattern\":\"diet\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"'low-carb' OR 'low-fat'\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"diet\"}]}}}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3581,9 +3550,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"diet-rule\",\"consequence\":{\"params\":{\"filters\":\"'low-carb' OR 'low-fat'\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"diet\"}]}}}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"diet-rule\",\"consequence\":{\"params\":{\"filters\":\"'low-carb' OR 'low-fat'\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"diet\"}]}}}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3618,9 +3586,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"a-rule-id\",\"conditions\":[{\"context\":\"mobile\"}],\"consequence\":{\"params\":{\"filters\":\"release_date >= 1577836800\"}}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"a-rule-id\",\"conditions\":[{\"context\":\"mobile\"}],\"consequence\":{\"params\":{\"filters\":\"release_date >= 1577836800\"}}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3657,9 +3624,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"a-rule-id\",\"consequence\":{\"params\":{\"aroundRadius\":1000}},\"validity\":[{\"from\":1577836800,\"until\":1577836800}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"a-rule-id\",\"consequence\":{\"params\":{\"aroundRadius\":1000}},\"validity\":[{\"from\":1577836800,\"until\":1577836800}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3696,9 +3662,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"a-rule-id\",\"consequence\":{\"params\":{\"aroundRadius\":1000}},\"validity\":[{\"from\":1577836800}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"a-rule-id\",\"consequence\":{\"params\":{\"aroundRadius\":1000}},\"validity\":[{\"from\":1577836800}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3721,11 +3686,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let response = try await client.saveRulesWithHTTPInfo(
             indexName: "<YOUR_INDEX_NAME>",
             rules: [
-                Rule(
-                    objectID: "a-rule-id",
-                    conditions: [SearchCondition(pattern: "smartphone", anchoring: SearchAnchoring.contains)],
-                    consequence: SearchConsequence(params: SearchConsequenceParams(filters: "brand:apple"))
-                ),
+                Rule(objectID: "a-rule-id", conditions: [SearchCondition(
+                    pattern: "smartphone",
+                    anchoring: SearchAnchoring.contains
+                )], consequence: SearchConsequence(params: SearchConsequenceParams(filters: "brand:apple"))),
                 Rule(
                     objectID: "a-second-rule-id",
                     conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)],
@@ -3741,9 +3705,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "[{\"objectID\":\"a-rule-id\",\"conditions\":[{\"pattern\":\"smartphone\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\"}}},{\"objectID\":\"a-second-rule-id\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:samsung\"}}}]"
-                .data(using: .utf8)
+        let expectedBodyData = "[{\"objectID\":\"a-rule-id\",\"conditions\":[{\"pattern\":\"smartphone\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\"}}},{\"objectID\":\"a-second-rule-id\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"brand:samsung\"}}}]"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3784,14 +3747,13 @@ final class SearchClientRequestsTests: XCTestCase {
                 consequence: SearchConsequence(
                     params: SearchConsequenceParams(
                         filters: "brand:apple",
-                        query: SearchConsequenceQuery
-                            .searchConsequenceQueryObject(SearchConsequenceQueryObject(
-                                remove: ["algolia"],
-                                edits: [
-                                    SearchEdit(type: SearchEditType.remove, delete: "abc", insert: "cde"),
-                                    SearchEdit(type: SearchEditType.replace, delete: "abc", insert: "cde"),
-                                ]
-                            ))
+                        query: SearchConsequenceQuery.searchConsequenceQueryObject(SearchConsequenceQueryObject(
+                            remove: ["algolia"],
+                            edits: [
+                                SearchEdit(type: SearchEditType.remove, delete: "abc", insert: "cde"),
+                                SearchEdit(type: SearchEditType.replace, delete: "abc", insert: "cde"),
+                            ]
+                        ))
                     ),
                     promote: [
                         SearchPromote.searchPromoteObjectID(SearchPromoteObjectID(objectID: "abc", position: 3)),
@@ -3817,9 +3779,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "[{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\",\"alternatives\":false,\"context\":\"search\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\",\"query\":{\"remove\":[\"algolia\"],\"edits\":[{\"type\":\"remove\",\"delete\":\"abc\",\"insert\":\"cde\"},{\"type\":\"replace\",\"delete\":\"abc\",\"insert\":\"cde\"}]}},\"hide\":[{\"objectID\":\"321\"}],\"filterPromotes\":false,\"userData\":{\"algolia\":\"aloglia\"},\"promote\":[{\"objectID\":\"abc\",\"position\":3},{\"objectIDs\":[\"abc\",\"def\"],\"position\":1}]},\"description\":\"test\",\"enabled\":true,\"validity\":[{\"from\":1656670273,\"until\":1656670277}]}]"
-                .data(using: .utf8)
+        let expectedBodyData = "[{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\",\"alternatives\":false,\"context\":\"search\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\",\"query\":{\"remove\":[\"algolia\"],\"edits\":[{\"type\":\"remove\",\"delete\":\"abc\",\"insert\":\"cde\"},{\"type\":\"replace\",\"delete\":\"abc\",\"insert\":\"cde\"}]}},\"hide\":[{\"objectID\":\"321\"}],\"filterPromotes\":false,\"userData\":{\"algolia\":\"aloglia\"},\"promote\":[{\"objectID\":\"abc\",\"position\":3},{\"objectIDs\":[\"abc\",\"def\"],\"position\":1}]},\"description\":\"test\",\"enabled\":true,\"validity\":[{\"from\":1656670273,\"until\":1656670277}]}]"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3850,15 +3811,14 @@ final class SearchClientRequestsTests: XCTestCase {
         let response = try await client.saveRulesWithHTTPInfo(
             indexName: "<YOUR_INDEX_NAME>",
             rules: [
-                Rule(
-                    objectID: "toaster",
-                    conditions: [SearchCondition(pattern: "toaster", anchoring: SearchAnchoring.contains)],
-                    consequence: SearchConsequence(params: SearchConsequenceParams(
-                        filters: "product_type:toaster",
-                        query: SearchConsequenceQuery
-                            .searchConsequenceQueryObject(SearchConsequenceQueryObject(remove: ["toaster"]))
-                    ))
-                ),
+                Rule(objectID: "toaster", conditions: [SearchCondition(
+                    pattern: "toaster",
+                    anchoring: SearchAnchoring.contains
+                )], consequence: SearchConsequence(params: SearchConsequenceParams(
+                    filters: "product_type:toaster",
+                    query: SearchConsequenceQuery
+                        .searchConsequenceQueryObject(SearchConsequenceQueryObject(remove: ["toaster"]))
+                ))),
                 Rule(
                     objectID: "cheap",
                     conditions: [SearchCondition(pattern: "cheap", anchoring: SearchAnchoring.contains)],
@@ -3876,9 +3836,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "[{\"objectID\":\"toaster\",\"conditions\":[{\"pattern\":\"toaster\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"toaster\"]},\"filters\":\"product_type:toaster\"}}},{\"objectID\":\"cheap\",\"conditions\":[{\"pattern\":\"cheap\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"cheap\"]},\"filters\":\"price < 15\"}}}]"
-                .data(using: .utf8)
+        let expectedBodyData = "[{\"objectID\":\"toaster\",\"conditions\":[{\"pattern\":\"toaster\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"toaster\"]},\"filters\":\"product_type:toaster\"}}},{\"objectID\":\"cheap\",\"conditions\":[{\"pattern\":\"cheap\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"cheap\"]},\"filters\":\"price < 15\"}}}]"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3901,11 +3860,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let response = try await client.saveRulesWithHTTPInfo(
             indexName: "<YOUR_INDEX_NAME>",
             rules: [
-                Rule(
-                    objectID: "country",
-                    conditions: [SearchCondition(pattern: "{facet:country}", anchoring: SearchAnchoring.contains)],
-                    consequence: SearchConsequence(params: SearchConsequenceParams(aroundLatLngViaIP: false))
-                ),
+                Rule(objectID: "country", conditions: [SearchCondition(
+                    pattern: "{facet:country}",
+                    anchoring: SearchAnchoring.contains
+                )], consequence: SearchConsequence(params: SearchConsequenceParams(aroundLatLngViaIP: false))),
                 Rule(
                     objectID: "city",
                     conditions: [SearchCondition(pattern: "{facet:city}", anchoring: SearchAnchoring.contains)],
@@ -3919,9 +3877,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "[{\"objectID\":\"country\",\"conditions\":[{\"pattern\":\"{facet:country}\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"aroundLatLngViaIP\":false}}},{\"objectID\":\"city\",\"conditions\":[{\"pattern\":\"{facet:city}\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"aroundLatLngViaIP\":false}}}]"
-                .data(using: .utf8)
+        let expectedBodyData = "[{\"objectID\":\"country\",\"conditions\":[{\"pattern\":\"{facet:country}\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"aroundLatLngViaIP\":false}}},{\"objectID\":\"city\",\"conditions\":[{\"pattern\":\"{facet:city}\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"aroundLatLngViaIP\":false}}}]"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -3953,9 +3910,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"objectID\":\"id1\",\"type\":\"synonym\",\"synonyms\":[\"car\",\"vehicule\",\"auto\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"objectID\":\"id1\",\"type\":\"synonym\",\"synonyms\":[\"car\",\"vehicule\",\"auto\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -4001,9 +3957,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "[{\"objectID\":\"id1\",\"type\":\"synonym\",\"synonyms\":[\"car\",\"vehicule\",\"auto\"]},{\"objectID\":\"id2\",\"type\":\"onewaysynonym\",\"input\":\"iphone\",\"synonyms\":[\"ephone\",\"aphone\",\"yphone\"]}]"
-                .data(using: .utf8)
+        let expectedBodyData = "[{\"objectID\":\"id1\",\"type\":\"synonym\",\"synonyms\":[\"car\",\"vehicule\",\"auto\"]},{\"objectID\":\"id2\",\"type\":\"onewaysynonym\",\"input\":\"iphone\",\"synonyms\":[\"ephone\",\"aphone\",\"yphone\"]}]"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -4011,8 +3966,10 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/synonyms/batch")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        let expectedQueryParameters =
-            try XCTUnwrap("{\"forwardToReplicas\":\"true\",\"replaceExistingSynonyms\":\"true\"}".data(using: .utf8))
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"forwardToReplicas\":\"true\",\"replaceExistingSynonyms\":\"true\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -4045,9 +4002,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"hitsPerPage\":50}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"hitsPerPage\":50}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -4082,9 +4038,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"filters\":\"actor:Scarlett Johansson\"}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"filters\":\"actor:Scarlett Johansson\"}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -4119,9 +4074,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"filters\":\"actor:Tom Cruise OR actor:Scarlett Johansson\"}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"filters\":\"actor:Tom Cruise OR actor:Scarlett Johansson\"}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -4156,9 +4110,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"filters\":\"NOT actor:Nicolas Cage\"}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"filters\":\"NOT actor:Nicolas Cage\"}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -4226,9 +4179,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"cts_e2e_highlight_snippet_results\",\"query\":\"vim\",\"attributesToSnippet\":[\"*:20\"],\"attributesToHighlight\":[\"*\"],\"attributesToRetrieve\":[\"*\"]}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"indexName\":\"cts_e2e_highlight_snippet_results\",\"query\":\"vim\",\"attributesToSnippet\":[\"*:20\"],\"attributesToHighlight\":[\"*\"],\"attributesToRetrieve\":[\"*\"]}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -4263,9 +4215,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"facets\":[\"author\",\"genre\"]}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"facets\":[\"author\",\"genre\"]}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -4300,9 +4251,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"facets\":[\"*\"]}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"facets\":[\"*\"]}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -4337,9 +4287,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"cts_e2e_search_facet\",\"type\":\"facet\",\"facet\":\"editor\"}],\"strategy\":\"stopIfEnoughMatches\"}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"indexName\":\"cts_e2e_search_facet\",\"type\":\"facet\",\"facet\":\"editor\"}],\"strategy\":\"stopIfEnoughMatches\"}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -4375,9 +4324,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"theIndexName\",\"query\":\"myQuery\",\"hitsPerPage\":50,\"type\":\"default\"}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"indexName\":\"theIndexName\",\"query\":\"myQuery\",\"hitsPerPage\":50,\"type\":\"default\"}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -4415,9 +4363,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"theIndexName\",\"type\":\"facet\",\"facet\":\"theFacet\",\"facetQuery\":\"theFacetQuery\",\"query\":\"theQuery\",\"maxFacetHits\":50}],\"strategy\":\"stopIfEnoughMatches\"}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"indexName\":\"theIndexName\",\"type\":\"facet\",\"facet\":\"theFacet\",\"facetQuery\":\"theFacetQuery\",\"query\":\"theQuery\",\"maxFacetHits\":50}],\"strategy\":\"stopIfEnoughMatches\"}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -4441,12 +4388,11 @@ final class SearchClientRequestsTests: XCTestCase {
             .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(
                 requests: [
                     SearchQuery.searchForHits(SearchForHits(indexName: "theIndexName")),
-                    SearchQuery
-                        .searchForFacets(SearchForFacets(
-                            facet: "theFacet",
-                            indexName: "theIndexName2",
-                            type: SearchTypeFacet.facet
-                        )),
+                    SearchQuery.searchForFacets(SearchForFacets(
+                        facet: "theFacet",
+                        indexName: "theIndexName2",
+                        type: SearchTypeFacet.facet
+                    )),
                     SearchQuery.searchForHits(
                         SearchForHits(indexName: "theIndexName", type: SearchTypeDefault.`default`)
                     ),
@@ -4459,9 +4405,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"theIndexName\"},{\"indexName\":\"theIndexName2\",\"type\":\"facet\",\"facet\":\"theFacet\"},{\"indexName\":\"theIndexName\",\"type\":\"default\"}],\"strategy\":\"stopIfEnoughMatches\"}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"indexName\":\"theIndexName\"},{\"indexName\":\"theIndexName2\",\"type\":\"facet\",\"facet\":\"theFacet\"},{\"indexName\":\"theIndexName\",\"type\":\"default\"}],\"strategy\":\"stopIfEnoughMatches\"}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -4504,9 +4449,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"theIndexName\",\"type\":\"facet\",\"facet\":\"theFacet\",\"facetQuery\":\"theFacetQuery\",\"query\":\"theQuery\",\"maxFacetHits\":50},{\"indexName\":\"theIndexName\",\"query\":\"myQuery\",\"hitsPerPage\":50,\"type\":\"default\"}],\"strategy\":\"stopIfEnoughMatches\"}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"indexName\":\"theIndexName\",\"type\":\"facet\",\"facet\":\"theFacet\",\"facetQuery\":\"theFacetQuery\",\"query\":\"theQuery\",\"maxFacetHits\":50},{\"indexName\":\"theIndexName\",\"query\":\"myQuery\",\"hitsPerPage\":50,\"type\":\"default\"}],\"strategy\":\"stopIfEnoughMatches\"}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -4574,9 +4518,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"theIndexName\",\"facetFilters\":\"mySearch:filters\",\"reRankingApplyFilter\":\"mySearch:filters\",\"tagFilters\":\"mySearch:filters\",\"numericFilters\":\"mySearch:filters\",\"optionalFilters\":\"mySearch:filters\"},{\"indexName\":\"theIndexName\",\"facetFilters\":[\"mySearch:filters\",[\"mySearch:filters\",[\"mySearch:filters\"]]],\"reRankingApplyFilter\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"tagFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"numericFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"optionalFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]]}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"indexName\":\"theIndexName\",\"facetFilters\":\"mySearch:filters\",\"reRankingApplyFilter\":\"mySearch:filters\",\"tagFilters\":\"mySearch:filters\",\"numericFilters\":\"mySearch:filters\",\"optionalFilters\":\"mySearch:filters\"},{\"indexName\":\"theIndexName\",\"facetFilters\":[\"mySearch:filters\",[\"mySearch:filters\",[\"mySearch:filters\"]]],\"reRankingApplyFilter\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"tagFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"numericFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"optionalFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]]}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -4633,9 +4576,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"cts_e2e_search_facet\",\"filters\":\"editor:'visual studio' OR editor:neovim\"},{\"indexName\":\"cts_e2e_search_facet\",\"facetFilters\":[\"editor:'visual studio'\",\"editor:neovim\"]},{\"indexName\":\"cts_e2e_search_facet\",\"facetFilters\":[\"editor:'visual studio'\",[\"editor:neovim\"]]},{\"indexName\":\"cts_e2e_search_facet\",\"facetFilters\":[\"editor:'visual studio'\",[\"editor:neovim\",[\"editor:goland\"]]]}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"indexName\":\"cts_e2e_search_facet\",\"filters\":\"editor:'visual studio' OR editor:neovim\"},{\"indexName\":\"cts_e2e_search_facet\",\"facetFilters\":[\"editor:'visual studio'\",\"editor:neovim\"]},{\"indexName\":\"cts_e2e_search_facet\",\"facetFilters\":[\"editor:'visual studio'\",[\"editor:neovim\"]]},{\"indexName\":\"cts_e2e_search_facet\",\"facetFilters\":[\"editor:'visual studio'\",[\"editor:neovim\",[\"editor:goland\"]]]}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -4752,9 +4694,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"requests\":[{\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"],\"allowTyposOnNumericTokens\":true,\"alternativesAsExact\":[\"multiWordsSynonym\"],\"analytics\":true,\"analyticsTags\":[\"\"],\"aroundLatLng\":\"\",\"aroundLatLngViaIP\":true,\"aroundPrecision\":0,\"aroundRadius\":\"all\",\"attributeCriteriaComputedByMinProximity\":true,\"attributesToHighlight\":[\"\"],\"attributesToRetrieve\":[\"\"],\"attributesToSnippet\":[\"\"],\"clickAnalytics\":true,\"decompoundQuery\":true,\"disableExactOnAttributes\":[\"\"],\"disableTypoToleranceOnAttributes\":[\"\"],\"distinct\":0,\"enableABTest\":true,\"enablePersonalization\":true,\"enableReRanking\":true,\"enableRules\":true,\"exactOnSingleWordQuery\":\"attribute\",\"facetFilters\":[\"\"],\"facetingAfterDistinct\":true,\"facets\":[\"\"],\"filters\":\"\",\"getRankingInfo\":true,\"highlightPostTag\":\"\",\"highlightPreTag\":\"\",\"hitsPerPage\":1,\"ignorePlurals\":false,\"indexName\":\"theIndexName\",\"insideBoundingBox\":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],\"insidePolygon\":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],\"length\":1,\"maxValuesPerFacet\":0,\"minProximity\":1,\"minWordSizefor1Typo\":0,\"minWordSizefor2Typos\":0,\"minimumAroundRadius\":1,\"naturalLanguages\":[\"fr\"],\"numericFilters\":[\"\"],\"offset\":0,\"optionalFilters\":[\"\"],\"optionalWords\":[\"\"],\"page\":0,\"percentileComputation\":true,\"personalizationImpact\":0,\"query\":\"\",\"queryLanguages\":[\"fr\"],\"queryType\":\"prefixAll\",\"ranking\":[\"\"],\"reRankingApplyFilter\":[\"\"],\"relevancyStrictness\":0,\"removeStopWords\":true,\"removeWordsIfNoResults\":\"allOptional\",\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"a\",\"b\"]},\"values\":{\"a\":{\"order\":[\"b\"],\"sortRemainingBy\":\"count\"}}}},\"replaceSynonymsInHighlight\":true,\"responseFields\":[\"\"],\"restrictHighlightAndSnippetArrays\":true,\"restrictSearchableAttributes\":[\"\"],\"ruleContexts\":[\"\"],\"similarQuery\":\"\",\"snippetEllipsisText\":\"\",\"sortFacetValuesBy\":\"\",\"sumOrFiltersScores\":true,\"synonyms\":true,\"tagFilters\":[\"\"],\"type\":\"default\",\"typoTolerance\":\"min\",\"userToken\":\"\"}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"requests\":[{\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"],\"allowTyposOnNumericTokens\":true,\"alternativesAsExact\":[\"multiWordsSynonym\"],\"analytics\":true,\"analyticsTags\":[\"\"],\"aroundLatLng\":\"\",\"aroundLatLngViaIP\":true,\"aroundPrecision\":0,\"aroundRadius\":\"all\",\"attributeCriteriaComputedByMinProximity\":true,\"attributesToHighlight\":[\"\"],\"attributesToRetrieve\":[\"\"],\"attributesToSnippet\":[\"\"],\"clickAnalytics\":true,\"decompoundQuery\":true,\"disableExactOnAttributes\":[\"\"],\"disableTypoToleranceOnAttributes\":[\"\"],\"distinct\":0,\"enableABTest\":true,\"enablePersonalization\":true,\"enableReRanking\":true,\"enableRules\":true,\"exactOnSingleWordQuery\":\"attribute\",\"facetFilters\":[\"\"],\"facetingAfterDistinct\":true,\"facets\":[\"\"],\"filters\":\"\",\"getRankingInfo\":true,\"highlightPostTag\":\"\",\"highlightPreTag\":\"\",\"hitsPerPage\":1,\"ignorePlurals\":false,\"indexName\":\"theIndexName\",\"insideBoundingBox\":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],\"insidePolygon\":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],\"length\":1,\"maxValuesPerFacet\":0,\"minProximity\":1,\"minWordSizefor1Typo\":0,\"minWordSizefor2Typos\":0,\"minimumAroundRadius\":1,\"naturalLanguages\":[\"fr\"],\"numericFilters\":[\"\"],\"offset\":0,\"optionalFilters\":[\"\"],\"optionalWords\":[\"\"],\"page\":0,\"percentileComputation\":true,\"personalizationImpact\":0,\"query\":\"\",\"queryLanguages\":[\"fr\"],\"queryType\":\"prefixAll\",\"ranking\":[\"\"],\"reRankingApplyFilter\":[\"\"],\"relevancyStrictness\":0,\"removeStopWords\":true,\"removeWordsIfNoResults\":\"allOptional\",\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"a\",\"b\"]},\"values\":{\"a\":{\"order\":[\"b\"],\"sortRemainingBy\":\"count\"}}}},\"replaceSynonymsInHighlight\":true,\"responseFields\":[\"\"],\"restrictHighlightAndSnippetArrays\":true,\"restrictSearchableAttributes\":[\"\"],\"ruleContexts\":[\"\"],\"similarQuery\":\"\",\"snippetEllipsisText\":\"\",\"sortFacetValuesBy\":\"\",\"sumOrFiltersScores\":true,\"synonyms\":true,\"tagFilters\":[\"\"],\"type\":\"default\",\"typoTolerance\":\"min\",\"userToken\":\"\"}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -4881,9 +4822,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"params\":\"query=foo&facetFilters=['bar']\",\"facetQuery\":\"foo\",\"maxFacetHits\":42}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"params\":\"query=foo&facetFilters=['bar']\",\"facetQuery\":\"foo\",\"maxFacetHits\":42}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -5067,9 +5007,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"query\":\"batman mask of the phantasm\",\"attributesToRetrieve\":[\"*\"],\"attributesToSnippet\":[\"*:20\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"batman mask of the phantasm\",\"attributesToRetrieve\":[\"*\"],\"attributesToSnippet\":[\"*:20\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -5163,9 +5102,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"query\":\"ben\",\"filters\":\"categories:politics AND store:Gibert Joseph Saint-Michel\"}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"ben\",\"filters\":\"categories:politics AND store:Gibert Joseph Saint-Michel\"}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -5323,9 +5261,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"filters\":\"(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)\",\"sumOrFiltersScores\":false}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"filters\":\"(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)\",\"sumOrFiltersScores\":false}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -5358,9 +5295,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"filters\":\"(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)\",\"sumOrFiltersScores\":true}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"filters\":\"(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)\",\"sumOrFiltersScores\":true}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -5611,9 +5547,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"query\":\"query\",\"facetFilters\":[\"author:John Doe\",[\"category:Book\",\"category:Movie\"]]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"query\",\"facetFilters\":[\"author:John Doe\",[\"category:Book\",\"category:Movie\"]]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -5680,9 +5615,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"filters\":\"(author:\\\"Stephen King\\\" OR genre:\\\"Horror\\\")\",\"facetFilters\":[\"publisher:Penguin\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"filters\":\"(author:\\\"Stephen King\\\" OR genre:\\\"Horror\\\")\",\"facetFilters\":[\"publisher:Penguin\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -5907,9 +5841,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"insideBoundingBox\":[[49.067996905313834,65.73828125,25.905859247243498,128.8046875]]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"insideBoundingBox\":[[49.067996905313834,65.73828125,25.905859247243498,128.8046875]]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -5952,54 +5885,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"insidePolygon\":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}"
-                .data(using: .utf8)
-        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
-
-        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
-
-        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
-        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
-
-        XCTAssertNil(echoResponse.queryParameters)
-    }
-
-    /// insidePolygon
-    func testSearchSingleIndexTest30() async throws {
-        let configuration = try SearchClientConfiguration(
-            appID: SearchClientRequestsTests.APPLICATION_ID,
-            apiKey: SearchClientRequestsTests.API_KEY
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = SearchClient(configuration: configuration, transporter: transporter)
-
-        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
-            indexName: "indexName",
-            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(insidePolygon: [[
-                42.01,
-                -124.31,
-                48.835509470063045,
-                -124.40453125000005,
-                45.01082951668149,
-                -65.95726562500005,
-                31.247243545293433,
-                -81.06578125000004,
-                25.924152577235226,
-                -97.68234374999997,
-                32.300311895879545,
-                -117.54828125,
-            ]]))
-        )
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
-
-        let expectedBodyData =
-            "{\"insidePolygon\":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"insidePolygon\":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -6011,7 +5898,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// optionalFilters
-    func testSearchSingleIndexTest31() async throws {
+    func testSearchSingleIndexTest30() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6044,7 +5931,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// optionalFiltersMany
-    func testSearchSingleIndexTest32() async throws {
+    func testSearchSingleIndexTest31() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6069,9 +5956,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"optionalFilters\":[\"brand:Apple<score=3>\",\"brand:Samsung<score=2>\",\"brand:-Huawei\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"optionalFilters\":[\"brand:Apple<score=3>\",\"brand:Samsung<score=2>\",\"brand:-Huawei\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -6083,7 +5969,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// optionalFiltersSimple
-    func testSearchSingleIndexTest33() async throws {
+    func testSearchSingleIndexTest32() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6119,7 +6005,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// restrictSearchableAttributes
-    func testSearchSingleIndexTest34() async throws {
+    func testSearchSingleIndexTest33() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6150,7 +6036,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// getRankingInfo
-    func testSearchSingleIndexTest35() async throws {
+    func testSearchSingleIndexTest34() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6180,7 +6066,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// clickAnalytics
-    func testSearchSingleIndexTest36() async throws {
+    func testSearchSingleIndexTest35() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6210,7 +6096,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// clickAnalyticsUserToken
-    func testSearchSingleIndexTest37() async throws {
+    func testSearchSingleIndexTest36() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6243,7 +6129,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// enablePersonalization
-    func testSearchSingleIndexTest38() async throws {
+    func testSearchSingleIndexTest37() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6276,7 +6162,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// userToken
-    func testSearchSingleIndexTest39() async throws {
+    func testSearchSingleIndexTest38() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6306,7 +6192,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// userToken1234
-    func testSearchSingleIndexTest40() async throws {
+    func testSearchSingleIndexTest39() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6339,7 +6225,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// analyticsTag
-    func testSearchSingleIndexTest41() async throws {
+    func testSearchSingleIndexTest40() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6370,7 +6256,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// facetFiltersUsers
-    func testSearchSingleIndexTest42() async throws {
+    func testSearchSingleIndexTest41() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6406,7 +6292,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// buildTheQuery
-    func testSearchSingleIndexTest43() async throws {
+    func testSearchSingleIndexTest42() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6428,9 +6314,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"filters\":\"categoryPageId: Men's Clothing\",\"hitsPerPage\":50,\"analyticsTags\":[\"mens-clothing\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"filters\":\"categoryPageId: Men's Clothing\",\"hitsPerPage\":50,\"analyticsTags\":[\"mens-clothing\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -6442,7 +6327,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// attributesToHighlightOverride
-    func testSearchSingleIndexTest44() async throws {
+    func testSearchSingleIndexTest43() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6476,7 +6361,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// disableTypoToleranceOnAttributes
-    func testSearchSingleIndexTest45() async throws {
+    func testSearchSingleIndexTest44() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6510,7 +6395,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// similarQuery
-    func testSearchSingleIndexTest46() async throws {
+    func testSearchSingleIndexTest45() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6540,7 +6425,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search_everything
-    func testSearchSingleIndexTest47() async throws {
+    func testSearchSingleIndexTest46() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6570,7 +6455,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// api_filtering_range_example
-    func testSearchSingleIndexTest48() async throws {
+    func testSearchSingleIndexTest47() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6603,7 +6488,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search_a_query
-    func testSearchSingleIndexTest49() async throws {
+    func testSearchSingleIndexTest48() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6625,9 +6510,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"query\":\"\",\"similarQuery\":\"Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen\",\"filters\":\"year:1991 TO 2001\"}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"\",\"similarQuery\":\"Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen\",\"filters\":\"year:1991 TO 2001\"}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -6639,7 +6523,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// override_retrievable_attributes
-    func testSearchSingleIndexTest50() async throws {
+    func testSearchSingleIndexTest49() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6673,7 +6557,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// restrict_searchable_attributes
-    func testSearchSingleIndexTest51() async throws {
+    func testSearchSingleIndexTest50() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6707,7 +6591,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// override_default_relevancy
-    func testSearchSingleIndexTest52() async throws {
+    func testSearchSingleIndexTest51() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6740,7 +6624,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// apply_filters
-    func testSearchSingleIndexTest53() async throws {
+    func testSearchSingleIndexTest52() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6761,9 +6645,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"query\":\"query\",\"filters\":\"(category:Book OR category:Ebook) AND _tags:published\"}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"query\",\"filters\":\"(category:Book OR category:Ebook) AND _tags:published\"}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -6775,7 +6658,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// apply_all_filters
-    func testSearchSingleIndexTest54() async throws {
+    func testSearchSingleIndexTest53() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6796,9 +6679,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"query\":\"query\",\"filters\":\"available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\\\"John Doe\\\"\"}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"query\",\"filters\":\"available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\\\"John Doe\\\"\"}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -6810,7 +6692,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// escape_spaces
-    func testSearchSingleIndexTest55() async throws {
+    func testSearchSingleIndexTest54() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6844,7 +6726,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// escape_keywords
-    func testSearchSingleIndexTest56() async throws {
+    func testSearchSingleIndexTest55() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6877,7 +6759,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// escape_single_quotes
-    func testSearchSingleIndexTest57() async throws {
+    func testSearchSingleIndexTest56() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6911,7 +6793,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// escape_double_quotes
-    func testSearchSingleIndexTest58() async throws {
+    func testSearchSingleIndexTest57() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6944,8 +6826,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// apply_filters
-    func testSearchSingleIndexTest59() async throws {
+    /// apply_optional_filters
+    func testSearchSingleIndexTest58() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -6982,7 +6864,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// apply_negative_filters
-    func testSearchSingleIndexTest60() async throws {
+    func testSearchSingleIndexTest59() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7019,7 +6901,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// apply_negative_filters_restaurants
-    func testSearchSingleIndexTest61() async throws {
+    func testSearchSingleIndexTest60() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7054,7 +6936,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// apply_numeric_filters
-    func testSearchSingleIndexTest62() async throws {
+    func testSearchSingleIndexTest61() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7081,9 +6963,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"query\":\"query\",\"numericFilters\":[\"price < 1000\",[\"inStock = 1\",\"deliveryDate < 1441755506\"]]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"query\",\"numericFilters\":[\"price < 1000\",[\"inStock = 1\",\"deliveryDate < 1441755506\"]]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -7095,7 +6976,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// apply_tag_filters
-    func testSearchSingleIndexTest63() async throws {
+    func testSearchSingleIndexTest62() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7134,8 +7015,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// apply_filters
-    func testSearchSingleIndexTest64() async throws {
+    /// set_sum_or_filters_scores
+    func testSearchSingleIndexTest63() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7168,7 +7049,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// facets_all
-    func testSearchSingleIndexTest65() async throws {
+    func testSearchSingleIndexTest64() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7201,7 +7082,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// retrieve_only_some_facets
-    func testSearchSingleIndexTest66() async throws {
+    func testSearchSingleIndexTest65() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7234,7 +7115,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// override_default_max_values_per_facet
-    func testSearchSingleIndexTest67() async throws {
+    func testSearchSingleIndexTest66() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7267,7 +7148,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// enable_faceting_after_distinct
-    func testSearchSingleIndexTest68() async throws {
+    func testSearchSingleIndexTest67() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7300,7 +7181,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// sort_facet_values_alphabetically
-    func testSearchSingleIndexTest69() async throws {
+    func testSearchSingleIndexTest68() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7333,7 +7214,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// override_attributes_to_snippet
-    func testSearchSingleIndexTest70() async throws {
+    func testSearchSingleIndexTest69() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7367,7 +7248,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// override_default_highlight_pre_tag
-    func testSearchSingleIndexTest71() async throws {
+    func testSearchSingleIndexTest70() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7400,7 +7281,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// override_default_highlight_post_tag
-    func testSearchSingleIndexTest72() async throws {
+    func testSearchSingleIndexTest71() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7433,7 +7314,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// override_default_snippet_ellipsis_text
-    func testSearchSingleIndexTest73() async throws {
+    func testSearchSingleIndexTest72() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7466,7 +7347,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// enable_restrict_highlight_and_snippet_arrays
-    func testSearchSingleIndexTest74() async throws {
+    func testSearchSingleIndexTest73() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7499,7 +7380,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// access_page
-    func testSearchSingleIndexTest75() async throws {
+    func testSearchSingleIndexTest74() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7529,7 +7410,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// override_default_hits_per_page
-    func testSearchSingleIndexTest76() async throws {
+    func testSearchSingleIndexTest75() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7562,7 +7443,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// get_nth_hit
-    func testSearchSingleIndexTest77() async throws {
+    func testSearchSingleIndexTest76() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7595,7 +7476,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// get_n_results
-    func testSearchSingleIndexTest78() async throws {
+    func testSearchSingleIndexTest77() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7628,7 +7509,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// override_default_min_word_size_for_one_typo
-    func testSearchSingleIndexTest79() async throws {
+    func testSearchSingleIndexTest78() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7661,7 +7542,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// override_default_min_word_size_for_two_typos
-    func testSearchSingleIndexTest80() async throws {
+    func testSearchSingleIndexTest79() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7694,7 +7575,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// override_default_typo_tolerance_mode
-    func testSearchSingleIndexTest81() async throws {
+    func testSearchSingleIndexTest80() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7727,7 +7608,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// disable_typos_on_numeric_tokens_at_search_time
-    func testSearchSingleIndexTest82() async throws {
+    func testSearchSingleIndexTest81() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7760,7 +7641,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search_around_a_position
-    func testSearchSingleIndexTest83() async throws {
+    func testSearchSingleIndexTest82() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7793,7 +7674,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search_around_server_ip
-    func testSearchSingleIndexTest84() async throws {
+    func testSearchSingleIndexTest83() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7829,11 +7710,10 @@ final class SearchClientRequestsTests: XCTestCase {
 
         XCTAssertNil(echoResponse.queryParameters)
 
-        let expectedHeaders =
-            try XCTUnwrap(
-                "{\"x-forwarded-for\":\"94.228.178.246 // should be replaced with the actual IP you would like to search around\"}"
-                    .data(using: .utf8)
-            )
+        let expectedHeaders = try XCTUnwrap(
+            "{\"x-forwarded-for\":\"94.228.178.246 // should be replaced with the actual IP you would like to search around\"}"
+                .data(using: .utf8)
+        )
         let expectedHeadersMap = try CodableHelper.jsonDecoder.decode([String: String?].self, from: expectedHeaders)
 
         let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
@@ -7843,7 +7723,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_around_radius
-    func testSearchSingleIndexTest85() async throws {
+    func testSearchSingleIndexTest84() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7876,7 +7756,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// disable_automatic_radius
-    func testSearchSingleIndexTest86() async throws {
+    func testSearchSingleIndexTest85() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7909,7 +7789,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_geo_search_precision
-    func testSearchSingleIndexTest87() async throws {
+    func testSearchSingleIndexTest86() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7942,7 +7822,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_geo_search_precision_non_linear
-    func testSearchSingleIndexTest88() async throws {
+    func testSearchSingleIndexTest87() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -7966,9 +7846,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"query\":\"query\",\"aroundPrecision\":[{\"from\":0,\"value\":25},{\"from\":2000,\"value\":1000}]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"query\",\"aroundPrecision\":[{\"from\":0,\"value\":25},{\"from\":2000,\"value\":1000}]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -7980,7 +7859,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_minimum_geo_search_radius
-    func testSearchSingleIndexTest89() async throws {
+    func testSearchSingleIndexTest88() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8013,7 +7892,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search_inside_rectangular_area
-    func testSearchSingleIndexTest90() async throws {
+    func testSearchSingleIndexTest89() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8039,9 +7918,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"query\":\"query\",\"insideBoundingBox\":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625]]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"query\",\"insideBoundingBox\":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625]]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -8053,7 +7931,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search_inside_multiple_rectangular_areas
-    func testSearchSingleIndexTest91() async throws {
+    func testSearchSingleIndexTest90() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8077,9 +7955,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"query\":\"query\",\"insideBoundingBox\":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875]]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"query\",\"insideBoundingBox\":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875]]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -8091,7 +7968,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search_inside_polygon_area
-    func testSearchSingleIndexTest92() async throws {
+    func testSearchSingleIndexTest91() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8119,9 +7996,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"query\":\"query\",\"insidePolygon\":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625]]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"query\",\"insidePolygon\":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625]]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -8133,7 +8009,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search_inside_multiple_polygon_areas
-    func testSearchSingleIndexTest93() async throws {
+    func testSearchSingleIndexTest92() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8166,9 +8042,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"query\":\"query\",\"insidePolygon\":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875,45.17210966999772,1.009765625,50.62626704081,4.6181640625]]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"query\",\"insidePolygon\":[[46.650828100116044,7.123046875,45.17210966999772,1.009765625,49.62625916704081,4.6181640625],[49.62625916704081,4.6181640625,47.715070300900194,0.482421875,45.17210966999772,1.009765625,50.62626704081,4.6181640625]]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -8180,7 +8055,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_querylanguages_override
-    func testSearchSingleIndexTest94() async throws {
+    func testSearchSingleIndexTest93() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8215,80 +8090,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// set_querylanguages_override
-    func testSearchSingleIndexTest95() async throws {
-        let configuration = try SearchClientConfiguration(
-            appID: SearchClientRequestsTests.APPLICATION_ID,
-            apiKey: SearchClientRequestsTests.API_KEY
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = SearchClient(configuration: configuration, transporter: transporter)
-
-        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
-            indexName: "indexName",
-            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
-                query: "query",
-                removeStopWords: SearchRemoveStopWords.arrayOfSearchSupportedLanguage([
-                    SearchSupportedLanguage.ca,
-                    SearchSupportedLanguage.es,
-                ])
-            ))
-        )
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
-
-        let expectedBodyData = "{\"query\":\"query\",\"removeStopWords\":[\"ca\",\"es\"]}".data(using: .utf8)
-        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
-
-        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
-
-        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
-        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
-
-        XCTAssertNil(echoResponse.queryParameters)
-    }
-
-    /// set_querylanguages_override
-    func testSearchSingleIndexTest96() async throws {
-        let configuration = try SearchClientConfiguration(
-            appID: SearchClientRequestsTests.APPLICATION_ID,
-            apiKey: SearchClientRequestsTests.API_KEY
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = SearchClient(configuration: configuration, transporter: transporter)
-
-        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
-            indexName: "indexName",
-            searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
-                query: "query",
-                removeStopWords: SearchRemoveStopWords.arrayOfSearchSupportedLanguage([
-                    SearchSupportedLanguage.ca,
-                    SearchSupportedLanguage.es,
-                ])
-            ))
-        )
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
-
-        let expectedBodyData = "{\"query\":\"query\",\"removeStopWords\":[\"ca\",\"es\"]}".data(using: .utf8)
-        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
-
-        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
-
-        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/query")
-        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
-
-        XCTAssertNil(echoResponse.queryParameters)
-    }
-
     /// set_querylanguages_with_japanese_query
-    func testSearchSingleIndexTest97() async throws {
+    func testSearchSingleIndexTest94() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8321,7 +8124,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_natural_languages
-    func testSearchSingleIndexTest98() async throws {
+    func testSearchSingleIndexTest95() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8354,7 +8157,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// override_natural_languages_with_query
-    func testSearchSingleIndexTest99() async throws {
+    func testSearchSingleIndexTest96() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8376,9 +8179,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"query\":\"\",\"naturalLanguages\":[\"fr\"],\"removeWordsIfNoResults\":\"firstWords\"}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"\",\"naturalLanguages\":[\"fr\"],\"removeWordsIfNoResults\":\"firstWords\"}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -8390,7 +8192,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// enable_decompound_query_search_time
-    func testSearchSingleIndexTest100() async throws {
+    func testSearchSingleIndexTest97() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8423,7 +8225,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// enable_rules_search_time
-    func testSearchSingleIndexTest101() async throws {
+    func testSearchSingleIndexTest98() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8456,7 +8258,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_rule_contexts
-    func testSearchSingleIndexTest102() async throws {
+    func testSearchSingleIndexTest99() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8489,7 +8291,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// enable_personalization
-    func testSearchSingleIndexTest103() async throws {
+    func testSearchSingleIndexTest100() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8522,7 +8324,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// enable_personalization_with_user_token
-    func testSearchSingleIndexTest104() async throws {
+    func testSearchSingleIndexTest101() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8557,7 +8359,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// personalization_impact
-    func testSearchSingleIndexTest105() async throws {
+    func testSearchSingleIndexTest102() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8590,7 +8392,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_user_token
-    func testSearchSingleIndexTest106() async throws {
+    func testSearchSingleIndexTest103() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8623,7 +8425,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_user_token_with_personalization
-    func testSearchSingleIndexTest107() async throws {
+    func testSearchSingleIndexTest104() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8658,7 +8460,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// override_default_query_type
-    func testSearchSingleIndexTest108() async throws {
+    func testSearchSingleIndexTest105() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8691,7 +8493,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// override_default_remove_words_if_no_results
-    func testSearchSingleIndexTest109() async throws {
+    func testSearchSingleIndexTest106() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8724,7 +8526,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// enable_advanced_syntax_search_time
-    func testSearchSingleIndexTest110() async throws {
+    func testSearchSingleIndexTest107() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8757,7 +8559,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// overide_default_optional_words
-    func testSearchSingleIndexTest111() async throws {
+    func testSearchSingleIndexTest108() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8790,7 +8592,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// disabling_exact_for_some_attributes_search_time
-    func testSearchSingleIndexTest112() async throws {
+    func testSearchSingleIndexTest109() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8823,7 +8625,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// override_default_exact_single_word_query
-    func testSearchSingleIndexTest113() async throws {
+    func testSearchSingleIndexTest110() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8856,7 +8658,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// override_default_aternative_as_exact
-    func testSearchSingleIndexTest114() async throws {
+    func testSearchSingleIndexTest111() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8890,7 +8692,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// enable_advanced_syntax_exact_phrase
-    func testSearchSingleIndexTest115() async throws {
+    func testSearchSingleIndexTest112() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8912,9 +8714,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"query\":\"query\",\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"query\",\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -8926,7 +8727,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// enable_advanced_syntax_exclude_words
-    func testSearchSingleIndexTest116() async throws {
+    func testSearchSingleIndexTest113() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8948,9 +8749,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"query\":\"query\",\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"excludeWords\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"query\":\"query\",\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"excludeWords\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -8962,7 +8762,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// override_distinct
-    func testSearchSingleIndexTest117() async throws {
+    func testSearchSingleIndexTest114() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -8995,7 +8795,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// get_ranking_info
-    func testSearchSingleIndexTest118() async throws {
+    func testSearchSingleIndexTest115() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -9028,7 +8828,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// disable_click_analytics
-    func testSearchSingleIndexTest119() async throws {
+    func testSearchSingleIndexTest116() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -9061,7 +8861,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// enable_click_analytics
-    func testSearchSingleIndexTest120() async throws {
+    func testSearchSingleIndexTest117() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -9094,7 +8894,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// disable_analytics
-    func testSearchSingleIndexTest121() async throws {
+    func testSearchSingleIndexTest118() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -9127,7 +8927,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// add_analytics_tags
-    func testSearchSingleIndexTest122() async throws {
+    func testSearchSingleIndexTest119() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -9160,7 +8960,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// disable_synonyms
-    func testSearchSingleIndexTest123() async throws {
+    func testSearchSingleIndexTest120() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -9193,7 +8993,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// override_replace_synonyms_in_highlights
-    func testSearchSingleIndexTest124() async throws {
+    func testSearchSingleIndexTest121() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -9226,7 +9026,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// override_min_proximity
-    func testSearchSingleIndexTest125() async throws {
+    func testSearchSingleIndexTest122() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -9259,7 +9059,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// override_default_field
-    func testSearchSingleIndexTest126() async throws {
+    func testSearchSingleIndexTest123() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -9292,7 +9092,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// override_percentile_computation
-    func testSearchSingleIndexTest127() async throws {
+    func testSearchSingleIndexTest124() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -9325,7 +9125,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_ab_test
-    func testSearchSingleIndexTest128() async throws {
+    func testSearchSingleIndexTest125() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -9358,7 +9158,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_enable_re_ranking
-    func testSearchSingleIndexTest129() async throws {
+    func testSearchSingleIndexTest126() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -9391,7 +9191,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// with algolia user id
-    func testSearchSingleIndexTest130() async throws {
+    func testSearchSingleIndexTest127() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -9424,7 +9224,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// mcm with algolia user id
-    func testSearchSingleIndexTest131() async throws {
+    func testSearchSingleIndexTest128() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -9610,9 +9410,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"disableStandardEntries\":{\"plurals\":{\"fr\":false,\"en\":false,\"ru\":true},\"stopwords\":{\"fr\":false},\"compounds\":{\"ru\":true}}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"disableStandardEntries\":{\"plurals\":{\"fr\":false,\"en\":false,\"ru\":true},\"stopwords\":{\"fr\":false},\"compounds\":{\"ru\":true}}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -10677,9 +10476,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"customRanking\":[\"desc(nb_airline_liaisons)\"],\"attributesForFaceting\":[\"city, country\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"customRanking\":[\"desc(nb_airline_liaisons)\"],\"attributesForFaceting\":[\"city, country\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -10779,9 +10577,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"ranking\":[\"desc(price)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"ranking\":[\"desc(price)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -10821,9 +10618,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"ranking\":[\"desc(is_popular)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"ranking\":[\"desc(is_popular)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -10916,9 +10712,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"customRanking\":[\"asc(textual_attribute)\"],\"ranking\":[\"custom\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"customRanking\":[\"asc(textual_attribute)\"],\"ranking\":[\"custom\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -11200,9 +10995,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"attributesForFaceting\":[\"actor\",\"filterOnly(category)\",\"searchable(publisher)\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"attributesForFaceting\":[\"actor\",\"filterOnly(category)\",\"searchable(publisher)\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -11242,9 +11036,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"ranking\":[\"asc(date_timestamp)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"ranking\":[\"asc(date_timestamp)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -11307,9 +11100,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"searchableAttributes\":[\"name\",\"country\",\"city\",\"iata_code\"],\"customRanking\":[\"desc(links_count)\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"searchableAttributes\":[\"name\",\"country\",\"city\",\"iata_code\"],\"customRanking\":[\"desc(links_count)\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -11464,9 +11256,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"],\"allowCompressionOfIntegerArray\":true,\"allowTyposOnNumericTokens\":true,\"alternativesAsExact\":[\"singleWordSynonym\"],\"attributeCriteriaComputedByMinProximity\":true,\"attributeForDistinct\":\"test\",\"attributesForFaceting\":[\"algolia\"],\"attributesToHighlight\":[\"algolia\"],\"attributesToRetrieve\":[\"algolia\"],\"attributesToSnippet\":[\"algolia\"],\"attributesToTransliterate\":[\"algolia\"],\"camelCaseAttributes\":[\"algolia\"],\"customNormalization\":{\"algolia\":{\"aloglia\":\"aglolia\"}},\"customRanking\":[\"algolia\"],\"decompoundQuery\":false,\"decompoundedAttributes\":{\"algolia\":\"aloglia\"},\"disableExactOnAttributes\":[\"algolia\"],\"disablePrefixOnAttributes\":[\"algolia\"],\"disableTypoToleranceOnAttributes\":[\"algolia\"],\"disableTypoToleranceOnWords\":[\"algolia\"],\"distinct\":3,\"enablePersonalization\":true,\"enableReRanking\":false,\"enableRules\":true,\"exactOnSingleWordQuery\":\"attribute\",\"highlightPreTag\":\"<span>\",\"highlightPostTag\":\"</span>\",\"hitsPerPage\":10,\"ignorePlurals\":false,\"indexLanguages\":[\"fr\"],\"keepDiacriticsOnCharacters\":\"abc\",\"maxFacetHits\":20,\"maxValuesPerFacet\":30,\"minProximity\":6,\"minWordSizefor1Typo\":5,\"minWordSizefor2Typos\":11,\"mode\":\"neuralSearch\",\"numericAttributesForFiltering\":[\"algolia\"],\"optionalWords\":[\"myspace\"],\"paginationLimitedTo\":0,\"queryLanguages\":[\"fr\"],\"queryType\":\"prefixLast\",\"ranking\":[\"geo\"],\"reRankingApplyFilter\":\"mySearch:filters\",\"relevancyStrictness\":10,\"removeStopWords\":false,\"removeWordsIfNoResults\":\"lastWords\",\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"a\",\"b\"]},\"values\":{\"a\":{\"order\":[\"b\"],\"sortRemainingBy\":\"count\"}}}},\"replaceSynonymsInHighlight\":true,\"replicas\":[\"\"],\"responseFields\":[\"algolia\"],\"restrictHighlightAndSnippetArrays\":true,\"searchableAttributes\":[\"foo\"],\"semanticSearch\":{\"eventSources\":[\"foo\"]},\"separatorsToIndex\":\"bar\",\"snippetEllipsisText\":\"---\",\"sortFacetValuesBy\":\"date\",\"typoTolerance\":false,\"unretrievableAttributes\":[\"foo\"],\"userData\":{\"user\":\"data\"}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"],\"allowCompressionOfIntegerArray\":true,\"allowTyposOnNumericTokens\":true,\"alternativesAsExact\":[\"singleWordSynonym\"],\"attributeCriteriaComputedByMinProximity\":true,\"attributeForDistinct\":\"test\",\"attributesForFaceting\":[\"algolia\"],\"attributesToHighlight\":[\"algolia\"],\"attributesToRetrieve\":[\"algolia\"],\"attributesToSnippet\":[\"algolia\"],\"attributesToTransliterate\":[\"algolia\"],\"camelCaseAttributes\":[\"algolia\"],\"customNormalization\":{\"algolia\":{\"aloglia\":\"aglolia\"}},\"customRanking\":[\"algolia\"],\"decompoundQuery\":false,\"decompoundedAttributes\":{\"algolia\":\"aloglia\"},\"disableExactOnAttributes\":[\"algolia\"],\"disablePrefixOnAttributes\":[\"algolia\"],\"disableTypoToleranceOnAttributes\":[\"algolia\"],\"disableTypoToleranceOnWords\":[\"algolia\"],\"distinct\":3,\"enablePersonalization\":true,\"enableReRanking\":false,\"enableRules\":true,\"exactOnSingleWordQuery\":\"attribute\",\"highlightPreTag\":\"<span>\",\"highlightPostTag\":\"</span>\",\"hitsPerPage\":10,\"ignorePlurals\":false,\"indexLanguages\":[\"fr\"],\"keepDiacriticsOnCharacters\":\"abc\",\"maxFacetHits\":20,\"maxValuesPerFacet\":30,\"minProximity\":6,\"minWordSizefor1Typo\":5,\"minWordSizefor2Typos\":11,\"mode\":\"neuralSearch\",\"numericAttributesForFiltering\":[\"algolia\"],\"optionalWords\":[\"myspace\"],\"paginationLimitedTo\":0,\"queryLanguages\":[\"fr\"],\"queryType\":\"prefixLast\",\"ranking\":[\"geo\"],\"reRankingApplyFilter\":\"mySearch:filters\",\"relevancyStrictness\":10,\"removeStopWords\":false,\"removeWordsIfNoResults\":\"lastWords\",\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"a\",\"b\"]},\"values\":{\"a\":{\"order\":[\"b\"],\"sortRemainingBy\":\"count\"}}}},\"replaceSynonymsInHighlight\":true,\"replicas\":[\"\"],\"responseFields\":[\"algolia\"],\"restrictHighlightAndSnippetArrays\":true,\"searchableAttributes\":[\"foo\"],\"semanticSearch\":{\"eventSources\":[\"foo\"]},\"separatorsToIndex\":\"bar\",\"snippetEllipsisText\":\"---\",\"sortFacetValuesBy\":\"date\",\"typoTolerance\":false,\"unretrievableAttributes\":[\"foo\"],\"userData\":{\"user\":\"data\"}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -11500,9 +11291,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"searchableAttributes\":[\"brand\",\"name\",\"categories\",\"unordered(description)\"],\"customRanking\":[\"desc(popularity)\"],\"attributesForFaceting\":[\"searchable(brand)\",\"type\",\"categories\",\"price\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"searchableAttributes\":[\"brand\",\"name\",\"categories\",\"unordered(description)\"],\"customRanking\":[\"desc(popularity)\"],\"attributesForFaceting\":[\"searchable(brand)\",\"type\",\"categories\",\"price\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -11566,9 +11356,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"searchableAttributes\":[\"name\",\"product_reference\",\"product_reference_suffixes\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"searchableAttributes\":[\"name\",\"product_reference\",\"product_reference_suffixes\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -11787,9 +11576,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"searchableAttributes\":[\"title,alternative_title\",\"author\",\"unordered(text)\",\"emails.personal\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"searchableAttributes\":[\"title,alternative_title\",\"author\",\"unordered(text)\",\"emails.personal\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -11825,9 +11613,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"attributesForFaceting\":[\"author\",\"filterOnly(isbn)\",\"searchable(edition)\",\"afterDistinct(category)\",\"afterDistinct(searchable(publisher))\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"attributesForFaceting\":[\"author\",\"filterOnly(isbn)\",\"searchable(edition)\",\"afterDistinct(category)\",\"afterDistinct(searchable(publisher))\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -12046,9 +11833,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"ranking\":[\"typo\",\"geo\",\"words\",\"filters\",\"attribute\",\"proximity\",\"exact\",\"custom\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"ranking\":[\"typo\",\"geo\",\"words\",\"filters\",\"attribute\",\"proximity\",\"exact\",\"custom\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -12088,9 +11874,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"ranking\":[\"asc(price)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"ranking\":[\"asc(price)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -12130,9 +11915,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"ranking\":[\"desc(price)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"ranking\":[\"desc(price)\",\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"]}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -12714,7 +12498,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// set_languages_using_querylanguages
+    /// set_querylanguage_ignoreplurals
     func testSetSettingsTest94() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -12781,7 +12565,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// set_languages_using_querylanguages
+    /// set_querylanguage_removestopwords
     func testSetSettingsTest96() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -12896,9 +12680,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"decompoundedAttributes\":{\"de\":[\"name_de\",\"description_de\"],\"fi\":[\"name_fi\",\"description_fi\"]}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"decompoundedAttributes\":{\"de\":[\"name_de\",\"description_de\"],\"fi\":[\"name_fi\",\"description_fi\"]}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -12969,7 +12752,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// set_languages_using_querylanguages
+    /// set_querylanguage_both
     func testSetSettingsTest102() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -13367,38 +13150,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// enable_advanced_syntax_by_default
-    func testSetSettingsTest115() async throws {
-        let configuration = try SearchClientConfiguration(
-            appID: SearchClientRequestsTests.APPLICATION_ID,
-            apiKey: SearchClientRequestsTests.API_KEY
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = SearchClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client.setSettingsWithHTTPInfo(
-            indexName: "theIndexName",
-            indexSettings: IndexSettings(advancedSyntax: true)
-        )
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
-
-        let expectedBodyData = "{\"advancedSyntax\":true}".data(using: .utf8)
-        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
-
-        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
-
-        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
-        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
-
-        XCTAssertNil(echoResponse.queryParameters)
-    }
-
     /// set_numeric_attributes_for_filtering
-    func testSetSettingsTest116() async throws {
+    func testSetSettingsTest115() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13428,7 +13181,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// enable_compression_of_integer_array
-    func testSetSettingsTest117() async throws {
+    func testSetSettingsTest116() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13458,7 +13211,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_attributes_for_distinct
-    func testSetSettingsTest118() async throws {
+    func testSetSettingsTest117() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13488,7 +13241,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_distinct
-    func testSetSettingsTest119() async throws {
+    func testSetSettingsTest118() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13518,7 +13271,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_replace_synonyms_in_highlights
-    func testSetSettingsTest120() async throws {
+    func testSetSettingsTest119() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13548,7 +13301,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_min_proximity
-    func testSetSettingsTest121() async throws {
+    func testSetSettingsTest120() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13578,7 +13331,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_default_field
-    func testSetSettingsTest122() async throws {
+    func testSetSettingsTest121() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13608,7 +13361,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_max_facet_hits
-    func testSetSettingsTest123() async throws {
+    func testSetSettingsTest122() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13638,7 +13391,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_attribute_criteria_computed_by_min_proximity
-    func testSetSettingsTest124() async throws {
+    func testSetSettingsTest123() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13668,7 +13421,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_user_data
-    func testSetSettingsTest125() async throws {
+    func testSetSettingsTest124() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13688,9 +13441,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"userData\":{\"extraData\":\"This is the custom data that you want to store in your index\"}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"userData\":{\"extraData\":\"This is the custom data that you want to store in your index\"}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -13702,7 +13454,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_rendering_content
-    func testSetSettingsTest126() async throws {
+    func testSetSettingsTest125() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13715,8 +13467,11 @@ final class SearchClientRequestsTests: XCTestCase {
             indexSettings: IndexSettings(renderingContent: SearchRenderingContent(facetOrdering: SearchFacetOrdering(
                 facets: SearchFacets(order: ["size", "brand"]),
                 values: [
-                    "brand": SearchValue(order: ["uniqlo"], sortRemainingBy: SearchSortRemainingBy.count,
-                                         hide: ["muji"]),
+                    "brand": SearchValue(
+                        order: ["uniqlo"],
+                        sortRemainingBy: SearchSortRemainingBy.count,
+                        hide: ["muji"]
+                    ),
                     "size": SearchValue(order: ["S", "M", "L"], sortRemainingBy: SearchSortRemainingBy.hidden),
                 ]
             )))
@@ -13727,9 +13482,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"size\",\"brand\"]},\"values\":{\"brand\":{\"order\":[\"uniqlo\"],\"hide\":[\"muji\"],\"sortRemainingBy\":\"count\"},\"size\":{\"order\":[\"S\",\"M\",\"L\"],\"sortRemainingBy\":\"hidden\"}}}}}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"size\",\"brand\"]},\"values\":{\"brand\":{\"order\":[\"uniqlo\"],\"hide\":[\"muji\"],\"sortRemainingBy\":\"count\"},\"size\":{\"order\":[\"S\",\"M\",\"L\"],\"sortRemainingBy\":\"hidden\"}}}}}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
@@ -13764,9 +13518,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData =
-            "{\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20}"
-                .data(using: .utf8)
+        let expectedBodyData = "{\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20}"
+            .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)

@@ -8,7 +8,7 @@ import java.util.List;
 public class searchWithLogicalOr {
 
   public static void main(String[] args) throws Exception {
-    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");) {
+    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")) {
       String query = "the query";
 
       OptionalWords optionalWords = OptionalWords.of(List.of("the", "query"));

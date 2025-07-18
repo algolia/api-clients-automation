@@ -30,7 +30,7 @@ class saveImageClassificationsAndSettings {
 
   public static void main(String[] args) throws Exception {
     // API key ACL should include editSettings / addObject
-    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");) {
+    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")) {
       var hits = client.browseObjects("<YOUR_INDEX_NAME>", Image.class);
 
       List<Image> records = new ArrayList<>();

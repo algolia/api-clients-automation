@@ -4,9 +4,6 @@ import { describe, expect, test } from 'vitest';
 import { union } from '../helpers.js';
 
 import { liteClient } from 'algoliasearch/lite';
-import * as dotenv from 'dotenv';
-
-dotenv.config({ path: '../../.env' });
 
 if (!process.env.ALGOLIA_APPLICATION_ID) {
   throw new Error('please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests');

@@ -7,7 +7,7 @@ import com.algolia.model.search.*;
 public class searchWithAnalyticsAndHeader {
 
   public static void main(String[] args) throws Exception {
-    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");) {
+    try (SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")) {
       /*
       '94.228.178.246' should be replaced with your user's IP address.
       Depending on your stack there are multiple ways to get this information.

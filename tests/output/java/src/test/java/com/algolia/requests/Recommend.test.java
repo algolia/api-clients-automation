@@ -31,7 +31,9 @@ class RecommendClientRequestsTests {
   void init() {
     this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
     this.echo = new EchoInterceptor();
-    ClientOptions options = ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
+    ClientOptions options = ClientOptions.builder()
+      .setRequesterConfig(requester -> requester.addInterceptor(echo))
+      .build();
     this.client = new RecommendClient("appId", "apiKey", options);
   }
 
@@ -712,16 +714,11 @@ class RecommendClientRequestsTests {
   void getRecommendationsTest() {
     assertDoesNotThrow(() -> {
       client.getRecommendations(
-        new GetRecommendationsParams()
-          .setRequests(
-            Arrays.asList(
-              new RelatedQuery()
-                .setIndexName("indexName")
-                .setObjectID("objectID")
-                .setModel(RelatedModel.RELATED_PRODUCTS)
-                .setThreshold(42.1)
-            )
+        new GetRecommendationsParams().setRequests(
+          Arrays.asList(
+            new RelatedQuery().setIndexName("indexName").setObjectID("objectID").setModel(RelatedModel.RELATED_PRODUCTS).setThreshold(42.1)
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -741,17 +738,16 @@ class RecommendClientRequestsTests {
   void getRecommendationsTest1() {
     assertDoesNotThrow(() -> {
       client.getRecommendations(
-        new GetRecommendationsParams()
-          .setRequests(
-            Arrays.asList(
-              new RelatedQuery()
-                .setIndexName("cts_e2e_browse")
-                .setObjectID("Æon Flux")
-                .setModel(RelatedModel.RELATED_PRODUCTS)
-                .setThreshold(20.0)
-                .setMaxRecommendations(2)
-            )
+        new GetRecommendationsParams().setRequests(
+          Arrays.asList(
+            new RelatedQuery()
+              .setIndexName("cts_e2e_browse")
+              .setObjectID("Æon Flux")
+              .setModel(RelatedModel.RELATED_PRODUCTS)
+              .setThreshold(20.0)
+              .setMaxRecommendations(2)
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -772,23 +768,22 @@ class RecommendClientRequestsTests {
   void getRecommendationsTest2() {
     assertDoesNotThrow(() -> {
       client.getRecommendations(
-        new GetRecommendationsParams()
-          .setRequests(
-            Arrays.asList(
-              new RelatedQuery()
-                .setIndexName("indexName")
-                .setObjectID("objectID")
-                .setModel(RelatedModel.RELATED_PRODUCTS)
-                .setThreshold(42.1)
-                .setMaxRecommendations(10)
-                .setQueryParameters(
-                  new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query"))))
-                )
-                .setFallbackParameters(
-                  new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback"))))
-                )
-            )
+        new GetRecommendationsParams().setRequests(
+          Arrays.asList(
+            new RelatedQuery()
+              .setIndexName("indexName")
+              .setObjectID("objectID")
+              .setModel(RelatedModel.RELATED_PRODUCTS)
+              .setThreshold(42.1)
+              .setMaxRecommendations(10)
+              .setQueryParameters(
+                new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query"))))
+              )
+              .setFallbackParameters(
+                new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback"))))
+              )
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -808,17 +803,16 @@ class RecommendClientRequestsTests {
   void getRecommendationsTest3() {
     assertDoesNotThrow(() -> {
       client.getRecommendations(
-        new GetRecommendationsParams()
-          .setRequests(
-            Arrays.asList(
-              new TrendingItemsQuery()
-                .setIndexName("indexName")
-                .setModel(TrendingItemsModel.TRENDING_ITEMS)
-                .setThreshold(42.1)
-                .setFacetName("facet")
-                .setFacetValue("value")
-            )
+        new GetRecommendationsParams().setRequests(
+          Arrays.asList(
+            new TrendingItemsQuery()
+              .setIndexName("indexName")
+              .setModel(TrendingItemsModel.TRENDING_ITEMS)
+              .setThreshold(42.1)
+              .setFacetName("facet")
+              .setFacetValue("value")
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -838,24 +832,23 @@ class RecommendClientRequestsTests {
   void getRecommendationsTest4() {
     assertDoesNotThrow(() -> {
       client.getRecommendations(
-        new GetRecommendationsParams()
-          .setRequests(
-            Arrays.asList(
-              new TrendingItemsQuery()
-                .setIndexName("indexName")
-                .setModel(TrendingItemsModel.TRENDING_ITEMS)
-                .setThreshold(42.1)
-                .setMaxRecommendations(10)
-                .setFacetName("myFacetName")
-                .setFacetValue("myFacetValue")
-                .setQueryParameters(
-                  new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query"))))
-                )
-                .setFallbackParameters(
-                  new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback"))))
-                )
-            )
+        new GetRecommendationsParams().setRequests(
+          Arrays.asList(
+            new TrendingItemsQuery()
+              .setIndexName("indexName")
+              .setModel(TrendingItemsModel.TRENDING_ITEMS)
+              .setThreshold(42.1)
+              .setMaxRecommendations(10)
+              .setFacetName("myFacetName")
+              .setFacetValue("myFacetValue")
+              .setQueryParameters(
+                new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query"))))
+              )
+              .setFallbackParameters(
+                new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback"))))
+              )
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -875,21 +868,20 @@ class RecommendClientRequestsTests {
   void getRecommendationsTest5() {
     assertDoesNotThrow(() -> {
       client.getRecommendations(
-        new GetRecommendationsParams()
-          .setRequests(
-            Arrays.asList(
-              new RelatedQuery()
-                .setIndexName("indexName1")
-                .setObjectID("objectID1")
-                .setModel(RelatedModel.RELATED_PRODUCTS)
-                .setThreshold(21.7),
-              new RelatedQuery()
-                .setIndexName("indexName2")
-                .setObjectID("objectID2")
-                .setModel(RelatedModel.RELATED_PRODUCTS)
-                .setThreshold(21.7)
-            )
+        new GetRecommendationsParams().setRequests(
+          Arrays.asList(
+            new RelatedQuery()
+              .setIndexName("indexName1")
+              .setObjectID("objectID1")
+              .setModel(RelatedModel.RELATED_PRODUCTS)
+              .setThreshold(21.7),
+            new RelatedQuery()
+              .setIndexName("indexName2")
+              .setObjectID("objectID2")
+              .setModel(RelatedModel.RELATED_PRODUCTS)
+              .setThreshold(21.7)
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -909,35 +901,34 @@ class RecommendClientRequestsTests {
   void getRecommendationsTest6() {
     assertDoesNotThrow(() -> {
       client.getRecommendations(
-        new GetRecommendationsParams()
-          .setRequests(
-            Arrays.asList(
-              new RelatedQuery()
-                .setIndexName("indexName1")
-                .setObjectID("objectID1")
-                .setModel(RelatedModel.RELATED_PRODUCTS)
-                .setThreshold(21.7)
-                .setMaxRecommendations(10)
-                .setQueryParameters(
-                  new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query1"))))
-                )
-                .setFallbackParameters(
-                  new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback1"))))
-                ),
-              new RelatedQuery()
-                .setIndexName("indexName2")
-                .setObjectID("objectID2")
-                .setModel(RelatedModel.RELATED_PRODUCTS)
-                .setThreshold(21.7)
-                .setMaxRecommendations(10)
-                .setQueryParameters(
-                  new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query2"))))
-                )
-                .setFallbackParameters(
-                  new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback2"))))
-                )
-            )
+        new GetRecommendationsParams().setRequests(
+          Arrays.asList(
+            new RelatedQuery()
+              .setIndexName("indexName1")
+              .setObjectID("objectID1")
+              .setModel(RelatedModel.RELATED_PRODUCTS)
+              .setThreshold(21.7)
+              .setMaxRecommendations(10)
+              .setQueryParameters(
+                new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query1"))))
+              )
+              .setFallbackParameters(
+                new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback1"))))
+              ),
+            new RelatedQuery()
+              .setIndexName("indexName2")
+              .setObjectID("objectID2")
+              .setModel(RelatedModel.RELATED_PRODUCTS)
+              .setThreshold(21.7)
+              .setMaxRecommendations(10)
+              .setQueryParameters(
+                new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query2"))))
+              )
+              .setFallbackParameters(
+                new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback2"))))
+              )
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -957,16 +948,15 @@ class RecommendClientRequestsTests {
   void getRecommendationsTest7() {
     assertDoesNotThrow(() -> {
       client.getRecommendations(
-        new GetRecommendationsParams()
-          .setRequests(
-            Arrays.asList(
-              new BoughtTogetherQuery()
-                .setIndexName("indexName1")
-                .setObjectID("objectID1")
-                .setModel(FbtModel.BOUGHT_TOGETHER)
-                .setThreshold(42.7)
-            )
+        new GetRecommendationsParams().setRequests(
+          Arrays.asList(
+            new BoughtTogetherQuery()
+              .setIndexName("indexName1")
+              .setObjectID("objectID1")
+              .setModel(FbtModel.BOUGHT_TOGETHER)
+              .setThreshold(42.7)
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
