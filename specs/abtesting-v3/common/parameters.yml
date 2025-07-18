@@ -156,3 +156,14 @@ metric:
     - name: conversionRate
     - name: clickThroughRate
     - name: trackedSearchCount
+
+direction:
+  type: string
+  description: |
+    Sort order for A/B tests by start date.
+    Use 'asc' for ascending or 'desc' for descending.
+    Active A/B tests are always listed first.
+  enum:
+    - asc
+    - desc
+  example: desc
