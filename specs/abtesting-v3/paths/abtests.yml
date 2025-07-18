@@ -96,6 +96,14 @@ get:
       example: '_development'
       schema:
         type: string
+    - name: direction
+      in: query
+      description: |
+        Sort order for A/B tests by start date.
+        Use 'asc' for ascending or 'desc' for descending. Active A/B tests are always listed first.
+      example: desc
+      schema:
+        $ref: '../common/parameters.yml#/direction'
   responses:
     '200':
       description: OK

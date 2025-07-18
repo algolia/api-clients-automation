@@ -29,6 +29,12 @@ variant:
       $ref: '#/metrics'
     metadata:
       $ref: '#/variantMetadata'
+    customSearchParameters:
+      type: object
+      description: |
+        Search parameters applied to this variant when the same index is used for multiple variants.
+        Only present if custom search parameters were provided during test creation.
+      example: {'enablePersonalization': true, 'personalizationImpact': 50}
 
   required:
     - index
