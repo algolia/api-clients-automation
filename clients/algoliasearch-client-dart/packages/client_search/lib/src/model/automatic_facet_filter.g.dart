@@ -14,7 +14,7 @@ AutomaticFacetFilter _$AutomaticFacetFilterFromJson(
       ($checkedConvert) {
         final val = AutomaticFacetFilter(
           facet: $checkedConvert('facet', (v) => v as String),
-          score: $checkedConvert('score', (v) => (v as num?)?.toInt()),
+          score: $checkedConvert('score', (v) => v as int?),
           disjunctive: $checkedConvert('disjunctive', (v) => v as bool?),
         );
         return val;
@@ -22,9 +22,18 @@ AutomaticFacetFilter _$AutomaticFacetFilterFromJson(
     );
 
 Map<String, dynamic> _$AutomaticFacetFilterToJson(
-        AutomaticFacetFilter instance) =>
-    <String, dynamic>{
-      'facet': instance.facet,
-      if (instance.score case final value?) 'score': value,
-      if (instance.disjunctive case final value?) 'disjunctive': value,
-    };
+    AutomaticFacetFilter instance) {
+  final val = <String, dynamic>{
+    'facet': instance.facet,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('score', instance.score);
+  writeNotNull('disjunctive', instance.disjunctive);
+  return val;
+}

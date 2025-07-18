@@ -31,10 +31,18 @@ const _$CompositionRunSearchResponseFieldMap = <String, String>{
 };
 
 Map<String, dynamic> _$CompositionRunSearchResponseToJson(
-        CompositionRunSearchResponse instance) =>
-    <String, dynamic>{
-      'objectID': instance.objectID,
-      if (instance.appliedRules?.map((e) => e.toJson()).toList()
-          case final value?)
-        'appliedRules': value,
-    };
+    CompositionRunSearchResponse instance) {
+  final val = <String, dynamic>{
+    'objectID': instance.objectID,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull(
+      'appliedRules', instance.appliedRules?.map((e) => e.toJson()).toList());
+  return val;
+}

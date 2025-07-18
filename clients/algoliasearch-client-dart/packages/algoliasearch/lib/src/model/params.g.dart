@@ -26,12 +26,19 @@ Params _$ParamsFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$ParamsToJson(Params instance) => <String, dynamic>{
-      if (instance.query case final value?) 'query': value,
-      if (instance.automaticFacetFilters case final value?)
-        'automaticFacetFilters': value,
-      if (instance.automaticOptionalFacetFilters case final value?)
-        'automaticOptionalFacetFilters': value,
-      if (instance.renderingContent?.toJson() case final value?)
-        'renderingContent': value,
-    };
+Map<String, dynamic> _$ParamsToJson(Params instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('query', instance.query);
+  writeNotNull('automaticFacetFilters', instance.automaticFacetFilters);
+  writeNotNull(
+      'automaticOptionalFacetFilters', instance.automaticOptionalFacetFilters);
+  writeNotNull('renderingContent', instance.renderingContent?.toJson());
+  return val;
+}

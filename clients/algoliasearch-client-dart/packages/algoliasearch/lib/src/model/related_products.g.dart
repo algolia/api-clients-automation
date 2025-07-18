@@ -25,13 +25,21 @@ RelatedProducts _$RelatedProductsFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$RelatedProductsToJson(RelatedProducts instance) =>
-    <String, dynamic>{
-      'model': instance.model.toJson(),
-      'objectID': instance.objectID,
-      if (instance.fallbackParameters?.toJson() case final value?)
-        'fallbackParameters': value,
-    };
+Map<String, dynamic> _$RelatedProductsToJson(RelatedProducts instance) {
+  final val = <String, dynamic>{
+    'model': instance.model.toJson(),
+    'objectID': instance.objectID,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('fallbackParameters', instance.fallbackParameters?.toJson());
+  return val;
+}
 
 const _$RelatedModelEnumMap = {
   RelatedModel.relatedProducts: 'related-products',

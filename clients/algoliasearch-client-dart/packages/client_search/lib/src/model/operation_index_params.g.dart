@@ -27,13 +27,21 @@ OperationIndexParams _$OperationIndexParamsFromJson(
     );
 
 Map<String, dynamic> _$OperationIndexParamsToJson(
-        OperationIndexParams instance) =>
-    <String, dynamic>{
-      'operation': instance.operation.toJson(),
-      'destination': instance.destination,
-      if (instance.scope?.map((e) => e.toJson()).toList() case final value?)
-        'scope': value,
-    };
+    OperationIndexParams instance) {
+  final val = <String, dynamic>{
+    'operation': instance.operation.toJson(),
+    'destination': instance.destination,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('scope', instance.scope?.map((e) => e.toJson()).toList());
+  return val;
+}
 
 const _$OperationTypeEnumMap = {
   OperationType.move: 'move',

@@ -18,7 +18,15 @@ SearchParamsQuery _$SearchParamsQueryFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$SearchParamsQueryToJson(SearchParamsQuery instance) =>
-    <String, dynamic>{
-      if (instance.query case final value?) 'query': value,
-    };
+Map<String, dynamic> _$SearchParamsQueryToJson(SearchParamsQuery instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('query', instance.query);
+  return val;
+}

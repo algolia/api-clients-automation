@@ -16,22 +16,29 @@ SearchSynonymsParams _$SearchSynonymsParamsFromJson(
           query: $checkedConvert('query', (v) => v as String?),
           type: $checkedConvert(
               'type', (v) => $enumDecodeNullable(_$SynonymTypeEnumMap, v)),
-          page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
-          hitsPerPage:
-              $checkedConvert('hitsPerPage', (v) => (v as num?)?.toInt()),
+          page: $checkedConvert('page', (v) => v as int?),
+          hitsPerPage: $checkedConvert('hitsPerPage', (v) => v as int?),
         );
         return val;
       },
     );
 
 Map<String, dynamic> _$SearchSynonymsParamsToJson(
-        SearchSynonymsParams instance) =>
-    <String, dynamic>{
-      if (instance.query case final value?) 'query': value,
-      if (instance.type?.toJson() case final value?) 'type': value,
-      if (instance.page case final value?) 'page': value,
-      if (instance.hitsPerPage case final value?) 'hitsPerPage': value,
-    };
+    SearchSynonymsParams instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('query', instance.query);
+  writeNotNull('type', instance.type?.toJson());
+  writeNotNull('page', instance.page);
+  writeNotNull('hitsPerPage', instance.hitsPerPage);
+  return val;
+}
 
 const _$SynonymTypeEnumMap = {
   SynonymType.synonym: 'synonym',

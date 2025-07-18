@@ -21,23 +21,31 @@ ConvertedFilters _$ConvertedFiltersFromJson(Map<String, dynamic> json) =>
           userToken: $checkedConvert('userToken', (v) => v as String),
           authenticatedUserToken:
               $checkedConvert('authenticatedUserToken', (v) => v as String?),
-          timestamp: $checkedConvert('timestamp', (v) => (v as num?)?.toInt()),
+          timestamp: $checkedConvert('timestamp', (v) => v as int?),
         );
         return val;
       },
     );
 
-Map<String, dynamic> _$ConvertedFiltersToJson(ConvertedFilters instance) =>
-    <String, dynamic>{
-      'eventName': instance.eventName,
-      'eventType': instance.eventType.toJson(),
-      'index': instance.index,
-      'filters': instance.filters,
-      'userToken': instance.userToken,
-      if (instance.authenticatedUserToken case final value?)
-        'authenticatedUserToken': value,
-      if (instance.timestamp case final value?) 'timestamp': value,
-    };
+Map<String, dynamic> _$ConvertedFiltersToJson(ConvertedFilters instance) {
+  final val = <String, dynamic>{
+    'eventName': instance.eventName,
+    'eventType': instance.eventType.toJson(),
+    'index': instance.index,
+    'filters': instance.filters,
+    'userToken': instance.userToken,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('authenticatedUserToken', instance.authenticatedUserToken);
+  writeNotNull('timestamp', instance.timestamp);
+  return val;
+}
 
 const _$ConversionEventEnumMap = {
   ConversionEvent.conversion: 'conversion',
