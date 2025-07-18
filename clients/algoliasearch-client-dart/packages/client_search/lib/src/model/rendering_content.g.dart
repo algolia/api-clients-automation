@@ -32,10 +32,17 @@ RenderingContent _$RenderingContentFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$RenderingContentToJson(RenderingContent instance) =>
-    <String, dynamic>{
-      if (instance.facetOrdering?.toJson() case final value?)
-        'facetOrdering': value,
-      if (instance.redirect?.toJson() case final value?) 'redirect': value,
-      if (instance.widgets?.toJson() case final value?) 'widgets': value,
-    };
+Map<String, dynamic> _$RenderingContentToJson(RenderingContent instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('facetOrdering', instance.facetOrdering?.toJson());
+  writeNotNull('redirect', instance.redirect?.toJson());
+  writeNotNull('widgets', instance.widgets?.toJson());
+  return val;
+}

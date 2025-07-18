@@ -25,8 +25,15 @@ SearchForFacetValuesResponse _$SearchForFacetValuesResponseFromJson(
     );
 
 Map<String, dynamic> _$SearchForFacetValuesResponseToJson(
-        SearchForFacetValuesResponse instance) =>
-    <String, dynamic>{
-      if (instance.results?.map((e) => e.toJson()).toList() case final value?)
-        'results': value,
-    };
+    SearchForFacetValuesResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('results', instance.results?.map((e) => e.toJson()).toList());
+  return val;
+}

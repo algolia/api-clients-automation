@@ -28,17 +28,26 @@ SynonymHit _$SynonymHitFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$SynonymHitToJson(SynonymHit instance) =>
-    <String, dynamic>{
-      'objectID': instance.objectID,
-      'type': instance.type.toJson(),
-      if (instance.synonyms case final value?) 'synonyms': value,
-      if (instance.input case final value?) 'input': value,
-      if (instance.word case final value?) 'word': value,
-      if (instance.corrections case final value?) 'corrections': value,
-      if (instance.placeholder case final value?) 'placeholder': value,
-      if (instance.replacements case final value?) 'replacements': value,
-    };
+Map<String, dynamic> _$SynonymHitToJson(SynonymHit instance) {
+  final val = <String, dynamic>{
+    'objectID': instance.objectID,
+    'type': instance.type.toJson(),
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('synonyms', instance.synonyms);
+  writeNotNull('input', instance.input);
+  writeNotNull('word', instance.word);
+  writeNotNull('corrections', instance.corrections);
+  writeNotNull('placeholder', instance.placeholder);
+  writeNotNull('replacements', instance.replacements);
+  return val;
+}
 
 const _$SynonymTypeEnumMap = {
   SynonymType.synonym: 'synonym',

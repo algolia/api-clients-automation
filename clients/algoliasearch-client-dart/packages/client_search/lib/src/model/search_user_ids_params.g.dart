@@ -14,19 +14,26 @@ SearchUserIdsParams _$SearchUserIdsParamsFromJson(Map<String, dynamic> json) =>
         final val = SearchUserIdsParams(
           query: $checkedConvert('query', (v) => v as String),
           clusterName: $checkedConvert('clusterName', (v) => v as String?),
-          page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
-          hitsPerPage:
-              $checkedConvert('hitsPerPage', (v) => (v as num?)?.toInt()),
+          page: $checkedConvert('page', (v) => v as int?),
+          hitsPerPage: $checkedConvert('hitsPerPage', (v) => v as int?),
         );
         return val;
       },
     );
 
-Map<String, dynamic> _$SearchUserIdsParamsToJson(
-        SearchUserIdsParams instance) =>
-    <String, dynamic>{
-      'query': instance.query,
-      if (instance.clusterName case final value?) 'clusterName': value,
-      if (instance.page case final value?) 'page': value,
-      if (instance.hitsPerPage case final value?) 'hitsPerPage': value,
-    };
+Map<String, dynamic> _$SearchUserIdsParamsToJson(SearchUserIdsParams instance) {
+  final val = <String, dynamic>{
+    'query': instance.query,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('clusterName', instance.clusterName);
+  writeNotNull('page', instance.page);
+  writeNotNull('hitsPerPage', instance.hitsPerPage);
+  return val;
+}
