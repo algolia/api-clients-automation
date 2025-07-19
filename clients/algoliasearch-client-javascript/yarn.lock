@@ -281,7 +281,7 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:22.16.3"
     cross-fetch: "npm:4.1.0"
-    nock: "npm:14.0.5"
+    nock: "npm:14.0.6"
     publint: "npm:0.3.12"
     tsup: "npm:8.5.0"
     typescript: "npm:5.8.3"
@@ -296,7 +296,7 @@ __metadata:
     "@algolia/client-common": "npm:5.34.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:22.16.3"
-    nock: "npm:14.0.5"
+    nock: "npm:14.0.6"
     publint: "npm:0.3.12"
     tsup: "npm:8.5.0"
     typescript: "npm:5.8.3"
@@ -1288,9 +1288,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mswjs/interceptors@npm:^0.38.7":
-  version: 0.38.7
-  resolution: "@mswjs/interceptors@npm:0.38.7"
+"@mswjs/interceptors@npm:^0.39.3":
+  version: 0.39.3
+  resolution: "@mswjs/interceptors@npm:0.39.3"
   dependencies:
     "@open-draft/deferred-promise": "npm:^2.2.0"
     "@open-draft/logger": "npm:^0.3.0"
@@ -1298,7 +1298,7 @@ __metadata:
     is-node-process: "npm:^1.2.0"
     outvariant: "npm:^1.4.3"
     strict-event-emitter: "npm:^0.5.1"
-  checksum: 10/5563cf6af45baa547c40541df2ca1a7b049645bc0cac76f0cabcd27636da7c5bb5dce4fd5f17b1a68e4eaa10a8964f9dd3aba4e3408d67fc10b609e3888c4b49
+  checksum: 10/f5fbf0a4088ad013cec7b0803c03d6c47c4216d292fbf9bd7c01e32e40eb42fa4ce43e0bf9454697aa39c5bbb85f5e5d83fbb3a2640a411a413a85d9f7c3f8d0
   languageName: node
   linkType: hard
 
@@ -6126,14 +6126,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nock@npm:14.0.5":
-  version: 14.0.5
-  resolution: "nock@npm:14.0.5"
+"nock@npm:14.0.6":
+  version: 14.0.6
+  resolution: "nock@npm:14.0.6"
   dependencies:
-    "@mswjs/interceptors": "npm:^0.38.7"
+    "@mswjs/interceptors": "npm:^0.39.3"
     json-stringify-safe: "npm:^5.0.1"
     propagate: "npm:^2.0.0"
-  checksum: 10/811e09b530dc9cbf83e1a2c0efb91a422ea7e7a3bb51bbb60a03e78cbfad887af4a8eda4de2e9b29e94367c26d458c37979ec82237b3edc9d90c87de903a15b6
+  checksum: 10/32048a34b1109b6ff85b25a9c9a939e57779929ac6d33332dd09a8803ae9dc2296f577d9f9ba9b0482e503b0eb01ca2b5f3e25678db2619b5a0364f2fd2b0f5e
   languageName: node
   linkType: hard
 
