@@ -19,8 +19,7 @@ SecuredApiKeyRestrictions _$SecuredApiKeyRestrictionsFromJson(
                   ? null
                   : SearchParamsObject.fromJson(v as Map<String, dynamic>)),
           filters: $checkedConvert('filters', (v) => v as String?),
-          validUntil:
-              $checkedConvert('validUntil', (v) => (v as num?)?.toInt()),
+          validUntil: $checkedConvert('validUntil', (v) => v as int?),
           restrictIndices: $checkedConvert('restrictIndices',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           restrictSources:
@@ -32,13 +31,20 @@ SecuredApiKeyRestrictions _$SecuredApiKeyRestrictionsFromJson(
     );
 
 Map<String, dynamic> _$SecuredApiKeyRestrictionsToJson(
-        SecuredApiKeyRestrictions instance) =>
-    <String, dynamic>{
-      if (instance.searchParams?.toJson() case final value?)
-        'searchParams': value,
-      if (instance.filters case final value?) 'filters': value,
-      if (instance.validUntil case final value?) 'validUntil': value,
-      if (instance.restrictIndices case final value?) 'restrictIndices': value,
-      if (instance.restrictSources case final value?) 'restrictSources': value,
-      if (instance.userToken case final value?) 'userToken': value,
-    };
+    SecuredApiKeyRestrictions instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('searchParams', instance.searchParams?.toJson());
+  writeNotNull('filters', instance.filters);
+  writeNotNull('validUntil', instance.validUntil);
+  writeNotNull('restrictIndices', instance.restrictIndices);
+  writeNotNull('restrictSources', instance.restrictSources);
+  writeNotNull('userToken', instance.userToken);
+  return val;
+}

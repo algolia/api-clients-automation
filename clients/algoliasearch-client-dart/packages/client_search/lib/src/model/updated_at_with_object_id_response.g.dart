@@ -13,7 +13,7 @@ UpdatedAtWithObjectIdResponse _$UpdatedAtWithObjectIdResponseFromJson(
       json,
       ($checkedConvert) {
         final val = UpdatedAtWithObjectIdResponse(
-          taskID: $checkedConvert('taskID', (v) => (v as num?)?.toInt()),
+          taskID: $checkedConvert('taskID', (v) => v as int?),
           updatedAt: $checkedConvert('updatedAt', (v) => v as String?),
           objectID: $checkedConvert('objectID', (v) => v as String?),
         );
@@ -22,9 +22,17 @@ UpdatedAtWithObjectIdResponse _$UpdatedAtWithObjectIdResponseFromJson(
     );
 
 Map<String, dynamic> _$UpdatedAtWithObjectIdResponseToJson(
-        UpdatedAtWithObjectIdResponse instance) =>
-    <String, dynamic>{
-      if (instance.taskID case final value?) 'taskID': value,
-      if (instance.updatedAt case final value?) 'updatedAt': value,
-      if (instance.objectID case final value?) 'objectID': value,
-    };
+    UpdatedAtWithObjectIdResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('taskID', instance.taskID);
+  writeNotNull('updatedAt', instance.updatedAt);
+  writeNotNull('objectID', instance.objectID);
+  return val;
+}

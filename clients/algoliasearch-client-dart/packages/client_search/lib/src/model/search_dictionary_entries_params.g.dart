@@ -14,9 +14,8 @@ SearchDictionaryEntriesParams _$SearchDictionaryEntriesParamsFromJson(
       ($checkedConvert) {
         final val = SearchDictionaryEntriesParams(
           query: $checkedConvert('query', (v) => v as String),
-          page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
-          hitsPerPage:
-              $checkedConvert('hitsPerPage', (v) => (v as num?)?.toInt()),
+          page: $checkedConvert('page', (v) => v as int?),
+          hitsPerPage: $checkedConvert('hitsPerPage', (v) => v as int?),
           language: $checkedConvert('language',
               (v) => $enumDecodeNullable(_$SupportedLanguageEnumMap, v)),
         );
@@ -25,13 +24,22 @@ SearchDictionaryEntriesParams _$SearchDictionaryEntriesParamsFromJson(
     );
 
 Map<String, dynamic> _$SearchDictionaryEntriesParamsToJson(
-        SearchDictionaryEntriesParams instance) =>
-    <String, dynamic>{
-      'query': instance.query,
-      if (instance.page case final value?) 'page': value,
-      if (instance.hitsPerPage case final value?) 'hitsPerPage': value,
-      if (instance.language?.toJson() case final value?) 'language': value,
-    };
+    SearchDictionaryEntriesParams instance) {
+  final val = <String, dynamic>{
+    'query': instance.query,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('page', instance.page);
+  writeNotNull('hitsPerPage', instance.hitsPerPage);
+  writeNotNull('language', instance.language?.toJson());
+  return val;
+}
 
 const _$SupportedLanguageEnumMap = {
   SupportedLanguage.af: 'af',

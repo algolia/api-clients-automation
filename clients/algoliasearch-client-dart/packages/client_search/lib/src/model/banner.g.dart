@@ -26,7 +26,16 @@ Banner _$BannerFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$BannerToJson(Banner instance) => <String, dynamic>{
-      if (instance.image?.toJson() case final value?) 'image': value,
-      if (instance.link?.toJson() case final value?) 'link': value,
-    };
+Map<String, dynamic> _$BannerToJson(Banner instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('image', instance.image?.toJson());
+  writeNotNull('link', instance.link?.toJson());
+  return val;
+}

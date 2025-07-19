@@ -15,8 +15,8 @@ BaseRecommendRequest _$BaseRecommendRequestFromJson(
         final val = BaseRecommendRequest(
           indexName: $checkedConvert('indexName', (v) => v as String),
           threshold: $checkedConvert('threshold', (v) => (v as num).toDouble()),
-          maxRecommendations: $checkedConvert(
-              'maxRecommendations', (v) => (v as num?)?.toInt()),
+          maxRecommendations:
+              $checkedConvert('maxRecommendations', (v) => v as int?),
           queryParameters: $checkedConvert(
               'queryParameters',
               (v) => v == null
@@ -28,12 +28,19 @@ BaseRecommendRequest _$BaseRecommendRequestFromJson(
     );
 
 Map<String, dynamic> _$BaseRecommendRequestToJson(
-        BaseRecommendRequest instance) =>
-    <String, dynamic>{
-      'indexName': instance.indexName,
-      'threshold': instance.threshold,
-      if (instance.maxRecommendations case final value?)
-        'maxRecommendations': value,
-      if (instance.queryParameters?.toJson() case final value?)
-        'queryParameters': value,
-    };
+    BaseRecommendRequest instance) {
+  final val = <String, dynamic>{
+    'indexName': instance.indexName,
+    'threshold': instance.threshold,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('maxRecommendations', instance.maxRecommendations);
+  writeNotNull('queryParameters', instance.queryParameters?.toJson());
+  return val;
+}

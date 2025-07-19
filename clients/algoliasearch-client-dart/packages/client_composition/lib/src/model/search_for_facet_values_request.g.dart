@@ -25,7 +25,15 @@ SearchForFacetValuesRequest _$SearchForFacetValuesRequestFromJson(
     );
 
 Map<String, dynamic> _$SearchForFacetValuesRequestToJson(
-        SearchForFacetValuesRequest instance) =>
-    <String, dynamic>{
-      if (instance.params?.toJson() case final value?) 'params': value,
-    };
+    SearchForFacetValuesRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('params', instance.params?.toJson());
+  return val;
+}

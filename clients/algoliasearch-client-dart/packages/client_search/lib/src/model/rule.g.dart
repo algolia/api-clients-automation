@@ -31,14 +31,22 @@ Rule _$RuleFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$RuleToJson(Rule instance) => <String, dynamic>{
-      'objectID': instance.objectID,
-      if (instance.conditions?.map((e) => e.toJson()).toList()
-          case final value?)
-        'conditions': value,
-      'consequence': instance.consequence.toJson(),
-      if (instance.description case final value?) 'description': value,
-      if (instance.enabled case final value?) 'enabled': value,
-      if (instance.validity?.map((e) => e.toJson()).toList() case final value?)
-        'validity': value,
-    };
+Map<String, dynamic> _$RuleToJson(Rule instance) {
+  final val = <String, dynamic>{
+    'objectID': instance.objectID,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull(
+      'conditions', instance.conditions?.map((e) => e.toJson()).toList());
+  val['consequence'] = instance.consequence.toJson();
+  writeNotNull('description', instance.description);
+  writeNotNull('enabled', instance.enabled);
+  writeNotNull('validity', instance.validity?.map((e) => e.toJson()).toList());
+  return val;
+}

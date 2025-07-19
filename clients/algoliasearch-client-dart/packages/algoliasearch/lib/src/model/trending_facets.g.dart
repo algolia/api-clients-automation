@@ -25,13 +25,21 @@ TrendingFacets _$TrendingFacetsFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$TrendingFacetsToJson(TrendingFacets instance) =>
-    <String, dynamic>{
-      'facetName': instance.facetName,
-      'model': instance.model.toJson(),
-      if (instance.fallbackParameters?.toJson() case final value?)
-        'fallbackParameters': value,
-    };
+Map<String, dynamic> _$TrendingFacetsToJson(TrendingFacets instance) {
+  final val = <String, dynamic>{
+    'facetName': instance.facetName,
+    'model': instance.model.toJson(),
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('fallbackParameters', instance.fallbackParameters?.toJson());
+  return val;
+}
 
 const _$TrendingFacetsModelEnumMap = {
   TrendingFacetsModel.trendingFacets: 'trending-facets',

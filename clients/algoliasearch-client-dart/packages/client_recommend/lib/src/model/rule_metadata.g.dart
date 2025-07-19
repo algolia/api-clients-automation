@@ -18,7 +18,15 @@ RuleMetadata _$RuleMetadataFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$RuleMetadataToJson(RuleMetadata instance) =>
-    <String, dynamic>{
-      if (instance.lastUpdate case final value?) 'lastUpdate': value,
-    };
+Map<String, dynamic> _$RuleMetadataToJson(RuleMetadata instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('lastUpdate', instance.lastUpdate);
+  return val;
+}

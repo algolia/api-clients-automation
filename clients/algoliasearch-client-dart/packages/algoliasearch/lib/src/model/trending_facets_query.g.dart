@@ -14,8 +14,8 @@ TrendingFacetsQuery _$TrendingFacetsQueryFromJson(Map<String, dynamic> json) =>
         final val = TrendingFacetsQuery(
           indexName: $checkedConvert('indexName', (v) => v as String),
           threshold: $checkedConvert('threshold', (v) => (v as num).toDouble()),
-          maxRecommendations: $checkedConvert(
-              'maxRecommendations', (v) => (v as num?)?.toInt()),
+          maxRecommendations:
+              $checkedConvert('maxRecommendations', (v) => v as int?),
           queryParameters: $checkedConvert(
               'queryParameters',
               (v) => v == null
@@ -34,20 +34,25 @@ TrendingFacetsQuery _$TrendingFacetsQueryFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$TrendingFacetsQueryToJson(
-        TrendingFacetsQuery instance) =>
-    <String, dynamic>{
-      'indexName': instance.indexName,
-      'threshold': instance.threshold,
-      if (instance.maxRecommendations case final value?)
-        'maxRecommendations': value,
-      if (instance.queryParameters?.toJson() case final value?)
-        'queryParameters': value,
-      'facetName': instance.facetName,
-      'model': instance.model.toJson(),
-      if (instance.fallbackParameters?.toJson() case final value?)
-        'fallbackParameters': value,
-    };
+Map<String, dynamic> _$TrendingFacetsQueryToJson(TrendingFacetsQuery instance) {
+  final val = <String, dynamic>{
+    'indexName': instance.indexName,
+    'threshold': instance.threshold,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('maxRecommendations', instance.maxRecommendations);
+  writeNotNull('queryParameters', instance.queryParameters?.toJson());
+  val['facetName'] = instance.facetName;
+  val['model'] = instance.model.toJson();
+  writeNotNull('fallbackParameters', instance.fallbackParameters?.toJson());
+  return val;
+}
 
 const _$TrendingFacetsModelEnumMap = {
   TrendingFacetsModel.trendingFacets: 'trending-facets',

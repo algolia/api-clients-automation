@@ -15,17 +15,24 @@ SearchForFacetValuesRequest _$SearchForFacetValuesRequestFromJson(
         final val = SearchForFacetValuesRequest(
           params: $checkedConvert('params', (v) => v as String?),
           facetQuery: $checkedConvert('facetQuery', (v) => v as String?),
-          maxFacetHits:
-              $checkedConvert('maxFacetHits', (v) => (v as num?)?.toInt()),
+          maxFacetHits: $checkedConvert('maxFacetHits', (v) => v as int?),
         );
         return val;
       },
     );
 
 Map<String, dynamic> _$SearchForFacetValuesRequestToJson(
-        SearchForFacetValuesRequest instance) =>
-    <String, dynamic>{
-      if (instance.params case final value?) 'params': value,
-      if (instance.facetQuery case final value?) 'facetQuery': value,
-      if (instance.maxFacetHits case final value?) 'maxFacetHits': value,
-    };
+    SearchForFacetValuesRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('params', instance.params);
+  writeNotNull('facetQuery', instance.facetQuery);
+  writeNotNull('maxFacetHits', instance.maxFacetHits);
+  return val;
+}

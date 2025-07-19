@@ -22,18 +22,26 @@ SearchForFacetValuesResults _$SearchForFacetValuesResultsFromJson(
           exhaustiveFacetsCount:
               $checkedConvert('exhaustiveFacetsCount', (v) => v as bool),
           processingTimeMS:
-              $checkedConvert('processingTimeMS', (v) => (v as num?)?.toInt()),
+              $checkedConvert('processingTimeMS', (v) => v as int?),
         );
         return val;
       },
     );
 
 Map<String, dynamic> _$SearchForFacetValuesResultsToJson(
-        SearchForFacetValuesResults instance) =>
-    <String, dynamic>{
-      'indexName': instance.indexName,
-      'facetHits': instance.facetHits.map((e) => e.toJson()).toList(),
-      'exhaustiveFacetsCount': instance.exhaustiveFacetsCount,
-      if (instance.processingTimeMS case final value?)
-        'processingTimeMS': value,
-    };
+    SearchForFacetValuesResults instance) {
+  final val = <String, dynamic>{
+    'indexName': instance.indexName,
+    'facetHits': instance.facetHits.map((e) => e.toJson()).toList(),
+    'exhaustiveFacetsCount': instance.exhaustiveFacetsCount,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('processingTimeMS', instance.processingTimeMS);
+  return val;
+}

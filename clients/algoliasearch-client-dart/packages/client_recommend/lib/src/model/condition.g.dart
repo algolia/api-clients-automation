@@ -18,7 +18,16 @@ Condition _$ConditionFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$ConditionToJson(Condition instance) => <String, dynamic>{
-      if (instance.filters case final value?) 'filters': value,
-      if (instance.context case final value?) 'context': value,
-    };
+Map<String, dynamic> _$ConditionToJson(Condition instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('filters', instance.filters);
+  writeNotNull('context', instance.context);
+  return val;
+}

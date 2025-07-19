@@ -20,10 +20,18 @@ FacetStats _$FacetStatsFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$FacetStatsToJson(FacetStats instance) =>
-    <String, dynamic>{
-      if (instance.min case final value?) 'min': value,
-      if (instance.max case final value?) 'max': value,
-      if (instance.avg case final value?) 'avg': value,
-      if (instance.sum case final value?) 'sum': value,
-    };
+Map<String, dynamic> _$FacetStatsToJson(FacetStats instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('min', instance.min);
+  writeNotNull('max', instance.max);
+  writeNotNull('avg', instance.avg);
+  writeNotNull('sum', instance.sum);
+  return val;
+}

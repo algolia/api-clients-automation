@@ -26,9 +26,16 @@ ConsequenceQueryObject _$ConsequenceQueryObjectFromJson(
     );
 
 Map<String, dynamic> _$ConsequenceQueryObjectToJson(
-        ConsequenceQueryObject instance) =>
-    <String, dynamic>{
-      if (instance.remove case final value?) 'remove': value,
-      if (instance.edits?.map((e) => e.toJson()).toList() case final value?)
-        'edits': value,
-    };
+    ConsequenceQueryObject instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('remove', instance.remove);
+  writeNotNull('edits', instance.edits?.map((e) => e.toJson()).toList());
+  return val;
+}

@@ -24,8 +24,17 @@ LogQuery _$LogQueryFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$LogQueryToJson(LogQuery instance) => <String, dynamic>{
-      if (instance.indexName case final value?) 'index_name': value,
-      if (instance.userToken case final value?) 'user_token': value,
-      if (instance.queryId case final value?) 'query_id': value,
-    };
+Map<String, dynamic> _$LogQueryToJson(LogQuery instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('index_name', instance.indexName);
+  writeNotNull('user_token', instance.userToken);
+  writeNotNull('query_id', instance.queryId);
+  return val;
+}

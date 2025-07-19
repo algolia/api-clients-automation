@@ -14,8 +14,8 @@ RelatedQuery _$RelatedQueryFromJson(Map<String, dynamic> json) =>
         final val = RelatedQuery(
           indexName: $checkedConvert('indexName', (v) => v as String),
           threshold: $checkedConvert('threshold', (v) => (v as num).toDouble()),
-          maxRecommendations: $checkedConvert(
-              'maxRecommendations', (v) => (v as num?)?.toInt()),
+          maxRecommendations:
+              $checkedConvert('maxRecommendations', (v) => v as int?),
           queryParameters: $checkedConvert(
               'queryParameters',
               (v) => v == null
@@ -34,19 +34,25 @@ RelatedQuery _$RelatedQueryFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$RelatedQueryToJson(RelatedQuery instance) =>
-    <String, dynamic>{
-      'indexName': instance.indexName,
-      'threshold': instance.threshold,
-      if (instance.maxRecommendations case final value?)
-        'maxRecommendations': value,
-      if (instance.queryParameters?.toJson() case final value?)
-        'queryParameters': value,
-      'model': instance.model.toJson(),
-      'objectID': instance.objectID,
-      if (instance.fallbackParameters?.toJson() case final value?)
-        'fallbackParameters': value,
-    };
+Map<String, dynamic> _$RelatedQueryToJson(RelatedQuery instance) {
+  final val = <String, dynamic>{
+    'indexName': instance.indexName,
+    'threshold': instance.threshold,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('maxRecommendations', instance.maxRecommendations);
+  writeNotNull('queryParameters', instance.queryParameters?.toJson());
+  val['model'] = instance.model.toJson();
+  val['objectID'] = instance.objectID;
+  writeNotNull('fallbackParameters', instance.fallbackParameters?.toJson());
+  return val;
+}
 
 const _$RelatedModelEnumMap = {
   RelatedModel.relatedProducts: 'related-products',
