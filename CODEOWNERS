@@ -6,7 +6,6 @@ website/ @algolia/doc-approvers
 specs/advanced-personalization @algolia/predict-fe
 specs/composition @algolia/composition
 specs/composition-full @algolia/composition
-specs/abtesting
 specs/abtesting-v3 @algolia/optimization
 specs/analytics @algolia/optimization
 
