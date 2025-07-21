@@ -7,7 +7,7 @@ specs/advanced-personalization @algolia/predict-fe
 specs/composition @algolia/composition
 specs/composition-full @algolia/composition
 specs/abtesting
-specs/abtesting-v3
+specs/abtesting-v3 @algolia/optimization
 specs/analytics @algolia/optimization
 
 * @algolia/api-clients-automation
