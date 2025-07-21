@@ -21,6 +21,15 @@ const _$ErrorBaseFieldMap = <String, String>{
   'message': 'message',
 };
 
-Map<String, dynamic> _$ErrorBaseToJson(ErrorBase instance) => <String, dynamic>{
-      if (instance.message case final value?) 'message': value,
-    };
+Map<String, dynamic> _$ErrorBaseToJson(ErrorBase instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('message', instance.message);
+  return val;
+}

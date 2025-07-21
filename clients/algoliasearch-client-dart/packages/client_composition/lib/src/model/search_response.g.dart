@@ -29,9 +29,16 @@ SearchResponse _$SearchResponseFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$SearchResponseToJson(SearchResponse instance) =>
-    <String, dynamic>{
-      if (instance.compositions?.toJson() case final value?)
-        'compositions': value,
-      'results': instance.results.map((e) => e.toJson()).toList(),
-    };
+Map<String, dynamic> _$SearchResponseToJson(SearchResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('compositions', instance.compositions?.toJson());
+  val['results'] = instance.results.map((e) => e.toJson()).toList();
+  return val;
+}

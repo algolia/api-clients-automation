@@ -30,7 +30,7 @@ AddedToCartObjectIDs _$AddedToCartObjectIDsFromJson(
               (v) => (v as List<dynamic>?)
                   ?.map((e) => ObjectData.fromJson(e as Map<String, dynamic>))
                   .toList()),
-          timestamp: $checkedConvert('timestamp', (v) => (v as num?)?.toInt()),
+          timestamp: $checkedConvert('timestamp', (v) => v as int?),
           value: $checkedConvert('value', (v) => v),
         );
         return val;
@@ -38,23 +38,30 @@ AddedToCartObjectIDs _$AddedToCartObjectIDsFromJson(
     );
 
 Map<String, dynamic> _$AddedToCartObjectIDsToJson(
-        AddedToCartObjectIDs instance) =>
-    <String, dynamic>{
-      'eventName': instance.eventName,
-      'eventType': instance.eventType.toJson(),
-      'eventSubtype': instance.eventSubtype.toJson(),
-      'index': instance.index,
-      'objectIDs': instance.objectIDs,
-      'userToken': instance.userToken,
-      if (instance.authenticatedUserToken case final value?)
-        'authenticatedUserToken': value,
-      if (instance.currency case final value?) 'currency': value,
-      if (instance.objectData?.map((e) => e.toJson()).toList()
-          case final value?)
-        'objectData': value,
-      if (instance.timestamp case final value?) 'timestamp': value,
-      if (instance.value case final value?) 'value': value,
-    };
+    AddedToCartObjectIDs instance) {
+  final val = <String, dynamic>{
+    'eventName': instance.eventName,
+    'eventType': instance.eventType.toJson(),
+    'eventSubtype': instance.eventSubtype.toJson(),
+    'index': instance.index,
+    'objectIDs': instance.objectIDs,
+    'userToken': instance.userToken,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('authenticatedUserToken', instance.authenticatedUserToken);
+  writeNotNull('currency', instance.currency);
+  writeNotNull(
+      'objectData', instance.objectData?.map((e) => e.toJson()).toList());
+  writeNotNull('timestamp', instance.timestamp);
+  writeNotNull('value', instance.value);
+  return val;
+}
 
 const _$ConversionEventEnumMap = {
   ConversionEvent.conversion: 'conversion',

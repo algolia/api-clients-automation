@@ -29,8 +29,15 @@ const _$CompositionBaseSearchResponseFieldMap = <String, String>{
 };
 
 Map<String, dynamic> _$CompositionBaseSearchResponseToJson(
-        CompositionBaseSearchResponse instance) =>
-    <String, dynamic>{
-      if (instance.compositions?.toJson() case final value?)
-        'compositions': value,
-    };
+    CompositionBaseSearchResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('compositions', instance.compositions?.toJson());
+  return val;
+}

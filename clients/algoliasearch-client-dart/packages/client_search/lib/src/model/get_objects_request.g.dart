@@ -21,10 +21,17 @@ GetObjectsRequest _$GetObjectsRequestFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$GetObjectsRequestToJson(GetObjectsRequest instance) =>
-    <String, dynamic>{
-      if (instance.attributesToRetrieve case final value?)
-        'attributesToRetrieve': value,
-      'objectID': instance.objectID,
-      'indexName': instance.indexName,
-    };
+Map<String, dynamic> _$GetObjectsRequestToJson(GetObjectsRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('attributesToRetrieve', instance.attributesToRetrieve);
+  val['objectID'] = instance.objectID;
+  val['indexName'] = instance.indexName;
+  return val;
+}

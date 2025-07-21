@@ -17,7 +17,15 @@ WithPrimary _$WithPrimaryFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$WithPrimaryToJson(WithPrimary instance) =>
-    <String, dynamic>{
-      if (instance.primary case final value?) 'primary': value,
-    };
+Map<String, dynamic> _$WithPrimaryToJson(WithPrimary instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('primary', instance.primary);
+  return val;
+}

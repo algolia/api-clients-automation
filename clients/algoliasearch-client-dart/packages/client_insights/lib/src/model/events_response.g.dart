@@ -13,14 +13,22 @@ EventsResponse _$EventsResponseFromJson(Map<String, dynamic> json) =>
       ($checkedConvert) {
         final val = EventsResponse(
           message: $checkedConvert('message', (v) => v as String?),
-          status: $checkedConvert('status', (v) => (v as num?)?.toInt()),
+          status: $checkedConvert('status', (v) => v as int?),
         );
         return val;
       },
     );
 
-Map<String, dynamic> _$EventsResponseToJson(EventsResponse instance) =>
-    <String, dynamic>{
-      if (instance.message case final value?) 'message': value,
-      if (instance.status case final value?) 'status': value,
-    };
+Map<String, dynamic> _$EventsResponseToJson(EventsResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('message', instance.message);
+  writeNotNull('status', instance.status);
+  return val;
+}

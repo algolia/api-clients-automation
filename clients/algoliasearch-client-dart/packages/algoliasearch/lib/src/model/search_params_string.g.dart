@@ -18,7 +18,15 @@ SearchParamsString _$SearchParamsStringFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$SearchParamsStringToJson(SearchParamsString instance) =>
-    <String, dynamic>{
-      if (instance.params case final value?) 'params': value,
-    };
+Map<String, dynamic> _$SearchParamsStringToJson(SearchParamsString instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('params', instance.params);
+  return val;
+}

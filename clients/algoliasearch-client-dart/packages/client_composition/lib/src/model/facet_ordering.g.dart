@@ -28,10 +28,17 @@ FacetOrdering _$FacetOrderingFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$FacetOrderingToJson(FacetOrdering instance) =>
-    <String, dynamic>{
-      if (instance.facets?.toJson() case final value?) 'facets': value,
-      if (instance.values?.map((k, e) => MapEntry(k, e.toJson()))
-          case final value?)
-        'values': value,
-    };
+Map<String, dynamic> _$FacetOrderingToJson(FacetOrdering instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('facets', instance.facets?.toJson());
+  writeNotNull(
+      'values', instance.values?.map((k, e) => MapEntry(k, e.toJson())));
+  return val;
+}

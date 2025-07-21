@@ -13,7 +13,7 @@ RecommendUpdatedAtResponse _$RecommendUpdatedAtResponseFromJson(
       json,
       ($checkedConvert) {
         final val = RecommendUpdatedAtResponse(
-          taskID: $checkedConvert('taskID', (v) => (v as num).toInt()),
+          taskID: $checkedConvert('taskID', (v) => v as int),
           updatedAt: $checkedConvert('updatedAt', (v) => v as String),
         );
         return val;

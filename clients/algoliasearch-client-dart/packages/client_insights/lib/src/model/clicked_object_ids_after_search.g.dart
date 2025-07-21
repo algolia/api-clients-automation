@@ -19,34 +19,40 @@ ClickedObjectIDsAfterSearch _$ClickedObjectIDsAfterSearchFromJson(
           index: $checkedConvert('index', (v) => v as String),
           objectIDs: $checkedConvert('objectIDs',
               (v) => (v as List<dynamic>).map((e) => e as String).toList()),
-          positions: $checkedConvert(
-              'positions',
-              (v) =>
-                  (v as List<dynamic>).map((e) => (e as num).toInt()).toList()),
+          positions: $checkedConvert('positions',
+              (v) => (v as List<dynamic>).map((e) => e as int).toList()),
           queryID: $checkedConvert('queryID', (v) => v as String),
           userToken: $checkedConvert('userToken', (v) => v as String),
           authenticatedUserToken:
               $checkedConvert('authenticatedUserToken', (v) => v as String?),
-          timestamp: $checkedConvert('timestamp', (v) => (v as num?)?.toInt()),
+          timestamp: $checkedConvert('timestamp', (v) => v as int?),
         );
         return val;
       },
     );
 
 Map<String, dynamic> _$ClickedObjectIDsAfterSearchToJson(
-        ClickedObjectIDsAfterSearch instance) =>
-    <String, dynamic>{
-      'eventName': instance.eventName,
-      'eventType': instance.eventType.toJson(),
-      'index': instance.index,
-      'objectIDs': instance.objectIDs,
-      'positions': instance.positions,
-      'queryID': instance.queryID,
-      'userToken': instance.userToken,
-      if (instance.authenticatedUserToken case final value?)
-        'authenticatedUserToken': value,
-      if (instance.timestamp case final value?) 'timestamp': value,
-    };
+    ClickedObjectIDsAfterSearch instance) {
+  final val = <String, dynamic>{
+    'eventName': instance.eventName,
+    'eventType': instance.eventType.toJson(),
+    'index': instance.index,
+    'objectIDs': instance.objectIDs,
+    'positions': instance.positions,
+    'queryID': instance.queryID,
+    'userToken': instance.userToken,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('authenticatedUserToken', instance.authenticatedUserToken);
+  writeNotNull('timestamp', instance.timestamp);
+  return val;
+}
 
 const _$ClickEventEnumMap = {
   ClickEvent.click: 'click',

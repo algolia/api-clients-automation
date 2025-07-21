@@ -17,7 +17,7 @@ Event _$EventFromJson(Map<String, dynamic> json) => $checkedCreate(
               'status', (v) => $enumDecodeNullable(_$EventStatusEnumMap, v)),
           type: $checkedConvert(
               'type', (v) => $enumDecode(_$EventTypeEnumMap, v)),
-          batchSize: $checkedConvert('batchSize', (v) => (v as num).toInt()),
+          batchSize: $checkedConvert('batchSize', (v) => v as int),
           data: $checkedConvert(
               'data',
               (v) => (v as Map<String, dynamic>?)?.map(
@@ -29,15 +29,25 @@ Event _$EventFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
-      'eventID': instance.eventID,
-      'runID': instance.runID,
-      if (instance.status?.toJson() case final value?) 'status': value,
-      'type': instance.type.toJson(),
-      'batchSize': instance.batchSize,
-      if (instance.data case final value?) 'data': value,
-      'publishedAt': instance.publishedAt,
-    };
+Map<String, dynamic> _$EventToJson(Event instance) {
+  final val = <String, dynamic>{
+    'eventID': instance.eventID,
+    'runID': instance.runID,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('status', instance.status?.toJson());
+  val['type'] = instance.type.toJson();
+  val['batchSize'] = instance.batchSize;
+  writeNotNull('data', instance.data);
+  val['publishedAt'] = instance.publishedAt;
+  return val;
+}
 
 const _$EventStatusEnumMap = {
   EventStatus.created: 'created',
