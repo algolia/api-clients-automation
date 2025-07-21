@@ -1,10 +1,6 @@
 GROUP={{groupId}}
 VERSION_NAME={{packageVersion}}
 
-SONATYPE_HOST=DEFAULT
-RELEASE_SIGNING_ENABLED=true
-SONATYPE_AUTOMATIC_RELEASE=true
-
 # POM
 POM_DESCRIPTION=Java client for Algolia Search API
 POM_URL=https://github.com/algolia/algoliasearch-client-java
@@ -19,3 +15,8 @@ POM_DEVELOPER_NAME=The Algolia Team
 POM_DEVELOPER_EMAIL=hey@algolia.com
 POM_ISSUE_SYSTEM=github
 POM_ISSUE_URL=https://github.com/algolia/algoliasearch-client-java/issues
+
+# Publishing
+mavenCentralPublishing=true
+mavenCentralAutomaticPublishing=true
+signAllPublications=true

@@ -382,11 +382,8 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public BatchResponse batch(
-    @Nonnull String indexName,
-    @Nonnull BatchWriteParams batchWriteParams,
-    @Nullable RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
+  public BatchResponse batch(@Nonnull String indexName, @Nonnull BatchWriteParams batchWriteParams, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
     return LaunderThrowable.await(batchAsync(indexName, batchWriteParams, requestOptions));
   }
 
@@ -3160,10 +3157,8 @@ public class SearchClient extends ApiClient {
    * @deprecated
    */
   @Deprecated
-  public CompletableFuture<HasPendingMappingsResponse> hasPendingMappingsAsync(
-    Boolean getClusters,
-    @Nullable RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
+  public CompletableFuture<HasPendingMappingsResponse> hasPendingMappingsAsync(Boolean getClusters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/clusters/mapping/pending")
       .setMethod("GET")
@@ -3370,11 +3365,8 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<ListIndicesResponse> listIndicesAsync(
-    Integer page,
-    Integer hitsPerPage,
-    @Nullable RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
+  public CompletableFuture<ListIndicesResponse> listIndicesAsync(Integer page, Integer hitsPerPage, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes")
       .setMethod("GET")
@@ -3487,11 +3479,8 @@ public class SearchClient extends ApiClient {
    * @deprecated
    */
   @Deprecated
-  public CompletableFuture<ListUserIdsResponse> listUserIdsAsync(
-    Integer page,
-    Integer hitsPerPage,
-    @Nullable RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
+  public CompletableFuture<ListUserIdsResponse> listUserIdsAsync(Integer page, Integer hitsPerPage, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/clusters/mapping")
       .setMethod("GET")
@@ -4193,10 +4182,8 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<ReplaceSourceResponse> replaceSourcesAsync(
-    @Nonnull List<Source> source,
-    @Nullable RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
+  public CompletableFuture<ReplaceSourceResponse> replaceSourcesAsync(@Nonnull List<Source> source, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
     Parameters.requireNonNull(source, "Parameter `source` is required when calling `replaceSources`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/security/sources").setMethod("PUT").setBody(source).build();
@@ -5711,10 +5698,8 @@ public class SearchClient extends ApiClient {
    * @param searchSynonymsParams Body of the `searchSynonyms` operation. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<SearchSynonymsResponse> searchSynonymsAsync(
-    @Nonnull String indexName,
-    SearchSynonymsParams searchSynonymsParams
-  ) throws AlgoliaRuntimeException {
+  public CompletableFuture<SearchSynonymsResponse> searchSynonymsAsync(@Nonnull String indexName, SearchSynonymsParams searchSynonymsParams)
+    throws AlgoliaRuntimeException {
     return this.searchSynonymsAsync(indexName, searchSynonymsParams, null);
   }
 
@@ -6598,8 +6583,12 @@ public class SearchClient extends ApiClient {
     final List<SearchQuery> searchQueries = new ArrayList<>(requests); // Upcast the list
     final SearchMethodParams params = new SearchMethodParams().setRequests(searchQueries).setStrategy(strategy);
     return searchAsync(params, innerType).thenApply(searchResponses ->
-      searchResponses.getResults().stream().map(res -> (SearchResponse<T>) res).collect(Collectors.toList())
-    );
+        searchResponses
+          .getResults()
+          .stream()
+          .map(res -> (SearchResponse<T>) res)
+          .collect(Collectors.toList())
+      );
   }
 
   /**
@@ -6679,8 +6668,12 @@ public class SearchClient extends ApiClient {
     final List<SearchQuery> searchQueries = new ArrayList<>(requests); // Upcast the list
     final SearchMethodParams params = new SearchMethodParams().setRequests(searchQueries).setStrategy(strategy);
     return searchAsync(params, Hit.class).thenApply(searchResponses ->
-      searchResponses.getResults().stream().map(res -> (SearchForFacetValuesResponse) res).collect(Collectors.toList())
-    );
+        searchResponses
+          .getResults()
+          .stream()
+          .map(res -> (SearchForFacetValuesResponse) res)
+          .collect(Collectors.toList())
+      );
   }
 
   /**
@@ -6833,14 +6826,14 @@ public class SearchClient extends ApiClient {
     }
 
     return this.ingestionTransporter.chunkedPush(
-        indexName,
-        objects,
-        com.algolia.model.ingestion.Action.ADD_OBJECT,
-        waitForTasks,
-        batchSize,
-        null,
-        requestOptions
-      );
+      indexName,
+      objects,
+      com.algolia.model.ingestion.Action.ADD_OBJECT,
+      waitForTasks,
+      batchSize,
+      null,
+      requestOptions
+    );
   }
 
   /**
@@ -7074,16 +7067,16 @@ public class SearchClient extends ApiClient {
     }
 
     return this.ingestionTransporter.chunkedPush(
-        indexName,
-        objects,
-        createIfNotExists
-          ? com.algolia.model.ingestion.Action.PARTIAL_UPDATE_OBJECT
-          : com.algolia.model.ingestion.Action.PARTIAL_UPDATE_OBJECT_NO_CREATE,
-        waitForTasks,
-        batchSize,
-        null,
-        requestOptions
-      );
+      indexName,
+      objects,
+      createIfNotExists
+        ? com.algolia.model.ingestion.Action.PARTIAL_UPDATE_OBJECT
+        : com.algolia.model.ingestion.Action.PARTIAL_UPDATE_OBJECT_NO_CREATE,
+      waitForTasks,
+      batchSize,
+      null,
+      requestOptions
+    );
   }
 
   /**
@@ -7435,16 +7428,15 @@ public class SearchClient extends ApiClient {
       );
 
       // Save new objects
-      List<WatchResponse> watchResponses =
-        this.ingestionTransporter.chunkedPush(
-            tmpIndexName,
-            objects,
-            com.algolia.model.ingestion.Action.ADD_OBJECT,
-            true,
-            batchSize,
-            indexName,
-            requestOptions
-          );
+      List<WatchResponse> watchResponses = this.ingestionTransporter.chunkedPush(
+        tmpIndexName,
+        objects,
+        com.algolia.model.ingestion.Action.ADD_OBJECT,
+        true,
+        batchSize,
+        indexName,
+        requestOptions
+      );
 
       waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
 
@@ -7516,8 +7508,10 @@ public class SearchClient extends ApiClient {
     if (restrictions.getUserToken() != null) restrictionsMap.put("userToken", StringUtils.paramToString(restrictions.getUserToken()));
 
     if (restrictions.getSearchParams() != null) {
-      Map<String, Object> searchParamsMap = JsonSerializer.getObjectMapper()
-        .convertValue(restrictions.getSearchParams(), new TypeReference<Map<String, Object>>() {});
+      Map<String, Object> searchParamsMap = JsonSerializer.getObjectMapper().convertValue(
+        restrictions.getSearchParams(),
+        new TypeReference<Map<String, Object>>() {}
+      );
       searchParamsMap.forEach((key, value) -> restrictionsMap.put(key, StringUtils.paramToString(value)));
     }
 

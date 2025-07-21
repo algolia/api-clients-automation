@@ -555,7 +555,7 @@
       "post": {
         "operationId": "crawlUrls",
         "summary": "Crawl URLs",
-        "description": "Crawls the specified URLs, extracts records from them, and adds them to the index.\nIf a crawl is currently running (the crawler's `reindexing` property is `true`),\nthe records are added to a temporary index.\n",
+        "description": "Crawls the specified URLs, extracts records from them, and adds them to the index.\nIf a crawl is currently running (the crawler's `reindexing` property is `true`),\nthe records are added to a temporary index.\n\nThis operation is rate-limited to 500 requests every 24 hours.\n",
         "tags": [
           "actions"
         ],

@@ -245,7 +245,7 @@
                     "type": "array",
                     "description": "A/B test metrics involved in the test. Only these metrics will be considered when calculating results.",
                     "items": {
-                      "$ref": "#/components/schemas/parameters_metric"
+                      "$ref": "#/components/schemas/createMetric"
                     }
                   },
                   "configuration": {
@@ -603,7 +603,7 @@
                     "type": "array",
                     "description": "A/B test metrics involved in the test. Only these metrics will be considered when calculating results.",
                     "items": {
-                      "$ref": "#/components/schemas/parameters_metric"
+                      "$ref": "#/components/schemas/createMetric"
                     }
                   },
                   "configuration": {
@@ -782,7 +782,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/components/schemas/Metric"
+                "$ref": "#/components/schemas/MetricName"
               }
             }
           }
@@ -992,14 +992,21 @@
           "winsorizedValue": {
             "type": "number",
             "format": "double",
-            "description": "Only present in case the metric is 'revenue'. \nIt is the amount exceeding the 95th percentile of global revenue transactions involved in the AB Test. This amount is not considered when calculating statistical significance.\nIt is tied to a per revenue-currency pair contrary to other \nglobal filter effects (such as outliers and empty search count).\n"
+            "description": "Only present in case the metric is 'revenue'.\nIt is the amount exceeding the 95th percentile of global revenue transactions involved in the AB Test. This amount is not considered when calculating statistical significance.\nIt is tied to a per revenue-currency pair contrary to other\nglobal filter effects (such as outliers and empty search count).\n"
+          },
+          "mean": {
+            "type": "number",
+            "format": "double",
+            "description": "Mean value for this metric.",
+            "example": 53.7
           }
         },
         "example": {
-          "winsorizedValue": 888.8
+          "winsorizedValue": 888.8,
+          "mean": 53.7
         }
       },
-      "metric": {
+      "metricResult": {
         "type": "object",
         "properties": {
           "name": {
@@ -1016,12 +1023,12 @@
           "valueCIHigh": {
             "type": "number",
             "format": "double",
-            "description": "The upper bound of the 95% confidence interval for the metric value. The confidence interval is calculated using \neither the relative ratio or relative difference between the metric values for the control and the variant.\nRelative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate), \nwhile relative difference is used for continuous metrics (e.g., revenue).\n"
+            "description": "The upper bound of the 95% confidence interval for the metric value. The confidence interval is calculated using\neither the relative ratio or relative difference between the metric values for the control and the variant.\nRelative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate),\nwhile relative difference is used for continuous metrics (e.g., revenue).\n"
           },
           "valueCILow": {
             "type": "number",
             "format": "double",
-            "description": "The lower bound of the 95% confidence interval for the metric value. The confidence interval is calculated using \neither the relative ratio or relative difference between the metric values for the control and the variant.\nRelative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate), \nwhile relative difference is used for continuous metrics (e.g., revenue).\n"
+            "description": "The lower bound of the 95% confidence interval for the metric value. The confidence interval is calculated using\neither the relative ratio or relative difference between the metric values for the control and the variant.\nRelative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate),\nwhile relative difference is used for continuous metrics (e.g., revenue).\n"
           },
           "pValue": {
             "type": "number",
@@ -1038,7 +1045,7 @@
           "criticalValue": {
             "type": "number",
             "format": "double",
-            "description": "The value that was computed during error correction. It is used to determine significance of the metric pValue.\nThe critical value is calculated using Bonferroni or Benjamini-Hochberg corrections, based on the given \nconfiguration during the A/B test creation.\n"
+            "description": "The value that was computed during error correction. It is used to determine significance of the metric pValue.\nThe critical value is calculated using Bonferroni or Benjamini-Hochberg corrections, based on the given\nconfiguration during the A/B test creation.\n"
           },
           "significant": {
             "type": "boolean",
@@ -1090,7 +1097,7 @@
         "type": "array",
         "description": "All ABTest metrics that were defined during test creation.",
         "items": {
-          "$ref": "#/components/schemas/metric"
+          "$ref": "#/components/schemas/metricResult"
         }
       },
       "filterEffects": {
@@ -1400,7 +1407,7 @@
           }
         ]
       },
-      "parameters_metric": {
+      "createMetric": {
         "type": "object",
         "description": "Defines a metric to be retrieved during an A/B test.",
         "properties": {
@@ -1501,7 +1508,7 @@
           }
         }
       },
-      "Metric": {
+      "MetricName": {
         "type": "string",
         "enum": [
           "search_count",

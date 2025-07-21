@@ -391,8 +391,9 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
       // additionalproperties: true
       Schema<?> inner = ModelUtils.getAdditionalProperties(target);
       if (inner == null) {
-        Logger.getGlobal()
-          .warning("`" + p.getName() + "` (map property) does not have a proper inner type defined. Default to" + " type:string");
+        Logger.getGlobal().warning(
+          "`" + p.getName() + "` (map property) does not have a proper inner type defined. Default to" + " type:string"
+        );
         inner = new StringSchema().description("TODO default missing map inner type to string");
         p.setAdditionalProperties(inner);
       }

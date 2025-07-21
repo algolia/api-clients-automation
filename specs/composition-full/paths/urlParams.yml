@@ -1,0 +1,7 @@
+compositionID:
+  in: path
+  name: compositionID
+  description: Unique Composition ObjectID.
+  required: true
+  schema:
+    $ref: '../common/schemas/Identifiers.yml#/compositionObjectID'

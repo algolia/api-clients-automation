@@ -42,7 +42,9 @@ class IngestionClientClientTests {
   }
 
   private ClientOptions withEchoRequester() {
-    return ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
+    return ClientOptions.builder()
+      .setRequesterConfig(requester -> requester.addInterceptor(echo))
+      .build();
   }
 
   private ClientOptions withCustomHosts(List<Host> hosts, boolean gzipEncoding) {
@@ -178,7 +180,7 @@ class IngestionClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.21.0\\).*";
+      String regexp = "^Algolia for Java \\(4.22.0\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp

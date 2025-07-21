@@ -502,6 +502,9 @@ paths:
         `true`),
 
         the records are added to a temporary index.
+
+
+        This operation is rate-limited to 500 requests every 24 hours.
       tags:
         - crawler
       parameters:

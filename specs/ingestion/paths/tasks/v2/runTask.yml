@@ -10,6 +10,12 @@ post:
     - editSettings
   parameters:
     - $ref: '../../../common/parameters.yml#/pathTaskID'
+  requestBody:
+    description: ''
+    content:
+      application/json:
+        schema:
+          $ref: '../../../common/schemas/task.yml#/RunTaskPayload'
   responses:
     '200':
       description: OK

@@ -1,0 +1,88 @@
+compositionBehavior:
+  type: object
+  additionalProperties: false
+  properties:
+    injection:
+      title: injection
+      type: object
+      additionalProperties: false
+      properties:
+        main:
+          title: main
+          type: object
+          additionalProperties: false
+          properties:
+            source:
+              title: compositionSource
+              type: object
+              additionalProperties: false
+              properties:
+                search:
+                  title: compositionSourceSearch
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    index:
+                      type: string
+                      description: Composition Main Index name.
+                      example: Products
+                    params:
+                      $ref: './Injection.yml#/mainInjectionQueryParameters'
+                  required:
+                    - index
+              required:
+                - search
+          required:
+            - source
+        injectedItems:
+          type: array
+          description: list of injected items of the current Composition.
+          minItems: 0
+          maxItems: 2
+          items:
+            $ref: '#/injectedItem'
+      required:
+        - main
+  required:
+    - injection
+
+injectedItem:
+  type: object
+  additionalProperties: false
+  properties:
+    key:
+      type: string
+      description: injected Item unique identifier.
+    source:
+      title: injectedItemSource
+      type: object
+      additionalProperties: false
+      properties:
+        search:
+          title: injectedItemSourceSearch
+          type: object
+          additionalProperties: false
+          properties:
+            index:
+              type: string
+              description: Composition Main Index name.
+              example: Products
+            params:
+              $ref: './Injection.yml#/injectedItemsQueryParameters'
+          required:
+            - index
+      required:
+        - search
+    position:
+      type: integer
+      minimum: 0
+      maximum: 19
+    length:
+      type: integer
+      minimum: 0
+      maximum: 20
+  required:
+    - key
+    - source
+    - position
+    - length

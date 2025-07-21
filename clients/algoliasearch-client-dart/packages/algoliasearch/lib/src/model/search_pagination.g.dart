@@ -12,20 +12,27 @@ SearchPagination _$SearchPaginationFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = SearchPagination(
-          page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
-          nbHits: $checkedConvert('nbHits', (v) => (v as num?)?.toInt()),
-          nbPages: $checkedConvert('nbPages', (v) => (v as num?)?.toInt()),
-          hitsPerPage:
-              $checkedConvert('hitsPerPage', (v) => (v as num?)?.toInt()),
+          page: $checkedConvert('page', (v) => v as int?),
+          nbHits: $checkedConvert('nbHits', (v) => v as int?),
+          nbPages: $checkedConvert('nbPages', (v) => v as int?),
+          hitsPerPage: $checkedConvert('hitsPerPage', (v) => v as int?),
         );
         return val;
       },
     );
 
-Map<String, dynamic> _$SearchPaginationToJson(SearchPagination instance) =>
-    <String, dynamic>{
-      if (instance.page case final value?) 'page': value,
-      if (instance.nbHits case final value?) 'nbHits': value,
-      if (instance.nbPages case final value?) 'nbPages': value,
-      if (instance.hitsPerPage case final value?) 'hitsPerPage': value,
-    };
+Map<String, dynamic> _$SearchPaginationToJson(SearchPagination instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('page', instance.page);
+  writeNotNull('nbHits', instance.nbHits);
+  writeNotNull('nbPages', instance.nbPages);
+  writeNotNull('hitsPerPage', instance.hitsPerPage);
+  return val;
+}

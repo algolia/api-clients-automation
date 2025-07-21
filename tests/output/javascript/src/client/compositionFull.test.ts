@@ -42,7 +42,7 @@ describe('commonApi', () => {
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
     expect(decodeURIComponent(result.algoliaAgent)).toMatch(
-      /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; CompositionFull (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/,
+      /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Composition (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/,
     );
   }, 25000);
 
@@ -51,7 +51,7 @@ describe('commonApi', () => {
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.6.0\).*/);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.10.0\).*/);
   }, 25000);
 });
 

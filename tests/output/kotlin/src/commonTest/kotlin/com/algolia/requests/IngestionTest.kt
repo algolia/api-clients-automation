@@ -1481,7 +1481,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertEmptyBody(it.body)
+        assertJsonBody("""{}""", it.body)
       },
     )
   }
@@ -1499,7 +1499,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertEmptyBody(it.body)
+        assertJsonBody("""{}""", it.body)
       },
     )
   }

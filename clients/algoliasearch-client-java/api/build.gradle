@@ -9,10 +9,7 @@ plugins {
 }
 
 repositories {
-   maven {
-      name = 'ossrh-staging-api'
-      url = "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/"
-  }
+  maven { url = "https://oss.sonatype.org/content/repositories/" }
   mavenCentral()
 }
 

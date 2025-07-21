@@ -5281,45 +5281,6 @@ void main() {
 
   // searchSingleIndex
   test(
-    'insidePolygon',
-    () => runTest(
-      builder: (requester) => SearchClient(
-        appId: 'appId',
-        apiKey: 'apiKey',
-        options: ClientOptions(requester: requester),
-      ),
-      call: (client) => client.searchSingleIndex(
-        indexName: "indexName",
-        searchParams: SearchParamsObject(
-          insidePolygon: [
-            [
-              42.01,
-              -124.31,
-              48.835509470063045,
-              -124.40453125000005,
-              45.01082951668149,
-              -65.95726562500005,
-              31.247243545293433,
-              -81.06578125000004,
-              25.924152577235226,
-              -97.68234374999997,
-              32.300311895879545,
-              -117.54828125,
-            ],
-          ],
-        ),
-      ),
-      intercept: (request) {
-        expectPath(request.path, '/1/indexes/indexName/query');
-        expect(request.method, 'post');
-        expectBody(request.body,
-            """{"insidePolygon":[[42.01,-124.31,48.835509470063045,-124.40453125000005,45.01082951668149,-65.95726562500005,31.247243545293433,-81.06578125000004,25.924152577235226,-97.68234374999997,32.300311895879545,-117.54828125]]}""");
-      },
-    ),
-  );
-
-  // searchSingleIndex
-  test(
     'optionalFilters',
     () => runTest(
       builder: (requester) => SearchClient(
@@ -6037,7 +5998,7 @@ void main() {
 
   // searchSingleIndex
   test(
-    'apply_filters',
+    'apply_optional_filters',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -6182,7 +6143,7 @@ void main() {
 
   // searchSingleIndex
   test(
-    'apply_filters',
+    'set_sum_or_filters_scores',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -7017,62 +6978,6 @@ void main() {
         expect(request.method, 'post');
         expectBody(
             request.body, """{"query":"query","ignorePlurals":["ca","es"]}""");
-      },
-    ),
-  );
-
-  // searchSingleIndex
-  test(
-    'set_querylanguages_override',
-    () => runTest(
-      builder: (requester) => SearchClient(
-        appId: 'appId',
-        apiKey: 'apiKey',
-        options: ClientOptions(requester: requester),
-      ),
-      call: (client) => client.searchSingleIndex(
-        indexName: "indexName",
-        searchParams: SearchParamsObject(
-          query: "query",
-          removeStopWords: [
-            SupportedLanguage.fromJson("ca"),
-            SupportedLanguage.fromJson("es"),
-          ],
-        ),
-      ),
-      intercept: (request) {
-        expectPath(request.path, '/1/indexes/indexName/query');
-        expect(request.method, 'post');
-        expectBody(request.body,
-            """{"query":"query","removeStopWords":["ca","es"]}""");
-      },
-    ),
-  );
-
-  // searchSingleIndex
-  test(
-    'set_querylanguages_override',
-    () => runTest(
-      builder: (requester) => SearchClient(
-        appId: 'appId',
-        apiKey: 'apiKey',
-        options: ClientOptions(requester: requester),
-      ),
-      call: (client) => client.searchSingleIndex(
-        indexName: "indexName",
-        searchParams: SearchParamsObject(
-          query: "query",
-          removeStopWords: [
-            SupportedLanguage.fromJson("ca"),
-            SupportedLanguage.fromJson("es"),
-          ],
-        ),
-      ),
-      intercept: (request) {
-        expectPath(request.path, '/1/indexes/indexName/query');
-        expect(request.method, 'post');
-        expectBody(request.body,
-            """{"query":"query","removeStopWords":["ca","es"]}""");
       },
     ),
   );
@@ -10743,7 +10648,7 @@ void main() {
 
   // setSettings
   test(
-    'set_languages_using_querylanguages',
+    'set_querylanguage_ignoreplurals',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -10800,7 +10705,7 @@ void main() {
 
   // setSettings
   test(
-    'set_languages_using_querylanguages',
+    'set_querylanguage_removestopwords',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -10964,7 +10869,7 @@ void main() {
 
   // setSettings
   test(
-    'set_languages_using_querylanguages',
+    'set_querylanguage_both',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -11277,29 +11182,6 @@ void main() {
         expect(request.method, 'put');
         expectBody(request.body,
             """{"alternativesAsExact":["ignorePlurals","singleWordSynonym"]}""");
-      },
-    ),
-  );
-
-  // setSettings
-  test(
-    'enable_advanced_syntax_by_default',
-    () => runTest(
-      builder: (requester) => SearchClient(
-        appId: 'appId',
-        apiKey: 'apiKey',
-        options: ClientOptions(requester: requester),
-      ),
-      call: (client) => client.setSettings(
-        indexName: "theIndexName",
-        indexSettings: IndexSettings(
-          advancedSyntax: true,
-        ),
-      ),
-      intercept: (request) {
-        expectPath(request.path, '/1/indexes/theIndexName/settings');
-        expect(request.method, 'put');
-        expectBody(request.body, """{"advancedSyntax":true}""");
       },
     ),
   );

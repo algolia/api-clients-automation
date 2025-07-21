@@ -20,7 +20,15 @@ HideConsequenceObject _$HideConsequenceObjectFromJson(
     );
 
 Map<String, dynamic> _$HideConsequenceObjectToJson(
-        HideConsequenceObject instance) =>
-    <String, dynamic>{
-      if (instance.objectID case final value?) 'objectID': value,
-    };
+    HideConsequenceObject instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('objectID', instance.objectID);
+  return val;
+}

@@ -1,7 +1,7 @@
 post:
   tags:
     - tasks
-  summary: Pushes records to be transformed through the Pipeline, by taskID
+  summary: Push records by taskID
   description: >
     Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter,
     for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task.

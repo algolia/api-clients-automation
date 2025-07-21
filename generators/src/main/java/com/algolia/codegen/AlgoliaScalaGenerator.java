@@ -150,14 +150,16 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     CodegenProperty property
   ) {
     if (p == null) {
-      this.logger.severe("Undefined property/schema for `" + name + "`. Default to type:string.");
+      // this.logger.severe("Undefined property/schema for `" + name + "`. Default to
+      // type:string.");
       return null;
     } else {
-      this.logger.severe("debugging fromProperty for " + name + ": " + p);
+      // this.logger.severe("debugging fromProperty for " + name + ": " + p);
       NamedSchema ns = new NamedSchema(name, p, required, schemaIsFromAdditionalProperties);
       CodegenProperty cpc = (CodegenProperty) this.schemaCodegenPropertyCache.get(ns);
       if (cpc != null) {
-        this.logger.info("Cached fromProperty for " + name + " : " + p.getName() + " required=" + required);
+        // this.logger.info("Cached fromProperty for " + name + " : " + p.getName() + " required=" +
+        // required);
         return cpc;
       } else {
         Schema refToPropertiesSchema = ModelUtils.getSchemaFromRefToSchemaWithProperties(this.openAPI, p.get$ref());
@@ -209,7 +211,10 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     Collections.reverse(enumVars);
     enumVars.forEach(v -> {
       String name = (String) v.get("name");
-      long count = enumVars.stream().filter(v1 -> ((String) v1.get("name")).equalsIgnoreCase(name)).count();
+      long count = enumVars
+        .stream()
+        .filter(v1 -> ((String) v1.get("name")).equalsIgnoreCase(name))
+        .count();
       if (count > 1L) {
         String uniqueEnumName = this.getUniqueEnumName(name, enumVars);
         Object var10001 = v.get("name");
@@ -221,7 +226,10 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
   }
 
   private String getUniqueEnumName(String name, List<Map<String, Object>> enumVars) {
-    long count = enumVars.stream().filter(v -> ((String) v.get("name")).equalsIgnoreCase(name)).count();
+    long count = enumVars
+      .stream()
+      .filter(v -> ((String) v.get("name")).equalsIgnoreCase(name))
+      .count();
     return count > 1L ? this.getUniqueEnumName(name + "Alt", enumVars) : name;
   }
 

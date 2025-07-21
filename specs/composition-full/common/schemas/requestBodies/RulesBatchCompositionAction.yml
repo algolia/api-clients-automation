@@ -1,0 +1,14 @@
+deleteCompositionRuleAction:
+  type: object
+  description: Operation arguments when deleting.
+  additionalProperties: false
+  properties:
+    objectID:
+      $ref: '../Identifiers.yml#/compositionRuleObjectID'
+  required:
+    - objectID
+
+rulesBatchCompositionAction:
+  oneOf:
+    - $ref: '../components/CompositionRule.yml#/compositionRule'
+    - $ref: '#/deleteCompositionRuleAction'

@@ -46,9 +46,9 @@ metrics:
   type: array
   description: All ABTest metrics that were defined during test creation.
   items:
-    $ref: '#/metric'
+    $ref: '#/metricResult'
 
-metric:
+metricResult:
   type: object
   properties:
     name:
@@ -63,17 +63,17 @@ metric:
       type: number
       format: double
       description: |
-        The upper bound of the 95% confidence interval for the metric value. The confidence interval is calculated using 
+        The upper bound of the 95% confidence interval for the metric value. The confidence interval is calculated using
         either the relative ratio or relative difference between the metric values for the control and the variant.
-        Relative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate), 
+        Relative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate),
         while relative difference is used for continuous metrics (e.g., revenue).
     valueCILow:
       type: number
       format: double
       description: |
-        The lower bound of the 95% confidence interval for the metric value. The confidence interval is calculated using 
+        The lower bound of the 95% confidence interval for the metric value. The confidence interval is calculated using
         either the relative ratio or relative difference between the metric values for the control and the variant.
-        Relative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate), 
+        Relative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate),
         while relative difference is used for continuous metrics (e.g., revenue).
     pValue:
       type: number
@@ -89,7 +89,7 @@ metric:
       format: double
       description: |
         The value that was computed during error correction. It is used to determine significance of the metric pValue.
-        The critical value is calculated using Bonferroni or Benjamini-Hochberg corrections, based on the given 
+        The critical value is calculated using Bonferroni or Benjamini-Hochberg corrections, based on the given
         configuration during the A/B test creation.
     significant:
       type: boolean
@@ -137,9 +137,15 @@ metricMetadata:
       type: number
       format: double
       description: |
-        Only present in case the metric is 'revenue'. 
+        Only present in case the metric is 'revenue'.
         It is the amount exceeding the 95th percentile of global revenue transactions involved in the AB Test. This amount is not considered when calculating statistical significance.
-        It is tied to a per revenue-currency pair contrary to other 
+        It is tied to a per revenue-currency pair contrary to other
         global filter effects (such as outliers and empty search count).
+    mean:
+      type: number
+      format: double
+      description: Mean value for this metric.
+      example: 53.7
   example:
     winsorizedValue: 888.80
+    mean: 53.7

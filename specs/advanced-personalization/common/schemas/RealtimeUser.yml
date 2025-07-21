@@ -5,6 +5,7 @@ RealtimeUser:
   required:
     - version
     - userID
+    - lastUpdatedAt
     - search
   properties:
     version:
@@ -13,6 +14,10 @@ RealtimeUser:
     userID:
       type: string
       description: User ID of the user.
+    lastUpdatedAt:
+      type: string
+      description: Date and time when the profile was last computed, in RFC 3339 format.
+      example: 2023-06-15T15:06:04.249906Z
     search:
       type: object
       description: |

@@ -3,7 +3,68 @@
   "dart": {},
   "go": {},
   "java": {},
-  "javascript": {},
+  "javascript": {
+    "import": {
+      "default": "import { abtestingClient } from '@algolia/abtesting';"
+    },
+    "addABTests": {
+      "default": "const response = await client.addABTests({\n  endAt: '2022-12-31T00:00:00.000Z',\n  name: 'myABTest',\n  metrics: [{ name: 'myMetric' }],\n  variants: [\n    { index: 'AB_TEST_1', trafficPercentage: 30 },\n    { index: 'AB_TEST_2', trafficPercentage: 50 },\n  ],\n});"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "const response = await client.customDelete({ path: 'test/minimal' });",
+      "allow del method for a custom path with all parameters": "const response = await client.customDelete({ path: 'test/all', parameters: { query: 'parameters' } });"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "const response = await client.customGet({ path: 'test/minimal' });",
+      "allow get method for a custom path with all parameters": "const response = await client.customGet({ path: 'test/all', parameters: { query: 'parameters with space' } });",
+      "requestOptions should be escaped too": "const response = await client.customGet(\n  { path: 'test/all', parameters: { query: 'to be overriden' } },\n  {\n    queryParameters: { query: 'parameters with space', 'and an array': ['array', 'with spaces'] },\n    headers: { 'x-header-1': 'spaces are left alone' },\n  },\n);"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "const response = await client.customPost({ path: 'test/minimal' });",
+      "allow post method for a custom path with all parameters": "const response = await client.customPost({\n  path: 'test/all',\n  parameters: { query: 'parameters' },\n  body: { body: 'parameters' },\n});",
+      "requestOptions can override default query parameters": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { query: 'myQueryParameter' },\n  },\n);",
+      "requestOptions merges query parameters with default ones": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { query2: 'myQueryParameter' },\n  },\n);",
+      "requestOptions can override default headers": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },\n  },\n);",
+      "requestOptions merges headers with default ones": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },\n  },\n);",
+      "requestOptions queryParameters accepts booleans": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { isItWorking: true },\n  },\n);",
+      "requestOptions queryParameters accepts integers": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { myParam: 2 },\n  },\n);",
+      "requestOptions queryParameters accepts list of string": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { myParam: ['b and c', 'd'] },\n  },\n);",
+      "requestOptions queryParameters accepts list of booleans": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { myParam: [true, true, false] },\n  },\n);",
+      "requestOptions queryParameters accepts list of integers": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { myParam: [1, 2] },\n  },\n);"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "const response = await client.customPut({ path: 'test/minimal' });",
+      "allow put method for a custom path with all parameters": "const response = await client.customPut({\n  path: 'test/all',\n  parameters: { query: 'parameters' },\n  body: { body: 'parameters' },\n});"
+    },
+    "deleteABTest": {
+      "default": "const response = await client.deleteABTest({ id: 42 });"
+    },
+    "estimateABTest": {
+      "default": "const response = await client.estimateABTest({\n  configuration: { minimumDetectableEffect: { size: 0.03, metric: 'conversionRate' } },\n  variants: [\n    { index: 'AB_TEST_1', trafficPercentage: 50 },\n    { index: 'AB_TEST_2', trafficPercentage: 50 },\n  ],\n});"
+    },
+    "getABTest": {
+      "default": "const response = await client.getABTest({ id: 42 });"
+    },
+    "getTimeseries": {
+      "default": "const response = await client.getTimeseries({ id: 42 });"
+    },
+    "listABTests": {
+      "listABTests with minimal parameters": "const response = await client.listABTests();",
+      "listABTests with parameters": "const response = await client.listABTests({ offset: 0, limit: 21, indexPrefix: 'cts_e2e ab', indexSuffix: 't' });"
+    },
+    "scheduleABTest": {
+      "default": "const response = await client.scheduleABTest({\n  endAt: '2022-12-31T00:00:00.000Z',\n  scheduledAt: '2022-11-31T00:00:00.000Z',\n  name: 'myABTest',\n  metrics: [{ name: 'myMetric' }],\n  variants: [\n    { index: 'AB_TEST_1', trafficPercentage: 30 },\n    { index: 'AB_TEST_2', trafficPercentage: 50 },\n  ],\n});"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
+    },
+    "stopABTest": {
+      "default": "const response = await client.stopABTest({ id: 42 });"
+    },
+    "init": {
+      "default": "// Replace 'us' with your Algolia Application Region\nconst client = abtestingClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'us');"
+    }
+  },
   "kotlin": {},
   "php": {},
   "python": {},

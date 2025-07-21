@@ -1,0 +1,46 @@
+hit:
+  type: object
+  description: |
+    Search result.
+
+    A hit is a record from your index, augmented with special attributes for highlighting, snippeting, and ranking.
+  x-is-generic: true
+  additionalProperties: true
+  required:
+    - objectID
+  properties:
+    objectID:
+      $ref: '../../../../common/parameters.yml#/objectID'
+    _highlightResult:
+      $ref: '../../../../common/schemas/HighlightResult.yml#/highlightResultMap'
+    _snippetResult:
+      $ref: '../../../../common/schemas/SnippetResult.yml#/snippetResultMap'
+    _rankingInfo:
+      $ref: '#/rankingInfo'
+    _distinctSeqID:
+      $ref: '../../../../common/schemas/Hit.yml#/distinctSeqID'
+
+rankingInfo:
+  allOf:
+    - $ref: '../../../../common/schemas/Hit.yml#/rankingInfo'
+    - $ref: '#/compositionRankingInfo'
+
+compositionRankingInfo:
+  type: object
+  additionalProperties: false
+  properties:
+    composed:
+      title: composedRankingInfo
+      type: object
+      additionalProperties:
+        title: compositionIdRankingInfo
+        x-additionalPropertiesName: composition-id
+        type: object
+        properties:
+          index:
+            type: string
+          injectedItemKey:
+            type: string
+        required:
+          - index
+          - injectedItemKey

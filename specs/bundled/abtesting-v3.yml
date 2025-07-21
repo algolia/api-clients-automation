@@ -255,7 +255,7 @@ paths:
                     A/B test metrics involved in the test. Only these metrics
                     will be considered when calculating results.
                   items:
-                    $ref: '#/components/schemas/parameters_metric'
+                    $ref: '#/components/schemas/createMetric'
                 configuration:
                   $ref: '#/components/schemas/ABTestConfiguration'
                 endAt:
@@ -500,7 +500,7 @@ paths:
                     A/B test metrics involved in the test. Only these metrics
                     will be considered when calculating results.
                   items:
-                    $ref: '#/components/schemas/parameters_metric'
+                    $ref: '#/components/schemas/createMetric'
                 configuration:
                   $ref: '#/components/schemas/ABTestConfiguration'
                 scheduledAt:
@@ -621,7 +621,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/Metric'
+              $ref: '#/components/schemas/MetricName'
       responses:
         '200':
           description: OK
@@ -796,18 +796,24 @@ components:
           type: number
           format: double
           description: >
-            Only present in case the metric is 'revenue'. 
+            Only present in case the metric is 'revenue'.
 
             It is the amount exceeding the 95th percentile of global revenue
             transactions involved in the AB Test. This amount is not considered
             when calculating statistical significance.
 
-            It is tied to a per revenue-currency pair contrary to other 
+            It is tied to a per revenue-currency pair contrary to other
 
             global filter effects (such as outliers and empty search count).
+        mean:
+          type: number
+          format: double
+          description: Mean value for this metric.
+          example: 53.7
       example:
         winsorizedValue: 888.8
-    metric:
+        mean: 53.7
+    metricResult:
       type: object
       properties:
         name:
@@ -823,13 +829,13 @@ components:
           format: double
           description: >
             The upper bound of the 95% confidence interval for the metric value.
-            The confidence interval is calculated using 
+            The confidence interval is calculated using
 
             either the relative ratio or relative difference between the metric
             values for the control and the variant.
 
             Relative ratio is used for metrics that are ratios (e.g.,
-            click-through rate, conversion rate), 
+            click-through rate, conversion rate),
 
             while relative difference is used for continuous metrics (e.g.,
             revenue).
@@ -838,13 +844,13 @@ components:
           format: double
           description: >
             The lower bound of the 95% confidence interval for the metric value.
-            The confidence interval is calculated using 
+            The confidence interval is calculated using
 
             either the relative ratio or relative difference between the metric
             values for the control and the variant.
 
             Relative ratio is used for metrics that are ratios (e.g.,
-            click-through rate, conversion rate), 
+            click-through rate, conversion rate),
 
             while relative difference is used for continuous metrics (e.g.,
             revenue).
@@ -868,7 +874,7 @@ components:
             determine significance of the metric pValue.
 
             The critical value is calculated using Bonferroni or
-            Benjamini-Hochberg corrections, based on the given 
+            Benjamini-Hochberg corrections, based on the given
 
             configuration during the A/B test creation.
         significant:
@@ -908,7 +914,7 @@ components:
       type: array
       description: All ABTest metrics that were defined during test creation.
       items:
-        $ref: '#/components/schemas/metric'
+        $ref: '#/components/schemas/metricResult'
     filterEffects:
       type: object
       description: A/B test filter effects resulting from configuration settings.
@@ -1156,7 +1162,7 @@ components:
       oneOf:
         - $ref: '#/components/schemas/abTestsVariant'
         - $ref: '#/components/schemas/abTestsVariantSearchParams'
-    parameters_metric:
+    createMetric:
       type: object
       description: Defines a metric to be retrieved during an A/B test.
       properties:
@@ -1245,7 +1251,7 @@ components:
               Number of tracked searches needed to be able to detect the
               configured effect for the control variant.
             example: 23415
-    Metric:
+    MetricName:
       type: string
       enum:
         - search_count

@@ -493,16 +493,15 @@ class SnippetRecommendClient {
 
     // Call the API
     client.getRecommendations(
-      new GetRecommendationsParams()
-        .setRequests(
-          Arrays.asList(
-            new RelatedQuery()
-              .setIndexName("<YOUR_INDEX_NAME>")
-              .setObjectID("objectID")
-              .setModel(RelatedModel.RELATED_PRODUCTS)
-              .setThreshold(42.1)
-          )
+      new GetRecommendationsParams().setRequests(
+        Arrays.asList(
+          new RelatedQuery()
+            .setIndexName("<YOUR_INDEX_NAME>")
+            .setObjectID("objectID")
+            .setModel(RelatedModel.RELATED_PRODUCTS)
+            .setThreshold(42.1)
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -518,17 +517,16 @@ class SnippetRecommendClient {
 
     // Call the API
     client.getRecommendations(
-      new GetRecommendationsParams()
-        .setRequests(
-          Arrays.asList(
-            new RelatedQuery()
-              .setIndexName("<YOUR_INDEX_NAME>")
-              .setObjectID("Æon Flux")
-              .setModel(RelatedModel.RELATED_PRODUCTS)
-              .setThreshold(20.0)
-              .setMaxRecommendations(2)
-          )
+      new GetRecommendationsParams().setRequests(
+        Arrays.asList(
+          new RelatedQuery()
+            .setIndexName("<YOUR_INDEX_NAME>")
+            .setObjectID("Æon Flux")
+            .setModel(RelatedModel.RELATED_PRODUCTS)
+            .setThreshold(20.0)
+            .setMaxRecommendations(2)
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -544,23 +542,22 @@ class SnippetRecommendClient {
 
     // Call the API
     client.getRecommendations(
-      new GetRecommendationsParams()
-        .setRequests(
-          Arrays.asList(
-            new RelatedQuery()
-              .setIndexName("<YOUR_INDEX_NAME>")
-              .setObjectID("objectID")
-              .setModel(RelatedModel.RELATED_PRODUCTS)
-              .setThreshold(42.1)
-              .setMaxRecommendations(10)
-              .setQueryParameters(
-                new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query"))))
-              )
-              .setFallbackParameters(
-                new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback"))))
-              )
-          )
+      new GetRecommendationsParams().setRequests(
+        Arrays.asList(
+          new RelatedQuery()
+            .setIndexName("<YOUR_INDEX_NAME>")
+            .setObjectID("objectID")
+            .setModel(RelatedModel.RELATED_PRODUCTS)
+            .setThreshold(42.1)
+            .setMaxRecommendations(10)
+            .setQueryParameters(
+              new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query"))))
+            )
+            .setFallbackParameters(
+              new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback"))))
+            )
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -576,17 +573,16 @@ class SnippetRecommendClient {
 
     // Call the API
     client.getRecommendations(
-      new GetRecommendationsParams()
-        .setRequests(
-          Arrays.asList(
-            new TrendingItemsQuery()
-              .setIndexName("<YOUR_INDEX_NAME>")
-              .setModel(TrendingItemsModel.TRENDING_ITEMS)
-              .setThreshold(42.1)
-              .setFacetName("facet")
-              .setFacetValue("value")
-          )
+      new GetRecommendationsParams().setRequests(
+        Arrays.asList(
+          new TrendingItemsQuery()
+            .setIndexName("<YOUR_INDEX_NAME>")
+            .setModel(TrendingItemsModel.TRENDING_ITEMS)
+            .setThreshold(42.1)
+            .setFacetName("facet")
+            .setFacetValue("value")
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -602,24 +598,23 @@ class SnippetRecommendClient {
 
     // Call the API
     client.getRecommendations(
-      new GetRecommendationsParams()
-        .setRequests(
-          Arrays.asList(
-            new TrendingItemsQuery()
-              .setIndexName("<YOUR_INDEX_NAME>")
-              .setModel(TrendingItemsModel.TRENDING_ITEMS)
-              .setThreshold(42.1)
-              .setMaxRecommendations(10)
-              .setFacetName("myFacetName")
-              .setFacetValue("myFacetValue")
-              .setQueryParameters(
-                new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query"))))
-              )
-              .setFallbackParameters(
-                new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback"))))
-              )
-          )
+      new GetRecommendationsParams().setRequests(
+        Arrays.asList(
+          new TrendingItemsQuery()
+            .setIndexName("<YOUR_INDEX_NAME>")
+            .setModel(TrendingItemsModel.TRENDING_ITEMS)
+            .setThreshold(42.1)
+            .setMaxRecommendations(10)
+            .setFacetName("myFacetName")
+            .setFacetValue("myFacetValue")
+            .setQueryParameters(
+              new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query"))))
+            )
+            .setFallbackParameters(
+              new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback"))))
+            )
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -635,21 +630,20 @@ class SnippetRecommendClient {
 
     // Call the API
     client.getRecommendations(
-      new GetRecommendationsParams()
-        .setRequests(
-          Arrays.asList(
-            new RelatedQuery()
-              .setIndexName("<YOUR_INDEX_NAME>")
-              .setObjectID("objectID1")
-              .setModel(RelatedModel.RELATED_PRODUCTS)
-              .setThreshold(21.7),
-            new RelatedQuery()
-              .setIndexName("<YOUR_INDEX_NAME>")
-              .setObjectID("objectID2")
-              .setModel(RelatedModel.RELATED_PRODUCTS)
-              .setThreshold(21.7)
-          )
+      new GetRecommendationsParams().setRequests(
+        Arrays.asList(
+          new RelatedQuery()
+            .setIndexName("<YOUR_INDEX_NAME>")
+            .setObjectID("objectID1")
+            .setModel(RelatedModel.RELATED_PRODUCTS)
+            .setThreshold(21.7),
+          new RelatedQuery()
+            .setIndexName("<YOUR_INDEX_NAME>")
+            .setObjectID("objectID2")
+            .setModel(RelatedModel.RELATED_PRODUCTS)
+            .setThreshold(21.7)
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -665,35 +659,34 @@ class SnippetRecommendClient {
 
     // Call the API
     client.getRecommendations(
-      new GetRecommendationsParams()
-        .setRequests(
-          Arrays.asList(
-            new RelatedQuery()
-              .setIndexName("<YOUR_INDEX_NAME>")
-              .setObjectID("objectID1")
-              .setModel(RelatedModel.RELATED_PRODUCTS)
-              .setThreshold(21.7)
-              .setMaxRecommendations(10)
-              .setQueryParameters(
-                new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query1"))))
-              )
-              .setFallbackParameters(
-                new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback1"))))
-              ),
-            new RelatedQuery()
-              .setIndexName("<YOUR_INDEX_NAME>")
-              .setObjectID("objectID2")
-              .setModel(RelatedModel.RELATED_PRODUCTS)
-              .setThreshold(21.7)
-              .setMaxRecommendations(10)
-              .setQueryParameters(
-                new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query2"))))
-              )
-              .setFallbackParameters(
-                new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback2"))))
-              )
-          )
+      new GetRecommendationsParams().setRequests(
+        Arrays.asList(
+          new RelatedQuery()
+            .setIndexName("<YOUR_INDEX_NAME>")
+            .setObjectID("objectID1")
+            .setModel(RelatedModel.RELATED_PRODUCTS)
+            .setThreshold(21.7)
+            .setMaxRecommendations(10)
+            .setQueryParameters(
+              new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query1"))))
+            )
+            .setFallbackParameters(
+              new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback1"))))
+            ),
+          new RelatedQuery()
+            .setIndexName("<YOUR_INDEX_NAME>")
+            .setObjectID("objectID2")
+            .setModel(RelatedModel.RELATED_PRODUCTS)
+            .setThreshold(21.7)
+            .setMaxRecommendations(10)
+            .setQueryParameters(
+              new RecommendSearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("query2"))))
+            )
+            .setFallbackParameters(
+              new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("fallback2"))))
+            )
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -709,16 +702,15 @@ class SnippetRecommendClient {
 
     // Call the API
     client.getRecommendations(
-      new GetRecommendationsParams()
-        .setRequests(
-          Arrays.asList(
-            new BoughtTogetherQuery()
-              .setIndexName("<YOUR_INDEX_NAME>")
-              .setObjectID("objectID1")
-              .setModel(FbtModel.BOUGHT_TOGETHER)
-              .setThreshold(42.7)
-          )
+      new GetRecommendationsParams().setRequests(
+        Arrays.asList(
+          new BoughtTogetherQuery()
+            .setIndexName("<YOUR_INDEX_NAME>")
+            .setObjectID("objectID1")
+            .setModel(FbtModel.BOUGHT_TOGETHER)
+            .setThreshold(42.7)
         )
+      )
     );
     // >LOG
     // SEPARATOR<

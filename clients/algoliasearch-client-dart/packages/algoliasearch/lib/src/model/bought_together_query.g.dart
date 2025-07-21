@@ -14,8 +14,8 @@ BoughtTogetherQuery _$BoughtTogetherQueryFromJson(Map<String, dynamic> json) =>
         final val = BoughtTogetherQuery(
           indexName: $checkedConvert('indexName', (v) => v as String),
           threshold: $checkedConvert('threshold', (v) => (v as num).toDouble()),
-          maxRecommendations: $checkedConvert(
-              'maxRecommendations', (v) => (v as num?)?.toInt()),
+          maxRecommendations:
+              $checkedConvert('maxRecommendations', (v) => v as int?),
           queryParameters: $checkedConvert(
               'queryParameters',
               (v) => v == null
@@ -29,18 +29,24 @@ BoughtTogetherQuery _$BoughtTogetherQueryFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$BoughtTogetherQueryToJson(
-        BoughtTogetherQuery instance) =>
-    <String, dynamic>{
-      'indexName': instance.indexName,
-      'threshold': instance.threshold,
-      if (instance.maxRecommendations case final value?)
-        'maxRecommendations': value,
-      if (instance.queryParameters?.toJson() case final value?)
-        'queryParameters': value,
-      'model': instance.model.toJson(),
-      'objectID': instance.objectID,
-    };
+Map<String, dynamic> _$BoughtTogetherQueryToJson(BoughtTogetherQuery instance) {
+  final val = <String, dynamic>{
+    'indexName': instance.indexName,
+    'threshold': instance.threshold,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('maxRecommendations', instance.maxRecommendations);
+  writeNotNull('queryParameters', instance.queryParameters?.toJson());
+  val['model'] = instance.model.toJson();
+  val['objectID'] = instance.objectID;
+  return val;
+}
 
 const _$FbtModelEnumMap = {
   FbtModel.boughtTogether: 'bought-together',

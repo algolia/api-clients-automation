@@ -298,10 +298,8 @@ public class CompositionClient extends ApiClient {
    *     in the `attributesForFaceting` index setting with the `searchable()` modifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<SearchForFacetValuesResponse> searchForFacetValuesAsync(
-    @Nonnull String compositionID,
-    @Nonnull String facetName
-  ) throws AlgoliaRuntimeException {
+  public CompletableFuture<SearchForFacetValuesResponse> searchForFacetValuesAsync(@Nonnull String compositionID, @Nonnull String facetName)
+    throws AlgoliaRuntimeException {
     return this.searchForFacetValuesAsync(compositionID, facetName, null, null);
   }
 }

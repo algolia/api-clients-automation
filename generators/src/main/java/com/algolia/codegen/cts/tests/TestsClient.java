@@ -180,8 +180,9 @@ public class TestsClient extends TestsGenerator {
               var isNotTestable =
                 step.type != null &&
                 step.type.equals("method") &&
-                ((List<Map<String, Object>>) stepOut.getOrDefault("parametersWithDataType", new ArrayList<>())).stream()
-                  .anyMatch(item -> (boolean) item.getOrDefault("isNullObject", false) || (boolean) item.getOrDefault("isNull", false));
+                ((List<Map<String, Object>>) stepOut.getOrDefault("parametersWithDataType", new ArrayList<>())).stream().anyMatch(
+                  item -> (boolean) item.getOrDefault("isNullObject", false) || (boolean) item.getOrDefault("isNull", false)
+                );
               if (isNotTestable) {
                 continue;
               }

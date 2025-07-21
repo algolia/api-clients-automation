@@ -20,8 +20,16 @@ GetObjectsResponse _$GetObjectsResponseFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$GetObjectsResponseToJson(GetObjectsResponse instance) =>
-    <String, dynamic>{
-      if (instance.message case final value?) 'message': value,
-      'results': instance.results,
-    };
+Map<String, dynamic> _$GetObjectsResponseToJson(GetObjectsResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('message', instance.message);
+  val['results'] = instance.results;
+  return val;
+}

@@ -12,13 +12,11 @@ HitRankingInfo _$HitRankingInfoFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = HitRankingInfo(
-          filters: $checkedConvert('filters', (v) => (v as num?)?.toInt()),
+          filters: $checkedConvert('filters', (v) => v as int?),
           firstMatchedWord:
-              $checkedConvert('firstMatchedWord', (v) => (v as num).toInt()),
-          geoDistance:
-              $checkedConvert('geoDistance', (v) => (v as num).toInt()),
-          geoPrecision:
-              $checkedConvert('geoPrecision', (v) => (v as num?)?.toInt()),
+              $checkedConvert('firstMatchedWord', (v) => v as int),
+          geoDistance: $checkedConvert('geoDistance', (v) => v as int),
+          geoPrecision: $checkedConvert('geoPrecision', (v) => v as int?),
           matchedGeoLocation: $checkedConvert(
               'matchedGeoLocation',
               (v) => v == null
@@ -29,14 +27,13 @@ HitRankingInfo _$HitRankingInfoFromJson(Map<String, dynamic> json) =>
               (v) => v == null
                   ? null
                   : Personalization.fromJson(v as Map<String, dynamic>)),
-          nbExactWords:
-              $checkedConvert('nbExactWords', (v) => (v as num).toInt()),
-          nbTypos: $checkedConvert('nbTypos', (v) => (v as num).toInt()),
+          nbExactWords: $checkedConvert('nbExactWords', (v) => v as int),
+          nbTypos: $checkedConvert('nbTypos', (v) => v as int),
           promoted: $checkedConvert('promoted', (v) => v as bool?),
           proximityDistance:
-              $checkedConvert('proximityDistance', (v) => (v as num?)?.toInt()),
-          userScore: $checkedConvert('userScore', (v) => (v as num).toInt()),
-          words: $checkedConvert('words', (v) => (v as num?)?.toInt()),
+              $checkedConvert('proximityDistance', (v) => v as int?),
+          userScore: $checkedConvert('userScore', (v) => v as int),
+          words: $checkedConvert('words', (v) => v as int?),
           promotedByReRanking:
               $checkedConvert('promotedByReRanking', (v) => v as bool?),
           composed: $checkedConvert(
@@ -52,26 +49,29 @@ HitRankingInfo _$HitRankingInfoFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$HitRankingInfoToJson(HitRankingInfo instance) =>
-    <String, dynamic>{
-      if (instance.filters case final value?) 'filters': value,
-      'firstMatchedWord': instance.firstMatchedWord,
-      'geoDistance': instance.geoDistance,
-      if (instance.geoPrecision case final value?) 'geoPrecision': value,
-      if (instance.matchedGeoLocation?.toJson() case final value?)
-        'matchedGeoLocation': value,
-      if (instance.personalization?.toJson() case final value?)
-        'personalization': value,
-      'nbExactWords': instance.nbExactWords,
-      'nbTypos': instance.nbTypos,
-      if (instance.promoted case final value?) 'promoted': value,
-      if (instance.proximityDistance case final value?)
-        'proximityDistance': value,
-      'userScore': instance.userScore,
-      if (instance.words case final value?) 'words': value,
-      if (instance.promotedByReRanking case final value?)
-        'promotedByReRanking': value,
-      if (instance.composed?.map((k, e) => MapEntry(k, e.toJson()))
-          case final value?)
-        'composed': value,
-    };
+Map<String, dynamic> _$HitRankingInfoToJson(HitRankingInfo instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('filters', instance.filters);
+  val['firstMatchedWord'] = instance.firstMatchedWord;
+  val['geoDistance'] = instance.geoDistance;
+  writeNotNull('geoPrecision', instance.geoPrecision);
+  writeNotNull('matchedGeoLocation', instance.matchedGeoLocation?.toJson());
+  writeNotNull('personalization', instance.personalization?.toJson());
+  val['nbExactWords'] = instance.nbExactWords;
+  val['nbTypos'] = instance.nbTypos;
+  writeNotNull('promoted', instance.promoted);
+  writeNotNull('proximityDistance', instance.proximityDistance);
+  val['userScore'] = instance.userScore;
+  writeNotNull('words', instance.words);
+  writeNotNull('promotedByReRanking', instance.promotedByReRanking);
+  writeNotNull(
+      'composed', instance.composed?.map((k, e) => MapEntry(k, e.toJson())));
+  return val;
+}

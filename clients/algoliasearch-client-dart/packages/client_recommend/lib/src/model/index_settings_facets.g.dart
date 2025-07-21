@@ -19,8 +19,15 @@ IndexSettingsFacets _$IndexSettingsFacetsFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$IndexSettingsFacetsToJson(
-        IndexSettingsFacets instance) =>
-    <String, dynamic>{
-      if (instance.order case final value?) 'order': value,
-    };
+Map<String, dynamic> _$IndexSettingsFacetsToJson(IndexSettingsFacets instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('order', instance.order);
+  return val;
+}

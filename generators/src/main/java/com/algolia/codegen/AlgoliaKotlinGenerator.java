@@ -215,7 +215,8 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
   @Override
   public String toVarName(String name) {
     String newName = super.toVarName(name);
-    if (StringUtils.isAllUpperCase(newName)) { // e.g. LTE, GT.
+    if (StringUtils.isAllUpperCase(newName)) {
+      // e.g. LTE, GT.
       return StringUtils.lowerCase(newName);
     }
     return newName;

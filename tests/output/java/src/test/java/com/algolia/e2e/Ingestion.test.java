@@ -100,14 +100,13 @@ class IngestionClientRequestsTestsE2E {
   @DisplayName("searchTasks")
   void searchTasksTest() {
     List res = client.searchTasks(
-      new TaskSearch()
-        .setTaskIDs(
-          Arrays.asList(
-            "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-            "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
-          )
+      new TaskSearch().setTaskIDs(
+        Arrays.asList(
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+          "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
         )
+      )
     );
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
@@ -122,14 +121,13 @@ class IngestionClientRequestsTestsE2E {
   @DisplayName("searchTasksV1")
   void searchTasksV1Test() {
     List res = client.searchTasksV1(
-      new TaskSearch()
-        .setTaskIDs(
-          Arrays.asList(
-            "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-            "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
-          )
+      new TaskSearch().setTaskIDs(
+        Arrays.asList(
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+          "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
         )
+      )
     );
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(

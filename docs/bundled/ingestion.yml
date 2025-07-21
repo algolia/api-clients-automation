@@ -1031,7 +1031,7 @@ paths:
     post:
       tags:
         - tasks
-      summary: Pushes records to be transformed through the Pipeline, by indexName
+      summary: Push records by indexName
       description: >
         Pushes records through the Pipeline, directly to an index. You can make
         the call synchronous by providing the `watch` parameter, for
@@ -2069,8 +2069,9 @@ paths:
             // Call the API
 
             client.searchAuthentications(
-              new AuthenticationSearch()
-                .setAuthenticationIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
+              new AuthenticationSearch().setAuthenticationIDs(
+                Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
+              )
             );
 
             // >LOG
@@ -3635,8 +3636,9 @@ paths:
             // Call the API
 
             client.searchDestinations(
-              new DestinationSearch()
-                .setDestinationIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
+              new DestinationSearch().setDestinationIDs(
+                Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
+              )
             );
 
             // >LOG
@@ -7386,7 +7388,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"indexToInclude":["lorem"],"indexToExclude":["lorem"],"entityIDs":["lorem"],"entityType":"product"}'
+              --data '{"indexToInclude":["lorem"],"indexToExclude":["lorem"],"entityIDs":["lorem"],"entityType":"product","runMetadata":{}}'
   /2/tasks:
     get:
       tags:
@@ -7995,14 +7997,13 @@ paths:
             // Call the API
 
             client.searchTasks(
-              new TaskSearch()
-                .setTaskIDs(
-                  Arrays.asList(
-                    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                    "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                    "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
-                  )
+              new TaskSearch().setTaskIDs(
+                Arrays.asList(
+                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                  "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
                 )
+              )
             );
 
             // >LOG
@@ -8950,6 +8951,12 @@ paths:
         - editSettings
       parameters:
         - $ref: '#/components/parameters/pathTaskID'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunTaskPayload'
       responses:
         '200':
           description: OK
@@ -9173,13 +9180,15 @@ paths:
             curl --request POST \
               --url https://data.us.algolia.com/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"runMetadata":{}}'
   /2/tasks/{taskID}/push:
     post:
       tags:
         - tasks
-      summary: Pushes records to be transformed through the Pipeline, by taskID
+      summary: Push records by taskID
       description: >
         Pushes records through the Pipeline, directly to an index. You can make
         the call synchronous by providing the `watch` parameter, for
@@ -10692,14 +10701,13 @@ paths:
             // Call the API
 
             client.searchTasksV1(
-              new TaskSearch()
-                .setTaskIDs(
-                  Arrays.asList(
-                    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                    "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                    "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
-                  )
+              new TaskSearch().setTaskIDs(
+                Arrays.asList(
+                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                  "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
                 )
+              )
             );
 
             // >LOG
@@ -11657,6 +11665,12 @@ paths:
         - editSettings
       parameters:
         - $ref: '#/components/parameters/pathTaskID'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunTaskPayload'
       responses:
         '200':
           description: OK
@@ -11881,8 +11895,10 @@ paths:
             curl --request POST \
               --url https://data.us.algolia.com/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run \
               --header 'accept: application/json' \
+              --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"runMetadata":{}}'
   /1/tasks/{taskID}/enable:
     put:
       tags:
@@ -13306,14 +13322,13 @@ paths:
             // Call the API
 
             client.searchTransformations(
-              new TransformationSearch()
-                .setTransformationIDs(
-                  Arrays.asList(
-                    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                    "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                    "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
-                  )
+              new TransformationSearch().setTransformationIDs(
+                Arrays.asList(
+                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                  "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
                 )
+              )
             );
 
             // >LOG
@@ -17227,6 +17242,10 @@ components:
           description: List of entityIDs to update.
         entityType:
           $ref: '#/components/schemas/EntityType'
+        runMetadata:
+          type: object
+          additionalProperties: true
+          description: Additional information that will be passed to the created runs.
     ActionType:
       type: string
       description: Action to perform on the Algolia index.
@@ -17625,6 +17644,14 @@ components:
       required:
         - taskID
         - updatedAt
+    RunTaskPayload:
+      type: object
+      additionalProperties: false
+      properties:
+        runMetadata:
+          type: object
+          additionalProperties: true
+          description: Additional information that will be passed to the created run.
     RunResponse:
       type: object
       additionalProperties: false

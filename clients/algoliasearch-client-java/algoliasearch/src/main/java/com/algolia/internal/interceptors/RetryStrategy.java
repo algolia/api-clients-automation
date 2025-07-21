@@ -117,7 +117,10 @@ public final class RetryStrategy implements Interceptor {
   /** Fetches a list of hosts that can be used for a specific call type. */
   private synchronized List<StatefulHost> callableHosts(CallType callType) {
     resetExpiredHosts();
-    List<StatefulHost> hostsCallType = hosts.stream().filter(h -> h.getAccept().contains(callType)).collect(Collectors.toList());
+    List<StatefulHost> hostsCallType = hosts
+      .stream()
+      .filter(h -> h.getAccept().contains(callType))
+      .collect(Collectors.toList());
     List<StatefulHost> hostsCallTypeAreUp = hostsCallType.stream().filter(StatefulHost::isUp).collect(Collectors.toList());
     if (hostsCallTypeAreUp.isEmpty()) {
       hostsCallType.forEach(StatefulHost::reset);

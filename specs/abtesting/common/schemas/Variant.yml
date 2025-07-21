@@ -26,10 +26,11 @@ variant:
         - type: 'null'
     averageClickPosition:
       oneOf:
-        - type: integer
+        - type: number
+          format: double
           description: |
             [Average click position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position) for this variant.
-          example: 0
+          example: 29.12342
         - type: 'null'
     clickCount:
       type: integer

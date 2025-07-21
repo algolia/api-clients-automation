@@ -7,7 +7,7 @@ post:
   summary: Search for composition rules
   description: Searches for composition rules in your index.
   parameters:
-    - $ref: '../../common/parameters.yml#/compositionID'
+    - $ref: '../urlParams.yml#/compositionID'
   requestBody:
     content:
       application/json:
@@ -20,7 +20,7 @@ post:
             query:
               $ref: './parameters.yml#/query'
             anchoring:
-              $ref: '../../common/schemas/compositionRule.yml#/anchoring'
+              $ref: '../../common/schemas/components/CompositionRule.yml#/anchoring'
             context:
               type: string
               description: Only return composition rules that match the context (exact match).
@@ -57,7 +57,7 @@ post:
                 type: array
                 description: Composition rules that matched the search criteria.
                 items:
-                  $ref: '../../common/schemas/compositionRule.yml#/compositionRule'
+                  $ref: '../../common/schemas/components/CompositionRule.yml#/compositionRule'
               nbHits:
                 type: integer
                 description: Number of composition rules that matched the search criteria.

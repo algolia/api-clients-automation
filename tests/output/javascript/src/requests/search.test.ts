@@ -2998,34 +2998,6 @@ describe('searchSingleIndex', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('insidePolygon', async () => {
-    const req = (await client.searchSingleIndex({
-      indexName: 'indexName',
-      searchParams: {
-        insidePolygon: [
-          [
-            42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005,
-            31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545,
-            -117.54828125,
-          ],
-        ],
-      },
-    })) as unknown as EchoResponse;
-
-    expect(req.path).toEqual('/1/indexes/indexName/query');
-    expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      insidePolygon: [
-        [
-          42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005,
-          31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545,
-          -117.54828125,
-        ],
-      ],
-    });
-    expect(req.searchParams).toStrictEqual(undefined);
-  });
-
   test('optionalFilters', async () => {
     const req = (await client.searchSingleIndex({
       indexName: 'indexName',
@@ -3382,7 +3354,7 @@ describe('searchSingleIndex', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('apply_filters', async () => {
+  test('apply_optional_filters', async () => {
     const req = (await client.searchSingleIndex({
       indexName: 'indexName',
       searchParams: { query: 'query', optionalFilters: ['category:Book', 'author:John Doe'] },
@@ -3445,7 +3417,7 @@ describe('searchSingleIndex', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('apply_filters', async () => {
+  test('set_sum_or_filters_scores', async () => {
     const req = (await client.searchSingleIndex({
       indexName: 'indexName',
       searchParams: { query: 'query', sumOrFiltersScores: true },
@@ -3881,30 +3853,6 @@ describe('searchSingleIndex', () => {
     expect(req.path).toEqual('/1/indexes/indexName/query');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ query: 'query', ignorePlurals: ['ca', 'es'] });
-    expect(req.searchParams).toStrictEqual(undefined);
-  });
-
-  test('set_querylanguages_override', async () => {
-    const req = (await client.searchSingleIndex({
-      indexName: 'indexName',
-      searchParams: { query: 'query', removeStopWords: ['ca', 'es'] },
-    })) as unknown as EchoResponse;
-
-    expect(req.path).toEqual('/1/indexes/indexName/query');
-    expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({ query: 'query', removeStopWords: ['ca', 'es'] });
-    expect(req.searchParams).toStrictEqual(undefined);
-  });
-
-  test('set_querylanguages_override', async () => {
-    const req = (await client.searchSingleIndex({
-      indexName: 'indexName',
-      searchParams: { query: 'query', removeStopWords: ['ca', 'es'] },
-    })) as unknown as EchoResponse;
-
-    expect(req.path).toEqual('/1/indexes/indexName/query');
-    expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({ query: 'query', removeStopWords: ['ca', 'es'] });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
@@ -5748,7 +5696,7 @@ describe('setSettings', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('set_languages_using_querylanguages', async () => {
+  test('set_querylanguage_ignoreplurals', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',
       indexSettings: { queryLanguages: ['es'], ignorePlurals: true },
@@ -5772,7 +5720,7 @@ describe('setSettings', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('set_languages_using_querylanguages', async () => {
+  test('set_querylanguage_removestopwords', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',
       indexSettings: { queryLanguages: ['es'], removeStopWords: true },
@@ -5848,7 +5796,7 @@ describe('setSettings', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('set_languages_using_querylanguages', async () => {
+  test('set_querylanguage_both', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',
       indexSettings: { queryLanguages: ['es'], removeStopWords: true, ignorePlurals: true },
@@ -6001,18 +5949,6 @@ describe('setSettings', () => {
     expect(req.path).toEqual('/1/indexes/theIndexName/settings');
     expect(req.method).toEqual('PUT');
     expect(req.data).toEqual({ alternativesAsExact: ['ignorePlurals', 'singleWordSynonym'] });
-    expect(req.searchParams).toStrictEqual(undefined);
-  });
-
-  test('enable_advanced_syntax_by_default', async () => {
-    const req = (await client.setSettings({
-      indexName: 'theIndexName',
-      indexSettings: { advancedSyntax: true },
-    })) as unknown as EchoResponse;
-
-    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
-    expect(req.method).toEqual('PUT');
-    expect(req.data).toEqual({ advancedSyntax: true });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 

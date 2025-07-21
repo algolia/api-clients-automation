@@ -28,13 +28,21 @@ WatchResponse _$WatchResponseFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$WatchResponseToJson(WatchResponse instance) =>
-    <String, dynamic>{
-      'runID': instance.runID,
-      if (instance.eventID case final value?) 'eventID': value,
-      if (instance.data case final value?) 'data': value,
-      if (instance.events?.map((e) => e.toJson()).toList() case final value?)
-        'events': value,
-      if (instance.message case final value?) 'message': value,
-      if (instance.createdAt case final value?) 'createdAt': value,
-    };
+Map<String, dynamic> _$WatchResponseToJson(WatchResponse instance) {
+  final val = <String, dynamic>{
+    'runID': instance.runID,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('eventID', instance.eventID);
+  writeNotNull('data', instance.data);
+  writeNotNull('events', instance.events?.map((e) => e.toJson()).toList());
+  writeNotNull('message', instance.message);
+  writeNotNull('createdAt', instance.createdAt);
+  return val;
+}
