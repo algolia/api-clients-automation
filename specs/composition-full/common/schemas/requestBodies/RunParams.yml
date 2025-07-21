@@ -1,0 +1,57 @@
+params:
+  title: Run composition parameters as object
+  type: object
+  additionalProperties: false
+  properties:
+    query:
+      $ref: '../../params/Search.yml#/query'
+    filters:
+      $ref: '../../params/Search.yml#/filters'
+    page:
+      $ref: '../../params/Search.yml#/page'
+    getRankingInfo:
+      $ref: '../../params/Composition.yml#/getRankingInfo'
+    relevancyStrictness:
+      $ref: '../../params/Search.yml#/relevancyStrictness'
+    facetFilters:
+      $ref: '../../params/Search.yml#/facetFilters'
+    optionalFilters:
+      $ref: '../../params/Search.yml#/optionalFilters'
+    numericFilters:
+      $ref: '../../params/Search.yml#/numericFilters'
+    hitsPerPage:
+      $ref: '../../params/Search.yml#/hitsPerPage'
+    aroundLatLng:
+      $ref: '../../params/Search.yml#/aroundLatLng'
+    aroundLatLngViaIP:
+      $ref: '../../params/Search.yml#/aroundLatLngViaIP'
+    aroundRadius:
+      $ref: '../../params/Search.yml#/aroundRadius'
+    aroundPrecision:
+      $ref: '../../params/Search.yml#/aroundPrecision'
+    minimumAroundRadius:
+      $ref: '../../params/Search.yml#/minimumAroundRadius'
+    insideBoundingBox:
+      $ref: '../../params/Search.yml#/insideBoundingBox'
+    insidePolygon:
+      $ref: '../../params/Search.yml#/insidePolygon'
+    queryLanguages:
+      $ref: '../../params/Search.yml#/queryLanguages'
+    naturalLanguages:
+      $ref: '../../params/Search.yml#/naturalLanguages'
+    enableRules:
+      $ref: '../../params/Composition.yml#/enableRules'
+    ruleContexts:
+      $ref: '../../params/Composition.yml#/ruleContexts'
+    userToken:
+      $ref: '../../params/Search.yml#/userToken'
+    clickAnalytics:
+      $ref: '../../params/Search.yml#/clickAnalytics'
+    analytics:
+      $ref: '../../params/Search.yml#/analytics'
+    analyticsTags:
+      $ref: '../../params/Search.yml#/analyticsTags'
+    enableABTest:
+      $ref: '../../params/Composition.yml#/enableABTest'
+    enableReRanking:
+      $ref: '../../params/Search.yml#/enableReRanking'

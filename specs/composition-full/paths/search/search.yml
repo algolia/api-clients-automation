@@ -20,7 +20,7 @@ post:
           additionalProperties: false
           properties:
             params:
-              $ref: '../../common/schemas/SearchParams.yml#/params'
+              $ref: '../../common/schemas/requestBodies/RunParams.yml#/params'
   responses:
     '200':
       description: OK
