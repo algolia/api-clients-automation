@@ -350,6 +350,15 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "direction",
+            "in": "query",
+            "description": "Sort order for A/B tests by start date.\nUse 'asc' for ascending or 'desc' for descending. Active A/B tests are always listed first.\n",
+            "example": "desc",
+            "schema": {
+              "$ref": "#/components/schemas/direction"
+            }
           }
         ],
         "responses": {
@@ -932,6 +941,15 @@
           }
         }
       },
+      "direction": {
+        "type": "string",
+        "description": "Sort order for A/B tests by start date.\nUse 'asc' for ascending or 'desc' for descending.\nActive A/B tests are always listed first.\n",
+        "enum": [
+          "asc",
+          "desc"
+        ],
+        "example": "desc"
+      },
       "abTestID": {
         "type": "integer",
         "description": "Unique A/B test identifier.",
@@ -1180,6 +1198,14 @@
           },
           "metadata": {
             "$ref": "#/components/schemas/variantMetadata"
+          },
+          "customSearchParameters": {
+            "type": "object",
+            "description": "Search parameters applied to this variant when the same index is used for multiple variants.\nOnly present if custom search parameters were provided during test creation.\n",
+            "example": {
+              "enablePersonalization": true,
+              "personalizationImpact": 50
+            }
           }
         },
         "required": [

@@ -327,6 +327,16 @@ paths:
           example: _development
           schema:
             type: string
+        - name: direction
+          in: query
+          description: >
+            Sort order for A/B tests by start date.
+
+            Use 'asc' for ascending or 'desc' for descending. Active A/B tests
+            are always listed first.
+          example: desc
+          schema:
+            $ref: '#/components/schemas/direction'
       responses:
         '200':
           description: OK
@@ -732,6 +742,16 @@ components:
         message:
           type: string
           example: Invalid Application-Id or API-Key
+    direction:
+      type: string
+      description: |
+        Sort order for A/B tests by start date.
+        Use 'asc' for ascending or 'desc' for descending.
+        Active A/B tests are always listed first.
+      enum:
+        - asc
+        - desc
+      example: desc
     abTestID:
       type: integer
       description: Unique A/B test identifier.
@@ -985,6 +1005,17 @@ components:
           $ref: '#/components/schemas/metrics'
         metadata:
           $ref: '#/components/schemas/variantMetadata'
+        customSearchParameters:
+          type: object
+          description: >
+            Search parameters applied to this variant when the same index is
+            used for multiple variants.
+
+            Only present if custom search parameters were provided during test
+            creation.
+          example:
+            enablePersonalization: true
+            personalizationImpact: 50
       required:
         - index
         - description
