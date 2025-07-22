@@ -179,7 +179,9 @@ currency:
   example: EUR
 
 value:
-  description: Total monetary value of this event in units of `currency`. This should be equal to `price` times `quantity`.
+  description: |
+    Total monetary value of this event in units of `currency`.
+    This should be equal to the sum of `price` times `quantity`.
   oneOf:
     - type: number
       format: double
