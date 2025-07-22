@@ -17,6 +17,9 @@ func (c *APIClient) ChunkedPush(indexName string, objects []map[string]any, acti
 	}
 
   waitBatchSize := conf.batchSize / 10
+  if waitBatchSize < 1 {
+    waitBatchSize = conf.batchSize
+  }
 
 	for _, opt := range opts {
 		opt.apply(&conf)

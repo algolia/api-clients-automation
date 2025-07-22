@@ -46,6 +46,9 @@ public <T> List<WatchResponse> chunkedPush(
   List<T> records = new ArrayList<>();
   Int count = 0;
   Int waitBatchSize = batchSize / 10;
+  if (waitBatchSize < 1) {
+    waitBatchSize = batchSize;
+  }
 
   for (T item : objects) {
     if (records.size() == batchSize || count == objects.size() - 1) {

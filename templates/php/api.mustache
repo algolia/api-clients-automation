@@ -338,6 +338,9 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         $records = [];
         $count = 0;
         $waitBatchSize = (int)($batchSize / 10);
+        if ($waitBatchSize < 1) {
+            $waitBatchSize = $batchSize;
+        }
 
         foreach ($objects as $object) {
             $records[] = $object;
