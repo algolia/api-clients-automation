@@ -13,6 +13,7 @@
         """
         records: List[PushTaskRecords] = []
         responses: List[WatchResponse] = []
+        wait_batch_size = batch_size // 10
         for i, obj in enumerate(objects):
             records.append(obj)  # pyright: ignore
             if len(records) == batch_size or i == len(objects) - 1:
@@ -28,8 +29,8 @@
                     )
                 )
                 records = []
-            if wait_for_tasks and (len(responses) % 50 == 0 or i == len(objects) - 1):
-                for response in responses:
+            if wait_for_tasks and (len(responses) % wait_batch_size == 0 or i == len(objects) - 1):
+                for response in responses[-wait_batch_size:]:
                     {{^isSyncClient}}async {{/isSyncClient}}def _func(_: Optional[Event]) -> Event:
                         if response.event_id is None:
                             raise ValueError(
