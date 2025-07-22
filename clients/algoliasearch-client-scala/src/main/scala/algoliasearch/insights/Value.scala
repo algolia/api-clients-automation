@@ -29,7 +29,8 @@ package algoliasearch.insights
 
 import org.json4s._
 
-/** Total monetary value of this event in units of `currency`.
+/** Total monetary value of this event in units of `currency`. This should be equal to the sum of `price` times
+  * `quantity`.
   */
 sealed trait Value
 

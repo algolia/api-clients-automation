@@ -11,7 +11,10 @@ import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-/** Total monetary value of this event in units of `currency`. */
+/**
+ * Total monetary value of this event in units of `currency`. This should be equal to the sum of
+ * `price` times `quantity`.
+ */
 @JsonDeserialize(using = Value.Deserializer.class)
 public interface Value {
   // Value as Double wrapper.

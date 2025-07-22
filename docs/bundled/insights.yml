@@ -2368,7 +2368,7 @@ components:
       example: EUR
     price:
       description: >-
-        Total price of a product, including any discounts, in units of
+        Final price of a single product, including any discounts, in units of
         `currency`.
       oneOf:
         - type: number
@@ -2425,7 +2425,9 @@ components:
       minItems: 1
       maxItems: 20
     value:
-      description: Total monetary value of this event in units of `currency`.
+      description: |
+        Total monetary value of this event in units of `currency`.
+        This should be equal to the sum of `price` times `quantity`.
       oneOf:
         - type: number
           format: double
