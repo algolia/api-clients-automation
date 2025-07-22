@@ -28,37 +28,37 @@
                     )
                 )
                 records = []
-        if wait_for_tasks:
-            for response in responses:
-                {{^isSyncClient}}async {{/isSyncClient}}def _func(_: Optional[Event]) -> Event:
-                    if response.event_id is None:
-                        raise ValueError(
-                            "received unexpected response from the push endpoint, eventID must not be undefined"
-                        )
-                    try:
-                        return {{^isSyncClient}}await {{/isSyncClient}}self.get_event(run_id=response.run_id, event_id=response.event_id, request_options=request_options)
-                    except RequestException as e:
-                        if e.status_code == 404:
-                            return None # pyright: ignore
-                        raise e
+            if wait_for_tasks and (len(responses) % 50 == 0 or i == len(objects) - 1):
+                for response in responses:
+                    {{^isSyncClient}}async {{/isSyncClient}}def _func(_: Optional[Event]) -> Event:
+                        if response.event_id is None:
+                            raise ValueError(
+                                "received unexpected response from the push endpoint, eventID must not be undefined"
+                            )
+                        try:
+                            return {{^isSyncClient}}await {{/isSyncClient}}self.get_event(run_id=response.run_id, event_id=response.event_id, request_options=request_options)
+                        except RequestException as e:
+                            if e.status_code == 404:
+                                return None # pyright: ignore
+                            raise e
 
-                _retry_count = 0
+                    _retry_count = 0
 
-                def _aggregator(_: Event | None) -> None:
-                    nonlocal _retry_count
-                    _retry_count += 1
+                    def _aggregator(_: Event | None) -> None:
+                        nonlocal _retry_count
+                        _retry_count += 1
 
-                def _validate(_resp: Event | None) -> bool:
-                    return _resp is not None
+                    def _validate(_resp: Event | None) -> bool:
+                        return _resp is not None
 
-                timeout = RetryTimeout()
+                    timeout = RetryTimeout()
 
-                {{^isSyncClient}}await {{/isSyncClient}}create_iterable{{#isSyncClient}}_sync{{/isSyncClient}}(
-                    func=_func,
-                    validate=_validate,
-                    aggregator=_aggregator,
-                    timeout=lambda: timeout(_retry_count),
-                    error_validate=lambda _: _retry_count >= 50,
-                    error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${50})",
-                )
+                    {{^isSyncClient}}await {{/isSyncClient}}create_iterable{{#isSyncClient}}_sync{{/isSyncClient}}(
+                        func=_func,
+                        validate=_validate,
+                        aggregator=_aggregator,
+                        timeout=lambda: timeout(_retry_count),
+                        error_validate=lambda _: _retry_count >= 50,
+                        error_message=lambda _: f"The maximum number of retries exceeded. (${_retry_count}/${50})",
+                    )
         return responses
