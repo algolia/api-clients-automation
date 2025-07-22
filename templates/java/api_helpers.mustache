@@ -44,16 +44,13 @@ public <T> List<WatchResponse> chunkedPush(
 ) {
   List<WatchResponse> responses = new ArrayList<>();
   List<T> records = new ArrayList<>();
-  Int count = 0;
   Int waitBatchSize = batchSize / 10;
   if (waitBatchSize < 1) {
     waitBatchSize = batchSize;
   }
 
   for (T item : objects) {
-    if (records.size() == batchSize || count == objects.size() - 1) {
-      count++;
-
+    if (records.size() == batchSize || !item.hasNext()) {
       WatchResponse watch =
         this.push(
             indexName,
@@ -68,7 +65,7 @@ public <T> List<WatchResponse> chunkedPush(
 
     records.add(item);
 
-    if (waitForTasks && (responses.size() % waitBatchSize == 0 || count == objects.size() - 1)) {
+    if (waitForTasks && (responses.size() % waitBatchSize == 0 || !item.hasNext())) {
           responses.subList(Math.max(responses.size() - waitBatchSize, 0), responses.size()).forEach(response -> {
           TaskUtils.retryUntil(
             () -> {
