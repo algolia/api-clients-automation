@@ -36,18 +36,18 @@ internal static class QueryStringHelper
       case bool boolean:
         return boolean ? "true" : "false";
       case ICollection collection:
-        {
-          var entries = new List<string>();
-          foreach (var entry in collection)
-            entries.Add(ParameterToString(entry));
-          return string.Join(",", entries);
-        }
+      {
+        var entries = new List<string>();
+        foreach (var entry in collection)
+          entries.Add(ParameterToString(entry));
+        return string.Join(",", entries);
+      }
       case Enum when HasEnumMemberAttrValue(obj):
         return GetEnumMemberAttrValue(obj);
       case AbstractSchema schema when obj.GetType().IsClass:
-        {
-          return ParameterToString(schema.ActualInstance);
-        }
+      {
+        return ParameterToString(schema.ActualInstance);
+      }
       default:
         return Convert.ToString(obj, CultureInfo.InvariantCulture);
     }

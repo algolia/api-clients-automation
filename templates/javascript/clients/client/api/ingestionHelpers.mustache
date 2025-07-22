@@ -12,7 +12,14 @@
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getEvent` method and merged with the transporter requestOptions.
  */
 async chunkedPush(
-  { indexName, objects, action = 'addObject', waitForTasks, batchSize = 1000, referenceIndexName }: ChunkedPushOptions,
+  {
+    indexName,
+    objects,
+    action = 'addObject',
+    waitForTasks,
+    batchSize = 1000,
+    referenceIndexName,
+  }: ChunkedPushOptions,
   requestOptions?: RequestOptions,
 ): Promise<Array<WatchResponse>> {
   let records: Array<PushTaskRecords> = [];
@@ -23,10 +30,7 @@ async chunkedPush(
     records.push(obj as PushTaskRecords);
     if (records.length === batchSize || i === objects.length - 1) {
       responses.push(
-        await this.push(
-          { indexName, pushTaskPayload: { action, records }, referenceIndexName },
-          requestOptions,
-        ),
+        await this.push({ indexName, pushTaskPayload: { action, records }, referenceIndexName }, requestOptions),
       );
       records = [];
     }
@@ -51,7 +55,7 @@ async chunkedPush(
               }
 
               throw error;
-            })
+            });
           },
           validate: (response) => response !== undefined,
           aggregator: () => (retryCount += 1),
@@ -64,7 +68,6 @@ async chunkedPush(
       }
     }
   }
-
 
   return responses;
 },

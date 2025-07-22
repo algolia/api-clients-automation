@@ -349,7 +349,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
 
             ++$count;
 
-            if ($waitForTasks && (count($responses) % 50 === 0 || $count === sizeof($objects) - 1)) {
+            if ($waitForTasks && (0 === count($responses) % 50 || $count === sizeof($objects) - 1)) {
                 $timeoutCalculation = 'Algolia\AlgoliaSearch\Support\Helpers::linearTimeout';
 
                 foreach ($responses as $response) {
