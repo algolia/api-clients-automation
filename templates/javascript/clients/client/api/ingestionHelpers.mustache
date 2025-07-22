@@ -23,6 +23,7 @@ async chunkedPush(
   requestOptions?: RequestOptions,
 ): Promise<Array<WatchResponse>> {
   let records: Array<PushTaskRecords> = [];
+  let offset = 0;
   const responses: Array<WatchResponse> = [];
   const waitBatchSize = Math.floor(batchSize / 10) || batchSize;
 
@@ -36,8 +37,8 @@ async chunkedPush(
       records = [];
     }
 
-    if (waitForTasks && (responses.length % waitBatchSize === 0 || i === objects.length - 1)) {
-      for (const resp of responses.slice(-waitBatchSize)) {
+    if (waitForTasks && responses.length > 0 && (responses.length % waitBatchSize === 0 || i === objects.length - 1)) {
+      for (const resp of responses.slice(offset, offset+waitBatchSize)) {
         if (!resp.eventID) {
           throw new Error('received unexpected response from the push endpoint, eventID must not be undefined');
         }
@@ -67,6 +68,7 @@ async chunkedPush(
           timeout: (): number => Math.min(retryCount * 500, 5000),
         });
       }
+      offset += waitBatchSize;
     }
   }
 
