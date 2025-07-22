@@ -24,6 +24,7 @@ async chunkedPush(
 ): Promise<Array<WatchResponse>> {
   let records: Array<PushTaskRecords> = [];
   const responses: Array<WatchResponse> = [];
+  const waitBatchSize = Math.floor(batchSize / 10);
 
   const objectEntries = objects.entries();
   for (const [i, obj] of objectEntries) {
@@ -35,8 +36,8 @@ async chunkedPush(
       records = [];
     }
 
-    if (waitForTasks && (responses.length % 50 === 0 || i === objects.length - 1)) {
-      for (const resp of responses.slice(-50)) {
+    if (waitForTasks && (responses.length % waitBatchSize === 0 || i === objects.length - 1)) {
+      for (const resp of responses.slice(-waitBatchSize)) {
         if (!resp.eventID) {
           throw new Error('received unexpected response from the push endpoint, eventID must not be undefined');
         }
