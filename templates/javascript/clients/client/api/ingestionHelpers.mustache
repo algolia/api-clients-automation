@@ -24,7 +24,7 @@ async chunkedPush(
 ): Promise<Array<WatchResponse>> {
   let records: Array<PushTaskRecords> = [];
   const responses: Array<WatchResponse> = [];
-  const waitBatchSize = Math.floor(batchSize / 10);
+  const waitBatchSize = Math.floor(batchSize / 10) || batchSize;
 
   const objectEntries = objects.entries();
   for (const [i, obj] of objectEntries) {

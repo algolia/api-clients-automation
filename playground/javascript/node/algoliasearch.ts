@@ -152,7 +152,7 @@ async function testAlgoliasearchBridgeIngestion() {
   console.log('replaceAllObjectsWithTransformation', await client.replaceAllObjectsWithTransformation({
     indexName: 'boyd',
     objects: [{ objectID: 'foo', data: { baz: 'baz', win: 42 } }, { objectID: 'bar', data: { baz: 'baz', win: 24 } }],
-    batchSize: 2
+    batchSize: 1
   }));
 }
 

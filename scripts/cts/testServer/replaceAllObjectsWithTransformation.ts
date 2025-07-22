@@ -88,6 +88,7 @@ function addRoutes(app: Express): void {
         expect(raowtState[lang]).to.deep.equal({
           copyCount: 2,
           pushCount: 10,
+          deleteCount: 0,
           waitTaskCount: 2,
           tmpIndexName: req.params.indexName,
           waitingForFinalWaitTask: false,
