@@ -337,7 +337,8 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         $responses = [];
         $records = [];
         $count = 0;
-        $waitBatchSize = (int)($batchSize / 10);
+        $offset = 0;
+        $waitBatchSize = (int) ($batchSize / 10);
         if ($waitBatchSize < 1) {
             $waitBatchSize = $batchSize;
         }
@@ -345,18 +346,17 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         foreach ($objects as $object) {
             $records[] = $object;
             $ok = false;
+            ++$count;
 
-            if (sizeof($records) === $batchSize || $count === sizeof($objects) - 1) {
+            if (sizeof($records) === $batchSize || $count === sizeof($objects)) {
                 $responses[] = $this->push($indexName, ['action' => $action, 'records' => $records], false, $referenceIndexName, $requestOptions);
                 $records = [];
             }
 
-            ++$count;
-
-            if ($waitForTasks && (0 === count($responses) % $waitBatchSize || $count === sizeof($objects) - 1)) {
+            if ($waitForTasks && !empty($responses) && (0 === sizeof($responses) % $waitBatchSize || $count === sizeof($objects))) {
                 $timeoutCalculation = 'Algolia\AlgoliaSearch\Support\Helpers::linearTimeout';
 
-                foreach (array_slice($responses, -$waitBatchSize) as $response) {
+                foreach (array_slice($responses, $offset, $waitBatchSize) as $response) {
                     $retry = 0;
 
                     while ($retry < 50) {
@@ -380,6 +380,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
                         throw new ExceededRetriesException('Maximum number of retries (50) exceeded.');
                     }
                 }
+                $offset = $offset + $waitBatchSize;
             }
         }
 

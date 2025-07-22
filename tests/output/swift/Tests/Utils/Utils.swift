@@ -65,7 +65,10 @@ public func XCTLenientAssertEqual(received: some Encodable, expected: String) {
     guard let unionizedData = try? JSONSerialization.data(withJSONObject: unionizedObject, options: .fragmentsAllowed),
           let unionizedJSON = unionizedData.jsonString?.data(using: .utf8),
           let unionizedString = String(data: unionizedJSON, encoding: .utf8),
-          let expectedJSON = try? JSONSerialization.jsonObject(with: expected.data(using: .utf8)!, options: .fragmentsAllowed),
+          let expectedJSON = try? JSONSerialization.jsonObject(
+              with: expected.data(using: .utf8)!,
+              options: .fragmentsAllowed
+          ),
           let expectedData = try? JSONSerialization.data(withJSONObject: expectedJSON, options: .fragmentsAllowed),
           let expectedMinifiedJSON = expectedData.jsonString?.data(using: .utf8),
           let expectedString = String(data: expectedMinifiedJSON, encoding: .utf8)
