@@ -44,6 +44,7 @@ public <T> List<WatchResponse> chunkedPush(
 ) {
   List<WatchResponse> responses = new ArrayList<>();
   List<T> records = new ArrayList<>();
+  int offset = 0;
   int waitBatchSize = batchSize / 10;
   if (waitBatchSize < 1) {
     waitBatchSize = batchSize;
@@ -53,23 +54,24 @@ public <T> List<WatchResponse> chunkedPush(
   T current = it.next();
 
   while (true) {
+    records.add(current);
+
     if (records.size() == batchSize || !it.hasNext()) {
-      WatchResponse watch =
-        this.push(
-            indexName,
-            new PushTaskPayload().setAction(action).setRecords(this.objectsToPushTaskRecords(records)),
-            waitForTasks,
-            referenceIndexName,
-            requestOptions
-          );
+      WatchResponse watch = this.push(
+        indexName,
+        new PushTaskPayload().setAction(action).setRecords(this.objectsToPushTaskRecords(records)),
+        waitForTasks,
+        referenceIndexName,
+        requestOptions
+      );
       responses.add(watch);
       records.clear();
     }
 
-    records.add(current);
-
-    if (waitForTasks && (responses.size() % waitBatchSize == 0 || !it.hasNext())) {
-          responses.subList(Math.max(responses.size() - waitBatchSize, 0), responses.size()).forEach(response -> {
+    if (waitForTasks && responses.size() > 0 && (responses.size() % waitBatchSize == 0 || !it.hasNext())) {
+      responses
+        .subList(offset, Math.min(offset + waitBatchSize, responses.size()))
+        .forEach(response -> {
           TaskUtils.retryUntil(
             () -> {
               try {
@@ -88,8 +90,9 @@ public <T> List<WatchResponse> chunkedPush(
             50,
             null
           );
-        }
-      );
+        });
+
+      offset += waitBatchSize;
     }
 
     if (!it.hasNext()) {
