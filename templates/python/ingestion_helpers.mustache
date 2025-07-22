@@ -21,7 +21,7 @@
             records.append(obj)  # pyright: ignore
             if len(records) == batch_size or i == len(objects) - 1:
                 responses.append(
-                    await self.push(
+                    {{^isSyncClient}}await {{/isSyncClient}}self.push(
                         index_name=index_name,
                         push_task_payload={
                             "action": action,
@@ -39,13 +39,13 @@
             ):
                 for response in responses[offset:offset+wait_batch_size]:
 
-                    async def _func(_: Optional[Event]) -> Event:
+                    {{^isSyncClient}}async {{/isSyncClient}}def _func(_: Optional[Event]) -> Event:
                         if response.event_id is None:
                             raise ValueError(
                                 "received unexpected response from the push endpoint, eventID must not be undefined"
                             )
                         try:
-                            return await self.get_event(
+                            return {{^isSyncClient}}await {{/isSyncClient}}self.get_event(
                                 run_id=response.run_id,
                                 event_id=response.event_id,
                                 request_options=request_options,
@@ -66,7 +66,7 @@
 
                     timeout = RetryTimeout()
 
-                    await create_iterable(
+                    {{^isSyncClient}}await {{/isSyncClient}}create_iterable{{#isSyncClient}}_sync{{/isSyncClient}}(
                         func=_func,
                         validate=_validate,
                         aggregator=_aggregator,
