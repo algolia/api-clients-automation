@@ -10,6 +10,7 @@ const raowtState: Record<
   string,
   {
     copyCount: number;
+    deleteCount: number;
     pushCount: number;
     tmpIndexName: string;
     waitTaskCount: number;
@@ -33,6 +34,27 @@ function addRoutes(app: Express): void {
     }),
   );
 
+  app.delete('/1/indexes/:indexName', (req, res) => {
+    expect(req.params.indexName).to.match(/^cts_e2e_replace_all_objects_with_transformation_(.*)$/);
+
+    const lang = req.params.indexName.replace('cts_e2e_replace_all_objects_with_transformation_', '');
+    if (!raowtState[lang] || raowtState[lang].successful) {
+      raowtState[lang] = {
+        copyCount: 0,
+        pushCount: 0,
+        deleteCount: 1,
+        waitTaskCount: 0,
+        tmpIndexName: req.body.destination,
+        waitingForFinalWaitTask: false,
+        successful: false,
+      };
+    } else {
+      raowtState[lang].deleteCount++;
+    }
+
+    res.json({ taskID: 123 + raowtState[lang].copyCount, deletedAt: '2021-01-01T00:00:00.000Z' });
+  });
+
   app.post('/1/indexes/:indexName/operation', (req, res) => {
     expect(req.params.indexName).to.match(/^cts_e2e_replace_all_objects_with_transformation_(.*)$/);
 
@@ -47,6 +69,7 @@ function addRoutes(app: Express): void {
           raowtState[lang] = {
             copyCount: 1,
             pushCount: 0,
+            deleteCount: 0,
             waitTaskCount: 0,
             tmpIndexName: req.body.destination,
             waitingForFinalWaitTask: false,
@@ -123,10 +146,17 @@ function addRoutes(app: Express): void {
 
     raowtState[lang].waitTaskCount++;
     if (raowtState[lang].waitingForFinalWaitTask) {
-      expect(req.params.taskID).to.equal('777');
-      expect(raowtState[lang].waitTaskCount).to.equal(3);
-
       raowtState[lang].successful = true;
+      expect(req.params.taskID).to.equal('777');
+      expect(raowtState[lang]).to.deep.equal({
+        copyCount: 2,
+        pushCount: 10,
+        deleteCount: 0,
+        waitTaskCount: 3,
+        tmpIndexName: req.params.indexName,
+        waitingForFinalWaitTask: true,
+        successful: true,
+      });
     }
 
     res.json({ status: 'published', updatedAt: '2021-01-01T00:00:00.000Z' });

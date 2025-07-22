@@ -14,6 +14,8 @@
         records: List[PushTaskRecords] = []
         responses: List[WatchResponse] = []
         wait_batch_size = batch_size // 10
+        if wait_batch_size == 0:
+            wait_batch_size = batch_size
         for i, obj in enumerate(objects):
             records.append(obj)  # pyright: ignore
             if len(records) == batch_size or i == len(objects) - 1:
