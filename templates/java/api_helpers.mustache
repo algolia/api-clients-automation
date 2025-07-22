@@ -44,9 +44,12 @@ public <T> List<WatchResponse> chunkedPush(
 ) {
   List<WatchResponse> responses = new ArrayList<>();
   List<T> records = new ArrayList<>();
+  Int count = 0;
 
   for (T item : objects) {
-    if (records.size() == batchSize) {
+    if (records.size() == batchSize || count == objects.length() - 1) {
+      count++;
+
       WatchResponse watch =
         this.push(
             indexName,
@@ -60,42 +63,30 @@ public <T> List<WatchResponse> chunkedPush(
     }
 
     records.add(item);
-  }
 
-  if (records.size() > 0) {
-    WatchResponse watch =
-      this.push(
-          indexName,
-          new PushTaskPayload().setAction(action).setRecords(this.objectsToPushTaskRecords(records)),
-          waitForTasks,
-          referenceIndexName,
-          requestOptions
-        );
-    responses.add(watch);
-  }
+    if (waitForTasks && (responses.size() % 50 == 0 || count == objects.length() - 1)) {
+          responses.subList(Math.max(responses.size() - 50, 0), responses.size()).forEach(response -> {
+          TaskUtils.retryUntil(
+            () -> {
+              try {
+                return this.getEvent(response.getRunID(), response.getEventID());
+              } catch (AlgoliaApiException e) {
+                if (e.getStatusCode() == 404) {
+                  return null;
+                }
 
-  if (waitForTasks) {
-    responses.forEach(response -> {
-        TaskUtils.retryUntil(
-          () -> {
-            try {
-              return this.getEvent(response.getRunID(), response.getEventID());
-            } catch (AlgoliaApiException e) {
-              if (e.getStatusCode() == 404) {
-                return null;
+                throw e;
               }
-
-              throw e;
-            }
-          },
-          (Event resp) -> {
-            return resp != null;
-          },
-          50,
-          null
-        );
-      }
-    );
+            },
+            (Event resp) -> {
+              return resp != null;
+            },
+            50,
+            null
+          );
+        }
+      );
+    }
   }
 
   return responses;
