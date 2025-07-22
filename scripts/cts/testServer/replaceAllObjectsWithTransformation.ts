@@ -12,6 +12,7 @@ const raowtState: Record<
     copyCount: number;
     deleteCount: number;
     pushCount: number;
+    getEventCount: number;
     tmpIndexName: string;
     waitTaskCount: number;
     waitingForFinalWaitTask: boolean;
@@ -42,9 +43,10 @@ function addRoutes(app: Express): void {
       raowtState[lang] = {
         copyCount: 0,
         pushCount: 0,
+        getEventCount: 0,
         deleteCount: 1,
         waitTaskCount: 0,
-        tmpIndexName: req.body.destination,
+        tmpIndexName: req.params.indexName,
         waitingForFinalWaitTask: false,
         successful: false,
       };
@@ -69,6 +71,7 @@ function addRoutes(app: Express): void {
           raowtState[lang] = {
             copyCount: 1,
             pushCount: 0,
+            getEventCount: 0,
             deleteCount: 0,
             waitTaskCount: 0,
             tmpIndexName: req.body.destination,
@@ -89,6 +92,7 @@ function addRoutes(app: Express): void {
           copyCount: 2,
           pushCount: 10,
           deleteCount: 0,
+          getEventCount: 6,
           waitTaskCount: 2,
           tmpIndexName: req.params.indexName,
           waitingForFinalWaitTask: false,
@@ -121,7 +125,7 @@ function addRoutes(app: Express): void {
     raowtState[lang].pushCount += req.body.records.length;
 
     res.json({
-      runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
+      runID: `b1b7a982-524c-40d2-bb7f-48aab075abda_${lang}`,
       eventID: `113b2068-6337-4c85-b5c2-e7b213d8292${raowtState[lang].pushCount}`,
       message: 'OK',
       createdAt: '2022-05-12T06:24:30.049Z',
@@ -129,10 +133,14 @@ function addRoutes(app: Express): void {
   });
 
   app.get('/1/runs/:runID/events/:eventID', (req, res) => {
+    const lang = req.params.runID.match(/^b1b7a982-524c-40d2-bb7f-48aab075abda_(.*)$/)?.[1] as string;
+
+    raowtState[lang].getEventCount++;
+
     res.json({
       status: 'succeeded',
-      eventID: '113b2068-6337-4c85-b5c2-e7b213d82921',
-      runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
+      eventID: req.params.eventID,
+      runID: req.params.runID,
       type: 'fetch',
       batchSize: 1,
       publishedAt: '2022-05-12T06:24:30.049Z',
@@ -152,6 +160,7 @@ function addRoutes(app: Express): void {
       expect(raowtState[lang]).to.deep.equal({
         copyCount: 2,
         pushCount: 10,
+        getEventCount: 6,
         deleteCount: 0,
         waitTaskCount: 3,
         tmpIndexName: req.params.indexName,

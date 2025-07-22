@@ -356,7 +356,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             if ($waitForTasks && (0 === count($responses) % $waitBatchSize || $count === sizeof($objects) - 1)) {
                 $timeoutCalculation = 'Algolia\AlgoliaSearch\Support\Helpers::linearTimeout';
 
-                foreach (array_slice($responses, -waitBatchSize) as $response) {
+                foreach (array_slice($responses, -$waitBatchSize) as $response) {
                     $retry = 0;
 
                     while ($retry < 50) {
