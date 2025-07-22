@@ -61,7 +61,15 @@ func (c *APIClient) ChunkedPush(indexName string, objects []map[string]any, acti
 
 
 	  if conf.waitForTasks && (len(responses) % 50 == 0 || i == len(objects)-1) { 
-	  	for _, resp := range responses[:50] {
+      var waitableResponses []WatchResponse
+
+      if len(responses) > 50 {
+        waitableResponses = responses[len(responses)-50:]
+      } else {
+        waitableResponses = responses
+      }
+
+	  	for _, resp := range waitableResponses {
         _, err := CreateIterable( //nolint:wrapcheck
 	  			func(*Event, error) (*Event, error) {
             if resp.EventID == nil {
