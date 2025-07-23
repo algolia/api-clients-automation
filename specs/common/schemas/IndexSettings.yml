@@ -464,7 +464,7 @@ advancedSyntax:
 advancedSyntaxFeatures:
   type: array
   items:
-    $ref: '#/advancedSyntaxFeaturesEnum'
+    $ref: './SearchEnums.yml#/advancedSyntaxFeatures'
   description: |
     Advanced search syntax features you want to support
     - `exactPhrase`.
@@ -475,12 +475,6 @@ advancedSyntaxFeatures:
       For example, `search -engine` matches records that contain "search" but not "engine"
     This setting only has an effect if `advancedSyntax` is true.
   default: [exactPhrase, excludeWords]
-  x-categories:
-    - Query strategy
-
-advancedSyntaxFeaturesEnum:
-  type: string
-  enum: [exactPhrase, excludeWords]
   x-categories:
     - Query strategy
 
@@ -497,7 +491,7 @@ allowTyposOnNumericTokens:
 alternativesAsExact:
   type: array
   items:
-    $ref: '#/alternativesAsExactEnum'
+    $ref: './SearchEnums.yml#/alternativesAsExact'
   description: |
     Determine which plurals and synonyms should be considered an exact matches
     By default, Algolia treats singular and plural forms of a word, and single-word synonyms, as [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact) matches when searching.
@@ -511,12 +505,6 @@ alternativesAsExact:
     - `multiWordsSynonym`.
       Multi-word synonyms, such as "NY" = "New York", are considered exact matches.
   default: [ignorePlurals, singleWordSynonym]
-  x-categories:
-    - Query strategy
-
-alternativesAsExactEnum:
-  type: string
-  enum: [ignorePlurals, singleWordSynonym, multiWordsSynonym, ignoreConjugations]
   x-categories:
     - Query strategy
 
@@ -889,20 +877,9 @@ typoTolerance:
     - type: boolean
       default: true
       description: Whether typo tolerance is active. If true, matches with typos are included in the search results and rank after exact matches.
-    - $ref: '#/typoToleranceEnum'
+    - $ref: './SearchEnums.yml#/typoTolerance'
   x-categories:
     - Typos
-
-typoToleranceEnum:
-  type: string
-  title: typo tolerance
-  description: |
-    - `min`. Return matches with the lowest number of typos.
-      For example, if you have matches without typos, only include those.
-      But if there are no matches without typos (with 1 typo), include matches with 1 typo (2 typos).
-    - `strict`. Return matches with the two lowest numbers of typos.
-      With `strict`, the Typo ranking criterion is applied first in the `ranking` setting.
-  enum: [min, strict, 'true', 'false']
 
 ignorePlurals:
   description: |
