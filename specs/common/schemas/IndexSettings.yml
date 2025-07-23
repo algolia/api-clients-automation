@@ -523,7 +523,7 @@ alternativesAsExactEnum:
 attributeCriteriaComputedByMinProximity:
   type: boolean
   description: |
-    Whether the best matching attribute should be determined by minimum proximit  
+    Whether the best matching attribute should be determined by minimum proximity
     This setting only affects ranking if the Attribute ranking criterion comes before Proximity in the `ranking` setting.
     If true, the best matching attribute is selected based on the minimum proximity of multiple matches.
     Otherwise, the best matching attribute is determined by the order in the `searchableAttributes` setting.
@@ -751,10 +751,10 @@ queryLanguages:
   example:
     - es
   description: |
-    Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionarie 
+    Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries 
     This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings.
     This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages.
-    To support this, you must place the CJK language **first* 
+    To support this, you must place the CJK language **first** 
     **You should always specify a query language.**
     If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),
     or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters.
