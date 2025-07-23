@@ -44,58 +44,62 @@ public <T> List<WatchResponse> chunkedPush(
 ) {
   List<WatchResponse> responses = new ArrayList<>();
   List<T> records = new ArrayList<>();
+  int offset = 0;
+  int waitBatchSize = batchSize / 10;
+  if (waitBatchSize < 1) {
+    waitBatchSize = batchSize;
+  }
 
-  for (T item : objects) {
-    if (records.size() == batchSize) {
-      WatchResponse watch =
-        this.push(
-            indexName,
-            new PushTaskPayload().setAction(action).setRecords(this.objectsToPushTaskRecords(records)),
-            waitForTasks,
-            referenceIndexName,
-            requestOptions
-          );
+  Iterator<T> it = objects.iterator();
+  T current = it.next();
+
+  while (true) {
+    records.add(current);
+
+    if (records.size() == batchSize || !it.hasNext()) {
+      WatchResponse watch = this.push(
+        indexName,
+        new PushTaskPayload().setAction(action).setRecords(this.objectsToPushTaskRecords(records)),
+        waitForTasks,
+        referenceIndexName,
+        requestOptions
+      );
       responses.add(watch);
       records.clear();
     }
 
-    records.add(item);
-  }
+    if (waitForTasks && responses.size() > 0 && (responses.size() % waitBatchSize == 0 || !it.hasNext())) {
+      responses
+        .subList(offset, Math.min(offset + waitBatchSize, responses.size()))
+        .forEach(response -> {
+          TaskUtils.retryUntil(
+            () -> {
+              try {
+                return this.getEvent(response.getRunID(), response.getEventID());
+              } catch (AlgoliaApiException e) {
+                if (e.getStatusCode() == 404) {
+                  return null;
+                }
 
-  if (records.size() > 0) {
-    WatchResponse watch =
-      this.push(
-          indexName,
-          new PushTaskPayload().setAction(action).setRecords(this.objectsToPushTaskRecords(records)),
-          waitForTasks,
-          referenceIndexName,
-          requestOptions
-        );
-    responses.add(watch);
-  }
-
-  if (waitForTasks) {
-    responses.forEach(response -> {
-        TaskUtils.retryUntil(
-          () -> {
-            try {
-              return this.getEvent(response.getRunID(), response.getEventID());
-            } catch (AlgoliaApiException e) {
-              if (e.getStatusCode() == 404) {
-                return null;
+                throw e;
               }
+            },
+            (Event resp) -> {
+              return resp != null;
+            },
+            50,
+            null
+          );
+        });
 
-              throw e;
-            }
-          },
-          (Event resp) -> {
-            return resp != null;
-          },
-          50,
-          null
-        );
-      }
-    );
+      offset += waitBatchSize;
+    }
+
+    if (!it.hasNext()) {
+      break;
+    }
+
+    current = it.next();
   }
 
   return responses;
