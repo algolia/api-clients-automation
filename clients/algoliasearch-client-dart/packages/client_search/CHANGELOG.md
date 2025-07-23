@@ -1,3 +1,8 @@
+## [1.34.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.34.1...1.34.2)
+
+- [9b7b0324df](https://github.com/algolia/api-clients-automation/commit/9b7b0324df) fix(dart): deps constraints for null-aware-elements ([#5128](https://github.com/algolia/api-clients-automation/pull/5128)) by [@shortcuts](https://github.com/shortcuts/)
+- [84a1f4e422](https://github.com/algolia/api-clients-automation/commit/84a1f4e422) refactor(specs): add interface to manipulate query parameter between composition API & Search API ([#5123](https://github.com/algolia/api-clients-automation/pull/5123)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+
 ## [1.34.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.34.0...1.34.1)
 
 - [754efceb80](https://github.com/algolia/api-clients-automation/commit/754efceb80) fix(specs): allow one sided rule validity ([#5060](https://github.com/algolia/api-clients-automation/pull/5060)) by [@millotp](https://github.com/millotp/)
