@@ -979,7 +979,7 @@ facetOrdering:
   additionalProperties: false
   properties:
     facets:
-      $ref: '#/facets'
+      $ref: '#/facetsWithOrder'
     values:
       $ref: '#/values'
 
@@ -1035,7 +1035,7 @@ bannerImageUrl:
     url:
       type: string
 
-facets:
+facetsWithOrder:
   description: Order of facet names.
   type: object
   additionalProperties: false
