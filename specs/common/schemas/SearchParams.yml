@@ -84,7 +84,7 @@ baseSearchParamsWithoutQuery:
     clickAnalytics:
       $ref: '#/clickAnalytics'
     analytics:
-      $ref: '#/analyticsTags'
+      $ref: '#/analytics'
     analyticsTags:
       $ref: '#/analyticsTags'
       x-categories:
