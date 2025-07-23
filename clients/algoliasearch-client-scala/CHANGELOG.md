@@ -1,3 +1,8 @@
+## [2.24.1](https://github.com/algolia/algoliasearch-client-scala/compare/2.24.0...2.24.1)
+
+- [84a1f4e422](https://github.com/algolia/api-clients-automation/commit/84a1f4e422) refactor(specs): add interface to manipulate query parameter between composition API & Search API ([#5123](https://github.com/algolia/api-clients-automation/pull/5123)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [f25e156dde](https://github.com/algolia/api-clients-automation/commit/f25e156dde) fix(specs): value/price clarifications in the Insights API ([#5154](https://github.com/algolia/api-clients-automation/pull/5154)) by [@kai687](https://github.com/kai687/)
+
 ## [2.24.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.23.2...2.24.0)
 
 - [a7a3c5fc95](https://github.com/algolia/api-clients-automation/commit/a7a3c5fc95) feat(specs): document runMetadata parameter ([#5087](https://github.com/algolia/api-clients-automation/pull/5087)) by [@DevinCodes](https://github.com/DevinCodes/)

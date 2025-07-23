@@ -1,3 +1,10 @@
+## [4.22.1](https://github.com/algolia/algoliasearch-client-java/compare/4.22.0...4.22.1)
+
+- [84a1f4e422](https://github.com/algolia/api-clients-automation/commit/84a1f4e422) refactor(specs): add interface to manipulate query parameter between composition API & Search API ([#5123](https://github.com/algolia/api-clients-automation/pull/5123)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [995f185c07](https://github.com/algolia/api-clients-automation/commit/995f185c07) chore(deps): dependencies 2025-07-21 ([#5129](https://github.com/algolia/api-clients-automation/pull/5129)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [f25e156dde](https://github.com/algolia/api-clients-automation/commit/f25e156dde) fix(specs): value/price clarifications in the Insights API ([#5154](https://github.com/algolia/api-clients-automation/pull/5154)) by [@kai687](https://github.com/kai687/)
+- [3160f87f7b](https://github.com/algolia/api-clients-automation/commit/3160f87f7b) fix(clients): reduce chances of Push rate limiting ([#5153](https://github.com/algolia/api-clients-automation/pull/5153)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [4.22.0](https://github.com/algolia/algoliasearch-client-java/compare/4.21.2...4.22.0)
 
 - [a7a3c5fc95](https://github.com/algolia/api-clients-automation/commit/a7a3c5fc95) feat(specs): document runMetadata parameter ([#5087](https://github.com/algolia/api-clients-automation/pull/5087)) by [@DevinCodes](https://github.com/DevinCodes/)
