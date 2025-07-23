@@ -415,8 +415,6 @@ indexSettingsAsSearchParams:
       $ref: '#/semanticSearch'
     advancedSyntax:
       $ref: '#/advancedSyntax'
-      x-categories:
-        - Query strategy
     optionalWords:
       $ref: '#/optionalWords'
     disableExactOnAttributes:
@@ -460,6 +458,8 @@ advancedSyntax:
     Whether to support phrase matching and excluding words from search queries
     Use the `advancedSyntaxFeatures` parameter to control which feature is supported.
   default: false
+  x-categories:
+    - Query strategy
 
 advancedSyntaxFeatures:
   type: array
