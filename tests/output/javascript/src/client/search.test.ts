@@ -688,26 +688,26 @@ describe('replaceAllObjectsWithTransformation', () => {
         copyOperationResponse: { taskID: 125, updatedAt: '2021-01-01T00:00:00.000Z' },
         watchResponses: [
           {
-            runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
+            runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda_javascript',
+            eventID: '113b2068-6337-4c85-b5c2-e7b213d82921',
+            message: 'OK',
+            createdAt: '2022-05-12T06:24:30.049Z',
+          },
+          {
+            runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda_javascript',
+            eventID: '113b2068-6337-4c85-b5c2-e7b213d82922',
+            message: 'OK',
+            createdAt: '2022-05-12T06:24:30.049Z',
+          },
+          {
+            runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda_javascript',
             eventID: '113b2068-6337-4c85-b5c2-e7b213d82923',
             message: 'OK',
             createdAt: '2022-05-12T06:24:30.049Z',
           },
           {
-            runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
-            eventID: '113b2068-6337-4c85-b5c2-e7b213d82926',
-            message: 'OK',
-            createdAt: '2022-05-12T06:24:30.049Z',
-          },
-          {
-            runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
-            eventID: '113b2068-6337-4c85-b5c2-e7b213d82929',
-            message: 'OK',
-            createdAt: '2022-05-12T06:24:30.049Z',
-          },
-          {
-            runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
-            eventID: '113b2068-6337-4c85-b5c2-e7b213d829210',
+            runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda_javascript',
+            eventID: '113b2068-6337-4c85-b5c2-e7b213d82924',
             message: 'OK',
             createdAt: '2022-05-12T06:24:30.049Z',
           },

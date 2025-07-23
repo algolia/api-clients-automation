@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -4997,9 +4998,19 @@ public class IngestionClient extends ApiClient {
   ) {
     List<WatchResponse> responses = new ArrayList<>();
     List<T> records = new ArrayList<>();
+    int offset = 0;
+    int waitBatchSize = batchSize / 10;
+    if (waitBatchSize < 1) {
+      waitBatchSize = batchSize;
+    }
 
-    for (T item : objects) {
-      if (records.size() == batchSize) {
+    Iterator<T> it = objects.iterator();
+    T current = it.next();
+
+    while (true) {
+      records.add(current);
+
+      if (records.size() == batchSize || !it.hasNext()) {
         WatchResponse watch = this.push(
           indexName,
           new PushTaskPayload().setAction(action).setRecords(this.objectsToPushTaskRecords(records)),
@@ -5011,41 +5022,38 @@ public class IngestionClient extends ApiClient {
         records.clear();
       }
 
-      records.add(item);
-    }
+      if (waitForTasks && responses.size() > 0 && (responses.size() % waitBatchSize == 0 || !it.hasNext())) {
+        responses
+          .subList(offset, Math.min(offset + waitBatchSize, responses.size()))
+          .forEach(response -> {
+            TaskUtils.retryUntil(
+              () -> {
+                try {
+                  return this.getEvent(response.getRunID(), response.getEventID());
+                } catch (AlgoliaApiException e) {
+                  if (e.getStatusCode() == 404) {
+                    return null;
+                  }
 
-    if (records.size() > 0) {
-      WatchResponse watch = this.push(
-        indexName,
-        new PushTaskPayload().setAction(action).setRecords(this.objectsToPushTaskRecords(records)),
-        waitForTasks,
-        referenceIndexName,
-        requestOptions
-      );
-      responses.add(watch);
-    }
+                  throw e;
+                }
+              },
+              (Event resp) -> {
+                return resp != null;
+              },
+              50,
+              null
+            );
+          });
 
-    if (waitForTasks) {
-      responses.forEach(response -> {
-        TaskUtils.retryUntil(
-          () -> {
-            try {
-              return this.getEvent(response.getRunID(), response.getEventID());
-            } catch (AlgoliaApiException e) {
-              if (e.getStatusCode() == 404) {
-                return null;
-              }
+        offset += waitBatchSize;
+      }
 
-              throw e;
-            }
-          },
-          (Event resp) -> {
-            return resp != null;
-          },
-          50,
-          null
-        );
-      });
+      if (!it.hasNext()) {
+        break;
+      }
+
+      current = it.next();
     }
 
     return responses;
