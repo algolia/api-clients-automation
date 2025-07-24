@@ -147,8 +147,7 @@
       },
       {
         "name": "abtesting-v3",
-        "output": "clients/algoliasearch-client-javascript/packages/abtesting",
-        "clientName": "abtesting"
+        "output": "clients/algoliasearch-client-javascript/packages/abtesting"
       },
       {
         "name": "analytics",
