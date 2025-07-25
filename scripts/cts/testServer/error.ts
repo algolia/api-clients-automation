@@ -5,7 +5,7 @@ import type express from 'express';
 
 import { setupServer } from './index.ts';
 
-const errorState: Record<string, { errorCount: number }> = {};
+const errorState: Record<string, { errorCount: number; maxError: number }> = {};
 
 export function assertValidErrors(expectedCount: number): void {
   // assert that the retry strategy uses the correct timings, by checking the time between each request, and how long each request took before being timed out
@@ -15,14 +15,14 @@ export function assertValidErrors(expectedCount: number): void {
   }
 
   for (const [lang, state] of Object.entries(errorState)) {
-    let numberOfTestSuites = 1;
-
     // python has sync and async tests
     if (lang === 'python') {
-      numberOfTestSuites = 2;
+      expect(state.errorCount).to.equal(state.maxError * 2);
+
+      return;
     }
 
-    expect(state.errorCount).to.equal(Number(numberOfTestSuites) * 3);
+    expect(state.errorCount).to.equal(state.maxError);
   }
 }
 
@@ -32,12 +32,13 @@ function addRoutes(app: express.Express): void {
     if (!errorState[lang]) {
       errorState[lang] = {
         errorCount: 0,
+        maxError: 3,
       };
     }
 
     errorState[lang].errorCount++;
 
-    if (errorState[lang].errorCount < 3) {
+    if (errorState[lang].errorCount % errorState[lang].maxError !== 0) {
       res.status(500).json({ message: 'error test server response' });
       return;
     }
