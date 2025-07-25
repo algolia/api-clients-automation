@@ -52,7 +52,7 @@ func prepareRetryableRequest(req *http.Request) (*http.Request, error) {
 
 	bodyBytes, err := io.ReadAll(req.Body)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("cannot read body: %v", err)
 	}
 	_ = req.Body.Close() // close the original body
 
