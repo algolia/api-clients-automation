@@ -80,13 +80,30 @@ class SearchTest {
   }
 
   @Test
-  fun `tests the retry strategy error`() = runTest {
+  fun `tests the retry strategy on timeout`() = runTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6676))))
     assertFails {
       client.customGet(
         path = "1/test/hang/kotlin",
       )
     }.let { error -> assertError(error, "Error\\(s\\) while processing the retry strategy".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
+  }
+
+  @Test
+  fun `tests the retry strategy on 5xx`() = runTest {
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6671), Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6672), Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6673))))
+    client.runTest(
+      call = {
+        customPost(
+          path = "1/test/error/kotlin",
+        )
+      },
+
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"status":"ok"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
+      },
+    )
   }
 
   @Test

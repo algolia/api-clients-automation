@@ -115,7 +115,7 @@ public class SearchClientTests
     );
   }
 
-  [Fact(DisplayName = "tests the retry strategy error")]
+  [Fact(DisplayName = "tests the retry strategy on timeout")]
   public async Task ApiTest4()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
@@ -148,8 +148,64 @@ public class SearchClientTests
     );
   }
 
-  [Fact(DisplayName = "test the compression strategy")]
+  [Fact(DisplayName = "tests the retry strategy on 5xx")]
   public async Task ApiTest5()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6671,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6672,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6673,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.CustomPostAsync("1/test/error/csharp");
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"status\":\"ok\"}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "test the compression strategy")]
+  public async Task ApiTest6()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -186,7 +242,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "calls api with default read timeouts")]
-  public async Task ApiTest6()
+  public async Task ApiTest7()
   {
     var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
     await client.CustomGetAsync("1/test");
@@ -197,7 +253,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "calls api with default write timeouts")]
-  public async Task ApiTest7()
+  public async Task ApiTest8()
   {
     var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
     await client.CustomPostAsync("1/test");
@@ -208,7 +264,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "can handle unknown response fields")]
-  public async Task ApiTest8()
+  public async Task ApiTest9()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -240,7 +296,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "can handle unknown response fields inside a nested oneOf")]
-  public async Task ApiTest9()
+  public async Task ApiTest10()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {

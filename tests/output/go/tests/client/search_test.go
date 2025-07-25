@@ -133,7 +133,7 @@ func TestSearchapi3(t *testing.T) {
 	require.JSONEq(t, `{"message":"ok test server response"}`, string(rawBody))
 }
 
-// tests the retry strategy error
+// tests the retry strategy on timeout
 func TestSearchapi4(t *testing.T) {
 	var err error
 	var res any
@@ -157,8 +157,35 @@ func TestSearchapi4(t *testing.T) {
 	require.EqualError(t, err, "failed to do request: all hosts have been contacted unsuccessfully, it can either be a server or a network error or wrong appID/key credentials were used. You can use 'ExposeIntermediateNetworkErrors: true' in the config to investigate.")
 }
 
-// test the compression strategy
+// tests the retry strategy on 5xx
 func TestSearchapi5(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.SearchConfiguration
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6671", call.IsReadWrite), transport.NewStatefulHost("http", tests.GetLocalhost()+":6672", call.IsReadWrite), transport.NewStatefulHost("http", tests.GetLocalhost()+":6673", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
+		"1/test/error/go"))
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `{"status":"ok"}`, string(rawBody))
+}
+
+// test the compression strategy
+func TestSearchapi6(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -186,7 +213,7 @@ func TestSearchapi5(t *testing.T) {
 }
 
 // calls api with default read timeouts
-func TestSearchapi6(t *testing.T) {
+func TestSearchapi7(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -200,7 +227,7 @@ func TestSearchapi6(t *testing.T) {
 }
 
 // calls api with default write timeouts
-func TestSearchapi7(t *testing.T) {
+func TestSearchapi8(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -214,7 +241,7 @@ func TestSearchapi7(t *testing.T) {
 }
 
 // can handle unknown response fields
-func TestSearchapi8(t *testing.T) {
+func TestSearchapi9(t *testing.T) {
 	var err error
 	var res any
 	_ = res
@@ -241,7 +268,7 @@ func TestSearchapi8(t *testing.T) {
 }
 
 // can handle unknown response fields inside a nested oneOf
-func TestSearchapi9(t *testing.T) {
+func TestSearchapi10(t *testing.T) {
 	var err error
 	var res any
 	_ = res

@@ -75,7 +75,7 @@ final class SearchClientClientTests: XCTestCase {
         XTCJSONEquals(received: response, expected: "{\"message\":\"ok test server response\"}")
     }
 
-    /// tests the retry strategy error
+    /// tests the retry strategy on timeout
     func testApiTest4() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
@@ -98,8 +98,35 @@ final class SearchClientClientTests: XCTestCase {
         }
     }
 
-    /// test the compression strategy
+    /// tests the retry strategy on 5xx
     func testApiTest5() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [
+                RetryableHost(url: URL(string: "http://" +
+                        (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                        ":6671"
+                )!),
+                RetryableHost(url: URL(string: "http://" +
+                        (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                        ":6672"
+                )!),
+                RetryableHost(url: URL(string: "http://" +
+                        (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                        ":6673"
+                )!),
+            ]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.customPost(path: "1/test/error/swift")
+
+        XTCJSONEquals(received: response, expected: "{\"status\":\"ok\"}")
+    }
+
+    /// test the compression strategy
+    func testApiTest6() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
@@ -123,7 +150,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// calls api with default read timeouts
-    func testApiTest6() async throws {
+    func testApiTest7() async throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -136,7 +163,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// calls api with default write timeouts
-    func testApiTest7() async throws {
+    func testApiTest8() async throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
@@ -149,7 +176,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// can handle unknown response fields
-    func testApiTest8() async throws {
+    func testApiTest9() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
@@ -168,7 +195,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// can handle unknown response fields inside a nested oneOf
-    func testApiTest9() async throws {
+    func testApiTest10() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",

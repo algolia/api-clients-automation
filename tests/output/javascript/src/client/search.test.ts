@@ -97,7 +97,7 @@ describe('api', () => {
     expect(result).toEqual({ message: 'ok test server response' });
   }, 25000);
 
-  test('tests the retry strategy error', async () => {
+  test('tests the retry strategy on timeout', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {
       hosts: [
         {
@@ -118,6 +118,35 @@ describe('api', () => {
         'Unreachable hosts - your application id may be incorrect. If the error persists, please reach out to the Algolia Support team: https://alg.li/support.',
       );
     }
+  }, 25000);
+
+  test('tests the retry strategy on 5xx', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6671,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+        {
+          url: 'localhost',
+          port: 6672,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+        {
+          url: 'localhost',
+          port: 6673,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.customPost({ path: '1/test/error/javascript' });
+
+    expect(result).toEqual({ status: 'ok' });
   }, 25000);
 
   test('calls api with default read timeouts', async () => {
