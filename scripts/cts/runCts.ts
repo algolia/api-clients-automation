@@ -8,6 +8,7 @@ import type { Language } from '../types.ts';
 import { assertValidAccountCopyIndex } from './testServer/accountCopyIndex.ts';
 import { printBenchmarkReport } from './testServer/benchmark.ts';
 import { assertChunkWrapperValid } from './testServer/chunkWrapper.ts';
+import { assertValidErrors } from './testServer/error.ts';
 import { startTestServer } from './testServer/index.ts';
 import { assertPushMockValid } from './testServer/pushMock.ts';
 import { assertValidReplaceAllObjects } from './testServer/replaceAllObjects.ts';
@@ -152,6 +153,7 @@ export async function runCts(
     const skip = (lang: Language): number => (languages.includes(lang) ? 1 : 0);
     const only = skip;
 
+    assertValidErrors(languages.length);
     assertValidTimeouts(languages.length);
     assertChunkWrapperValid(languages.length - skip('dart'));
     assertValidReplaceAllObjects(languages.length - skip('dart'));
