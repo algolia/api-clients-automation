@@ -74,7 +74,10 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind,
 	}
 
 	// Prepare the request to be retryable.
-	req, _ = prepareRetryableRequest(req)
+	req, err := prepareRetryableRequest(req)
+	if err != nil {
+		return nil, nil, err
+	}
 
 	for i, h := range t.retryStrategy.GetTryableHosts(k) {
 		// Handle per-request timeout by using a context with timeout.
