@@ -109,7 +109,7 @@
     ]
   },
   {
-    "testName": "tests the retry strategy error",
+    "testName": "tests the retry strategy on timeout",
     "autoCreateClient": false,
     "steps": [
       {
@@ -143,6 +143,43 @@
             "ruby": "Unreachable hosts. Last error for %localhost%: Net::ReadTimeout with #<TCPSocket:(closed)>",
             "scala": "Error(s) while processing the retry strategy",
             "swift": "All hosts are unreachable. You can use 'exposeIntermediateErrors: true' in the config to investigate."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "tests the retry strategy on 5xx",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "port": 6671
+            },
+            {
+              "port": 6672
+            },
+            {
+              "port": 6673
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "customPost",
+        "parameters": {
+          "path": "1/test/error/${{language}}"
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "status": "ok"
           }
         }
       }

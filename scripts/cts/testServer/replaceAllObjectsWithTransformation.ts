@@ -88,7 +88,6 @@ function addRoutes(app: Express): void {
       case 'move': {
         const lang = req.body.destination.replace('cts_e2e_replace_all_objects_with_transformation_', '');
         expect(raowtState).to.include.keys(lang);
-        console.log(raowtState[lang]);
         expect(raowtState[lang]).to.deep.equal({
           copyCount: 2,
           pushCount: 4,
