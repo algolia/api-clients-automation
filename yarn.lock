@@ -89,7 +89,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/api-client-automation@workspace:."
   dependencies:
-    "@openapitools/openapi-generator-cli": "npm:2.21.3"
+    "@openapitools/openapi-generator-cli": "npm:2.21.4"
     "@redocly/cli": "npm:1.29.0"
     eslint: "npm:8.57.1"
     eslint-plugin-automation-custom: "npm:1.0.0"
@@ -1375,15 +1375,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openapitools/openapi-generator-cli@npm:2.21.3":
-  version: 2.21.3
-  resolution: "@openapitools/openapi-generator-cli@npm:2.21.3"
+"@openapitools/openapi-generator-cli@npm:2.21.4":
+  version: 2.21.4
+  resolution: "@openapitools/openapi-generator-cli@npm:2.21.4"
   dependencies:
     "@nestjs/axios": "npm:4.0.1"
     "@nestjs/common": "npm:11.1.5"
     "@nestjs/core": "npm:11.1.5"
     "@nuxtjs/opencollective": "npm:0.3.2"
-    axios: "npm:1.10.0"
+    axios: "npm:1.11.0"
     chalk: "npm:4.1.2"
     commander: "npm:8.3.0"
     compare-versions: "npm:4.1.4"
@@ -1399,7 +1399,7 @@ __metadata:
     tslib: "npm:2.8.1"
   bin:
     openapi-generator-cli: main.js
-  checksum: 10/9870a611a4660d3a7f01628fb1d47ecf2d7900ff32b8ae94ff1b1728ab444886d2adec0ffbd0c2e8f83d9702507b722032b2b49d010d7c452d41fdbb9634f44c
+  checksum: 10/d6b19bade7eb1ff256c54aacdab171de975cb0939cf011837aa9b6fd6549c10751114330fd8f21e760f453d33bae11cfe10035f061df74bb7011617018780a77
   languageName: node
   linkType: hard
 
@@ -2896,14 +2896,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.10.0":
-  version: 1.10.0
-  resolution: "axios@npm:1.10.0"
+"axios@npm:1.11.0":
+  version: 1.11.0
+  resolution: "axios@npm:1.11.0"
   dependencies:
     follow-redirects: "npm:^1.15.6"
-    form-data: "npm:^4.0.0"
+    form-data: "npm:^4.0.4"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 10/d43c80316a45611fd395743e15d16ea69a95f2b7f7095f2bb12cb78f9ca0a905194a02e52a3bf4e0db9f85fd1186d6c690410644c10ecd8bb0a468e57c2040e4
+  checksum: 10/232df4af7a4e4e07baa84621b9cc4b0c518a757b4eacc7f635c0eb3642cb98dff347326739f24b891b3b4481b7b838c79a3a0c4819c9fbc1fc40232431b9c5dc
   languageName: node
   linkType: hard
 
@@ -4683,7 +4683,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"form-data@npm:^4.0.0":
+"form-data@npm:^4.0.0, form-data@npm:^4.0.4":
   version: 4.0.4
   resolution: "form-data@npm:4.0.4"
   dependencies:
