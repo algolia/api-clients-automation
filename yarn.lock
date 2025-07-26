@@ -100,7 +100,7 @@ __metadata:
     oxlint: "npm:1.7.0"
     prettier: "npm:3.6.2"
     prettier-plugin-java: "npm:2.7.3"
-    prettier-plugin-organize-imports: "npm:4.1.0"
+    prettier-plugin-organize-imports: "npm:4.2.0"
     renovate-config-algolia: "npm:2.2.0"
     typescript: "npm:5.8.3"
   languageName: unknown
@@ -6891,17 +6891,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-organize-imports@npm:4.1.0":
-  version: 4.1.0
-  resolution: "prettier-plugin-organize-imports@npm:4.1.0"
+"prettier-plugin-organize-imports@npm:4.2.0":
+  version: 4.2.0
+  resolution: "prettier-plugin-organize-imports@npm:4.2.0"
   peerDependencies:
     prettier: ">=2.0"
     typescript: ">=2.9"
-    vue-tsc: ^2.1.0
+    vue-tsc: ^2.1.0 || 3
   peerDependenciesMeta:
     vue-tsc:
       optional: true
-  checksum: 10/8223af6d42d06f6a5140a2724a6c6c2cef4a2e149721ceb25b945af71f4de7499bc63e47ea003b9eee84e6b94728b59d91b4275d3c53b718a747e273fb30cee2
+  checksum: 10/aa7a8280c79dc77a55f4be221ceb8543f5bd8d4a6090aea0e80194cc40edf37345c172357aca45588ebf82a88d2b8a42dd8c4af0bf98dbdd1c9b7d20837836b3
   languageName: node
   linkType: hard
 
