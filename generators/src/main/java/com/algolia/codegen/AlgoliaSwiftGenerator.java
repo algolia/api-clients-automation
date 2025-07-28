@@ -30,6 +30,7 @@ import org.openapitools.codegen.utils.ModelUtils;
 public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
 
   private static final List<String> reservedModelNames = List.of(
+    "abtest",
     "abtestconfiguration",
     "abtestresponse",
     "abtestsvariant",
