@@ -22,7 +22,8 @@
           "sourceIndexName": "cts_e2e_account_copy_index_source_${{language}}",
           "destinationAppID": "test-app-id-destination",
           "destinationApiKey": "test-api-key-destination",
-          "destinationIndexName": "cts_e2e_account_copy_index_destination_${{language}}"
+          "destinationIndexName": "cts_e2e_account_copy_index_destination_${{language}}",
+          "batchSize": 2
         }
       }
     ]
