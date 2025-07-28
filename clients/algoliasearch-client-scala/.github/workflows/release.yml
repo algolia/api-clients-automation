@@ -27,6 +27,6 @@ jobs:
       - run: sbt ci-release
         env:
           PGP_PASSPHRASE: ${{ secrets.SIGNING_PRIVATE_KEY_PASSWORD }}
-          PGP_SECRET_KEY: ${{ secrets.SIGNING_PRIVATE_KEY }}
+          PGP_SECRET: ${{ secrets.SIGNING_PRIVATE_KEY }}
           SONATYPE_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
