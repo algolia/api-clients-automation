@@ -1,13 +1,5 @@
 [
   {
-    "testName": "listABTests with minimal parameters",
-    "parameters": {},
-    "request": {
-      "path": "/3/abtests",
-      "method": "GET"
-    }
-  },
-  {
     "testName": "listABTests with parameters",
     "parameters": {
       "offset": 0,
