@@ -10,7 +10,9 @@ import type {
 } from '{{{dependencyPackage}}}';
 {{/dependencies}}
 
+import type { Direction } from '@algolia/client-analytics';
 import type { ClientOptions } from '@algolia/client-common';
+import type { EventType } from '@algolia/client-personalization';
 import type {
   Action,
   AdvancedSyntaxFeatures,
@@ -107,17 +109,35 @@ import type {
   Widgets,
 } from '@algolia/client-search';
 import { apiClientVersion } from '@algolia/client-search';
+import type { Event, EventStatus, WatchResponse } from '@algolia/ingestion';
+
 import type {
+  ABTest,
+  ABTestConfiguration,
+  ABTestResponse,
+  AbTestsVariant,
+  AbTestsVariantSearchParams,
+  AddABTestsRequest,
+  AddABTestsVariant,
+  CustomSearchParams,
+  DeleteABTestProps,
+  EffectMetric,
+  EmptySearchFilter,
+  EstimateABTestRequest,
+  EstimateABTestResponse,
+  EstimateConfiguration,
+  FilterEffects,
+  GetABTestProps,
+  ListABTestsProps,
+  ListABTestsResponse,
+  MinimumDetectableEffect,
+  OutliersFilter,
+  ScheduleABTestResponse,
+  ScheduleABTestsRequest,
   Status,
+  StopABTestProps,
+  Variant,
 } from '@algolia/client-abtesting';
-import type {
-  EventType,
-} from '@algolia/client-personalization';
-import type {
-  Event,
-  EventStatus,
-  WatchResponse,
-} from '@algolia/ingestion';
 
 {{#dependencies}}
 export * from '{{{dependencyPackage}}}';
@@ -139,7 +159,14 @@ export type {
 };
 
 export type {
+  ABTest,
+  ABTestConfiguration,
+  ABTestResponse,
+  AbTestsVariant,
+  AbTestsVariantSearchParams,
   Action,
+  AddABTestsRequest,
+  AddABTestsVariant,
   AdvancedSyntaxFeatures,
   AlternativesAsExact,
   Anchoring,
@@ -167,12 +194,20 @@ export type {
   CustomGetProps,
   CustomPostProps,
   CustomPutProps,
+  CustomSearchParams,
+  DeleteABTestProps,
   DeleteSourceProps,
   DeletedAtResponse,
+  Direction,
   Distinct,
   Edit,
   EditType,
+  EffectMetric,
+  EmptySearchFilter,
   ErrorBase,
+  EstimateABTestRequest,
+  EstimateABTestResponse,
+  EstimateConfiguration,
   Event,
   EventStatus,
   ExactOnSingleWordQuery,
@@ -182,6 +217,8 @@ export type {
   FacetOrdering,
   FacetStats,
   Facets,
+  FilterEffects,
+  GetABTestProps,
   GetTaskProps,
   HighlightResult,
   HighlightResultOption,
@@ -190,12 +227,16 @@ export type {
   IndexSettingsAsSearchParams,
   InsideBoundingBox,
   Languages,
+  ListABTestsProps,
+  ListABTestsResponse,
   MatchLevel,
   MatchedGeoLocation,
+  MinimumDetectableEffect,
   Mode,
   NumericFilters,
   OptionalFilters,
   OptionalWords,
+  OutliersFilter,
   Params,
   Personalization,
   Promote,
@@ -212,6 +253,8 @@ export type {
   RemoveStopWords,
   RemoveWordsIfNoResults,
   RenderingContent,
+  ScheduleABTestResponse,
+  ScheduleABTestsRequest,
   SearchForFacetValuesProps,
   SearchForFacetValuesRequest,
   SearchForFacetValuesResponse,
@@ -226,6 +269,7 @@ export type {
   SnippetResultOption,
   SortRemainingBy,
   Source,
+  StopABTestProps,
   SupportedLanguage,
   TagFilters,
   TaskStatus,
@@ -233,6 +277,7 @@ export type {
   TypoTolerance,
   TypoToleranceEnum,
   Value,
+  Variant,
   WatchResponse,
   Widgets,
 };
