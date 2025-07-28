@@ -10,6 +10,7 @@ dependencies:
   algolia_client_insights: ^1.0.0
   algolia_client_recommend: ^1.0.0
   algolia_client_composition: ^1.0.0
+  algolia_client_abtesting_v3: ^1.0.0
   test: ^1.25.8
   collection: ^1.17.2
   test_api: ^0.7.3
@@ -17,4 +18,3 @@ dependencies:
   algolia_client_core: any
 dev_dependencies:
   lints: ^6.0.0
-  algolia_client_abtesting_v3: any
