@@ -1,11 +1,20 @@
 [
   {
+    "testName": "listABTests with minimal parameters",
+    "parameters": {},
+    "request": {
+      "path": "/3/abtests",
+      "method": "GET"
+    }
+  },
+  {
     "testName": "listABTests with parameters",
     "parameters": {
       "offset": 0,
       "limit": 21,
       "indexPrefix": "cts_e2e ab",
-      "indexSuffix": "t"
+      "indexSuffix": "t",
+      "direction": "asc"
     },
     "request": {
       "path": "/3/abtests",
@@ -14,7 +23,8 @@
         "offset": "0",
         "limit": "21",
         "indexPrefix": "cts_e2e%20ab",
-        "indexSuffix": "t"
+        "indexSuffix": "t",
+        "direction": "asc"
       }
     }
   }
