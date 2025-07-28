@@ -87,7 +87,7 @@
     ],
     "folder": "clients/algoliasearch-client-go",
     "gitRepoId": "algoliasearch-client-go",
-    "packageVersion": "4.22.1",
+    "packageVersion": "4.22.2",
     "modelFolder": "algolia",
     "apiFolder": "algolia",
     "dockerImage": "apic_base",

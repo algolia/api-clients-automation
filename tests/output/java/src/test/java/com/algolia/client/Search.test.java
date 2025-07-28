@@ -119,7 +119,7 @@ class SearchClientClientTests {
   }
 
   @Test
-  @DisplayName("tests the retry strategy error")
+  @DisplayName("tests the retry strategy on timeout")
   void apiTest4() {
     SearchClient client = new SearchClient(
       "test-app-id",
@@ -149,8 +149,44 @@ class SearchClientClientTests {
   }
 
   @Test
-  @DisplayName("test the compression strategy")
+  @DisplayName("tests the retry strategy on 5xx")
   void apiTest5() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6671
+          ),
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6672
+          ),
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6673
+          )
+        ),
+        false
+      )
+    );
+
+    Object res = client.customPost("1/test/error/java");
+
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"status\":\"ok\"}", json.writeValueAsString(res), JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("test the compression strategy")
+  void apiTest6() {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
@@ -190,7 +226,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("calls api with default read timeouts")
-  void apiTest6() {
+  void apiTest7() {
     SearchClient client = createClient();
 
     client.customGet("1/test");
@@ -201,7 +237,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("calls api with default write timeouts")
-  void apiTest7() {
+  void apiTest8() {
     SearchClient client = createClient();
 
     client.customPost("1/test");
@@ -212,7 +248,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("can handle unknown response fields")
-  void apiTest8() {
+  void apiTest9() {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",
@@ -242,7 +278,7 @@ class SearchClientClientTests {
 
   @Test
   @DisplayName("can handle unknown response fields inside a nested oneOf")
-  void apiTest9() {
+  void apiTest10() {
     SearchClient client = new SearchClient(
       "test-app-id",
       "test-api-key",

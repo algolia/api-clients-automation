@@ -76,7 +76,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     assert_equal({:"message" => "ok test server response"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
-  # tests the retry strategy error
+  # tests the retry strategy on timeout
   def test_api4
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
@@ -107,8 +107,41 @@ class TestClientSearchClient < Test::Unit::TestCase
     end
   end
 
-  # test the compression strategy
+  # tests the retry strategy on 5xx
   def test_api5
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6671,
+            accept: CallType::READ | CallType::WRITE
+          ),
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6672,
+            accept: CallType::READ | CallType::WRITE
+          ),
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6673,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    req = client.custom_post("1/test/error/ruby")
+    assert_equal({:"status" => "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+  end
+
+  # test the compression strategy
+  def test_api6
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
         "test-app-id",
@@ -133,7 +166,7 @@ class TestClientSearchClient < Test::Unit::TestCase
   end
 
   # calls api with default read timeouts
-  def test_api6
+  def test_api7
     client = Algolia::SearchClient.create(
       "APP_ID",
       "API_KEY",
@@ -146,7 +179,7 @@ class TestClientSearchClient < Test::Unit::TestCase
   end
 
   # calls api with default write timeouts
-  def test_api7
+  def test_api8
     client = Algolia::SearchClient.create(
       "APP_ID",
       "API_KEY",
@@ -159,7 +192,7 @@ class TestClientSearchClient < Test::Unit::TestCase
   end
 
   # can handle unknown response fields
-  def test_api8
+  def test_api9
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
         "test-app-id",
@@ -183,7 +216,7 @@ class TestClientSearchClient < Test::Unit::TestCase
   end
 
   # can handle unknown response fields inside a nested oneOf
-  def test_api9
+  def test_api10
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
         "test-app-id",

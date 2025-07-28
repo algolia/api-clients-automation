@@ -113,7 +113,7 @@ class SearchTest extends AnyFunSuite {
     assert(parse(write(res)) == parse("{\"message\":\"ok test server response\"}"))
   }
 
-  test("tests the retry strategy error") {
+  test("tests the retry strategy on timeout") {
 
     val client = SearchClient(
       appId = "test-app-id",
@@ -141,6 +141,47 @@ class SearchTest extends AnyFunSuite {
         Duration.Inf
       )
     }
+  }
+
+  test("tests the retry strategy on 5xx") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6671)
+            ),
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6672)
+            ),
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6673)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.customPost[JObject](
+        path = "1/test/error/scala"
+      ),
+      Duration.Inf
+    )
+    assert(parse(write(res)) == parse("{\"status\":\"ok\"}"))
   }
 
   test("test the compression strategy") {

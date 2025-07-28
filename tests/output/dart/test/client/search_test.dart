@@ -90,7 +90,7 @@ void main() {
     }
   });
 
-  test('tests the retry strategy error', () async {
+  test('tests the retry strategy on timeout', () async {
     final requester = RequestInterceptor();
     final client = SearchClient(
         appId: "test-app-id",
@@ -113,6 +113,36 @@ void main() {
         }
       },
     );
+  });
+
+  test('tests the retry strategy on 5xx', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6671',
+              scheme: 'http'),
+          Host.create(
+              url:
+                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6672',
+              scheme: 'http'),
+          Host.create(
+              url:
+                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6673',
+              scheme: 'http'),
+        ]));
+    requester.setOnRequest((request) {});
+    try {
+      final res = await client.customPost(
+        path: "1/test/error/dart",
+      );
+      expectBody(res, """{"status":"ok"}""");
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
   });
 
   test('calls api with default read timeouts', () async {
