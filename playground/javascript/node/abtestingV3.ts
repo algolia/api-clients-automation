@@ -1,11 +1,11 @@
-import { abtestingClient } from '@algolia/abtesting';
+import { abtestingV3Client } from '@algolia/abtesting';
 import { ApiError } from '@algolia/client-common';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
 const apiKey = process.env.ALGOLIA_ANALYTICS_KEY || '**** ANALYTICS_API_KEY *****';
 
 // Init client with appId and apiKey
-const client = abtestingClient(appId, apiKey, 'de');
+const client = abtestingV3Client(appId, apiKey, 'de');
 
 async function testABTesting() {
   try {
