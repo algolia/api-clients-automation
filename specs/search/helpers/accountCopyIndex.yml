@@ -40,6 +40,13 @@ method:
         required: true
         schema:
           type: string
+      - in: query
+        name: batchSize
+        description: The size of the chunk of `objects`. Defaults to 1000.
+        required: false
+        schema:
+          type: integer
+          default: 1000
     responses:
       '400':
         $ref: '../../common/responses/IndexInSameApp.yml'

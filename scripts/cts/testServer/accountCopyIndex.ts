@@ -25,7 +25,7 @@ const aciState: Record<
 export function assertValidAccountCopyIndex(expectedCount: number): void {
   expect(Object.keys(aciState)).to.have.length(expectedCount);
   for (const lang in aciState) {
-    expect(aciState[lang].waitTaskCount).to.equal(4);
+    expect(aciState[lang].waitTaskCount).to.equal(5);
   }
 }
 
@@ -167,23 +167,25 @@ function addRoutes(app: Express): void {
   app.post('/1/indexes/:indexName/browse', (req, res) => {
     const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_source_(.*)$/)?.[1] as string;
     expect(aciState).to.include.keys(lang);
+    expect(req.body.hitsPerPage).to.equal(2);
 
     aciState[lang].browseObjectsCount++;
 
     res.json({
       page: 0,
-      nbHits: 1,
+      nbHits: 4,
       nbPages: 1,
-      hitsPerPage: 1000,
+      hitsPerPage: req.body.hitsPerPage,
       query: '',
       params: '',
-      hits: [{ objectID: 'bar' }],
+      hits: [{ objectID: 'bar' }, { objectID: 'foo' }, { objectID: 'baz' }, { objectID: 'qux' }],
     });
   });
 
   app.post('/1/indexes/:indexName/batch', (req, res) => {
     const lang = req.params.indexName.match(/^cts_e2e_account_copy_index_destination_(.*)$/)?.[1] as string;
     expect(aciState).to.include.keys(lang);
+    expect(req.body.requests).to.have.lengthOf(2);
 
     aciState[lang].saveObjectsCount++;
 
