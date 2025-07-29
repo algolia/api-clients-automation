@@ -14,7 +14,7 @@ import { benchmarkServer } from './benchmark.ts';
 import { chunkWrapperServer } from './chunkWrapper.ts';
 import { errorServer, errorServerRetriedOnce, errorServerRetriedTwice } from './error.ts';
 import { gzipServer } from './gzip.ts';
-import { pushMockServer } from './pushMock.ts';
+import { pushMockServer, pushMockServerRetriedOnce } from './pushMock.ts';
 import { replaceAllObjectsServer } from './replaceAllObjects.ts';
 import { replaceAllObjectsServerFailed } from './replaceAllObjectsFailed.ts';
 import { replaceAllObjectsScopesServer } from './replaceAllObjectsScopes.ts';
@@ -42,6 +42,7 @@ export async function startTestServer(suites: Record<CTSType, boolean>): Promise
       apiKeyServer(),
       algoliaMockServer(),
       pushMockServer(),
+      pushMockServerRetriedOnce(),
       replaceAllObjectsWithTransformationServer(),
     );
   }

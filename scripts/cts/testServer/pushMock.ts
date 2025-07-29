@@ -6,7 +6,15 @@ import express from 'express';
 
 import { setupServer } from './index.ts';
 
-const pushMockState: Record<string, any> = {};
+const pushMockState: Record<
+  string,
+  {
+    retriedEvents: boolean;
+    retriedHosts: boolean;
+    saveObjectsWithTransformation: number;
+    partialUpdateObjectsWithTransformation: number;
+  }
+> = {};
 
 export function assertPushMockValid(expectedCount: number): void {
   if (Object.values(pushMockState).length !== expectedCount) {
@@ -20,6 +28,8 @@ export function assertPushMockValid(expectedCount: number): void {
     }
 
     expect(state).to.deep.equal({
+      retriedHosts: true,
+      retriedEvents: true,
       saveObjectsWithTransformation: Number(numberOfTestSuites),
       partialUpdateObjectsWithTransformation: Number(numberOfTestSuites),
     });
@@ -40,7 +50,16 @@ function addRoutes(app: Express): void {
     const lang = match?.[2] as string;
 
     if (!pushMockState[lang]) {
-      pushMockState[lang] = {};
+      // simulate a retry at the hosts level
+      pushMockState[lang] = {
+        retriedHosts: true,
+        retriedEvents: false,
+        saveObjectsWithTransformation: 0,
+        partialUpdateObjectsWithTransformation: 0,
+      };
+
+      res.status(500).json({ message: 'error test server response' });
+      return;
     }
 
     pushMockState[lang][helper] = (pushMockState[lang][helper] ?? 0) + 1;
@@ -55,7 +74,7 @@ function addRoutes(app: Express): void {
         });
 
         res.json({
-          runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
+          runID: `b1b7a982-524c-40d2-bb7f-48aab075abda_${lang}`,
           eventID: '113b2068-6337-4c85-b5c2-e7b213d82925',
           message: 'OK',
           createdAt: '2022-05-12T06:24:30.049Z',
@@ -72,7 +91,7 @@ function addRoutes(app: Express): void {
         });
 
         res.json({
-          runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
+          runID: `b1b7a982-524c-40d2-bb7f-48aab075abda_${lang}`,
           eventID: '113b2068-6337-4c85-b5c2-e7b213d82925',
           message: 'OK',
           createdAt: '2022-05-12T06:24:30.049Z',
@@ -82,8 +101,32 @@ function addRoutes(app: Express): void {
         throw new Error('unknown helper');
     }
   });
+
+  app.get('/1/runs/:runID/events/:eventID', (req, res) => {
+    const lang = req.params.runID.match(/^b1b7a982-524c-40d2-bb7f-48aab075abda_(.*)$/)?.[1] as string;
+
+    if (pushMockState[lang] && !pushMockState[lang]?.retriedEvents) {
+      pushMockState[lang].retriedEvents = true;
+      res.status(404).json({ message: 'error test server response' });
+
+      return;
+    }
+
+    res.json({
+      status: 'succeeded',
+      eventID: req.params.eventID,
+      runID: req.params.runID,
+      type: 'fetch',
+      batchSize: 1,
+      publishedAt: '2022-05-12T06:24:30.049Z',
+    });
+  });
+}
+
+export function pushMockServerRetriedOnce(): Promise<Server> {
+  return setupServer('pushMockRetriedOnce', 6689, addRoutes);
 }
 
 export function pushMockServer(): Promise<Server> {
-  return setupServer('pushMock', 6689, addRoutes);
+  return setupServer('pushMock', 6688, addRoutes);
 }
