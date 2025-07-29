@@ -2081,6 +2081,7 @@ export async function snippetForPartialUpdateObjectsWithTransformation(): Promis
       { objectID: '2', name: 'Benoit' },
     ],
     createIfNotExists: true,
+    waitForTasks: true,
   });
 
   // >LOG
@@ -2414,6 +2415,7 @@ export async function snippetForSaveObjectsWithTransformation(): Promise<void> {
       { objectID: '1', name: 'Adam' },
       { objectID: '2', name: 'Benoit' },
     ],
+    waitForTasks: true,
   });
 
   // >LOG

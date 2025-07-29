@@ -549,6 +549,12 @@ describe('partialUpdateObjectsWithTransformation', () => {
       hosts: [
         {
           url: 'localhost',
+          port: 6688,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+        {
+          url: 'localhost',
           port: 6689,
           accept: 'readWrite',
           protocol: 'http',
@@ -565,11 +571,12 @@ describe('partialUpdateObjectsWithTransformation', () => {
           { objectID: '2', name: 'Benoit' },
         ],
         createIfNotExists: true,
+        waitForTasks: true,
       });
 
       expect(result).toEqual([
         {
-          runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
+          runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda_javascript',
           eventID: '113b2068-6337-4c85-b5c2-e7b213d82925',
           message: 'OK',
           createdAt: '2022-05-12T06:24:30.049Z',
@@ -871,6 +878,12 @@ describe('saveObjectsWithTransformation', () => {
       hosts: [
         {
           url: 'localhost',
+          port: 6688,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+        {
+          url: 'localhost',
           port: 6689,
           accept: 'readWrite',
           protocol: 'http',
@@ -886,11 +899,12 @@ describe('saveObjectsWithTransformation', () => {
           { objectID: '1', name: 'Adam' },
           { objectID: '2', name: 'Benoit' },
         ],
+        waitForTasks: true,
       });
 
       expect(result).toEqual([
         {
-          runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda',
+          runID: 'b1b7a982-524c-40d2-bb7f-48aab075abda_javascript',
           eventID: '113b2068-6337-4c85-b5c2-e7b213d82925',
           message: 'OK',
           createdAt: '2022-05-12T06:24:30.049Z',

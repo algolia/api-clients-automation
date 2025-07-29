@@ -2677,6 +2677,7 @@ def snippet_for_partial_update_objects_with_transformation():
             },
         ],
         create_if_not_exists=True,
+        wait_for_tasks=True,
     )
 
     # >LOG
@@ -3138,6 +3139,7 @@ def snippet_for_save_objects_with_transformation():
                 "name": "Benoit",
             },
         ],
+        wait_for_tasks=True,
     )
 
     # >LOG

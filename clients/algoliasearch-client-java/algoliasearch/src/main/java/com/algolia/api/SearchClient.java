@@ -6768,6 +6768,25 @@ public class SearchClient extends ApiClient {
    *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+   *     processed, this operation may slow the total execution time of this method but is more
+   *     reliable.
+   * @throws AlgoliaRetryException When the retry has failed on all hosts
+   * @throws AlgoliaApiException When the API sends an http error code
+   * @throws AlgoliaRuntimeException When an error occurred during the serialization
+   */
+  public <T> List<WatchResponse> saveObjectsWithTransformation(String indexName, Iterable<T> objects, boolean waitForTasks) {
+    return saveObjectsWithTransformation(indexName, objects, waitForTasks, null);
+  }
+
+  /**
+   * Helper: Similar to the `saveObjects` method but requires a Push connector
+   * (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/)
+   * to be created first, in order to transform records before indexing them to Algolia. The
+   * `region` must have been passed to the client instantiation method.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    */

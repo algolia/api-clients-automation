@@ -548,7 +548,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('call partialUpdateObjectsWithTransformation with createIfNotExists=true')]
     public function test0partialUpdateObjectsWithTransformation(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6689'])->setTransformationRegion('us'));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6688', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6689'])->setTransformationRegion('us'));
 
         $res = $client->partialUpdateObjectsWithTransformation(
             'cts_e2e_partialUpdateObjectsWithTransformation_php',
@@ -562,9 +562,10 @@ class SearchTest extends TestCase implements HttpClientInterface
                 ],
             ],
             true,
+            true,
         );
         $this->assertEquals(
-            '[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]',
+            '[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_php","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]',
             json_encode($res)
         );
     }
@@ -827,7 +828,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     #[TestDox('call saveObjectsWithTransformation without error')]
     public function test0saveObjectsWithTransformation(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6689'])->setTransformationRegion('us'));
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6688', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6689'])->setTransformationRegion('us'));
 
         $res = $client->saveObjectsWithTransformation(
             'cts_e2e_saveObjectsWithTransformation_php',
@@ -840,9 +841,10 @@ class SearchTest extends TestCase implements HttpClientInterface
                     'name' => 'Benoit',
                 ],
             ],
+            true,
         );
         $this->assertEquals(
-            '[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]',
+            '[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_php","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]',
             json_encode($res)
         );
     }

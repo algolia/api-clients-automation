@@ -1967,6 +1967,7 @@ class SnippetSearchClient {
           }
         }
       ),
+      true,
       true
     );
     // >LOG
@@ -2400,7 +2401,8 @@ class SnippetSearchClient {
             put("name", "Benoit");
           }
         }
-      )
+      ),
+      true
     );
     // >LOG
     // SEPARATOR<

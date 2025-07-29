@@ -682,7 +682,7 @@ func TestSearchpartialUpdateObjectsWithTransformation0(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6689", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6688", call.IsReadWrite), transport.NewStatefulHost("http", tests.GetLocalhost()+":6689", call.IsReadWrite)},
 		},
 		Transformation: &search.TransformationConfiguration{Region: "us"},
 	}
@@ -691,11 +691,11 @@ func TestSearchpartialUpdateObjectsWithTransformation0(t *testing.T) {
 	{
 		res, err = client.PartialUpdateObjectsWithTransformation(
 			"cts_e2e_partialUpdateObjectsWithTransformation_go",
-			[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}}, search.WithCreateIfNotExists(true))
+			[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}}, search.WithCreateIfNotExists(true), search.WithWaitForTasks(true))
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
-		require.JSONEq(t, `[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]`, string(rawBody))
+		require.JSONEq(t, `[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_go","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]`, string(rawBody))
 	}
 }
 
@@ -939,7 +939,7 @@ func TestSearchsaveObjectsWithTransformation0(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6689", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6688", call.IsReadWrite), transport.NewStatefulHost("http", tests.GetLocalhost()+":6689", call.IsReadWrite)},
 		},
 		Transformation: &search.TransformationConfiguration{Region: "us"},
 	}
@@ -948,11 +948,11 @@ func TestSearchsaveObjectsWithTransformation0(t *testing.T) {
 	{
 		res, err = client.SaveObjectsWithTransformation(
 			"cts_e2e_saveObjectsWithTransformation_go",
-			[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}})
+			[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}}, search.WithWaitForTasks(true))
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
-		require.JSONEq(t, `[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]`, string(rawBody))
+		require.JSONEq(t, `[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_go","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]`, string(rawBody))
 	}
 }
 

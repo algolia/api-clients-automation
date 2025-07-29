@@ -2880,7 +2880,7 @@ func SnippetForPartialUpdateObjectsWithTransformationOfSearch() {
 	// Call the API
 	response, err := client.PartialUpdateObjectsWithTransformation(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}}, search.WithCreateIfNotExists(true))
+		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}}, search.WithCreateIfNotExists(true), search.WithWaitForTasks(true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -3255,7 +3255,7 @@ func SnippetForSaveObjectsWithTransformationOfSearch() {
 	// Call the API
 	response, err := client.SaveObjectsWithTransformation(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}})
+		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}}, search.WithWaitForTasks(true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

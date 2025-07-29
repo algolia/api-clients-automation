@@ -2616,6 +2616,7 @@ class SnippetSearchClient
                 ],
             ],
             true,
+            true,
         );
 
         // >LOG
@@ -3069,6 +3070,7 @@ class SnippetSearchClient
                     'name' => 'Benoit',
                 ],
             ],
+            true,
         );
 
         // >LOG
