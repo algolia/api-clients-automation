@@ -1,3 +1,9 @@
+## [4.23.0](https://github.com/algolia/algoliasearch-client-java/compare/4.22.1...4.23.0)
+
+- [050aacef17](https://github.com/algolia/api-clients-automation/commit/050aacef17) chore(deps): dependencies 2025-07-28 ([#5161](https://github.com/algolia/api-clients-automation/pull/5161)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [66bc4eee9e](https://github.com/algolia/api-clients-automation/commit/66bc4eee9e) feat(clients): add new abtesting-v3 package to clients + stabilize alpha js package ([#5157](https://github.com/algolia/api-clients-automation/pull/5157)) by [@leonardogavaudan](https://github.com/leonardogavaudan/)
+- [ede5ee05b7](https://github.com/algolia/api-clients-automation/commit/ede5ee05b7) fix(clients): WithTransformation methods retry logic ([#5183](https://github.com/algolia/api-clients-automation/pull/5183)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [4.22.1](https://github.com/algolia/algoliasearch-client-java/compare/4.22.0...4.22.1)
 
 - [84a1f4e422](https://github.com/algolia/api-clients-automation/commit/84a1f4e422) refactor(specs): add interface to manipulate query parameter between composition API & Search API ([#5123](https://github.com/algolia/api-clients-automation/pull/5123)) by [@ClaraMuller](https://github.com/ClaraMuller/)
