@@ -32,6 +32,7 @@ describe('accountCopyIndex', () => {
         destinationAppID: 'test-app-id-destination',
         destinationApiKey: 'test-api-key-destination',
         destinationIndexName: 'cts_e2e_account_copy_index_destination_javascript',
+        batchSize: 2,
       });
     }
   }, 25000);
