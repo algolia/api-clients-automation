@@ -4088,6 +4088,16 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "in": "query",
+            "name": "batchSize",
+            "description": "The size of the chunk of `objects`. Defaults to 1000.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1000
+            }
           }
         ],
         "responses": {

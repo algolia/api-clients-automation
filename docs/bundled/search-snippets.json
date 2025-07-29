@@ -2346,7 +2346,7 @@
       "default": "import { algoliasearch } from 'algoliasearch';"
     },
     "accountCopyIndex": {
-      "default": "const response = await client.accountCopyIndex({\n  sourceIndexName: 'cts_e2e_account_copy_index_source_javascript',\n  destinationAppID: 'test-app-id-destination',\n  destinationApiKey: 'test-api-key-destination',\n  destinationIndexName: 'cts_e2e_account_copy_index_destination_javascript',\n});"
+      "default": "const response = await client.accountCopyIndex({\n  sourceIndexName: 'cts_e2e_account_copy_index_source_javascript',\n  destinationAppID: 'test-app-id-destination',\n  destinationApiKey: 'test-api-key-destination',\n  destinationIndexName: 'cts_e2e_account_copy_index_destination_javascript',\n  batchSize: 2,\n});"
     },
     "addApiKey": {
       "minimal": "const response = await client.addApiKey({ acl: ['search', 'addObject'], description: 'my new api key' });",
