@@ -138,6 +138,80 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new AbtestingV3Client(
+              new AbtestingV3Config(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
+            );
+
+            // Call the API
+            var response = await client.CustomGetAsync("test/minimal");
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client = AbtestingV3Client(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.customGet(
+              path: "test/minimal",
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtestingV3.ALGOLIA_APPLICATION_REGION
+
+            client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", abtestingV3.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.CustomGet(client.NewApiCustomGetRequest(
+              "test/minimal"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            AbtestingV3Client client = new
+            AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.customGet("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -145,8 +219,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
 
 
             // Call the API
@@ -159,6 +233,129 @@ paths:
             // use typed response
 
             console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingV3Client(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.customGet(
+              path = "test/minimal",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->customGet(
+                'test/minimal',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use AbtestingV3Client instead,
+            which exposes the exact same methods.
+
+            client = AbtestingV3ClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.custom_get(
+                path="test/minimal",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.custom_get("test/minimal")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = AbtestingV3Client(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.customGet[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.customGet(path: "test/minimal")
+
+            // >LOG
     post:
       operationId: customPost
       requestBody:
@@ -188,6 +385,80 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new AbtestingV3Client(
+              new AbtestingV3Config(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
+            );
+
+            // Call the API
+            var response = await client.CustomPostAsync("test/minimal");
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client = AbtestingV3Client(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.customPost(
+              path: "test/minimal",
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtestingV3.ALGOLIA_APPLICATION_REGION
+
+            client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", abtestingV3.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.CustomPost(client.NewApiCustomPostRequest(
+              "test/minimal"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            AbtestingV3Client client = new
+            AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.customPost("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -195,8 +466,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
 
 
             // Call the API
@@ -209,6 +480,129 @@ paths:
             // use typed response
 
             console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingV3Client(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.customPost(
+              path = "test/minimal",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->customPost(
+                'test/minimal',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use AbtestingV3Client instead,
+            which exposes the exact same methods.
+
+            client = AbtestingV3ClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.custom_post(
+                path="test/minimal",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.custom_post("test/minimal")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = AbtestingV3Client(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.customPost[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.customPost(path: "test/minimal")
+
+            // >LOG
     put:
       operationId: customPut
       requestBody:
@@ -238,6 +632,80 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new AbtestingV3Client(
+              new AbtestingV3Config(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
+            );
+
+            // Call the API
+            var response = await client.CustomPutAsync("test/minimal");
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client = AbtestingV3Client(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.customPut(
+              path: "test/minimal",
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtestingV3.ALGOLIA_APPLICATION_REGION
+
+            client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", abtestingV3.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.CustomPut(client.NewApiCustomPutRequest(
+              "test/minimal"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            AbtestingV3Client client = new
+            AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.customPut("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -245,8 +713,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
 
 
             // Call the API
@@ -259,6 +727,129 @@ paths:
             // use typed response
 
             console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingV3Client(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.customPut(
+              path = "test/minimal",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->customPut(
+                'test/minimal',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use AbtestingV3Client instead,
+            which exposes the exact same methods.
+
+            client = AbtestingV3ClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.custom_put(
+                path="test/minimal",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.custom_put("test/minimal")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = AbtestingV3Client(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.customPut[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.customPut(path: "test/minimal")
+
+            // >LOG
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -282,6 +873,81 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new AbtestingV3Client(
+              new AbtestingV3Config(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
+            );
+
+            // Call the API
+            var response = await client.CustomDeleteAsync("test/minimal");
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client = AbtestingV3Client(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.customDelete(
+              path: "test/minimal",
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtestingV3.ALGOLIA_APPLICATION_REGION
+
+            client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", abtestingV3.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.CustomDelete(client.NewApiCustomDeleteRequest(
+              "test/minimal"))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            AbtestingV3Client client = new
+            AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.customDelete("test/minimal");
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -289,8 +955,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
 
 
             // Call the API
@@ -304,6 +970,129 @@ paths:
             // use typed response
 
             console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingV3Client(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.customDelete(
+              path = "test/minimal",
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->customDelete(
+                'test/minimal',
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use AbtestingV3Client instead,
+            which exposes the exact same methods.
+
+            client = AbtestingV3ClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.custom_delete(
+                path="test/minimal",
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.custom_delete("test/minimal")
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = AbtestingV3Client(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.customDelete[JObject](
+                path = "test/minimal"
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.customDelete(path: "test/minimal")
+
+            // >LOG
   /3/abtests:
     post:
       tags:
@@ -369,6 +1158,126 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new AbtestingV3Client(
+              new AbtestingV3Config(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
+            );
+
+            // Call the API
+            var response = await client.AddABTestsAsync(
+              new AddABTestsRequest
+              {
+                EndAt = "2022-12-31T00:00:00.000Z",
+                Name = "myABTest",
+                Metrics = new List<CreateMetric> { new CreateMetric { Name = "myMetric" } },
+                Variants = new List<AddABTestsVariant>
+                {
+                  new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30 }),
+                  new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
+                },
+              }
+            );
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client = AbtestingV3Client(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.addABTests(
+              addABTestsRequest: AddABTestsRequest(
+                endAt: "2022-12-31T00:00:00.000Z",
+                name: "myABTest",
+                metrics: [
+                  CreateMetric(
+                    name: "myMetric",
+                  ),
+                ],
+                variants: [
+                  AbTestsVariant(
+                    index: "AB_TEST_1",
+                    trafficPercentage: 30,
+                  ),
+                  AbTestsVariant(
+                    index: "AB_TEST_2",
+                    trafficPercentage: 50,
+                  ),
+                ],
+              ),
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtestingV3.ALGOLIA_APPLICATION_REGION
+
+            client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", abtestingV3.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.AddABTests(client.NewApiAddABTestsRequest(
+
+              abtestingV3.NewEmptyAddABTestsRequest().SetEndAt("2022-12-31T00:00:00.000Z").SetName("myABTest").SetMetrics(
+                []abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName("myMetric")}).SetVariants(
+                []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
+                  abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
+                  abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            AbtestingV3Client client = new
+            AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.addABTests(
+              new AddABTestsRequest()
+                .setEndAt("2022-12-31T00:00:00.000Z")
+                .setName("myABTest")
+                .setMetrics(Arrays.asList(new CreateMetric().setName("myMetric")))
+                .setVariants(
+                  Arrays.asList(
+                    new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
+                    new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
+                  )
+                )
+            );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -376,8 +1285,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
 
 
             // Call the API
@@ -398,6 +1307,223 @@ paths:
             // use typed response
 
             console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingV3Client(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.addABTests(
+              addABTestsRequest = AddABTestsRequest(
+                endAt = "2022-12-31T00:00:00.000Z",
+                name = "myABTest",
+                metrics = listOf(
+                  CreateMetric(
+                    name = "myMetric",
+                  ),
+                ),
+                variants = listOf(
+                  AbTestsVariant(
+                    index = "AB_TEST_1",
+                    trafficPercentage = 30,
+                  ),
+                  AbTestsVariant(
+                    index = "AB_TEST_2",
+                    trafficPercentage = 50,
+                  ),
+                ),
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->addABTests(
+                ['endAt' => '2022-12-31T00:00:00.000Z',
+                    'name' => 'myABTest',
+                    'metrics' => [
+                        ['name' => 'myMetric',
+                        ],
+                    ],
+                    'variants' => [
+                        ['index' => 'AB_TEST_1',
+                            'trafficPercentage' => 30,
+                        ],
+
+                        ['index' => 'AB_TEST_2',
+                            'trafficPercentage' => 50,
+                        ],
+                    ],
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use AbtestingV3Client instead,
+            which exposes the exact same methods.
+
+            client = AbtestingV3ClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.add_ab_tests(
+                add_ab_tests_request={
+                    "endAt": "2022-12-31T00:00:00.000Z",
+                    "name": "myABTest",
+                    "metrics": [
+                        {
+                            "name": "myMetric",
+                        },
+                    ],
+                    "variants": [
+                        {
+                            "index": "AB_TEST_1",
+                            "trafficPercentage": 30,
+                        },
+                        {
+                            "index": "AB_TEST_2",
+                            "trafficPercentage": 50,
+                        },
+                    ],
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.add_ab_tests(
+              Algolia::AbtestingV3::AddABTestsRequest.new(
+                end_at: "2022-12-31T00:00:00.000Z",
+                name: "myABTest",
+                metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "myMetric")],
+                variants: [
+                  Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
+                  Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
+                ]
+              )
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = AbtestingV3Client(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.addABTests(
+                addABTestsRequest = AddABTestsRequest(
+                  endAt = "2022-12-31T00:00:00.000Z",
+                  name = "myABTest",
+                  metrics = Seq(
+                    CreateMetric(
+                      name = "myMetric"
+                    )
+                  ),
+                  variants = Seq(
+                    AbTestsVariant(
+                      index = "AB_TEST_1",
+                      trafficPercentage = 30
+                    ),
+                    AbTestsVariant(
+                      index = "AB_TEST_2",
+                      trafficPercentage = 50
+                    )
+                  )
+                )
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.addABTests(addABTestsRequest:
+            AbtestingV3AddABTestsRequest(
+                name: "myABTest",
+                variants: [
+                    AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(
+                        index: "AB_TEST_1",
+                        trafficPercentage: 30
+                    )),
+                    AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(
+                        index: "AB_TEST_2",
+                        trafficPercentage: 50
+                    )),
+                ],
+                metrics: [CreateMetric(name: "myMetric")],
+                endAt: "2022-12-31T00:00:00.000Z"
+            ))
+
+            // >LOG
         - lang: cURL
           label: curl
           source: |-
@@ -498,6 +1624,79 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new AbtestingV3Client(
+              new AbtestingV3Config(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
+            );
+
+            // Call the API
+            var response = await client.ListABTestsAsync();
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client = AbtestingV3Client(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.listABTests();
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtestingV3.ALGOLIA_APPLICATION_REGION
+
+            client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", abtestingV3.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.ListABTests(client.NewApiListABTestsRequest())
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            AbtestingV3Client client = new
+            AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.listABTests();
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -505,8 +1704,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
 
 
             // Call the API
@@ -519,6 +1718,122 @@ paths:
             // use typed response
 
             console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingV3Client(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.listABTests()
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->listABTests();
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use AbtestingV3Client instead,
+            which exposes the exact same methods.
+
+            client = AbtestingV3ClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.list_ab_tests()
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.list_ab_tests
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = AbtestingV3Client(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.listABTests(
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.listABTests()
+
+            // >LOG
         - lang: cURL
           label: curl
           source: |-
@@ -561,6 +1876,80 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new AbtestingV3Client(
+              new AbtestingV3Config(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
+            );
+
+            // Call the API
+            var response = await client.GetABTestAsync(42);
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client = AbtestingV3Client(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.getABTest(
+              id: 42,
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtestingV3.ALGOLIA_APPLICATION_REGION
+
+            client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", abtestingV3.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.GetABTest(client.NewApiGetABTestRequest(
+              42))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            AbtestingV3Client client = new
+            AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.getABTest(42);
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -568,8 +1957,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
 
 
             // Call the API
@@ -582,6 +1971,129 @@ paths:
             // use typed response
 
             console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingV3Client(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.getABTest(
+              id = 42,
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->getABTest(
+                42,
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use AbtestingV3Client instead,
+            which exposes the exact same methods.
+
+            client = AbtestingV3ClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.get_ab_test(
+                id=42,
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.get_ab_test(42)
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = AbtestingV3Client(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.getABTest(
+                id = 42
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.getABTest(id: 42)
+
+            // >LOG
         - lang: cURL
           label: curl
           source: |-
@@ -623,6 +2135,81 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new AbtestingV3Client(
+              new AbtestingV3Config(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
+            );
+
+            // Call the API
+            var response = await client.DeleteABTestAsync(42);
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client = AbtestingV3Client(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.deleteABTest(
+              id: 42,
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtestingV3.ALGOLIA_APPLICATION_REGION
+
+            client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", abtestingV3.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.DeleteABTest(client.NewApiDeleteABTestRequest(
+              42))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            AbtestingV3Client client = new
+            AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.deleteABTest(42);
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -630,8 +2217,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
 
 
             // Call the API
@@ -644,6 +2231,129 @@ paths:
             // use typed response
 
             console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingV3Client(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.deleteABTest(
+              id = 42,
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->deleteABTest(
+                42,
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use AbtestingV3Client instead,
+            which exposes the exact same methods.
+
+            client = AbtestingV3ClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.delete_ab_test(
+                id=42,
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.delete_ab_test(42)
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = AbtestingV3Client(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.deleteABTest(
+                id = 42
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.deleteABTest(id: 42)
+
+            // >LOG
         - lang: cURL
           label: curl
           source: |-
@@ -689,6 +2399,80 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new AbtestingV3Client(
+              new AbtestingV3Config(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
+            );
+
+            // Call the API
+            var response = await client.StopABTestAsync(42);
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client = AbtestingV3Client(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.stopABTest(
+              id: 42,
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtestingV3.ALGOLIA_APPLICATION_REGION
+
+            client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", abtestingV3.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.StopABTest(client.NewApiStopABTestRequest(
+              42))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            AbtestingV3Client client = new
+            AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.stopABTest(42);
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -696,8 +2480,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
 
 
             // Call the API
@@ -710,6 +2494,129 @@ paths:
             // use typed response
 
             console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingV3Client(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.stopABTest(
+              id = 42,
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->stopABTest(
+                42,
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use AbtestingV3Client instead,
+            which exposes the exact same methods.
+
+            client = AbtestingV3ClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.stop_ab_test(
+                id=42,
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.stop_ab_test(42)
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = AbtestingV3Client(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.stopABTest(
+                id = 42
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.stopABTest(id: 42)
+
+            // >LOG
         - lang: cURL
           label: curl
           source: |-
@@ -787,6 +2694,130 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new AbtestingV3Client(
+              new AbtestingV3Config(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
+            );
+
+            // Call the API
+            var response = await client.ScheduleABTestAsync(
+              new ScheduleABTestsRequest
+              {
+                EndAt = "2022-12-31T00:00:00.000Z",
+                ScheduledAt = "2022-11-31T00:00:00.000Z",
+                Name = "myABTest",
+                Metrics = new List<CreateMetric> { new CreateMetric { Name = "myMetric" } },
+                Variants = new List<AddABTestsVariant>
+                {
+                  new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30 }),
+                  new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
+                },
+              }
+            );
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client = AbtestingV3Client(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.scheduleABTest(
+              scheduleABTestsRequest: ScheduleABTestsRequest(
+                endAt: "2022-12-31T00:00:00.000Z",
+                scheduledAt: "2022-11-31T00:00:00.000Z",
+                name: "myABTest",
+                metrics: [
+                  CreateMetric(
+                    name: "myMetric",
+                  ),
+                ],
+                variants: [
+                  AbTestsVariant(
+                    index: "AB_TEST_1",
+                    trafficPercentage: 30,
+                  ),
+                  AbTestsVariant(
+                    index: "AB_TEST_2",
+                    trafficPercentage: 50,
+                  ),
+                ],
+              ),
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtestingV3.ALGOLIA_APPLICATION_REGION
+
+            client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", abtestingV3.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.ScheduleABTest(client.NewApiScheduleABTestRequest(
+
+              abtestingV3.NewEmptyScheduleABTestsRequest().SetEndAt("2022-12-31T00:00:00.000Z").SetScheduledAt("2022-11-31T00:00:00.000Z").SetName("myABTest").SetMetrics(
+                []abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName("myMetric")}).SetVariants(
+                []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
+                  abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
+                  abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            AbtestingV3Client client = new
+            AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.scheduleABTest(
+              new ScheduleABTestsRequest()
+                .setEndAt("2022-12-31T00:00:00.000Z")
+                .setScheduledAt("2022-11-31T00:00:00.000Z")
+                .setName("myABTest")
+                .setMetrics(Arrays.asList(new CreateMetric().setName("myMetric")))
+                .setVariants(
+                  Arrays.asList(
+                    new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
+                    new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
+                  )
+                )
+            );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -794,8 +2825,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
 
 
             // Call the API
@@ -817,6 +2848,230 @@ paths:
             // use typed response
 
             console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingV3Client(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.scheduleABTest(
+              scheduleABTestsRequest = ScheduleABTestsRequest(
+                endAt = "2022-12-31T00:00:00.000Z",
+                scheduledAt = "2022-11-31T00:00:00.000Z",
+                name = "myABTest",
+                metrics = listOf(
+                  CreateMetric(
+                    name = "myMetric",
+                  ),
+                ),
+                variants = listOf(
+                  AbTestsVariant(
+                    index = "AB_TEST_1",
+                    trafficPercentage = 30,
+                  ),
+                  AbTestsVariant(
+                    index = "AB_TEST_2",
+                    trafficPercentage = 50,
+                  ),
+                ),
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->scheduleABTest(
+                ['endAt' => '2022-12-31T00:00:00.000Z',
+                    'scheduledAt' => '2022-11-31T00:00:00.000Z',
+                    'name' => 'myABTest',
+                    'metrics' => [
+                        ['name' => 'myMetric',
+                        ],
+                    ],
+                    'variants' => [
+                        ['index' => 'AB_TEST_1',
+                            'trafficPercentage' => 30,
+                        ],
+
+                        ['index' => 'AB_TEST_2',
+                            'trafficPercentage' => 50,
+                        ],
+                    ],
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use AbtestingV3Client instead,
+            which exposes the exact same methods.
+
+            client = AbtestingV3ClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.schedule_ab_test(
+                schedule_ab_tests_request={
+                    "endAt": "2022-12-31T00:00:00.000Z",
+                    "scheduledAt": "2022-11-31T00:00:00.000Z",
+                    "name": "myABTest",
+                    "metrics": [
+                        {
+                            "name": "myMetric",
+                        },
+                    ],
+                    "variants": [
+                        {
+                            "index": "AB_TEST_1",
+                            "trafficPercentage": 30,
+                        },
+                        {
+                            "index": "AB_TEST_2",
+                            "trafficPercentage": 50,
+                        },
+                    ],
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.schedule_ab_test(
+              Algolia::AbtestingV3::ScheduleABTestsRequest.new(
+                end_at: "2022-12-31T00:00:00.000Z",
+                scheduled_at: "2022-11-31T00:00:00.000Z",
+                name: "myABTest",
+                metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "myMetric")],
+                variants: [
+                  Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
+                  Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
+                ]
+              )
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = AbtestingV3Client(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.scheduleABTest(
+                scheduleABTestsRequest = ScheduleABTestsRequest(
+                  endAt = "2022-12-31T00:00:00.000Z",
+                  scheduledAt = "2022-11-31T00:00:00.000Z",
+                  name = "myABTest",
+                  metrics = Seq(
+                    CreateMetric(
+                      name = "myMetric"
+                    )
+                  ),
+                  variants = Seq(
+                    AbTestsVariant(
+                      index = "AB_TEST_1",
+                      trafficPercentage = 30
+                    ),
+                    AbTestsVariant(
+                      index = "AB_TEST_2",
+                      trafficPercentage = 50
+                    )
+                  )
+                )
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await
+            client.scheduleABTest(scheduleABTestsRequest:
+            AbtestingV3ScheduleABTestsRequest(
+                name: "myABTest",
+                variants: [
+                    AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(
+                        index: "AB_TEST_1",
+                        trafficPercentage: 30
+                    )),
+                    AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(
+                        index: "AB_TEST_2",
+                        trafficPercentage: 50
+                    )),
+                ],
+                metrics: [CreateMetric(name: "myMetric")],
+                scheduledAt: "2022-11-31T00:00:00.000Z",
+                endAt: "2022-12-31T00:00:00.000Z"
+            ))
+
+            // >LOG
         - lang: cURL
           label: curl
           source: |-
@@ -893,6 +3148,134 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new AbtestingV3Client(
+              new AbtestingV3Config(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
+            );
+
+            // Call the API
+            var response = await client.EstimateABTestAsync(
+              new EstimateABTestRequest
+              {
+                Configuration = new EstimateConfiguration
+                {
+                  MinimumDetectableEffect = new MinimumDetectableEffect
+                  {
+                    Size = 0.03,
+                    Metric = Enum.Parse<EffectMetric>("ConversionRate"),
+                  },
+                },
+                Variants = new List<AddABTestsVariant>
+                {
+                  new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 50 }),
+                  new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
+                },
+              }
+            );
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client = AbtestingV3Client(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.estimateABTest(
+              estimateABTestRequest: EstimateABTestRequest(
+                configuration: EstimateConfiguration(
+                  minimumDetectableEffect: MinimumDetectableEffect(
+                    size: 0.03,
+                    metric: EffectMetric.fromJson("conversionRate"),
+                  ),
+                ),
+                variants: [
+                  AbTestsVariant(
+                    index: "AB_TEST_1",
+                    trafficPercentage: 50,
+                  ),
+                  AbTestsVariant(
+                    index: "AB_TEST_2",
+                    trafficPercentage: 50,
+                  ),
+                ],
+              ),
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtestingV3.ALGOLIA_APPLICATION_REGION
+
+            client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", abtestingV3.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.EstimateABTest(client.NewApiEstimateABTestRequest(
+
+              abtestingV3.NewEmptyEstimateABTestRequest().SetConfiguration(
+                abtestingV3.NewEmptyEstimateConfiguration().SetMinimumDetectableEffect(
+                  abtestingV3.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtestingV3.EffectMetric("conversionRate")))).SetVariants(
+                []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
+                  abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(50)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
+                  abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            AbtestingV3Client client = new
+            AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.estimateABTest(
+              new EstimateABTestRequest()
+                .setConfiguration(
+                  new EstimateConfiguration().setMinimumDetectableEffect(
+                    new MinimumDetectableEffect().setSize(0.03).setMetric(EffectMetric.CONVERSION_RATE)
+                  )
+                )
+                .setVariants(
+                  Arrays.asList(
+                    new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(50),
+                    new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
+                  )
+                )
+            );
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -900,8 +3283,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
 
 
             // Call the API
@@ -920,6 +3303,223 @@ paths:
             // use typed response
 
             console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingV3Client(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.estimateABTest(
+              estimateABTestRequest = EstimateABTestRequest(
+                configuration = EstimateConfiguration(
+                  minimumDetectableEffect = MinimumDetectableEffect(
+                    size = 0.03,
+                    metric = EffectMetric.entries.first { it.value == "conversionRate" },
+                  ),
+                ),
+                variants = listOf(
+                  AbTestsVariant(
+                    index = "AB_TEST_1",
+                    trafficPercentage = 50,
+                  ),
+                  AbTestsVariant(
+                    index = "AB_TEST_2",
+                    trafficPercentage = 50,
+                  ),
+                ),
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->estimateABTest(
+                ['configuration' => ['minimumDetectableEffect' => ['size' => 0.03,
+                    'metric' => 'conversionRate',
+                ],
+                ],
+                    'variants' => [
+                        ['index' => 'AB_TEST_1',
+                            'trafficPercentage' => 50,
+                        ],
+
+                        ['index' => 'AB_TEST_2',
+                            'trafficPercentage' => 50,
+                        ],
+                    ],
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use AbtestingV3Client instead,
+            which exposes the exact same methods.
+
+            client = AbtestingV3ClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.estimate_ab_test(
+                estimate_ab_test_request={
+                    "configuration": {
+                        "minimumDetectableEffect": {
+                            "size": 0.03,
+                            "metric": "conversionRate",
+                        },
+                    },
+                    "variants": [
+                        {
+                            "index": "AB_TEST_1",
+                            "trafficPercentage": 50,
+                        },
+                        {
+                            "index": "AB_TEST_2",
+                            "trafficPercentage": 50,
+                        },
+                    ],
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.estimate_ab_test(
+              Algolia::AbtestingV3::EstimateABTestRequest.new(
+                configuration: Algolia::AbtestingV3::EstimateConfiguration.new(
+                  minimum_detectable_effect: Algolia::AbtestingV3::MinimumDetectableEffect.new(
+                    size: 0.03,
+                    metric: "conversionRate"
+                  )
+                ),
+                variants: [
+                  Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 50),
+                  Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
+                ]
+              )
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = AbtestingV3Client(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.estimateABTest(
+                estimateABTestRequest = EstimateABTestRequest(
+                  configuration = EstimateConfiguration(
+                    minimumDetectableEffect = MinimumDetectableEffect(
+                      size = 0.03,
+                      metric = EffectMetric.withName("conversionRate")
+                    )
+                  ),
+                  variants = Seq(
+                    AbTestsVariant(
+                      index = "AB_TEST_1",
+                      trafficPercentage = 50
+                    ),
+                    AbTestsVariant(
+                      index = "AB_TEST_2",
+                      trafficPercentage = 50
+                    )
+                  )
+                )
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await
+            client.estimateABTest(estimateABTestRequest:
+            AbtestingV3EstimateABTestRequest(
+                configuration: AbtestingV3EstimateConfiguration(minimumDetectableEffect: AbtestingV3MinimumDetectableEffect(
+                    size: 0.03,
+                    metric: AbtestingV3EffectMetric.conversionRate
+                )),
+                variants: [
+                    AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(
+                        index: "AB_TEST_1",
+                        trafficPercentage: 50
+                    )),
+                    AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(
+                        index: "AB_TEST_2",
+                        trafficPercentage: 50
+                    )),
+                ]
+            ))
+
+            // >LOG
         - lang: cURL
           label: curl
           source: |-
@@ -977,6 +3577,81 @@ paths:
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
       x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new AbtestingV3Client(
+              new AbtestingV3Config(
+                "ALGOLIA_APPLICATION_ID",
+                "ALGOLIA_API_KEY",
+                "ALGOLIA_APPLICATION_REGION"
+              )
+            );
+
+            // Call the API
+            var response = await client.GetTimeseriesAsync(42);
+            // >LOG
+        - lang: dart
+          label: Dart
+          source: |
+            // Initialize the client
+            final client = AbtestingV3Client(
+                appId: 'ALGOLIA_APPLICATION_ID',
+                apiKey: 'ALGOLIA_API_KEY',
+                region: 'ALGOLIA_APPLICATION_REGION');
+
+            // Call the API
+            final response = await client.getTimeseries(
+              id: 42,
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            abtestingV3.ALGOLIA_APPLICATION_REGION
+
+            client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", abtestingV3.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.GetTimeseries(client.NewApiGetTimeseriesRequest(
+              42))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            AbtestingV3Client client = new
+            AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.getTimeseries(42);
+
+            // >LOG
         - lang: javascript
           label: JavaScript
           source: >
@@ -984,8 +3659,8 @@ paths:
 
             // Replace 'us' with your Algolia Application Region
 
-            const client = abtestingClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY', 'us');
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
 
 
             // Call the API
@@ -998,6 +3673,129 @@ paths:
             // use typed response
 
             console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AbtestingV3Client(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.getTimeseries(
+              id = 42,
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->getTimeseries(
+                42,
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use AbtestingV3Client instead,
+            which exposes the exact same methods.
+
+            client = AbtestingV3ClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.get_timeseries(
+                id=42,
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.get_timeseries(42)
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = AbtestingV3Client(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = Option("ALGOLIA_APPLICATION_REGION")
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.getTimeseries(
+                id = 42
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.getTimeseries(id: 42)
+
+            // >LOG
         - lang: cURL
           label: curl
           source: |-
@@ -1636,7 +4434,6 @@ components:
         date:
           type: string
           description: Date where the metric was updated, in RFC 3339 format.
-          format: date
           example: '2025-06-15'
         metrics:
           $ref: '#/components/schemas/metrics'

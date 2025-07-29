@@ -1005,7 +1005,7 @@ final class AnalyticsClientSnippet {
             startDate: "1999-09-19",
             endDate: "2001-01-01",
             orderBy: OrderBy.searchCount,
-            direction: Direction.asc,
+            direction: AnalyticsDirection.asc,
             limit: 21,
             offset: 42,
             tags: "tag"

@@ -11,3 +11,5 @@ dependency_overrides:
     path: ../../../clients/algoliasearch-client-dart/packages/client_recommend
   algolia_client_composition:
     path: ../../../clients/algoliasearch-client-dart/packages/client_composition
+  algolia_client_abtesting_v3:
+    path: ../../../clients/algoliasearch-client-dart/packages/client_abtesting_v3

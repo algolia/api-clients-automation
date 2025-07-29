@@ -1167,7 +1167,7 @@
     },
     "getTopSearches": {
       "get getTopSearches with minimal parameters": "let response = try await client.getTopSearches(index: \"index\")",
-      "get getTopSearches with all parameters": "let response = try await client.getTopSearches(\n    index: \"index\",\n    clickAnalytics: true,\n    revenueAnalytics: true,\n    startDate: \"1999-09-19\",\n    endDate: \"2001-01-01\",\n    orderBy: OrderBy.searchCount,\n    direction: Direction.asc,\n    limit: 21,\n    offset: 42,\n    tags: \"tag\"\n)"
+      "get getTopSearches with all parameters": "let response = try await client.getTopSearches(\n    index: \"index\",\n    clickAnalytics: true,\n    revenueAnalytics: true,\n    startDate: \"1999-09-19\",\n    endDate: \"2001-01-01\",\n    orderBy: OrderBy.searchCount,\n    direction: AnalyticsDirection.asc,\n    limit: 21,\n    offset: 42,\n    tags: \"tag\"\n)"
     },
     "getUsersCount": {
       "get getUsersCount with minimal parameters": "let response = try await client.getUsersCount(index: \"index\")",
