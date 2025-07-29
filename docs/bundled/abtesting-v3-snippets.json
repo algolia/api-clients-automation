@@ -1,11 +1,255 @@
 {
-  "csharp": {},
-  "dart": {},
-  "go": {},
-  "java": {},
+  "csharp": {
+    "import": {
+      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Http;\nusing Algolia.Search.Models.AbtestingV3;"
+    },
+    "addABTests": {
+      "default": "var response = await client.AddABTestsAsync(\n  new AddABTestsRequest\n  {\n    EndAt = \"2022-12-31T00:00:00.000Z\",\n    Name = \"myABTest\",\n    Metrics = new List<CreateMetric> { new CreateMetric { Name = \"myMetric\" } },\n    Variants = new List<AddABTestsVariant>\n    {\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_1\", TrafficPercentage = 30 }),\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_2\", TrafficPercentage = 50 }),\n    },\n  }\n);"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "var response = await client.CustomDeleteAsync(\"test/minimal\");",
+      "allow del method for a custom path with all parameters": "var response = await client.CustomDeleteAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } }\n);"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "var response = await client.CustomGetAsync(\"test/minimal\");",
+      "allow get method for a custom path with all parameters": "var response = await client.CustomGetAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"parameters with space\" } }\n);",
+      "requestOptions should be escaped too": "var response = await client.CustomGetAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"to be overriden\" } },\n  new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"query\", \"parameters with space\")\n    .AddExtraQueryParameters(\"and an array\", new List<object> { \"array\", \"with spaces\" })\n    .AddExtraHeader(\"x-header-1\", \"spaces are left alone\")\n    .Build()\n);"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "var response = await client.CustomPostAsync(\"test/minimal\");",
+      "allow post method for a custom path with all parameters": "var response = await client.CustomPostAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"body\", \"parameters\" } }\n);",
+      "requestOptions can override default query parameters": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraQueryParameters(\"query\", \"myQueryParameter\").Build()\n);",
+      "requestOptions merges query parameters with default ones": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraQueryParameters(\"query2\", \"myQueryParameter\").Build()\n);",
+      "requestOptions can override default headers": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\").Build()\n);",
+      "requestOptions merges headers with default ones": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\").Build()\n);",
+      "requestOptions queryParameters accepts booleans": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraQueryParameters(\"isItWorking\", true).Build()\n);",
+      "requestOptions queryParameters accepts integers": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraQueryParameters(\"myParam\", 2).Build()\n);",
+      "requestOptions queryParameters accepts list of string": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"myParam\", new List<object> { \"b and c\", \"d\" })\n    .Build()\n);",
+      "requestOptions queryParameters accepts list of booleans": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"myParam\", new List<object> { true, true, false })\n    .Build()\n);",
+      "requestOptions queryParameters accepts list of integers": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"myParam\", new List<object> { 1, 2 })\n    .Build()\n);"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "var response = await client.CustomPutAsync(\"test/minimal\");",
+      "allow put method for a custom path with all parameters": "var response = await client.CustomPutAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"body\", \"parameters\" } }\n);"
+    },
+    "deleteABTest": {
+      "default": "var response = await client.DeleteABTestAsync(42);"
+    },
+    "estimateABTest": {
+      "default": "var response = await client.EstimateABTestAsync(\n  new EstimateABTestRequest\n  {\n    Configuration = new EstimateConfiguration\n    {\n      MinimumDetectableEffect = new MinimumDetectableEffect\n      {\n        Size = 0.03,\n        Metric = Enum.Parse<EffectMetric>(\"ConversionRate\"),\n      },\n    },\n    Variants = new List<AddABTestsVariant>\n    {\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_1\", TrafficPercentage = 50 }),\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_2\", TrafficPercentage = 50 }),\n    },\n  }\n);"
+    },
+    "getABTest": {
+      "default": "var response = await client.GetABTestAsync(42);"
+    },
+    "getTimeseries": {
+      "default": "var response = await client.GetTimeseriesAsync(42);"
+    },
+    "listABTests": {
+      "listABTests with minimal parameters": "var response = await client.ListABTestsAsync();",
+      "listABTests with parameters": "var response = await client.ListABTestsAsync(\n  0,\n  21,\n  \"cts_e2e ab\",\n  \"t\",\n  Enum.Parse<Direction>(\"Asc\")\n);"
+    },
+    "scheduleABTest": {
+      "default": "var response = await client.ScheduleABTestAsync(\n  new ScheduleABTestsRequest\n  {\n    EndAt = \"2022-12-31T00:00:00.000Z\",\n    ScheduledAt = \"2022-11-31T00:00:00.000Z\",\n    Name = \"myABTest\",\n    Metrics = new List<CreateMetric> { new CreateMetric { Name = \"myMetric\" } },\n    Variants = new List<AddABTestsVariant>\n    {\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_1\", TrafficPercentage = 30 }),\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_2\", TrafficPercentage = 50 }),\n    },\n  }\n);"
+    },
+    "setClientApiKey": {
+      "default": "client.SetClientApiKey(\"updated-api-key\");"
+    },
+    "stopABTest": {
+      "default": "var response = await client.StopABTestAsync(42);"
+    },
+    "init": {
+      "default": "var client = new AbtestingV3Client(\n  new AbtestingV3Config(\n    \"ALGOLIA_APPLICATION_ID\",\n    \"ALGOLIA_API_KEY\",\n    \"ALGOLIA_APPLICATION_REGION\"\n  )\n);"
+    }
+  },
+  "dart": {
+    "import": {
+      "default": "import 'package:algolia_client_abtesting_v3/algolia_client_abtesting_v3.dart';"
+    },
+    "addABTests": {
+      "default": "final response = await client.addABTests(\n  addABTestsRequest: AddABTestsRequest(\n    endAt: \"2022-12-31T00:00:00.000Z\",\n    name: \"myABTest\",\n    metrics: [\n      CreateMetric(\n        name: \"myMetric\",\n      ),\n    ],\n    variants: [\n      AbTestsVariant(\n        index: \"AB_TEST_1\",\n        trafficPercentage: 30,\n      ),\n      AbTestsVariant(\n        index: \"AB_TEST_2\",\n        trafficPercentage: 50,\n      ),\n    ],\n  ),\n);"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "final response = await client.customDelete(\n  path: \"test/minimal\",\n);",
+      "allow del method for a custom path with all parameters": "final response = await client.customDelete(\n  path: \"test/all\",\n  parameters: {\n    'query': \"parameters\",\n  },\n);"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "final response = await client.customGet(\n  path: \"test/minimal\",\n);",
+      "allow get method for a custom path with all parameters": "final response = await client.customGet(\n  path: \"test/all\",\n  parameters: {\n    'query': \"parameters with space\",\n  },\n);",
+      "requestOptions should be escaped too": "final response = await client.customGet(\n  path: \"test/all\",\n  parameters: {\n    'query': \"to be overriden\",\n  },\n  requestOptions: RequestOptions(\n    headers: {\n      'x-header-1': 'spaces are left alone',\n    },\n    urlParameters: {\n      'query': \"parameters with space\",\n      'and an array': [\n        \"array\",\n        \"with spaces\",\n      ],\n    },\n  ),\n);"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "final response = await client.customPost(\n  path: \"test/minimal\",\n);",
+      "allow post method for a custom path with all parameters": "final response = await client.customPost(\n  path: \"test/all\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'body': \"parameters\",\n  },\n);",
+      "requestOptions can override default query parameters": "final response = await client.customPost(\n  path: \"test/requestOptions\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'facet': \"filters\",\n  },\n  requestOptions: RequestOptions(\n    urlParameters: {\n      'query': \"myQueryParameter\",\n    },\n  ),\n);",
+      "requestOptions merges query parameters with default ones": "final response = await client.customPost(\n  path: \"test/requestOptions\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'facet': \"filters\",\n  },\n  requestOptions: RequestOptions(\n    urlParameters: {\n      'query2': \"myQueryParameter\",\n    },\n  ),\n);",
+      "requestOptions can override default headers": "final response = await client.customPost(\n  path: \"test/requestOptions\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'facet': \"filters\",\n  },\n  requestOptions: RequestOptions(\n    headers: {\n      'x-algolia-api-key': 'ALGOLIA_API_KEY',\n    },\n  ),\n);",
+      "requestOptions merges headers with default ones": "final response = await client.customPost(\n  path: \"test/requestOptions\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'facet': \"filters\",\n  },\n  requestOptions: RequestOptions(\n    headers: {\n      'x-algolia-api-key': 'ALGOLIA_API_KEY',\n    },\n  ),\n);",
+      "requestOptions queryParameters accepts booleans": "final response = await client.customPost(\n  path: \"test/requestOptions\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'facet': \"filters\",\n  },\n  requestOptions: RequestOptions(\n    urlParameters: {\n      'isItWorking': true,\n    },\n  ),\n);",
+      "requestOptions queryParameters accepts integers": "final response = await client.customPost(\n  path: \"test/requestOptions\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'facet': \"filters\",\n  },\n  requestOptions: RequestOptions(\n    urlParameters: {\n      'myParam': 2,\n    },\n  ),\n);",
+      "requestOptions queryParameters accepts list of string": "final response = await client.customPost(\n  path: \"test/requestOptions\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'facet': \"filters\",\n  },\n  requestOptions: RequestOptions(\n    urlParameters: {\n      'myParam': [\n        \"b and c\",\n        \"d\",\n      ],\n    },\n  ),\n);",
+      "requestOptions queryParameters accepts list of booleans": "final response = await client.customPost(\n  path: \"test/requestOptions\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'facet': \"filters\",\n  },\n  requestOptions: RequestOptions(\n    urlParameters: {\n      'myParam': [\n        true,\n        true,\n        false,\n      ],\n    },\n  ),\n);",
+      "requestOptions queryParameters accepts list of integers": "final response = await client.customPost(\n  path: \"test/requestOptions\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'facet': \"filters\",\n  },\n  requestOptions: RequestOptions(\n    urlParameters: {\n      'myParam': [\n        1,\n        2,\n      ],\n    },\n  ),\n);"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "final response = await client.customPut(\n  path: \"test/minimal\",\n);",
+      "allow put method for a custom path with all parameters": "final response = await client.customPut(\n  path: \"test/all\",\n  parameters: {\n    'query': \"parameters\",\n  },\n  body: {\n    'body': \"parameters\",\n  },\n);"
+    },
+    "deleteABTest": {
+      "default": "final response = await client.deleteABTest(\n  id: 42,\n);"
+    },
+    "estimateABTest": {
+      "default": "final response = await client.estimateABTest(\n  estimateABTestRequest: EstimateABTestRequest(\n    configuration: EstimateConfiguration(\n      minimumDetectableEffect: MinimumDetectableEffect(\n        size: 0.03,\n        metric: EffectMetric.fromJson(\"conversionRate\"),\n      ),\n    ),\n    variants: [\n      AbTestsVariant(\n        index: \"AB_TEST_1\",\n        trafficPercentage: 50,\n      ),\n      AbTestsVariant(\n        index: \"AB_TEST_2\",\n        trafficPercentage: 50,\n      ),\n    ],\n  ),\n);"
+    },
+    "getABTest": {
+      "default": "final response = await client.getABTest(\n  id: 42,\n);"
+    },
+    "getTimeseries": {
+      "default": "final response = await client.getTimeseries(\n  id: 42,\n);"
+    },
+    "listABTests": {
+      "listABTests with minimal parameters": "final response = await client.listABTests();",
+      "listABTests with parameters": "final response = await client.listABTests(\n  offset: 0,\n  limit: 21,\n  indexPrefix: \"cts_e2e ab\",\n  indexSuffix: \"t\",\n  direction: Direction.fromJson(\"asc\"),\n);"
+    },
+    "scheduleABTest": {
+      "default": "final response = await client.scheduleABTest(\n  scheduleABTestsRequest: ScheduleABTestsRequest(\n    endAt: \"2022-12-31T00:00:00.000Z\",\n    scheduledAt: \"2022-11-31T00:00:00.000Z\",\n    name: \"myABTest\",\n    metrics: [\n      CreateMetric(\n        name: \"myMetric\",\n      ),\n    ],\n    variants: [\n      AbTestsVariant(\n        index: \"AB_TEST_1\",\n        trafficPercentage: 30,\n      ),\n      AbTestsVariant(\n        index: \"AB_TEST_2\",\n        trafficPercentage: 50,\n      ),\n    ],\n  ),\n);"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey(\n  apiKey: \"updated-api-key\",\n);"
+    },
+    "stopABTest": {
+      "default": "final response = await client.stopABTest(\n  id: 42,\n);"
+    },
+    "init": {
+      "default": "final client = AbtestingV3Client(\n    appId: 'ALGOLIA_APPLICATION_ID',\n    apiKey: 'ALGOLIA_API_KEY',\n    region: 'ALGOLIA_APPLICATION_REGION');"
+    }
+  },
+  "go": {
+    "import": {
+      "default": "import abtestingV3 \"github.com/algolia/algoliasearch-client-go/v4/algolia/abtesting-v3\""
+    },
+    "addABTests": {
+      "default": "response, err := client.AddABTests(client.NewApiAddABTestsRequest(\n\n  abtestingV3.NewEmptyAddABTestsRequest().SetEndAt(\"2022-12-31T00:00:00.000Z\").SetName(\"myABTest\").SetMetrics(\n    []abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName(\"myMetric\")}).SetVariants(\n    []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(\n      abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(\n      abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "allow del method for a custom path with all parameters": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "allow get method for a custom path with all parameters": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters with space\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions should be escaped too": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"to be overriden\"}), abtestingV3.WithQueryParam(\"query\", \"parameters with space\"), abtestingV3.WithQueryParam(\"and an array\",\n  []string{\"array\", \"with spaces\"}), abtestingV3.WithHeaderParam(\"x-header-1\", \"spaces are left alone\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "allow post method for a custom path with all parameters": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"body\": \"parameters\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions can override default query parameters": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), abtestingV3.WithQueryParam(\"query\", \"myQueryParameter\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions merges query parameters with default ones": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), abtestingV3.WithQueryParam(\"query2\", \"myQueryParameter\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions can override default headers": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), abtestingV3.WithHeaderParam(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions merges headers with default ones": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), abtestingV3.WithHeaderParam(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts booleans": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), abtestingV3.WithQueryParam(\"isItWorking\", true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts integers": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), abtestingV3.WithQueryParam(\"myParam\", 2))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts list of string": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), abtestingV3.WithQueryParam(\"myParam\",\n  []string{\"b and c\", \"d\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts list of booleans": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), abtestingV3.WithQueryParam(\"myParam\",\n  []bool{true, true, false}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts list of integers": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), abtestingV3.WithQueryParam(\"myParam\",\n  []int32{1, 2}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "allow put method for a custom path with all parameters": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"body\": \"parameters\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "deleteABTest": {
+      "default": "response, err := client.DeleteABTest(client.NewApiDeleteABTestRequest(\n  42))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "estimateABTest": {
+      "default": "response, err := client.EstimateABTest(client.NewApiEstimateABTestRequest(\n\n  abtestingV3.NewEmptyEstimateABTestRequest().SetConfiguration(\n    abtestingV3.NewEmptyEstimateConfiguration().SetMinimumDetectableEffect(\n      abtestingV3.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtestingV3.EffectMetric(\"conversionRate\")))).SetVariants(\n    []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(\n      abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(50)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(\n      abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "getABTest": {
+      "default": "response, err := client.GetABTest(client.NewApiGetABTestRequest(\n  42))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "getTimeseries": {
+      "default": "response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(\n  42))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "listABTests": {
+      "listABTests with minimal parameters": "response, err := client.ListABTests(client.NewApiListABTestsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "listABTests with parameters": "response, err := client.ListABTests(client.NewApiListABTestsRequest().WithOffset(0).WithLimit(21).WithIndexPrefix(\"cts_e2e ab\").WithIndexSuffix(\"t\").WithDirection(abtestingV3.Direction(\"asc\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "scheduleABTest": {
+      "default": "response, err := client.ScheduleABTest(client.NewApiScheduleABTestRequest(\n\n  abtestingV3.NewEmptyScheduleABTestsRequest().SetEndAt(\"2022-12-31T00:00:00.000Z\").SetScheduledAt(\"2022-11-31T00:00:00.000Z\").SetName(\"myABTest\").SetMetrics(\n    []abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName(\"myMetric\")}).SetVariants(\n    []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(\n      abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(\n      abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "setClientApiKey": {
+      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "stopABTest": {
+      "default": "response, err := client.StopABTest(client.NewApiStopABTestRequest(\n  42))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "init": {
+      "default": "client, err := abtestingV3.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", abtestingV3.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"
+    }
+  },
+  "java": {
+    "import": {
+      "default": "import com.algolia.api.AbtestingV3Client;\nimport com.algolia.config.*;"
+    },
+    "addABTests": {
+      "default": "client.addABTests(\n  new AddABTestsRequest()\n    .setEndAt(\"2022-12-31T00:00:00.000Z\")\n    .setName(\"myABTest\")\n    .setMetrics(Arrays.asList(new CreateMetric().setName(\"myMetric\")))\n    .setVariants(\n      Arrays.asList(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(30),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n);"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "client.customDelete(\"test/minimal\");",
+      "allow del method for a custom path with all parameters": "client.customDelete(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  }\n);"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "client.customGet(\"test/minimal\");",
+      "allow get method for a custom path with all parameters": "client.customGet(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters with space\");\n    }\n  }\n);",
+      "requestOptions should be escaped too": "client.customGet(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"to be overriden\");\n    }\n  },\n  new RequestOptions()\n    .addExtraQueryParameters(\"query\", \"parameters with space\")\n    .addExtraQueryParameters(\"and an array\", Arrays.asList(\"array\", \"with spaces\"))\n    .addExtraHeader(\"x-header-1\", \"spaces are left alone\")\n);"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "client.customPost(\"test/minimal\");",
+      "allow post method for a custom path with all parameters": "client.customPost(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"body\", \"parameters\");\n    }\n  }\n);",
+      "requestOptions can override default query parameters": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"query\", \"myQueryParameter\")\n);",
+      "requestOptions merges query parameters with default ones": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"query2\", \"myQueryParameter\")\n);",
+      "requestOptions can override default headers": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n);",
+      "requestOptions merges headers with default ones": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n);",
+      "requestOptions queryParameters accepts booleans": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"isItWorking\", true)\n);",
+      "requestOptions queryParameters accepts integers": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", 2)\n);",
+      "requestOptions queryParameters accepts list of string": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(\"b and c\", \"d\"))\n);",
+      "requestOptions queryParameters accepts list of booleans": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(true, true, false))\n);",
+      "requestOptions queryParameters accepts list of integers": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(1, 2))\n);"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "client.customPut(\"test/minimal\");",
+      "allow put method for a custom path with all parameters": "client.customPut(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"body\", \"parameters\");\n    }\n  }\n);"
+    },
+    "deleteABTest": {
+      "default": "client.deleteABTest(42);"
+    },
+    "estimateABTest": {
+      "default": "client.estimateABTest(\n  new EstimateABTestRequest()\n    .setConfiguration(\n      new EstimateConfiguration().setMinimumDetectableEffect(\n        new MinimumDetectableEffect().setSize(0.03).setMetric(EffectMetric.CONVERSION_RATE)\n      )\n    )\n    .setVariants(\n      Arrays.asList(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(50),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n);"
+    },
+    "getABTest": {
+      "default": "client.getABTest(42);"
+    },
+    "getTimeseries": {
+      "default": "client.getTimeseries(42);"
+    },
+    "listABTests": {
+      "listABTests with minimal parameters": "client.listABTests();",
+      "listABTests with parameters": "client.listABTests(0, 21, \"cts_e2e ab\", \"t\", Direction.ASC);"
+    },
+    "scheduleABTest": {
+      "default": "client.scheduleABTest(\n  new ScheduleABTestsRequest()\n    .setEndAt(\"2022-12-31T00:00:00.000Z\")\n    .setScheduledAt(\"2022-11-31T00:00:00.000Z\")\n    .setName(\"myABTest\")\n    .setMetrics(Arrays.asList(new CreateMetric().setName(\"myMetric\")))\n    .setVariants(\n      Arrays.asList(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(30),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n);"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey(\"updated-api-key\");"
+    },
+    "stopABTest": {
+      "default": "client.stopABTest(42);"
+    },
+    "init": {
+      "default": "AbtestingV3Client client = new AbtestingV3Client(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\");"
+    }
+  },
   "javascript": {
     "import": {
-      "default": "import { abtestingClient } from '@algolia/abtesting';"
+      "default": "import { algoliasearch } from 'algoliasearch';"
     },
     "addABTests": {
       "default": "const response = await client.addABTests({\n  endAt: '2022-12-31T00:00:00.000Z',\n  name: 'myABTest',\n  metrics: [{ name: 'myMetric' }],\n  variants: [\n    { index: 'AB_TEST_1', trafficPercentage: 30 },\n    { index: 'AB_TEST_2', trafficPercentage: 50 },\n  ],\n});"
@@ -50,7 +294,7 @@
     },
     "listABTests": {
       "listABTests with minimal parameters": "const response = await client.listABTests();",
-      "listABTests with parameters": "const response = await client.listABTests({ offset: 0, limit: 21, indexPrefix: 'cts_e2e ab', indexSuffix: 't' });"
+      "listABTests with parameters": "const response = await client.listABTests({\n  offset: 0,\n  limit: 21,\n  indexPrefix: 'cts_e2e ab',\n  indexSuffix: 't',\n  direction: 'asc',\n});"
     },
     "scheduleABTest": {
       "default": "const response = await client.scheduleABTest({\n  endAt: '2022-12-31T00:00:00.000Z',\n  scheduledAt: '2022-11-31T00:00:00.000Z',\n  name: 'myABTest',\n  metrics: [{ name: 'myMetric' }],\n  variants: [\n    { index: 'AB_TEST_1', trafficPercentage: 30 },\n    { index: 'AB_TEST_2', trafficPercentage: 50 },\n  ],\n});"
@@ -62,13 +306,379 @@
       "default": "const response = await client.stopABTest({ id: 42 });"
     },
     "init": {
-      "default": "// Replace 'us' with your Algolia Application Region\nconst client = abtestingClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'us');"
+      "default": "// Replace 'us' with your Algolia Application Region\nconst client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });"
     }
   },
-  "kotlin": {},
-  "php": {},
-  "python": {},
-  "ruby": {},
-  "scala": {},
-  "swift": {}
+  "kotlin": {
+    "import": {
+      "default": "import com.algolia.client.api.AbtestingV3Client\nimport com.algolia.client.configuration.*\nimport com.algolia.client.transport.*"
+    },
+    "addABTests": {
+      "default": "var response = client.addABTests(\n  addABTestsRequest = AddABTestsRequest(\n    endAt = \"2022-12-31T00:00:00.000Z\",\n    name = \"myABTest\",\n    metrics = listOf(\n      CreateMetric(\n        name = \"myMetric\",\n      ),\n    ),\n    variants = listOf(\n      AbTestsVariant(\n        index = \"AB_TEST_1\",\n        trafficPercentage = 30,\n      ),\n      AbTestsVariant(\n        index = \"AB_TEST_2\",\n        trafficPercentage = 50,\n      ),\n    ),\n  ),\n)"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "var response = client.customDelete(\n  path = \"test/minimal\",\n)",
+      "allow del method for a custom path with all parameters": "var response = client.customDelete(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n)"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "var response = client.customGet(\n  path = \"test/minimal\",\n)",
+      "allow get method for a custom path with all parameters": "var response = client.customGet(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters with space\"),\n)",
+      "requestOptions should be escaped too": "var response = client.customGet(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"to be overriden\"),\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"query\", \"parameters with space\")\n      put(\"and an array\", listOf(\"array\", \"with spaces\"))\n    },\n    headers = buildMap {\n      put(\"x-header-1\", \"spaces are left alone\")\n    },\n  ),\n)"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "var response = client.customPost(\n  path = \"test/minimal\",\n)",
+      "allow post method for a custom path with all parameters": "var response = client.customPost(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"body\",\n      JsonPrimitive(\"parameters\"),\n    )\n  },\n)",
+      "requestOptions can override default query parameters": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"query\", \"myQueryParameter\")\n    },\n  ),\n)",
+      "requestOptions merges query parameters with default ones": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"query2\", \"myQueryParameter\")\n    },\n  ),\n)",
+      "requestOptions can override default headers": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    headers = buildMap {\n      put(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n    },\n  ),\n)",
+      "requestOptions merges headers with default ones": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    headers = buildMap {\n      put(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n    },\n  ),\n)",
+      "requestOptions queryParameters accepts booleans": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"isItWorking\", true)\n    },\n  ),\n)",
+      "requestOptions queryParameters accepts integers": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", 2)\n    },\n  ),\n)",
+      "requestOptions queryParameters accepts list of string": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", listOf(\"b and c\", \"d\"))\n    },\n  ),\n)",
+      "requestOptions queryParameters accepts list of booleans": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", listOf(true, true, false))\n    },\n  ),\n)",
+      "requestOptions queryParameters accepts list of integers": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", listOf(1, 2))\n    },\n  ),\n)"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "var response = client.customPut(\n  path = \"test/minimal\",\n)",
+      "allow put method for a custom path with all parameters": "var response = client.customPut(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"body\",\n      JsonPrimitive(\"parameters\"),\n    )\n  },\n)"
+    },
+    "deleteABTest": {
+      "default": "var response = client.deleteABTest(\n  id = 42,\n)"
+    },
+    "estimateABTest": {
+      "default": "var response = client.estimateABTest(\n  estimateABTestRequest = EstimateABTestRequest(\n    configuration = EstimateConfiguration(\n      minimumDetectableEffect = MinimumDetectableEffect(\n        size = 0.03,\n        metric = EffectMetric.entries.first { it.value == \"conversionRate\" },\n      ),\n    ),\n    variants = listOf(\n      AbTestsVariant(\n        index = \"AB_TEST_1\",\n        trafficPercentage = 50,\n      ),\n      AbTestsVariant(\n        index = \"AB_TEST_2\",\n        trafficPercentage = 50,\n      ),\n    ),\n  ),\n)"
+    },
+    "getABTest": {
+      "default": "var response = client.getABTest(\n  id = 42,\n)"
+    },
+    "getTimeseries": {
+      "default": "var response = client.getTimeseries(\n  id = 42,\n)"
+    },
+    "listABTests": {
+      "listABTests with minimal parameters": "var response = client.listABTests()",
+      "listABTests with parameters": "var response = client.listABTests(\n  offset = 0,\n  limit = 21,\n  indexPrefix = \"cts_e2e ab\",\n  indexSuffix = \"t\",\n  direction = Direction.entries.first { it.value == \"asc\" },\n)"
+    },
+    "scheduleABTest": {
+      "default": "var response = client.scheduleABTest(\n  scheduleABTestsRequest = ScheduleABTestsRequest(\n    endAt = \"2022-12-31T00:00:00.000Z\",\n    scheduledAt = \"2022-11-31T00:00:00.000Z\",\n    name = \"myABTest\",\n    metrics = listOf(\n      CreateMetric(\n        name = \"myMetric\",\n      ),\n    ),\n    variants = listOf(\n      AbTestsVariant(\n        index = \"AB_TEST_1\",\n        trafficPercentage = 30,\n      ),\n      AbTestsVariant(\n        index = \"AB_TEST_2\",\n        trafficPercentage = 50,\n      ),\n    ),\n  ),\n)"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey(\n  apiKey = \"updated-api-key\",\n)"
+    },
+    "stopABTest": {
+      "default": "var response = client.stopABTest(\n  id = 42,\n)"
+    },
+    "init": {
+      "default": "val client = AbtestingV3Client(appId = \"ALGOLIA_APPLICATION_ID\", apiKey = \"ALGOLIA_API_KEY\", region = \"ALGOLIA_APPLICATION_REGION\")"
+    }
+  },
+  "php": {
+    "import": {
+      "default": "use Algolia\\AlgoliaSearch\\Api\\AbtestingV3Client;"
+    },
+    "addABTests": {
+      "default": "$response = $client->addABTests(\n    ['endAt' => '2022-12-31T00:00:00.000Z',\n        'name' => 'myABTest',\n        'metrics' => [\n            ['name' => 'myMetric',\n            ],\n        ],\n        'variants' => [\n            ['index' => 'AB_TEST_1',\n                'trafficPercentage' => 30,\n            ],\n\n            ['index' => 'AB_TEST_2',\n                'trafficPercentage' => 50,\n            ],\n        ],\n    ],\n);"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "$response = $client->customDelete(\n    'test/minimal',\n);",
+      "allow del method for a custom path with all parameters": "$response = $client->customDelete(\n    'test/all',\n    ['query' => 'parameters',\n    ],\n);"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "$response = $client->customGet(\n    'test/minimal',\n);",
+      "allow get method for a custom path with all parameters": "$response = $client->customGet(\n    'test/all',\n    ['query' => 'parameters with space',\n    ],\n);",
+      "requestOptions should be escaped too": "$response = $client->customGet(\n    'test/all',\n    ['query' => 'to be overriden',\n    ],\n    [\n        'queryParameters' => [\n            'query' => 'parameters with space',\n            'and an array' => ['array', 'with spaces',\n            ],\n        ],\n        'headers' => [\n            'x-header-1' => 'spaces are left alone',\n        ],\n    ]\n);"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "$response = $client->customPost(\n    'test/minimal',\n);",
+      "allow post method for a custom path with all parameters": "$response = $client->customPost(\n    'test/all',\n    ['query' => 'parameters',\n    ],\n    ['body' => 'parameters',\n    ],\n);",
+      "requestOptions can override default query parameters": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'query' => 'myQueryParameter',\n        ], ]\n);",
+      "requestOptions merges query parameters with default ones": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'query2' => 'myQueryParameter',\n        ], ]\n);",
+      "requestOptions can override default headers": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'headers' => [\n            'x-algolia-api-key' => 'ALGOLIA_API_KEY',\n        ],\n    ]\n);",
+      "requestOptions merges headers with default ones": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'headers' => [\n            'x-algolia-api-key' => 'ALGOLIA_API_KEY',\n        ],\n    ]\n);",
+      "requestOptions queryParameters accepts booleans": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'isItWorking' => true,\n        ], ]\n);",
+      "requestOptions queryParameters accepts integers": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'myParam' => 2,\n        ], ]\n);",
+      "requestOptions queryParameters accepts list of string": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'myParam' => ['b and c', 'd',\n            ],\n        ], ]\n);",
+      "requestOptions queryParameters accepts list of booleans": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'myParam' => [true, true, false,\n            ],\n        ], ]\n);",
+      "requestOptions queryParameters accepts list of integers": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'myParam' => [1, 2,\n            ],\n        ], ]\n);"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "$response = $client->customPut(\n    'test/minimal',\n);",
+      "allow put method for a custom path with all parameters": "$response = $client->customPut(\n    'test/all',\n    ['query' => 'parameters',\n    ],\n    ['body' => 'parameters',\n    ],\n);"
+    },
+    "deleteABTest": {
+      "default": "$response = $client->deleteABTest(\n    42,\n);"
+    },
+    "estimateABTest": {
+      "default": "$response = $client->estimateABTest(\n    ['configuration' => ['minimumDetectableEffect' => ['size' => 0.03,\n        'metric' => 'conversionRate',\n    ],\n    ],\n        'variants' => [\n            ['index' => 'AB_TEST_1',\n                'trafficPercentage' => 50,\n            ],\n\n            ['index' => 'AB_TEST_2',\n                'trafficPercentage' => 50,\n            ],\n        ],\n    ],\n);"
+    },
+    "getABTest": {
+      "default": "$response = $client->getABTest(\n    42,\n);"
+    },
+    "getTimeseries": {
+      "default": "$response = $client->getTimeseries(\n    42,\n);"
+    },
+    "listABTests": {
+      "listABTests with minimal parameters": "$response = $client->listABTests();",
+      "listABTests with parameters": "$response = $client->listABTests(\n    0,\n    21,\n    'cts_e2e ab',\n    't',\n    'asc',\n);"
+    },
+    "scheduleABTest": {
+      "default": "$response = $client->scheduleABTest(\n    ['endAt' => '2022-12-31T00:00:00.000Z',\n        'scheduledAt' => '2022-11-31T00:00:00.000Z',\n        'name' => 'myABTest',\n        'metrics' => [\n            ['name' => 'myMetric',\n            ],\n        ],\n        'variants' => [\n            ['index' => 'AB_TEST_1',\n                'trafficPercentage' => 30,\n            ],\n\n            ['index' => 'AB_TEST_2',\n                'trafficPercentage' => 50,\n            ],\n        ],\n    ],\n);"
+    },
+    "setClientApiKey": {
+      "default": "$client->setClientApiKey(\n    'updated-api-key',\n);"
+    },
+    "stopABTest": {
+      "default": "$response = $client->stopABTest(\n    42,\n);"
+    },
+    "init": {
+      "default": "$client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');"
+    }
+  },
+  "python": {
+    "import": {
+      "default": "from algoliasearch.abtesting_v3.client import AbtestingV3ClientSync\nfrom json import loads"
+    },
+    "addABTests": {
+      "default": "response = client.add_ab_tests(\n    add_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"metrics\": [\n            {\n                \"name\": \"myMetric\",\n            },\n        ],\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "response = client.custom_delete(\n    path=\"test/minimal\",\n)",
+      "allow del method for a custom path with all parameters": "response = client.custom_delete(\n    path=\"test/all\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n)"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "response = client.custom_get(\n    path=\"test/minimal\",\n)",
+      "allow get method for a custom path with all parameters": "response = client.custom_get(\n    path=\"test/all\",\n    parameters={\n        \"query\": \"parameters with space\",\n    },\n)",
+      "requestOptions should be escaped too": "response = client.custom_get(\n    path=\"test/all\",\n    parameters={\n        \"query\": \"to be overriden\",\n    },\n    request_options={\n        \"headers\": loads(\"\"\"{\"x-header-1\":\"spaces are left alone\"}\"\"\"),\n        \"query_parameters\": loads(\n            \"\"\"{\"query\":\"parameters with space\",\"and an array\":[\"array\",\"with spaces\"]}\"\"\"\n        ),\n    },\n)"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "response = client.custom_post(\n    path=\"test/minimal\",\n)",
+      "allow post method for a custom path with all parameters": "response = client.custom_post(\n    path=\"test/all\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"body\": \"parameters\",\n    },\n)",
+      "requestOptions can override default query parameters": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"query\":\"myQueryParameter\"}\"\"\"),\n    },\n)",
+      "requestOptions merges query parameters with default ones": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"query2\":\"myQueryParameter\"}\"\"\"),\n    },\n)",
+      "requestOptions can override default headers": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"headers\": loads(\"\"\"{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}\"\"\"),\n    },\n)",
+      "requestOptions merges headers with default ones": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"headers\": loads(\"\"\"{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}\"\"\"),\n    },\n)",
+      "requestOptions queryParameters accepts booleans": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"isItWorking\":true}\"\"\"),\n    },\n)",
+      "requestOptions queryParameters accepts integers": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"myParam\":2}\"\"\"),\n    },\n)",
+      "requestOptions queryParameters accepts list of string": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"myParam\":[\"b and c\",\"d\"]}\"\"\"),\n    },\n)",
+      "requestOptions queryParameters accepts list of booleans": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"myParam\":[true,true,false]}\"\"\"),\n    },\n)",
+      "requestOptions queryParameters accepts list of integers": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"myParam\":[1,2]}\"\"\"),\n    },\n)"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "response = client.custom_put(\n    path=\"test/minimal\",\n)",
+      "allow put method for a custom path with all parameters": "response = client.custom_put(\n    path=\"test/all\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"body\": \"parameters\",\n    },\n)"
+    },
+    "deleteABTest": {
+      "default": "response = client.delete_ab_test(\n    id=42,\n)"
+    },
+    "estimateABTest": {
+      "default": "response = client.estimate_ab_test(\n    estimate_ab_test_request={\n        \"configuration\": {\n            \"minimumDetectableEffect\": {\n                \"size\": 0.03,\n                \"metric\": \"conversionRate\",\n            },\n        },\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 50,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)"
+    },
+    "getABTest": {
+      "default": "response = client.get_ab_test(\n    id=42,\n)"
+    },
+    "getTimeseries": {
+      "default": "response = client.get_timeseries(\n    id=42,\n)"
+    },
+    "listABTests": {
+      "listABTests with minimal parameters": "response = client.list_ab_tests()",
+      "listABTests with parameters": "response = client.list_ab_tests(\n    offset=0,\n    limit=21,\n    index_prefix=\"cts_e2e ab\",\n    index_suffix=\"t\",\n    direction=\"asc\",\n)"
+    },
+    "scheduleABTest": {
+      "default": "response = client.schedule_ab_test(\n    schedule_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"scheduledAt\": \"2022-11-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"metrics\": [\n            {\n                \"name\": \"myMetric\",\n            },\n        ],\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)"
+    },
+    "setClientApiKey": {
+      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
+    },
+    "stopABTest": {
+      "default": "response = client.stop_ab_test(\n    id=42,\n)"
+    },
+    "init": {
+      "default": "# In an asynchronous context, you can use AbtestingV3Client instead, which exposes the exact same methods.\nclient = AbtestingV3ClientSync(\n    \"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\"\n)"
+    }
+  },
+  "ruby": {
+    "import": {
+      "default": "require \"algolia\""
+    },
+    "addABTests": {
+      "default": "response = client.add_ab_tests(\n  Algolia::AbtestingV3::AddABTestsRequest.new(\n    end_at: \"2022-12-31T00:00:00.000Z\",\n    name: \"myABTest\",\n    metrics: [Algolia::AbtestingV3::CreateMetric.new(name: \"myMetric\")],\n    variants: [\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_1\", traffic_percentage: 30),\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_2\", traffic_percentage: 50)\n    ]\n  )\n)"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "response = client.custom_delete(\"test/minimal\")",
+      "allow del method for a custom path with all parameters": "response = client.custom_delete(\"test/all\", {query: \"parameters\"})"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "response = client.custom_get(\"test/minimal\")",
+      "allow get method for a custom path with all parameters": "response = client.custom_get(\"test/all\", {query: \"parameters with space\"})",
+      "requestOptions should be escaped too": "response = client.custom_get(\n  \"test/all\",\n  {query: \"to be overriden\"},\n  {\n    :header_params => {\"x-header-1\" => \"spaces are left alone\"},\n    :query_params => JSON.parse(\n      \"{\\\"query\\\":\\\"parameters with space\\\",\\\"and an array\\\":[\\\"array\\\",\\\"with spaces\\\"]}\",\n      :symbolize_names => true\n    )\n  }\n)"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "response = client.custom_post(\"test/minimal\")",
+      "allow post method for a custom path with all parameters": "response = client.custom_post(\"test/all\", {query: \"parameters\"}, {body: \"parameters\"})",
+      "requestOptions can override default query parameters": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"query\\\":\\\"myQueryParameter\\\"}\", :symbolize_names => true)}\n)",
+      "requestOptions merges query parameters with default ones": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"query2\\\":\\\"myQueryParameter\\\"}\", :symbolize_names => true)}\n)",
+      "requestOptions can override default headers": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:header_params => {\"x-algolia-api-key\" => \"ALGOLIA_API_KEY\"}}\n)",
+      "requestOptions merges headers with default ones": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:header_params => {\"x-algolia-api-key\" => \"ALGOLIA_API_KEY\"}}\n)",
+      "requestOptions queryParameters accepts booleans": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"isItWorking\\\":true}\", :symbolize_names => true)}\n)",
+      "requestOptions queryParameters accepts integers": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"myParam\\\":2}\", :symbolize_names => true)}\n)",
+      "requestOptions queryParameters accepts list of string": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"myParam\\\":[\\\"b and c\\\",\\\"d\\\"]}\", :symbolize_names => true)}\n)",
+      "requestOptions queryParameters accepts list of booleans": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"myParam\\\":[true,true,false]}\", :symbolize_names => true)}\n)",
+      "requestOptions queryParameters accepts list of integers": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"myParam\\\":[1,2]}\", :symbolize_names => true)}\n)"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "response = client.custom_put(\"test/minimal\")",
+      "allow put method for a custom path with all parameters": "response = client.custom_put(\"test/all\", {query: \"parameters\"}, {body: \"parameters\"})"
+    },
+    "deleteABTest": {
+      "default": "response = client.delete_ab_test(42)"
+    },
+    "estimateABTest": {
+      "default": "response = client.estimate_ab_test(\n  Algolia::AbtestingV3::EstimateABTestRequest.new(\n    configuration: Algolia::AbtestingV3::EstimateConfiguration.new(\n      minimum_detectable_effect: Algolia::AbtestingV3::MinimumDetectableEffect.new(\n        size: 0.03,\n        metric: \"conversionRate\"\n      )\n    ),\n    variants: [\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_1\", traffic_percentage: 50),\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_2\", traffic_percentage: 50)\n    ]\n  )\n)"
+    },
+    "getABTest": {
+      "default": "response = client.get_ab_test(42)"
+    },
+    "getTimeseries": {
+      "default": "response = client.get_timeseries(42)"
+    },
+    "listABTests": {
+      "listABTests with minimal parameters": "response = client.list_ab_tests",
+      "listABTests with parameters": "response = client.list_ab_tests(0, 21, \"cts_e2e ab\", \"t\", \"asc\")"
+    },
+    "scheduleABTest": {
+      "default": "response = client.schedule_ab_test(\n  Algolia::AbtestingV3::ScheduleABTestsRequest.new(\n    end_at: \"2022-12-31T00:00:00.000Z\",\n    scheduled_at: \"2022-11-31T00:00:00.000Z\",\n    name: \"myABTest\",\n    metrics: [Algolia::AbtestingV3::CreateMetric.new(name: \"myMetric\")],\n    variants: [\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_1\", traffic_percentage: 30),\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_2\", traffic_percentage: 50)\n    ]\n  )\n)"
+    },
+    "setClientApiKey": {
+      "default": "client.set_client_api_key(\"updated-api-key\")"
+    },
+    "stopABTest": {
+      "default": "response = client.stop_ab_test(42)"
+    },
+    "init": {
+      "default": "client = Algolia::AbtestingV3Client.create(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\")"
+    }
+  },
+  "scala": {
+    "import": {
+      "default": "import algoliasearch.api.AbtestingV3Client\nimport algoliasearch.config.*"
+    },
+    "addABTests": {
+      "default": "val response = Await.result(\n  client.addABTests(\n    addABTestsRequest = AddABTestsRequest(\n      endAt = \"2022-12-31T00:00:00.000Z\",\n      name = \"myABTest\",\n      metrics = Seq(\n        CreateMetric(\n          name = \"myMetric\"\n        )\n      ),\n      variants = Seq(\n        AbTestsVariant(\n          index = \"AB_TEST_1\",\n          trafficPercentage = 30\n        ),\n        AbTestsVariant(\n          index = \"AB_TEST_2\",\n          trafficPercentage = 50\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "val response = Await.result(\n  client.customDelete[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "allow del method for a custom path with all parameters": "val response = Await.result(\n  client.customDelete[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"parameters\"))\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "val response = Await.result(\n  client.customGet[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "allow get method for a custom path with all parameters": "val response = Await.result(\n  client.customGet[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"parameters with space\"))\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions should be escaped too": "val response = Await.result(\n  client.customGet[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"to be overriden\")),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"query\", \"parameters with space\")\n        .withQueryParameter(\"and an array\", Seq(\"array\", \"with spaces\"))\n        .withHeader(\"x-header-1\", \"spaces are left alone\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "allow post method for a custom path with all parameters": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"body\", JString(\"parameters\")))))\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions can override default query parameters": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"query\", \"myQueryParameter\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions merges query parameters with default ones": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"query2\", \"myQueryParameter\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions can override default headers": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions merges headers with default ones": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts booleans": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"isItWorking\", true)\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts integers": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"myParam\", 2)\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts list of string": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"myParam\", Seq(\"b and c\", \"d\"))\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts list of booleans": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"myParam\", Seq(true, true, false))\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts list of integers": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"myParam\", Seq(1, 2))\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "val response = Await.result(\n  client.customPut[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "allow put method for a custom path with all parameters": "val response = Await.result(\n  client.customPut[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"body\", JString(\"parameters\")))))\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "deleteABTest": {
+      "default": "val response = Await.result(\n  client.deleteABTest(\n    id = 42\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "estimateABTest": {
+      "default": "val response = Await.result(\n  client.estimateABTest(\n    estimateABTestRequest = EstimateABTestRequest(\n      configuration = EstimateConfiguration(\n        minimumDetectableEffect = MinimumDetectableEffect(\n          size = 0.03,\n          metric = EffectMetric.withName(\"conversionRate\")\n        )\n      ),\n      variants = Seq(\n        AbTestsVariant(\n          index = \"AB_TEST_1\",\n          trafficPercentage = 50\n        ),\n        AbTestsVariant(\n          index = \"AB_TEST_2\",\n          trafficPercentage = 50\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "getABTest": {
+      "default": "val response = Await.result(\n  client.getABTest(\n    id = 42\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "getTimeseries": {
+      "default": "val response = Await.result(\n  client.getTimeseries(\n    id = 42\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "listABTests": {
+      "listABTests with minimal parameters": "val response = Await.result(\n  client.listABTests(\n  ),\n  Duration(100, \"sec\")\n)",
+      "listABTests with parameters": "val response = Await.result(\n  client.listABTests(\n    offset = Some(0),\n    limit = Some(21),\n    indexPrefix = Some(\"cts_e2e ab\"),\n    indexSuffix = Some(\"t\"),\n    direction = Some(Direction.withName(\"asc\"))\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "scheduleABTest": {
+      "default": "val response = Await.result(\n  client.scheduleABTest(\n    scheduleABTestsRequest = ScheduleABTestsRequest(\n      endAt = \"2022-12-31T00:00:00.000Z\",\n      scheduledAt = \"2022-11-31T00:00:00.000Z\",\n      name = \"myABTest\",\n      metrics = Seq(\n        CreateMetric(\n          name = \"myMetric\"\n        )\n      ),\n      variants = Seq(\n        AbTestsVariant(\n          index = \"AB_TEST_1\",\n          trafficPercentage = 30\n        ),\n        AbTestsVariant(\n          index = \"AB_TEST_2\",\n          trafficPercentage = 50\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey(\n  apiKey = \"updated-api-key\"\n)"
+    },
+    "stopABTest": {
+      "default": "val response = Await.result(\n  client.stopABTest(\n    id = 42\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "init": {
+      "default": "val client = AbtestingV3Client(\n  appId = \"ALGOLIA_APPLICATION_ID\",\n  apiKey = \"ALGOLIA_API_KEY\",\n  region = Option(\"ALGOLIA_APPLICATION_REGION\")\n)"
+    }
+  },
+  "swift": {
+    "import": {
+      "default": "import AbtestingV3"
+    },
+    "addABTests": {
+      "default": "let response = try await client.addABTests(addABTestsRequest: AbtestingV3AddABTestsRequest(\n    name: \"myABTest\",\n    variants: [\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_1\",\n            trafficPercentage: 30\n        )),\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_2\",\n            trafficPercentage: 50\n        )),\n    ],\n    metrics: [CreateMetric(name: \"myMetric\")],\n    endAt: \"2022-12-31T00:00:00.000Z\"\n))"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "let response = try await client.customDelete(path: \"test/minimal\")",
+      "allow del method for a custom path with all parameters": "let response = try await client.customDelete(path: \"test/all\", parameters: [\"query\": AnyCodable(\"parameters\")])"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "let response = try await client.customGet(path: \"test/minimal\")",
+      "allow get method for a custom path with all parameters": "let response = try await client.customGet(\n    path: \"test/all\",\n    parameters: [\"query\": AnyCodable(\"parameters with space\")]\n)",
+      "requestOptions should be escaped too": "let response = try await client.customGet(\n    path: \"test/all\",\n    parameters: [\"query\": AnyCodable(\"to be overriden\")],\n    requestOptions: RequestOptions(\n        headers: [\"x-header-1\": \"spaces are left alone\"],\n\n        queryParameters: [\"query\": \"parameters with space\", \"and an array\": [\"array\", \"with spaces\"]]\n    )\n)"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "let response = try await client.customPost(path: \"test/minimal\")",
+      "allow post method for a custom path with all parameters": "let response = try await client.customPost(\n    path: \"test/all\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"body\": \"parameters\"]\n)",
+      "requestOptions can override default query parameters": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        queryParameters: [\"query\": \"myQueryParameter\"]\n    )\n)",
+      "requestOptions merges query parameters with default ones": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        queryParameters: [\"query2\": \"myQueryParameter\"]\n    )\n)",
+      "requestOptions can override default headers": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        headers: [\"x-algolia-api-key\": \"ALGOLIA_API_KEY\"]\n    )\n)",
+      "requestOptions merges headers with default ones": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        headers: [\"x-algolia-api-key\": \"ALGOLIA_API_KEY\"]\n    )\n)",
+      "requestOptions queryParameters accepts booleans": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        queryParameters: [\"isItWorking\": true]\n    )\n)",
+      "requestOptions queryParameters accepts integers": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        queryParameters: [\"myParam\": 2]\n    )\n)",
+      "requestOptions queryParameters accepts list of string": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        queryParameters: [\"myParam\": [\"b and c\", \"d\"]]\n    )\n)",
+      "requestOptions queryParameters accepts list of booleans": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        queryParameters: [\"myParam\": [true, true, false]]\n    )\n)",
+      "requestOptions queryParameters accepts list of integers": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        queryParameters: [\"myParam\": [1, 2]]\n    )\n)"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "let response = try await client.customPut(path: \"test/minimal\")",
+      "allow put method for a custom path with all parameters": "let response = try await client.customPut(\n    path: \"test/all\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"body\": \"parameters\"]\n)"
+    },
+    "deleteABTest": {
+      "default": "let response = try await client.deleteABTest(id: 42)"
+    },
+    "estimateABTest": {
+      "default": "let response = try await client.estimateABTest(estimateABTestRequest: AbtestingV3EstimateABTestRequest(\n    configuration: AbtestingV3EstimateConfiguration(minimumDetectableEffect: AbtestingV3MinimumDetectableEffect(\n        size: 0.03,\n        metric: AbtestingV3EffectMetric.conversionRate\n    )),\n    variants: [\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_1\",\n            trafficPercentage: 50\n        )),\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_2\",\n            trafficPercentage: 50\n        )),\n    ]\n))"
+    },
+    "getABTest": {
+      "default": "let response = try await client.getABTest(id: 42)"
+    },
+    "getTimeseries": {
+      "default": "let response = try await client.getTimeseries(id: 42)"
+    },
+    "listABTests": {
+      "listABTests with minimal parameters": "let response = try await client.listABTests()",
+      "listABTests with parameters": "let response = try await client.listABTests(\n    offset: 0,\n    limit: 21,\n    indexPrefix: \"cts_e2e ab\",\n    indexSuffix: \"t\",\n    direction: AbtestingV3Direction.asc\n)"
+    },
+    "scheduleABTest": {
+      "default": "let response = try await client.scheduleABTest(scheduleABTestsRequest: AbtestingV3ScheduleABTestsRequest(\n    name: \"myABTest\",\n    variants: [\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_1\",\n            trafficPercentage: 30\n        )),\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_2\",\n            trafficPercentage: 50\n        )),\n    ],\n    metrics: [CreateMetric(name: \"myMetric\")],\n    scheduledAt: \"2022-11-31T00:00:00.000Z\",\n    endAt: \"2022-12-31T00:00:00.000Z\"\n))"
+    },
+    "setClientApiKey": {
+      "default": "try client.setClientApiKey(apiKey: \"updated-api-key\")"
+    },
+    "stopABTest": {
+      "default": "let response = try await client.stopABTest(id: 42)"
+    },
+    "init": {
+      "default": "let client = try AbtestingV3Client(appID: \"ALGOLIA_APPLICATION_ID\", apiKey: \"ALGOLIA_API_KEY\", region: .us)"
+    }
+  }
 }

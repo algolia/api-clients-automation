@@ -2,15 +2,15 @@
 /* eslint-disable eslint/no-unused-vars */
 import { describe, expect, test } from 'vitest';
 
-import { abtestingClient } from '@algolia/abtesting';
 import type { EchoResponse } from '@algolia/requester-testing';
 import { nodeEchoRequester } from '@algolia/requester-testing';
+import { algoliasearch } from 'algoliasearch';
 
 const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
 function createClient() {
-  return abtestingClient(appId, apiKey, 'us', { requester: nodeEchoRequester() });
+  return algoliasearch(appId, apiKey).initAbtestingV3({ options: { requester: nodeEchoRequester() }, region: 'us' });
 }
 
 describe('commonApi', () => {
@@ -20,7 +20,7 @@ describe('commonApi', () => {
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
     expect(decodeURIComponent(result.algoliaAgent)).toMatch(
-      /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Abtesting (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/,
+      /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; AbtestingV3 (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/,
     );
   }, 25000);
 
@@ -29,16 +29,19 @@ describe('commonApi', () => {
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(0.0.1-alpha.6\).*/);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(1.0.0\).*/);
   }, 25000);
 });
 
 describe('parameters', () => {
   test('uses the correct region', async () => {
-    const client = abtestingClient('my-app-id', 'my-api-key', 'us', {
-      requester: nodeEchoRequester(),
+    const client = algoliasearch('my-app-id', 'my-api-key').initAbtestingV3({
+      options: {
+        requester: nodeEchoRequester(),
+      },
+      // @ts-ignore
+      region: 'us',
     });
-
     const result = (await client.getABTest({ id: 123 })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('analytics.us.algolia.com');
@@ -47,8 +50,12 @@ describe('parameters', () => {
   test('throws when incorrect region is given', async () => {
     try {
       // @ts-ignore
-      const client = abtestingClient('my-app-id', 'my-api-key', 'not_a_region', {
-        requester: nodeEchoRequester(),
+      const client = algoliasearch('my-app-id', 'my-api-key').initAbtestingV3({
+        options: {
+          requester: nodeEchoRequester(),
+        },
+        // @ts-ignore
+        region: 'not_a_region',
       });
       throw new Error('test is expected to throw error');
     } catch (e) {
@@ -59,17 +66,20 @@ describe('parameters', () => {
 
 describe('setClientApiKey', () => {
   test('switch API key', async () => {
-    const client = abtestingClient('test-app-id', 'test-api-key', 'us', {
-      hosts: [
-        {
-          url: 'localhost',
-          port: 6683,
-          accept: 'readWrite',
-          protocol: 'http',
-        },
-      ],
+    const client = algoliasearch('test-app-id', 'test-api-key').initAbtestingV3({
+      options: {
+        hosts: [
+          {
+            url: 'localhost',
+            port: 6683,
+            accept: 'readWrite',
+            protocol: 'http',
+          },
+        ],
+      },
+      // @ts-ignore
+      region: 'us',
     });
-
     {
       const result = await client.customGet({ path: 'check-api-key/1' });
 
@@ -88,13 +98,13 @@ describe('setClientApiKey', () => {
 
 describe('init', () => {
   test('sets authMode', async () => {
-    const qpClient = abtestingClient('foo', 'bar', 'us', {
-      requester: nodeEchoRequester(),
-      authMode: 'WithinQueryParameters',
+    const qpClient = algoliasearch('foo', 'bar').initAbtestingV3({
+      options: { requester: nodeEchoRequester(), authMode: 'WithinQueryParameters' },
+      region: 'us',
     });
-    const headerClient = abtestingClient('foo', 'bar', 'us', {
-      requester: nodeEchoRequester(),
-      authMode: 'WithinHeaders',
+    const headerClient = algoliasearch('foo', 'bar').initAbtestingV3({
+      options: { requester: nodeEchoRequester(), authMode: 'WithinHeaders' },
+      region: 'us',
     });
 
     const qpResult = (await qpClient.customGet({

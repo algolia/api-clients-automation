@@ -12,6 +12,7 @@
               "type": "string",
               "enum": [
                 "abtesting",
+                "abtesting-v3",
                 "analytics",
                 "composition",
                 "ingestion",

@@ -21,11 +21,17 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.addABTestsWithHTTPInfo(addABTestsRequest: AddABTestsRequest(
+        let response = try await client.addABTestsWithHTTPInfo(addABTestsRequest: AbtestingAddABTestsRequest(
             name: "myABTest",
             variants: [
-                AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_1", trafficPercentage: 30)),
-                AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_2", trafficPercentage: 50)),
+                AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(
+                    index: "AB_TEST_1",
+                    trafficPercentage: 30
+                )),
+                AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(
+                    index: "AB_TEST_2",
+                    trafficPercentage: 50
+                )),
             ],
             endAt: "2022-12-31T00:00:00.000Z"
         ))
@@ -758,19 +764,26 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.estimateABTestWithHTTPInfo(estimateABTestRequest: EstimateABTestRequest(
-            configuration: EstimateConfiguration(
-                emptySearch: EmptySearch(exclude: true),
-                minimumDetectableEffect: MinimumDetectableEffect(
-                    size: 0.03,
-                    metric: EffectMetric.conversionRate
-                )
-            ),
-            variants: [
-                AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_1", trafficPercentage: 50)),
-                AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_2", trafficPercentage: 50)),
-            ]
-        ))
+        let response = try await client
+            .estimateABTestWithHTTPInfo(estimateABTestRequest: AbtestingEstimateABTestRequest(
+                configuration: AbtestingEstimateConfiguration(
+                    emptySearch: EmptySearch(exclude: true),
+                    minimumDetectableEffect: AbtestingMinimumDetectableEffect(
+                        size: 0.03,
+                        metric: AbtestingEffectMetric.conversionRate
+                    )
+                ),
+                variants: [
+                    AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(
+                        index: "AB_TEST_1",
+                        trafficPercentage: 50
+                    )),
+                    AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(
+                        index: "AB_TEST_2",
+                        trafficPercentage: 50
+                    )),
+                ]
+            ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -879,15 +892,22 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.scheduleABTestWithHTTPInfo(scheduleABTestsRequest: ScheduleABTestsRequest(
-            name: "myABTest",
-            variants: [
-                AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_1", trafficPercentage: 30)),
-                AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_2", trafficPercentage: 50)),
-            ],
-            scheduledAt: "2022-11-31T00:00:00.000Z",
-            endAt: "2022-12-31T00:00:00.000Z"
-        ))
+        let response = try await client
+            .scheduleABTestWithHTTPInfo(scheduleABTestsRequest: AbtestingScheduleABTestsRequest(
+                name: "myABTest",
+                variants: [
+                    AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(
+                        index: "AB_TEST_1",
+                        trafficPercentage: 30
+                    )),
+                    AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(
+                        index: "AB_TEST_2",
+                        trafficPercentage: 50
+                    )),
+                ],
+                scheduledAt: "2022-11-31T00:00:00.000Z",
+                endAt: "2022-12-31T00:00:00.000Z"
+            ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 

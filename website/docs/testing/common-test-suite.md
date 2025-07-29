@@ -42,10 +42,6 @@ The list of `queryParameters` must match exactly the actual value, the CTS has t
       "type": "string",
       "description": "The name of the test, defaults to the name of the `operation` (file name). The testName is also used for the documentation snippets as a key to access it inside the snippet JSON object: with a testName equal to `foo` on the `operationIndex` of the `search` client, you can access it from the `search.operationIndex.foo` key."
     },
-    "isSnippet": {
-      "type": "boolean",
-      "description": "Whether this test case should also be a documentation code snippet."
-    },
     "parameters": {
       "type": "object",
       "description": "A free form object that must correspond to the parameters that the method expects."

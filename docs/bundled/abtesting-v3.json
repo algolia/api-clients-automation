@@ -1560,7 +1560,6 @@
           "date": {
             "type": "string",
             "description": "Date where the metric was updated, in RFC 3339 format.",
-            "format": "date",
             "example": "2025-06-15"
           },
           "metrics": {

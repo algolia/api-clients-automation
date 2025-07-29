@@ -16,11 +16,17 @@ final class AbtestingClientSnippet {
         let client = try AbtestingClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
-        let response = try await client.addABTests(addABTestsRequest: AddABTestsRequest(
+        let response = try await client.addABTests(addABTestsRequest: AbtestingAddABTestsRequest(
             name: "myABTest",
             variants: [
-                AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_1", trafficPercentage: 30)),
-                AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_2", trafficPercentage: 50)),
+                AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(
+                    index: "AB_TEST_1",
+                    trafficPercentage: 30
+                )),
+                AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(
+                    index: "AB_TEST_2",
+                    trafficPercentage: 50
+                )),
             ],
             endAt: "2022-12-31T00:00:00.000Z"
         ))
@@ -385,17 +391,23 @@ final class AbtestingClientSnippet {
         let client = try AbtestingClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
-        let response = try await client.estimateABTest(estimateABTestRequest: EstimateABTestRequest(
-            configuration: EstimateConfiguration(
+        let response = try await client.estimateABTest(estimateABTestRequest: AbtestingEstimateABTestRequest(
+            configuration: AbtestingEstimateConfiguration(
                 emptySearch: EmptySearch(exclude: true),
-                minimumDetectableEffect: MinimumDetectableEffect(
+                minimumDetectableEffect: AbtestingMinimumDetectableEffect(
                     size: 0.03,
-                    metric: EffectMetric.conversionRate
+                    metric: AbtestingEffectMetric.conversionRate
                 )
             ),
             variants: [
-                AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_1", trafficPercentage: 50)),
-                AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_2", trafficPercentage: 50)),
+                AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(
+                    index: "AB_TEST_1",
+                    trafficPercentage: 50
+                )),
+                AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(
+                    index: "AB_TEST_2",
+                    trafficPercentage: 50
+                )),
             ]
         ))
         // >LOG
@@ -453,11 +465,17 @@ final class AbtestingClientSnippet {
         let client = try AbtestingClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
-        let response = try await client.scheduleABTest(scheduleABTestsRequest: ScheduleABTestsRequest(
+        let response = try await client.scheduleABTest(scheduleABTestsRequest: AbtestingScheduleABTestsRequest(
             name: "myABTest",
             variants: [
-                AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_1", trafficPercentage: 30)),
-                AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_2", trafficPercentage: 50)),
+                AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(
+                    index: "AB_TEST_1",
+                    trafficPercentage: 30
+                )),
+                AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(
+                    index: "AB_TEST_2",
+                    trafficPercentage: 50
+                )),
             ],
             scheduledAt: "2022-11-31T00:00:00.000Z",
             endAt: "2022-12-31T00:00:00.000Z"

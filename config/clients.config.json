@@ -3,6 +3,7 @@
   "csharp": {
     "clients": [
       "abtesting",
+      "abtesting-v3",
       "analytics",
       "composition",
       "ingestion",
@@ -33,6 +34,10 @@
       {
         "name": "algoliasearch",
         "output": "clients/algoliasearch-client-dart/packages/algoliasearch"
+      },
+      {
+        "name": "abtesting-v3",
+        "output": "clients/algoliasearch-client-dart/packages/client_abtesting_v3"
       },
       {
         "name": "composition",
@@ -69,6 +74,7 @@
   "go": {
     "clients": [
       "abtesting",
+      "abtesting-v3",
       "analytics",
       "composition",
       "ingestion",
@@ -97,6 +103,7 @@
   "java": {
     "clients": [
       "abtesting",
+      "abtesting-v3",
       "analytics",
       "composition",
       "ingestion",
@@ -140,9 +147,7 @@
       },
       {
         "name": "abtesting-v3",
-        "output": "clients/algoliasearch-client-javascript/packages/abtesting",
-        "isStandaloneClient": true,
-        "clientName": "abtesting"
+        "output": "clients/algoliasearch-client-javascript/packages/abtesting"
       },
       {
         "name": "analytics",
@@ -211,6 +216,7 @@
   "kotlin": {
     "clients": [
       "abtesting",
+      "abtesting-v3",
       "analytics",
       "composition",
       "ingestion",
@@ -239,6 +245,7 @@
   "php": {
     "clients": [
       "abtesting",
+      "abtesting-v3",
       "analytics",
       "composition",
       "ingestion",
@@ -267,6 +274,7 @@
   "python": {
     "clients": [
       "abtesting",
+      "abtesting-v3",
       "analytics",
       "composition",
       "ingestion",
@@ -302,6 +310,7 @@
   "ruby": {
     "clients": [
       "abtesting",
+      "abtesting-v3",
       "analytics",
       "composition",
       "ingestion",
@@ -330,6 +339,7 @@
   "scala": {
     "clients": [
       "abtesting",
+      "abtesting-v3",
       "analytics",
       "composition",
       "ingestion",
@@ -358,6 +368,7 @@
   "swift": {
     "clients": [
       "abtesting",
+      "abtesting-v3",
       "analytics",
       "composition",
       "ingestion",

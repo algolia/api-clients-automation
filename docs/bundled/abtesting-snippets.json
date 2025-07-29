@@ -536,7 +536,7 @@
       "default": "import Abtesting"
     },
     "addABTests": {
-      "default": "let response = try await client.addABTests(addABTestsRequest: AddABTestsRequest(\n    name: \"myABTest\",\n    variants: [\n        AddABTestsVariant.abTestsVariant(AbTestsVariant(index: \"AB_TEST_1\", trafficPercentage: 30)),\n        AddABTestsVariant.abTestsVariant(AbTestsVariant(index: \"AB_TEST_2\", trafficPercentage: 50)),\n    ],\n    endAt: \"2022-12-31T00:00:00.000Z\"\n))"
+      "default": "let response = try await client.addABTests(addABTestsRequest: AbtestingAddABTestsRequest(\n    name: \"myABTest\",\n    variants: [\n        AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(\n            index: \"AB_TEST_1\",\n            trafficPercentage: 30\n        )),\n        AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(\n            index: \"AB_TEST_2\",\n            trafficPercentage: 50\n        )),\n    ],\n    endAt: \"2022-12-31T00:00:00.000Z\"\n))"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "let response = try await client.customDelete(path: \"test/minimal\")",
@@ -568,7 +568,7 @@
       "default": "let response = try await client.deleteABTest(id: 42)"
     },
     "estimateABTest": {
-      "default": "let response = try await client.estimateABTest(estimateABTestRequest: EstimateABTestRequest(\n    configuration: EstimateConfiguration(\n        emptySearch: EmptySearch(exclude: true),\n        minimumDetectableEffect: MinimumDetectableEffect(\n            size: 0.03,\n            metric: EffectMetric.conversionRate\n        )\n    ),\n    variants: [\n        AddABTestsVariant.abTestsVariant(AbTestsVariant(index: \"AB_TEST_1\", trafficPercentage: 50)),\n        AddABTestsVariant.abTestsVariant(AbTestsVariant(index: \"AB_TEST_2\", trafficPercentage: 50)),\n    ]\n))"
+      "default": "let response = try await client.estimateABTest(estimateABTestRequest: AbtestingEstimateABTestRequest(\n    configuration: AbtestingEstimateConfiguration(\n        emptySearch: EmptySearch(exclude: true),\n        minimumDetectableEffect: AbtestingMinimumDetectableEffect(\n            size: 0.03,\n            metric: AbtestingEffectMetric.conversionRate\n        )\n    ),\n    variants: [\n        AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(\n            index: \"AB_TEST_1\",\n            trafficPercentage: 50\n        )),\n        AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(\n            index: \"AB_TEST_2\",\n            trafficPercentage: 50\n        )),\n    ]\n))"
     },
     "getABTest": {
       "default": "let response = try await client.getABTest(id: 42)"
@@ -578,7 +578,7 @@
       "listABTests with parameters": "let response = try await client.listABTests(offset: 0, limit: 21, indexPrefix: \"cts_e2e ab\", indexSuffix: \"t\")"
     },
     "scheduleABTest": {
-      "default": "let response = try await client.scheduleABTest(scheduleABTestsRequest: ScheduleABTestsRequest(\n    name: \"myABTest\",\n    variants: [\n        AddABTestsVariant.abTestsVariant(AbTestsVariant(index: \"AB_TEST_1\", trafficPercentage: 30)),\n        AddABTestsVariant.abTestsVariant(AbTestsVariant(index: \"AB_TEST_2\", trafficPercentage: 50)),\n    ],\n    scheduledAt: \"2022-11-31T00:00:00.000Z\",\n    endAt: \"2022-12-31T00:00:00.000Z\"\n))"
+      "default": "let response = try await client.scheduleABTest(scheduleABTestsRequest: AbtestingScheduleABTestsRequest(\n    name: \"myABTest\",\n    variants: [\n        AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(\n            index: \"AB_TEST_1\",\n            trafficPercentage: 30\n        )),\n        AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(\n            index: \"AB_TEST_2\",\n            trafficPercentage: 50\n        )),\n    ],\n    scheduledAt: \"2022-11-31T00:00:00.000Z\",\n    endAt: \"2022-12-31T00:00:00.000Z\"\n))"
     },
     "setClientApiKey": {
       "default": "try client.setClientApiKey(apiKey: \"updated-api-key\")"

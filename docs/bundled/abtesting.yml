@@ -1366,11 +1366,17 @@ paths:
             // Call the API
 
             let response = try await client.addABTests(addABTestsRequest:
-            AddABTestsRequest(
+            AbtestingAddABTestsRequest(
                 name: "myABTest",
                 variants: [
-                    AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_1", trafficPercentage: 30)),
-                    AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_2", trafficPercentage: 50)),
+                    AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(
+                        index: "AB_TEST_1",
+                        trafficPercentage: 30
+                    )),
+                    AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(
+                        index: "AB_TEST_2",
+                        trafficPercentage: 50
+                    )),
                 ],
                 endAt: "2022-12-31T00:00:00.000Z"
             ))
@@ -2757,11 +2763,17 @@ paths:
 
             let response = try await
             client.scheduleABTest(scheduleABTestsRequest:
-            ScheduleABTestsRequest(
+            AbtestingScheduleABTestsRequest(
                 name: "myABTest",
                 variants: [
-                    AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_1", trafficPercentage: 30)),
-                    AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_2", trafficPercentage: 50)),
+                    AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(
+                        index: "AB_TEST_1",
+                        trafficPercentage: 30
+                    )),
+                    AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(
+                        index: "AB_TEST_2",
+                        trafficPercentage: 50
+                    )),
                 ],
                 scheduledAt: "2022-11-31T00:00:00.000Z",
                 endAt: "2022-12-31T00:00:00.000Z"
@@ -3181,17 +3193,24 @@ paths:
             // Call the API
 
             let response = try await
-            client.estimateABTest(estimateABTestRequest: EstimateABTestRequest(
-                configuration: EstimateConfiguration(
+            client.estimateABTest(estimateABTestRequest:
+            AbtestingEstimateABTestRequest(
+                configuration: AbtestingEstimateConfiguration(
                     emptySearch: EmptySearch(exclude: true),
-                    minimumDetectableEffect: MinimumDetectableEffect(
+                    minimumDetectableEffect: AbtestingMinimumDetectableEffect(
                         size: 0.03,
-                        metric: EffectMetric.conversionRate
+                        metric: AbtestingEffectMetric.conversionRate
                     )
                 ),
                 variants: [
-                    AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_1", trafficPercentage: 50)),
-                    AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_2", trafficPercentage: 50)),
+                    AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(
+                        index: "AB_TEST_1",
+                        trafficPercentage: 50
+                    )),
+                    AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(
+                        index: "AB_TEST_2",
+                        trafficPercentage: 50
+                    )),
                 ]
             ))
 

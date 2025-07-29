@@ -40,8 +40,15 @@ public class DartCTSManager implements CTSManager {
   @Override
   public void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles, String output) {
     supportingFiles.add(new SupportingFile("snippets/.gitignore.mustache", output + "/dart/.gitignore"));
-    supportingFiles.add(new SupportingFile("snippets/analysis_options.mustache", output + "/dart/analysis_options.yaml"));
-    supportingFiles.add(new SupportingFile("snippets/pubspec.mustache", output + "/dart/pubspec.yaml"));
-    supportingFiles.add(new SupportingFile("snippets/pubspec_overrides.mustache", output + "/dart/pubspec_overrides.yaml"));
+    supportingFiles.add(new SupportingFile("analysis_options.tests.mustache", output + "/dart/analysis_options.yaml"));
+    supportingFiles.add(new SupportingFile("pubspec.tests.mustache", output + "/dart/pubspec.yaml"));
+    supportingFiles.add(new SupportingFile("pubspec_overrides.tests.mustache", output + "/dart/pubspec_overrides.yaml"));
+  }
+
+  @Override
+  public void addTestsSupportingFiles(List<SupportingFile> supportingFiles) {
+    supportingFiles.add(new SupportingFile("analysis_options.tests.mustache", "tests/output/dart/analysis_options.yaml"));
+    supportingFiles.add(new SupportingFile("pubspec.tests.mustache", "tests/output/dart/pubspec.yaml"));
+    supportingFiles.add(new SupportingFile("pubspec_overrides.tests.mustache", "tests/output/dart/pubspec_overrides.yaml"));
   }
 }

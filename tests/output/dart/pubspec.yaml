@@ -5,15 +5,19 @@ environment:
   sdk: ^3.0.0
 
 dependencies:
-  algoliasearch: ^1.0.0
-  algolia_client_search: ^1.0.0
+  algolia_client_abtesting_v3: ^1.0.0
+  algolia_client_composition: ^1.0.0
   algolia_client_insights: ^1.0.0
   algolia_client_recommend: ^1.0.0
-  algolia_client_composition: ^1.0.0
-  test: ^1.25.8
+  algolia_client_search: ^1.0.0
+  algoliasearch: ^1.0.0
   collection: ^1.17.2
+  dotenv: ^4.1.0
+  http: ^1.2.2
+  test: ^1.25.8
   test_api: ^0.7.3
 
   algolia_client_core: any
+
 dev_dependencies:
   lints: ^6.0.0
