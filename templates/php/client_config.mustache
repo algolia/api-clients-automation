@@ -30,7 +30,17 @@ class {{configClassname}} extends {{#hasRegionalHost}}ConfigWithRegion{{/hasRegi
     }
     {{/hasRegionalHost}}
 
-    {{#isSearchClient}}private $defaultWaitTaskTimeBeforeRetry = 5000; // 5 sec in milliseconds
+    {{#isIngestionClient}}
+    private $defaultWaitTaskTimeBeforeRetry = 5000; // 5 sec in milliseconds
+
+    public function getWaitTaskTimeBeforeRetry()
+    {
+        return $this->config['waitTaskTimeBeforeRetry'];
+    }
+
+    {{/isIngestionClient}}
+    {{#isSearchClient}}
+    private $defaultWaitTaskTimeBeforeRetry = 5000; // 5 sec in milliseconds
     private $defaultMaxRetries = 50;
 
     public static function create($appId, $apiKey)
@@ -98,6 +108,9 @@ class {{configClassname}} extends {{#hasRegionalHost}}ConfigWithRegion{{/hasRegi
             'writeTimeout' => {{#lambda.toSeconds}}{{x-timeouts.server.write}}{{/lambda.toSeconds}},
             'connectTimeout' => {{#lambda.toSeconds}}{{x-timeouts.server.connect}}{{/lambda.toSeconds}},
             'defaultHeaders' => [],
+            {{#isIngestionClient}}
+            'waitTaskTimeBeforeRetry' => $this->defaultWaitTaskTimeBeforeRetry,
+            {{/isIngestionClient}}
             {{#isSearchClient}}
             'region' => null,
             'waitTaskTimeBeforeRetry' => $this->defaultWaitTaskTimeBeforeRetry,
