@@ -16,6 +16,12 @@ public class TaskUtils {
 
   public static <T> T retryUntil(Supplier<T> func, Predicate<T> validate, int maxRetries, IntUnaryOperator timeout)
     throws AlgoliaRuntimeException {
+    if (timeout == null) {
+      timeout = DEFAULT_TIMEOUT;
+    }
+    if (maxRetries == 0) {
+      maxRetries = DEFAULT_MAX_RETRIES;
+    }
     int retryCount = 0;
     while (retryCount < maxRetries) {
       T resp = func.get();
