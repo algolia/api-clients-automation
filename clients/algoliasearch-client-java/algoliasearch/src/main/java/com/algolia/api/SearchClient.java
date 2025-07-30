@@ -7197,8 +7197,8 @@ public class SearchClient extends ApiClient {
   /**
    * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
    * untouched. Replace all records in an index without any downtime. See
-   * https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation
-   * details.
+   * https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for
+   * implementation details.
    *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -7213,8 +7213,8 @@ public class SearchClient extends ApiClient {
   /**
    * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
    * untouched. Replace all records in an index without any downtime. See
-   * https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation
-   * details.
+   * https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for
+   * implementation details.
    *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -7231,8 +7231,8 @@ public class SearchClient extends ApiClient {
   /**
    * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
    * untouched. Replace all records in an index without any downtime. See
-   * https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation
-   * details.
+   * https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for
+   * implementation details.
    *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -7251,8 +7251,8 @@ public class SearchClient extends ApiClient {
   /**
    * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
    * untouched. Replace all records in an index without any downtime. See
-   * https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation
-   * details.
+   * https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for
+   * implementation details.
    *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.

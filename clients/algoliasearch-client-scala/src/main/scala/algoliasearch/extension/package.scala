@@ -419,7 +419,8 @@ package object extension {
       * settings, synonyms and query rules and indexes all passed objects. Finally, the temporary one replaces the
       * existing index.
       *
-      * See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
+      * See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation
+      * details.
       *
       * @param indexName
       *   The index in which to perform the request.
