@@ -1,3 +1,8 @@
+## [2.25.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.24.1...2.25.0)
+
+- [bb777c4b60](https://github.com/algolia/api-clients-automation/commit/bb777c4b60) chore(scripts): correct var env for scala release ([#5182](https://github.com/algolia/api-clients-automation/pull/5182)) by [@millotp](https://github.com/millotp/)
+- [66bc4eee9e](https://github.com/algolia/api-clients-automation/commit/66bc4eee9e) feat(clients): add new abtesting-v3 package to clients + stabilize alpha js package ([#5157](https://github.com/algolia/api-clients-automation/pull/5157)) by [@leonardogavaudan](https://github.com/leonardogavaudan/)
+
 ## [2.24.1](https://github.com/algolia/algoliasearch-client-scala/compare/2.24.0...2.24.1)
 
 - [84a1f4e422](https://github.com/algolia/api-clients-automation/commit/84a1f4e422) refactor(specs): add interface to manipulate query parameter between composition API & Search API ([#5123](https://github.com/algolia/api-clients-automation/pull/5123)) by [@ClaraMuller](https://github.com/ClaraMuller/)
