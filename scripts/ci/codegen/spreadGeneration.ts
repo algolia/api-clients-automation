@@ -99,7 +99,7 @@ async function spreadGeneration(): Promise<void> {
       // ruby tag is already pushed by `rake release`
       if (IS_RELEASE_COMMIT && lang !== 'ruby') {
         // Go needs a 'v' prefix for tags.
-        const tagVersion = lang === 'go' ? `v${version}` : version;
+        const tagVersion = lang === 'go' || lang === 'scala' ? `v${version}` : version;
 
         console.log(`Processing release commit, creating new release tag ('${version}') for '${lang}' repository.`);
 
