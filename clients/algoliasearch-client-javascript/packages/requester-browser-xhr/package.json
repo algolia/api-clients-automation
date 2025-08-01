@@ -40,7 +40,7 @@
     "jsdom": "26.1.0",
     "publint": "0.3.12",
     "tsup": "8.5.0",
-    "typescript": "5.8.3",
+    "typescript": "5.9.2",
     "vitest": "3.2.4",
     "xhr-mock": "2.5.1"
   },
