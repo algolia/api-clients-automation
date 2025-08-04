@@ -1,3 +1,4 @@
+import * as core from '@actions/core';
 import type { components } from '@octokit/openapi-types';
 
 import { exists, getOctokit, run, setVerbose, toAbsolutePath } from '../../common.ts';
@@ -125,8 +126,12 @@ async function waitForAllReleases(languagesReleased: Language[]): Promise<void> 
   }
 
   if (failures.length > 0) {
-    throw new Error(`${failures.join(', ')} failed to release`);
+    console.error(`${failures.join(', ')} releases failed, please check the CI logs.`);
+    core.setOutput('FAILED_RELEASES', failures.join(' '));
   }
+
+  core.setOutput('CAN_PUSH_TO_REPO', true);
+  core.setOutput('RELEASED_LANGUAGES', languagesReleased.filter((lang) => !failures.includes(lang)).join(' '));
 }
 
 if (import.meta.url.endsWith(process.argv[1])) {
