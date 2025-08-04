@@ -131,8 +131,8 @@
     "supportedVersions": [
       "8",
       "11",
-      "21",
-      "17"
+      "17",
+      "21"
     ]
   },
   "javascript": {
