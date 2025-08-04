@@ -693,17 +693,29 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
 
       - name: Wait for all release CI
+        id: waitForAllReleases
         run: yarn workspace scripts waitForAllReleases ${{ steps.spreadGeneration.outputs.PUSHED_LANGUAGES }}
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
 
       - name: Create GitHub release
-        run: yarn workspace scripts createGitHubReleases ${{ steps.spreadGeneration.outputs.PUSHED_LANGUAGES }}
+        run: yarn workspace scripts createGitHubReleases ${{ steps.waitForAllReleases.outputs.RELEASED_LANGUAGES }}
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
 
-      - name: Push generated files to repositories
+      - name: Push generated files to doc/dashboard repositories
         run: yarn workspace scripts pushToRepository
+        if: ${{ steps.waitForAllReleases.outputs.CAN_PUSH_TO_REPO == 'true' }}
         env:
           GH_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+        
+      - name: notify failures
+        uses: slackapi/slack-github-action@v2.1.1
+        if: ${{ steps.waitForAllReleases.outputs.FAILED_RELEASES != '' }}
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_CHANNEL_ID }}
+            text: ":alert: Some clients failed to release :alert: \n${{ steps.waitForAllReleases.outputs.FAILED_RELEASES }}\nYou can retry the CI jobs to release them again, it will not affect already released clients."
