@@ -12,8 +12,8 @@ dependencies {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-        vendor = JvmVendorSpec.ADOPTIUM
+        languageVersion = JavaLanguageVersion.of(21)
+        vendor = JvmVendorSpec.AZUL
     }
 }
 

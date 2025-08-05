@@ -5497,7 +5497,7 @@ __metadata:
     "@algolia/client-common": "link:../../../clients/algoliasearch-client-javascript/packages/client-common"
     "@algolia/requester-node-http": "link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http"
     algoliasearch: "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
-    typescript: "npm:5.8.3"
+    typescript: "npm:5.9.2"
   languageName: unknown
   linkType: soft
 
@@ -5555,7 +5555,7 @@ __metadata:
     "@algolia/client-common": "link:../../../clients/algoliasearch-client-javascript/packages/client-common"
     "@algolia/requester-node-http": "link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http"
     algoliasearch: "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
-    typescript: "npm:5.8.3"
+    typescript: "npm:5.9.2"
   languageName: unknown
   linkType: soft
 
@@ -8388,16 +8388,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.8.3":
-  version: 5.8.3
-  resolution: "typescript@npm:5.8.3"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10/65c40944c51b513b0172c6710ee62e951b70af6f75d5a5da745cb7fab132c09ae27ffdf7838996e3ed603bb015dadd099006658046941bd0ba30340cc563ae92
-  languageName: node
-  linkType: hard
-
 "typescript@npm:5.9.2":
   version: 5.9.2
   resolution: "typescript@npm:5.9.2"
@@ -8425,16 +8415,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10/760f7d92fb383dbf7dee2443bf902f4365db2117f96f875cf809167f6103d55064de973db9f78fe8f31ec08fff52b2c969aee0d310939c0a3798ec75d0bca2e1
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@npm%3A5.8.3#optional!builtin<compat/typescript>":
-  version: 5.8.3
-  resolution: "typescript@patch:typescript@npm%3A5.8.3#optional!builtin<compat/typescript>::version=5.8.3&hash=5786d5"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10/b9b1e73dabac5dc730c041325dbd9c99467c1b0d239f1b74ec3b90d831384af3e2ba973946232df670519147eb51a2c20f6f96163cea2b359f03de1e2091cc4f
   languageName: node
   linkType: hard
 
