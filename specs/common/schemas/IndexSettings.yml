@@ -877,7 +877,7 @@ typoTolerance:
     - type: boolean
       default: true
       description: Whether typo tolerance is active. If true, matches with typos are included in the search results and rank after exact matches.
-    - $ref: './SearchEnums.yml#/typoTolerance'
+    - $ref: './SearchEnums.yml#/typoToleranceEnum'
   x-categories:
     - Typos
 
@@ -956,7 +956,7 @@ facetOrdering:
   additionalProperties: false
   properties:
     facets:
-      $ref: '#/facetsWithOrder'
+      $ref: '#/facets'
     values:
       $ref: '#/values'
 
@@ -1012,7 +1012,7 @@ bannerImageUrl:
     url:
       type: string
 
-facetsWithOrder:
+facets:
   description: Order of facet names.
   type: object
   additionalProperties: false

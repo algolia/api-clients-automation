@@ -10,7 +10,7 @@ alternativesAsExact:
   x-categories:
     - Query strategy
 
-typoTolerance:
+typoToleranceEnum:
   type: string
   title: typo tolerance
   description: |
