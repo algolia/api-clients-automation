@@ -8,24 +8,20 @@ repositories {
     mavenCentral()
 }
 
-java {
-  sourceCompatibility = JavaVersion.VERSION_1_8
-  targetCompatibility = JavaVersion.VERSION_1_8
-}
-
 dependencies {
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
-    api 'com.squareup.okhttp3:okhttp:4.11.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
+    api 'com.squareup.okhttp3:okhttp:5.1.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.1.0'
     implementation 'com.fasterxml.jackson.core:jackson-core:2.15.2'
     api 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
     api 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
     implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
 }
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
     options.compilerArgs += ['-Xlint:deprecation', '-Xlint:unchecked', '-Xlint:cast', '-Xlint:rawtypes']
+    options.release = 8
 }
 
 javadoc {
