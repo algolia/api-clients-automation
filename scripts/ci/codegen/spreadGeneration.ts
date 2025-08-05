@@ -52,7 +52,11 @@ async function spreadGeneration(): Promise<void> {
   if (IS_RELEASE_COMMIT) {
     console.log('Creating new `released` tag for latest commit');
     await run(`git tag ${await getNewReleasedTag()}`);
-    await run('git push --tags');
+    try {
+      await run('git push --tags');
+    } catch (e) {
+      console.error('Failed to push tags, it might already exist, ignoring error.', e);
+    }
   }
 
   const pushed: Language[] = [];
@@ -62,7 +66,7 @@ async function spreadGeneration(): Promise<void> {
       const { tempGitDir } = await cloneRepository({
         lang,
         githubToken,
-        tempDir: process.env.RUNNER_TEMP!,
+        tempDir: process.env.RUNNER_TEMP || '/tmp',
       });
 
       const clientPath = toAbsolutePath(getLanguageFolder(lang));
