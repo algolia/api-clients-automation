@@ -1,0 +1,8 @@
+Conditions:
+  type: object
+  description: Conditions to filter records.
+  properties:
+    facetFilters:
+      $ref: '../../../common/schemas/SearchParams.yml#/facetFilters'
+    numericFilters:
+      $ref: '../../../common/schemas/SearchParams.yml#/numericFilters'

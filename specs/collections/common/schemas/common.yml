@@ -1,0 +1,10 @@
+collectionID:
+  type: string
+  # format: uuid
+  description: Universally unique identifier (UUID) of a collection.
+  example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+
+query:
+  type: string
+  description: Query to filter collections.
+  example: Summer collection

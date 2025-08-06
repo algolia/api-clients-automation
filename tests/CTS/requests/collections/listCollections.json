@@ -1,0 +1,34 @@
+[
+  {
+    "testName": "listCollections",
+    "parameters": {
+      "indexName": "indexName"
+    },
+    "request": {
+      "path": "/1/collections",
+      "method": "GET",
+      "queryParameters": {
+        "indexName": "indexName"
+      }
+    }
+  },
+  {
+    "testName": "listCollections with query, offset and limit",
+    "parameters": {
+      "indexName": "indexName",
+      "query": "Summer",
+      "offset": 100,
+      "limit": 50
+    },
+    "request": {
+      "path": "/1/collections",
+      "method": "GET",
+      "queryParameters": {
+        "indexName": "indexName",
+        "query": "Summer",
+        "offset": "100",
+        "limit": "50"
+      }
+    }
+  }
+]

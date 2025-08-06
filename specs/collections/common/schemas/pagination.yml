@@ -1,0 +1,30 @@
+Pagination:
+  type: object
+  description: Paginated API response.
+  additionalProperties: false
+  properties:
+    total:
+      type: integer
+      minimum: 0
+      description: Total number of items across all pages.
+    limit:
+      $ref: '#/limit'
+    offset:
+      $ref: '#/offset'
+  required:
+    - total
+    - limit
+    - offset
+
+limit:
+  type: integer
+  description: Number of items to fetch.
+  minimum: 1
+  maximum: 50
+  default: 10
+
+offset:
+  type: integer
+  description: Number of items to skip.
+  minimum: 0
+  default: 0

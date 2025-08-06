@@ -1,0 +1,12 @@
+[
+  {
+    "testName": "deleteCollection",
+    "parameters": {
+      "collectionID": "75eeb306-51d3-4e5e-a279-3c92bd8893ac"
+    },
+    "request": {
+      "path": "/1/collections/75eeb306-51d3-4e5e-a279-3c92bd8893ac",
+      "method": "DELETE"
+    }
+  }
+]
