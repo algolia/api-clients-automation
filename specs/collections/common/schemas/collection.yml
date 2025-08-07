@@ -12,11 +12,15 @@ Collection:
       example: 'prod_products_EN'
     createdAt:
       type: string
-      format: date-time
+      # format: date-time
+      description: |
+        Date and time when the collection was created, in RFC 3339 format.
       example: '2024-10-07T00:00:00Z'
     updatedAt:
       type: string
-      format: date-time
+      # format: date-time
+      description: |
+        Date and time when the collection was last updated, in RFC 3339 format.
       example: '2024-10-07T00:00:00Z'
     status:
       $ref: '#/CollectionStatus'

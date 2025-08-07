@@ -17,8 +17,8 @@
     "parameters": {
       "indexName": "indexName",
       "query": "Summer",
-      "offset": 100,
-      "limit": 50
+      "limit": 50,
+      "offset": 100
     },
     "request": {
       "path": "/1/collections",
@@ -26,8 +26,8 @@
       "queryParameters": {
         "indexName": "indexName",
         "query": "Summer",
-        "offset": "100",
-        "limit": "50"
+        "limit": "50",
+        "offset": "100"
       }
     }
   }
