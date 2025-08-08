@@ -1516,6 +1516,96 @@
           }
         }
       },
+      "attributesToRetrieve": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "example": [
+          "author",
+          "title",
+          "content"
+        ],
+        "description": "Attributes to include in the API response\nTo reduce the size of your response, you can retrieve only some of the attributes.\nAttribute names are case-sensitive\n- `*` retrieves all attributes, except attributes included in the `customRanking` and `unretrievableAttributes` settings.\n- To retrieve all attributes except a specific one, prefix the attribute with a dash and combine it with the `*`: `[\"*\", \"-ATTRIBUTE\"]`.\n- The `objectID` attribute is always included.\n",
+        "default": [
+          "*"
+        ],
+        "x-categories": [
+          "Attributes"
+        ]
+      },
+      "relevancyStrictness": {
+        "type": "integer",
+        "example": 90,
+        "description": "Relevancy threshold below which less relevant results aren't included in the results\nYou can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).\nUse this setting to strike a balance between the relevance and number of returned results.\n",
+        "default": 100,
+        "x-categories": [
+          "Ranking"
+        ]
+      },
+      "attributesToHighlight": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "example": [
+          "author",
+          "title",
+          "conten",
+          "content"
+        ],
+        "description": "Attributes to highlight\nBy default, all searchable attributes are highlighted.\nUse `*` to highlight all attributes or use an empty array `[]` to turn off highlighting.\nAttribute names are case-sensitive\nWith highlighting, strings that match the search query are surrounded by HTML tags defined by `highlightPreTag` and `highlightPostTag`.\nYou can use this to visually highlight matching parts of a search query in your UI\nFor more information, see [Highlighting and snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js/).\n",
+        "x-categories": [
+          "Highlighting and Snippeting"
+        ]
+      },
+      "attributesToSnippet": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "example": [
+          "content:80",
+          "description"
+        ],
+        "description": "Attributes for which to enable snippets.\nAttribute names are case-sensitive\nSnippets provide additional context to matched words.\nIf you enable snippets, they include 10 words, including the matched word.\nThe matched word will also be wrapped by HTML tags for highlighting.\nYou can adjust the number of words with the following notation: `ATTRIBUTE:NUMBER`,\nwhere `NUMBER` is the number of words to be extracted.\n",
+        "default": [],
+        "x-categories": [
+          "Highlighting and Snippeting"
+        ]
+      },
+      "highlightPreTag": {
+        "type": "string",
+        "description": "HTML tag to insert before the highlighted parts in all highlighted results and snippets.",
+        "default": "<em>",
+        "x-categories": [
+          "Highlighting and Snippeting"
+        ]
+      },
+      "highlightPostTag": {
+        "type": "string",
+        "description": "HTML tag to insert after the highlighted parts in all highlighted results and snippets.",
+        "default": "</em>",
+        "x-categories": [
+          "Highlighting and Snippeting"
+        ]
+      },
+      "snippetEllipsisText": {
+        "type": "string",
+        "description": "String used as an ellipsis indicator when a snippet is truncated.",
+        "default": "…",
+        "x-categories": [
+          "Highlighting and Snippeting"
+        ]
+      },
+      "restrictHighlightAndSnippetArrays": {
+        "type": "boolean",
+        "description": "Whether to restrict highlighting and snippeting to items that at least partially matched the search query.\nBy default, all items are highlighted and snippeted.\n",
+        "default": false,
+        "x-categories": [
+          "Highlighting and Snippeting"
+        ]
+      },
       "hitsPerPage": {
         "type": "integer",
         "description": "Number of hits per page.",
@@ -1524,6 +1614,22 @@
         "maximum": 1000,
         "x-categories": [
           "Pagination"
+        ]
+      },
+      "minWordSizefor1Typo": {
+        "type": "integer",
+        "description": "Minimum number of characters a word in the search query must contain to accept matches with [one typo](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).",
+        "default": 4,
+        "x-categories": [
+          "Typos"
+        ]
+      },
+      "minWordSizefor2Typos": {
+        "type": "integer",
+        "description": "Minimum number of characters a word in the search query must contain to accept matches with [two typos](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).",
+        "default": 8,
+        "x-categories": [
+          "Typos"
         ]
       },
       "typoToleranceEnum": {
@@ -1549,6 +1655,28 @@
             "$ref": "#/components/schemas/typoToleranceEnum"
           }
         ],
+        "x-categories": [
+          "Typos"
+        ]
+      },
+      "allowTyposOnNumericTokens": {
+        "type": "boolean",
+        "description": "Whether to allow typos on numbers in the search query\nTurn off this setting to reduce the number of irrelevant matches\nwhen searching in large sets of similar numbers.\n",
+        "default": true,
+        "x-categories": [
+          "Typos"
+        ]
+      },
+      "disableTypoToleranceOnAttributes": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "example": [
+          "sku"
+        ],
+        "description": "Attributes for which you want to turn off [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).\nAttribute names are case-sensitive\nReturning only exact matches can help when\n- [Searching in hyphenated attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/).\n- Reducing the number of matches when you have too many.\n  This can happen with attributes that are long blocks of text, such as product descriptions\nConsider alternatives such as `disableTypoToleranceOnWords` or adding synonyms if your attributes have intentional unusual spellings that might look like typos.\n",
+        "default": [],
         "x-categories": [
           "Typos"
         ]
@@ -1611,6 +1739,44 @@
           "Languages"
         ]
       },
+      "queryLanguages": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/supportedLanguage"
+        },
+        "example": [
+          "es"
+        ],
+        "description": "Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries \nThis setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings.\nThis setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages.\nTo support this, you must place the CJK language **first** \n**You should always specify a query language.**\nIf you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),\nor the languages you specified with the `ignorePlurals` or `removeStopWords` parameters.\nThis can lead to unexpected search results.\nFor more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).\n",
+        "default": [],
+        "x-categories": [
+          "Languages"
+        ]
+      },
+      "decompoundQuery": {
+        "type": "boolean",
+        "description": "Whether to split compound words in the query into their building blocks\nFor more information, see [Word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words).\nWord segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and Norwegian.\nDecompounding doesn't work for words with [non-spacing mark Unicode characters](https://www.charactercodes.net/category/non-spacing_mark).\nFor example, `Gartenstühle` won't be decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).\n",
+        "default": true,
+        "x-categories": [
+          "Languages"
+        ]
+      },
+      "enableRules": {
+        "type": "boolean",
+        "description": "Whether to enable rules.",
+        "default": true,
+        "x-categories": [
+          "Rules"
+        ]
+      },
+      "enablePersonalization": {
+        "type": "boolean",
+        "description": "Whether to enable Personalization.",
+        "default": false,
+        "x-categories": [
+          "Personalization"
+        ]
+      },
       "queryType": {
         "type": "string",
         "enum": [
@@ -1671,6 +1837,14 @@
           }
         }
       },
+      "advancedSyntax": {
+        "type": "boolean",
+        "description": "Whether to support phrase matching and excluding words from search queries\nUse the `advancedSyntaxFeatures` parameter to control which feature is supported.\n",
+        "default": false,
+        "x-categories": [
+          "Query strategy"
+        ]
+      },
       "optionalWordsArray": {
         "type": "array",
         "items": {
@@ -1700,6 +1874,20 @@
           }
         ]
       },
+      "disableExactOnAttributes": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "example": [
+          "description"
+        ],
+        "description": "Searchable attributes for which you want to [turn off the Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).\nAttribute names are case-sensitive\nThis can be useful for attributes with long values, where the likelihood of an exact match is high,\nsuch as product descriptions.\nTurning off the Exact ranking criterion for these attributes favors exact matching on other attributes.\nThis reduces the impact of individual attributes with a lot of content on ranking.\n",
+        "default": [],
+        "x-categories": [
+          "Query strategy"
+        ]
+      },
       "exactOnSingleWordQuery": {
         "type": "string",
         "enum": [
@@ -1725,9 +1913,37 @@
           "Query strategy"
         ]
       },
+      "IndexSettings_alternativesAsExact": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/alternativesAsExact"
+        },
+        "description": "Determine which plurals and synonyms should be considered an exact matches\nBy default, Algolia treats singular and plural forms of a word, and single-word synonyms, as [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact) matches when searching.\nFor example\n- \"swimsuit\" and \"swimsuits\" are treated the same\n- \"swimsuit\" and \"swimwear\" are treated the same (if they are [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms))\n- `ignorePlurals`.\n  Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches\n- `singleWordSynonym`.\n  Single-word synonyms, such as \"NY\" = \"NYC\", are considered exact matches\n- `multiWordsSynonym`.\n  Multi-word synonyms, such as \"NY\" = \"New York\", are considered exact matches.\n",
+        "default": [
+          "ignorePlurals",
+          "singleWordSynonym"
+        ],
+        "x-categories": [
+          "Query strategy"
+        ]
+      },
       "advancedSyntaxFeatures": {
         "type": "string",
         "enum": [
+          "exactPhrase",
+          "excludeWords"
+        ],
+        "x-categories": [
+          "Query strategy"
+        ]
+      },
+      "IndexSettings_advancedSyntaxFeatures": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/advancedSyntaxFeatures"
+        },
+        "description": "Advanced search syntax features you want to support\n- `exactPhrase`.\n  Phrases in quotes must match exactly.\n  For example, `sparkly blue \"iPhone case\"` only returns records with the exact string \"iPhone case\"\n- `excludeWords`.\n  Query words prefixed with a `-` must not occur in a record.\n  For example, `search -engine` matches records that contain \"search\" but not \"engine\"\nThis setting only has an effect if `advancedSyntax` is true.\n",
+        "default": [
           "exactPhrase",
           "excludeWords"
         ],
@@ -1751,6 +1967,62 @@
             "default": 0
           }
         ],
+        "x-categories": [
+          "Advanced"
+        ]
+      },
+      "replaceSynonymsInHighlight": {
+        "type": "boolean",
+        "description": "Whether to replace a highlighted word with the matched synonym\nBy default, the original words are highlighted even if a synonym matches.\nFor example, with `home` as a synonym for `house` and a search for `home`,\nrecords matching either \"home\" or \"house\" are included in the search results,\nand either \"home\" or \"house\" are highlighted\nWith `replaceSynonymsInHighlight` set to `true`, a search for `home` still matches the same records,\nbut all occurrences of \"house\" are replaced by \"home\" in the highlighted response.\n",
+        "default": false,
+        "x-categories": [
+          "Highlighting and Snippeting"
+        ]
+      },
+      "minProximity": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 7,
+        "description": "Minimum proximity score for two matching words\nThis adjusts the [Proximity ranking criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity)\nby equally scoring matches that are farther apart\nFor example, if `minProximity` is 2, neighboring matches and matches with one word between them would have the same score.\n",
+        "default": 1,
+        "x-categories": [
+          "Advanced"
+        ]
+      },
+      "responseFields": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Properties to include in the API response of search and browse requests\nBy default, all response properties are included.\nTo reduce the response size, you can select which properties should be included\nAn empty list may lead to an empty API response (except properties you can't exclude)\nYou can't exclude these properties:\n`message`, `warning`, `cursor`, `abTestVariantID`,\nor any property added by setting `getRankingInfo` to true\nYour search depends on the `hits` field. If you omit this field, searches won't return any results.\nYour UI might also depend on other properties, for example, for pagination.\nBefore restricting the response size, check the impact on your search experience.\n",
+        "default": [
+          "*"
+        ],
+        "x-categories": [
+          "Advanced"
+        ]
+      },
+      "maxValuesPerFacet": {
+        "type": "integer",
+        "description": "Maximum number of facet values to return for each facet.",
+        "default": 100,
+        "maximum": 1000,
+        "x-categories": [
+          "Faceting"
+        ]
+      },
+      "sortFacetValuesBy": {
+        "type": "string",
+        "description": "Order in which to retrieve facet values\n- `count`.\n  Facet values are retrieved by decreasing count.\n  The count is the number of matching records containing this facet value\n- `alpha`.\n  Retrieve facet values alphabetically\nThis setting doesn't influence how facet values are displayed in your UI (see `renderingContent`).\nFor more information, see [facet value display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js/).\n",
+        "default": "count",
+        "x-categories": [
+          "Faceting"
+        ]
+      },
+      "attributeCriteriaComputedByMinProximity": {
+        "type": "boolean",
+        "description": "Whether the best matching attribute should be determined by minimum proximity\nThis setting only affects ranking if the Attribute ranking criterion comes before Proximity in the `ranking` setting.\nIf true, the best matching attribute is selected based on the minimum proximity of multiple matches.\nOtherwise, the best matching attribute is determined by the order in the `searchableAttributes` setting.\n",
+        "default": false,
         "x-categories": [
           "Advanced"
         ]
@@ -1919,6 +2191,14 @@
           "Advanced"
         ]
       },
+      "enableReRanking": {
+        "type": "boolean",
+        "description": "Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/)\nThis setting only has an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.\n",
+        "default": true,
+        "x-categories": [
+          "Filtering"
+        ]
+      },
       "reRankingApplyFilter": {
         "description": "Restrict [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) to records that match these filters.\n",
         "oneOf": [
@@ -1941,22 +2221,7 @@
         "additionalProperties": false,
         "properties": {
           "attributesToRetrieve": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "example": [
-              "author",
-              "title",
-              "content"
-            ],
-            "description": "Attributes to include in the API response.\n\nTo reduce the size of your response, you can retrieve only some of the attributes.\nAttribute names are case-sensitive.\n\n- `*` retrieves all attributes, except attributes included in the `customRanking` and `unretrievableAttributes` settings.\n- To retrieve all attributes except a specific one, prefix the attribute with a dash and combine it with the `*`: `[\"*\", \"-ATTRIBUTE\"]`.\n- The `objectID` attribute is always included.\n",
-            "default": [
-              "*"
-            ],
-            "x-categories": [
-              "Attributes"
-            ]
+            "$ref": "#/components/schemas/attributesToRetrieve"
           },
           "ranking": {
             "type": "array",
@@ -1979,120 +2244,43 @@
             ]
           },
           "relevancyStrictness": {
-            "type": "integer",
-            "example": 90,
-            "description": "Relevancy threshold below which less relevant results aren't included in the results.\n\nYou can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).\nUse this setting to strike a balance between the relevance and number of returned results.\n",
-            "default": 100,
-            "x-categories": [
-              "Ranking"
-            ]
+            "$ref": "#/components/schemas/relevancyStrictness"
           },
           "attributesToHighlight": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "example": [
-              "author",
-              "title",
-              "conten",
-              "content"
-            ],
-            "description": "Attributes to highlight.\n\nBy default, all searchable attributes are highlighted.\nUse `*` to highlight all attributes or use an empty array `[]` to turn off highlighting.\nAttribute names are case-sensitive.\n\nWith highlighting, strings that match the search query are surrounded by HTML tags defined by `highlightPreTag` and `highlightPostTag`.\nYou can use this to visually highlight matching parts of a search query in your UI.\n\nFor more information, see [Highlighting and snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js/).\n",
-            "x-categories": [
-              "Highlighting and Snippeting"
-            ]
+            "$ref": "#/components/schemas/attributesToHighlight"
           },
           "attributesToSnippet": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "example": [
-              "content:80",
-              "description"
-            ],
-            "description": "Attributes for which to enable snippets.\nAttribute names are case-sensitive.\n\nSnippets provide additional context to matched words.\nIf you enable snippets, they include 10 words, including the matched word.\nThe matched word will also be wrapped by HTML tags for highlighting.\nYou can adjust the number of words with the following notation: `ATTRIBUTE:NUMBER`,\nwhere `NUMBER` is the number of words to be extracted.\n",
-            "default": [],
-            "x-categories": [
-              "Highlighting and Snippeting"
-            ]
+            "$ref": "#/components/schemas/attributesToSnippet"
           },
           "highlightPreTag": {
-            "type": "string",
-            "description": "HTML tag to insert before the highlighted parts in all highlighted results and snippets.",
-            "default": "<em>",
-            "x-categories": [
-              "Highlighting and Snippeting"
-            ]
+            "$ref": "#/components/schemas/highlightPreTag"
           },
           "highlightPostTag": {
-            "type": "string",
-            "description": "HTML tag to insert after the highlighted parts in all highlighted results and snippets.",
-            "default": "</em>",
-            "x-categories": [
-              "Highlighting and Snippeting"
-            ]
+            "$ref": "#/components/schemas/highlightPostTag"
           },
           "snippetEllipsisText": {
-            "type": "string",
-            "description": "String used as an ellipsis indicator when a snippet is truncated.",
-            "default": "…",
-            "x-categories": [
-              "Highlighting and Snippeting"
-            ]
+            "$ref": "#/components/schemas/snippetEllipsisText"
           },
           "restrictHighlightAndSnippetArrays": {
-            "type": "boolean",
-            "description": "Whether to restrict highlighting and snippeting to items that at least partially matched the search query.\nBy default, all items are highlighted and snippeted.\n",
-            "default": false,
-            "x-categories": [
-              "Highlighting and Snippeting"
-            ]
+            "$ref": "#/components/schemas/restrictHighlightAndSnippetArrays"
           },
           "hitsPerPage": {
             "$ref": "#/components/schemas/hitsPerPage"
           },
           "minWordSizefor1Typo": {
-            "type": "integer",
-            "description": "Minimum number of characters a word in the search query must contain to accept matches with [one typo](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).",
-            "default": 4,
-            "x-categories": [
-              "Typos"
-            ]
+            "$ref": "#/components/schemas/minWordSizefor1Typo"
           },
           "minWordSizefor2Typos": {
-            "type": "integer",
-            "description": "Minimum number of characters a word in the search query must contain to accept matches with [two typos](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).",
-            "default": 8,
-            "x-categories": [
-              "Typos"
-            ]
+            "$ref": "#/components/schemas/minWordSizefor2Typos"
           },
           "typoTolerance": {
             "$ref": "#/components/schemas/typoTolerance"
           },
           "allowTyposOnNumericTokens": {
-            "type": "boolean",
-            "description": "Whether to allow typos on numbers in the search query.\n\nTurn off this setting to reduce the number of irrelevant matches\nwhen searching in large sets of similar numbers.\n",
-            "default": true,
-            "x-categories": [
-              "Typos"
-            ]
+            "$ref": "#/components/schemas/allowTyposOnNumericTokens"
           },
           "disableTypoToleranceOnAttributes": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "example": [
-              "sku"
-            ],
-            "description": "Attributes for which you want to turn off [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).\nAttribute names are case-sensitive.\n\nReturning only exact matches can help when:\n\n- [Searching in hyphenated attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/).\n- Reducing the number of matches when you have too many.\n  This can happen with attributes that are long blocks of text, such as product descriptions.\n\nConsider alternatives such as `disableTypoToleranceOnWords` or adding synonyms if your attributes have intentional unusual spellings that might look like typos.\n",
-            "default": [],
-            "x-categories": [
-              "Typos"
-            ]
+            "$ref": "#/components/schemas/disableTypoToleranceOnAttributes"
           },
           "ignorePlurals": {
             "$ref": "#/components/schemas/ignorePlurals"
@@ -2101,42 +2289,16 @@
             "$ref": "#/components/schemas/removeStopWords"
           },
           "queryLanguages": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/supportedLanguage"
-            },
-            "example": [
-              "es"
-            ],
-            "description": "Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries.\n\nThis setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings.\nThis setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages.\nTo support this, you must place the CJK language **first**.\n\n**You should always specify a query language.**\nIf you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),\nor the languages you specified with the `ignorePlurals` or `removeStopWords` parameters.\nThis can lead to unexpected search results.\nFor more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).\n",
-            "default": [],
-            "x-categories": [
-              "Languages"
-            ]
+            "$ref": "#/components/schemas/queryLanguages"
           },
           "decompoundQuery": {
-            "type": "boolean",
-            "description": "Whether to split compound words in the query into their building blocks.\n\nFor more information, see [Word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words).\nWord segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and Norwegian.\nDecompounding doesn't work for words with [non-spacing mark Unicode characters](https://www.charactercodes.net/category/non-spacing_mark).\nFor example, `Gartenstühle` won't be decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).\n",
-            "default": true,
-            "x-categories": [
-              "Languages"
-            ]
+            "$ref": "#/components/schemas/decompoundQuery"
           },
           "enableRules": {
-            "type": "boolean",
-            "description": "Whether to enable rules.",
-            "default": true,
-            "x-categories": [
-              "Rules"
-            ]
+            "$ref": "#/components/schemas/enableRules"
           },
           "enablePersonalization": {
-            "type": "boolean",
-            "description": "Whether to enable Personalization.",
-            "default": false,
-            "x-categories": [
-              "Personalization"
-            ]
+            "$ref": "#/components/schemas/enablePersonalization"
           },
           "queryType": {
             "$ref": "#/components/schemas/queryType"
@@ -2151,130 +2313,49 @@
             "$ref": "#/components/schemas/semanticSearch"
           },
           "advancedSyntax": {
-            "type": "boolean",
-            "description": "Whether to support phrase matching and excluding words from search queries.\n\nUse the `advancedSyntaxFeatures` parameter to control which feature is supported.\n",
-            "default": false,
-            "x-categories": [
-              "Query strategy"
-            ]
+            "$ref": "#/components/schemas/advancedSyntax"
           },
           "optionalWords": {
             "$ref": "#/components/schemas/optionalWords"
           },
           "disableExactOnAttributes": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "example": [
-              "description"
-            ],
-            "description": "Searchable attributes for which you want to [turn off the Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).\nAttribute names are case-sensitive.\n\nThis can be useful for attributes with long values, where the likelihood of an exact match is high,\nsuch as product descriptions.\nTurning off the Exact ranking criterion for these attributes favors exact matching on other attributes.\nThis reduces the impact of individual attributes with a lot of content on ranking.\n",
-            "default": [],
-            "x-categories": [
-              "Query strategy"
-            ]
+            "$ref": "#/components/schemas/disableExactOnAttributes"
           },
           "exactOnSingleWordQuery": {
             "$ref": "#/components/schemas/exactOnSingleWordQuery"
           },
           "alternativesAsExact": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/alternativesAsExact"
-            },
-            "description": "Determine which plurals and synonyms should be considered an exact matches.\n\nBy default, Algolia treats singular and plural forms of a word, and single-word synonyms, as [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact) matches when searching.\nFor example:\n\n- \"swimsuit\" and \"swimsuits\" are treated the same\n- \"swimsuit\" and \"swimwear\" are treated the same (if they are [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms)).\n\n- `ignorePlurals`.\n  Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.\n\n- `singleWordSynonym`.\n  Single-word synonyms, such as \"NY\" = \"NYC\", are considered exact matches.\n\n- `multiWordsSynonym`.\n  Multi-word synonyms, such as \"NY\" = \"New York\", are considered exact matches.\n",
-            "default": [
-              "ignorePlurals",
-              "singleWordSynonym"
-            ],
-            "x-categories": [
-              "Query strategy"
-            ]
+            "$ref": "#/components/schemas/IndexSettings_alternativesAsExact"
           },
           "advancedSyntaxFeatures": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/advancedSyntaxFeatures"
-            },
-            "description": "Advanced search syntax features you want to support.\n\n- `exactPhrase`.\n  Phrases in quotes must match exactly.\n  For example, `sparkly blue \"iPhone case\"` only returns records with the exact string \"iPhone case\".\n\n- `excludeWords`.\n  Query words prefixed with a `-` must not occur in a record.\n  For example, `search -engine` matches records that contain \"search\" but not \"engine\".\n\nThis setting only has an effect if `advancedSyntax` is true.\n",
-            "default": [
-              "exactPhrase",
-              "excludeWords"
-            ],
-            "x-categories": [
-              "Query strategy"
-            ]
+            "$ref": "#/components/schemas/IndexSettings_advancedSyntaxFeatures"
           },
           "distinct": {
             "$ref": "#/components/schemas/distinct"
           },
           "replaceSynonymsInHighlight": {
-            "type": "boolean",
-            "description": "Whether to replace a highlighted word with the matched synonym.\n\nBy default, the original words are highlighted even if a synonym matches.\nFor example, with `home` as a synonym for `house` and a search for `home`,\nrecords matching either \"home\" or \"house\" are included in the search results,\nand either \"home\" or \"house\" are highlighted.\n\nWith `replaceSynonymsInHighlight` set to `true`, a search for `home` still matches the same records,\nbut all occurrences of \"house\" are replaced by \"home\" in the highlighted response.\n",
-            "default": false,
-            "x-categories": [
-              "Highlighting and Snippeting"
-            ]
+            "$ref": "#/components/schemas/replaceSynonymsInHighlight"
           },
           "minProximity": {
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 7,
-            "description": "Minimum proximity score for two matching words.\n\nThis adjusts the [Proximity ranking criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity)\nby equally scoring matches that are farther apart.\n\nFor example, if `minProximity` is 2, neighboring matches and matches with one word between them would have the same score.\n",
-            "default": 1,
-            "x-categories": [
-              "Advanced"
-            ]
+            "$ref": "#/components/schemas/minProximity"
           },
           "responseFields": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "Properties to include in the API response of search and browse requests.\n\nBy default, all response properties are included.\nTo reduce the response size, you can select which properties should be included.\n\nAn empty list may lead to an empty API response (except properties you can't exclude).\n\nYou can't exclude these properties:\n`message`, `warning`, `cursor`, `abTestVariantID`,\nor any property added by setting `getRankingInfo` to true.\n\nYour search depends on the `hits` field. If you omit this field, searches won't return any results.\nYour UI might also depend on other properties, for example, for pagination.\nBefore restricting the response size, check the impact on your search experience.\n",
-            "default": [
-              "*"
-            ],
-            "x-categories": [
-              "Advanced"
-            ]
+            "$ref": "#/components/schemas/responseFields"
           },
           "maxValuesPerFacet": {
-            "type": "integer",
-            "description": "Maximum number of facet values to return for each facet.",
-            "default": 100,
-            "maximum": 1000,
-            "x-categories": [
-              "Faceting"
-            ]
+            "$ref": "#/components/schemas/maxValuesPerFacet"
           },
           "sortFacetValuesBy": {
-            "type": "string",
-            "description": "Order in which to retrieve facet values.\n\n- `count`.\n  Facet values are retrieved by decreasing count.\n  The count is the number of matching records containing this facet value.\n\n- `alpha`.\n  Retrieve facet values alphabetically.\n\nThis setting doesn't influence how facet values are displayed in your UI (see `renderingContent`).\nFor more information, see [facet value display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js/).\n",
-            "default": "count",
-            "x-categories": [
-              "Faceting"
-            ]
+            "$ref": "#/components/schemas/sortFacetValuesBy"
           },
           "attributeCriteriaComputedByMinProximity": {
-            "type": "boolean",
-            "description": "Whether the best matching attribute should be determined by minimum proximity.\n\nThis setting only affects ranking if the Attribute ranking criterion comes before Proximity in the `ranking` setting.\nIf true, the best matching attribute is selected based on the minimum proximity of multiple matches.\nOtherwise, the best matching attribute is determined by the order in the `searchableAttributes` setting.\n",
-            "default": false,
-            "x-categories": [
-              "Advanced"
-            ]
+            "$ref": "#/components/schemas/attributeCriteriaComputedByMinProximity"
           },
           "renderingContent": {
             "$ref": "#/components/schemas/renderingContent"
           },
           "enableReRanking": {
-            "type": "boolean",
-            "description": "Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/).\n\nThis setting only has an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.\n",
-            "default": true,
-            "x-categories": [
-              "Filtering"
-            ]
+            "$ref": "#/components/schemas/enableReRanking"
           },
           "reRankingApplyFilter": {
             "oneOf": [
