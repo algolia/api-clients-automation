@@ -1,0 +1,50 @@
+[
+  {
+    "testName": "upsertCollection / insert",
+    "parameters": {
+      "name": "Summer Deals",
+      "indexName": "prod_products_EN",
+      "description": "This is a test collection",
+      "add": ["objectID1", "objectID2"],
+      "conditions": {
+        "facetFilters": ["category:Book"],
+        "numericFilters": ["price > 50"]
+      }
+    },
+    "request": {
+      "path": "/1/collections",
+      "method": "POST",
+      "body": {
+        "name": "Summer Deals",
+        "indexName": "prod_products_EN",
+        "description": "This is a test collection",
+        "add": ["objectID1", "objectID2"],
+        "conditions": {
+          "facetFilters": ["category:Book"],
+          "numericFilters": ["price > 50"]
+        }
+      }
+    }
+  },
+  {
+    "testName": "upsertCollection / update",
+    "parameters": {
+      "id": "75eeb306-51d3-4e5e-a279-3c92bd8893ac",
+      "name": "Summer Deals",
+      "indexName": "prod_products_EN",
+      "add": ["objectID3"],
+      "remove": ["objectID1"]
+    },
+    "request": {
+      "path": "/1/collections",
+      "method": "POST",
+      "body": {
+        "id": "75eeb306-51d3-4e5e-a279-3c92bd8893ac",
+        "name": "Summer Deals",
+        "indexName": "prod_products_EN",
+        "add": ["objectID3"],
+        "remove": ["objectID1"]
+      }
+    }
+  }
+]

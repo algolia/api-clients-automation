@@ -1,0 +1,45 @@
+get:
+  summary: Retrieve a collection
+  description: Retrieves a collection by its ID.
+  operationId: getCollection
+  x-acl:
+    - search
+  parameters:
+    - $ref: '../common/parameters.yml#/pathCollectionID'
+  responses:
+    '404':
+      $ref: '../common/responses/CollectionNotFound.yml'
+    '200':
+      description: The requested collection.
+      content:
+        application/json:
+          schema:
+            title: getCollectionResponse
+            $ref: '../common/schemas/collection.yml#/Collection'
+
+delete:
+  summary: Delete a collection
+  description: Deletes a collection by its ID.
+  operationId: deleteCollection
+  x-acl:
+    - search
+    - addObject
+    - deleteIndex
+    - settings
+    - editSettings
+  parameters:
+    - $ref: '../common/parameters.yml#/pathCollectionID'
+  responses:
+    '404':
+      $ref: '../common/responses/CollectionNotFound.yml'
+    '200':
+      description: Collection deleted successfully.
+      content:
+        application/json:
+          schema:
+            title: deleteCollectionResponse
+            type: object
+            properties:
+              message:
+                type: string
+                example: 'Collection with id {collectionID} deleted.'

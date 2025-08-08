@@ -5,6 +5,7 @@
       "abtesting",
       "abtesting-v3",
       "analytics",
+      "collections",
       "composition",
       "ingestion",
       "insights",
@@ -38,6 +39,10 @@
       {
         "name": "abtesting-v3",
         "output": "clients/algoliasearch-client-dart/packages/client_abtesting_v3"
+      },
+      {
+        "name": "collections",
+        "output": "clients/algoliasearch-client-dart/packages/client_collections"
       },
       {
         "name": "composition",
@@ -76,6 +81,7 @@
       "abtesting",
       "abtesting-v3",
       "analytics",
+      "collections",
       "composition",
       "ingestion",
       "insights",
@@ -105,6 +111,7 @@
       "abtesting",
       "abtesting-v3",
       "analytics",
+      "collections",
       "composition",
       "ingestion",
       "insights",
@@ -152,6 +159,12 @@
       {
         "name": "analytics",
         "output": "clients/algoliasearch-client-javascript/packages/client-analytics"
+      },
+      {
+        "name": "collections",
+        "output": "clients/algoliasearch-client-javascript/packages/collections",
+        "isStandaloneClient": true,
+        "clientName": "collections"
       },
       {
         "name": "composition",
@@ -218,6 +231,7 @@
       "abtesting",
       "abtesting-v3",
       "analytics",
+      "collections",
       "composition",
       "ingestion",
       "insights",
@@ -247,6 +261,7 @@
       "abtesting",
       "abtesting-v3",
       "analytics",
+      "collections",
       "composition",
       "ingestion",
       "insights",
@@ -276,6 +291,7 @@
       "abtesting",
       "abtesting-v3",
       "analytics",
+      "collections",
       "composition",
       "ingestion",
       "insights",
@@ -312,6 +328,7 @@
       "abtesting",
       "abtesting-v3",
       "analytics",
+      "collections",
       "composition",
       "ingestion",
       "insights",
@@ -341,6 +358,7 @@
       "abtesting",
       "abtesting-v3",
       "analytics",
+      "collections",
       "composition",
       "ingestion",
       "insights",

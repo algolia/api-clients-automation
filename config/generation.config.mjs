@@ -30,6 +30,7 @@ export const patterns = [
   // Dart
   '!clients/algoliasearch-client-dart/**',
   'clients/algoliasearch-client-dart/packages/*/pubspec.yaml',
+  'clients/algoliasearch-client-dart/packages/*/build.yaml',
   'clients/algoliasearch-client-dart/packages/*/lib/*.dart',
   'clients/algoliasearch-client-dart/packages/*/lib/src/*.dart',
   'clients/algoliasearch-client-dart/packages/client_core/pubspec.yaml',
@@ -37,7 +38,6 @@ export const patterns = [
   'clients/algoliasearch-client-dart/packages/*/lib/src/model/**',
   '!clients/algoliasearch-client-dart/packages/client_core/**',
   'clients/algoliasearch-client-dart/packages/client_core/lib/src/version.dart',
-  '!clients/algoliasearch-client-dart/packages/*/lib/src/extension.dart',
   '!clients/algoliasearch-client-dart/packages/algoliasearch/lib/algoliasearch.dart',
 
   // GO
@@ -90,6 +90,7 @@ export const patterns = [
 
   // PHP
   '!clients/algoliasearch-client-php/**',
+  'clients/algoliasearch-client-php/lib/FormDataProcessor.php',
   'clients/algoliasearch-client-php/lib/Api/*',
   'clients/algoliasearch-client-php/lib/Model/**',
   '!clients/algoliasearch-client-php/lib/Model/AbstractModel.php',

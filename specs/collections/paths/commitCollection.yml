@@ -1,0 +1,26 @@
+post:
+  summary: Commit a collection
+  description: Evaluates the changes on a collection and applies them on the index.
+  operationId: commitCollection
+  x-acl:
+    - search
+    - addObject
+    - deleteIndex
+    - settings
+    - editSettings
+  parameters:
+    - $ref: '../common/parameters.yml#/pathCollectionID'
+  responses:
+    '404':
+      $ref: '../common/responses/CollectionNotFound.yml'
+    '202':
+      description: Committing collection.
+      content:
+        application/json:
+          schema:
+            title: commitCollectionResponse
+            type: object
+            properties:
+              message:
+                type: string
+                example: 'Committing collection'
