@@ -93,3 +93,10 @@ paths:
     $ref: 'paths/collectionID.yml'
   /1/collections/{collectionID}/commit:
     $ref: 'paths/commitCollection.yml'
+
+  # ###############
+  # ### Helpers ###
+  # ###############
+
+  /setClientApiKey:
+    $ref: '../common/helpers/setClientApiKey.yml#/method'
