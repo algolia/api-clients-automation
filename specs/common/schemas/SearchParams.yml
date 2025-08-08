@@ -27,23 +27,7 @@ baseSearchParamsWithoutQuery:
   additionalProperties: false
   properties:
     similarQuery:
-      type: string
-      description: |
-        Keywords to be used instead of the search query to conduct a more broader search.
-
-        Using the `similarQuery` parameter changes other settings:
-
-        - `queryType` is set to `prefixNone`.
-        - `removeStopWords` is set to true.
-        - `words` is set as the first ranking criterion.
-        - All remaining words are treated as `optionalWords`.
-
-        Since the `similarQuery` is supposed to do a broad search, they usually return many results.
-        Combine it with `filters` to narrow down the list of results.
-      default: ''
-      example: 'comedy drama crime Macy Buscemi'
-      x-categories:
-        - Search
+      $ref: '#/similarQuery'
     filters:
       $ref: '#/filters'
     facetFilters:
@@ -55,34 +39,15 @@ baseSearchParamsWithoutQuery:
     tagFilters:
       $ref: '#/tagFilters'
     sumOrFiltersScores:
-      type: boolean
-      description: |
-        Whether to sum all filter scores.
-
-        If true, all filter scores are summed.
-        Otherwise, the maximum filter score is kept.
-        For more information, see [filter scores](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#accumulating-scores-with-sumorfiltersscores).
-      default: false
-      x-categories:
-        - Filtering
+      $ref: '#/sumOrFiltersScores'
     restrictSearchableAttributes:
-      type: array
-      items:
-        type: string
-      example: [title, author]
-      description: |
-        Restricts a search to a subset of your searchable attributes.
-        Attribute names are case-sensitive.
-      default: []
-      x-categories:
-        - Filtering
+      $ref: '#/restrictSearchableAttributes'
     facets:
       type: array
       items:
         type: string
       description: |
-        Facets for which to retrieve facet values that match the search criteria and the number of matching facet values.
-
+        Facets for which to retrieve facet values that match the search criteria and the number of matching facet values
         To retrieve all facets, use the wildcard character `*`.
         For more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
       default: []
@@ -90,16 +55,7 @@ baseSearchParamsWithoutQuery:
       x-categories:
         - Faceting
     facetingAfterDistinct:
-      type: boolean
-      description: |
-        Whether faceting should be applied after deduplication with `distinct`.
-
-        This leads to accurate facet counts when using faceting in combination with `distinct`.
-        It's usually better to use `afterDistinct` modifiers in the `attributesForFaceting` setting,
-        as `facetingAfterDistinct` only computes correct facet counts if all records have the same facet values for the `attributeForDistinct`.
-      default: false
-      x-categories:
-        - Faceting
+      $ref: '#/facetingAfterDistinct'
     page:
       $ref: '#/page'
     offset:
@@ -108,12 +64,7 @@ baseSearchParamsWithoutQuery:
       x-categories:
         - Pagination
     length:
-      type: integer
-      description: Number of hits to retrieve (used in combination with `offset`).
-      minimum: 0
-      maximum: 1000
-      x-categories:
-        - Pagination
+      $ref: '#/length'
     aroundLatLng:
       $ref: '#/aroundLatLng'
     aroundLatLngViaIP:
@@ -123,101 +74,35 @@ baseSearchParamsWithoutQuery:
     aroundPrecision:
       $ref: '#/aroundPrecision'
     minimumAroundRadius:
-      type: integer
-      description: Minimum radius (in meters) for a search around a location when `aroundRadius` isn't set.
-      minimum: 1
-      x-categories:
-        - Geo-Search
+      $ref: '#/minimumAroundRadius'
     insideBoundingBox:
       $ref: '#/insideBoundingBox'
     insidePolygon:
       $ref: '#/insidePolygon'
     naturalLanguages:
-      type: array
-      items:
-        $ref: './IndexSettings.yml#/supportedLanguage'
-      description: |
-        ISO language codes that adjust settings that are useful for processing natural language queries (as opposed to keyword searches):
-
-        - Sets `removeStopWords` and `ignorePlurals` to the list of provided languages.
-        - Sets `removeWordsIfNoResults` to `allOptional`.
-        - Adds a `natural_language` attribute to `ruleContexts` and `analyticsTags`.
-      default: []
-      x-categories:
-        - Languages
+      $ref: '#/naturalLanguages'
     ruleContexts:
-      type: array
-      items:
-        type: string
-      description: |
-        Assigns a rule context to the search query.
-
-        [Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context) are strings that you can use to trigger matching rules.
-      default: []
-      example: [mobile]
-      x-categories:
-        - Rules
+      $ref: '#/ruleContexts'
     personalizationImpact:
-      type: integer
-      description: |
-        Impact that Personalization should have on this search.
-
-        The higher this value is, the more Personalization determines the ranking compared to other factors.
-        For more information, see [Understanding Personalization impact](https://www.algolia.com/doc/guides/personalization/personalizing-results/in-depth/configuring-personalization/#understanding-personalization-impact).
-      default: 100
-      minimum: 0
-      maximum: 100
-      x-categories:
-        - Personalization
+      $ref: '#/personalizationImpact'
     userToken:
       $ref: '#/userToken'
     getRankingInfo:
-      type: boolean
-      description: Whether the search response should include detailed ranking information.
-      default: false
-      x-categories:
-        - Advanced
+      $ref: '#/getRankingInfo'
     synonyms:
-      type: boolean
-      description: Whether to take into account an index's synonyms for this search.
-      default: true
-      x-categories:
-        - Advanced
+      $ref: '#/synonyms'
     clickAnalytics:
-      type: boolean
-      description: |
-        Whether to include a `queryID` attribute in the response.
-
-        The query ID is a unique identifier for a search query and is required for tracking [click and conversion events](https://www.algolia.com/guides/sending-events/getting-started/).
-      default: false
-      x-categories:
-        - Analytics
+      $ref: '#/clickAnalytics'
     analytics:
-      type: boolean
-      description: Whether this search will be included in Analytics.
-      default: true
-      x-categories:
-        - Analytics
+      $ref: '#/analytics'
     analyticsTags:
-      type: array
-      items:
-        type: string
-      description: Tags to apply to the query for [segmenting analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-      default: []
+      $ref: '#/analyticsTags'
       x-categories:
         - Analytics
     percentileComputation:
-      type: boolean
-      description: Whether to include this search when calculating processing-time percentiles.
-      default: true
-      x-categories:
-        - Advanced
+      $ref: '#/percentileComputation'
     enableABTest:
-      type: boolean
-      description: Whether to enable A/B testing for this search.
-      default: true
-      x-categories:
-        - Advanced
+      $ref: '#/enableABTest'
 
 searchParamsString:
   type: object
@@ -236,31 +121,23 @@ paramsAsString:
   type: string
   default: ''
 
-userToken:
-  type: string
-  description: |
-    Unique pseudonymous or anonymous user identifier.
+#
+# Schemas for search parameters
+#
 
-    This helps with analytics and click and conversion events.
-    For more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
-  example: test-user-123
+analytics:
+  type: boolean
+  description: Whether this search will be included in Analytics.
+  default: true
   x-categories:
-    - Personalization
+    - Analytics
 
-query:
-  type: string
-  description: Search query.
-  default: ''
-  x-categories:
-    - Search
-
-page:
-  type: integer
-  description: Page of search results to retrieve.
-  default: 0
-  minimum: 0
-  x-categories:
-    - Pagination
+analyticsTags:
+  type: array
+  items:
+    type: string
+  description: Tags to apply to the query for [segmenting analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+  default: []
 
 aroundRadius:
   description: |
@@ -336,6 +213,91 @@ aroundLatLngViaIP:
   x-categories:
     - Geo-Search
 
+clickAnalytics:
+  type: boolean
+  description: |
+    Whether to include a `queryID` attribute in the response
+    The query ID is a unique identifier for a search query and is required for tracking [click and conversion events](https://www.algolia.com/guides/sending-events/getting-started/).
+  default: false
+  x-categories:
+    - Analytics
+
+enableABTest:
+  type: boolean
+  description: Whether to enable A/B testing for this search.
+  default: true
+  x-categories:
+    - Advanced
+
+facetFilters:
+  description: |
+    Filter the search by facet values, so that only records with the same facet values are retrieved.
+
+    **Prefer using the `filters` parameter, which supports all filter types and combinations with boolean operators.**
+
+    - `[filter1, filter2]` is interpreted as `filter1 AND filter2`.
+    - `[[filter1, filter2], filter3]` is interpreted as `filter1 OR filter2 AND filter3`.
+    - `facet:-value` is interpreted as `NOT facet:value`.
+
+    While it's best to avoid attributes that start with a `-`, you can still filter them by escaping with a backslash:
+    `facet:\-value`.
+  example: [['category:Book', 'category:-Movie'], 'author:John Doe']
+  oneOf:
+    - type: array
+      items:
+        $ref: '#/facetFilters'
+    - type: string
+  x-categories:
+    - Filtering
+
+facetingAfterDistinct:
+  type: boolean
+  description: |
+    Whether faceting should be applied after deduplication with `distinct`
+    This leads to accurate facet counts when using faceting in combination with `distinct`.
+    It's usually better to use `afterDistinct` modifiers in the `attributesForFaceting` setting,
+    as `facetingAfterDistinct` only computes correct facet counts if all records have the same facet values for the `attributeForDistinct`.
+  default: false
+  x-categories:
+    - Faceting
+
+filters:
+  type: string
+  description: |
+    Filter expression to only include items that match the filter criteria in the response.
+
+    You can use these filter expressions:
+
+    - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`.
+    - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive).
+    - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value.
+    - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive).
+    - **Boolean filters.** `<facet>: true | false`.
+
+    You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:
+
+    - You can only combine filters of the same type with `OR`.
+      **Not supported:** `facet:value OR num > 3`.
+    - You can't use `NOT` with combinations of filters.
+      **Not supported:** `NOT(facet:value OR facet:value)`
+    - You can't combine conjunctions (`AND`) with `OR`.
+      **Not supported:** `facet:value OR (facet:value AND facet:value)`
+
+    Use quotes around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes.
+    If a facet attribute is an array, the filter matches if it matches at least one element of the array.
+
+    For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
+  example: '(category:Book OR category:Ebook) AND _tags:published'
+  x-categories:
+    - Filtering
+
+getRankingInfo:
+  type: boolean
+  description: Whether the search response should include detailed ranking information.
+  default: false
+  x-categories:
+    - Advanced
+
 insideBoundingBox:
   oneOf:
     - type: string
@@ -386,74 +348,40 @@ insidePolygon:
   x-categories:
     - Geo-Search
 
-filters:
+query:
   type: string
-  description: |
-    Filter expression to only include items that match the filter criteria in the response.
-
-    You can use these filter expressions:
-
-    - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`.
-    - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive).
-    - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value.
-    - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive).
-    - **Boolean filters.** `<facet>: true | false`.
-
-    You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:
-
-    - You can only combine filters of the same type with `OR`.
-      **Not supported:** `facet:value OR num > 3`.
-    - You can't use `NOT` with combinations of filters.
-      **Not supported:** `NOT(facet:value OR facet:value)`
-    - You can't combine conjunctions (`AND`) with `OR`.
-      **Not supported:** `facet:value OR (facet:value AND facet:value)`
-
-    Use quotes around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes.
-    If a facet attribute is an array, the filter matches if it matches at least one element of the array.
-
-    For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
-  example: '(category:Book OR category:Ebook) AND _tags:published'
+  description: Search query.
+  default: ''
   x-categories:
-    - Filtering
+    - Search
 
-facetFilters:
-  description: |
-    Filter the search by facet values, so that only records with the same facet values are retrieved.
-
-    **Prefer using the `filters` parameter, which supports all filter types and combinations with boolean operators.**
-
-    - `[filter1, filter2]` is interpreted as `filter1 AND filter2`.
-    - `[[filter1, filter2], filter3]` is interpreted as `filter1 OR filter2 AND filter3`.
-    - `facet:-value` is interpreted as `NOT facet:value`.
-
-    While it's best to avoid attributes that start with a `-`, you can still filter them by escaping with a backslash:
-    `facet:\-value`.
-  example: [['category:Book', 'category:-Movie'], 'author:John Doe']
-  oneOf:
-    - type: array
-      items:
-        $ref: '#/facetFilters'
-    - type: string
+length:
+  type: integer
+  description: Number of hits to retrieve (used in combination with `offset`).
+  minimum: 0
+  maximum: 1000
   x-categories:
-    - Filtering
+    - Pagination
 
-tagFilters:
-  description: |
-    Filter the search by values of the special `_tags` attribute.
-
-    **Prefer using the `filters` parameter, which supports all filter types and combinations with boolean operators.**
-
-    Different from regular facets, `_tags` can only be used for filtering (including or excluding records).
-    You won't get a facet count.
-    The same combination and escaping rules apply as for `facetFilters`.
-  example: [['Book', 'Movie'], 'SciFi']
-  oneOf:
-    - type: array
-      items:
-        $ref: '#/tagFilters'
-    - type: string
+minimumAroundRadius:
+  type: integer
+  description: Minimum radius (in meters) for a search around a location when `aroundRadius` isn't set.
+  minimum: 1
   x-categories:
-    - Filtering
+    - Geo-Search
+
+naturalLanguages:
+  type: array
+  items:
+    $ref: './IndexSettings.yml#/supportedLanguage'
+  description: |
+    ISO language codes that adjust settings that are useful for processing natural language queries (as opposed to keyword searches)
+    - Sets `removeStopWords` and `ignorePlurals` to the list of provided languages.
+    - Sets `removeWordsIfNoResults` to `allOptional`.
+    - Adds a `natural_language` attribute to `ruleContexts` and `analyticsTags`.
+  default: []
+  x-categories:
+    - Languages
 
 numericFilters:
   description: |
@@ -495,3 +423,117 @@ optionalFilters:
     - type: string
   x-categories:
     - Filtering
+
+page:
+  type: integer
+  description: Page of search results to retrieve.
+  default: 0
+  minimum: 0
+  x-categories:
+    - Pagination
+
+percentileComputation:
+  type: boolean
+  description: Whether to include this search when calculating processing-time percentiles.
+  default: true
+  x-categories:
+    - Advanced
+
+personalizationImpact:
+  type: integer
+  description: |
+    Impact that Personalization should have on this search
+    The higher this value is, the more Personalization determines the ranking compared to other factors.
+    For more information, see [Understanding Personalization impact](https://www.algolia.com/doc/guides/personalization/personalizing-results/in-depth/configuring-personalization/#understanding-personalization-impact).
+  default: 100
+  minimum: 0
+  maximum: 100
+  x-categories:
+    - Personalization
+
+restrictSearchableAttributes:
+  type: array
+  items:
+    type: string
+  example: [title, author]
+  description: |
+    Restricts a search to a subset of your searchable attributes.
+    Attribute names are case-sensitive.
+  default: []
+  x-categories:
+    - Filtering
+
+ruleContexts:
+  type: array
+  items:
+    type: string
+  description: |
+    Assigns a rule context to the search query
+    [Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context) are strings that you can use to trigger matching rules.
+  default: []
+  example: [mobile]
+  x-categories:
+    - Rules
+
+similarQuery:
+  type: string
+  description: |
+    Keywords to be used instead of the search query to conduct a more broader search
+    Using the `similarQuery` parameter changes other settings
+    - `queryType` is set to `prefixNone`.
+    - `removeStopWords` is set to true.
+    - `words` is set as the first ranking criterion.
+    - All remaining words are treated as `optionalWords`
+    Since the `similarQuery` is supposed to do a broad search, they usually return many results.
+    Combine it with `filters` to narrow down the list of results.
+  default: ''
+  example: 'comedy drama crime Macy Buscemi'
+  x-categories:
+    - Search
+
+sumOrFiltersScores:
+  type: boolean
+  description: |
+    Whether to sum all filter scores
+    If true, all filter scores are summed.
+    Otherwise, the maximum filter score is kept.
+    For more information, see [filter scores](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#accumulating-scores-with-sumorfiltersscores).
+  default: false
+  x-categories:
+    - Filtering
+
+synonyms:
+  type: boolean
+  description: Whether to take into account an index's synonyms for this search.
+  default: true
+  x-categories:
+    - Advanced
+
+tagFilters:
+  description: |
+    Filter the search by values of the special `_tags` attribute.
+
+    **Prefer using the `filters` parameter, which supports all filter types and combinations with boolean operators.**
+
+    Different from regular facets, `_tags` can only be used for filtering (including or excluding records).
+    You won't get a facet count.
+    The same combination and escaping rules apply as for `facetFilters`.
+  example: [['Book', 'Movie'], 'SciFi']
+  oneOf:
+    - type: array
+      items:
+        $ref: '#/tagFilters'
+    - type: string
+  x-categories:
+    - Filtering
+
+userToken:
+  type: string
+  description: |
+    Unique pseudonymous or anonymous user identifier.
+
+    This helps with analytics and click and conversion events.
+    For more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+  example: test-user-123
+  x-categories:
+    - Personalization

@@ -4,54 +4,54 @@ params:
   additionalProperties: false
   properties:
     query:
-      $ref: '../../params/Search.yml#/query'
+      $ref: '../../../../common/schemas/SearchParams.yml#/query'
     filters:
-      $ref: '../../params/Search.yml#/filters'
+      $ref: '../../../../common/schemas/SearchParams.yml#/filters'
     page:
-      $ref: '../../params/Search.yml#/page'
+      $ref: '../../../../common/schemas/SearchParams.yml#/page'
     getRankingInfo:
       $ref: '../../params/Composition.yml#/getRankingInfo'
     relevancyStrictness:
-      $ref: '../../params/Search.yml#/relevancyStrictness'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/relevancyStrictness'
     facetFilters:
-      $ref: '../../params/Search.yml#/facetFilters'
+      $ref: '../../../../common/schemas/SearchParams.yml#/facetFilters'
     optionalFilters:
-      $ref: '../../params/Search.yml#/optionalFilters'
+      $ref: '../../../../common/schemas/SearchParams.yml#/optionalFilters'
     numericFilters:
-      $ref: '../../params/Search.yml#/numericFilters'
+      $ref: '../../../../common/schemas/SearchParams.yml#/numericFilters'
     hitsPerPage:
-      $ref: '../../params/Search.yml#/hitsPerPage'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/hitsPerPage'
     aroundLatLng:
-      $ref: '../../params/Search.yml#/aroundLatLng'
+      $ref: '../../../../common/schemas/SearchParams.yml#/aroundLatLng'
     aroundLatLngViaIP:
-      $ref: '../../params/Search.yml#/aroundLatLngViaIP'
+      $ref: '../../../../common/schemas/SearchParams.yml#/aroundLatLngViaIP'
     aroundRadius:
-      $ref: '../../params/Search.yml#/aroundRadius'
+      $ref: '../../../../common/schemas/SearchParams.yml#/aroundRadius'
     aroundPrecision:
-      $ref: '../../params/Search.yml#/aroundPrecision'
+      $ref: '../../../../common/schemas/SearchParams.yml#/aroundPrecision'
     minimumAroundRadius:
-      $ref: '../../params/Search.yml#/minimumAroundRadius'
+      $ref: '../../../../common/schemas/SearchParams.yml#/minimumAroundRadius'
     insideBoundingBox:
-      $ref: '../../params/Search.yml#/insideBoundingBox'
+      $ref: '../../../../common/schemas/SearchParams.yml#/insideBoundingBox'
     insidePolygon:
-      $ref: '../../params/Search.yml#/insidePolygon'
+      $ref: '../../../../common/schemas/SearchParams.yml#/insidePolygon'
     queryLanguages:
-      $ref: '../../params/Search.yml#/queryLanguages'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/queryLanguages'
     naturalLanguages:
-      $ref: '../../params/Search.yml#/naturalLanguages'
+      $ref: '../../../../common/schemas/SearchParams.yml#/naturalLanguages'
     enableRules:
       $ref: '../../params/Composition.yml#/enableRules'
     ruleContexts:
       $ref: '../../params/Composition.yml#/ruleContexts'
     userToken:
-      $ref: '../../params/Search.yml#/userToken'
+      $ref: '../../../../common/schemas/SearchParams.yml#/userToken'
     clickAnalytics:
-      $ref: '../../params/Search.yml#/clickAnalytics'
+      $ref: '../../../../common/schemas/SearchParams.yml#/clickAnalytics'
     analytics:
-      $ref: '../../params/Search.yml#/analytics'
+      $ref: '../../../../common/schemas/SearchParams.yml#/analytics'
     analyticsTags:
-      $ref: '../../params/Search.yml#/analyticsTags'
+      $ref: '../../../../common/schemas/SearchParams.yml#/analyticsTags'
     enableABTest:
       $ref: '../../params/Composition.yml#/enableABTest'
     enableReRanking:
-      $ref: '../../params/Search.yml#/enableReRanking'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/enableReRanking'
