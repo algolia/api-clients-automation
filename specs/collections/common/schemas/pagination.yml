@@ -1,4 +1,4 @@
-Pagination:
+CollectionPagination:
   type: object
   description: Paginated API response.
   additionalProperties: false

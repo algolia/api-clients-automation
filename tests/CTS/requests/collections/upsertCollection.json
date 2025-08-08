@@ -33,8 +33,7 @@
       "name": "Summer Deals",
       "indexName": "prod_products_EN",
       "add": ["objectID3"],
-      "remove": ["objectID1"],
-      "conditions": {}
+      "remove": ["objectID1"]
     },
     "request": {
       "path": "/1/collections",
@@ -44,8 +43,7 @@
         "name": "Summer Deals",
         "indexName": "prod_products_EN",
         "add": ["objectID3"],
-        "remove": ["objectID1"],
-        "conditions": {}
+        "remove": ["objectID1"]
       }
     }
   }

@@ -82,4 +82,4 @@ CollectionsResponse:
             $ref: '#/Collection'
       required:
         - items
-    - $ref: 'pagination.yml#/Pagination'
+    - $ref: 'pagination.yml#/CollectionPagination'
