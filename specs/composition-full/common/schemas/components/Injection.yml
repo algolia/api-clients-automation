@@ -4,99 +4,99 @@ baseInjectionQueryParameters:
   additionalProperties: false
   properties:
     advancedSyntax:
-      $ref: '../../params/Search.yml#/advancedSyntax'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/advancedSyntax'
     advancedSyntaxFeatures:
-      $ref: '../../params/Search.yml#/advancedSyntaxFeatures'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/advancedSyntaxFeatures'
     allowTyposOnNumericTokens:
-      $ref: '../../params/Search.yml#/allowTyposOnNumericTokens'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/allowTyposOnNumericTokens'
     alternativesAsExact:
-      $ref: '../../params/Search.yml#/alternativesAsExact'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/alternativesAsExact'
     analytics:
-      $ref: '../../params/Search.yml#/analytics'
+      $ref: '../../../../common/schemas/SearchParams.yml#/analytics'
     attributeCriteriaComputedByMinProximity:
-      $ref: '../../params/Search.yml#/attributeCriteriaComputedByMinProximity'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/attributeCriteriaComputedByMinProximity'
     attributesToHighlight:
-      $ref: '../../params/Search.yml#/attributesToHighlight'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/attributesToHighlight'
     attributesToRetrieve:
-      $ref: '../../params/Search.yml#/attributesToRetrieve'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/attributesToRetrieve'
     attributesToSnippet:
-      $ref: '../../params/Search.yml#/attributesToSnippet'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/attributesToSnippet'
     clickAnalytics:
-      $ref: '../../params/Search.yml#/clickAnalytics'
+      $ref: '../../../../common/schemas/SearchParams.yml#/clickAnalytics'
     decompoundQuery:
-      $ref: '../../params/Search.yml#/decompoundQuery'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/decompoundQuery'
     disableExactOnAttributes:
-      $ref: '../../params/Search.yml#/disableExactOnAttributes'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/disableExactOnAttributes'
     disableTypoToleranceOnAttributes:
-      $ref: '../../params/Search.yml#/disableTypoToleranceOnAttributes'    
+      $ref: '../../../../common/schemas/IndexSettings.yml#/disableTypoToleranceOnAttributes'    
     distinct:
-      $ref: '../../params/Search.yml#/distinct'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/distinct'
     enableABTest:
-      $ref: '../../params/Search.yml#/enableABTest'
+      $ref: '../../../../common/schemas/SearchParams.yml#/enableABTest'
     enablePersonalization:
-      $ref: '../../params/Search.yml#/enablePersonalization'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/enablePersonalization'
     enableReRanking:
-      $ref: '../../params/Search.yml#/enableReRanking'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/enableReRanking'
     enableRules:
-      $ref: '../../params/Search.yml#/enableRules'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/enableRules'
     exactOnSingleWordQuery:
-      $ref: '../../params/Search.yml#/exactOnSingleWordQuery'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/exactOnSingleWordQuery'
     facetFilters:
-      $ref: '../../params/Search.yml#/facetFilters'
+      $ref: '../../../../common/schemas/SearchParams.yml#/facetFilters'
     filters:
-      $ref: '../../params/Search.yml#/filters'
+      $ref: '../../../../common/schemas/SearchParams.yml#/filters'
     getRankingInfo:
-      $ref: '../../params/Search.yml#/getRankingInfo'
+      $ref: '../../../../common/schemas/SearchParams.yml#/getRankingInfo'
     highlightPostTag:
-      $ref: '../../params/Search.yml#/highlightPostTag'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/highlightPostTag'
     highlightPreTag:
-      $ref: '../../params/Search.yml#/highlightPreTag'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/highlightPreTag'
     ignorePlurals:
-      $ref: '../../params/Search.yml#/ignorePlurals'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/ignorePlurals'
     maxFacetHits:
-      $ref: '../../params/Search.yml#/maxFacetHits'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/maxFacetHits'
     minProximity:
-      $ref: '../../params/Search.yml#/minProximity'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/minProximity'
     minWordSizefor1Typo:
-      $ref: '../../params/Search.yml#/minWordSizefor1Typo'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/minWordSizefor1Typo'
     minWordSizefor2Typos:
-      $ref: '../../params/Search.yml#/minWordSizefor2Typos'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/minWordSizefor2Typos'
     naturalLanguages:
-      $ref: '../../params/Search.yml#/naturalLanguages'
+      $ref: '../../../../common/schemas/SearchParams.yml#/naturalLanguages'
     numericFilters:
-      $ref: '../../params/Search.yml#/numericFilters'
+      $ref: '../../../../common/schemas/SearchParams.yml#/numericFilters'
     optionalFilters:
-      $ref: '../../params/Search.yml#/optionalFilters'
+      $ref: '../../../../common/schemas/SearchParams.yml#/optionalFilters'
     optionalWords:
-      $ref: '../../params/Search.yml#/optionalWords'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/optionalWords'
     percentileComputation:
-      $ref: '../../params/Search.yml#/percentileComputation'
+      $ref: '../../../../common/schemas/SearchParams.yml#/percentileComputation'
     personalizationImpact:
-      $ref: '../../params/Search.yml#/personalizationImpact'
+      $ref: '../../../../common/schemas/SearchParams.yml#/personalizationImpact'
     queryLanguages:
-      $ref: '../../params/Search.yml#/queryLanguages'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/queryLanguages'
     queryType:
-      $ref: '../../params/Search.yml#/queryType'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/queryType'
     removeStopWords:
-      $ref: '../../params/Search.yml#/removeStopWords'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/removeStopWords'
     removeWordsIfNoResults:
-      $ref: '../../params/Search.yml#/removeWordsIfNoResults'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/removeWordsIfNoResults'
     replaceSynonymsInHighlight:
-      $ref: '../../params/Search.yml#/replaceSynonymsInHighlight'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/replaceSynonymsInHighlight'
     responseFields:
-      $ref: '../../params/Search.yml#/responseFields'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/responseFields'
     restrictHighlightAndSnippetArrays:
-      $ref: '../../params/Search.yml#/restrictHighlightAndSnippetArrays'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/restrictHighlightAndSnippetArrays'
     restrictSearchableAttributes:
-      $ref: '../../params/Search.yml#/restrictSearchableAttributes'
+      $ref: '../../../../common/schemas/SearchParams.yml#/restrictSearchableAttributes'
     ruleContexts:
-      $ref: '../../params/Search.yml#/ruleContexts'
+      $ref: '../../../../common/schemas/SearchParams.yml#/ruleContexts'
     snippetEllipsisText:
-      $ref: '../../params/Search.yml#/snippetEllipsisText'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/snippetEllipsisText'
     synonyms:
-      $ref: '../../params/Search.yml#/synonyms'
+      $ref: '../../../../common/schemas/SearchParams.yml#/synonyms'
     typoTolerance:
-      $ref: '../../params/Search.yml#/typoTolerance'
+      $ref: '../../../../common/schemas/IndexSettings.yml#/typoTolerance'
 
 mainInjectionQueryParameters:
   title: Composition Main Injection Query parameters as object
@@ -108,17 +108,17 @@ mainInjectionQueryParameters:
       additionalProperties: false
       properties:
         facetingAfterDistinct:
-          $ref: '../../params/Search.yml#/facetingAfterDistinct'
+          $ref: '../../../../common/schemas/SearchParams.yml#/facetingAfterDistinct'
         facets:
-          $ref: '../../params/Search.yml#/facets'
+          $ref: '../../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/facets'
         hitsPerPage:
-          $ref: '../../params/Search.yml#/hitsPerPage'
+          $ref: '../../../../common/schemas/IndexSettings.yml#/hitsPerPage'
         maxValuesPerFacet:
-          $ref: '../../params/Search.yml#/maxValuesPerFacet'
+          $ref: '../../../../common/schemas/IndexSettings.yml#/maxValuesPerFacet'
         sortFacetValuesBy:
-          $ref: '../../params/Search.yml#/sortFacetValuesBy'
+          $ref: '../../../../common/schemas/IndexSettings.yml#/sortFacetValuesBy'
         sumOrFiltersScores:
-          $ref: '../../params/Search.yml#/sumOrFiltersScores'
+          $ref: '../../../../common/schemas/SearchParams.yml#/sumOrFiltersScores'
 
 injectedItemsQueryParameters:
   title: Composition injectedItems Query parameters as object
