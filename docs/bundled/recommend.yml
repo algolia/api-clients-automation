@@ -3002,11 +3002,9 @@ components:
       type: string
       description: >
         Keywords to be used instead of the search query to conduct a more
-        broader search.
+        broader search
 
-
-        Using the `similarQuery` parameter changes other settings:
-
+        Using the `similarQuery` parameter changes other settings
 
         - `queryType` is set to `prefixNone`.
 
@@ -3014,8 +3012,7 @@ components:
 
         - `words` is set as the first ranking criterion.
 
-        - All remaining words are treated as `optionalWords`.
-
+        - All remaining words are treated as `optionalWords`
 
         Since the `similarQuery` is supposed to do a broad search, they usually
         return many results.
@@ -3197,8 +3194,7 @@ components:
     sumOrFiltersScores:
       type: boolean
       description: >
-        Whether to sum all filter scores.
-
+        Whether to sum all filter scores
 
         If true, all filter scores are summed.
 
@@ -3228,8 +3224,7 @@ components:
         type: string
       description: >
         Facets for which to retrieve facet values that match the search criteria
-        and the number of matching facet values.
-
+        and the number of matching facet values
 
         To retrieve all facets, use the wildcard character `*`.
 
@@ -3243,8 +3238,7 @@ components:
     facetingAfterDistinct:
       type: boolean
       description: >
-        Whether faceting should be applied after deduplication with `distinct`.
-
+        Whether faceting should be applied after deduplication with `distinct`
 
         This leads to accurate facet counts when using faceting in combination
         with `distinct`.
@@ -3515,8 +3509,7 @@ components:
         $ref: '#/components/schemas/supportedLanguage'
       description: >
         ISO language codes that adjust settings that are useful for processing
-        natural language queries (as opposed to keyword searches):
-
+        natural language queries (as opposed to keyword searches)
 
         - Sets `removeStopWords` and `ignorePlurals` to the list of provided
         languages.
@@ -3533,8 +3526,7 @@ components:
       items:
         type: string
       description: >
-        Assigns a rule context to the search query.
-
+        Assigns a rule context to the search query
 
         [Rule
         contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context)
@@ -3547,8 +3539,7 @@ components:
     personalizationImpact:
       type: integer
       description: >
-        Impact that Personalization should have on this search.
-
+        Impact that Personalization should have on this search
 
         The higher this value is, the more Personalization determines the
         ranking compared to other factors.
@@ -3588,8 +3579,7 @@ components:
     clickAnalytics:
       type: boolean
       description: >
-        Whether to include a `queryID` attribute in the response.
-
+        Whether to include a `queryID` attribute in the response
 
         The query ID is a unique identifier for a search query and is required
         for tracking [click and conversion
@@ -3611,8 +3601,6 @@ components:
         Tags to apply to the query for [segmenting analytics
         data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
       default: []
-      x-categories:
-        - Analytics
     percentileComputation:
       type: boolean
       description: >-
@@ -4187,14 +4175,12 @@ components:
         - title
         - content
       description: >
-        Attributes to include in the API response.
-
+        Attributes to include in the API response
 
         To reduce the size of your response, you can retrieve only some of the
         attributes.
 
-        Attribute names are case-sensitive.
-
+        Attribute names are case-sensitive
 
         - `*` retrieves all attributes, except attributes included in the
         `customRanking` and `unretrievableAttributes` settings.
@@ -4257,8 +4243,7 @@ components:
       example: 90
       description: >
         Relevancy threshold below which less relevant results aren't included in
-        the results.
-
+        the results
 
         You can only set `relevancyStrictness` on [virtual replica
         indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
@@ -4278,23 +4263,20 @@ components:
         - conten
         - content
       description: >
-        Attributes to highlight.
-
+        Attributes to highlight
 
         By default, all searchable attributes are highlighted.
 
         Use `*` to highlight all attributes or use an empty array `[]` to turn
         off highlighting.
 
-        Attribute names are case-sensitive.
-
+        Attribute names are case-sensitive
 
         With highlighting, strings that match the search query are surrounded by
         HTML tags defined by `highlightPreTag` and `highlightPostTag`.
 
         You can use this to visually highlight matching parts of a search query
-        in your UI.
-
+        in your UI
 
         For more information, see [Highlighting and
         snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js/).
@@ -4310,8 +4292,7 @@ components:
       description: >
         Attributes for which to enable snippets.
 
-        Attribute names are case-sensitive.
-
+        Attribute names are case-sensitive
 
         Snippets provide additional context to matched words.
 
@@ -4413,8 +4394,7 @@ components:
     allowTyposOnNumericTokens:
       type: boolean
       description: |
-        Whether to allow typos on numbers in the search query.
-
+        Whether to allow typos on numbers in the search query
         Turn off this setting to reduce the number of irrelevant matches
         when searching in large sets of similar numbers.
       default: true
@@ -4430,18 +4410,15 @@ components:
         Attributes for which you want to turn off [typo
         tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
 
-        Attribute names are case-sensitive.
+        Attribute names are case-sensitive
 
-
-        Returning only exact matches can help when:
-
+        Returning only exact matches can help when
 
         - [Searching in hyphenated
         attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/).
 
         - Reducing the number of matches when you have too many.
-          This can happen with attributes that are long blocks of text, such as product descriptions.
-
+          This can happen with attributes that are long blocks of text, such as product descriptions
         Consider alternatives such as `disableTypoToleranceOnWords` or adding
         synonyms if your attributes have intentional unusual spellings that
         might look like typos.
@@ -4519,8 +4496,7 @@ components:
         - es
       description: >
         Languages for language-specific query processing steps such as plurals,
-        stop-word removal, and word-detection dictionaries.
-
+        stop-word removal, and word-detection dictionaries 
 
         This setting sets a default list of languages used by the
         `removeStopWords` and `ignorePlurals` settings.
@@ -4530,8 +4506,7 @@ components:
         [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk)
         languages.
 
-        To support this, you must place the CJK language **first**.
-
+        To support this, you must place the CJK language **first** 
 
         **You should always specify a query language.**
 
@@ -4552,8 +4527,7 @@ components:
     decompoundQuery:
       type: boolean
       description: >
-        Whether to split compound words in the query into their building blocks.
-
+        Whether to split compound words in the query into their building blocks
 
         For more information, see [Word
         segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words).
@@ -4645,8 +4619,7 @@ components:
       type: boolean
       description: >
         Whether to support phrase matching and excluding words from search
-        queries.
-
+        queries
 
         Use the `advancedSyntaxFeatures` parameter to control which feature is
         supported.
@@ -4718,8 +4691,7 @@ components:
         Searchable attributes for which you want to [turn off the Exact ranking
         criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).
 
-        Attribute names are case-sensitive.
-
+        Attribute names are case-sensitive
 
         This can be useful for attributes with long values, where the likelihood
         of an exact match is high,
@@ -4770,35 +4742,30 @@ components:
         - ignoreConjugations
       x-categories:
         - Query strategy
-    properties-alternativesAsExact:
+    IndexSettings_alternativesAsExact:
       type: array
       items:
         $ref: '#/components/schemas/alternativesAsExact'
       description: >
         Determine which plurals and synonyms should be considered an exact
-        matches.
-
+        matches
 
         By default, Algolia treats singular and plural forms of a word, and
         single-word synonyms, as
         [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact)
         matches when searching.
 
-        For example:
-
+        For example
 
         - "swimsuit" and "swimsuits" are treated the same
 
         - "swimsuit" and "swimwear" are treated the same (if they are
-        [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms)).
-
+        [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms))
 
         - `ignorePlurals`.
-          Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.
-
+          Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches
         - `singleWordSynonym`.
-          Single-word synonyms, such as "NY" = "NYC", are considered exact matches.
-
+          Single-word synonyms, such as "NY" = "NYC", are considered exact matches
         - `multiWordsSynonym`.
           Multi-word synonyms, such as "NY" = "New York", are considered exact matches.
       default:
@@ -4813,21 +4780,18 @@ components:
         - excludeWords
       x-categories:
         - Query strategy
-    properties-advancedSyntaxFeatures:
+    IndexSettings_advancedSyntaxFeatures:
       type: array
       items:
         $ref: '#/components/schemas/advancedSyntaxFeatures'
       description: |
-        Advanced search syntax features you want to support.
-
+        Advanced search syntax features you want to support
         - `exactPhrase`.
           Phrases in quotes must match exactly.
-          For example, `sparkly blue "iPhone case"` only returns records with the exact string "iPhone case".
-
+          For example, `sparkly blue "iPhone case"` only returns records with the exact string "iPhone case"
         - `excludeWords`.
           Query words prefixed with a `-` must not occur in a record.
-          For example, `search -engine` matches records that contain "search" but not "engine".
-
+          For example, `search -engine` matches records that contain "search" but not "engine"
         This setting only has an effect if `advancedSyntax` is true.
       default:
         - exactPhrase
@@ -4878,8 +4842,7 @@ components:
     replaceSynonymsInHighlight:
       type: boolean
       description: >
-        Whether to replace a highlighted word with the matched synonym.
-
+        Whether to replace a highlighted word with the matched synonym
 
         By default, the original words are highlighted even if a synonym
         matches.
@@ -4890,8 +4853,7 @@ components:
         records matching either "home" or "house" are included in the search
         results,
 
-        and either "home" or "house" are highlighted.
-
+        and either "home" or "house" are highlighted
 
         With `replaceSynonymsInHighlight` set to `true`, a search for `home`
         still matches the same records,
@@ -4906,14 +4868,12 @@ components:
       minimum: 1
       maximum: 7
       description: >
-        Minimum proximity score for two matching words.
-
+        Minimum proximity score for two matching words
 
         This adjusts the [Proximity ranking
         criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity)
 
-        by equally scoring matches that are farther apart.
-
+        by equally scoring matches that are farther apart
 
         For example, if `minProximity` is 2, neighboring matches and matches
         with one word between them would have the same score.
@@ -4925,25 +4885,21 @@ components:
       items:
         type: string
       description: >
-        Properties to include in the API response of search and browse requests.
-
+        Properties to include in the API response of search and browse requests
 
         By default, all response properties are included.
 
         To reduce the response size, you can select which properties should be
-        included.
-
+        included
 
         An empty list may lead to an empty API response (except properties you
-        can't exclude).
-
+        can't exclude)
 
         You can't exclude these properties:
 
         `message`, `warning`, `cursor`, `abTestVariantID`,
 
-        or any property added by setting `getRankingInfo` to true.
-
+        or any property added by setting `getRankingInfo` to true
 
         Your search depends on the `hits` field. If you omit this field,
         searches won't return any results.
@@ -4967,16 +4923,13 @@ components:
     sortFacetValuesBy:
       type: string
       description: >
-        Order in which to retrieve facet values.
-
+        Order in which to retrieve facet values
 
         - `count`.
           Facet values are retrieved by decreasing count.
-          The count is the number of matching records containing this facet value.
-
+          The count is the number of matching records containing this facet value
         - `alpha`.
-          Retrieve facet values alphabetically.
-
+          Retrieve facet values alphabetically
         This setting doesn't influence how facet values are displayed in your UI
         (see `renderingContent`).
 
@@ -4989,8 +4942,7 @@ components:
       type: boolean
       description: >
         Whether the best matching attribute should be determined by minimum
-        proximity.
-
+        proximity
 
         This setting only affects ranking if the Attribute ranking criterion
         comes before Proximity in the `ranking` setting.
@@ -5147,8 +5099,7 @@ components:
       type: boolean
       description: >
         Whether this search will use [Dynamic
-        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/).
-
+        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/)
 
         This setting only has an effect if you activated Dynamic Re-Ranking for
         this index in the Algolia dashboard.
@@ -5228,9 +5179,9 @@ components:
         exactOnSingleWordQuery:
           $ref: '#/components/schemas/exactOnSingleWordQuery'
         alternativesAsExact:
-          $ref: '#/components/schemas/properties-alternativesAsExact'
+          $ref: '#/components/schemas/IndexSettings_alternativesAsExact'
         advancedSyntaxFeatures:
-          $ref: '#/components/schemas/properties-advancedSyntaxFeatures'
+          $ref: '#/components/schemas/IndexSettings_advancedSyntaxFeatures'
         distinct:
           $ref: '#/components/schemas/distinct'
         replaceSynonymsInHighlight:

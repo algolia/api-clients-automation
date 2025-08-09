@@ -1068,7 +1068,13 @@
         "description": "Whether the run response should include detailed ranking information."
       },
       "relevancyStrictness": {
-        "type": "integer"
+        "type": "integer",
+        "example": 90,
+        "description": "Relevancy threshold below which less relevant results aren't included in the results\nYou can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).\nUse this setting to strike a balance between the relevance and number of returned results.\n",
+        "default": 100,
+        "x-categories": [
+          "Ranking"
+        ]
       },
       "facetFilters": {
         "description": "Filter the search by facet values, so that only records with the same facet values are retrieved.\n\n**Prefer using the `filters` parameter, which supports all filter types and combinations with boolean operators.**\n\n- `[filter1, filter2]` is interpreted as `filter1 AND filter2`.\n- `[[filter1, filter2], filter3]` is interpreted as `filter1 OR filter2 AND filter3`.\n- `facet:-value` is interpreted as `NOT facet:value`.\n\nWhile it's best to avoid attributes that start with a `-`, you can still filter them by escaping with a backslash:\n`facet:\\-value`.\n",
@@ -1393,7 +1399,7 @@
         "example": [
           "es"
         ],
-        "description": "Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries\nThis setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings.\nThis setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages.\nTo support this, you must place the CJK language **first**\n**You should always specify a query language.**\nIf you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),\nor the languages you specified with the `ignorePlurals` or `removeStopWords` parameters.\nThis can lead to unexpected search results.\nFor more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).\n",
+        "description": "Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries \nThis setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings.\nThis setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages.\nTo support this, you must place the CJK language **first** \n**You should always specify a query language.**\nIf you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),\nor the languages you specified with the `ignorePlurals` or `removeStopWords` parameters.\nThis can lead to unexpected search results.\nFor more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).\n",
         "default": [],
         "x-categories": [
           "Languages"
@@ -1459,10 +1465,7 @@
           "type": "string"
         },
         "description": "Tags to apply to the query for [segmenting analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).",
-        "default": [],
-        "x-categories": [
-          "Analytics"
-        ]
+        "default": []
       },
       "enableABTest": {
         "type": "boolean",
@@ -2606,7 +2609,7 @@
           "Query strategy"
         ]
       },
-      "Search_advancedSyntaxFeatures": {
+      "IndexSettings_advancedSyntaxFeatures": {
         "type": "array",
         "items": {
           "$ref": "#/components/schemas/advancedSyntaxFeatures"
@@ -2640,7 +2643,7 @@
           "Query strategy"
         ]
       },
-      "Search_alternativesAsExact": {
+      "IndexSettings_alternativesAsExact": {
         "type": "array",
         "items": {
           "$ref": "#/components/schemas/alternativesAsExact"
@@ -2670,6 +2673,7 @@
         "example": [
           "author",
           "title",
+          "conten",
           "content"
         ],
         "description": "Attributes to highlight\nBy default, all searchable attributes are highlighted.\nUse `*` to highlight all attributes or use an empty array `[]` to turn off highlighting.\nAttribute names are case-sensitive\nWith highlighting, strings that match the search query are surrounded by HTML tags defined by `highlightPreTag` and `highlightPostTag`.\nYou can use this to visually highlight matching parts of a search query in your UI\nFor more information, see [Highlighting and snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js/).\n",
@@ -2687,7 +2691,7 @@
           "title",
           "content"
         ],
-        "description": "Attributes to include in the API response.\n\nTo reduce the size of your response, you can retrieve only some of the attributes.\nAttribute names are case-sensitive.\n\n- `*` retrieves all attributes, except attributes included in the `customRanking` and `unretrievableAttributes` settings.\n- To retrieve all attributes except a specific one, prefix the attribute with a dash and combine it with the `*`: `[\"*\", \"-ATTRIBUTE\"]`.\n- The `objectID` attribute is always included.\n",
+        "description": "Attributes to include in the API response\nTo reduce the size of your response, you can retrieve only some of the attributes.\nAttribute names are case-sensitive\n- `*` retrieves all attributes, except attributes included in the `customRanking` and `unretrievableAttributes` settings.\n- To retrieve all attributes except a specific one, prefix the attribute with a dash and combine it with the `*`: `[\"*\", \"-ATTRIBUTE\"]`.\n- The `objectID` attribute is always included.\n",
         "default": [
           "*"
         ],
@@ -2766,7 +2770,7 @@
           "Advanced"
         ]
       },
-      "Search_enableABTest": {
+      "SearchParams_enableABTest": {
         "type": "boolean",
         "description": "Whether to enable A/B testing for this search.",
         "default": true,
@@ -2782,7 +2786,7 @@
           "Personalization"
         ]
       },
-      "Search_enableRules": {
+      "IndexSettings_enableRules": {
         "type": "boolean",
         "description": "Whether to enable rules.",
         "default": true,
@@ -2803,9 +2807,13 @@
           "Query strategy"
         ]
       },
-      "Search_getRankingInfo": {
+      "SearchParams_getRankingInfo": {
         "type": "boolean",
-        "description": "Whether the search response should include detailed ranking information."
+        "description": "Whether the search response should include detailed ranking information.",
+        "default": false,
+        "x-categories": [
+          "Advanced"
+        ]
       },
       "highlightPostTag": {
         "type": "string",
@@ -2883,7 +2891,7 @@
           "Typos"
         ]
       },
-      "optionalWords": {
+      "optionalWordsArray": {
         "type": "array",
         "items": {
           "type": "string"
@@ -2892,10 +2900,24 @@
           "blue",
           "iphone case"
         ],
-        "description": "Words that should be considered optional when found in the query\nBy default, records must match all words in the search query to be included in the search results.\nAdding optional words can help to increase the number of search results by running an additional search query that doesn't include the optional words.\nFor example, if the search query is \"action video\" and \"video\" is an optional word,\nthe search engine runs two queries. One for \"action video\" and one for \"action\".\nRecords that match all words are ranked higher\nFor a search query with 4 or more words **and** all its words are optional,\nthe number of matched words required for a record to be included in the search results increases for every 1,000 records\n- If `optionalWords` has less than 10 words, the required number of matched words increases by 1:\n  results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words.\n- If `optionalWords` has 10 or more words, the number of required matched words increases by the number of optional words divided by 5 (rounded down).\n  For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words\nFor more information, see [Optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).\n",
+        "description": "List of [optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).",
         "default": [],
         "x-categories": [
           "Query strategy"
+        ]
+      },
+      "optionalWords": {
+        "description": "Words that should be considered optional when found in the query.\n\nBy default, records must match all words in the search query to be included in the search results.\nAdding optional words can help to increase the number of search results by running an additional search query that doesn't include the optional words.\nFor example, if the search query is \"action video\" and \"video\" is an optional word,\nthe search engine runs two queries. One for \"action video\" and one for \"action\".\nRecords that match all words are ranked higher.\n\nFor a search query with 4 or more words **and** all its words are optional,\nthe number of matched words required for a record to be included in the search results increases for every 1,000 records:\n\n- If `optionalWords` has less than 10 words, the required number of matched words increases by 1:\n  results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words.\n- If `optionalWords` has 10 or more words, the number of required matched words increases by the number of optional words divided by 5 (rounded down).\n  For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.\n\nFor more information, see [Optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).\n",
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "$ref": "#/components/schemas/optionalWordsArray"
+          }
         ]
       },
       "percentileComputation": {
@@ -2981,7 +3003,7 @@
         "items": {
           "type": "string"
         },
-        "description": "Properties to include in the API response of `search` and `browse` requests\nBy default, all response properties are included.\nTo reduce the response size, you can select, which attributes should be included\nYou can't exclude these properties:\n`message`, `warning`, `cursor`, `serverUsed`, `indexUsed`,\n`abTestVariantID`, `parsedQuery`, or any property triggered by the `getRankingInfo` parameter\nDon't exclude properties that you might need in your search UI.\n",
+        "description": "Properties to include in the API response of search and browse requests\nBy default, all response properties are included.\nTo reduce the response size, you can select which properties should be included\nAn empty list may lead to an empty API response (except properties you can't exclude)\nYou can't exclude these properties:\n`message`, `warning`, `cursor`, `abTestVariantID`,\nor any property added by setting `getRankingInfo` to true\nYour search depends on the `hits` field. If you omit this field, searches won't return any results.\nYour UI might also depend on other properties, for example, for pagination.\nBefore restricting the response size, check the impact on your search experience.\n",
         "default": [
           "*"
         ],
@@ -3012,7 +3034,7 @@
           "Filtering"
         ]
       },
-      "Search_ruleContexts": {
+      "SearchParams_ruleContexts": {
         "type": "array",
         "items": {
           "type": "string"
@@ -3078,13 +3100,13 @@
             "$ref": "#/components/schemas/advancedSyntax"
           },
           "advancedSyntaxFeatures": {
-            "$ref": "#/components/schemas/Search_advancedSyntaxFeatures"
+            "$ref": "#/components/schemas/IndexSettings_advancedSyntaxFeatures"
           },
           "allowTyposOnNumericTokens": {
             "$ref": "#/components/schemas/allowTyposOnNumericTokens"
           },
           "alternativesAsExact": {
-            "$ref": "#/components/schemas/Search_alternativesAsExact"
+            "$ref": "#/components/schemas/IndexSettings_alternativesAsExact"
           },
           "analytics": {
             "$ref": "#/components/schemas/analytics"
@@ -3117,7 +3139,7 @@
             "$ref": "#/components/schemas/distinct"
           },
           "enableABTest": {
-            "$ref": "#/components/schemas/Search_enableABTest"
+            "$ref": "#/components/schemas/SearchParams_enableABTest"
           },
           "enablePersonalization": {
             "$ref": "#/components/schemas/enablePersonalization"
@@ -3126,7 +3148,7 @@
             "$ref": "#/components/schemas/enableReRanking"
           },
           "enableRules": {
-            "$ref": "#/components/schemas/Search_enableRules"
+            "$ref": "#/components/schemas/IndexSettings_enableRules"
           },
           "exactOnSingleWordQuery": {
             "$ref": "#/components/schemas/exactOnSingleWordQuery"
@@ -3138,7 +3160,7 @@
             "$ref": "#/components/schemas/filters"
           },
           "getRankingInfo": {
-            "$ref": "#/components/schemas/Search_getRankingInfo"
+            "$ref": "#/components/schemas/SearchParams_getRankingInfo"
           },
           "highlightPostTag": {
             "$ref": "#/components/schemas/highlightPostTag"
@@ -3204,7 +3226,7 @@
             "$ref": "#/components/schemas/restrictSearchableAttributes"
           },
           "ruleContexts": {
-            "$ref": "#/components/schemas/Search_ruleContexts"
+            "$ref": "#/components/schemas/SearchParams_ruleContexts"
           },
           "snippetEllipsisText": {
             "$ref": "#/components/schemas/snippetEllipsisText"
@@ -3225,7 +3247,7 @@
           "Faceting"
         ]
       },
-      "Search_facets": {
+      "properties-facets": {
         "type": "array",
         "items": {
           "type": "string"
@@ -3280,7 +3302,7 @@
                 "$ref": "#/components/schemas/facetingAfterDistinct"
               },
               "facets": {
-                "$ref": "#/components/schemas/Search_facets"
+                "$ref": "#/components/schemas/properties-facets"
               },
               "hitsPerPage": {
                 "$ref": "#/components/schemas/hitsPerPage"

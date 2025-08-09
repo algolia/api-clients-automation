@@ -298,7 +298,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"params":{"query":"","filters":"(category:Book OR category:Ebook) AND _tags:published","page":0,"getRankingInfo":true,"relevancyStrictness":42,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"hitsPerPage":20,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"queryLanguages":["es"],"naturalLanguages":[],"enableRules":true,"ruleContexts":["mobile"],"userToken":"test-user-123","clickAnalytics":false,"analytics":true,"analyticsTags":[],"enableABTest":true,"enableReRanking":true}}'
+              --data '{"params":{"query":"","filters":"(category:Book OR category:Ebook) AND _tags:published","page":0,"getRankingInfo":true,"relevancyStrictness":90,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"hitsPerPage":20,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"queryLanguages":["es"],"naturalLanguages":[],"enableRules":true,"ruleContexts":["mobile"],"userToken":"test-user-123","clickAnalytics":false,"analytics":true,"analyticsTags":[],"enableABTest":true,"enableReRanking":true}}'
   /1/compositions/{compositionID}/facets/{facetName}/query:
     post:
       tags:
@@ -399,7 +399,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"params":{"query":"","maxFacetHits":10,"searchQuery":{"query":"","filters":"(category:Book OR category:Ebook) AND _tags:published","page":0,"getRankingInfo":true,"relevancyStrictness":42,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"hitsPerPage":20,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"queryLanguages":["es"],"naturalLanguages":[],"enableRules":true,"ruleContexts":["mobile"],"userToken":"test-user-123","clickAnalytics":false,"analytics":true,"analyticsTags":[],"enableABTest":true,"enableReRanking":true}}}'
+              --data '{"params":{"query":"","maxFacetHits":10,"searchQuery":{"query":"","filters":"(category:Book OR category:Ebook) AND _tags:published","page":0,"getRankingInfo":true,"relevancyStrictness":90,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"hitsPerPage":20,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"queryLanguages":["es"],"naturalLanguages":[],"enableRules":true,"ruleContexts":["mobile"],"userToken":"test-user-123","clickAnalytics":false,"analytics":true,"analyticsTags":[],"enableABTest":true,"enableReRanking":true}}}'
   /1/compositions/{compositionID}:
     get:
       tags:
@@ -563,7 +563,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"requests":[{"action":"upsert","body":{"objectID":"my_composition_object_id","name":"my lovely crafted composition","description":"my lovely crafted composition that is used for X purpose","behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":true,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":["blue","iphone case"],"percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":["*"],"hitsPerPage":20,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":true,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":["blue","iphone case"],"percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0}]}}}}]}'
+              --data '{"requests":[{"action":"upsert","body":{"objectID":"my_composition_object_id","name":"my lovely crafted composition","description":"my lovely crafted composition that is used for X purpose","behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":["*"],"hitsPerPage":20,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0}]}}}}]}'
   /1/compositions/{compositionID}/rules/{objectID}:
     get:
       tags:
@@ -730,7 +730,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"requests":[{"action":"upsert","body":{"objectID":"my_composition_rule_object_id","conditions":[{"pattern":"{facet:genre}","anchoring":"is","context":"mobile","filters":"genre:comedy"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":true,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":["blue","iphone case"],"percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":["*"],"hitsPerPage":20,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":true,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":["blue","iphone case"],"percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0}]}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}]}}]}'
+              --data '{"requests":[{"action":"upsert","body":{"objectID":"my_composition_rule_object_id","conditions":[{"pattern":"{facet:genre}","anchoring":"is","context":"mobile","filters":"genre:comedy"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":["*"],"hitsPerPage":20,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0}]}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}]}}]}'
   /1/compositions/{compositionID}/rules/search:
     post:
       tags:
@@ -1126,6 +1126,19 @@ components:
       description: Whether the run response should include detailed ranking information.
     relevancyStrictness:
       type: integer
+      example: 90
+      description: >
+        Relevancy threshold below which less relevant results aren't included in
+        the results
+
+        You can only set `relevancyStrictness` on [virtual replica
+        indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
+
+        Use this setting to strike a balance between the relevance and number of
+        returned results.
+      default: 100
+      x-categories:
+        - Ranking
     facetFilters:
       description: >
         Filter the search by facet values, so that only records with the same
@@ -1490,7 +1503,7 @@ components:
         - es
       description: >
         Languages for language-specific query processing steps such as plurals,
-        stop-word removal, and word-detection dictionaries
+        stop-word removal, and word-detection dictionaries 
 
         This setting sets a default list of languages used by the
         `removeStopWords` and `ignorePlurals` settings.
@@ -1500,7 +1513,7 @@ components:
         [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk)
         languages.
 
-        To support this, you must place the CJK language **first**
+        To support this, you must place the CJK language **first** 
 
         **You should always specify a query language.**
 
@@ -1593,8 +1606,6 @@ components:
         Tags to apply to the query for [segmenting analytics
         data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
       default: []
-      x-categories:
-        - Analytics
     enableABTest:
       type: boolean
       description: |
@@ -2515,7 +2526,7 @@ components:
         - excludeWords
       x-categories:
         - Query strategy
-    Search_advancedSyntaxFeatures:
+    IndexSettings_advancedSyntaxFeatures:
       type: array
       items:
         $ref: '#/components/schemas/advancedSyntaxFeatures'
@@ -2551,7 +2562,7 @@ components:
         - ignoreConjugations
       x-categories:
         - Query strategy
-    Search_alternativesAsExact:
+    IndexSettings_alternativesAsExact:
       type: array
       items:
         $ref: '#/components/schemas/alternativesAsExact'
@@ -2606,6 +2617,7 @@ components:
       example:
         - author
         - title
+        - conten
         - content
       description: >
         Attributes to highlight
@@ -2636,14 +2648,12 @@ components:
         - title
         - content
       description: >
-        Attributes to include in the API response.
-
+        Attributes to include in the API response
 
         To reduce the size of your response, you can retrieve only some of the
         attributes.
 
-        Attribute names are case-sensitive.
-
+        Attribute names are case-sensitive
 
         - `*` retrieves all attributes, except attributes included in the
         `customRanking` and `unretrievableAttributes` settings.
@@ -2792,7 +2802,7 @@ components:
           default: 0
       x-categories:
         - Advanced
-    Search_enableABTest:
+    SearchParams_enableABTest:
       type: boolean
       description: Whether to enable A/B testing for this search.
       default: true
@@ -2804,7 +2814,7 @@ components:
       default: false
       x-categories:
         - Personalization
-    Search_enableRules:
+    IndexSettings_enableRules:
       type: boolean
       description: Whether to enable rules.
       default: true
@@ -2837,9 +2847,12 @@ components:
       default: attribute
       x-categories:
         - Query strategy
-    Search_getRankingInfo:
+    SearchParams_getRankingInfo:
       type: boolean
       description: Whether the search response should include detailed ranking information.
+      default: false
+      x-categories:
+        - Advanced
     highlightPostTag:
       type: string
       description: >-
@@ -2922,15 +2935,23 @@ components:
       default: 8
       x-categories:
         - Typos
-    optionalWords:
+    optionalWordsArray:
       type: array
       items:
         type: string
       example:
         - blue
         - iphone case
+      description: >-
+        List of [optional
+        words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
+      default: []
+      x-categories:
+        - Query strategy
+    optionalWords:
       description: >
-        Words that should be considered optional when found in the query
+        Words that should be considered optional when found in the query.
+
 
         By default, records must match all words in the search query to be
         included in the search results.
@@ -2945,13 +2966,15 @@ components:
         the search engine runs two queries. One for "action video" and one for
         "action".
 
-        Records that match all words are ranked higher
+        Records that match all words are ranked higher.
+
 
         For a search query with 4 or more words **and** all its words are
         optional,
 
         the number of matched words required for a record to be included in the
-        search results increases for every 1,000 records
+        search results increases for every 1,000 records:
+
 
         - If `optionalWords` has less than 10 words, the required number of
         matched words increases by 1:
@@ -2959,12 +2982,14 @@ components:
         - If `optionalWords` has 10 or more words, the number of required
         matched words increases by the number of optional words divided by 5
         (rounded down).
-          For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words
+          For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.
+
         For more information, see [Optional
         words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
-      default: []
-      x-categories:
-        - Query strategy
+      oneOf:
+        - type: string
+        - type: 'null'
+        - $ref: '#/components/schemas/optionalWordsArray'
     percentileComputation:
       type: boolean
       description: >-
@@ -3109,22 +3134,30 @@ components:
       items:
         type: string
       description: >
-        Properties to include in the API response of `search` and `browse`
-        requests
+        Properties to include in the API response of search and browse requests
 
         By default, all response properties are included.
 
-        To reduce the response size, you can select, which attributes should be
+        To reduce the response size, you can select which properties should be
         included
+
+        An empty list may lead to an empty API response (except properties you
+        can't exclude)
 
         You can't exclude these properties:
 
-        `message`, `warning`, `cursor`, `serverUsed`, `indexUsed`,
+        `message`, `warning`, `cursor`, `abTestVariantID`,
 
-        `abTestVariantID`, `parsedQuery`, or any property triggered by the
-        `getRankingInfo` parameter
+        or any property added by setting `getRankingInfo` to true
 
-        Don't exclude properties that you might need in your search UI.
+        Your search depends on the `hits` field. If you omit this field,
+        searches won't return any results.
+
+        Your UI might also depend on other properties, for example, for
+        pagination.
+
+        Before restricting the response size, check the impact on your search
+        experience.
       default:
         - '*'
       x-categories:
@@ -3152,7 +3185,7 @@ components:
       default: []
       x-categories:
         - Filtering
-    Search_ruleContexts:
+    SearchParams_ruleContexts:
       type: array
       items:
         type: string
@@ -3222,11 +3255,11 @@ components:
         advancedSyntax:
           $ref: '#/components/schemas/advancedSyntax'
         advancedSyntaxFeatures:
-          $ref: '#/components/schemas/Search_advancedSyntaxFeatures'
+          $ref: '#/components/schemas/IndexSettings_advancedSyntaxFeatures'
         allowTyposOnNumericTokens:
           $ref: '#/components/schemas/allowTyposOnNumericTokens'
         alternativesAsExact:
-          $ref: '#/components/schemas/Search_alternativesAsExact'
+          $ref: '#/components/schemas/IndexSettings_alternativesAsExact'
         analytics:
           $ref: '#/components/schemas/analytics'
         attributeCriteriaComputedByMinProximity:
@@ -3248,13 +3281,13 @@ components:
         distinct:
           $ref: '#/components/schemas/distinct'
         enableABTest:
-          $ref: '#/components/schemas/Search_enableABTest'
+          $ref: '#/components/schemas/SearchParams_enableABTest'
         enablePersonalization:
           $ref: '#/components/schemas/enablePersonalization'
         enableReRanking:
           $ref: '#/components/schemas/enableReRanking'
         enableRules:
-          $ref: '#/components/schemas/Search_enableRules'
+          $ref: '#/components/schemas/IndexSettings_enableRules'
         exactOnSingleWordQuery:
           $ref: '#/components/schemas/exactOnSingleWordQuery'
         facetFilters:
@@ -3262,7 +3295,7 @@ components:
         filters:
           $ref: '#/components/schemas/filters'
         getRankingInfo:
-          $ref: '#/components/schemas/Search_getRankingInfo'
+          $ref: '#/components/schemas/SearchParams_getRankingInfo'
         highlightPostTag:
           $ref: '#/components/schemas/highlightPostTag'
         highlightPreTag:
@@ -3306,7 +3339,7 @@ components:
         restrictSearchableAttributes:
           $ref: '#/components/schemas/restrictSearchableAttributes'
         ruleContexts:
-          $ref: '#/components/schemas/Search_ruleContexts'
+          $ref: '#/components/schemas/SearchParams_ruleContexts'
         snippetEllipsisText:
           $ref: '#/components/schemas/snippetEllipsisText'
         synonyms:
@@ -3329,7 +3362,7 @@ components:
       default: false
       x-categories:
         - Faceting
-    Search_facets:
+    properties-facets:
       type: array
       items:
         type: string
@@ -3397,7 +3430,7 @@ components:
             facetingAfterDistinct:
               $ref: '#/components/schemas/facetingAfterDistinct'
             facets:
-              $ref: '#/components/schemas/Search_facets'
+              $ref: '#/components/schemas/properties-facets'
             hitsPerPage:
               $ref: '#/components/schemas/hitsPerPage'
             maxValuesPerFacet:

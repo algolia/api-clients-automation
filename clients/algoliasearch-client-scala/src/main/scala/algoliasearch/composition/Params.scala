@@ -56,6 +56,11 @@ import algoliasearch.composition.SupportedLanguage._
   *   Page of search results to retrieve.
   * @param getRankingInfo
   *   Whether the run response should include detailed ranking information.
+  * @param relevancyStrictness
+  *   Relevancy threshold below which less relevant results aren't included in the results You can only set
+  *   `relevancyStrictness` on [virtual replica
+  *   indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
+  *   Use this setting to strike a balance between the relevance and number of returned results.
   * @param hitsPerPage
   *   Number of hits per page.
   * @param aroundLatLng

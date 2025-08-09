@@ -34,9 +34,9 @@ import algoliasearch.recommend.SupportedLanguage._
 /** BaseRecommendSearchParams
   *
   * @param similarQuery
-  *   Keywords to be used instead of the search query to conduct a more broader search. Using the `similarQuery`
-  *   parameter changes other settings: - `queryType` is set to `prefixNone`. - `removeStopWords` is set to true. -
-  *   `words` is set as the first ranking criterion. - All remaining words are treated as `optionalWords`. Since the
+  *   Keywords to be used instead of the search query to conduct a more broader search Using the `similarQuery`
+  *   parameter changes other settings - `queryType` is set to `prefixNone`. - `removeStopWords` is set to true. -
+  *   `words` is set as the first ranking criterion. - All remaining words are treated as `optionalWords` Since the
   *   `similarQuery` is supposed to do a broad search, they usually return many results. Combine it with `filters` to
   *   narrow down the list of results.
   * @param filters
@@ -54,17 +54,17 @@ import algoliasearch.recommend.SupportedLanguage._
   *   matches if it matches at least one element of the array. For more information, see
   *   [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
   * @param sumOrFiltersScores
-  *   Whether to sum all filter scores. If true, all filter scores are summed. Otherwise, the maximum filter score is
+  *   Whether to sum all filter scores If true, all filter scores are summed. Otherwise, the maximum filter score is
   *   kept. For more information, see [filter
   *   scores](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#accumulating-scores-with-sumorfiltersscores).
   * @param restrictSearchableAttributes
   *   Restricts a search to a subset of your searchable attributes. Attribute names are case-sensitive.
   * @param facets
-  *   Facets for which to retrieve facet values that match the search criteria and the number of matching facet values.
+  *   Facets for which to retrieve facet values that match the search criteria and the number of matching facet values
   *   To retrieve all facets, use the wildcard character `*`. For more information, see
   *   [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
   * @param facetingAfterDistinct
-  *   Whether faceting should be applied after deduplication with `distinct`. This leads to accurate facet counts when
+  *   Whether faceting should be applied after deduplication with `distinct` This leads to accurate facet counts when
   *   using faceting in combination with `distinct`. It's usually better to use `afterDistinct` modifiers in the
   *   `attributesForFaceting` setting, as `facetingAfterDistinct` only computes correct facet counts if all records have
   *   the same facet values for the `attributeForDistinct`.
@@ -85,15 +85,15 @@ import algoliasearch.recommend.SupportedLanguage._
   *   This parameter is ignored if you also specify `insideBoundingBox`.
   * @param naturalLanguages
   *   ISO language codes that adjust settings that are useful for processing natural language queries (as opposed to
-  *   keyword searches): - Sets `removeStopWords` and `ignorePlurals` to the list of provided languages. - Sets
+  *   keyword searches) - Sets `removeStopWords` and `ignorePlurals` to the list of provided languages. - Sets
   *   `removeWordsIfNoResults` to `allOptional`. - Adds a `natural_language` attribute to `ruleContexts` and
   *   `analyticsTags`.
   * @param ruleContexts
-  *   Assigns a rule context to the search query. [Rule
+  *   Assigns a rule context to the search query [Rule
   *   contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context)
   *   are strings that you can use to trigger matching rules.
   * @param personalizationImpact
-  *   Impact that Personalization should have on this search. The higher this value is, the more Personalization
+  *   Impact that Personalization should have on this search The higher this value is, the more Personalization
   *   determines the ranking compared to other factors. For more information, see [Understanding Personalization
   *   impact](https://www.algolia.com/doc/guides/personalization/personalizing-results/in-depth/configuring-personalization/#understanding-personalization-impact).
   * @param userToken
@@ -104,7 +104,7 @@ import algoliasearch.recommend.SupportedLanguage._
   * @param synonyms
   *   Whether to take into account an index's synonyms for this search.
   * @param clickAnalytics
-  *   Whether to include a `queryID` attribute in the response. The query ID is a unique identifier for a search query
+  *   Whether to include a `queryID` attribute in the response The query ID is a unique identifier for a search query
   *   and is required for tracking [click and conversion
   *   events](https://www.algolia.com/guides/sending-events/getting-started/).
   * @param analytics

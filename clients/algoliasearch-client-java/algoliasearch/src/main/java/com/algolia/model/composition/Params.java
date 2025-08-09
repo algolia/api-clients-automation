@@ -155,7 +155,12 @@ public class Params {
     return this;
   }
 
-  /** Get relevancyStrictness */
+  /**
+   * Relevancy threshold below which less relevant results aren't included in the results You can
+   * only set `relevancyStrictness` on [virtual replica
+   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
+   * Use this setting to strike a balance between the relevance and number of returned results.
+   */
   @javax.annotation.Nullable
   public Integer getRelevancyStrictness() {
     return relevancyStrictness;

@@ -354,6 +354,19 @@ components:
       description: Whether the run response should include detailed ranking information.
     relevancyStrictness:
       type: integer
+      example: 90
+      description: >
+        Relevancy threshold below which less relevant results aren't included in
+        the results
+
+        You can only set `relevancyStrictness` on [virtual replica
+        indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
+
+        Use this setting to strike a balance between the relevance and number of
+        returned results.
+      default: 100
+      x-categories:
+        - Ranking
     facetFilters:
       description: >
         Filter the search by facet values, so that only records with the same
@@ -724,7 +737,7 @@ components:
         - es
       description: >
         Languages for language-specific query processing steps such as plurals,
-        stop-word removal, and word-detection dictionaries
+        stop-word removal, and word-detection dictionaries 
 
         This setting sets a default list of languages used by the
         `removeStopWords` and `ignorePlurals` settings.
@@ -734,7 +747,7 @@ components:
         [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk)
         languages.
 
-        To support this, you must place the CJK language **first**
+        To support this, you must place the CJK language **first** 
 
         **You should always specify a query language.**
 
@@ -827,8 +840,6 @@ components:
         Tags to apply to the query for [segmenting analytics
         data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
       default: []
-      x-categories:
-        - Analytics
     enableABTest:
       type: boolean
       description: |
