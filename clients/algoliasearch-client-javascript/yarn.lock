@@ -173,6 +173,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@algolia/collections@workspace:packages/collections":
+  version: 0.0.0-use.local
+  resolution: "@algolia/collections@workspace:packages/collections"
+  dependencies:
+    "@algolia/client-common": "npm:5.35.0"
+    "@algolia/requester-browser-xhr": "npm:5.35.0"
+    "@algolia/requester-fetch": "npm:5.35.0"
+    "@algolia/requester-node-http": "npm:5.35.0"
+    "@arethetypeswrong/cli": "npm:0.18.2"
+    "@types/node": "npm:22.17.0"
+    publint: "npm:0.3.12"
+    rollup: "npm:4.41.0"
+    tsup: "npm:8.5.0"
+    typescript: "npm:5.9.2"
+  languageName: unknown
+  linkType: soft
+
 "@algolia/composition@workspace:packages/composition":
   version: 0.0.0-use.local
   resolution: "@algolia/composition@workspace:packages/composition"

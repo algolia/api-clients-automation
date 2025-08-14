@@ -1,0 +1,40 @@
+indexName:
+  name: indexName
+  in: query
+  required: true
+  description: Name of the index.
+  schema:
+    type: string
+    example: ALGOLIA_INDEX_NAME
+
+paginationLimit:
+  name: limit
+  in: query
+  description: Number of items to fetch.
+  required: false
+  schema:
+    $ref: './schemas/pagination.yml#/limit'
+
+paginationOffset:
+  name: offset
+  in: query
+  description: Number of items to skip.
+  required: false
+  schema:
+    $ref: './schemas/pagination.yml#/offset'
+
+pathCollectionID:
+  name: collectionID
+  in: path
+  required: true
+  description: Unique identifier of a collection.
+  schema:
+    $ref: './schemas/common.yml#/collectionID'
+
+query:
+  name: query
+  in: query
+  required: false
+  description: Query to filter collections.
+  schema:
+    $ref: './schemas/common.yml#/query'

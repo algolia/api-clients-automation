@@ -1,0 +1,55 @@
+get:
+  summary: List collections
+  description: Retrieves a list of collections for a specific index.
+  operationId: listCollections
+  x-acl:
+    - search
+  parameters:
+    - $ref: '../common/parameters.yml#/indexName'
+    - $ref: '../common/parameters.yml#/query'
+    - $ref: '../common/parameters.yml#/paginationLimit'
+    - $ref: '../common/parameters.yml#/paginationOffset'
+  responses:
+    '400':
+      $ref: '../../common/responses/BadRequest.yml'
+    '200':
+      description: A list of collections.
+      content:
+        application/json:
+          schema:
+            title: listCollectionsResponse
+            $ref: '../common/schemas/collection.yml#/CollectionsResponse'
+
+post:
+  summary: Upsert a collection
+  description: Upserts a collection.
+  operationId: upsertCollection
+  x-acl:
+    - search
+    - addObject
+    - deleteIndex
+    - settings
+    - editSettings
+  requestBody:
+    description: Request body for upserting a Collection.
+    content:
+      application/json:
+        schema:
+          $ref: '../common/schemas/collection.yml#/CollectionUpsert'
+  responses:
+    '400':
+      $ref: '../../common/responses/BadRequest.yml'
+    '201':
+      description: Collection created.
+      content:
+        application/json:
+          schema:
+            title: upsertCollectionResponse
+            $ref: '../common/schemas/collection.yml#/Collection'
+    '200':
+      description: Collection updated.
+      content:
+        application/json:
+          schema:
+            title: upsertCollectionResponse
+            $ref: '../common/schemas/collection.yml#/Collection'
