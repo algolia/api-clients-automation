@@ -22,6 +22,11 @@ Hit _$HitFromJson(Map<String, dynamic> json) => $checkedCreate(
                   ? null
                   : HitRankingInfo.fromJson(v as Map<String, dynamic>)),
           distinctSeqID: $checkedConvert('_distinctSeqID', (v) => v as int?),
+          extra: $checkedConvert(
+              '_extra',
+              (v) => v == null
+                  ? null
+                  : HitMetadata.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -29,7 +34,8 @@ Hit _$HitFromJson(Map<String, dynamic> json) => $checkedCreate(
         'highlightResult': '_highlightResult',
         'snippetResult': '_snippetResult',
         'rankingInfo': '_rankingInfo',
-        'distinctSeqID': '_distinctSeqID'
+        'distinctSeqID': '_distinctSeqID',
+        'extra': '_extra'
       },
     );
 
@@ -39,6 +45,7 @@ const _$HitFieldMap = <String, String>{
   'snippetResult': '_snippetResult',
   'rankingInfo': '_rankingInfo',
   'distinctSeqID': '_distinctSeqID',
+  'extra': '_extra',
 };
 
 Map<String, dynamic> _$HitToJson(Hit instance) {
@@ -56,5 +63,6 @@ Map<String, dynamic> _$HitToJson(Hit instance) {
   writeNotNull('_snippetResult', instance.snippetResult);
   writeNotNull('_rankingInfo', instance.rankingInfo?.toJson());
   writeNotNull('_distinctSeqID', instance.distinctSeqID);
+  writeNotNull('_extra', instance.extra?.toJson());
   return val;
 }

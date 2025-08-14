@@ -34,36 +34,57 @@ package algoliasearch.composition
 
 import org.json4s._
 
-object JsonSupport {
-  private def enumSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
-    new AroundRadiusAllSerializer() :+
-    new MatchLevelSerializer() :+
-    new SortRemainingBySerializer() :+
-    new SupportedLanguageSerializer()
+/** An object that contains the extra key-value pairs provided in the injectedItem definition.
+  *
+  * @param injectedItemKey
+  *   The key of the injectedItem that inserted this metadata.
+  */
+case class HitMetadata(
+    injectedItemKey /* _injectedItemKey */: Option[String] = scala.None,
+    additionalProperties: Option[List[JField]] = None
+)
 
-  private def oneOfsSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
-    AroundPrecisionSerializer :+
-    AroundRadiusSerializer :+
-    FacetFiltersSerializer :+
-    HighlightResultSerializer :+
-    InsideBoundingBoxSerializer :+
-    NumericFiltersSerializer :+
-    OptionalFiltersSerializer :+
-    SnippetResultSerializer
+class HitMetadataSerializer extends Serializer[HitMetadata] {
 
-  private def classMapSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
-    new BaseSearchResponseSerializer() :+
-    new CompositionBaseSearchResponseSerializer() :+
-    new CompositionRunSearchResponseSerializer() :+
-    new CompositionsSearchResponseSerializer() :+
-    new ErrorBaseSerializer() :+
-    new HitSerializer() :+
-    new HitMetadataSerializer() :+
-    new ResultsCompositionsResponseSerializer() :+
-    new ResultsInjectedItemInfoResponseSerializer() :+
-    new SearchHitsSerializer() :+
-    new SearchResultsItemSerializer()
+  private val renamedFields = Map[String, String](
+    "_injectedItemKey" -> "injectedItemKey"
+  )
+  override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), HitMetadata] = {
+    case (TypeInfo(clazz, _), json) if clazz == classOf[HitMetadata] =>
+      json match {
+        case jobject: JObject =>
+          // Rename fields from JSON to Scala
+          val renamedObject = JObject(
+            jobject.obj.map { field =>
+              renamedFields.get(field._1).map(JField(_, field._2)).getOrElse(field)
+            }
+          )
+          val formats = format - this
+          val mf = manifest[HitMetadata]
+          val obj = Extraction.extract[HitMetadata](renamedObject)(formats, mf)
 
-  implicit val format: Formats = DefaultFormats ++ enumSerializers ++ oneOfsSerializers ++ classMapSerializers
-  implicit val serialization: org.json4s.Serialization = org.json4s.native.Serialization
+          val fields = Set("_injectedItemKey")
+          val additionalProperties = jobject removeField {
+            case (name, _) if fields.contains(name) => true
+            case _                                  => false
+          }
+          additionalProperties match {
+            case JObject(fieldsList) => obj copy (additionalProperties = Some(fieldsList))
+            case _                   => obj
+          }
+        case _ => throw new IllegalArgumentException(s"Can't deserialize $json as HitMetadata")
+      }
+  }
+
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: HitMetadata =>
+    val formats = format - this // remove current serializer from formats to avoid stackoverflow
+    val baseObj = Extraction.decompose(value.copy(additionalProperties = None))(formats)
+    val renamedObj = baseObj transformField {
+      case JField(name, value) if renamedFields.exists(_._2 == name) => (renamedFields.find(_._2 == name).get._1, value)
+    }
+    value.additionalProperties match {
+      case Some(fields) => renamedObj merge JObject(fields)
+      case None         => renamedObj
+    }
+  }
 }
