@@ -19,6 +19,17 @@ hit:
       $ref: '#/rankingInfo'
     _distinctSeqID:
       $ref: '../../../../common/schemas/Hit.yml#/distinctSeqID'
+    _extra:
+      $ref: '#/hitMetadata'
+
+hitMetadata:
+  type: object
+  description: An object that contains the extra key-value pairs provided in the injectedItem definition.
+  additionalProperties: true
+  properties:
+    _injectedItemKey:
+      type: string
+      description: The key of the injectedItem that inserted this metadata.
 
 rankingInfo:
   allOf:
