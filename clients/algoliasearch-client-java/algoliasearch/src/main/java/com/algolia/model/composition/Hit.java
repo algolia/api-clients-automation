@@ -30,6 +30,9 @@ public class Hit {
   @JsonProperty("_distinctSeqID")
   private Integer distinctSeqID;
 
+  @JsonProperty("_extra")
+  private HitMetadata extra;
+
   private Map<String, Object> additionalProperties = new HashMap<>();
 
   @JsonAnyGetter
@@ -114,6 +117,17 @@ public class Hit {
     return distinctSeqID;
   }
 
+  public Hit setExtra(HitMetadata extra) {
+    this.extra = extra;
+    return this;
+  }
+
+  /** Get extra */
+  @javax.annotation.Nullable
+  public HitMetadata getExtra() {
+    return extra;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -129,13 +143,14 @@ public class Hit {
       Objects.equals(this.snippetResult, hit.snippetResult) &&
       Objects.equals(this.rankingInfo, hit.rankingInfo) &&
       Objects.equals(this.distinctSeqID, hit.distinctSeqID) &&
+      Objects.equals(this.extra, hit.extra) &&
       super.equals(o)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(objectID, highlightResult, snippetResult, rankingInfo, distinctSeqID, super.hashCode());
+    return Objects.hash(objectID, highlightResult, snippetResult, rankingInfo, distinctSeqID, extra, super.hashCode());
   }
 
   @Override
@@ -148,6 +163,7 @@ public class Hit {
     sb.append("    snippetResult: ").append(toIndentedString(snippetResult)).append("\n");
     sb.append("    rankingInfo: ").append(toIndentedString(rankingInfo)).append("\n");
     sb.append("    distinctSeqID: ").append(toIndentedString(distinctSeqID)).append("\n");
+    sb.append("    extra: ").append(toIndentedString(extra)).append("\n");
     sb.append("}");
     return sb.toString();
   }

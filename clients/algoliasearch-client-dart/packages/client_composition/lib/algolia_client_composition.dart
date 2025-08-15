@@ -25,6 +25,7 @@ export 'src/model/facet_stats.dart';
 export 'src/model/facets.dart';
 export 'src/model/highlight_result_option.dart';
 export 'src/model/hit.dart';
+export 'src/model/hit_metadata.dart';
 export 'src/model/hit_ranking_info.dart';
 export 'src/model/match_level.dart';
 export 'src/model/matched_geo_location.dart';

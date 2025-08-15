@@ -18,6 +18,7 @@ import 'package:algolia_client_composition/src/model/facet_stats.dart';
 import 'package:algolia_client_composition/src/model/facets.dart';
 import 'package:algolia_client_composition/src/model/highlight_result_option.dart';
 import 'package:algolia_client_composition/src/model/hit.dart';
+import 'package:algolia_client_composition/src/model/hit_metadata.dart';
 import 'package:algolia_client_composition/src/model/hit_ranking_info.dart';
 import 'package:algolia_client_composition/src/model/match_level.dart';
 import 'package:algolia_client_composition/src/model/matched_geo_location.dart';
@@ -119,6 +120,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'Hit':
       return Hit.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'HitMetadata':
+      return HitMetadata.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'HitRankingInfo':
       return HitRankingInfo.fromJson(value as Map<String, dynamic>)
           as ReturnType;

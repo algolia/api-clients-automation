@@ -2005,6 +2005,16 @@ components:
         - $ref: '#/components/schemas/compositionRankingInfo'
     distinctSeqID:
       type: integer
+    hitMetadata:
+      type: object
+      description: >-
+        An object that contains the extra key-value pairs provided in the
+        injectedItem definition.
+      additionalProperties: true
+      properties:
+        _injectedItemKey:
+          type: string
+          description: The key of the injectedItem that inserted this metadata.
     hit:
       type: object
       description: >
@@ -2028,6 +2038,8 @@ components:
           $ref: '#/components/schemas/Hit_rankingInfo'
         _distinctSeqID:
           $ref: '#/components/schemas/distinctSeqID'
+        _extra:
+          $ref: '#/components/schemas/hitMetadata'
     searchHits:
       type: object
       additionalProperties: true
@@ -3140,6 +3152,29 @@ components:
           type: integer
           minimum: 0
           maximum: 20
+        metadata:
+          title: injectedItemMetadata
+          type: object
+          description: Used to add metadata to the results of the injectedItem.
+          properties:
+            hits:
+              title: injectedItemHitsMetadata
+              type: object
+              description: >-
+                Adds the provided metadata to each injected hit via an `_extra`
+                attribute.
+              properties:
+                addItemKey:
+                  type: boolean
+                  description: >-
+                    When true, the `_injectedItemKey` field is set in the
+                    `_extra` object of each affected hit.
+                extra:
+                  type: object
+                  additionalProperties: true
+                  description: >-
+                    The user-defined key-value pairs that will be placed in the
+                    `_extra` field of each affected hit.
       required:
         - key
         - source

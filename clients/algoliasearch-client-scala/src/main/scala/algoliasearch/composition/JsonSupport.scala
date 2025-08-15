@@ -58,6 +58,7 @@ object JsonSupport {
     new CompositionsSearchResponseSerializer() :+
     new ErrorBaseSerializer() :+
     new HitSerializer() :+
+    new HitMetadataSerializer() :+
     new ResultsCompositionsResponseSerializer() :+
     new ResultsInjectedItemInfoResponseSerializer() :+
     new SearchHitsSerializer() :+
