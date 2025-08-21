@@ -112,7 +112,8 @@ class SearchTest extends AnyFunSuite {
   test("getSettings") {
     val client = testClient()
     val future = client.getSettings(
-      indexName = "cts_e2e_settings"
+      indexName = "cts_e2e_settings",
+      getVersion = Some(2)
     )
 
     val response = Await.result(future, Duration.Inf)

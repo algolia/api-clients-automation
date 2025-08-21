@@ -928,9 +928,12 @@ class SearchClient(
     *
     * @param indexName
     *   Name of the index on which to perform the operation.
+    * @param getVersion
+    *   When set to 2, the endpoint will not include `synonyms` in the response. This parameter is here for backward
+    *   compatibility.
     */
-  def getSettings(indexName: String, requestOptions: Option[RequestOptions] = None)(implicit
-      ec: ExecutionContext
+  def getSettings(indexName: String, getVersion: Option[Int] = None, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
   ): Future[SettingsResponse] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getSettings`.")
 
@@ -938,6 +941,7 @@ class SearchClient(
       .builder()
       .withMethod("GET")
       .withPath(s"/1/indexes/${escape(indexName)}/settings")
+      .withQueryParameter("getVersion", getVersion)
       .build()
     execute[SettingsResponse](request, requestOptions)
   }

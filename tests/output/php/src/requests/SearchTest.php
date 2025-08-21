@@ -1364,6 +1364,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $client->getSettings(
             'cts_e2e_settings',
+            2,
         );
 
         $this->assertRequests([
@@ -1371,6 +1372,7 @@ class SearchTest extends TestCase implements HttpClientInterface
                 'path' => '/1/indexes/cts_e2e_settings/settings',
                 'method' => 'GET',
                 'body' => null,
+                'queryParameters' => json_decode('{"getVersion":"2"}', true),
             ],
         ]);
     }

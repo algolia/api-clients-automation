@@ -1240,7 +1240,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
-        let response = try await client.getSettings(indexName: "<YOUR_INDEX_NAME>")
+        let response = try await client.getSettings(indexName: "<YOUR_INDEX_NAME>", getVersion: 2)
         // >LOG
         // SEPARATOR<
     }

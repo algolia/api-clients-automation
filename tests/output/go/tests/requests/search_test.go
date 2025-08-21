@@ -1037,13 +1037,19 @@ func TestSearch_GetSettings(t *testing.T) {
 
 	t.Run("getSettings", func(t *testing.T) {
 		_, err := client.GetSettings(client.NewApiGetSettingsRequest(
-			"cts_e2e_settings"))
+			"cts_e2e_settings").WithGetVersion(2))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/cts_e2e_settings/settings", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"getVersion":"2"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
 	})
 }
 

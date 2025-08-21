@@ -1584,6 +1584,7 @@ void snippetForgetSettings() async {
   // Call the API
   final response = await client.getSettings(
     indexName: "<YOUR_INDEX_NAME>",
+    getVersion: 2,
   );
   // >LOG
   // SEPARATOR<

@@ -78,6 +78,7 @@ class SearchTest {
       call = {
         getSettings(
           indexName = "cts_e2e_settings",
+          getVersion = 2,
         )
       },
       response = {

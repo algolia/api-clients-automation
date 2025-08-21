@@ -6150,6 +6150,7 @@ paths:
       summary: Retrieve index settings
       parameters:
         - $ref: '#/components/parameters/IndexName'
+        - $ref: '#/components/parameters/getVersion'
       responses:
         '200':
           description: OK
@@ -6177,7 +6178,8 @@ paths:
 
             // Call the API
 
-            var response = await client.GetSettingsAsync("<YOUR_INDEX_NAME>");
+            var response = await client.GetSettingsAsync("<YOUR_INDEX_NAME>",
+            2);
 
             // >LOG
         - lang: dart
@@ -6190,6 +6192,7 @@ paths:
             // Call the API
             final response = await client.getSettings(
               indexName: "<YOUR_INDEX_NAME>",
+              getVersion: 2,
             );
             // >LOG
         - lang: go
@@ -6209,7 +6212,7 @@ paths:
             // Call the API
 
             response, err := client.GetSettings(client.NewApiGetSettingsRequest(
-              "<YOUR_INDEX_NAME>"))
+              "<YOUR_INDEX_NAME>").WithGetVersion(2))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6232,7 +6235,7 @@ paths:
 
             // Call the API
 
-            client.getSettings("<YOUR_INDEX_NAME>");
+            client.getSettings("<YOUR_INDEX_NAME>", 2);
 
             // >LOG
         - lang: javascript
@@ -6249,7 +6252,7 @@ paths:
             // Call the API
 
             const response = await client.getSettings({ indexName:
-            'cts_e2e_settings' });
+            'cts_e2e_settings', getVersion: 2 });
 
 
             // >LOG
@@ -6270,6 +6273,7 @@ paths:
 
             var response = client.getSettings(
               indexName = "<YOUR_INDEX_NAME>",
+              getVersion = 2,
             )
 
 
@@ -6291,6 +6295,7 @@ paths:
 
             $response = $client->getSettings(
                 '<YOUR_INDEX_NAME>',
+                2,
             );
 
 
@@ -6315,6 +6320,7 @@ paths:
 
             response = client.get_settings(
                 index_name="<YOUR_INDEX_NAME>",
+                get_version=2,
             )
 
 
@@ -6334,7 +6340,7 @@ paths:
 
             # Call the API
 
-            response = client.get_settings("<YOUR_INDEX_NAME>")
+            response = client.get_settings("<YOUR_INDEX_NAME>", 2)
 
 
             # >LOG
@@ -6360,7 +6366,8 @@ paths:
 
             val response = Await.result(
               client.getSettings(
-                indexName = "<YOUR_INDEX_NAME>"
+                indexName = "<YOUR_INDEX_NAME>",
+                getVersion = Some(2)
               ),
               Duration(100, "sec")
             )
@@ -6378,14 +6385,14 @@ paths:
             // Call the API
 
             let response = try await client.getSettings(indexName:
-            "<YOUR_INDEX_NAME>")
+            "<YOUR_INDEX_NAME>", getVersion: 2)
 
             // >LOG
         - lang: cURL
           label: curl
           source: |-
             curl --request GET \
-              --url https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/settings \
+              --url 'https://algolia_application_id.algolia.net/1/indexes/ALGOLIA_INDEX_NAME/settings?getVersion=1' \
               --header 'accept: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
@@ -23471,6 +23478,15 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/objectID'
+    getVersion:
+      name: getVersion
+      description: >-
+        When set to 2, the endpoint will not include `synonyms` in the response.
+        This parameter is here for backward compatibility.
+      in: query
+      schema:
+        type: integer
+        default: 1
     ForwardToReplicas:
       in: query
       name: forwardToReplicas

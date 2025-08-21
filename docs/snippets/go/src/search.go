@@ -2013,7 +2013,7 @@ func SnippetForGetSettingsOfSearch() {
 
 	// Call the API
 	response, err := client.GetSettings(client.NewApiGetSettingsRequest(
-		"<YOUR_INDEX_NAME>"))
+		"<YOUR_INDEX_NAME>").WithGetVersion(2))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

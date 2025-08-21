@@ -1369,7 +1369,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getSettings("<YOUR_INDEX_NAME>");
+    client.getSettings("<YOUR_INDEX_NAME>", 2);
     // >LOG
     // SEPARATOR<
   }

@@ -1386,7 +1386,8 @@ class SearchTest extends AnyFunSuite {
   test("getSettings") {
     val (client, echo) = testClient()
     val future = client.getSettings(
-      indexName = "cts_e2e_settings"
+      indexName = "cts_e2e_settings",
+      getVersion = Some(2)
     )
 
     Await.ready(future, Duration.Inf)
@@ -1395,6 +1396,13 @@ class SearchTest extends AnyFunSuite {
     assert(res.path == "/1/indexes/cts_e2e_settings/settings")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
+    val expectedQuery = parse("""{"getVersion":"2"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
   }
 
   test("getSources") {

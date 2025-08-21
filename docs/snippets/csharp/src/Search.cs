@@ -1554,7 +1554,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // Call the API
-    var response = await client.GetSettingsAsync("<YOUR_INDEX_NAME>");
+    var response = await client.GetSettingsAsync("<YOUR_INDEX_NAME>", 2);
     // >LOG
     // SEPARATOR<
   }

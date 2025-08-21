@@ -1632,10 +1632,12 @@ void main() {
       ),
       call: (client) => client.getSettings(
         indexName: "cts_e2e_settings",
+        getVersion: 2,
       ),
       intercept: (request) {
         expectPath(request.path, '/1/indexes/cts_e2e_settings/settings');
         expect(request.method, 'get');
+        expectParams(request.queryParameters, """{"getVersion":"2"}""");
         expect(request.body, null);
       },
     ),

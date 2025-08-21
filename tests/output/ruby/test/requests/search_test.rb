@@ -963,11 +963,11 @@ class TestSearchClient < Test::Unit::TestCase
 
   # getSettings
   def test_get_settings
-    req = @client.get_settings_with_http_info("cts_e2e_settings")
+    req = @client.get_settings_with_http_info("cts_e2e_settings", 2)
 
     assert_equal(:get, req.method)
     assert_equal("/1/indexes/cts_e2e_settings/settings", req.path)
-    assert_equal({}.to_a, req.query_params.to_a)
+    assert_equal({:"getVersion" => "2"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")

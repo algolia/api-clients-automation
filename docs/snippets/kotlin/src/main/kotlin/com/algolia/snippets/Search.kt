@@ -1651,6 +1651,7 @@ class SnippetSearchClient {
     // Call the API
     var response = client.getSettings(
       indexName = "<YOUR_INDEX_NAME>",
+      getVersion = 2,
     )
 
     // >LOG

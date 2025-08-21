@@ -853,12 +853,12 @@ describe('getRule', () => {
 
 describe('getSettings', () => {
   test('getSettings', async () => {
-    const req = (await client.getSettings({ indexName: 'cts_e2e_settings' })) as unknown as EchoResponse;
+    const req = (await client.getSettings({ indexName: 'cts_e2e_settings', getVersion: 2 })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/cts_e2e_settings/settings');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual(undefined);
+    expect(req.searchParams).toStrictEqual({ getVersion: '2' });
   });
 });
 

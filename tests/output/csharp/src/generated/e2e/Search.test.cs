@@ -114,7 +114,7 @@ public class SearchClientRequestTestsE2E
   {
     try
     {
-      var resp = await client.GetSettingsAsync("cts_e2e_settings");
+      var resp = await client.GetSettingsAsync("cts_e2e_settings", 2);
       // Check status code 200
       Assert.NotNull(resp);
 

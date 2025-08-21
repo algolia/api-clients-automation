@@ -53,10 +53,10 @@ class TestSearchClientE2E < Test::Unit::TestCase
 
   # getSettings
   def test_get_settings
-    res = @client.get_settings_with_http_info("cts_e2e_settings")
+    res = @client.get_settings_with_http_info("cts_e2e_settings", 2)
 
     assert_equal(res.status, 200)
-    res = @client.get_settings("cts_e2e_settings")
+    res = @client.get_settings("cts_e2e_settings", 2)
     expected_body = JSON.parse(
       "{\"minWordSizefor1Typo\":4,\"minWordSizefor2Typos\":8,\"hitsPerPage\":100,\"maxValuesPerFacet\":100,\"paginationLimitedTo\":10,\"exactOnSingleWordQuery\":\"attribute\",\"ranking\":[\"typo\",\"geo\",\"words\",\"filters\",\"proximity\",\"attribute\",\"exact\",\"custom\"],\"separatorsToIndex\":\"\",\"removeWordsIfNoResults\":\"none\",\"queryType\":\"prefixLast\",\"highlightPreTag\":\"<em>\",\"highlightPostTag\":\"</em>\",\"alternativesAsExact\":[\"ignorePlurals\",\"singleWordSynonym\"],\"typoTolerance\":\"false\"}"
     )

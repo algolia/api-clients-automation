@@ -1898,6 +1898,7 @@ def snippet_for_get_settings():
     # Call the API
     response = client.get_settings(
         index_name="<YOUR_INDEX_NAME>",
+        get_version=2,
     )
 
     # >LOG

@@ -1261,11 +1261,12 @@ class TestSearchClient:
         """
         _req = await self._client.get_settings_with_http_info(
             index_name="cts_e2e_settings",
+            get_version=2,
         )
 
         assert _req.path == "/1/indexes/cts_e2e_settings/settings"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() == {}.items()
+        assert _req.query_parameters.items() == {"getVersion": "2"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -10519,11 +10520,12 @@ class TestSearchClientSync:
         """
         _req = self._client.get_settings_with_http_info(
             index_name="cts_e2e_settings",
+            get_version=2,
         )
 
         assert _req.path == "/1/indexes/cts_e2e_settings/settings"
         assert _req.verb == "GET"
-        assert _req.query_parameters.items() == {}.items()
+        assert _req.query_parameters.items() == {"getVersion": "2"}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
