@@ -32,3 +32,11 @@ userID:
   pattern: '^[a-zA-Z0-9 \-*.]+$'
   description: Unique identifier of the user who makes the search request.
   example: user1
+
+getVersion:
+  name: getVersion
+  description: When set to 2, the endpoint will not include `synonyms` in the response. This parameter is here for backward compatibility.
+  in: query
+  schema:
+    type: integer
+    default: 1

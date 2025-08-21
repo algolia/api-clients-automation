@@ -91,21 +91,21 @@ public class JsonStringEnumConverter<TEnum> : JsonConverter<TEnum>
     switch (type)
     {
       case JsonTokenType.String:
+      {
+        var stringValue = reader.GetString();
+        if (stringValue != null && _stringToEnum.TryGetValue(stringValue, out var enumValue))
         {
-          var stringValue = reader.GetString();
-          if (stringValue != null && _stringToEnum.TryGetValue(stringValue, out var enumValue))
-          {
-            return enumValue;
-          }
-
-          break;
-        }
-      case JsonTokenType.Number:
-        {
-          var numValue = reader.GetInt32();
-          _numberToEnum.TryGetValue(numValue, out var enumValue);
           return enumValue;
         }
+
+        break;
+      }
+      case JsonTokenType.Number:
+      {
+        var numValue = reader.GetInt32();
+        _numberToEnum.TryGetValue(numValue, out var enumValue);
+        return enumValue;
+      }
     }
 
     return default;
