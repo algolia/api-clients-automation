@@ -1,11 +1,15 @@
 [
   {
     "parameters": {
-      "indexName": "cts_e2e_settings"
+      "indexName": "cts_e2e_settings",
+      "getVersion": 2
     },
     "request": {
       "path": "/1/indexes/cts_e2e_settings/settings",
-      "method": "GET"
+      "method": "GET",
+      "queryParameters": {
+        "getVersion": "2"
+      }
     },
     "response": {
       "statusCode": 200,
