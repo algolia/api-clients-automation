@@ -42,7 +42,7 @@
     "fs-extra": "11.3.1",
     "httpsnippet": "3.0.1",
     "js-yaml": "4.1.0",
-    "knip": "5.62.0",
+    "knip": "5.63.0",
     "micromatch": "4.0.8",
     "semver": "7.7.2",
     "spinnies": "0.5.1",
