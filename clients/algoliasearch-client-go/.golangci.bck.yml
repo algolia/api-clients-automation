@@ -1,0 +1,71 @@
+linters-settings:
+  govet:
+    enable-all: true
+    disable:
+      - fieldalignment
+
+  revive:
+    rules:
+      - name: var-naming
+        disabled: true
+
+linters:
+  enable-all: true
+
+  disable:
+    - godox
+    - bodyclose
+    - contextcheck
+    - interfacebloat
+    - gci
+    - gosmopolitan
+    - wsl
+    - varnamelen
+    - nlreturn
+    - err113
+    - gochecknoglobals
+    - exhaustruct
+    - exhaustive
+    - depguard
+    - lll
+    - forbidigo
+    - gochecknoinits
+    - cyclop
+    - errorlint
+    - gomnd
+    - tagliatelle
+    - nilnil
+    - stylecheck
+    - musttag
+    - errchkjson
+    - nonamedreturns
+    - inamedparam
+    - ineffassign
+    - dupword
+    - nestif
+    - goconst
+    - funlen
+    - dupl
+    - unparam
+    - gocognit
+    - forcetypeassert
+    - wastedassign
+    - gocyclo
+    - maintidx
+    - copyloopvar
+    - intrange
+    - canonicalheader
+    - mnd
+    - perfsprint
+    - containedctx
+
+    # Deprecated
+    - execinquery
+    - exportloopref
+
+issues:
+  exclude-generated: disable
+
+run:
+  concurrency: 2
+  timeout: 10m

@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/query-suggestions"
 )
 
 func testQuerySuggestions(appID, apiKey string) int {

@@ -1,12 +1,26 @@
+version: "2"
+run:
+  concurrency: 2
 linters:
   disable:
     - ineffassign
     - staticcheck
     - unused
-
-issues:
-  exclude-generated: disable
-
-run:
-  concurrency: 2
-  timeout: 10m
+  exclusions:
+    generated: disable
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  exclusions:
+    generated: disable
+    paths:
+      - third_party$
+      - builtin$
+      - examples$

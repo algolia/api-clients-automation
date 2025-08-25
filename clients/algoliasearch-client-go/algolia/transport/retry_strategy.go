@@ -29,6 +29,7 @@ type Host struct {
 
 type RetryStrategy struct {
 	sync.RWMutex
+
 	hosts        []StatefulHost
 	writeTimeout time.Duration
 	readTimeout  time.Duration
@@ -107,7 +108,7 @@ func (s *RetryStrategy) Decide(h Host, code int, err error) Outcome {
 		return Retry
 	}
 
-	if !(isZero(code) || is4xx(code) || is2xx(code)) || isNetworkError(err) {
+	if (!isZero(code) && !is4xx(code) && !is2xx(code)) || isNetworkError(err) {
 		s.markDown(h)
 		return Retry
 	}
@@ -146,6 +147,7 @@ func isNetworkError(err error) bool {
 	if err == nil {
 		return false
 	}
+
 	_, ok := err.(net.Error)
 	// We need to ensure that the error is a net.Error but not a
 	// context.DeadlineExceeded error (which is actually a net.Error), because
@@ -157,6 +159,7 @@ func isTimeoutError(err error) bool {
 	if err == nil {
 		return false
 	}
+
 	return strings.Contains(err.Error(), context.DeadlineExceeded.Error())
 }
 

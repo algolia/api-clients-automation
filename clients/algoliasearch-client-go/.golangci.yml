@@ -1,71 +1,84 @@
-linters-settings:
-  govet:
-    enable-all: true
-    disable:
-      - fieldalignment
-
-  revive:
-    rules:
-      - name: var-naming
-        disabled: true
-
-linters:
-  enable-all: true
-
-  disable:
-    - godox
-    - bodyclose
-    - contextcheck
-    - interfacebloat
-    - gci
-    - gosmopolitan
-    - wsl
-    - varnamelen
-    - nlreturn
-    - err113
-    - gochecknoglobals
-    - exhaustruct
-    - exhaustive
-    - depguard
-    - lll
-    - forbidigo
-    - gochecknoinits
-    - cyclop
-    - errorlint
-    - gomnd
-    - tagliatelle
-    - nilnil
-    - stylecheck
-    - musttag
-    - errchkjson
-    - nonamedreturns
-    - inamedparam
-    - ineffassign
-    - dupword
-    - nestif
-    - goconst
-    - funlen
-    - dupl
-    - unparam
-    - gocognit
-    - forcetypeassert
-    - wastedassign
-    - gocyclo
-    - maintidx
-    - copyloopvar
-    - intrange
-    - canonicalheader
-    - mnd
-    - perfsprint
-    - containedctx
-
-    # Deprecated
-    - execinquery
-    - exportloopref
-
-issues:
-  exclude-generated: disable
-
+version: "2"
 run:
   concurrency: 2
-  timeout: 10m
+linters:
+  default: all
+  disable:
+    - bodyclose
+    - canonicalheader
+    - containedctx
+    - contextcheck
+    - copyloopvar
+    - cyclop
+    - depguard
+    - dupl
+    - dupword
+    - err113
+    - errchkjson
+    - errorlint
+    - exhaustive
+    - exhaustruct
+    - forbidigo
+    - forcetypeassert
+    - funcorder
+    - funlen
+    - gochecknoglobals
+    - gochecknoinits
+    - gocognit
+    - goconst
+    - gocyclo
+    - godox
+    - gosmopolitan
+    - inamedparam
+    - ineffassign
+    - interfacebloat
+    - intrange
+    - lll
+    - maintidx
+    - mnd
+    - musttag
+    - nestif
+    - nilnil
+    - nlreturn
+    - noctx
+    - noinlineerr
+    - nonamedreturns
+    - perfsprint
+    - recvcheck
+    - staticcheck
+    - tagliatelle
+    - unparam
+    - varnamelen
+    - wastedassign
+    - wsl
+  settings:
+    govet:
+      disable:
+        - fieldalignment
+      enable-all: true
+    revive:
+      rules:
+        - name: var-naming
+          disabled: true
+  exclusions:
+    generated: disable
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gofmt
+    - gofumpt
+    - goimports
+  exclusions:
+    generated: disable
+    paths:
+      - third_party$
+      - builtin$
+      - examples$

@@ -1,14 +1,28 @@
+version: "2"
+run:
+  concurrency: 2
 linters:
   disable:
     - ineffassign
     - staticcheck
-
-issues:
-  exclude-generated: disable
-
-  exclude:
-    - 'printf: non-constant format string in call to'
-
-run:
-  concurrency: 2
-  timeout: 10m
+  exclusions:
+    generated: disable
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - path: (.+)\.go$
+        text: 'printf: non-constant format string in call to'
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  exclusions:
+    generated: disable
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
