@@ -26,7 +26,7 @@ runs:
 
     - name: Setup gradle
       if: inputs.type != 'minimal'
-      uses: gradle/actions/setup-gradle@v4
+      uses: gradle/actions/setup-gradle@v4.4.1 # v4.4.2 uses Gradle 9.0 which is not compatible with Java < 17
       with:
         validate-wrappers: true
         add-job-summary: 'on-failure'
