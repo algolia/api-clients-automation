@@ -2110,6 +2110,16 @@ components:
         - $ref: '#/components/schemas/compositionRankingInfo'
     distinctSeqID:
       type: integer
+    hitMetadata:
+      type: object
+      description: >-
+        An object that contains the extra key-value pairs provided in the
+        injectedItem definition.
+      additionalProperties: true
+      properties:
+        _injectedItemKey:
+          type: string
+          description: The key of the injectedItem that inserted this metadata.
     hit:
       type: object
       description: >
@@ -2133,6 +2143,8 @@ components:
           $ref: '#/components/schemas/Hit_rankingInfo'
         _distinctSeqID:
           $ref: '#/components/schemas/distinctSeqID'
+        _extra:
+          $ref: '#/components/schemas/hitMetadata'
     searchHits:
       type: object
       additionalProperties: true

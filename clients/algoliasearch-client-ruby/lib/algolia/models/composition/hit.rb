@@ -22,6 +22,8 @@ module Algolia
 
       attr_accessor :_distinct_seq_id
 
+      attr_accessor :_extra
+
       attr_accessor :additional_properties
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -31,7 +33,8 @@ module Algolia
           :_highlight_result => :_highlightResult,
           :_snippet_result => :_snippetResult,
           :_ranking_info => :_rankingInfo,
-          :_distinct_seq_id => :_distinctSeqID
+          :_distinct_seq_id => :_distinctSeqID,
+          :_extra => :_extra
         }
       end
 
@@ -42,7 +45,8 @@ module Algolia
           :_highlight_result => :"Hash<String, HighlightResult>",
           :_snippet_result => :"Hash<String, SnippetResult>",
           :_ranking_info => :"HitRankingInfo",
-          :_distinct_seq_id => :"Integer"
+          :_distinct_seq_id => :"Integer",
+          :_extra => :"HitMetadata"
         }
       end
 
@@ -86,6 +90,10 @@ module Algolia
           self._distinct_seq_id = attributes[:_distinct_seq_id]
         end
 
+        if attributes.key?(:_extra)
+          self._extra = attributes[:_extra]
+        end
+
         # add extra attribute to additional_properties
         self.additional_properties ||= {}
         self.additional_properties.merge!(attributes.reject { |k, _| self.class.attribute_map.key?(k.to_sym) })
@@ -100,7 +108,8 @@ module Algolia
           _highlight_result == other._highlight_result &&
           _snippet_result == other._snippet_result &&
           _ranking_info == other._ranking_info &&
-          _distinct_seq_id == other._distinct_seq_id
+          _distinct_seq_id == other._distinct_seq_id &&
+          _extra == other._extra
       end
 
       # @see the `==` method
@@ -112,7 +121,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [algolia_object_id, _highlight_result, _snippet_result, _ranking_info, _distinct_seq_id].hash
+        [algolia_object_id, _highlight_result, _snippet_result, _ranking_info, _distinct_seq_id, _extra].hash
       end
 
       # Builds the object from hash

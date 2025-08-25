@@ -50,6 +50,7 @@ case class Hit(
     snippetResult /* _snippetResult */: Option[Map[String, SnippetResult]] = scala.None,
     rankingInfo /* _rankingInfo */: Option[HitRankingInfo] = scala.None,
     distinctSeqID /* _distinctSeqID */: Option[Int] = scala.None,
+    extra /* _extra */: Option[HitMetadata] = scala.None,
     additionalProperties: Option[List[JField]] = None
 )
 
@@ -59,7 +60,8 @@ class HitSerializer extends Serializer[Hit] {
     "_highlightResult" -> "highlightResult",
     "_snippetResult" -> "snippetResult",
     "_rankingInfo" -> "rankingInfo",
-    "_distinctSeqID" -> "distinctSeqID"
+    "_distinctSeqID" -> "distinctSeqID",
+    "_extra" -> "extra"
   )
   override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), Hit] = {
     case (TypeInfo(clazz, _), json) if clazz == classOf[Hit] =>
@@ -75,7 +77,7 @@ class HitSerializer extends Serializer[Hit] {
           val mf = manifest[Hit]
           val obj = Extraction.extract[Hit](renamedObject)(formats, mf)
 
-          val fields = Set("objectID", "_highlightResult", "_snippetResult", "_rankingInfo", "_distinctSeqID")
+          val fields = Set("objectID", "_highlightResult", "_snippetResult", "_rankingInfo", "_distinctSeqID", "_extra")
           val additionalProperties = jobject removeField {
             case (name, _) if fields.contains(name) => true
             case _                                  => false
