@@ -1,0 +1,41 @@
+[
+  {
+    "testName": "sets the correct host",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "my-app-id",
+          "apiKey": "my-api-key"
+        }
+      },
+      {
+        "type": "method",
+        "method": "listCollections",
+        "parameters": {
+          "indexName": "indexName"
+        },
+        "expected": {
+          "type": "host",
+          "match": "experiences.algolia.com"
+        }
+      }
+    ]
+  },
+  {
+    "testName": "listCollections throws without index",
+    "steps": [
+      {
+        "type": "method",
+        "method": "listCollections",
+        "parameters": {
+          "indexName": null
+        },
+        "expected": {
+          "error": "Parameter `indexName` is required when calling `listCollections`."
+        }
+      }
+    ]
+  }
+]
