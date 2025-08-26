@@ -2,7 +2,7 @@ name: Scheduled Release
 
 on:
   schedule:
-    - cron: '30 6 * * 2'
+    - cron: '32 9 * * 2'
   workflow_dispatch:
 
 jobs:
@@ -22,6 +22,6 @@ jobs:
           type: minimal
           language: dart # we need the dart deps because we use melos to bump dependencies for its client
 
-      - run: yarn cli release
+      - run: yarn && yarn cli release
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
