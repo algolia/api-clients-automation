@@ -2,7 +2,7 @@ name: Scheduled Release
 
 on:
   schedule:
-    - cron: '0 10 * * 2'
+    - cron: '30 6 * * 2'
   workflow_dispatch:
 
 jobs:
