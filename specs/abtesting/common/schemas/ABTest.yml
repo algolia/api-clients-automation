@@ -79,6 +79,8 @@ ABTest:
       $ref: '../parameters.yml#/createdAt'
     endAt:
       $ref: '../parameters.yml#/endAt'
+    stoppedAt:
+      $ref: '../parameters.yml#/stoppedAt'
     name:
       $ref: '../parameters.yml#/name'
     status:
