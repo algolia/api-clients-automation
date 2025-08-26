@@ -16,6 +16,7 @@ final class ABTest {
     required this.updatedAt,
     required this.createdAt,
     required this.endAt,
+    this.stoppedAt,
     required this.name,
     required this.status,
     required this.variants,
@@ -38,6 +39,10 @@ final class ABTest {
   /// End date and time of the A/B test, in RFC 3339 format.
   @JsonKey(name: r'endAt')
   final String endAt;
+
+  /// Date and time when the A/B test was stopped, in RFC 3339 format.
+  @JsonKey(name: r'stoppedAt')
+  final String? stoppedAt;
 
   /// A/B test name.
   @JsonKey(name: r'name')
@@ -65,6 +70,7 @@ final class ABTest {
           other.updatedAt == updatedAt &&
           other.createdAt == createdAt &&
           other.endAt == endAt &&
+          other.stoppedAt == stoppedAt &&
           other.name == name &&
           other.status == status &&
           other.variants == variants &&
@@ -77,6 +83,7 @@ final class ABTest {
       updatedAt.hashCode +
       createdAt.hashCode +
       endAt.hashCode +
+      (stoppedAt == null ? 0 : stoppedAt.hashCode) +
       name.hashCode +
       status.hashCode +
       variants.hashCode +
