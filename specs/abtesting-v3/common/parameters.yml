@@ -38,6 +38,12 @@ updatedAt:
   description: Date and time when the A/B test was last updated, in RFC 3339 format.
   example: 2023-06-15T15:06:44.400601Z
 
+stoppedAt:
+  type: string
+  description: Date and time when the A/B test was stopped, in RFC 3339 format.
+  example: 2023-06-15T15:06:44.400601Z
+  nullable: true
+
 scheduledAt:
   type: string
   description: Date and time when the A/B test is scheduled to start, in RFC 3339 format.
