@@ -28,7 +28,7 @@ class TestClientMonitoringClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.23.0\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.24.0\).*/))
   end
 
   # use the correct host
