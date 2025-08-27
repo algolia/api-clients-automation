@@ -253,7 +253,7 @@
       "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
     },
     "init": {
-      "default": "//\nconst client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();"
+      "default": "const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();"
     }
   },
   "kotlin": {

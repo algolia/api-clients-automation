@@ -242,8 +242,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY').initRecommend();
 
@@ -480,8 +478,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY').initRecommend();
@@ -720,8 +716,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY').initRecommend();
 
@@ -953,8 +947,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY').initRecommend();
@@ -1260,8 +1252,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY').initRecommend();
@@ -1575,8 +1565,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY').initRecommend();
 
@@ -1841,8 +1829,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY').initRecommend();
@@ -2135,8 +2121,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY').initRecommend();
@@ -2478,8 +2462,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY').initRecommend();
 
@@ -2766,8 +2748,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY').initRecommend();

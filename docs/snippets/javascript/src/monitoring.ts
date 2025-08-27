@@ -10,7 +10,6 @@ import { algoliasearch } from 'algoliasearch';
 export async function snippetForCustomDelete(): Promise<void> {
   // >SEPARATOR customDelete allow del method for a custom path with minimal parameters
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -28,7 +27,6 @@ export async function snippetForCustomDelete(): Promise<void> {
 export async function snippetForCustomDelete1(): Promise<void> {
   // >SEPARATOR customDelete allow del method for a custom path with all parameters
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -46,7 +44,6 @@ export async function snippetForCustomDelete1(): Promise<void> {
 export async function snippetForCustomGet(): Promise<void> {
   // >SEPARATOR customGet allow get method for a custom path with minimal parameters
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -64,7 +61,6 @@ export async function snippetForCustomGet(): Promise<void> {
 export async function snippetForCustomGet1(): Promise<void> {
   // >SEPARATOR customGet allow get method for a custom path with all parameters
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -82,7 +78,6 @@ export async function snippetForCustomGet1(): Promise<void> {
 export async function snippetForCustomGet2(): Promise<void> {
   // >SEPARATOR customGet requestOptions should be escaped too
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -106,7 +101,6 @@ export async function snippetForCustomGet2(): Promise<void> {
 export async function snippetForCustomPost(): Promise<void> {
   // >SEPARATOR customPost allow post method for a custom path with minimal parameters
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -124,7 +118,6 @@ export async function snippetForCustomPost(): Promise<void> {
 export async function snippetForCustomPost1(): Promise<void> {
   // >SEPARATOR customPost allow post method for a custom path with all parameters
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -146,7 +139,6 @@ export async function snippetForCustomPost1(): Promise<void> {
 export async function snippetForCustomPost2(): Promise<void> {
   // >SEPARATOR customPost requestOptions can override default query parameters
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -169,7 +161,6 @@ export async function snippetForCustomPost2(): Promise<void> {
 export async function snippetForCustomPost3(): Promise<void> {
   // >SEPARATOR customPost requestOptions merges query parameters with default ones
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -192,7 +183,6 @@ export async function snippetForCustomPost3(): Promise<void> {
 export async function snippetForCustomPost4(): Promise<void> {
   // >SEPARATOR customPost requestOptions can override default headers
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -215,7 +205,6 @@ export async function snippetForCustomPost4(): Promise<void> {
 export async function snippetForCustomPost5(): Promise<void> {
   // >SEPARATOR customPost requestOptions merges headers with default ones
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -238,7 +227,6 @@ export async function snippetForCustomPost5(): Promise<void> {
 export async function snippetForCustomPost6(): Promise<void> {
   // >SEPARATOR customPost requestOptions queryParameters accepts booleans
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -261,7 +249,6 @@ export async function snippetForCustomPost6(): Promise<void> {
 export async function snippetForCustomPost7(): Promise<void> {
   // >SEPARATOR customPost requestOptions queryParameters accepts integers
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -284,7 +271,6 @@ export async function snippetForCustomPost7(): Promise<void> {
 export async function snippetForCustomPost8(): Promise<void> {
   // >SEPARATOR customPost requestOptions queryParameters accepts list of string
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -307,7 +293,6 @@ export async function snippetForCustomPost8(): Promise<void> {
 export async function snippetForCustomPost9(): Promise<void> {
   // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -330,7 +315,6 @@ export async function snippetForCustomPost9(): Promise<void> {
 export async function snippetForCustomPost10(): Promise<void> {
   // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -353,7 +337,6 @@ export async function snippetForCustomPost10(): Promise<void> {
 export async function snippetForCustomPut(): Promise<void> {
   // >SEPARATOR customPut allow put method for a custom path with minimal parameters
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -371,7 +354,6 @@ export async function snippetForCustomPut(): Promise<void> {
 export async function snippetForCustomPut1(): Promise<void> {
   // >SEPARATOR customPut allow put method for a custom path with all parameters
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -393,7 +375,6 @@ export async function snippetForCustomPut1(): Promise<void> {
 export async function snippetForGetClusterIncidents(): Promise<void> {
   // >SEPARATOR getClusterIncidents default
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -411,7 +392,6 @@ export async function snippetForGetClusterIncidents(): Promise<void> {
 export async function snippetForGetClusterStatus(): Promise<void> {
   // >SEPARATOR getClusterStatus default
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -429,7 +409,6 @@ export async function snippetForGetClusterStatus(): Promise<void> {
 export async function snippetForGetIncidents(): Promise<void> {
   // >SEPARATOR getIncidents default
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -447,7 +426,6 @@ export async function snippetForGetIncidents(): Promise<void> {
 export async function snippetForGetIndexingTime(): Promise<void> {
   // >SEPARATOR getIndexingTime default
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -465,7 +443,6 @@ export async function snippetForGetIndexingTime(): Promise<void> {
 export async function snippetForGetLatency(): Promise<void> {
   // >SEPARATOR getLatency default
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -483,7 +460,6 @@ export async function snippetForGetLatency(): Promise<void> {
 export async function snippetForGetMetrics(): Promise<void> {
   // >SEPARATOR getMetrics default
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -501,7 +477,6 @@ export async function snippetForGetMetrics(): Promise<void> {
 export async function snippetForGetReachability(): Promise<void> {
   // >SEPARATOR getReachability default
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -519,7 +494,6 @@ export async function snippetForGetReachability(): Promise<void> {
 export async function snippetForGetServers(): Promise<void> {
   // >SEPARATOR getServers default
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -537,7 +511,6 @@ export async function snippetForGetServers(): Promise<void> {
 export async function snippetForGetStatus(): Promise<void> {
   // >SEPARATOR getStatus default
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API
@@ -555,7 +528,6 @@ export async function snippetForGetStatus(): Promise<void> {
 export function snippetForSetClientApiKey(): void {
   // >SEPARATOR setClientApiKey default
   // Initialize the client
-  //
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initMonitoring();
 
   // Call the API

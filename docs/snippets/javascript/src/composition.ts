@@ -10,7 +10,6 @@ import { compositionClient } from '@algolia/composition';
 export async function snippetForSearch(): Promise<void> {
   // >SEPARATOR search default
   // Initialize the client
-  //
   const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -28,7 +27,6 @@ export async function snippetForSearch(): Promise<void> {
 export async function snippetForSearchForFacetValues(): Promise<void> {
   // >SEPARATOR searchForFacetValues default
   // Initialize the client
-  //
   const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
