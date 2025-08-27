@@ -2931,7 +2931,7 @@
       "default": "const response = await client.waitForTask({ indexName: 'wait-task-javascript', taskID: 123 });"
     },
     "init": {
-      "default": "//\nconst client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');"
+      "default": "const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');"
     }
   },
   "kotlin": {
