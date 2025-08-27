@@ -1,0 +1,10 @@
+description: Collection not found.
+content:
+  application/json:
+    schema:
+      title: collectionNotFoundResponse
+      type: object
+      properties:
+        message:
+          type: string
+          example: 'Collection not found'

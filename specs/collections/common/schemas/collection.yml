@@ -1,0 +1,85 @@
+Collection:
+  type: object
+  properties:
+    id:
+      type: string
+      example: '5db3039e-04b5-4ed6-a00e-ba3304032c5a'
+    name:
+      type: string
+      example: 'Summer Deals'
+    indexName:
+      type: string
+      example: 'prod_products_EN'
+    createdAt:
+      type: string
+      # format: date-time
+      description: |
+        Date and time when the collection was created, in RFC 3339 format.
+      example: '2024-10-07T00:00:00Z'
+    updatedAt:
+      type: string
+      # format: date-time
+      description: |
+        Date and time when the collection was last updated, in RFC 3339 format.
+      example: '2024-10-07T00:00:00Z'
+    status:
+      $ref: '#/CollectionStatus'
+    conditions:
+      $ref: 'condition.yml#/Conditions'
+    records:
+      type: array
+      items:
+        type: string
+
+CollectionStatus:
+  type: string
+  description: |
+    Collection commit status.
+    Only returned if the request API key has write ACLs.
+  enum:
+    - COMMITTED
+    - COMMITTING
+    - TO_COMMIT
+
+CollectionUpsert:
+  type: object
+  description: API request body for upserting a Collection.
+  properties:
+    id:
+      type: string
+    indexName:
+      type: string
+    name:
+      type: string
+    description:
+      type: string
+    add:
+      type: array
+      description: a list of objectIDs.
+      minItems: 0
+      items:
+        type: string
+    remove:
+      type: array
+      description: a list of objectIDs.
+      minItems: 0
+      items:
+        type: string
+    conditions:
+      $ref: 'condition.yml#/Conditions'
+  required:
+    - indexName
+    - name
+
+CollectionsResponse:
+  type: object
+  allOf:
+    - type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/Collection'
+      required:
+        - items
+    - $ref: 'pagination.yml#/CollectionPagination'
