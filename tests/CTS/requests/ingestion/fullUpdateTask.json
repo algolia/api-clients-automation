@@ -3,8 +3,10 @@
     "testName": "task without cron",
     "parameters": {
       "taskID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      "destinationID": "destinationID",
-      "action": "replace"
+      "taskFullUpdate": {
+        "destinationID": "destinationID",
+        "action": "replace"
+      }
     },
     "request": {
       "path": "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -19,16 +21,18 @@
     "testName": "task with cron",
     "parameters": {
       "taskID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      "destinationID": "destinationID",
-      "cron": "* * * * *",
-      "action": "replace",
-      "notifications": {
-        "email": {
-          "enabled": true
+      "taskFullUpdate": {
+        "destinationID": "destinationID",
+        "cron": "* * * * *",
+        "action": "replace",
+        "notifications": {
+          "email": {
+            "enabled": true
+          }
+        },
+        "policies": {
+          "criticalThreshold": 8
         }
-      },
-      "policies": {
-        "criticalThreshold": 8
       }
     },
     "request": {
@@ -53,6 +57,7 @@
     "testName": "task shopify",
     "parameters": {
       "taskID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      "taskFullUpdate": {
       "destinationID": "destinationID",
       "cron": "* * * * *",
       "action": "replace",
@@ -63,6 +68,7 @@
             "syncMode": "incremental"
           }
         ]
+      }
       }
     },
     "request": {
