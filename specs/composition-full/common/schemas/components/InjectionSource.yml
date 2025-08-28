@@ -1,0 +1,37 @@
+search:
+  title: injectedItemSearchSource
+  description: Injected items will originate from a search request performed on the specified index.
+  type: object
+  additionalProperties: false
+  allOf:
+    - $ref: '#/baseSource'
+    - type: object
+      additionalProperties: false
+
+external:
+  title: injectedItemExternalSource
+  description: Injected items will originate from externally provided objectIDs (that must exist in the index) given at runtime in the run request payload.
+  type: object
+  additionalProperties: false
+  allOf:
+    - $ref: '#/baseSource'
+  properties:
+    ordering:
+      $ref: '#/externalOrdering'
+
+baseSource:
+  type: object
+  additionalProperties: false
+  properties:
+    index:
+      type: string
+      description: Composition Index name.
+      example: Products
+    params:
+      $ref: './Injection.yml#/injectedItemsQueryParameters'
+  required:
+    - index
+
+externalOrdering:
+  enum: ['default', 'user-defined']
+  default: 'default'

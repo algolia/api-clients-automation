@@ -54,25 +54,8 @@ injectedItem:
       type: string
       description: injected Item unique identifier.
     source:
-      title: injectedItemSource
-      type: object
-      additionalProperties: false
-      properties:
-        search:
-          title: injectedItemSourceSearch
-          type: object
-          additionalProperties: false
-          properties:
-            index:
-              type: string
-              description: Composition Main Index name.
-              example: Products
-            params:
-              $ref: './Injection.yml#/injectedItemsQueryParameters'
-          required:
-            - index
-      required:
-        - search
+      description: Search source to be used to inject items into result set.
+      $ref: '#/injectionSource'
     position:
       type: integer
       minimum: 0
@@ -103,3 +86,8 @@ injectedItem:
     - source
     - position
     - length
+
+injectionSource:
+  oneOf:
+    - $ref: './InjectionSource.yml#/search'
+    - $ref: './InjectionSource.yml#/external'

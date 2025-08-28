@@ -55,3 +55,5 @@ params:
       $ref: '../../params/Composition.yml#/enableABTest'
     enableReRanking:
       $ref: '../../params/Search.yml#/enableReRanking'
+    injectedItems:
+      $ref: '../../params/Composition.yml#/injectedItems'
