@@ -179,10 +179,41 @@ TaskCreateResponse:
     - taskID
     - createdAt
 
-TaskUpdate:
+TaskFullUpdate:
   type: object
   additionalProperties: false
   description: API request body for updating a task.
+  properties:
+    destinationID:
+      $ref: './common.yml#/destinationID'
+    action:
+      $ref: '#/ActionType'
+    subscriptionAction:
+      $ref: '#/ActionType'
+    cron:
+      $ref: '#/Cron'
+    enabled:
+      type: boolean
+      description: Whether the task is enabled.
+    failureThreshold:
+      $ref: '#/failureThreshold'
+    input:
+      $ref: '#/TaskInput'
+    cursor:
+      $ref: './common.yml#/cursor'
+    notifications:
+      $ref: '#/Notifications'
+    policies:
+      $ref: '#/Policies'
+  required:
+    - destinationID
+    - action
+
+# TODO: rename TaskUpdate to TaskPartialUpdate next major
+TaskUpdate:
+  type: object
+  additionalProperties: false
+  description: API request body for partially updating a task.
   properties:
     destinationID:
       $ref: './common.yml#/destinationID'
@@ -215,8 +246,7 @@ TaskUpdateV1:
     input:
       $ref: '#/TaskInput'
     enabled:
-      type: boolean
-      description: Whether the task is enabled.
+      $ref: '#/Enabled'
     failureThreshold:
       $ref: '#/failureThreshold'
 
@@ -308,6 +338,10 @@ Cron:
   type: string
   description: Cron expression for the task's schedule.
   example: '* * 1 * *'
+
+Enabled:
+  type: boolean
+  description: Whether the task is enabled.
 
 ScheduleTriggerType:
   type: string
