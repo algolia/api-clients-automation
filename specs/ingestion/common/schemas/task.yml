@@ -179,7 +179,7 @@ TaskCreateResponse:
     - taskID
     - createdAt
 
-TaskFullUpdate:
+TaskReplace:
   type: object
   additionalProperties: false
   description: API request body for updating a task.

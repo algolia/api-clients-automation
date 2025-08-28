@@ -3,7 +3,7 @@
     "testName": "fully replace task without cron",
     "parameters": {
       "taskID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      "taskFullUpdate": {
+      "taskReplace": {
         "destinationID": "destinationID",
         "action": "replace"
       }
@@ -21,7 +21,7 @@
     "testName": "fully replace task with cron",
     "parameters": {
       "taskID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      "taskFullUpdate": {
+      "taskReplace": {
         "destinationID": "destinationID",
         "cron": "* * * * *",
         "action": "replace",
@@ -57,18 +57,18 @@
     "testName": "fully replace task shopify",
     "parameters": {
       "taskID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      "taskFullUpdate": {
-      "destinationID": "destinationID",
-      "cron": "* * * * *",
-      "action": "replace",
-      "input": {
-        "streams": [
-          {
-            "name": "foo",
-            "syncMode": "incremental"
-          }
-        ]
-      }
+      "taskReplace": {
+        "destinationID": "destinationID",
+        "cron": "* * * * *",
+        "action": "replace",
+        "input": {
+          "streams": [
+            {
+              "name": "foo",
+              "syncMode": "incremental"
+            }
+          ]
+        }
       }
     },
     "request": {
