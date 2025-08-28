@@ -10,7 +10,7 @@
     },
     "request": {
       "path": "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      "method": "POST",
+      "method": "PUT",
       "body": {
         "destinationID": "destinationID",
         "action": "replace"
@@ -37,7 +37,7 @@
     },
     "request": {
       "path": "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      "method": "POST",
+      "method": "PUT",
       "body": {
         "destinationID": "destinationID",
         "cron": "* * * * *",
@@ -73,7 +73,7 @@
     },
     "request": {
       "path": "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      "method": "POST",
+      "method": "PUT",
       "body": {
         "sourceID": "search",
         "destinationID": "destinationID",
