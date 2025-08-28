@@ -1,6 +1,6 @@
 [
   {
-    "testName": "task without cron",
+    "testName": "fully replace task without cron",
     "parameters": {
       "taskID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       "taskFullUpdate": {
@@ -18,7 +18,7 @@
     }
   },
   {
-    "testName": "task with cron",
+    "testName": "fully replace task with cron",
     "parameters": {
       "taskID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       "taskFullUpdate": {
@@ -54,7 +54,7 @@
     }
   },
 {
-    "testName": "task shopify",
+    "testName": "fully replace task shopify",
     "parameters": {
       "taskID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       "taskFullUpdate": {
