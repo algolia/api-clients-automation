@@ -25,3 +25,65 @@ get:
       $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
       $ref: '../../../common/responses/CompositionNotFound.yml'
+
+put:
+  tags:
+    - Compositions
+  operationId: putComposition
+  x-acl:
+    - editSettings
+    - settings
+  summary: Upsert a composition
+  description: |
+    Upsert a composition in the current Algolia application.
+  parameters:
+    - $ref: '../urlParams.yml#/compositionID'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/components/Composition.yml#/composition'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../../common/responses/common.yml#/taskID'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '422':
+      $ref: '../../../common/responses/UnprocessableEntity.yml'
+
+delete:
+  tags:
+    - Compositions
+  operationId: deleteComposition
+  x-acl:
+    - editSettings
+    - settings
+  summary: Delete a composition
+  description: |
+    Delete a composition from the current Algolia application.
+  parameters:
+    - $ref: '../urlParams.yml#/compositionID'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../../common/responses/common.yml#/taskID'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/CompositionNotFound.yml'
