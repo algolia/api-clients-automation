@@ -252,6 +252,31 @@ describe('customPut', () => {
   });
 });
 
+describe('deleteComposition', () => {
+  test('deleteComposition', async () => {
+    const req = (await client.deleteComposition({ compositionID: '1234' })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/1234');
+    expect(req.method).toEqual('DELETE');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('deleteCompositionRule', () => {
+  test('deleteCompositionRule', async () => {
+    const req = (await client.deleteCompositionRule({
+      compositionID: '1234',
+      objectID: '5678',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/1234/rules/5678');
+    expect(req.method).toEqual('DELETE');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('getComposition', () => {
   test('getComposition', async () => {
     const req = (await client.getComposition({ compositionID: 'foo' })) as unknown as EchoResponse;
@@ -335,6 +360,75 @@ describe('multipleBatch', () => {
         },
         { action: 'delete', body: { objectID: 'baz' } },
       ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('putComposition', () => {
+  test('putComposition', async () => {
+    const req = (await client.putComposition({
+      compositionID: '1234',
+      composition: {
+        objectID: '1234',
+        name: 'my first composition',
+        behavior: {
+          injection: {
+            main: { source: { search: { index: 'foo' } } },
+            injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
+          },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/1234');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: '1234',
+      name: 'my first composition',
+      behavior: {
+        injection: {
+          main: { source: { search: { index: 'foo' } } },
+          injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
+        },
+      },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('putCompositionRule', () => {
+  test('putCompositionRule', async () => {
+    const req = (await client.putCompositionRule({
+      compositionID: '1234',
+      objectID: '5678',
+      compositionRule: {
+        objectID: '5678',
+        conditions: [{ anchoring: 'is', pattern: 'test' }],
+        consequence: {
+          behavior: {
+            injection: {
+              main: { source: { search: { index: 'foo' } } },
+              injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
+            },
+          },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/1234/rules/5678');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: '5678',
+      conditions: [{ anchoring: 'is', pattern: 'test' }],
+      consequence: {
+        behavior: {
+          injection: {
+            main: { source: { search: { index: 'foo' } } },
+            injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
+          },
+        },
+      },
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });

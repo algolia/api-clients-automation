@@ -369,6 +369,40 @@ export async function snippetForCustomPut1(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the deleteComposition method.
+//
+// deleteComposition
+export async function snippetForDeleteComposition(): Promise<void> {
+  // >SEPARATOR deleteComposition default
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.deleteComposition({ compositionID: '1234' });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the deleteCompositionRule method.
+//
+// deleteCompositionRule
+export async function snippetForDeleteCompositionRule(): Promise<void> {
+  // >SEPARATOR deleteCompositionRule default
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.deleteCompositionRule({ compositionID: '1234', objectID: '5678' });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the getComposition method.
 //
 // getComposition
@@ -475,6 +509,67 @@ export async function snippetForMultipleBatch(): Promise<void> {
       },
       { action: 'delete', body: { objectID: 'baz' } },
     ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the putComposition method.
+//
+// putComposition
+export async function snippetForPutComposition(): Promise<void> {
+  // >SEPARATOR putComposition default
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.putComposition({
+    compositionID: '1234',
+    composition: {
+      objectID: '1234',
+      name: 'my first composition',
+      behavior: {
+        injection: {
+          main: { source: { search: { index: 'foo' } } },
+          injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
+        },
+      },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the putCompositionRule method.
+//
+// putCompositionRule
+export async function snippetForPutCompositionRule(): Promise<void> {
+  // >SEPARATOR putCompositionRule default
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.putCompositionRule({
+    compositionID: '1234',
+    objectID: '5678',
+    compositionRule: {
+      objectID: '5678',
+      conditions: [{ anchoring: 'is', pattern: 'test' }],
+      consequence: {
+        behavior: {
+          injection: {
+            main: { source: { search: { index: 'foo' } } },
+            injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
+          },
+        },
+      },
+    },
   });
 
   // >LOG
