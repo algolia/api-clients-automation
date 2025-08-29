@@ -1,0 +1,65 @@
+[
+  {
+    "parameters": {
+      "compositionID": "1234",
+      "composition": {
+        "objectID": "1234",
+        "name": "my first composition",
+        "behavior": {
+          "injection": {
+            "main": {
+              "source": {
+                "search": {
+                  "index": "foo"
+                }
+              }
+            },
+            "injectedItems": [
+              {
+                "key": "injectedItem1",
+                "source": {
+                  "search": {
+                    "index": "foo"
+                  }
+                },
+                "position": 2,
+                "length": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/compositions/1234",
+      "method": "PUT",
+      "body": {
+        "objectID": "1234",
+        "name": "my first composition",
+        "behavior": {
+          "injection": {
+            "main": {
+              "source": {
+                "search": {
+                  "index": "foo"
+                }
+              }
+            },
+            "injectedItems": [
+              {
+                "key": "injectedItem1",
+                "source": {
+                  "search": {
+                    "index": "foo"
+                  }
+                },
+                "position": 2,
+                "length": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+]
