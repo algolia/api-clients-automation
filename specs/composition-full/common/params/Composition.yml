@@ -27,3 +27,28 @@ ruleContexts:
   example: [mobile]
   x-categories:
     - Rules
+
+injectedItems:
+  type: array
+  items:
+    $ref: '#/externalInjectedItem'
+  description: |
+    A list of injected objectIDs into an external source.
+  default: []
+  example:
+    [{'objectID': 'my-object-1', 'metadata': {'my-field': 'my-value'}}]
+  x-categories:
+    - Advanced
+
+externalInjectedItem:
+  type: object
+  properties:
+    objectID:
+      type: string
+    metadata:
+      $ref: '../schemas/components/CompositionBehavior.yml#/metadata'
+  description: |
+    An objectID injected into an external source.
+  required:
+    - objectID
+  example: {'objectID': 'my-object-1', 'metadata': {'my-field': 'my-value'}}
