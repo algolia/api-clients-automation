@@ -151,7 +151,7 @@ export async function snippetForCreateTask(): Promise<void> {
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
 
   // Call the API
-  const response = await client.createTask({ sourceID: 'search', destinationID: 'destinationName', action: 'replace' });
+  const response = await client.createTask({ sourceID: 'search', destinationID: 'destinationID', action: 'replace' });
 
   // >LOG
   // use typed response
@@ -171,7 +171,7 @@ export async function snippetForCreateTask1(): Promise<void> {
   // Call the API
   const response = await client.createTask({
     sourceID: 'search',
-    destinationID: 'destinationName',
+    destinationID: 'destinationID',
     cron: '* * * * *',
     action: 'replace',
     notifications: { email: { enabled: true } },
@@ -196,7 +196,7 @@ export async function snippetForCreateTask2(): Promise<void> {
   // Call the API
   const response = await client.createTask({
     sourceID: 'search',
-    destinationID: 'destinationName',
+    destinationID: 'destinationID',
     cron: '* * * * *',
     action: 'replace',
     input: { streams: [{ name: 'foo', syncMode: 'incremental' }] },
@@ -1306,6 +1306,80 @@ export async function snippetForPushTask1(): Promise<void> {
       ],
     },
     watch: true,
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the replaceTask method.
+//
+// fully replace task without cron
+export async function snippetForReplaceTask(): Promise<void> {
+  // >SEPARATOR replaceTask fully replace task without cron
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.replaceTask({
+    taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    taskReplace: { destinationID: 'destinationID', action: 'replace' },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the replaceTask method.
+//
+// fully replace task with cron
+export async function snippetForReplaceTask1(): Promise<void> {
+  // >SEPARATOR replaceTask fully replace task with cron
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.replaceTask({
+    taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    taskReplace: {
+      destinationID: 'destinationID',
+      cron: '* * * * *',
+      action: 'replace',
+      notifications: { email: { enabled: true } },
+      policies: { criticalThreshold: 8 },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the replaceTask method.
+//
+// fully replace task shopify
+export async function snippetForReplaceTask2(): Promise<void> {
+  // >SEPARATOR replaceTask fully replace task shopify
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.replaceTask({
+    taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    taskReplace: {
+      destinationID: 'destinationID',
+      cron: '* * * * *',
+      action: 'replace',
+      input: { streams: [{ name: 'foo', syncMode: 'incremental' }] },
+    },
   });
 
   // >LOG

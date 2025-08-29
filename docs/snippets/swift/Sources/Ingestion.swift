@@ -134,7 +134,7 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.createTask(taskCreate: TaskCreate(
             sourceID: "search",
-            destinationID: "destinationName",
+            destinationID: "destinationID",
             action: ActionType.replace
         ))
         // >LOG
@@ -152,7 +152,7 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.createTask(taskCreate: TaskCreate(
             sourceID: "search",
-            destinationID: "destinationName",
+            destinationID: "destinationID",
             action: ActionType.replace,
             cron: "* * * * *",
             notifications: Notifications(email: EmailNotifications(enabled: true)),
@@ -173,7 +173,7 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.createTask(taskCreate: TaskCreate(
             sourceID: "search",
-            destinationID: "destinationName",
+            destinationID: "destinationID",
             action: ActionType.replace,
             cron: "* * * * *",
             input: TaskInput.dockerStreamsInput(DockerStreamsInput(streams: [DockerStreams(
@@ -1131,6 +1131,71 @@ final class IngestionClientSnippet {
                 ]
             ),
             watch: true
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the replaceTask method.
+    ///
+    /// fully replace task without cron
+    func snippetForReplaceTask() async throws {
+        // >SEPARATOR replaceTask fully replace task without cron
+        // Initialize the client
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.replaceTask(
+            taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            taskReplace: TaskReplace(destinationID: "destinationID", action: ActionType.replace)
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the replaceTask method.
+    ///
+    /// fully replace task with cron
+    func snippetForReplaceTask1() async throws {
+        // >SEPARATOR replaceTask fully replace task with cron
+        // Initialize the client
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.replaceTask(
+            taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            taskReplace: TaskReplace(
+                destinationID: "destinationID",
+                action: ActionType.replace,
+                cron: "* * * * *",
+                notifications: Notifications(email: EmailNotifications(enabled: true)),
+                policies: Policies(criticalThreshold: 8)
+            )
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the replaceTask method.
+    ///
+    /// fully replace task shopify
+    func snippetForReplaceTask2() async throws {
+        // >SEPARATOR replaceTask fully replace task shopify
+        // Initialize the client
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.replaceTask(
+            taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            taskReplace: TaskReplace(
+                destinationID: "destinationID",
+                action: ActionType.replace,
+                cron: "* * * * *",
+                input: TaskInput.dockerStreamsInput(DockerStreamsInput(streams: [DockerStreams(
+                    name: "foo",
+                    syncMode: DockerStreamsSyncMode.incremental
+                )]))
+            )
         )
         // >LOG
         // SEPARATOR<

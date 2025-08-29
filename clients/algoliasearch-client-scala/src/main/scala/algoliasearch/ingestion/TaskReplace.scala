@@ -21,7 +21,7 @@ package algoliasearch.ingestion
 
 import algoliasearch.ingestion.ActionType._
 
-/** API request body for partially updating a task.
+/** API request body for updating a task.
   *
   * @param destinationID
   *   Universally unique identifier (UUID) of a destination resource.
@@ -31,14 +31,18 @@ import algoliasearch.ingestion.ActionType._
   *   Whether the task is enabled.
   * @param failureThreshold
   *   Maximum accepted percentage of failures for a task run to finish successfully.
+  * @param cursor
+  *   Date of the last cursor in RFC 3339 format.
   */
-case class TaskUpdate(
-    destinationID: Option[String] = scala.None,
-    cron: Option[String] = scala.None,
-    input: Option[TaskInput] = scala.None,
-    enabled: Option[Boolean] = scala.None,
+case class TaskReplace(
+    destinationID: String,
+    action: ActionType,
     subscriptionAction: Option[ActionType] = scala.None,
+    cron: Option[String] = scala.None,
+    enabled: Option[Boolean] = scala.None,
     failureThreshold: Option[Int] = scala.None,
+    input: Option[TaskInput] = scala.None,
+    cursor: Option[String] = scala.None,
     notifications: Option[Notifications] = scala.None,
     policies: Option[Policies] = scala.None
 )

@@ -177,7 +177,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $client->createTask(
             ['sourceID' => 'search',
-                'destinationID' => 'destinationName',
+                'destinationID' => 'destinationID',
                 'action' => 'replace',
             ],
         );
@@ -186,7 +186,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/tasks',
                 'method' => 'POST',
-                'body' => json_decode('{"sourceID":"search","destinationID":"destinationName","action":"replace"}'),
+                'body' => json_decode('{"sourceID":"search","destinationID":"destinationID","action":"replace"}'),
             ],
         ]);
     }
@@ -197,7 +197,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $client->createTask(
             ['sourceID' => 'search',
-                'destinationID' => 'destinationName',
+                'destinationID' => 'destinationID',
                 'cron' => '* * * * *',
                 'action' => 'replace',
                 'notifications' => ['email' => ['enabled' => true,
@@ -212,7 +212,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/tasks',
                 'method' => 'POST',
-                'body' => json_decode('{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}'),
+                'body' => json_decode('{"sourceID":"search","destinationID":"destinationID","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}'),
             ],
         ]);
     }
@@ -223,7 +223,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $client->createTask(
             ['sourceID' => 'search',
-                'destinationID' => 'destinationName',
+                'destinationID' => 'destinationID',
                 'cron' => '* * * * *',
                 'action' => 'replace',
                 'input' => ['streams' => [
@@ -239,7 +239,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/tasks',
                 'method' => 'POST',
-                'body' => json_decode('{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}'),
+                'body' => json_decode('{"sourceID":"search","destinationID":"destinationID","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}'),
             ],
         ]);
     }
@@ -1364,6 +1364,79 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 'method' => 'POST',
                 'body' => json_decode('{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}'),
                 'queryParameters' => json_decode('{"watch":"true"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('fully replace task without cron')]
+    public function testReplaceTask(): void
+    {
+        $client = $this->getClient();
+        $client->replaceTask(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['destinationID' => 'destinationID',
+                'action' => 'replace',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                'method' => 'PUT',
+                'body' => json_decode('{"destinationID":"destinationID","action":"replace"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('fully replace task with cron')]
+    public function testReplaceTask1(): void
+    {
+        $client = $this->getClient();
+        $client->replaceTask(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['destinationID' => 'destinationID',
+                'cron' => '* * * * *',
+                'action' => 'replace',
+                'notifications' => ['email' => ['enabled' => true,
+                ],
+                ],
+                'policies' => ['criticalThreshold' => 8,
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                'method' => 'PUT',
+                'body' => json_decode('{"destinationID":"destinationID","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('fully replace task shopify')]
+    public function testReplaceTask2(): void
+    {
+        $client = $this->getClient();
+        $client->replaceTask(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['destinationID' => 'destinationID',
+                'cron' => '* * * * *',
+                'action' => 'replace',
+                'input' => ['streams' => [
+                    ['name' => 'foo',
+                        'syncMode' => 'incremental',
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                'method' => 'PUT',
+                'body' => json_decode('{"destinationID":"destinationID","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}'),
             ],
         ]);
     }

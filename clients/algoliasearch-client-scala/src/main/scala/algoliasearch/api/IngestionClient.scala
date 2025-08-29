@@ -58,6 +58,7 @@ import algoliasearch.ingestion.Task
 import algoliasearch.ingestion.TaskCreate
 import algoliasearch.ingestion.TaskCreateResponse
 import algoliasearch.ingestion.TaskCreateV1
+import algoliasearch.ingestion.TaskReplace
 import algoliasearch.ingestion.TaskSearch
 import algoliasearch.ingestion.TaskSortKeys._
 import algoliasearch.ingestion.TaskUpdate
@@ -1302,6 +1303,26 @@ class IngestionClient(
     )
   }
 
+  /** Fully updates a task by its ID, use partialUpdateTask if you only want to update a subset of fields.
+    *
+    * @param taskID
+    *   Unique identifier of a task.
+    */
+  def replaceTask(taskID: String, taskReplace: TaskReplace, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[TaskUpdateResponse] = Future {
+    requireNotNull(taskID, "Parameter `taskID` is required when calling `replaceTask`.")
+    requireNotNull(taskReplace, "Parameter `taskReplace` is required when calling `replaceTask`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("PUT")
+      .withPath(s"/2/tasks/${escape(taskID)}")
+      .withBody(taskReplace)
+      .build()
+    execute[TaskUpdateResponse](request, requestOptions)
+  }
+
   /** Runs all tasks linked to a source, only available for Shopify, BigCommerce and commercetools sources. Creates one
     * run per task.
     *
@@ -1690,7 +1711,7 @@ class IngestionClient(
     execute[SourceUpdateResponse](request, requestOptions)
   }
 
-  /** Updates a task by its ID.
+  /** Partially updates a task by its ID.
     *
     * @param taskID
     *   Unique identifier of a task.

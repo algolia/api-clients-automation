@@ -228,7 +228,7 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let response = try await client.createTaskWithHTTPInfo(taskCreate: TaskCreate(
             sourceID: "search",
-            destinationID: "destinationName",
+            destinationID: "destinationID",
             action: ActionType.replace
         ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -237,7 +237,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"action\":\"replace\"}"
+        let expectedBodyData = "{\"sourceID\":\"search\",\"destinationID\":\"destinationID\",\"action\":\"replace\"}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -261,7 +261,7 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let response = try await client.createTaskWithHTTPInfo(taskCreate: TaskCreate(
             sourceID: "search",
-            destinationID: "destinationName",
+            destinationID: "destinationID",
             action: ActionType.replace,
             cron: "* * * * *",
             notifications: Notifications(email: EmailNotifications(enabled: true)),
@@ -273,7 +273,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"notifications\":{\"email\":{\"enabled\":true}},\"policies\":{\"criticalThreshold\":8}}"
+        let expectedBodyData = "{\"sourceID\":\"search\",\"destinationID\":\"destinationID\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"notifications\":{\"email\":{\"enabled\":true}},\"policies\":{\"criticalThreshold\":8}}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -297,7 +297,7 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let response = try await client.createTaskWithHTTPInfo(taskCreate: TaskCreate(
             sourceID: "search",
-            destinationID: "destinationName",
+            destinationID: "destinationID",
             action: ActionType.replace,
             cron: "* * * * *",
             input: TaskInput.dockerStreamsInput(DockerStreamsInput(streams: [DockerStreams(
@@ -311,7 +311,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}"
+        let expectedBodyData = "{\"sourceID\":\"search\",\"destinationID\":\"destinationID\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -2008,6 +2008,115 @@ final class IngestionClientRequestsTests: XCTestCase {
         )
 
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
+    /// fully replace task without cron
+    func testReplaceTaskTest() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.replaceTaskWithHTTPInfo(
+            taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            taskReplace: TaskReplace(destinationID: "destinationID", action: ActionType.replace)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"destinationID\":\"destinationID\",\"action\":\"replace\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// fully replace task with cron
+    func testReplaceTaskTest1() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.replaceTaskWithHTTPInfo(
+            taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            taskReplace: TaskReplace(
+                destinationID: "destinationID",
+                action: ActionType.replace,
+                cron: "* * * * *",
+                notifications: Notifications(email: EmailNotifications(enabled: true)),
+                policies: Policies(criticalThreshold: 8)
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"destinationID\":\"destinationID\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"notifications\":{\"email\":{\"enabled\":true}},\"policies\":{\"criticalThreshold\":8}}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// fully replace task shopify
+    func testReplaceTaskTest2() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.replaceTaskWithHTTPInfo(
+            taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            taskReplace: TaskReplace(
+                destinationID: "destinationID",
+                action: ActionType.replace,
+                cron: "* * * * *",
+                input: TaskInput.dockerStreamsInput(DockerStreamsInput(streams: [DockerStreams(
+                    name: "foo",
+                    syncMode: DockerStreamsSyncMode.incremental
+                )]))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"destinationID\":\"destinationID\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
     }
 
     /// runSource

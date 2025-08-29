@@ -165,7 +165,7 @@ class TestIngestionClient:
         _req = await self._client.create_task_with_http_info(
             task_create={
                 "sourceID": "search",
-                "destinationID": "destinationName",
+                "destinationID": "destinationID",
                 "action": "replace",
             },
         )
@@ -175,7 +175,7 @@ class TestIngestionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"sourceID":"search","destinationID":"destinationName","action":"replace"}"""
+            """{"sourceID":"search","destinationID":"destinationID","action":"replace"}"""
         )
 
     async def test_create_task_1(self):
@@ -185,7 +185,7 @@ class TestIngestionClient:
         _req = await self._client.create_task_with_http_info(
             task_create={
                 "sourceID": "search",
-                "destinationID": "destinationName",
+                "destinationID": "destinationID",
                 "cron": "* * * * *",
                 "action": "replace",
                 "notifications": {
@@ -204,7 +204,7 @@ class TestIngestionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}"""
+            """{"sourceID":"search","destinationID":"destinationID","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}"""
         )
 
     async def test_create_task_2(self):
@@ -214,7 +214,7 @@ class TestIngestionClient:
         _req = await self._client.create_task_with_http_info(
             task_create={
                 "sourceID": "search",
-                "destinationID": "destinationName",
+                "destinationID": "destinationID",
                 "cron": "* * * * *",
                 "action": "replace",
                 "input": {
@@ -233,7 +233,7 @@ class TestIngestionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}"""
+            """{"sourceID":"search","destinationID":"destinationID","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}"""
         )
 
     async def test_create_task_v1_(self):
@@ -1261,6 +1261,84 @@ class TestIngestionClient:
             """{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}"""
         )
 
+    async def test_replace_task_(self):
+        """
+        fully replace task without cron
+        """
+        _req = await self._client.replace_task_with_http_info(
+            task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            task_replace={
+                "destinationID": "destinationID",
+                "action": "replace",
+            },
+        )
+
+        assert _req.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"destinationID":"destinationID","action":"replace"}"""
+        )
+
+    async def test_replace_task_1(self):
+        """
+        fully replace task with cron
+        """
+        _req = await self._client.replace_task_with_http_info(
+            task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            task_replace={
+                "destinationID": "destinationID",
+                "cron": "* * * * *",
+                "action": "replace",
+                "notifications": {
+                    "email": {
+                        "enabled": True,
+                    },
+                },
+                "policies": {
+                    "criticalThreshold": 8,
+                },
+            },
+        )
+
+        assert _req.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"destinationID":"destinationID","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}"""
+        )
+
+    async def test_replace_task_2(self):
+        """
+        fully replace task shopify
+        """
+        _req = await self._client.replace_task_with_http_info(
+            task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            task_replace={
+                "destinationID": "destinationID",
+                "cron": "* * * * *",
+                "action": "replace",
+                "input": {
+                    "streams": [
+                        {
+                            "name": "foo",
+                            "syncMode": "incremental",
+                        },
+                    ],
+                },
+            },
+        )
+
+        assert _req.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"destinationID":"destinationID","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}"""
+        )
+
     async def test_run_source_(self):
         """
         runSource
@@ -1898,7 +1976,7 @@ class TestIngestionClientSync:
         _req = self._client.create_task_with_http_info(
             task_create={
                 "sourceID": "search",
-                "destinationID": "destinationName",
+                "destinationID": "destinationID",
                 "action": "replace",
             },
         )
@@ -1908,7 +1986,7 @@ class TestIngestionClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"sourceID":"search","destinationID":"destinationName","action":"replace"}"""
+            """{"sourceID":"search","destinationID":"destinationID","action":"replace"}"""
         )
 
     def test_create_task_1(self):
@@ -1918,7 +1996,7 @@ class TestIngestionClientSync:
         _req = self._client.create_task_with_http_info(
             task_create={
                 "sourceID": "search",
-                "destinationID": "destinationName",
+                "destinationID": "destinationID",
                 "cron": "* * * * *",
                 "action": "replace",
                 "notifications": {
@@ -1937,7 +2015,7 @@ class TestIngestionClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}"""
+            """{"sourceID":"search","destinationID":"destinationID","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}"""
         )
 
     def test_create_task_2(self):
@@ -1947,7 +2025,7 @@ class TestIngestionClientSync:
         _req = self._client.create_task_with_http_info(
             task_create={
                 "sourceID": "search",
-                "destinationID": "destinationName",
+                "destinationID": "destinationID",
                 "cron": "* * * * *",
                 "action": "replace",
                 "input": {
@@ -1966,7 +2044,7 @@ class TestIngestionClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}"""
+            """{"sourceID":"search","destinationID":"destinationID","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}"""
         )
 
     def test_create_task_v1_(self):
@@ -2992,6 +3070,84 @@ class TestIngestionClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}"""
+        )
+
+    def test_replace_task_(self):
+        """
+        fully replace task without cron
+        """
+        _req = self._client.replace_task_with_http_info(
+            task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            task_replace={
+                "destinationID": "destinationID",
+                "action": "replace",
+            },
+        )
+
+        assert _req.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"destinationID":"destinationID","action":"replace"}"""
+        )
+
+    def test_replace_task_1(self):
+        """
+        fully replace task with cron
+        """
+        _req = self._client.replace_task_with_http_info(
+            task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            task_replace={
+                "destinationID": "destinationID",
+                "cron": "* * * * *",
+                "action": "replace",
+                "notifications": {
+                    "email": {
+                        "enabled": True,
+                    },
+                },
+                "policies": {
+                    "criticalThreshold": 8,
+                },
+            },
+        )
+
+        assert _req.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"destinationID":"destinationID","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}"""
+        )
+
+    def test_replace_task_2(self):
+        """
+        fully replace task shopify
+        """
+        _req = self._client.replace_task_with_http_info(
+            task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            task_replace={
+                "destinationID": "destinationID",
+                "cron": "* * * * *",
+                "action": "replace",
+                "input": {
+                    "streams": [
+                        {
+                            "name": "foo",
+                            "syncMode": "incremental",
+                        },
+                    ],
+                },
+            },
+        )
+
+        assert _req.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"destinationID":"destinationID","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}"""
         )
 
     def test_run_source_(self):

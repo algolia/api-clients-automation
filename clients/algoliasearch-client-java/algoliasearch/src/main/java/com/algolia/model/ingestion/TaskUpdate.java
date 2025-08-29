@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** API request body for updating a task. */
+/** API request body for partially updating a task. */
 public class TaskUpdate {
 
   @JsonProperty("destinationID")

@@ -186,14 +186,14 @@ class IngestionClientRequestsTests {
   @DisplayName("task without cron")
   void createTaskTest() {
     assertDoesNotThrow(() -> {
-      client.createTask(new TaskCreate().setSourceID("search").setDestinationID("destinationName").setAction(ActionType.REPLACE));
+      client.createTask(new TaskCreate().setSourceID("search").setDestinationID("destinationID").setAction(ActionType.REPLACE));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/tasks", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"action\":\"replace\"}",
+        "{\"sourceID\":\"search\",\"destinationID\":\"destinationID\",\"action\":\"replace\"}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -207,7 +207,7 @@ class IngestionClientRequestsTests {
       client.createTask(
         new TaskCreate()
           .setSourceID("search")
-          .setDestinationID("destinationName")
+          .setDestinationID("destinationID")
           .setCron("* * * * *")
           .setAction(ActionType.REPLACE)
           .setNotifications(new Notifications().setEmail(new EmailNotifications().setEnabled(true)))
@@ -219,7 +219,7 @@ class IngestionClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * *" +
+        "{\"sourceID\":\"search\",\"destinationID\":\"destinationID\",\"cron\":\"* * * *" +
         " *\",\"action\":\"replace\",\"notifications\":{\"email\":{\"enabled\":true}},\"policies\":{\"criticalThreshold\":8}}",
         req.body,
         JSONCompareMode.STRICT
@@ -234,7 +234,7 @@ class IngestionClientRequestsTests {
       client.createTask(
         new TaskCreate()
           .setSourceID("search")
-          .setDestinationID("destinationName")
+          .setDestinationID("destinationID")
           .setCron("* * * * *")
           .setAction(ActionType.REPLACE)
           .setInput(
@@ -249,7 +249,7 @@ class IngestionClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * *" +
+        "{\"sourceID\":\"search\",\"destinationID\":\"destinationID\",\"cron\":\"* * * *" +
         " *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}",
         req.body,
         JSONCompareMode.STRICT
@@ -1488,6 +1488,80 @@ class IngestionClientRequestsTests {
     } catch (JsonProcessingException e) {
       fail("failed to parse queryParameters json");
     }
+  }
+
+  @Test
+  @DisplayName("fully replace task without cron")
+  void replaceTaskTest() {
+    assertDoesNotThrow(() -> {
+      client.replaceTask(
+        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        new TaskReplace().setDestinationID("destinationID").setAction(ActionType.REPLACE)
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"destinationID\":\"destinationID\",\"action\":\"replace\"}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("fully replace task with cron")
+  void replaceTaskTest1() {
+    assertDoesNotThrow(() -> {
+      client.replaceTask(
+        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        new TaskReplace()
+          .setDestinationID("destinationID")
+          .setCron("* * * * *")
+          .setAction(ActionType.REPLACE)
+          .setNotifications(new Notifications().setEmail(new EmailNotifications().setEnabled(true)))
+          .setPolicies(new Policies().setCriticalThreshold(8))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"destinationID\":\"destinationID\",\"cron\":\"* * * *" +
+        " *\",\"action\":\"replace\",\"notifications\":{\"email\":{\"enabled\":true}},\"policies\":{\"criticalThreshold\":8}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("fully replace task shopify")
+  void replaceTaskTest2() {
+    assertDoesNotThrow(() -> {
+      client.replaceTask(
+        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        new TaskReplace()
+          .setDestinationID("destinationID")
+          .setCron("* * * * *")
+          .setAction(ActionType.REPLACE)
+          .setInput(
+            new DockerStreamsInput().setStreams(
+              Arrays.asList(new DockerStreams().setName("foo").setSyncMode(DockerStreamsSyncMode.INCREMENTAL))
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"destinationID\":\"destinationID\",\"cron\":\"* * * *" +
+        " *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
   }
 
   @Test

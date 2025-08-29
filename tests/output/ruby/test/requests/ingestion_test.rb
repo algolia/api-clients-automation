@@ -147,7 +147,7 @@ class TestIngestionClient < Test::Unit::TestCase
   # task without cron
   def test_create_task
     req = @client.create_task_with_http_info(
-      Algolia::Ingestion::TaskCreate.new(source_id: "search", destination_id: "destinationName", action: "replace")
+      Algolia::Ingestion::TaskCreate.new(source_id: "search", destination_id: "destinationID", action: "replace")
     )
 
     assert_equal(:post, req.method)
@@ -155,7 +155,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse("{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"action\":\"replace\"}"),
+      JSON.parse("{\"sourceID\":\"search\",\"destinationID\":\"destinationID\",\"action\":\"replace\"}"),
       JSON.parse(req.body)
     )
   end
@@ -165,7 +165,7 @@ class TestIngestionClient < Test::Unit::TestCase
     req = @client.create_task_with_http_info(
       Algolia::Ingestion::TaskCreate.new(
         source_id: "search",
-        destination_id: "destinationName",
+        destination_id: "destinationID",
         cron: "* * * * *",
         action: "replace",
         notifications: Algolia::Ingestion::Notifications.new(
@@ -181,7 +181,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"notifications\":{\"email\":{\"enabled\":true}},\"policies\":{\"criticalThreshold\":8}}"
+        "{\"sourceID\":\"search\",\"destinationID\":\"destinationID\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"notifications\":{\"email\":{\"enabled\":true}},\"policies\":{\"criticalThreshold\":8}}"
       ),
       JSON.parse(req.body)
     )
@@ -192,7 +192,7 @@ class TestIngestionClient < Test::Unit::TestCase
     req = @client.create_task_with_http_info(
       Algolia::Ingestion::TaskCreate.new(
         source_id: "search",
-        destination_id: "destinationName",
+        destination_id: "destinationID",
         cron: "* * * * *",
         action: "replace",
         input: Algolia::Ingestion::DockerStreamsInput.new(
@@ -207,7 +207,7 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}"
+        "{\"sourceID\":\"search\",\"destinationID\":\"destinationID\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}"
       ),
       JSON.parse(req.body)
     )
@@ -1026,6 +1026,73 @@ class TestIngestionClient < Test::Unit::TestCase
     assert_equal(
       JSON.parse(
         "{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # fully replace task without cron
+  def test_replace_task
+    req = @client.replace_task_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      Algolia::Ingestion::TaskReplace.new(destination_id: "destinationID", action: "replace")
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"destinationID\":\"destinationID\",\"action\":\"replace\"}"), JSON.parse(req.body))
+  end
+
+  # fully replace task with cron
+  def test_replace_task1
+    req = @client.replace_task_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      Algolia::Ingestion::TaskReplace.new(
+        destination_id: "destinationID",
+        cron: "* * * * *",
+        action: "replace",
+        notifications: Algolia::Ingestion::Notifications.new(
+          email: Algolia::Ingestion::EmailNotifications.new(enabled: true)
+        ),
+        policies: Algolia::Ingestion::Policies.new(critical_threshold: 8)
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"destinationID\":\"destinationID\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"notifications\":{\"email\":{\"enabled\":true}},\"policies\":{\"criticalThreshold\":8}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # fully replace task shopify
+  def test_replace_task2
+    req = @client.replace_task_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      Algolia::Ingestion::TaskReplace.new(
+        destination_id: "destinationID",
+        cron: "* * * * *",
+        action: "replace",
+        input: Algolia::Ingestion::DockerStreamsInput.new(
+          streams: [Algolia::Ingestion::DockerStreams.new(name: "foo", sync_mode: "incremental")]
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"destinationID\":\"destinationID\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}"
       ),
       JSON.parse(req.body)
     )

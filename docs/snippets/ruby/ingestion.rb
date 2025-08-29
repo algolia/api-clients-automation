@@ -173,7 +173,7 @@ def snippet_for_create_task
 
   # Call the API
   response = client.create_task(
-    Algolia::Ingestion::TaskCreate.new(source_id: "search", destination_id: "destinationName", action: "replace")
+    Algolia::Ingestion::TaskCreate.new(source_id: "search", destination_id: "destinationID", action: "replace")
   )
 
   # >LOG
@@ -197,7 +197,7 @@ def snippet_for_create_task1
   response = client.create_task(
     Algolia::Ingestion::TaskCreate.new(
       source_id: "search",
-      destination_id: "destinationName",
+      destination_id: "destinationID",
       cron: "* * * * *",
       action: "replace",
       notifications: Algolia::Ingestion::Notifications.new(
@@ -228,7 +228,7 @@ def snippet_for_create_task2
   response = client.create_task(
     Algolia::Ingestion::TaskCreate.new(
       source_id: "search",
-      destination_id: "destinationName",
+      destination_id: "destinationID",
       cron: "* * * * *",
       action: "replace",
       input: Algolia::Ingestion::DockerStreamsInput.new(
@@ -1447,6 +1447,90 @@ def snippet_for_push_task1
       ]
     ),
     true
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the replaceTask method.
+#
+# fully replace task without cron
+def snippet_for_replace_task
+  # >SEPARATOR replaceTask fully replace task without cron
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.replace_task(
+    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    Algolia::Ingestion::TaskReplace.new(destination_id: "destinationID", action: "replace")
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the replaceTask method.
+#
+# fully replace task with cron
+def snippet_for_replace_task1
+  # >SEPARATOR replaceTask fully replace task with cron
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.replace_task(
+    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    Algolia::Ingestion::TaskReplace.new(
+      destination_id: "destinationID",
+      cron: "* * * * *",
+      action: "replace",
+      notifications: Algolia::Ingestion::Notifications.new(
+        email: Algolia::Ingestion::EmailNotifications.new(enabled: true)
+      ),
+      policies: Algolia::Ingestion::Policies.new(critical_threshold: 8)
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the replaceTask method.
+#
+# fully replace task shopify
+def snippet_for_replace_task2
+  # >SEPARATOR replaceTask fully replace task shopify
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.replace_task(
+    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    Algolia::Ingestion::TaskReplace.new(
+      destination_id: "destinationID",
+      cron: "* * * * *",
+      action: "replace",
+      input: Algolia::Ingestion::DockerStreamsInput.new(
+        streams: [Algolia::Ingestion::DockerStreams.new(name: "foo", sync_mode: "incremental")]
+      )
+    )
   )
 
   # >LOG
