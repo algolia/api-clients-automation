@@ -48,7 +48,7 @@ externalInjectedItem:
     metadata:
       $ref: '#/injectedItemMetadata'
   description: |
-    A list of injected objectIDs into an external source.
+    An objectID injected into an external source.
   required:
     - objectID
   example: {'objectID': 'my-object-1', 'metadata': {'my-field': 'my-value'}}
