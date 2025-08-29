@@ -51,12 +51,6 @@
           }
         }
       }
-    },
-    "response": {
-      "statusCode": 200,
-      "body": {
-        "taskID": 42
-      }
     }
   }
 ]
