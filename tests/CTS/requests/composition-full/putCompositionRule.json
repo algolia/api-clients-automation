@@ -20,7 +20,19 @@
                     "index": "foo"
                   }
                 }
-              }
+              },
+              "injectedItems": [
+                {
+                  "key": "injectedItem1",
+                  "source": {
+                    "search": {
+                      "index": "foo"
+                    }
+                  },
+                  "position": 2,
+                  "length": 1
+                }
+              ]
             }
           }
         }
@@ -46,7 +58,19 @@
                     "index": "foo"
                   }
                 }
-              }
+              },
+              "injectedItems": [
+                {
+                  "key": "injectedItem1",
+                  "source": {
+                    "search": {
+                      "index": "foo"
+                    }
+                  },
+                  "position": 2,
+                  "length": 1
+                }
+              ]
             }
           }
         }
