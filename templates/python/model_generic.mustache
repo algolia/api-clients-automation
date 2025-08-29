@@ -82,7 +82,12 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
     {{#vendorExtensions.x-is-hit-object}}
     @staticmethod
     def __dump_item(item):
-        return item.model_dump(warnings="none") if isinstance(item, BaseModel) else item
+        return item.model_dump(
+            by_alias=True,
+            exclude_none=True,
+            exclude_unset=True,
+            warnings="none",
+        ) if isinstance(item, BaseModel) else item
 
     @field_serializer("highlight_result")
     def serialize_highlight_result(self, v: HighlightResult | None):
