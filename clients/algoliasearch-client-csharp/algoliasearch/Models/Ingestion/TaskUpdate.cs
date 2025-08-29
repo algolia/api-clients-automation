@@ -12,7 +12,7 @@ using Algolia.Search.Serializer;
 namespace Algolia.Search.Models.Ingestion;
 
 /// <summary>
-/// API request body for updating a task.
+/// API request body for partially updating a task.
 /// </summary>
 public partial class TaskUpdate
 {

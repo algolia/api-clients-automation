@@ -215,7 +215,7 @@ def snippet_for_create_task():
     response = client.create_task(
         task_create={
             "sourceID": "search",
-            "destinationID": "destinationName",
+            "destinationID": "destinationID",
             "action": "replace",
         },
     )
@@ -243,7 +243,7 @@ def snippet_for_create_task1():
     response = client.create_task(
         task_create={
             "sourceID": "search",
-            "destinationID": "destinationName",
+            "destinationID": "destinationID",
             "cron": "* * * * *",
             "action": "replace",
             "notifications": {
@@ -280,7 +280,7 @@ def snippet_for_create_task2():
     response = client.create_task(
         task_create={
             "sourceID": "search",
-            "destinationID": "destinationName",
+            "destinationID": "destinationID",
             "cron": "* * * * *",
             "action": "replace",
             "input": {
@@ -1800,6 +1800,108 @@ def snippet_for_push_task1():
             ],
         },
         watch=True,
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_replace_task():
+    """
+    Snippet for the replaceTask method.
+
+    fully replace task without cron
+    """
+    # >SEPARATOR replaceTask fully replace task without cron
+    # Initialize the client
+    # In an asynchronous context, you can use IngestionClient instead, which exposes the exact same methods.
+    client = IngestionClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.replace_task(
+        task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        task_replace={
+            "destinationID": "destinationID",
+            "action": "replace",
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_replace_task1():
+    """
+    Snippet for the replaceTask method.
+
+    fully replace task with cron
+    """
+    # >SEPARATOR replaceTask fully replace task with cron
+    # Initialize the client
+    # In an asynchronous context, you can use IngestionClient instead, which exposes the exact same methods.
+    client = IngestionClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.replace_task(
+        task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        task_replace={
+            "destinationID": "destinationID",
+            "cron": "* * * * *",
+            "action": "replace",
+            "notifications": {
+                "email": {
+                    "enabled": True,
+                },
+            },
+            "policies": {
+                "criticalThreshold": 8,
+            },
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_replace_task2():
+    """
+    Snippet for the replaceTask method.
+
+    fully replace task shopify
+    """
+    # >SEPARATOR replaceTask fully replace task shopify
+    # Initialize the client
+    # In an asynchronous context, you can use IngestionClient instead, which exposes the exact same methods.
+    client = IngestionClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.replace_task(
+        task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        task_replace={
+            "destinationID": "destinationID",
+            "cron": "* * * * *",
+            "action": "replace",
+            "input": {
+                "streams": [
+                    {
+                        "name": "foo",
+                        "syncMode": "incremental",
+                    },
+                ],
+            },
+        },
     )
 
     # >LOG

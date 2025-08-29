@@ -206,7 +206,7 @@ func SnippetForCreateTaskOfIngestion() {
 	// Call the API
 	response, err := client.CreateTask(client.NewApiCreateTaskRequest(
 
-		ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetAction(ingestion.ActionType("replace"))))
+		ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationID").SetAction(ingestion.ActionType("replace"))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -235,7 +235,7 @@ func SnippetForCreateTaskOfIngestion1() {
 	// Call the API
 	response, err := client.CreateTask(client.NewApiCreateTaskRequest(
 
-		ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetNotifications(
+		ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationID").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetNotifications(
 			ingestion.NewEmptyNotifications().SetEmail(
 				ingestion.NewEmptyEmailNotifications().SetEnabled(true))).SetPolicies(
 			ingestion.NewEmptyPolicies().SetCriticalThreshold(8))))
@@ -267,7 +267,7 @@ func SnippetForCreateTaskOfIngestion2() {
 	// Call the API
 	response, err := client.CreateTask(client.NewApiCreateTaskRequest(
 
-		ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetInput(ingestion.DockerStreamsInputAsTaskInput(
+		ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationID").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetInput(ingestion.DockerStreamsInputAsTaskInput(
 			ingestion.NewEmptyDockerStreamsInput().SetStreams(
 				[]ingestion.DockerStreams{*ingestion.NewEmptyDockerStreams().SetName("foo").SetSyncMode(ingestion.DockerStreamsSyncMode("incremental"))})))))
 	if err != nil {
@@ -1800,6 +1800,98 @@ func SnippetForPushTaskOfIngestion1() {
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
 		ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
 			[]ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})).WithWatch(true))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForReplaceTaskOfIngestion() {
+	/*
+	   Snippet for the replaceTask method.
+
+	   fully replace task without cron
+	*/
+
+	// >SEPARATOR replaceTask fully replace task without cron
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ReplaceTask(client.NewApiReplaceTaskRequest(
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+		ingestion.NewEmptyTaskReplace().SetDestinationID("destinationID").SetAction(ingestion.ActionType("replace"))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForReplaceTaskOfIngestion1() {
+	/*
+	   Snippet for the replaceTask method.
+
+	   fully replace task with cron
+	*/
+
+	// >SEPARATOR replaceTask fully replace task with cron
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ReplaceTask(client.NewApiReplaceTaskRequest(
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+		ingestion.NewEmptyTaskReplace().SetDestinationID("destinationID").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetNotifications(
+			ingestion.NewEmptyNotifications().SetEmail(
+				ingestion.NewEmptyEmailNotifications().SetEnabled(true))).SetPolicies(
+			ingestion.NewEmptyPolicies().SetCriticalThreshold(8))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForReplaceTaskOfIngestion2() {
+	/*
+	   Snippet for the replaceTask method.
+
+	   fully replace task shopify
+	*/
+
+	// >SEPARATOR replaceTask fully replace task shopify
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ReplaceTask(client.NewApiReplaceTaskRequest(
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+		ingestion.NewEmptyTaskReplace().SetDestinationID("destinationID").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetInput(ingestion.DockerStreamsInputAsTaskInput(
+			ingestion.NewEmptyDockerStreamsInput().SetStreams(
+				[]ingestion.DockerStreams{*ingestion.NewEmptyDockerStreams().SetName("foo").SetSyncMode(ingestion.DockerStreamsSyncMode("incremental"))})))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

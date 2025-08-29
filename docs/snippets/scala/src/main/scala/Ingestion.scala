@@ -225,7 +225,7 @@ class SnippetIngestionClient {
       client.createTask(
         taskCreate = TaskCreate(
           sourceID = "search",
-          destinationID = "destinationName",
+          destinationID = "destinationID",
           action = ActionType.withName("replace")
         )
       ),
@@ -253,7 +253,7 @@ class SnippetIngestionClient {
       client.createTask(
         taskCreate = TaskCreate(
           sourceID = "search",
-          destinationID = "destinationName",
+          destinationID = "destinationID",
           cron = Some("* * * * *"),
           action = ActionType.withName("replace"),
           notifications = Some(
@@ -294,7 +294,7 @@ class SnippetIngestionClient {
       client.createTask(
         taskCreate = TaskCreate(
           sourceID = "search",
-          destinationID = "destinationName",
+          destinationID = "destinationID",
           cron = Some("* * * * *"),
           action = ActionType.withName("replace"),
           input = Some(
@@ -1793,6 +1793,114 @@ class SnippetIngestionClient {
           )
         ),
         watch = Some(true)
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the replaceTask method.
+    *
+    * fully replace task without cron
+    */
+  def snippetForIngestionClientReplaceTask(): Unit = {
+    // >SEPARATOR replaceTask fully replace task without cron
+    // Initialize the client
+    val client = IngestionClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.replaceTask(
+        taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        taskReplace = TaskReplace(
+          destinationID = "destinationID",
+          action = ActionType.withName("replace")
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the replaceTask method.
+    *
+    * fully replace task with cron
+    */
+  def snippetForIngestionClientReplaceTask1(): Unit = {
+    // >SEPARATOR replaceTask fully replace task with cron
+    // Initialize the client
+    val client = IngestionClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.replaceTask(
+        taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        taskReplace = TaskReplace(
+          destinationID = "destinationID",
+          cron = Some("* * * * *"),
+          action = ActionType.withName("replace"),
+          notifications = Some(
+            Notifications(
+              email = EmailNotifications(
+                enabled = Some(true)
+              )
+            )
+          ),
+          policies = Some(
+            Policies(
+              criticalThreshold = Some(8)
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the replaceTask method.
+    *
+    * fully replace task shopify
+    */
+  def snippetForIngestionClientReplaceTask2(): Unit = {
+    // >SEPARATOR replaceTask fully replace task shopify
+    // Initialize the client
+    val client = IngestionClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.replaceTask(
+        taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        taskReplace = TaskReplace(
+          destinationID = "destinationID",
+          cron = Some("* * * * *"),
+          action = ActionType.withName("replace"),
+          input = Some(
+            DockerStreamsInput(
+              streams = Seq(
+                DockerStreams(
+                  name = "foo",
+                  syncMode = DockerStreamsSyncMode.withName("incremental")
+                )
+              )
+            )
+          )
+        )
       ),
       Duration(100, "sec")
     )

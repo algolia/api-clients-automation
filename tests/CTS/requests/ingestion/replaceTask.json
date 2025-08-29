@@ -1,0 +1,92 @@
+[
+  {
+    "testName": "fully replace task without cron",
+    "parameters": {
+      "taskID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      "taskReplace": {
+        "destinationID": "destinationID",
+        "action": "replace"
+      }
+    },
+    "request": {
+      "path": "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      "method": "PUT",
+      "body": {
+        "destinationID": "destinationID",
+        "action": "replace"
+      }
+    }
+  },
+  {
+    "testName": "fully replace task with cron",
+    "parameters": {
+      "taskID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      "taskReplace": {
+        "destinationID": "destinationID",
+        "cron": "* * * * *",
+        "action": "replace",
+        "notifications": {
+          "email": {
+            "enabled": true
+          }
+        },
+        "policies": {
+          "criticalThreshold": 8
+        }
+      }
+    },
+    "request": {
+      "path": "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      "method": "PUT",
+      "body": {
+        "destinationID": "destinationID",
+        "cron": "* * * * *",
+        "action": "replace",
+        "notifications": {
+          "email": {
+            "enabled": true
+          }
+        },
+        "policies": {
+          "criticalThreshold": 8
+        }
+      }
+    }
+  },
+{
+    "testName": "fully replace task shopify",
+    "parameters": {
+      "taskID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      "taskReplace": {
+        "destinationID": "destinationID",
+        "cron": "* * * * *",
+        "action": "replace",
+        "input": {
+          "streams": [
+            {
+              "name": "foo",
+              "syncMode": "incremental"
+            }
+          ]
+        }
+      }
+    },
+    "request": {
+      "path": "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      "method": "PUT",
+      "body": {
+        "destinationID": "destinationID",
+        "cron": "* * * * *",
+        "action": "replace",
+        "input": {
+          "streams": [
+            {
+              "name": "foo",
+              "syncMode": "incremental"
+            }
+          ]
+        }
+      }
+    }
+  }
+]

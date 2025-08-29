@@ -41,7 +41,7 @@ def _alias_generator(name: str) -> str:
 
 class TaskUpdate(BaseModel):
     """
-    API request body for updating a task.
+    API request body for partially updating a task.
     """
 
     destination_id: Optional[str] = None

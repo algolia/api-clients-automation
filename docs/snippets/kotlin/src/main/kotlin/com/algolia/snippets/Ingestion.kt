@@ -172,7 +172,7 @@ class SnippetIngestionClient {
     var response = client.createTask(
       taskCreate = TaskCreate(
         sourceID = "search",
-        destinationID = "destinationName",
+        destinationID = "destinationID",
         action = ActionType.entries.first { it.value == "replace" },
       ),
     )
@@ -194,7 +194,7 @@ class SnippetIngestionClient {
     var response = client.createTask(
       taskCreate = TaskCreate(
         sourceID = "search",
-        destinationID = "destinationName",
+        destinationID = "destinationID",
         cron = "* * * * *",
         action = ActionType.entries.first { it.value == "replace" },
         notifications = Notifications(
@@ -225,7 +225,7 @@ class SnippetIngestionClient {
     var response = client.createTask(
       taskCreate = TaskCreate(
         sourceID = "search",
-        destinationID = "destinationName",
+        destinationID = "destinationID",
         cron = "* * * * *",
         action = ActionType.entries.first { it.value == "replace" },
         input = DockerStreamsInput(
@@ -1458,6 +1458,90 @@ class SnippetIngestionClient {
         ),
       ),
       watch = true,
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForReplaceTask() {
+    // >SEPARATOR replaceTask fully replace task without cron
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.replaceTask(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      taskReplace = TaskReplace(
+        destinationID = "destinationID",
+        action = ActionType.entries.first { it.value == "replace" },
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForReplaceTask1() {
+    // >SEPARATOR replaceTask fully replace task with cron
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.replaceTask(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      taskReplace = TaskReplace(
+        destinationID = "destinationID",
+        cron = "* * * * *",
+        action = ActionType.entries.first { it.value == "replace" },
+        notifications = Notifications(
+          email = EmailNotifications(
+            enabled = true,
+          ),
+        ),
+        policies = Policies(
+          criticalThreshold = 8,
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForReplaceTask2() {
+    // >SEPARATOR replaceTask fully replace task shopify
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.replaceTask(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      taskReplace = TaskReplace(
+        destinationID = "destinationID",
+        cron = "* * * * *",
+        action = ActionType.entries.first { it.value == "replace" },
+        input = DockerStreamsInput(
+          streams = listOf(
+            DockerStreams(
+              name = "foo",
+              syncMode = DockerStreamsSyncMode.entries.first { it.value == "incremental" },
+            ),
+          ),
+        ),
+      ),
     )
 
     // >LOG

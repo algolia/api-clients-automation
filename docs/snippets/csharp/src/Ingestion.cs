@@ -199,7 +199,7 @@ public class SnippetIngestionClient
       new TaskCreate
       {
         SourceID = "search",
-        DestinationID = "destinationName",
+        DestinationID = "destinationID",
         Action = Enum.Parse<ActionType>("Replace"),
       }
     );
@@ -225,7 +225,7 @@ public class SnippetIngestionClient
       new TaskCreate
       {
         SourceID = "search",
-        DestinationID = "destinationName",
+        DestinationID = "destinationID",
         Cron = "* * * * *",
         Action = Enum.Parse<ActionType>("Replace"),
         Notifications = new Notifications { Email = new EmailNotifications { Enabled = true } },
@@ -254,7 +254,7 @@ public class SnippetIngestionClient
       new TaskCreate
       {
         SourceID = "search",
-        DestinationID = "destinationName",
+        DestinationID = "destinationID",
         Cron = "* * * * *",
         Action = Enum.Parse<ActionType>("Replace"),
         Input = new TaskInput(
@@ -1560,6 +1560,101 @@ public class SnippetIngestionClient
         },
       },
       true
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ReplaceTask method.
+  ///
+  /// fully replace task without cron
+  /// </summary>
+  public async Task SnippetForIngestionClientReplaceTask()
+  {
+    // >SEPARATOR replaceTask fully replace task without cron
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+    );
+
+    // Call the API
+    var response = await client.ReplaceTaskAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TaskReplace
+      {
+        DestinationID = "destinationID",
+        Action = Enum.Parse<ActionType>("Replace"),
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ReplaceTask method.
+  ///
+  /// fully replace task with cron
+  /// </summary>
+  public async Task SnippetForIngestionClientReplaceTask1()
+  {
+    // >SEPARATOR replaceTask fully replace task with cron
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+    );
+
+    // Call the API
+    var response = await client.ReplaceTaskAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TaskReplace
+      {
+        DestinationID = "destinationID",
+        Cron = "* * * * *",
+        Action = Enum.Parse<ActionType>("Replace"),
+        Notifications = new Notifications { Email = new EmailNotifications { Enabled = true } },
+        Policies = new Policies { CriticalThreshold = 8 },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ReplaceTask method.
+  ///
+  /// fully replace task shopify
+  /// </summary>
+  public async Task SnippetForIngestionClientReplaceTask2()
+  {
+    // >SEPARATOR replaceTask fully replace task shopify
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+    );
+
+    // Call the API
+    var response = await client.ReplaceTaskAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TaskReplace
+      {
+        DestinationID = "destinationID",
+        Cron = "* * * * *",
+        Action = Enum.Parse<ActionType>("Replace"),
+        Input = new TaskInput(
+          new DockerStreamsInput
+          {
+            Streams = new List<DockerStreams>
+            {
+              new DockerStreams
+              {
+                Name = "foo",
+                SyncMode = Enum.Parse<DockerStreamsSyncMode>("Incremental"),
+              },
+            },
+          }
+        ),
+      }
     );
     // >LOG
     // SEPARATOR<

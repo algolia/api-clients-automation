@@ -5,7 +5,7 @@ import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 
 /**
- * API request body for updating a task.
+ * API request body for partially updating a task.
  *
  * @param destinationID Universally unique identifier (UUID) of a destination resource.
  * @param cron Cron expression for the task's schedule.

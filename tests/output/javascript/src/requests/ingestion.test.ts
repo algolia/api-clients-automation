@@ -134,20 +134,20 @@ describe('createTask', () => {
   test('task without cron', async () => {
     const req = (await client.createTask({
       sourceID: 'search',
-      destinationID: 'destinationName',
+      destinationID: 'destinationID',
       action: 'replace',
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/2/tasks');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({ sourceID: 'search', destinationID: 'destinationName', action: 'replace' });
+    expect(req.data).toEqual({ sourceID: 'search', destinationID: 'destinationID', action: 'replace' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('task with cron', async () => {
     const req = (await client.createTask({
       sourceID: 'search',
-      destinationID: 'destinationName',
+      destinationID: 'destinationID',
       cron: '* * * * *',
       action: 'replace',
       notifications: { email: { enabled: true } },
@@ -158,7 +158,7 @@ describe('createTask', () => {
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
       sourceID: 'search',
-      destinationID: 'destinationName',
+      destinationID: 'destinationID',
       cron: '* * * * *',
       action: 'replace',
       notifications: { email: { enabled: true } },
@@ -170,7 +170,7 @@ describe('createTask', () => {
   test('task shopify', async () => {
     const req = (await client.createTask({
       sourceID: 'search',
-      destinationID: 'destinationName',
+      destinationID: 'destinationID',
       cron: '* * * * *',
       action: 'replace',
       input: { streams: [{ name: 'foo', syncMode: 'incremental' }] },
@@ -180,7 +180,7 @@ describe('createTask', () => {
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
       sourceID: 'search',
-      destinationID: 'destinationName',
+      destinationID: 'destinationID',
       cron: '* * * * *',
       action: 'replace',
       input: { streams: [{ name: 'foo', syncMode: 'incremental' }] },
@@ -968,6 +968,66 @@ describe('pushTask', () => {
       ],
     });
     expect(req.searchParams).toStrictEqual({ watch: 'true' });
+  });
+});
+
+describe('replaceTask', () => {
+  test('fully replace task without cron', async () => {
+    const req = (await client.replaceTask({
+      taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+      taskReplace: { destinationID: 'destinationID', action: 'replace' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ destinationID: 'destinationID', action: 'replace' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('fully replace task with cron', async () => {
+    const req = (await client.replaceTask({
+      taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+      taskReplace: {
+        destinationID: 'destinationID',
+        cron: '* * * * *',
+        action: 'replace',
+        notifications: { email: { enabled: true } },
+        policies: { criticalThreshold: 8 },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      destinationID: 'destinationID',
+      cron: '* * * * *',
+      action: 'replace',
+      notifications: { email: { enabled: true } },
+      policies: { criticalThreshold: 8 },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('fully replace task shopify', async () => {
+    const req = (await client.replaceTask({
+      taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+      taskReplace: {
+        destinationID: 'destinationID',
+        cron: '* * * * *',
+        action: 'replace',
+        input: { streams: [{ name: 'foo', syncMode: 'incremental' }] },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      destinationID: 'destinationID',
+      cron: '* * * * *',
+      action: 'replace',
+      input: { streams: [{ name: 'foo', syncMode: 'incremental' }] },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 

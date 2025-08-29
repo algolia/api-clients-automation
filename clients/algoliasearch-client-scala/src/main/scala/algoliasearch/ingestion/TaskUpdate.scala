@@ -21,7 +21,7 @@ package algoliasearch.ingestion
 
 import algoliasearch.ingestion.ActionType._
 
-/** API request body for updating a task.
+/** API request body for partially updating a task.
   *
   * @param destinationID
   *   Universally unique identifier (UUID) of a destination resource.

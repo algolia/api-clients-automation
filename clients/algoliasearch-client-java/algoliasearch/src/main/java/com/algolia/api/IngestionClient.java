@@ -3529,6 +3529,69 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
+   * Fully updates a task by its ID, use partialUpdateTask if you only want to update a subset of
+   * fields.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param taskReplace (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TaskUpdateResponse replaceTask(@Nonnull String taskID, @Nonnull TaskReplace taskReplace, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(replaceTaskAsync(taskID, taskReplace, requestOptions));
+  }
+
+  /**
+   * Fully updates a task by its ID, use partialUpdateTask if you only want to update a subset of
+   * fields.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param taskReplace (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TaskUpdateResponse replaceTask(@Nonnull String taskID, @Nonnull TaskReplace taskReplace) throws AlgoliaRuntimeException {
+    return this.replaceTask(taskID, taskReplace, null);
+  }
+
+  /**
+   * (asynchronously) Fully updates a task by its ID, use partialUpdateTask if you only want to
+   * update a subset of fields.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param taskReplace (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TaskUpdateResponse> replaceTaskAsync(
+    @Nonnull String taskID,
+    @Nonnull TaskReplace taskReplace,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `replaceTask`.");
+
+    Parameters.requireNonNull(taskReplace, "Parameter `taskReplace` is required when calling `replaceTask`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}", taskID).setMethod("PUT").setBody(taskReplace).build();
+    return executeAsync(request, requestOptions, new TypeReference<TaskUpdateResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Fully updates a task by its ID, use partialUpdateTask if you only want to
+   * update a subset of fields.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param taskReplace (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TaskUpdateResponse> replaceTaskAsync(@Nonnull String taskID, @Nonnull TaskReplace taskReplace)
+    throws AlgoliaRuntimeException {
+    return this.replaceTaskAsync(taskID, taskReplace, null);
+  }
+
+  /**
    * Runs all tasks linked to a source, only available for Shopify, BigCommerce and commercetools
    * sources. Creates one run per task.
    *
@@ -4576,7 +4639,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Updates a task by its ID.
+   * Partially updates a task by its ID.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
@@ -4590,7 +4653,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Updates a task by its ID.
+   * Partially updates a task by its ID.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
@@ -4601,7 +4664,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Updates a task by its ID.
+   * (asynchronously) Partially updates a task by its ID.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
@@ -4623,7 +4686,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Updates a task by its ID.
+   * (asynchronously) Partially updates a task by its ID.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)

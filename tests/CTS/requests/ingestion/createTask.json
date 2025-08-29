@@ -3,7 +3,7 @@
     "testName": "task without cron",
     "parameters": {
       "sourceID": "search",
-      "destinationID": "destinationName",
+      "destinationID": "destinationID",
       "action": "replace"
     },
     "request": {
@@ -11,7 +11,7 @@
       "method": "POST",
       "body": {
         "sourceID": "search",
-        "destinationID": "destinationName",
+        "destinationID": "destinationID",
         "action": "replace"
       }
     }
@@ -20,7 +20,7 @@
     "testName": "task with cron",
     "parameters": {
       "sourceID": "search",
-      "destinationID": "destinationName",
+      "destinationID": "destinationID",
       "cron": "* * * * *",
       "action": "replace",
       "notifications": {
@@ -37,7 +37,7 @@
       "method": "POST",
       "body": {
         "sourceID": "search",
-        "destinationID": "destinationName",
+        "destinationID": "destinationID",
         "cron": "* * * * *",
         "action": "replace",
         "notifications": {
@@ -55,7 +55,7 @@
     "testName": "task shopify",
     "parameters": {
       "sourceID": "search",
-      "destinationID": "destinationName",
+      "destinationID": "destinationID",
       "cron": "* * * * *",
       "action": "replace",
       "input": {
@@ -72,7 +72,7 @@
       "method": "POST",
       "body": {
         "sourceID": "search",
-        "destinationID": "destinationName",
+        "destinationID": "destinationID",
         "cron": "* * * * *",
         "action": "replace",
         "input": {

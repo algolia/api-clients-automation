@@ -367,8 +367,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -608,8 +606,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -851,8 +847,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -1087,8 +1081,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -1346,8 +1338,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -1676,8 +1666,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -2005,8 +1993,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -2315,8 +2301,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -2645,8 +2629,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -2970,8 +2952,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -3258,8 +3238,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -3572,8 +3550,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -3853,8 +3829,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -4140,8 +4114,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -4407,8 +4379,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -4750,8 +4720,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -5110,8 +5078,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -5566,8 +5532,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -5955,8 +5919,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -6240,8 +6202,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -6517,8 +6477,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -6807,8 +6765,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -7117,8 +7073,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -7422,8 +7376,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -7746,8 +7698,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -8108,8 +8058,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -8380,8 +8328,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -8640,8 +8586,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -8898,8 +8842,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -9180,8 +9122,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -9470,8 +9410,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -9777,8 +9715,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -10036,8 +9972,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -10292,8 +10226,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -10597,8 +10529,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -10935,8 +10865,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -11292,8 +11220,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -11720,8 +11646,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -12032,8 +11956,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -12400,8 +12322,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -12811,8 +12731,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -13085,8 +13003,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -13373,8 +13289,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -13663,8 +13577,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -13928,8 +13840,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -14213,8 +14123,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -14496,8 +14404,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -14802,8 +14708,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -15050,8 +14954,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -15306,8 +15208,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -15564,8 +15464,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -15911,8 +15809,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -16221,8 +16117,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -16457,8 +16351,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -16722,8 +16614,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -17008,8 +16898,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -17287,8 +17175,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -17706,8 +17592,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -17952,8 +17836,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -18222,8 +18104,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -18580,8 +18460,6 @@ paths:
           source: >
             // Initialize the client
 
-            //
-
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
 
@@ -18878,8 +18756,6 @@ paths:
           label: JavaScript
           source: >
             // Initialize the client
-
-            //
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
             'ALGOLIA_API_KEY');
@@ -22722,17 +22598,24 @@ components:
           type: boolean
           default: false
           description: >
-            Whether promoted records must match an active filter for the
-            consequence to be applied.
+            Determines whether promoted records must also match active filters
+            for the consequence to apply.
 
 
-            This ensures that user actions (filtering the search) are given a
-            higher precendence.
+            This ensures user-applied filters take priority and irrelevant
+            matches aren't shown.
 
-            For example, if you promote a record with the `color: red`
-            attribute, and the user filters the search for `color: blue`,
+            For example, if you promote a record with `color: red` but the user
+            filters for `color: blue`,
 
             the "red" record won't be shown.
+
+
+            > In the Algolia dashboard, when you use the **Pin an item**
+            consequence, `filterPromotes` appears as the checkbox: **Pinned
+            items must match active filters to be displayed.** For examples, see
+            [Promote results with
+            rules](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/promote-hits/#promote-results-matching-active-filters).
         hide:
           type: array
           maxItems: 50

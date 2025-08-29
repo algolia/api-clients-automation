@@ -173,7 +173,7 @@ class IngestionTest {
         createTask(
           taskCreate = TaskCreate(
             sourceID = "search",
-            destinationID = "destinationName",
+            destinationID = "destinationID",
             action = ActionType.entries.first { it.value == "replace" },
           ),
         )
@@ -181,7 +181,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/2/tasks".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"sourceID":"search","destinationID":"destinationName","action":"replace"}""", it.body)
+        assertJsonBody("""{"sourceID":"search","destinationID":"destinationID","action":"replace"}""", it.body)
       },
     )
   }
@@ -193,7 +193,7 @@ class IngestionTest {
         createTask(
           taskCreate = TaskCreate(
             sourceID = "search",
-            destinationID = "destinationName",
+            destinationID = "destinationID",
             cron = "* * * * *",
             action = ActionType.entries.first { it.value == "replace" },
             notifications = Notifications(
@@ -210,7 +210,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/2/tasks".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}""", it.body)
+        assertJsonBody("""{"sourceID":"search","destinationID":"destinationID","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}""", it.body)
       },
     )
   }
@@ -222,7 +222,7 @@ class IngestionTest {
         createTask(
           taskCreate = TaskCreate(
             sourceID = "search",
-            destinationID = "destinationName",
+            destinationID = "destinationID",
             cron = "* * * * *",
             action = ActionType.entries.first { it.value == "replace" },
             input = DockerStreamsInput(
@@ -239,7 +239,7 @@ class IngestionTest {
       intercept = {
         assertEquals("/2/tasks".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}""", it.body)
+        assertJsonBody("""{"sourceID":"search","destinationID":"destinationID","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}""", it.body)
       },
     )
   }
@@ -1441,6 +1441,86 @@ class IngestionTest {
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertQueryParams("""{"watch":"true"}""", it.url.encodedParameters)
         assertJsonBody("""{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}""", it.body)
+      },
+    )
+  }
+
+  // replaceTask
+
+  @Test
+  fun `fully replace task without cron`() = runTest {
+    client.runTest(
+      call = {
+        replaceTask(
+          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          taskReplace = TaskReplace(
+            destinationID = "destinationID",
+            action = ActionType.entries.first { it.value == "replace" },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"destinationID":"destinationID","action":"replace"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `fully replace task with cron1`() = runTest {
+    client.runTest(
+      call = {
+        replaceTask(
+          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          taskReplace = TaskReplace(
+            destinationID = "destinationID",
+            cron = "* * * * *",
+            action = ActionType.entries.first { it.value == "replace" },
+            notifications = Notifications(
+              email = EmailNotifications(
+                enabled = true,
+              ),
+            ),
+            policies = Policies(
+              criticalThreshold = 8,
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"destinationID":"destinationID","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `fully replace task shopify2`() = runTest {
+    client.runTest(
+      call = {
+        replaceTask(
+          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          taskReplace = TaskReplace(
+            destinationID = "destinationID",
+            cron = "* * * * *",
+            action = ActionType.entries.first { it.value == "replace" },
+            input = DockerStreamsInput(
+              streams = listOf(
+                DockerStreams(
+                  name = "foo",
+                  syncMode = DockerStreamsSyncMode.entries.first { it.value == "incremental" },
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"destinationID":"destinationID","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}""", it.body)
       },
     )
   }

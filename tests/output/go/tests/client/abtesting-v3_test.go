@@ -54,7 +54,7 @@ func TestAbtestingV3commonApi1(t *testing.T) {
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.23.0\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.24.0\).*`), echo.Header.Get("User-Agent"))
 }
 
 // uses the correct region
