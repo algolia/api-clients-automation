@@ -1,0 +1,28 @@
+[
+  {
+    "parameters": {
+      "compositionID": "1234",
+      "objectID": "5678"
+    },
+    "request": {
+      "path": "/1/compositions/1234/rules/5678",
+      "method": "DELETE"
+    }
+  },
+  {
+    "parameters": {
+      "compositionID": "1234",
+      "objectID": "5678"
+    },
+    "request": {
+      "path": "/1/compositions/1234/rules/5678",
+      "method": "DELETE"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "taskID": 42
+      }
+    }
+  }
+]
