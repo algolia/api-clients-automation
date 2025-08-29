@@ -5,6 +5,6 @@ import type { InjectedItemHitsMetadata } from './injectedItemHitsMetadata';
 /**
  * Used to add metadata to the results of the injectedItem.
  */
-export type InjectedItemMetadata = {
+export type Metadata = {
   hits?: InjectedItemHitsMetadata | undefined;
 };

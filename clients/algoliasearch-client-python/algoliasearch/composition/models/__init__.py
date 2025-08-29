@@ -21,6 +21,7 @@ from .composition_run_search_response import CompositionRunSearchResponse
 from .compositions_search_response import CompositionsSearchResponse
 from .error_base import ErrorBase
 from .exhaustive import Exhaustive
+from .external_injected_item import ExternalInjectedItem
 from .facet_filters import FacetFilters
 from .facet_hits import FacetHits
 from .facet_ordering import FacetOrdering
@@ -31,9 +32,11 @@ from .highlight_result_option import HighlightResultOption
 from .hit import Hit
 from .hit_metadata import HitMetadata
 from .hit_ranking_info import HitRankingInfo
+from .injected_item_hits_metadata import InjectedItemHitsMetadata
 from .inside_bounding_box import InsideBoundingBox
 from .match_level import MatchLevel
 from .matched_geo_location import MatchedGeoLocation
+from .metadata import Metadata
 from .numeric_filters import NumericFilters
 from .optional_filters import OptionalFilters
 from .params import Params
@@ -77,6 +80,7 @@ __all__ = (
     "CompositionsSearchResponse",
     "ErrorBase",
     "Exhaustive",
+    "ExternalInjectedItem",
     "FacetFilters",
     "FacetHits",
     "FacetOrdering",
@@ -87,9 +91,11 @@ __all__ = (
     "Hit",
     "HitMetadata",
     "HitRankingInfo",
+    "InjectedItemHitsMetadata",
     "InsideBoundingBox",
     "MatchLevel",
     "MatchedGeoLocation",
+    "Metadata",
     "NumericFilters",
     "OptionalFilters",
     "Params",

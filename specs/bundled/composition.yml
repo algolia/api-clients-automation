@@ -859,6 +859,57 @@ components:
       default: true
       x-categories:
         - Filtering
+    metadata:
+      title: injectedItemMetadata
+      type: object
+      description: Used to add metadata to the results of the injectedItem.
+      properties:
+        hits:
+          title: injectedItemHitsMetadata
+          type: object
+          description: >-
+            Adds the provided metadata to each injected hit via an `_extra`
+            attribute.
+          properties:
+            addItemKey:
+              type: boolean
+              description: >-
+                When true, the `_injectedItemKey` field is set in the `_extra`
+                object of each affected hit.
+            extra:
+              type: object
+              additionalProperties: true
+              description: >-
+                The user-defined key-value pairs that will be placed in the
+                `_extra` field of each affected hit.
+    externalInjectedItem:
+      type: object
+      properties:
+        objectID:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/metadata'
+      description: |
+        An objectID injected into an external source.
+      required:
+        - objectID
+      example:
+        objectID: my-object-1
+        metadata:
+          my-field: my-value
+    injectedItems:
+      type: array
+      items:
+        $ref: '#/components/schemas/externalInjectedItem'
+      description: |
+        A list of injected objectIDs into an external source.
+      default: []
+      example:
+        - objectID: my-object-1
+          metadata:
+            my-field: my-value
+      x-categories:
+        - Advanced
     params:
       title: Run composition parameters as object
       type: object
@@ -916,6 +967,8 @@ components:
           $ref: '#/components/schemas/enableABTest'
         enableReRanking:
           $ref: '#/components/schemas/enableReRanking'
+        injectedItems:
+          $ref: '#/components/schemas/injectedItems'
     objectID:
       type: string
       description: Unique record identifier.

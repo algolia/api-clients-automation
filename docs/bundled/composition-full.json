@@ -1483,6 +1483,69 @@
           "Filtering"
         ]
       },
+      "metadata": {
+        "title": "injectedItemMetadata",
+        "type": "object",
+        "description": "Used to add metadata to the results of the injectedItem.",
+        "properties": {
+          "hits": {
+            "title": "injectedItemHitsMetadata",
+            "type": "object",
+            "description": "Adds the provided metadata to each injected hit via an `_extra` attribute.",
+            "properties": {
+              "addItemKey": {
+                "type": "boolean",
+                "description": "When true, the `_injectedItemKey` field is set in the `_extra` object of each affected hit."
+              },
+              "extra": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "The user-defined key-value pairs that will be placed in the `_extra` field of each affected hit."
+              }
+            }
+          }
+        }
+      },
+      "externalInjectedItem": {
+        "type": "object",
+        "properties": {
+          "objectID": {
+            "type": "string"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/metadata"
+          }
+        },
+        "description": "An objectID injected into an external source.\n",
+        "required": [
+          "objectID"
+        ],
+        "example": {
+          "objectID": "my-object-1",
+          "metadata": {
+            "my-field": "my-value"
+          }
+        }
+      },
+      "injectedItems": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/externalInjectedItem"
+        },
+        "description": "A list of injected objectIDs into an external source.\n",
+        "default": [],
+        "example": [
+          {
+            "objectID": "my-object-1",
+            "metadata": {
+              "my-field": "my-value"
+            }
+          }
+        ],
+        "x-categories": [
+          "Advanced"
+        ]
+      },
       "params": {
         "title": "Run composition parameters as object",
         "type": "object",
@@ -1565,6 +1628,9 @@
           },
           "enableReRanking": {
             "$ref": "#/components/schemas/enableReRanking"
+          },
+          "injectedItems": {
+            "$ref": "#/components/schemas/injectedItems"
           }
         }
       },
@@ -3334,6 +3400,71 @@
           }
         ]
       },
+      "baseSource": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "index": {
+            "type": "string",
+            "description": "Composition Index name.",
+            "example": "Products"
+          },
+          "params": {
+            "$ref": "#/components/schemas/baseInjectionQueryParameters"
+          }
+        },
+        "required": [
+          "index"
+        ]
+      },
+      "search": {
+        "title": "injectedItemSearchSource",
+        "description": "Injected items will originate from a search request performed on the specified index.",
+        "type": "object",
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/baseSource"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false
+          }
+        ]
+      },
+      "externalOrdering": {
+        "enum": [
+          "default",
+          "user-defined"
+        ],
+        "default": "default"
+      },
+      "external": {
+        "title": "injectedItemExternalSource",
+        "description": "Injected items will originate from externally provided objectIDs (that must exist in the index) given at runtime in the run request payload.",
+        "type": "object",
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/baseSource"
+          }
+        ],
+        "properties": {
+          "ordering": {
+            "$ref": "#/components/schemas/externalOrdering"
+          }
+        }
+      },
+      "injectionSource": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/search"
+          },
+          {
+            "$ref": "#/components/schemas/external"
+          }
+        ]
+      },
       "injectedItem": {
         "type": "object",
         "additionalProperties": false,
@@ -3343,32 +3474,8 @@
             "description": "injected Item unique identifier."
           },
           "source": {
-            "title": "injectedItemSource",
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "search": {
-                "title": "injectedItemSourceSearch",
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "index": {
-                    "type": "string",
-                    "description": "Composition Main Index name.",
-                    "example": "Products"
-                  },
-                  "params": {
-                    "$ref": "#/components/schemas/baseInjectionQueryParameters"
-                  }
-                },
-                "required": [
-                  "index"
-                ]
-              }
-            },
-            "required": [
-              "search"
-            ]
+            "description": "Search source to be used to inject items into result set.",
+            "$ref": "#/components/schemas/injectionSource"
           },
           "position": {
             "type": "integer",
@@ -3381,27 +3488,7 @@
             "maximum": 20
           },
           "metadata": {
-            "title": "injectedItemMetadata",
-            "type": "object",
-            "description": "Used to add metadata to the results of the injectedItem.",
-            "properties": {
-              "hits": {
-                "title": "injectedItemHitsMetadata",
-                "type": "object",
-                "description": "Adds the provided metadata to each injected hit via an `_extra` attribute.",
-                "properties": {
-                  "addItemKey": {
-                    "type": "boolean",
-                    "description": "When true, the `_injectedItemKey` field is set in the `_extra` object of each affected hit."
-                  },
-                  "extra": {
-                    "type": "object",
-                    "additionalProperties": true,
-                    "description": "The user-defined key-value pairs that will be placed in the `_extra` field of each affected hit."
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/schemas/metadata"
           }
         },
         "required": [

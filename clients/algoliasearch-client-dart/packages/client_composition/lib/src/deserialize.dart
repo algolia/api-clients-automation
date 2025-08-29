@@ -12,6 +12,7 @@ import 'package:algolia_client_composition/src/model/composition_run_search_resp
 import 'package:algolia_client_composition/src/model/compositions_search_response.dart';
 import 'package:algolia_client_composition/src/model/error_base.dart';
 import 'package:algolia_client_composition/src/model/exhaustive.dart';
+import 'package:algolia_client_composition/src/model/external_injected_item.dart';
 import 'package:algolia_client_composition/src/model/facet_hits.dart';
 import 'package:algolia_client_composition/src/model/facet_ordering.dart';
 import 'package:algolia_client_composition/src/model/facet_stats.dart';
@@ -20,8 +21,10 @@ import 'package:algolia_client_composition/src/model/highlight_result_option.dar
 import 'package:algolia_client_composition/src/model/hit.dart';
 import 'package:algolia_client_composition/src/model/hit_metadata.dart';
 import 'package:algolia_client_composition/src/model/hit_ranking_info.dart';
+import 'package:algolia_client_composition/src/model/injected_item_hits_metadata.dart';
 import 'package:algolia_client_composition/src/model/match_level.dart';
 import 'package:algolia_client_composition/src/model/matched_geo_location.dart';
+import 'package:algolia_client_composition/src/model/metadata.dart';
 import 'package:algolia_client_composition/src/model/params.dart';
 import 'package:algolia_client_composition/src/model/personalization.dart';
 import 'package:algolia_client_composition/src/model/range.dart';
@@ -106,6 +109,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return ErrorBase.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'Exhaustive':
       return Exhaustive.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ExternalInjectedItem':
+      return ExternalInjectedItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'FacetHits':
       return FacetHits.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'FacetOrdering':
@@ -125,11 +131,16 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'HitRankingInfo':
       return HitRankingInfo.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'InjectedItemHitsMetadata':
+      return InjectedItemHitsMetadata.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'MatchLevel':
       return MatchLevel.fromJson(value) as ReturnType;
     case 'MatchedGeoLocation':
       return MatchedGeoLocation.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'Metadata':
+      return Metadata.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'Params':
       return Params.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'Personalization':
