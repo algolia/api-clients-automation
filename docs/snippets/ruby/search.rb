@@ -1602,7 +1602,7 @@ def snippet_for_get_settings
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
-  response = client.get_settings("<YOUR_INDEX_NAME>")
+  response = client.get_settings("<YOUR_INDEX_NAME>", 2)
 
   # >LOG
   # use the class directly

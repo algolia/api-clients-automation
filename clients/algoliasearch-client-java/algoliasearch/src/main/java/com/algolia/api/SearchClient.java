@@ -2749,12 +2749,39 @@ public class SearchClient extends ApiClient {
    * Retrieves an object with non-null index settings.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
+   * @param getVersion When set to 2, the endpoint will not include `synonyms` in the response. This
+   *     parameter is here for backward compatibility. (optional, default to 1)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public SettingsResponse getSettings(@Nonnull String indexName, Integer getVersion, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getSettingsAsync(indexName, getVersion, requestOptions));
+  }
+
+  /**
+   * Retrieves an object with non-null index settings.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param getVersion When set to 2, the endpoint will not include `synonyms` in the response. This
+   *     parameter is here for backward compatibility. (optional, default to 1)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public SettingsResponse getSettings(@Nonnull String indexName, Integer getVersion) throws AlgoliaRuntimeException {
+    return this.getSettings(indexName, getVersion, null);
+  }
+
+  /**
+   * Retrieves an object with non-null index settings.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public SettingsResponse getSettings(@Nonnull String indexName, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(getSettingsAsync(indexName, requestOptions));
+    return this.getSettings(indexName, null, requestOptions);
   }
 
   /**
@@ -2764,7 +2791,45 @@ public class SearchClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public SettingsResponse getSettings(@Nonnull String indexName) throws AlgoliaRuntimeException {
-    return this.getSettings(indexName, null);
+    return this.getSettings(indexName, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves an object with non-null index settings.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param getVersion When set to 2, the endpoint will not include `synonyms` in the response. This
+   *     parameter is here for backward compatibility. (optional, default to 1)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<SettingsResponse> getSettingsAsync(
+    @Nonnull String indexName,
+    Integer getVersion,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getSettings`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/indexes/{indexName}/settings", indexName)
+      .setMethod("GET")
+      .addQueryParameter("getVersion", getVersion)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<SettingsResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves an object with non-null index settings.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param getVersion When set to 2, the endpoint will not include `synonyms` in the response. This
+   *     parameter is here for backward compatibility. (optional, default to 1)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<SettingsResponse> getSettingsAsync(@Nonnull String indexName, Integer getVersion)
+    throws AlgoliaRuntimeException {
+    return this.getSettingsAsync(indexName, getVersion, null);
   }
 
   /**
@@ -2777,10 +2842,7 @@ public class SearchClient extends ApiClient {
    */
   public CompletableFuture<SettingsResponse> getSettingsAsync(@Nonnull String indexName, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getSettings`.");
-
-    HttpRequest request = HttpRequest.builder().setPath("/1/indexes/{indexName}/settings", indexName).setMethod("GET").build();
-    return executeAsync(request, requestOptions, new TypeReference<SettingsResponse>() {});
+    return this.getSettingsAsync(indexName, null, requestOptions);
   }
 
   /**
@@ -2790,7 +2852,7 @@ public class SearchClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<SettingsResponse> getSettingsAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
-    return this.getSettingsAsync(indexName, null);
+    return this.getSettingsAsync(indexName, null, null);
   }
 
   /**

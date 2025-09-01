@@ -1168,9 +1168,11 @@ final class SearchClient implements ApiClient {
   ///
   /// Parameters:
   /// * [indexName] Name of the index on which to perform the operation.
+  /// * [getVersion] When set to 2, the endpoint will not include `synonyms` in the response. This parameter is here for backward compatibility.
   /// * [requestOptions] additional request configuration.
   Future<SettingsResponse> getSettings({
     required String indexName,
+    int? getVersion,
     RequestOptions? requestOptions,
   }) async {
     assert(
@@ -1181,6 +1183,9 @@ final class SearchClient implements ApiClient {
       method: RequestMethod.get,
       path: r'/1/indexes/{indexName}/settings'.replaceAll(
           '{' r'indexName' '}', Uri.encodeComponent(indexName.toString())),
+      queryParams: {
+        if (getVersion != null) 'getVersion': getVersion,
+      },
     );
     final response = await _retryStrategy.execute(
       request: request,

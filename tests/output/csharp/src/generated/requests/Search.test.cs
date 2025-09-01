@@ -1359,12 +1359,25 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "getSettings")]
   public async Task GetSettingsTest()
   {
-    await client.GetSettingsAsync("cts_e2e_settings");
+    await client.GetSettingsAsync("cts_e2e_settings", 2);
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/cts_e2e_settings/settings", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"getVersion\":\"2\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
   }
 
   [Fact(DisplayName = "getSources")]
