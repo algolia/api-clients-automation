@@ -1,0 +1,80 @@
+[
+  {
+    "parameters": {
+      "compositionID": "1234",
+      "objectID": "5678",
+      "compositionRule": {
+        "objectID": "5678",
+        "conditions": [
+          {
+            "anchoring": "is",
+            "pattern": "test"
+          }
+        ],
+        "consequence": {
+          "behavior": {
+            "injection": {
+              "main": {
+                "source": {
+                  "search": {
+                    "index": "foo"
+                  }
+                }
+              },
+              "injectedItems": [
+                {
+                  "key": "injectedItem1",
+                  "source": {
+                    "search": {
+                      "index": "foo"
+                    }
+                  },
+                  "position": 2,
+                  "length": 1
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/compositions/1234/rules/5678",
+      "method": "PUT",
+      "body": {
+        "objectID": "5678",
+        "conditions": [
+          {
+            "anchoring": "is",
+            "pattern": "test"
+          }
+        ],
+        "consequence": {
+          "behavior": {
+            "injection": {
+              "main": {
+                "source": {
+                  "search": {
+                    "index": "foo"
+                  }
+                }
+              },
+              "injectedItems": [
+                {
+                  "key": "injectedItem1",
+                  "source": {
+                    "search": {
+                      "index": "foo"
+                    }
+                  },
+                  "position": 2,
+                  "length": 1
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+]
