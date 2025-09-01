@@ -53,7 +53,14 @@ put:
       content:
         application/json:
           schema:
-            $ref: '../../../common/responses/common.yml#/taskID'
+            title: taskIDResponse
+            type: object
+            additionalProperties: false
+            properties:
+              taskID:
+                $ref: '../../../common/responses/common.yml#/taskID'
+            required:
+              - taskID
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':
@@ -84,7 +91,14 @@ delete:
       content:
         application/json:
           schema:
-            $ref: '../../../common/responses/common.yml#/taskID'
+            title: taskIDResponse
+            type: object
+            additionalProperties: false
+            properties:
+              taskID:
+                $ref: '../../../common/responses/common.yml#/taskID'
+            required:
+              - taskID
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':
