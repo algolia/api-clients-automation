@@ -1388,7 +1388,7 @@ export async function snippetForGetSettings(): Promise<void> {
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
-  const response = await client.getSettings({ indexName: 'cts_e2e_settings' });
+  const response = await client.getSettings({ indexName: 'cts_e2e_settings', getVersion: 2 });
 
   // >LOG
   // use typed response

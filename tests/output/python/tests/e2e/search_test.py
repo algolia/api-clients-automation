@@ -99,11 +99,13 @@ class TestSearchClientE2E:
             self._e2e_app_id, self._e2e_api_key
         ).get_settings_with_http_info(
             index_name="cts_e2e_settings",
+            get_version=2,
         )
         assert raw_resp.status_code == 200
 
         resp = await SearchClient(self._e2e_app_id, self._e2e_api_key).get_settings(
             index_name="cts_e2e_settings",
+            get_version=2,
         )
         _expected_body = loads(
             """{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":100,"maxValuesPerFacet":100,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"typoTolerance":"false"}"""
@@ -551,11 +553,13 @@ class TestSearchClientSyncE2E:
             self._e2e_app_id, self._e2e_api_key
         ).get_settings_with_http_info(
             index_name="cts_e2e_settings",
+            get_version=2,
         )
         assert raw_resp.status_code == 200
 
         resp = SearchClientSync(self._e2e_app_id, self._e2e_api_key).get_settings(
             index_name="cts_e2e_settings",
+            get_version=2,
         )
         _expected_body = loads(
             """{"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"hitsPerPage":100,"maxValuesPerFacet":100,"paginationLimitedTo":10,"exactOnSingleWordQuery":"attribute","ranking":["typo","geo","words","filters","proximity","attribute","exact","custom"],"separatorsToIndex":"","removeWordsIfNoResults":"none","queryType":"prefixLast","highlightPreTag":"<em>","highlightPostTag":"</em>","alternativesAsExact":["ignorePlurals","singleWordSynonym"],"typoTolerance":"false"}"""

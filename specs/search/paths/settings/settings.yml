@@ -9,6 +9,7 @@ get:
   summary: Retrieve index settings
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
+    - $ref: '../../common/parameters.yml#/getVersion'
   responses:
     '200':
       description: OK

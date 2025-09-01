@@ -1852,6 +1852,7 @@ class SnippetSearchClient
         // Call the API
         $response = $client->getSettings(
             '<YOUR_INDEX_NAME>',
+            2,
         );
 
         // >LOG

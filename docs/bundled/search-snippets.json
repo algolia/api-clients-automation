@@ -137,7 +137,7 @@
       "default": "var response = await client.GetRuleAsync(\"<YOUR_INDEX_NAME>\", \"qr-1725004648916\");"
     },
     "getSettings": {
-      "default": "var response = await client.GetSettingsAsync(\"<YOUR_INDEX_NAME>\");"
+      "default": "var response = await client.GetSettingsAsync(\"<YOUR_INDEX_NAME>\", 2);"
     },
     "getSources": {
       "default": "var response = await client.GetSourcesAsync();"
@@ -718,7 +718,7 @@
       "default": "final response = await client.getRule(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objectID: \"qr-1725004648916\",\n);"
     },
     "getSettings": {
-      "default": "final response = await client.getSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n);"
+      "default": "final response = await client.getSettings(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  getVersion: 2,\n);"
     },
     "getSources": {
       "default": "final response = await client.getSources();"
@@ -1299,7 +1299,7 @@
       "default": "response, err := client.GetRule(client.NewApiGetRuleRequest(\n  \"<YOUR_INDEX_NAME>\", \"qr-1725004648916\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getSettings": {
-      "default": "response, err := client.GetSettings(client.NewApiGetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetSettings(client.NewApiGetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\").WithGetVersion(2))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getSources": {
       "default": "response, err := client.GetSources()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -1889,7 +1889,7 @@
       "default": "client.getRule(\"<YOUR_INDEX_NAME>\", \"qr-1725004648916\");"
     },
     "getSettings": {
-      "default": "client.getSettings(\"<YOUR_INDEX_NAME>\");"
+      "default": "client.getSettings(\"<YOUR_INDEX_NAME>\", 2);"
     },
     "getSources": {
       "default": "client.getSources();"
@@ -2482,7 +2482,7 @@
       "default": "const response = await client.getRule({ indexName: 'cts_e2e_browse', objectID: 'qr-1725004648916' });"
     },
     "getSettings": {
-      "default": "const response = await client.getSettings({ indexName: 'cts_e2e_settings' });"
+      "default": "const response = await client.getSettings({ indexName: 'cts_e2e_settings', getVersion: 2 });"
     },
     "getSources": {
       "default": "const response = await client.getSources();"
@@ -3072,7 +3072,7 @@
       "default": "var response = client.getRule(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  objectID = \"qr-1725004648916\",\n)"
     },
     "getSettings": {
-      "default": "var response = client.getSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n)"
+      "default": "var response = client.getSettings(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  getVersion = 2,\n)"
     },
     "getSources": {
       "default": "var response = client.getSources()"
@@ -3653,7 +3653,7 @@
       "default": "$response = $client->getRule(\n    '<YOUR_INDEX_NAME>',\n    'qr-1725004648916',\n);"
     },
     "getSettings": {
-      "default": "$response = $client->getSettings(\n    '<YOUR_INDEX_NAME>',\n);"
+      "default": "$response = $client->getSettings(\n    '<YOUR_INDEX_NAME>',\n    2,\n);"
     },
     "getSources": {
       "default": "$response = $client->getSources();"
@@ -4243,7 +4243,7 @@
       "default": "response = client.get_rule(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    object_id=\"qr-1725004648916\",\n)"
     },
     "getSettings": {
-      "default": "response = client.get_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
+      "default": "response = client.get_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    get_version=2,\n)"
     },
     "getSources": {
       "default": "response = client.get_sources()"
@@ -4833,7 +4833,7 @@
       "default": "response = client.get_rule(\"<YOUR_INDEX_NAME>\", \"qr-1725004648916\")"
     },
     "getSettings": {
-      "default": "response = client.get_settings(\"<YOUR_INDEX_NAME>\")"
+      "default": "response = client.get_settings(\"<YOUR_INDEX_NAME>\", 2)"
     },
     "getSources": {
       "default": "response = client.get_sources"
@@ -5414,7 +5414,7 @@
       "default": "val response = Await.result(\n  client.getRule(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    objectID = \"qr-1725004648916\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getSettings": {
-      "default": "val response = Await.result(\n  client.getSettings(\n    indexName = \"<YOUR_INDEX_NAME>\"\n  ),\n  Duration(100, \"sec\")\n)"
+      "default": "val response = Await.result(\n  client.getSettings(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    getVersion = Some(2)\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getSources": {
       "default": "val response = Await.result(\n  client.getSources(\n  ),\n  Duration(100, \"sec\")\n)"
@@ -5995,7 +5995,7 @@
       "default": "let response = try await client.getRule(indexName: \"<YOUR_INDEX_NAME>\", objectID: \"qr-1725004648916\")"
     },
     "getSettings": {
-      "default": "let response = try await client.getSettings(indexName: \"<YOUR_INDEX_NAME>\")"
+      "default": "let response = try await client.getSettings(indexName: \"<YOUR_INDEX_NAME>\", getVersion: 2)"
     },
     "getSources": {
       "default": "let response = try await client.getSources()"

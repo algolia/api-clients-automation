@@ -1678,7 +1678,8 @@ class SnippetSearchClient {
     // Call the API
     val response = Await.result(
       client.getSettings(
-        indexName = "<YOUR_INDEX_NAME>"
+        indexName = "<YOUR_INDEX_NAME>",
+        getVersion = Some(2)
       ),
       Duration(100, "sec")
     )
