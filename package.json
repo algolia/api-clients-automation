@@ -46,7 +46,7 @@
     "renovate-config-algolia": "2.2.0",
     "typescript": "5.9.2"
   },
-  "packageManager": "yarn@4.9.3",
+  "packageManager": "yarn@4.9.4",
   "engines": {
     "node": "^22.0.0",
     "yarn": "^4.0.0"
