@@ -85,5 +85,3 @@ delete:
       $ref: '../../../common/responses/FeatureNotEnabled.yml'
     '403':
       $ref: '../../../common/responses/MethodNotAllowed.yml'
-    '404':
-      $ref: '../../../common/responses/CompositionNotFound.yml'
