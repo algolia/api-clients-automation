@@ -24,6 +24,9 @@ public class ABTest {
   @JsonProperty("endAt")
   private String endAt;
 
+  @JsonProperty("stoppedAt")
+  private String stoppedAt;
+
   @JsonProperty("name")
   private String name;
 
@@ -81,6 +84,17 @@ public class ABTest {
   @javax.annotation.Nonnull
   public String getEndAt() {
     return endAt;
+  }
+
+  public ABTest setStoppedAt(String stoppedAt) {
+    this.stoppedAt = stoppedAt;
+    return this;
+  }
+
+  /** Date and time when the A/B test was stopped, in RFC 3339 format. */
+  @javax.annotation.Nullable
+  public String getStoppedAt() {
+    return stoppedAt;
   }
 
   public ABTest setName(String name) {
@@ -161,6 +175,7 @@ public class ABTest {
       Objects.equals(this.updatedAt, abTest.updatedAt) &&
       Objects.equals(this.createdAt, abTest.createdAt) &&
       Objects.equals(this.endAt, abTest.endAt) &&
+      Objects.equals(this.stoppedAt, abTest.stoppedAt) &&
       Objects.equals(this.name, abTest.name) &&
       Objects.equals(this.status, abTest.status) &&
       Objects.equals(this.variants, abTest.variants) &&
@@ -171,7 +186,7 @@ public class ABTest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(abTestID, updatedAt, createdAt, endAt, name, status, variants, configuration, migratedAbTestID);
+    return Objects.hash(abTestID, updatedAt, createdAt, endAt, stoppedAt, name, status, variants, configuration, migratedAbTestID);
   }
 
   @Override
@@ -182,6 +197,7 @@ public class ABTest {
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    endAt: ").append(toIndentedString(endAt)).append("\n");
+    sb.append("    stoppedAt: ").append(toIndentedString(stoppedAt)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    variants: ").append(toIndentedString(variants)).append("\n");

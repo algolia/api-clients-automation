@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-/// API request body for updating a task.
+/// API request body for partially updating a task.
 public struct TaskUpdate: Codable, JSONEncodable {
     /// Universally unique identifier (UUID) of a destination resource.
     public var destinationID: String?

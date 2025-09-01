@@ -137,7 +137,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.createTask(new TaskCreate().setSourceID("search").setDestinationID("destinationName").setAction(ActionType.REPLACE));
+    client.createTask(new TaskCreate().setSourceID("search").setDestinationID("destinationID").setAction(ActionType.REPLACE));
     // >LOG
     // SEPARATOR<
   }
@@ -154,7 +154,7 @@ class SnippetIngestionClient {
     client.createTask(
       new TaskCreate()
         .setSourceID("search")
-        .setDestinationID("destinationName")
+        .setDestinationID("destinationID")
         .setCron("* * * * *")
         .setAction(ActionType.REPLACE)
         .setNotifications(new Notifications().setEmail(new EmailNotifications().setEnabled(true)))
@@ -176,7 +176,7 @@ class SnippetIngestionClient {
     client.createTask(
       new TaskCreate()
         .setSourceID("search")
-        .setDestinationID("destinationName")
+        .setDestinationID("destinationID")
         .setCron("* * * * *")
         .setAction(ActionType.REPLACE)
         .setInput(
@@ -1191,6 +1191,70 @@ class SnippetIngestionClient {
           )
         ),
       true
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the replaceTask method.
+  //
+  // fully replace task without cron
+  void snippetForReplaceTask() throws Exception {
+    // >SEPARATOR replaceTask fully replace task without cron
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.replaceTask(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TaskReplace().setDestinationID("destinationID").setAction(ActionType.REPLACE)
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the replaceTask method.
+  //
+  // fully replace task with cron
+  void snippetForReplaceTask1() throws Exception {
+    // >SEPARATOR replaceTask fully replace task with cron
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.replaceTask(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TaskReplace()
+        .setDestinationID("destinationID")
+        .setCron("* * * * *")
+        .setAction(ActionType.REPLACE)
+        .setNotifications(new Notifications().setEmail(new EmailNotifications().setEnabled(true)))
+        .setPolicies(new Policies().setCriticalThreshold(8))
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the replaceTask method.
+  //
+  // fully replace task shopify
+  void snippetForReplaceTask2() throws Exception {
+    // >SEPARATOR replaceTask fully replace task shopify
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.replaceTask(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TaskReplace()
+        .setDestinationID("destinationID")
+        .setCron("* * * * *")
+        .setAction(ActionType.REPLACE)
+        .setInput(
+          new DockerStreamsInput().setStreams(
+            Arrays.asList(new DockerStreams().setName("foo").setSyncMode(DockerStreamsSyncMode.INCREMENTAL))
+          )
+        )
     );
     // >LOG
     // SEPARATOR<

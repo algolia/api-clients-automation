@@ -7,7 +7,7 @@ require "time"
 
 module Algolia
   module Ingestion
-    # API request body for updating a task.
+    # API request body for partially updating a task.
     class TaskUpdate
       # Universally unique identifier (UUID) of a destination resource.
       attr_accessor :destination_id

@@ -189,7 +189,7 @@ class IngestionTest extends AnyFunSuite {
     val future = client.createTask(
       taskCreate = TaskCreate(
         sourceID = "search",
-        destinationID = "destinationName",
+        destinationID = "destinationID",
         action = ActionType.withName("replace")
       )
     )
@@ -199,7 +199,7 @@ class IngestionTest extends AnyFunSuite {
 
     assert(res.path == "/2/tasks")
     assert(res.method == "POST")
-    val expectedBody = parse("""{"sourceID":"search","destinationID":"destinationName","action":"replace"}""")
+    val expectedBody = parse("""{"sourceID":"search","destinationID":"destinationID","action":"replace"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
@@ -209,7 +209,7 @@ class IngestionTest extends AnyFunSuite {
     val future = client.createTask(
       taskCreate = TaskCreate(
         sourceID = "search",
-        destinationID = "destinationName",
+        destinationID = "destinationID",
         cron = Some("* * * * *"),
         action = ActionType.withName("replace"),
         notifications = Some(
@@ -233,7 +233,7 @@ class IngestionTest extends AnyFunSuite {
     assert(res.path == "/2/tasks")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}"""
+      """{"sourceID":"search","destinationID":"destinationID","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -244,7 +244,7 @@ class IngestionTest extends AnyFunSuite {
     val future = client.createTask(
       taskCreate = TaskCreate(
         sourceID = "search",
-        destinationID = "destinationName",
+        destinationID = "destinationID",
         cron = Some("* * * * *"),
         action = ActionType.withName("replace"),
         input = Some(
@@ -266,7 +266,7 @@ class IngestionTest extends AnyFunSuite {
     assert(res.path == "/2/tasks")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}"""
+      """{"sourceID":"search","destinationID":"destinationID","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -1418,6 +1418,94 @@ class IngestionTest extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
+  }
+
+  test("fully replace task without cron") {
+    val (client, echo) = testClient()
+    val future = client.replaceTask(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      taskReplace = TaskReplace(
+        destinationID = "destinationID",
+        action = ActionType.withName("replace")
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"destinationID":"destinationID","action":"replace"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("fully replace task with cron1") {
+    val (client, echo) = testClient()
+    val future = client.replaceTask(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      taskReplace = TaskReplace(
+        destinationID = "destinationID",
+        cron = Some("* * * * *"),
+        action = ActionType.withName("replace"),
+        notifications = Some(
+          Notifications(
+            email = EmailNotifications(
+              enabled = Some(true)
+            )
+          )
+        ),
+        policies = Some(
+          Policies(
+            criticalThreshold = Some(8)
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.method == "PUT")
+    val expectedBody = parse(
+      """{"destinationID":"destinationID","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("fully replace task shopify2") {
+    val (client, echo) = testClient()
+    val future = client.replaceTask(
+      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      taskReplace = TaskReplace(
+        destinationID = "destinationID",
+        cron = Some("* * * * *"),
+        action = ActionType.withName("replace"),
+        input = Some(
+          DockerStreamsInput(
+            streams = Seq(
+              DockerStreams(
+                name = "foo",
+                syncMode = DockerStreamsSyncMode.withName("incremental")
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.method == "PUT")
+    val expectedBody = parse(
+      """{"destinationID":"destinationID","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
   }
 
   test("runSource") {

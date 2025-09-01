@@ -182,7 +182,7 @@ public class IngestionClientRequestTests
       new TaskCreate
       {
         SourceID = "search",
-        DestinationID = "destinationName",
+        DestinationID = "destinationID",
         Action = Enum.Parse<ActionType>("Replace"),
       }
     );
@@ -191,7 +191,7 @@ public class IngestionClientRequestTests
     Assert.Equal("/2/tasks", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"action\":\"replace\"}",
+      "{\"sourceID\":\"search\",\"destinationID\":\"destinationID\",\"action\":\"replace\"}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -204,7 +204,7 @@ public class IngestionClientRequestTests
       new TaskCreate
       {
         SourceID = "search",
-        DestinationID = "destinationName",
+        DestinationID = "destinationID",
         Cron = "* * * * *",
         Action = Enum.Parse<ActionType>("Replace"),
         Notifications = new Notifications { Email = new EmailNotifications { Enabled = true } },
@@ -216,7 +216,7 @@ public class IngestionClientRequestTests
     Assert.Equal("/2/tasks", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"notifications\":{\"email\":{\"enabled\":true}},\"policies\":{\"criticalThreshold\":8}}",
+      "{\"sourceID\":\"search\",\"destinationID\":\"destinationID\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"notifications\":{\"email\":{\"enabled\":true}},\"policies\":{\"criticalThreshold\":8}}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -229,7 +229,7 @@ public class IngestionClientRequestTests
       new TaskCreate
       {
         SourceID = "search",
-        DestinationID = "destinationName",
+        DestinationID = "destinationID",
         Cron = "* * * * *",
         Action = Enum.Parse<ActionType>("Replace"),
         Input = new TaskInput(
@@ -252,7 +252,7 @@ public class IngestionClientRequestTests
     Assert.Equal("/2/tasks", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}",
+      "{\"sourceID\":\"search\",\"destinationID\":\"destinationID\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -1411,6 +1411,89 @@ public class IngestionClientRequestTests
       expectedQuery.TryGetValue(actual.Key, out var expected);
       Assert.Equal(expected, actual.Value);
     }
+  }
+
+  [Fact(DisplayName = "fully replace task without cron")]
+  public async Task ReplaceTaskTest()
+  {
+    await client.ReplaceTaskAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TaskReplace
+      {
+        DestinationID = "destinationID",
+        Action = Enum.Parse<ActionType>("Replace"),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"destinationID\":\"destinationID\",\"action\":\"replace\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "fully replace task with cron")]
+  public async Task ReplaceTaskTest1()
+  {
+    await client.ReplaceTaskAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TaskReplace
+      {
+        DestinationID = "destinationID",
+        Cron = "* * * * *",
+        Action = Enum.Parse<ActionType>("Replace"),
+        Notifications = new Notifications { Email = new EmailNotifications { Enabled = true } },
+        Policies = new Policies { CriticalThreshold = 8 },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"destinationID\":\"destinationID\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"notifications\":{\"email\":{\"enabled\":true}},\"policies\":{\"criticalThreshold\":8}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "fully replace task shopify")]
+  public async Task ReplaceTaskTest2()
+  {
+    await client.ReplaceTaskAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TaskReplace
+      {
+        DestinationID = "destinationID",
+        Cron = "* * * * *",
+        Action = Enum.Parse<ActionType>("Replace"),
+        Input = new TaskInput(
+          new DockerStreamsInput
+          {
+            Streams = new List<DockerStreams>
+            {
+              new DockerStreams
+              {
+                Name = "foo",
+                SyncMode = Enum.Parse<DockerStreamsSyncMode>("Incremental"),
+              },
+            },
+          }
+        ),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"destinationID\":\"destinationID\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
   }
 
   [Fact(DisplayName = "runSource")]

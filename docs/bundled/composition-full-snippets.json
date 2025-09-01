@@ -64,7 +64,7 @@
       "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
     },
     "init": {
-      "default": "//\nconst client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');"
+      "default": "const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');"
     }
   },
   "kotlin": {},

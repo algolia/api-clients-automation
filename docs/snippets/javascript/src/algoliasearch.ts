@@ -10,7 +10,6 @@ import { liteClient } from 'algoliasearch/lite';
 export async function snippetForCustomPost(): Promise<void> {
   // >SEPARATOR customPost allow post method for a custom path with minimal parameters
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -28,7 +27,6 @@ export async function snippetForCustomPost(): Promise<void> {
 export async function snippetForCustomPost1(): Promise<void> {
   // >SEPARATOR customPost allow post method for a custom path with all parameters
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -50,7 +48,6 @@ export async function snippetForCustomPost1(): Promise<void> {
 export async function snippetForCustomPost2(): Promise<void> {
   // >SEPARATOR customPost requestOptions can override default query parameters
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -73,7 +70,6 @@ export async function snippetForCustomPost2(): Promise<void> {
 export async function snippetForCustomPost3(): Promise<void> {
   // >SEPARATOR customPost requestOptions merges query parameters with default ones
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -96,7 +92,6 @@ export async function snippetForCustomPost3(): Promise<void> {
 export async function snippetForCustomPost4(): Promise<void> {
   // >SEPARATOR customPost requestOptions can override default headers
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -119,7 +114,6 @@ export async function snippetForCustomPost4(): Promise<void> {
 export async function snippetForCustomPost5(): Promise<void> {
   // >SEPARATOR customPost requestOptions merges headers with default ones
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -142,7 +136,6 @@ export async function snippetForCustomPost5(): Promise<void> {
 export async function snippetForCustomPost6(): Promise<void> {
   // >SEPARATOR customPost requestOptions queryParameters accepts booleans
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -165,7 +158,6 @@ export async function snippetForCustomPost6(): Promise<void> {
 export async function snippetForCustomPost7(): Promise<void> {
   // >SEPARATOR customPost requestOptions queryParameters accepts integers
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -188,7 +180,6 @@ export async function snippetForCustomPost7(): Promise<void> {
 export async function snippetForCustomPost8(): Promise<void> {
   // >SEPARATOR customPost requestOptions queryParameters accepts list of string
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -211,7 +202,6 @@ export async function snippetForCustomPost8(): Promise<void> {
 export async function snippetForCustomPost9(): Promise<void> {
   // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -234,7 +224,6 @@ export async function snippetForCustomPost9(): Promise<void> {
 export async function snippetForCustomPost10(): Promise<void> {
   // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -257,7 +246,6 @@ export async function snippetForCustomPost10(): Promise<void> {
 export async function snippetForGetRecommendations(): Promise<void> {
   // >SEPARATOR getRecommendations get recommendations for recommend model with minimal parameters
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -277,7 +265,6 @@ export async function snippetForGetRecommendations(): Promise<void> {
 export async function snippetForGetRecommendations1(): Promise<void> {
   // >SEPARATOR getRecommendations get recommendations with e2e to check oneOf model
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -305,7 +292,6 @@ export async function snippetForGetRecommendations1(): Promise<void> {
 export async function snippetForGetRecommendations2(): Promise<void> {
   // >SEPARATOR getRecommendations get recommendations for recommend model with all parameters
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -335,7 +321,6 @@ export async function snippetForGetRecommendations2(): Promise<void> {
 export async function snippetForGetRecommendations3(): Promise<void> {
   // >SEPARATOR getRecommendations get recommendations for trending model with minimal parameters
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -357,7 +342,6 @@ export async function snippetForGetRecommendations3(): Promise<void> {
 export async function snippetForGetRecommendations4(): Promise<void> {
   // >SEPARATOR getRecommendations get recommendations for trending model with all parameters
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -388,7 +372,6 @@ export async function snippetForGetRecommendations4(): Promise<void> {
 export async function snippetForGetRecommendations5(): Promise<void> {
   // >SEPARATOR getRecommendations get multiple recommendations with minimal parameters
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -411,7 +394,6 @@ export async function snippetForGetRecommendations5(): Promise<void> {
 export async function snippetForGetRecommendations6(): Promise<void> {
   // >SEPARATOR getRecommendations get multiple recommendations with all parameters
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -450,7 +432,6 @@ export async function snippetForGetRecommendations6(): Promise<void> {
 export async function snippetForGetRecommendations7(): Promise<void> {
   // >SEPARATOR getRecommendations get frequently bought together recommendations
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -470,7 +451,6 @@ export async function snippetForGetRecommendations7(): Promise<void> {
 export async function snippetForSearch(): Promise<void> {
   // >SEPARATOR search withHitsPerPage
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -490,7 +470,6 @@ export async function snippetForSearch(): Promise<void> {
 export async function snippetForSearch1(): Promise<void> {
   // >SEPARATOR search filterOnly
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -510,7 +489,6 @@ export async function snippetForSearch1(): Promise<void> {
 export async function snippetForSearch2(): Promise<void> {
   // >SEPARATOR search filterOr
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -536,7 +514,6 @@ export async function snippetForSearch2(): Promise<void> {
 export async function snippetForSearch3(): Promise<void> {
   // >SEPARATOR search filterNot
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -556,7 +533,6 @@ export async function snippetForSearch3(): Promise<void> {
 export async function snippetForSearch4(): Promise<void> {
   // >SEPARATOR search search for a single hits request with minimal parameters
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -574,7 +550,6 @@ export async function snippetForSearch4(): Promise<void> {
 export async function snippetForSearch5(): Promise<void> {
   // >SEPARATOR search search with highlight and snippet results
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -602,7 +577,6 @@ export async function snippetForSearch5(): Promise<void> {
 export async function snippetForSearch6(): Promise<void> {
   // >SEPARATOR search retrieveFacets
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -622,7 +596,6 @@ export async function snippetForSearch6(): Promise<void> {
 export async function snippetForSearch7(): Promise<void> {
   // >SEPARATOR search retrieveFacetsWildcard
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -642,7 +615,6 @@ export async function snippetForSearch7(): Promise<void> {
 export async function snippetForSearch8(): Promise<void> {
   // >SEPARATOR search search for a single facet request with minimal parameters
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -663,7 +635,6 @@ export async function snippetForSearch8(): Promise<void> {
 export async function snippetForSearch9(): Promise<void> {
   // >SEPARATOR search search for a single hits request with all parameters
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -683,7 +654,6 @@ export async function snippetForSearch9(): Promise<void> {
 export async function snippetForSearch10(): Promise<void> {
   // >SEPARATOR search search for a single facet request with all parameters
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -713,7 +683,6 @@ export async function snippetForSearch10(): Promise<void> {
 export async function snippetForSearch11(): Promise<void> {
   // >SEPARATOR search search for multiple mixed requests in multiple indices with minimal parameters
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -738,7 +707,6 @@ export async function snippetForSearch11(): Promise<void> {
 export async function snippetForSearch12(): Promise<void> {
   // >SEPARATOR search search for multiple mixed requests in multiple indices with all parameters
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -769,7 +737,6 @@ export async function snippetForSearch12(): Promise<void> {
 export async function snippetForSearch13(): Promise<void> {
   // >SEPARATOR search search filters accept all of the possible shapes
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -806,7 +773,6 @@ export async function snippetForSearch13(): Promise<void> {
 export async function snippetForSearch14(): Promise<void> {
   // >SEPARATOR search search filters end to end
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
@@ -834,7 +800,6 @@ export async function snippetForSearch14(): Promise<void> {
 export async function snippetForSearch15(): Promise<void> {
   // >SEPARATOR search search with all search parameters
   // Initialize the client
-  //
   const client = liteClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API

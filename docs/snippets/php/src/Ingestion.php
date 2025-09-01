@@ -195,7 +195,7 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->createTask(
             ['sourceID' => 'search',
-                'destinationID' => 'destinationName',
+                'destinationID' => 'destinationID',
                 'action' => 'replace',
             ],
         );
@@ -220,7 +220,7 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->createTask(
             ['sourceID' => 'search',
-                'destinationID' => 'destinationName',
+                'destinationID' => 'destinationID',
                 'cron' => '* * * * *',
                 'action' => 'replace',
                 'notifications' => ['email' => ['enabled' => true,
@@ -251,7 +251,7 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->createTask(
             ['sourceID' => 'search',
-                'destinationID' => 'destinationName',
+                'destinationID' => 'destinationID',
                 'cron' => '* * * * *',
                 'action' => 'replace',
                 'input' => ['streams' => [
@@ -1635,6 +1635,94 @@ class SnippetIngestionClient
                 ],
             ],
             true,
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ReplaceTask method.
+     *
+     * fully replace task without cron
+     */
+    public function snippetForReplaceTask(): void
+    {
+        // >SEPARATOR replaceTask fully replace task without cron
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->replaceTask(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['destinationID' => 'destinationID',
+                'action' => 'replace',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ReplaceTask method.
+     *
+     * fully replace task with cron
+     */
+    public function snippetForReplaceTask1(): void
+    {
+        // >SEPARATOR replaceTask fully replace task with cron
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->replaceTask(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['destinationID' => 'destinationID',
+                'cron' => '* * * * *',
+                'action' => 'replace',
+                'notifications' => ['email' => ['enabled' => true,
+                ],
+                ],
+                'policies' => ['criticalThreshold' => 8,
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ReplaceTask method.
+     *
+     * fully replace task shopify
+     */
+    public function snippetForReplaceTask2(): void
+    {
+        // >SEPARATOR replaceTask fully replace task shopify
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->replaceTask(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['destinationID' => 'destinationID',
+                'cron' => '* * * * *',
+                'action' => 'replace',
+                'input' => ['streams' => [
+                    ['name' => 'foo',
+                        'syncMode' => 'incremental',
+                    ],
+                ],
+                ],
+            ],
         );
 
         // >LOG

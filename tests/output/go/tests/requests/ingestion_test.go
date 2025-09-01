@@ -137,19 +137,19 @@ func TestIngestion_CreateTask(t *testing.T) {
 	t.Run("task without cron", func(t *testing.T) {
 		_, err := client.CreateTask(client.NewApiCreateTaskRequest(
 
-			ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetAction(ingestion.ActionType("replace"))))
+			ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationID").SetAction(ingestion.ActionType("replace"))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/tasks", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","action":"replace"}`)
+		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationID","action":"replace"}`)
 	})
 	t.Run("task with cron", func(t *testing.T) {
 		_, err := client.CreateTask(client.NewApiCreateTaskRequest(
 
-			ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetNotifications(
+			ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationID").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetNotifications(
 				ingestion.NewEmptyNotifications().SetEmail(
 					ingestion.NewEmptyEmailNotifications().SetEnabled(true))).SetPolicies(
 				ingestion.NewEmptyPolicies().SetCriticalThreshold(8))))
@@ -159,12 +159,12 @@ func TestIngestion_CreateTask(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}`)
+		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationID","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}`)
 	})
 	t.Run("task shopify", func(t *testing.T) {
 		_, err := client.CreateTask(client.NewApiCreateTaskRequest(
 
-			ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetInput(ingestion.DockerStreamsInputAsTaskInput(
+			ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationID").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetInput(ingestion.DockerStreamsInputAsTaskInput(
 				ingestion.NewEmptyDockerStreamsInput().SetStreams(
 					[]ingestion.DockerStreams{*ingestion.NewEmptyDockerStreams().SetName("foo").SetSyncMode(ingestion.DockerStreamsSyncMode("incremental"))})))))
 		require.NoError(t, err)
@@ -173,7 +173,7 @@ func TestIngestion_CreateTask(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}`)
+		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationID","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}`)
 	})
 }
 
@@ -1075,6 +1075,53 @@ func TestIngestion_PushTask(t *testing.T) {
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
+	})
+}
+
+func TestIngestion_ReplaceTask(t *testing.T) {
+	client, echo := createIngestionClient(t)
+	_ = echo
+
+	t.Run("fully replace task without cron", func(t *testing.T) {
+		_, err := client.ReplaceTask(client.NewApiReplaceTaskRequest(
+			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+			ingestion.NewEmptyTaskReplace().SetDestinationID("destinationID").SetAction(ingestion.ActionType("replace"))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"destinationID":"destinationID","action":"replace"}`)
+	})
+	t.Run("fully replace task with cron", func(t *testing.T) {
+		_, err := client.ReplaceTask(client.NewApiReplaceTaskRequest(
+			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+			ingestion.NewEmptyTaskReplace().SetDestinationID("destinationID").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetNotifications(
+				ingestion.NewEmptyNotifications().SetEmail(
+					ingestion.NewEmptyEmailNotifications().SetEnabled(true))).SetPolicies(
+				ingestion.NewEmptyPolicies().SetCriticalThreshold(8))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"destinationID":"destinationID","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}`)
+	})
+	t.Run("fully replace task shopify", func(t *testing.T) {
+		_, err := client.ReplaceTask(client.NewApiReplaceTaskRequest(
+			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+			ingestion.NewEmptyTaskReplace().SetDestinationID("destinationID").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetInput(ingestion.DockerStreamsInputAsTaskInput(
+				ingestion.NewEmptyDockerStreamsInput().SetStreams(
+					[]ingestion.DockerStreams{*ingestion.NewEmptyDockerStreams().SetName("foo").SetSyncMode(ingestion.DockerStreamsSyncMode("incremental"))})))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"destinationID":"destinationID","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}`)
 	})
 }
 

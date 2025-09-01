@@ -3896,6 +3896,11 @@ components:
       type: string
       description: End date and time of the A/B test, in RFC 3339 format.
       example: '2023-06-17T00:00:00Z'
+    stoppedAt:
+      type: string
+      description: Date and time when the A/B test was stopped, in RFC 3339 format.
+      example: '2023-06-15T15:06:44.400601Z'
+      nullable: true
     name:
       type: string
       description: A/B test name.
@@ -4259,6 +4264,8 @@ components:
           $ref: '#/components/schemas/createdAt'
         endAt:
           $ref: '#/components/schemas/endAt'
+        stoppedAt:
+          $ref: '#/components/schemas/stoppedAt'
         name:
           $ref: '#/components/schemas/name'
         status:

@@ -36,6 +36,8 @@ import algoliasearch.abtestingv3.Status._
   *   Date and time when the A/B test was created, in RFC 3339 format.
   * @param endAt
   *   End date and time of the A/B test, in RFC 3339 format.
+  * @param stoppedAt
+  *   Date and time when the A/B test was stopped, in RFC 3339 format.
   * @param name
   *   A/B test name.
   * @param variants
@@ -49,6 +51,7 @@ case class ABTest(
     updatedAt: String,
     createdAt: String,
     endAt: String,
+    stoppedAt: Option[String] = scala.None,
     name: String,
     status: Status,
     variants: Seq[Variant],

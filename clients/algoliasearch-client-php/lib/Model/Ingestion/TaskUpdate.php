@@ -12,7 +12,7 @@ use Algolia\AlgoliaSearch\Model\ModelInterface;
  *
  * @category Class
  *
- * @description API request body for updating a task.
+ * @description API request body for partially updating a task.
  */
 class TaskUpdate extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
 {

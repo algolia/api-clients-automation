@@ -7673,7 +7673,7 @@ paths:
               new TaskCreate
               {
                 SourceID = "search",
-                DestinationID = "destinationName",
+                DestinationID = "destinationID",
                 Action = Enum.Parse<ActionType>("Replace"),
               }
             );
@@ -7697,7 +7697,7 @@ paths:
 
             response, err := client.CreateTask(client.NewApiCreateTaskRequest(
 
-              ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationName").SetAction(ingestion.ActionType("replace"))))
+              ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationID").SetAction(ingestion.ActionType("replace"))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -7722,7 +7722,7 @@ paths:
             // Call the API
 
             client.createTask(new
-            TaskCreate().setSourceID("search").setDestinationID("destinationName").setAction(ActionType.REPLACE));
+            TaskCreate().setSourceID("search").setDestinationID("destinationID").setAction(ActionType.REPLACE));
 
             // >LOG
         - lang: javascript
@@ -7739,7 +7739,7 @@ paths:
             // Call the API
 
             const response = await client.createTask({ sourceID: 'search',
-            destinationID: 'destinationName', action: 'replace' });
+            destinationID: 'destinationID', action: 'replace' });
 
 
             // >LOG
@@ -7761,7 +7761,7 @@ paths:
             var response = client.createTask(
               taskCreate = TaskCreate(
                 sourceID = "search",
-                destinationID = "destinationName",
+                destinationID = "destinationID",
                 action = ActionType.entries.first { it.value == "replace" },
               ),
             )
@@ -7785,7 +7785,7 @@ paths:
 
             $response = $client->createTask(
                 ['sourceID' => 'search',
-                    'destinationID' => 'destinationName',
+                    'destinationID' => 'destinationID',
                     'action' => 'replace',
                 ],
             );
@@ -7814,7 +7814,7 @@ paths:
             response = client.create_task(
                 task_create={
                     "sourceID": "search",
-                    "destinationID": "destinationName",
+                    "destinationID": "destinationID",
                     "action": "replace",
                 },
             )
@@ -7837,7 +7837,7 @@ paths:
             # Call the API
 
             response = client.create_task(
-              Algolia::Ingestion::TaskCreate.new(source_id: "search", destination_id: "destinationName", action: "replace")
+              Algolia::Ingestion::TaskCreate.new(source_id: "search", destination_id: "destinationID", action: "replace")
             )
 
 
@@ -7866,7 +7866,7 @@ paths:
               client.createTask(
                 taskCreate = TaskCreate(
                   sourceID = "search",
-                  destinationID = "destinationName",
+                  destinationID = "destinationID",
                   action = ActionType.withName("replace")
                 )
               ),
@@ -7886,7 +7886,7 @@ paths:
 
             let response = try await client.createTask(taskCreate: TaskCreate(
                 sourceID: "search",
-                destinationID: "destinationName",
+                destinationID: "destinationID",
                 action: ActionType.replace
             ))
 
@@ -8439,11 +8439,282 @@ paths:
               --header 'accept: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+    put:
+      tags:
+        - tasks
+      summary: Fully updates a task
+      description: >-
+        Fully updates a task by its ID, use partialUpdateTask if you only want
+        to update a subset of fields.
+      operationId: replaceTask
+      parameters:
+        - $ref: '#/components/parameters/pathTaskID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskReplace'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskUpdateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new IngestionClient(
+              new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+            );
+
+            // Call the API
+            var response = await client.ReplaceTaskAsync(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new TaskReplace
+              {
+                DestinationID = "destinationID",
+                Action = Enum.Parse<ActionType>("Replace"),
+              }
+            );
+            // >LOG
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.ALGOLIA_APPLICATION_REGION
+
+            client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.ReplaceTask(client.NewApiReplaceTaskRequest(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ingestion.NewEmptyTaskReplace().SetDestinationID("destinationID").SetAction(ingestion.ActionType("replace"))))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // >LOG
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new
+            IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY",
+            "ALGOLIA_APPLICATION_REGION");
+
+
+            // Call the API
+
+            client.replaceTask(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new TaskReplace().setDestinationID("destinationID").setAction(ActionType.REPLACE)
+            );
+
+            // >LOG
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            // Replace 'us' with your Algolia Application Region
+
+            const client = algoliasearch('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+
+            // Call the API
+
+            const response = await client.replaceTask({
+              taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+              taskReplace: { destinationID: 'destinationID', action: 'replace' },
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+
+            // Call the API
+
+            var response = client.replaceTask(
+              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              taskReplace = TaskReplace(
+                destinationID = "destinationID",
+                action = ActionType.entries.first { it.value == "replace" },
+              ),
+            )
+
+
+            // >LOG
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+
+            // Call the API
+
+            $response = $client->replaceTask(
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                ['destinationID' => 'destinationID',
+                    'action' => 'replace',
+                ],
+            );
+
+
+            // >LOG
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            # In an asynchronous context, you can use IngestionClient instead,
+            which exposes the exact same methods.
+
+            client = IngestionClientSync(
+                "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+            )
+
+
+            # Call the API
+
+            response = client.replace_task(
+                task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                task_replace={
+                    "destinationID": "destinationID",
+                    "action": "replace",
+                },
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+
+            # Call the API
+
+            response = client.replace_task(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              Algolia::Ingestion::TaskReplace.new(destination_id: "destinationID", action: "replace")
+            )
+
+
+            # >LOG
+
+            # use the class directly
+
+            puts(response)
+
+
+            # print the JSON response
+
+            puts(response.to_json)
+        - lang: scala
+          label: Scala
+          source: |
+            // Initialize the client
+            val client = IngestionClient(
+              appId = "ALGOLIA_APPLICATION_ID",
+              apiKey = "ALGOLIA_API_KEY",
+              region = "ALGOLIA_APPLICATION_REGION"
+            )
+
+            // Call the API
+            val response = Await.result(
+              client.replaceTask(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                taskReplace = TaskReplace(
+                  destinationID = "destinationID",
+                  action = ActionType.withName("replace")
+                )
+              ),
+              Duration(100, "sec")
+            )
+            // >LOG
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.replaceTask(
+                taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                taskReplace: TaskReplace(destinationID: "destinationID", action: ActionType.replace)
+            )
+
+            // >LOG
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PUT \
+              --url https://data.us.algolia.com/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"destinationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","action":"replace","subscriptionAction":"replace","cron":"* * 1 * *","enabled":true,"failureThreshold":0,"input":{"mapping":{"format":"mappingkit/v1","actions":[{"id":"lorem","enabled":true,"trigger":"lorem","fieldDirectives":[{"fieldKey":"lorem","value":{}}]}]}},"cursor":"lorem","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":1}}'
     patch:
       tags:
         - tasks
-      summary: Update a task
-      description: Updates a task by its ID.
+      summary: Partially updates a task
+      description: Partially updates a task by its ID.
       operationId: updateTask
       parameters:
         - $ref: '#/components/parameters/pathTaskID'
@@ -17630,10 +17901,51 @@ components:
             $ref: '#/components/schemas/taskID'
       required:
         - taskIDs
-    TaskUpdate:
+    TaskReplace:
       type: object
       additionalProperties: false
       description: API request body for updating a task.
+      properties:
+        destinationID:
+          $ref: '#/components/schemas/destinationID'
+        action:
+          $ref: '#/components/schemas/ActionType'
+        subscriptionAction:
+          $ref: '#/components/schemas/ActionType'
+        cron:
+          $ref: '#/components/schemas/Cron'
+        enabled:
+          type: boolean
+          description: Whether the task is enabled.
+        failureThreshold:
+          $ref: '#/components/schemas/failureThreshold'
+        input:
+          $ref: '#/components/schemas/TaskInput'
+        cursor:
+          $ref: '#/components/schemas/cursor'
+        notifications:
+          $ref: '#/components/schemas/Notifications'
+        policies:
+          $ref: '#/components/schemas/Policies'
+      required:
+        - destinationID
+        - action
+    TaskUpdateResponse:
+      type: object
+      description: API response for updating a task.
+      additionalProperties: false
+      properties:
+        taskID:
+          $ref: '#/components/schemas/taskID'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+      required:
+        - taskID
+        - updatedAt
+    TaskUpdate:
+      type: object
+      additionalProperties: false
+      description: API request body for partially updating a task.
       properties:
         destinationID:
           $ref: '#/components/schemas/destinationID'
@@ -17652,18 +17964,6 @@ components:
           $ref: '#/components/schemas/Notifications'
         policies:
           $ref: '#/components/schemas/Policies'
-    TaskUpdateResponse:
-      type: object
-      description: API response for updating a task.
-      additionalProperties: false
-      properties:
-        taskID:
-          $ref: '#/components/schemas/taskID'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-      required:
-        - taskID
-        - updatedAt
     RunTaskPayload:
       type: object
       additionalProperties: false
@@ -17869,6 +18169,9 @@ components:
           $ref: '#/components/schemas/Cron'
       required:
         - cron
+    Enabled:
+      type: boolean
+      description: Whether the task is enabled.
     TaskUpdateV1:
       type: object
       additionalProperties: false
@@ -17884,8 +18187,7 @@ components:
         input:
           $ref: '#/components/schemas/TaskInput'
         enabled:
-          type: boolean
-          description: Whether the task is enabled.
+          $ref: '#/components/schemas/Enabled'
         failureThreshold:
           $ref: '#/components/schemas/failureThreshold'
     transformationSortKeys:

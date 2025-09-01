@@ -20,11 +20,36 @@ get:
     '400':
       $ref: '../../../../common/responses/BadRequest.yml'
 
+put:
+  tags:
+    - tasks
+  summary: Fully updates a task
+  description: Fully updates a task by its ID, use partialUpdateTask if you only want to update a subset of fields.
+  operationId: replaceTask
+  parameters:
+    - $ref: '../../../common/parameters.yml#/pathTaskID'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../../common/schemas/task.yml#/TaskReplace'
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../../common/schemas/task.yml#/TaskUpdateResponse'
+    '400':
+      $ref: '../../../../common/responses/BadRequest.yml'
+
+# TODO: rename taskUpdate to taskPartialUpdate next major
 patch:
   tags:
     - tasks
-  summary: Update a task
-  description: Updates a task by its ID.
+  summary: Partially updates a task
+  description: Partially updates a task by its ID.
   operationId: updateTask
   parameters:
     - $ref: '../../../common/parameters.yml#/pathTaskID'

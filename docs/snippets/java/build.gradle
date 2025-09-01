@@ -7,7 +7,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'com.algolia:algoliasearch:4.23.0'
+    testImplementation 'com.algolia:algoliasearch:4.24.0'
 }
 
 java {

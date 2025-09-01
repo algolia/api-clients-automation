@@ -15,6 +15,7 @@ ABTest _$ABTestFromJson(Map<String, dynamic> json) => $checkedCreate(
           updatedAt: $checkedConvert('updatedAt', (v) => v as String),
           createdAt: $checkedConvert('createdAt', (v) => v as String),
           endAt: $checkedConvert('endAt', (v) => v as String),
+          stoppedAt: $checkedConvert('stoppedAt', (v) => v as String?),
           name: $checkedConvert('name', (v) => v as String),
           status:
               $checkedConvert('status', (v) => $enumDecode(_$StatusEnumMap, v)),
@@ -41,9 +42,6 @@ Map<String, dynamic> _$ABTestToJson(ABTest instance) {
     'updatedAt': instance.updatedAt,
     'createdAt': instance.createdAt,
     'endAt': instance.endAt,
-    'name': instance.name,
-    'status': instance.status.toJson(),
-    'variants': instance.variants.map((e) => e.toJson()).toList(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -52,6 +50,10 @@ Map<String, dynamic> _$ABTestToJson(ABTest instance) {
     }
   }
 
+  writeNotNull('stoppedAt', instance.stoppedAt);
+  val['name'] = instance.name;
+  val['status'] = instance.status.toJson();
+  val['variants'] = instance.variants.map((e) => e.toJson()).toList();
   writeNotNull('configuration', instance.configuration?.toJson());
   writeNotNull('migratedAbTestID', instance.migratedAbTestID);
   return val;

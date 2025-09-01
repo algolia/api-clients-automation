@@ -6,7 +6,7 @@ import type { Policies } from './policies';
 import type { TaskInput } from './taskInput';
 
 /**
- * API request body for updating a task.
+ * API request body for partially updating a task.
  */
 export type TaskUpdate = {
   /**

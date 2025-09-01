@@ -66,7 +66,7 @@
       "default": "const response = await client.searchForFacetValues({\n  compositionID: 'foo',\n  facetName: 'brand',\n  searchForFacetValuesRequest: { params: { maxFacetHits: 10 } },\n});"
     },
     "init": {
-      "default": "//\nconst client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');"
+      "default": "const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');"
     }
   },
   "kotlin": {
