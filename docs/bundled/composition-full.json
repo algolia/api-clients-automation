@@ -421,6 +421,115 @@
             "$ref": "#/components/responses/CompositionNotFound"
           }
         }
+      },
+      "put": {
+        "tags": [
+          "Compositions"
+        ],
+        "operationId": "putComposition",
+        "x-acl": [
+          "editSettings",
+          "settings"
+        ],
+        "summary": "Upsert a composition",
+        "description": "Upsert a composition in the current Algolia application.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/compositionID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/composition"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "taskIDResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "taskID": {
+                      "$ref": "#/components/schemas/taskID"
+                    }
+                  },
+                  "required": [
+                    "taskID"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Compositions"
+        ],
+        "operationId": "deleteComposition",
+        "x-acl": [
+          "editSettings",
+          "settings"
+        ],
+        "summary": "Delete a composition",
+        "description": "Delete a composition from the current Algolia application.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/compositionID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "taskIDResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "taskID": {
+                      "$ref": "#/components/schemas/taskID"
+                    }
+                  },
+                  "required": [
+                    "taskID"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          }
+        }
       }
     },
     "/1/compositions/*/batch": {
@@ -553,6 +662,127 @@
           },
           "404": {
             "$ref": "#/components/responses/IndexNotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Rules"
+        ],
+        "operationId": "putCompositionRule",
+        "x-acl": [
+          "editSettings",
+          "settings"
+        ],
+        "summary": "Upsert a composition rule",
+        "description": "Upsert a Composition Rule for the specified composition ID.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/compositionID"
+          },
+          {
+            "$ref": "#/components/parameters/ObjectIDRule"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/compositionRule"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "taskIDResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "taskID": {
+                      "$ref": "#/components/schemas/taskID"
+                    }
+                  },
+                  "required": [
+                    "taskID"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/CompositionNotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Rules"
+        ],
+        "operationId": "deleteCompositionRule",
+        "x-acl": [
+          "editSettings",
+          "settings"
+        ],
+        "summary": "Delete a Composition Rule",
+        "description": "Delete a Composition Rule from the specified Composition ID.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/compositionID"
+          },
+          {
+            "$ref": "#/components/parameters/ObjectIDRule"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "taskIDResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "taskID": {
+                      "$ref": "#/components/schemas/taskID"
+                    }
+                  },
+                  "required": [
+                    "taskID"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/CompositionNotFound"
           }
         }
       }
@@ -3504,6 +3734,12 @@
           "name"
         ]
       },
+      "taskID": {
+        "type": "integer",
+        "format": "int64",
+        "example": 1514562690001,
+        "description": "Unique identifier of a task.\n\nA successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.\n"
+      },
       "action": {
         "type": "string",
         "enum": [
@@ -3534,12 +3770,6 @@
             "$ref": "#/components/schemas/deleteCompositionAction"
           }
         ]
-      },
-      "taskID": {
-        "type": "integer",
-        "format": "int64",
-        "example": 1514562690001,
-        "description": "Unique identifier of a task.\n\nA successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.\n"
       },
       "ruleID": {
         "title": "objectID",
@@ -3804,6 +4034,16 @@
       },
       "CompositionNotFound": {
         "description": "Composition not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorBase"
+            }
+          }
+        }
+      },
+      "UnprocessableEntity": {
+        "description": "Unprocessable Entity.",
         "content": {
           "application/json": {
             "schema": {
