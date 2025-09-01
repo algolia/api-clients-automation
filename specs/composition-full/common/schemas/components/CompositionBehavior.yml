@@ -55,7 +55,7 @@ injectedItem:
       description: injected Item unique identifier.
     source:
       description: Search source to be used to inject items into result set.
-      $ref: '#/injectionSource'
+      $ref: '#/injectedItemSource'
     position:
       type: integer
       minimum: 0
@@ -65,32 +65,29 @@ injectedItem:
       minimum: 0
       maximum: 20
     metadata:
-      $ref: '#/metadata'
+      title: injectedItemMetadata
+      type: object
+      description: Used to add metadata to the results of the injectedItem.
+      properties:
+        hits:
+          title: injectedItemHitsMetadata
+          type: object
+          description: Adds the provided metadata to each injected hit via an `_extra` attribute.
+          properties:
+            addItemKey:
+              type: boolean
+              description: When true, the `_injectedItemKey` field is set in the `_extra` object of each affected hit.
+            extra:
+              type: object
+              additionalProperties: true
+              description: The user-defined key-value pairs that will be placed in the `_extra` field of each affected hit.
   required:
     - key
     - source
     - position
     - length
 
-injectionSource:
+injectedItemSource:
   oneOf:
     - $ref: './InjectionSource.yml#/search'
     - $ref: './InjectionSource.yml#/external'
-
-metadata:
-  title: injectedItemMetadata
-  type: object
-  description: Used to add metadata to the results of the injectedItem.
-  properties:
-    hits:
-      title: injectedItemHitsMetadata
-      type: object
-      description: Adds the provided metadata to each injected hit via an `_extra` attribute.
-      properties:
-        addItemKey:
-          type: boolean
-          description: When true, the `_injectedItemKey` field is set in the `_extra` object of each affected hit.
-        extra:
-          type: object
-          additionalProperties: true
-          description: The user-defined key-value pairs that will be placed in the `_extra` field of each affected hit.
