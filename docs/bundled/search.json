@@ -6958,6 +6958,7 @@
         "type": "object",
         "description": "Search result.\n\nA hit is a record from your index, augmented with special attributes for highlighting, snippeting, and ranking.\n",
         "x-is-generic": true,
+        "x-is-hit-object": true,
         "additionalProperties": true,
         "required": [
           "objectID"
