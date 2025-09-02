@@ -61,7 +61,7 @@ case class AlgoliaRequestException(
 case class AlgoliaRetryException(
     exceptions: List[Throwable]
 ) extends AlgoliaRuntimeException(
-      "Error(s) while processing the retry strategy. If the error persists, please visit our help center <SUPPORT_LINK_HERE> or reach out to the Algolia Support team: https://alg.li/support.",
+      "Error(s) while processing the retry strategy. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support.",
       exceptions.lastOption.orNull
     )
 
