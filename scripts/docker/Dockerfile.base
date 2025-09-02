@@ -8,8 +8,8 @@ ARG CSHARP_VERSION
 FROM dart:${DART_VERSION} AS dart-builder
 FROM mcr.microsoft.com/dotnet/sdk:${CSHARP_VERSION} AS csharp-builder
 FROM golang:${GO_VERSION}-alpine AS go-builder
-FROM python:${PYTHON_VERSION}-bullseye AS python-builder
-FROM php:${PHP_VERSION}-bullseye AS builder
+FROM python:${PYTHON_VERSION}-trixie AS python-builder
+FROM php:${PHP_VERSION}-trixie AS builder
 
 SHELL ["/bin/bash", "--login", "-c"]
 
