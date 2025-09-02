@@ -223,7 +223,7 @@ internal class HttpTransport
     }
 
     throw new AlgoliaUnreachableHostException(
-      "RetryStrategy failed to connect to Algolia. Reason: " + _errorMessage
+      "RetryStrategy failed to connect to Algolia. If the error persists, please visit our help center <SUPPORT_LINK_HERE> or reach out to the Algolia Support team: https://alg.li/support. Reason: " + _errorMessage
     );
   }
 

@@ -12,7 +12,7 @@ public class AlgoliaRetryException extends AlgoliaRuntimeException {
   private final List<Throwable> errors;
 
   public AlgoliaRetryException(List<Throwable> errors) {
-    super("Error(s) while processing the retry strategy", errors.get(errors.size() - 1));
+    super("Error(s) while processing the retry strategy. If the error persists, please visit our help center <SUPPORT_LINK_HERE> or reach out to the Algolia Support team: https://alg.li/support.", errors.get(errors.size() - 1));
     this.errors = errors;
   }
 
