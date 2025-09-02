@@ -13,5 +13,54 @@
         "params": { "query": "batman" }
       }
     }
+  },
+  {
+    "parameters": {
+      "compositionID": "foo",
+      "requestBody": {
+        "params": {
+          "query": "batman",
+          "injectedItems": {
+            "injectedItem1": {
+              "items": [
+                {
+                  "objectID": "my-object-1"
+                },
+                {
+                  "objectID": "my-object-2",
+                  "metadata": {
+                    "my-key": "my-value"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/compositions/foo/run",
+      "method": "POST",
+      "body": {
+        "params": {
+          "query": "batman",
+          "injectedItems": {
+            "injectedItem1": {
+              "items": [
+                {
+                  "objectID": "my-object-1"
+                },
+                {
+                  "objectID": "my-object-2",
+                  "metadata": {
+                    "my-key": "my-value"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
   }
 ]
