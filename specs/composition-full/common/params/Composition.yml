@@ -58,4 +58,3 @@ externalInjectedItem:
   description: |
     An objectID injected into an external source.
   example: {'objectID': 'my-object-1', 'metadata': {'my-field': 'my-value'}}
-
