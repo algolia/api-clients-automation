@@ -395,6 +395,50 @@ describe('putComposition', () => {
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('putComposition', async () => {
+    const req = (await client.putComposition({
+      compositionID: 'my-external-injection-compo',
+      composition: {
+        objectID: 'my-external-injection-compo',
+        name: 'my first composition',
+        behavior: {
+          injection: {
+            main: { source: { search: { index: 'foo' } } },
+            injectedItems: [
+              {
+                key: 'injectedItem1',
+                source: { external: { index: 'foo', ordering: 'userDefined', params: { filters: 'brand:adidas' } } },
+                position: 2,
+                length: 1,
+              },
+            ],
+          },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/my-external-injection-compo');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'my-external-injection-compo',
+      name: 'my first composition',
+      behavior: {
+        injection: {
+          main: { source: { search: { index: 'foo' } } },
+          injectedItems: [
+            {
+              key: 'injectedItem1',
+              source: { external: { index: 'foo', ordering: 'userDefined', params: { filters: 'brand:adidas' } } },
+              position: 2,
+              length: 1,
+            },
+          ],
+        },
+      },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('putCompositionRule', () => {
@@ -482,6 +526,36 @@ describe('search', () => {
     expect(req.path).toEqual('/1/compositions/foo/run');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ params: { query: 'batman' } });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('search', async () => {
+    const req = (await client.search({
+      compositionID: 'foo',
+      requestBody: {
+        params: {
+          query: 'batman',
+          injectedItems: {
+            injectedItem1: {
+              items: [{ objectID: 'my-object-1' }, { objectID: 'my-object-2', metadata: { 'my-key': 'my-value' } }],
+            },
+          },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/foo/run');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      params: {
+        query: 'batman',
+        injectedItems: {
+          injectedItem1: {
+            items: [{ objectID: 'my-object-1' }, { objectID: 'my-object-2', metadata: { 'my-key': 'my-value' } }],
+          },
+        },
+      },
+    });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });

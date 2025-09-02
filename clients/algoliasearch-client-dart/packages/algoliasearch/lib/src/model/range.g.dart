@@ -11,8 +11,8 @@ Range _$RangeFromJson(Map<String, dynamic> json) => $checkedCreate(
       json,
       ($checkedConvert) {
         final val = Range(
-          from: $checkedConvert('from', (v) => v as int?),
-          value: $checkedConvert('value', (v) => v as int?),
+          from: $checkedConvert('from', (v) => (v as num?)?.toInt()),
+          value: $checkedConvert('value', (v) => (v as num?)?.toInt()),
         );
         return val;
       },

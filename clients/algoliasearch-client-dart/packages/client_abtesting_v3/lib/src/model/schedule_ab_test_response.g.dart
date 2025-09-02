@@ -14,7 +14,7 @@ ScheduleABTestResponse _$ScheduleABTestResponseFromJson(
       ($checkedConvert) {
         final val = ScheduleABTestResponse(
           abTestScheduleID:
-              $checkedConvert('abTestScheduleID', (v) => v as int),
+              $checkedConvert('abTestScheduleID', (v) => (v as num).toInt()),
         );
         return val;
       },

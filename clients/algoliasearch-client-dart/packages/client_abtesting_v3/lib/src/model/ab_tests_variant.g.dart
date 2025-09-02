@@ -14,7 +14,7 @@ AbTestsVariant _$AbTestsVariantFromJson(Map<String, dynamic> json) =>
         final val = AbTestsVariant(
           index: $checkedConvert('index', (v) => v as String),
           trafficPercentage:
-              $checkedConvert('trafficPercentage', (v) => v as int),
+              $checkedConvert('trafficPercentage', (v) => (v as num).toInt()),
           description: $checkedConvert('description', (v) => v as String?),
         );
         return val;

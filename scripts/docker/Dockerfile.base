@@ -8,14 +8,14 @@ ARG CSHARP_VERSION
 FROM dart:${DART_VERSION} AS dart-builder
 FROM mcr.microsoft.com/dotnet/sdk:${CSHARP_VERSION} AS csharp-builder
 FROM golang:${GO_VERSION}-alpine AS go-builder
-FROM python:${PYTHON_VERSION}-bullseye AS python-builder
-FROM php:${PHP_VERSION}-bullseye AS builder
+FROM python:${PYTHON_VERSION}-trixie AS python-builder
+FROM php:${PHP_VERSION}-trixie AS builder
 
 SHELL ["/bin/bash", "--login", "-c"]
 
 # Global dependencies
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends git curl zip unzip libexpat1-dev \
+  && apt-get install -y --no-install-recommends git curl zip unzip libexpat1-dev libicu76 \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 

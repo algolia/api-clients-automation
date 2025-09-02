@@ -19,13 +19,15 @@ ClickedObjectIDsAfterSearch _$ClickedObjectIDsAfterSearchFromJson(
           index: $checkedConvert('index', (v) => v as String),
           objectIDs: $checkedConvert('objectIDs',
               (v) => (v as List<dynamic>).map((e) => e as String).toList()),
-          positions: $checkedConvert('positions',
-              (v) => (v as List<dynamic>).map((e) => e as int).toList()),
+          positions: $checkedConvert(
+              'positions',
+              (v) =>
+                  (v as List<dynamic>).map((e) => (e as num).toInt()).toList()),
           queryID: $checkedConvert('queryID', (v) => v as String),
           userToken: $checkedConvert('userToken', (v) => v as String),
           authenticatedUserToken:
               $checkedConvert('authenticatedUserToken', (v) => v as String?),
-          timestamp: $checkedConvert('timestamp', (v) => v as int?),
+          timestamp: $checkedConvert('timestamp', (v) => (v as num?)?.toInt()),
         );
         return val;
       },

@@ -14,7 +14,8 @@ SearchForFacetValuesParams _$SearchForFacetValuesParamsFromJson(
       ($checkedConvert) {
         final val = SearchForFacetValuesParams(
           query: $checkedConvert('query', (v) => v as String?),
-          maxFacetHits: $checkedConvert('maxFacetHits', (v) => v as int?),
+          maxFacetHits:
+              $checkedConvert('maxFacetHits', (v) => (v as num?)?.toInt()),
           searchQuery: $checkedConvert(
               'searchQuery',
               (v) => v == null

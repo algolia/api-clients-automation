@@ -17,8 +17,8 @@ RecommendIndexSettings _$RecommendIndexSettingsFromJson(
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           replicas: $checkedConvert('replicas',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          paginationLimitedTo:
-              $checkedConvert('paginationLimitedTo', (v) => v as int?),
+          paginationLimitedTo: $checkedConvert(
+              'paginationLimitedTo', (v) => (v as num?)?.toInt()),
           unretrievableAttributes: $checkedConvert('unretrievableAttributes',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           disableTypoToleranceOnWords: $checkedConvert(
@@ -56,7 +56,8 @@ RecommendIndexSettings _$RecommendIndexSettingsFromJson(
                   )),
           attributeForDistinct:
               $checkedConvert('attributeForDistinct', (v) => v as String?),
-          maxFacetHits: $checkedConvert('maxFacetHits', (v) => v as int?),
+          maxFacetHits:
+              $checkedConvert('maxFacetHits', (v) => (v as num?)?.toInt()),
           keepDiacriticsOnCharacters: $checkedConvert(
               'keepDiacriticsOnCharacters', (v) => v as String?),
           customRanking: $checkedConvert('customRanking',
@@ -65,8 +66,8 @@ RecommendIndexSettings _$RecommendIndexSettingsFromJson(
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           ranking: $checkedConvert('ranking',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          relevancyStrictness:
-              $checkedConvert('relevancyStrictness', (v) => v as int?),
+          relevancyStrictness: $checkedConvert(
+              'relevancyStrictness', (v) => (v as num?)?.toInt()),
           attributesToHighlight: $checkedConvert('attributesToHighlight',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           attributesToSnippet: $checkedConvert('attributesToSnippet',
@@ -79,10 +80,10 @@ RecommendIndexSettings _$RecommendIndexSettingsFromJson(
               $checkedConvert('snippetEllipsisText', (v) => v as String?),
           restrictHighlightAndSnippetArrays: $checkedConvert(
               'restrictHighlightAndSnippetArrays', (v) => v as bool?),
-          minWordSizefor1Typo:
-              $checkedConvert('minWordSizefor1Typo', (v) => v as int?),
-          minWordSizefor2Typos:
-              $checkedConvert('minWordSizefor2Typos', (v) => v as int?),
+          minWordSizefor1Typo: $checkedConvert(
+              'minWordSizefor1Typo', (v) => (v as num?)?.toInt()),
+          minWordSizefor2Typos: $checkedConvert(
+              'minWordSizefor2Typos', (v) => (v as num?)?.toInt()),
           typoTolerance: $checkedConvert('typoTolerance', (v) => v),
           allowTyposOnNumericTokens:
               $checkedConvert('allowTyposOnNumericTokens', (v) => v as bool?),
@@ -124,11 +125,12 @@ RecommendIndexSettings _$RecommendIndexSettingsFromJson(
           distinct: $checkedConvert('distinct', (v) => v),
           replaceSynonymsInHighlight:
               $checkedConvert('replaceSynonymsInHighlight', (v) => v as bool?),
-          minProximity: $checkedConvert('minProximity', (v) => v as int?),
+          minProximity:
+              $checkedConvert('minProximity', (v) => (v as num?)?.toInt()),
           responseFields: $checkedConvert('responseFields',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           maxValuesPerFacet:
-              $checkedConvert('maxValuesPerFacet', (v) => v as int?),
+              $checkedConvert('maxValuesPerFacet', (v) => (v as num?)?.toInt()),
           sortFacetValuesBy:
               $checkedConvert('sortFacetValuesBy', (v) => v as String?),
           attributeCriteriaComputedByMinProximity: $checkedConvert(

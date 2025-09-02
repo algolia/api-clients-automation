@@ -11,7 +11,7 @@ Timeseries _$TimeseriesFromJson(Map<String, dynamic> json) => $checkedCreate(
       json,
       ($checkedConvert) {
         final val = Timeseries(
-          abTestID: $checkedConvert('abTestID', (v) => v as int),
+          abTestID: $checkedConvert('abTestID', (v) => (v as num).toInt()),
           variants: $checkedConvert(
               'variants',
               (v) => (v as List<dynamic>)

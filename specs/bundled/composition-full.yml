@@ -1441,6 +1441,50 @@ components:
       default: true
       x-categories:
         - Filtering
+    externalInjectedItem:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            title: externalInjection
+            type: object
+            additionalProperties: false
+            properties:
+              objectID:
+                type: string
+                description: An objectID injected into an external source.
+              metadata:
+                type: object
+                additionalProperties: true
+                description: >
+                  User-defined key-values that will be added to the injected
+                  item in the response.
+
+                  This is identical to Hits metadata defined in Composition or
+                  Composition Rule,
+
+                  with the benefit of being set at runtime.
+                example:
+                  my-field: my-value
+            required:
+              - objectID
+            example:
+              objectID: my-object-1
+              metadata:
+                my-field: my-value
+      required:
+        - items
+    injectedItems:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/externalInjectedItem'
+      description: >
+        A list of extenrally injected objectID groups into from an external
+        source.
+      default: {}
+      x-categories:
+        - Advanced
     params:
       title: Run composition parameters as object
       type: object
@@ -1498,6 +1542,8 @@ components:
           $ref: '#/components/schemas/enableABTest'
         enableReRanking:
           $ref: '#/components/schemas/enableReRanking'
+        injectedItems:
+          $ref: '#/components/schemas/injectedItems'
     objectID:
       type: string
       description: Unique record identifier.
@@ -3267,6 +3313,63 @@ components:
               $ref: '#/components/schemas/sortFacetValuesBy'
             sumOrFiltersScores:
               $ref: '#/components/schemas/sumOrFiltersScores'
+    SearchSource:
+      title: searchSource
+      description: >-
+        Injected items will originate from a search request performed on the
+        specified index.
+      type: object
+      additionalProperties: false
+      properties:
+        search:
+          title: search
+          type: object
+          additionalProperties: false
+          properties:
+            index:
+              type: string
+              description: Composition Index name.
+              example: Products
+            params:
+              $ref: '#/components/schemas/baseInjectionQueryParameters'
+          required:
+            - index
+      required:
+        - search
+    externalOrdering:
+      enum:
+        - default
+        - userDefined
+      default: default
+    ExternalSource:
+      title: externalSource
+      description: >-
+        Injected items will originate from externally provided objectIDs (that
+        must exist in the index) given at runtime in the run request payload.
+      type: object
+      additionalProperties: false
+      properties:
+        external:
+          title: external
+          type: object
+          additionalProperties: false
+          properties:
+            index:
+              type: string
+              description: Composition Index name.
+              example: Products
+            params:
+              $ref: '#/components/schemas/baseInjectionQueryParameters'
+            ordering:
+              $ref: '#/components/schemas/externalOrdering'
+          required:
+            - index
+      required:
+        - external
+    injectedItemSource:
+      oneOf:
+        - $ref: '#/components/schemas/SearchSource'
+        - $ref: '#/components/schemas/ExternalSource'
     injectedItem:
       type: object
       additionalProperties: false
@@ -3275,25 +3378,8 @@ components:
           type: string
           description: injected Item unique identifier.
         source:
-          title: injectedItemSource
-          type: object
-          additionalProperties: false
-          properties:
-            search:
-              title: injectedItemSourceSearch
-              type: object
-              additionalProperties: false
-              properties:
-                index:
-                  type: string
-                  description: Composition Main Index name.
-                  example: Products
-                params:
-                  $ref: '#/components/schemas/baseInjectionQueryParameters'
-              required:
-                - index
-          required:
-            - search
+          description: Search source to be used to inject items into result set.
+          $ref: '#/components/schemas/injectedItemSource'
         position:
           type: integer
           minimum: 0

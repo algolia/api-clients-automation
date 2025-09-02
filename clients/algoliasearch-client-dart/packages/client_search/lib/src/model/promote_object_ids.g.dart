@@ -14,7 +14,7 @@ PromoteObjectIDs _$PromoteObjectIDsFromJson(Map<String, dynamic> json) =>
         final val = PromoteObjectIDs(
           objectIDs: $checkedConvert('objectIDs',
               (v) => (v as List<dynamic>).map((e) => e as String).toList()),
-          position: $checkedConvert('position', (v) => v as int),
+          position: $checkedConvert('position', (v) => (v as num).toInt()),
         );
         return val;
       },

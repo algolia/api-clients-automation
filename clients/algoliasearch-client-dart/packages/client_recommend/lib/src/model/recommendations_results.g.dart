@@ -13,8 +13,9 @@ RecommendationsResults _$RecommendationsResultsFromJson(
       json,
       ($checkedConvert) {
         final val = RecommendationsResults(
-          abTestID: $checkedConvert('abTestID', (v) => v as int?),
-          abTestVariantID: $checkedConvert('abTestVariantID', (v) => v as int?),
+          abTestID: $checkedConvert('abTestID', (v) => (v as num?)?.toInt()),
+          abTestVariantID:
+              $checkedConvert('abTestVariantID', (v) => (v as num?)?.toInt()),
           aroundLatLng: $checkedConvert('aroundLatLng', (v) => v as String?),
           automaticRadius:
               $checkedConvert('automaticRadius', (v) => v as String?),
@@ -44,10 +45,11 @@ RecommendationsResults _$RecommendationsResultsFromJson(
           index: $checkedConvert('index', (v) => v as String?),
           indexUsed: $checkedConvert('indexUsed', (v) => v as String?),
           message: $checkedConvert('message', (v) => v as String?),
-          nbSortedHits: $checkedConvert('nbSortedHits', (v) => v as int?),
+          nbSortedHits:
+              $checkedConvert('nbSortedHits', (v) => (v as num?)?.toInt()),
           parsedQuery: $checkedConvert('parsedQuery', (v) => v as String?),
           processingTimeMS:
-              $checkedConvert('processingTimeMS', (v) => v as int?),
+              $checkedConvert('processingTimeMS', (v) => (v as num?)?.toInt()),
           processingTimingsMS: $checkedConvert('processingTimingsMS', (v) => v),
           queryAfterRemoval:
               $checkedConvert('queryAfterRemoval', (v) => v as String?),
@@ -61,16 +63,18 @@ RecommendationsResults _$RecommendationsResultsFromJson(
               (v) => v == null
                   ? null
                   : RenderingContent.fromJson(v as Map<String, dynamic>)),
-          serverTimeMS: $checkedConvert('serverTimeMS', (v) => v as int?),
+          serverTimeMS:
+              $checkedConvert('serverTimeMS', (v) => (v as num?)?.toInt()),
           serverUsed: $checkedConvert('serverUsed', (v) => v as String?),
           userData: $checkedConvert('userData', (v) => v),
           queryID: $checkedConvert('queryID', (v) => v as String?),
           automaticInsights:
               $checkedConvert('_automaticInsights', (v) => v as bool?),
-          page: $checkedConvert('page', (v) => v as int?),
-          nbHits: $checkedConvert('nbHits', (v) => v as int?),
-          nbPages: $checkedConvert('nbPages', (v) => v as int?),
-          hitsPerPage: $checkedConvert('hitsPerPage', (v) => v as int?),
+          page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
+          nbHits: $checkedConvert('nbHits', (v) => (v as num?)?.toInt()),
+          nbPages: $checkedConvert('nbPages', (v) => (v as num?)?.toInt()),
+          hitsPerPage:
+              $checkedConvert('hitsPerPage', (v) => (v as num?)?.toInt()),
           hits: $checkedConvert('hits', (v) => v as List<dynamic>),
         );
         return val;

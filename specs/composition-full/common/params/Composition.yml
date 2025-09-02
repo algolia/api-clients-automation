@@ -27,3 +27,41 @@ ruleContexts:
   example: [mobile]
   x-categories:
     - Rules
+
+injectedItems:
+  type: object
+  additionalProperties:
+    $ref: '#/externalInjectedItem'
+  description: |
+    A list of extenrally injected objectID groups into from an external source.
+  default: {}
+  x-categories:
+    - Advanced
+
+externalInjectedItem:
+  type: object
+  properties:
+    items:
+      type: array
+      items:
+        title: externalInjection
+        type: object
+        additionalProperties: false
+        properties:
+          objectID:
+            type: string
+            description: An objectID injected into an external source.
+          metadata:
+            type: object
+            additionalProperties: true
+            description: |
+              User-defined key-values that will be added to the injected item in the response.
+              This is identical to Hits metadata defined in Composition or Composition Rule,
+              with the benefit of being set at runtime.
+            example: {'my-field': 'my-value'}
+        required:
+          - objectID
+        example:
+          {'objectID': 'my-object-1', 'metadata': {'my-field': 'my-value'}}
+  required:
+    - items

@@ -14,7 +14,7 @@ PromoteConsequenceObject _$PromoteConsequenceObjectFromJson(
       ($checkedConvert) {
         final val = PromoteConsequenceObject(
           objectID: $checkedConvert('objectID', (v) => v as String?),
-          position: $checkedConvert('position', (v) => v as int?),
+          position: $checkedConvert('position', (v) => (v as num?)?.toInt()),
         );
         return val;
       },

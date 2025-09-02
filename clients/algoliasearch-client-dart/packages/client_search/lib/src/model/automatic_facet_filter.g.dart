@@ -14,7 +14,7 @@ AutomaticFacetFilter _$AutomaticFacetFilterFromJson(
       ($checkedConvert) {
         final val = AutomaticFacetFilter(
           facet: $checkedConvert('facet', (v) => v as String),
-          score: $checkedConvert('score', (v) => v as int?),
+          score: $checkedConvert('score', (v) => (v as num?)?.toInt()),
           disjunctive: $checkedConvert('disjunctive', (v) => v as bool?),
         );
         return val;

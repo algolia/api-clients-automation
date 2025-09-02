@@ -521,7 +521,7 @@ export async function snippetForMultipleBatch(): Promise<void> {
 //
 // putComposition
 export async function snippetForPutComposition(): Promise<void> {
-  // >SEPARATOR putComposition default
+  // >SEPARATOR putComposition putComposition
   // Initialize the client
   const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -535,6 +535,42 @@ export async function snippetForPutComposition(): Promise<void> {
         injection: {
           main: { source: { search: { index: 'foo' } } },
           injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
+        },
+      },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the putComposition method.
+//
+// putComposition
+export async function snippetForPutComposition1(): Promise<void> {
+  // >SEPARATOR putComposition putComposition
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.putComposition({
+    compositionID: 'my-external-injection-compo',
+    composition: {
+      objectID: 'my-external-injection-compo',
+      name: 'my first composition',
+      behavior: {
+        injection: {
+          main: { source: { search: { index: 'foo' } } },
+          injectedItems: [
+            {
+              key: 'injectedItem1',
+              source: { external: { index: 'foo', ordering: 'userDefined', params: { filters: 'brand:adidas' } } },
+              position: 2,
+              length: 1,
+            },
+          ],
         },
       },
     },
@@ -613,12 +649,41 @@ export async function snippetForSaveRules(): Promise<void> {
 //
 // search
 export async function snippetForSearch(): Promise<void> {
-  // >SEPARATOR search default
+  // >SEPARATOR search search
   // Initialize the client
   const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.search({ compositionID: 'foo', requestBody: { params: { query: 'batman' } } });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search
+export async function snippetForSearch1(): Promise<void> {
+  // >SEPARATOR search search
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    compositionID: 'foo',
+    requestBody: {
+      params: {
+        query: 'batman',
+        injectedItems: {
+          injectedItem1: {
+            items: [{ objectID: 'my-object-1' }, { objectID: 'my-object-2', metadata: { 'my-key': 'my-value' } }],
+          },
+        },
+      },
+    },
+  });
 
   // >LOG
   // use typed response

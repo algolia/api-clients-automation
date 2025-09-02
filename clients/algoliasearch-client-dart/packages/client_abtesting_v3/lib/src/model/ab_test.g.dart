@@ -11,7 +11,7 @@ ABTest _$ABTestFromJson(Map<String, dynamic> json) => $checkedCreate(
       json,
       ($checkedConvert) {
         final val = ABTest(
-          abTestID: $checkedConvert('abTestID', (v) => v as int),
+          abTestID: $checkedConvert('abTestID', (v) => (v as num).toInt()),
           updatedAt: $checkedConvert('updatedAt', (v) => v as String),
           createdAt: $checkedConvert('createdAt', (v) => v as String),
           endAt: $checkedConvert('endAt', (v) => v as String),
@@ -30,7 +30,7 @@ ABTest _$ABTestFromJson(Map<String, dynamic> json) => $checkedCreate(
                   ? null
                   : ABTestConfiguration.fromJson(v as Map<String, dynamic>)),
           migratedAbTestID:
-              $checkedConvert('migratedAbTestID', (v) => v as int?),
+              $checkedConvert('migratedAbTestID', (v) => (v as num?)?.toInt()),
         );
         return val;
       },

@@ -22,7 +22,7 @@ SearchForFacetValuesResults _$SearchForFacetValuesResultsFromJson(
           exhaustiveFacetsCount:
               $checkedConvert('exhaustiveFacetsCount', (v) => v as bool),
           processingTimeMS:
-              $checkedConvert('processingTimeMS', (v) => v as int?),
+              $checkedConvert('processingTimeMS', (v) => (v as num?)?.toInt()),
         );
         return val;
       },

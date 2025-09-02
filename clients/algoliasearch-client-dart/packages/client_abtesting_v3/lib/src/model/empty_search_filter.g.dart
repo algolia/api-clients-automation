@@ -12,9 +12,10 @@ EmptySearchFilter _$EmptySearchFilterFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = EmptySearchFilter(
-          usersCount: $checkedConvert('usersCount', (v) => v as int?),
-          trackedSearchesCount:
-              $checkedConvert('trackedSearchesCount', (v) => v as int?),
+          usersCount:
+              $checkedConvert('usersCount', (v) => (v as num?)?.toInt()),
+          trackedSearchesCount: $checkedConvert(
+              'trackedSearchesCount', (v) => (v as num?)?.toInt()),
         );
         return val;
       },

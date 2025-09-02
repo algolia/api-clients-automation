@@ -55,7 +55,7 @@
       "default": "const response = await client.multipleBatch({\n  requests: [\n    {\n      action: 'upsert',\n      body: {\n        objectID: 'foo',\n        name: 'my first composition',\n        behavior: { injection: { main: { source: { search: { index: 'bar' } } }, injectedItems: [] } },\n      },\n    },\n    { action: 'delete', body: { objectID: 'baz' } },\n  ],\n});"
     },
     "putComposition": {
-      "default": "const response = await client.putComposition({\n  compositionID: '1234',\n  composition: {\n    objectID: '1234',\n    name: 'my first composition',\n    behavior: {\n      injection: {\n        main: { source: { search: { index: 'foo' } } },\n        injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],\n      },\n    },\n  },\n});"
+      "putComposition": "const response = await client.putComposition({\n  compositionID: 'my-external-injection-compo',\n  composition: {\n    objectID: 'my-external-injection-compo',\n    name: 'my first composition',\n    behavior: {\n      injection: {\n        main: { source: { search: { index: 'foo' } } },\n        injectedItems: [\n          {\n            key: 'injectedItem1',\n            source: { external: { index: 'foo', ordering: 'userDefined', params: { filters: 'brand:adidas' } } },\n            position: 2,\n            length: 1,\n          },\n        ],\n      },\n    },\n  },\n});"
     },
     "putCompositionRule": {
       "default": "const response = await client.putCompositionRule({\n  compositionID: '1234',\n  objectID: '5678',\n  compositionRule: {\n    objectID: '5678',\n    conditions: [{ anchoring: 'is', pattern: 'test' }],\n    consequence: {\n      behavior: {\n        injection: {\n          main: { source: { search: { index: 'foo' } } },\n          injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],\n        },\n      },\n    },\n  },\n});"
@@ -64,7 +64,7 @@
       "default": "const response = await client.saveRules({\n  compositionID: 'foo',\n  rules: {\n    requests: [\n      {\n        action: 'upsert',\n        body: {\n          objectID: '123',\n          conditions: [{ pattern: 'a' }],\n          consequence: { behavior: { injection: { main: { source: { search: { index: '<YOUR_INDEX_NAME>' } } } } } },\n        },\n      },\n    ],\n  },\n});"
     },
     "search": {
-      "default": "const response = await client.search({ compositionID: 'foo', requestBody: { params: { query: 'batman' } } });"
+      "search": "const response = await client.search({\n  compositionID: 'foo',\n  requestBody: {\n    params: {\n      query: 'batman',\n      injectedItems: {\n        injectedItem1: {\n          items: [{ objectID: 'my-object-1' }, { objectID: 'my-object-2', metadata: { 'my-key': 'my-value' } }],\n        },\n      },\n    },\n  },\n});"
     },
     "searchCompositionRules": {
       "default": "const response = await client.searchCompositionRules({\n  compositionID: 'foo',\n  searchCompositionRulesParams: { query: 'batman' },\n});"
