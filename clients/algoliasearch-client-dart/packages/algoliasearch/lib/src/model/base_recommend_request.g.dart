@@ -15,8 +15,8 @@ BaseRecommendRequest _$BaseRecommendRequestFromJson(
         final val = BaseRecommendRequest(
           indexName: $checkedConvert('indexName', (v) => v as String),
           threshold: $checkedConvert('threshold', (v) => (v as num).toDouble()),
-          maxRecommendations:
-              $checkedConvert('maxRecommendations', (v) => v as int?),
+          maxRecommendations: $checkedConvert(
+              'maxRecommendations', (v) => (v as num?)?.toInt()),
           queryParameters: $checkedConvert(
               'queryParameters',
               (v) => v == null

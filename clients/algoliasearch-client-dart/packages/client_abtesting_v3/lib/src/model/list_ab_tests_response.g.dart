@@ -17,8 +17,8 @@ ListABTestsResponse _$ListABTestsResponseFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)
                   ?.map((e) => ABTest.fromJson(e as Map<String, dynamic>))
                   .toList()),
-          count: $checkedConvert('count', (v) => v as int),
-          total: $checkedConvert('total', (v) => v as int),
+          count: $checkedConvert('count', (v) => (v as num).toInt()),
+          total: $checkedConvert('total', (v) => (v as num).toInt()),
         );
         return val;
       },

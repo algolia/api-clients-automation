@@ -16,8 +16,9 @@ SearchRulesParams _$SearchRulesParamsFromJson(Map<String, dynamic> json) =>
           anchoring: $checkedConvert(
               'anchoring', (v) => $enumDecodeNullable(_$AnchoringEnumMap, v)),
           context: $checkedConvert('context', (v) => v as String?),
-          page: $checkedConvert('page', (v) => v as int?),
-          hitsPerPage: $checkedConvert('hitsPerPage', (v) => v as int?),
+          page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
+          hitsPerPage:
+              $checkedConvert('hitsPerPage', (v) => (v as num?)?.toInt()),
           enabled: $checkedConvert('enabled', (v) => v as bool?),
         );
         return val;

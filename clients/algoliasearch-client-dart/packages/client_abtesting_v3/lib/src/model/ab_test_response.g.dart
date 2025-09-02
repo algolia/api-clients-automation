@@ -13,8 +13,8 @@ ABTestResponse _$ABTestResponseFromJson(Map<String, dynamic> json) =>
       ($checkedConvert) {
         final val = ABTestResponse(
           index: $checkedConvert('index', (v) => v as String),
-          abTestID: $checkedConvert('abTestID', (v) => v as int),
-          taskID: $checkedConvert('taskID', (v) => v as int),
+          abTestID: $checkedConvert('abTestID', (v) => (v as num).toInt()),
+          taskID: $checkedConvert('taskID', (v) => (v as num).toInt()),
         );
         return val;
       },

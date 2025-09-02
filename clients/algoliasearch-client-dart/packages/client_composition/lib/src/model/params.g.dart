@@ -13,21 +13,22 @@ Params _$ParamsFromJson(Map<String, dynamic> json) => $checkedCreate(
         final val = Params(
           query: $checkedConvert('query', (v) => v as String?),
           filters: $checkedConvert('filters', (v) => v as String?),
-          page: $checkedConvert('page', (v) => v as int?),
+          page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
           getRankingInfo: $checkedConvert('getRankingInfo', (v) => v as bool?),
-          relevancyStrictness:
-              $checkedConvert('relevancyStrictness', (v) => v as int?),
+          relevancyStrictness: $checkedConvert(
+              'relevancyStrictness', (v) => (v as num?)?.toInt()),
           facetFilters: $checkedConvert('facetFilters', (v) => v),
           optionalFilters: $checkedConvert('optionalFilters', (v) => v),
           numericFilters: $checkedConvert('numericFilters', (v) => v),
-          hitsPerPage: $checkedConvert('hitsPerPage', (v) => v as int?),
+          hitsPerPage:
+              $checkedConvert('hitsPerPage', (v) => (v as num?)?.toInt()),
           aroundLatLng: $checkedConvert('aroundLatLng', (v) => v as String?),
           aroundLatLngViaIP:
               $checkedConvert('aroundLatLngViaIP', (v) => v as bool?),
           aroundRadius: $checkedConvert('aroundRadius', (v) => v),
           aroundPrecision: $checkedConvert('aroundPrecision', (v) => v),
-          minimumAroundRadius:
-              $checkedConvert('minimumAroundRadius', (v) => v as int?),
+          minimumAroundRadius: $checkedConvert(
+              'minimumAroundRadius', (v) => (v as num?)?.toInt()),
           insideBoundingBox: $checkedConvert('insideBoundingBox', (v) => v),
           insidePolygon: $checkedConvert(
               'insidePolygon',

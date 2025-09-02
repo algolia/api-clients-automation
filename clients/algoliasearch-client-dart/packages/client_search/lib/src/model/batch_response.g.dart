@@ -12,7 +12,7 @@ BatchResponse _$BatchResponseFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = BatchResponse(
-          taskID: $checkedConvert('taskID', (v) => v as int),
+          taskID: $checkedConvert('taskID', (v) => (v as num).toInt()),
           objectIDs: $checkedConvert('objectIDs',
               (v) => (v as List<dynamic>).map((e) => e as String).toList()),
         );

@@ -18,9 +18,10 @@ SearchUserIdsResponse _$SearchUserIdsResponseFromJson(
               (v) => (v as List<dynamic>)
                   .map((e) => UserHit.fromJson(e as Map<String, dynamic>))
                   .toList()),
-          nbHits: $checkedConvert('nbHits', (v) => v as int),
-          page: $checkedConvert('page', (v) => v as int),
-          hitsPerPage: $checkedConvert('hitsPerPage', (v) => v as int),
+          nbHits: $checkedConvert('nbHits', (v) => (v as num).toInt()),
+          page: $checkedConvert('page', (v) => (v as num).toInt()),
+          hitsPerPage:
+              $checkedConvert('hitsPerPage', (v) => (v as num).toInt()),
           updatedAt: $checkedConvert('updatedAt', (v) => v as String),
         );
         return val;

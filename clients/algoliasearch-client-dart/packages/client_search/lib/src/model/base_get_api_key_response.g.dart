@@ -14,7 +14,7 @@ BaseGetApiKeyResponse _$BaseGetApiKeyResponseFromJson(
       ($checkedConvert) {
         final val = BaseGetApiKeyResponse(
           value: $checkedConvert('value', (v) => v as String),
-          createdAt: $checkedConvert('createdAt', (v) => v as int),
+          createdAt: $checkedConvert('createdAt', (v) => (v as num).toInt()),
         );
         return val;
       },

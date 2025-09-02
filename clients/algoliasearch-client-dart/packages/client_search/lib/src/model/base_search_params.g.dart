@@ -28,16 +28,16 @@ BaseSearchParams _$BaseSearchParamsFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           facetingAfterDistinct:
               $checkedConvert('facetingAfterDistinct', (v) => v as bool?),
-          page: $checkedConvert('page', (v) => v as int?),
-          offset: $checkedConvert('offset', (v) => v as int?),
-          length: $checkedConvert('length', (v) => v as int?),
+          page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
+          offset: $checkedConvert('offset', (v) => (v as num?)?.toInt()),
+          length: $checkedConvert('length', (v) => (v as num?)?.toInt()),
           aroundLatLng: $checkedConvert('aroundLatLng', (v) => v as String?),
           aroundLatLngViaIP:
               $checkedConvert('aroundLatLngViaIP', (v) => v as bool?),
           aroundRadius: $checkedConvert('aroundRadius', (v) => v),
           aroundPrecision: $checkedConvert('aroundPrecision', (v) => v),
-          minimumAroundRadius:
-              $checkedConvert('minimumAroundRadius', (v) => v as int?),
+          minimumAroundRadius: $checkedConvert(
+              'minimumAroundRadius', (v) => (v as num?)?.toInt()),
           insideBoundingBox: $checkedConvert('insideBoundingBox', (v) => v),
           insidePolygon: $checkedConvert(
               'insidePolygon',
@@ -53,8 +53,8 @@ BaseSearchParams _$BaseSearchParamsFromJson(Map<String, dynamic> json) =>
                   .toList()),
           ruleContexts: $checkedConvert('ruleContexts',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          personalizationImpact:
-              $checkedConvert('personalizationImpact', (v) => v as int?),
+          personalizationImpact: $checkedConvert(
+              'personalizationImpact', (v) => (v as num?)?.toInt()),
           userToken: $checkedConvert('userToken', (v) => v as String?),
           getRankingInfo: $checkedConvert('getRankingInfo', (v) => v as bool?),
           synonyms: $checkedConvert('synonyms', (v) => v as bool?),

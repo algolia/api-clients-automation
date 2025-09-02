@@ -12,11 +12,11 @@ Variant _$VariantFromJson(Map<String, dynamic> json) => $checkedCreate(
       ($checkedConvert) {
         final val = Variant(
           description: $checkedConvert('description', (v) => v as String),
-          estimatedSampleSize:
-              $checkedConvert('estimatedSampleSize', (v) => v as int?),
+          estimatedSampleSize: $checkedConvert(
+              'estimatedSampleSize', (v) => (v as num?)?.toInt()),
           index: $checkedConvert('index', (v) => v as String),
           trafficPercentage:
-              $checkedConvert('trafficPercentage', (v) => v as int),
+              $checkedConvert('trafficPercentage', (v) => (v as num).toInt()),
           metrics: $checkedConvert(
               'metrics',
               (v) => (v as List<dynamic>)

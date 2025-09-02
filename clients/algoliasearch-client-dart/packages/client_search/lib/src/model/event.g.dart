@@ -17,7 +17,7 @@ Event _$EventFromJson(Map<String, dynamic> json) => $checkedCreate(
               'status', (v) => $enumDecodeNullable(_$EventStatusEnumMap, v)),
           type: $checkedConvert(
               'type', (v) => $enumDecode(_$EventTypeEnumMap, v)),
-          batchSize: $checkedConvert('batchSize', (v) => v as int),
+          batchSize: $checkedConvert('batchSize', (v) => (v as num).toInt()),
           data: $checkedConvert(
               'data',
               (v) => (v as Map<String, dynamic>?)?.map(

@@ -15,7 +15,7 @@ AbTestsVariantSearchParams _$AbTestsVariantSearchParamsFromJson(
         final val = AbTestsVariantSearchParams(
           index: $checkedConvert('index', (v) => v as String),
           trafficPercentage:
-              $checkedConvert('trafficPercentage', (v) => v as int),
+              $checkedConvert('trafficPercentage', (v) => (v as num).toInt()),
           description: $checkedConvert('description', (v) => v as String?),
           customSearchParameters:
               $checkedConvert('customSearchParameters', (v) => v as Object),

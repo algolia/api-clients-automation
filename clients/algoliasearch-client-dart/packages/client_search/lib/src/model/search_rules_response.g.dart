@@ -17,9 +17,9 @@ SearchRulesResponse _$SearchRulesResponseFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>)
                   .map((e) => Rule.fromJson(e as Map<String, dynamic>))
                   .toList()),
-          nbHits: $checkedConvert('nbHits', (v) => v as int),
-          page: $checkedConvert('page', (v) => v as int),
-          nbPages: $checkedConvert('nbPages', (v) => v as int),
+          nbHits: $checkedConvert('nbHits', (v) => (v as num).toInt()),
+          page: $checkedConvert('page', (v) => (v as num).toInt()),
+          nbPages: $checkedConvert('nbPages', (v) => (v as num).toInt()),
         );
         return val;
       },

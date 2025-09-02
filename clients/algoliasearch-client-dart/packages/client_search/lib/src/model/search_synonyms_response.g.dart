@@ -18,7 +18,7 @@ SearchSynonymsResponse _$SearchSynonymsResponseFromJson(
               (v) => (v as List<dynamic>)
                   .map((e) => SynonymHit.fromJson(e as Map<String, dynamic>))
                   .toList()),
-          nbHits: $checkedConvert('nbHits', (v) => v as int),
+          nbHits: $checkedConvert('nbHits', (v) => (v as num).toInt()),
         );
         return val;
       },

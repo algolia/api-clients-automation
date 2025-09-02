@@ -13,7 +13,7 @@ PromoteObjectID _$PromoteObjectIDFromJson(Map<String, dynamic> json) =>
       ($checkedConvert) {
         final val = PromoteObjectID(
           objectID: $checkedConvert('objectID', (v) => v as String),
-          position: $checkedConvert('position', (v) => v as int),
+          position: $checkedConvert('position', (v) => (v as num).toInt()),
         );
         return val;
       },

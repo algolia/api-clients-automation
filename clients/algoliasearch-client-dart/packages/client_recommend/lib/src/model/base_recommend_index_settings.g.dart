@@ -17,8 +17,8 @@ BaseRecommendIndexSettings _$BaseRecommendIndexSettingsFromJson(
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           ranking: $checkedConvert('ranking',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          relevancyStrictness:
-              $checkedConvert('relevancyStrictness', (v) => v as int?),
+          relevancyStrictness: $checkedConvert(
+              'relevancyStrictness', (v) => (v as num?)?.toInt()),
           attributesToHighlight: $checkedConvert('attributesToHighlight',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           attributesToSnippet: $checkedConvert('attributesToSnippet',
@@ -31,10 +31,10 @@ BaseRecommendIndexSettings _$BaseRecommendIndexSettingsFromJson(
               $checkedConvert('snippetEllipsisText', (v) => v as String?),
           restrictHighlightAndSnippetArrays: $checkedConvert(
               'restrictHighlightAndSnippetArrays', (v) => v as bool?),
-          minWordSizefor1Typo:
-              $checkedConvert('minWordSizefor1Typo', (v) => v as int?),
-          minWordSizefor2Typos:
-              $checkedConvert('minWordSizefor2Typos', (v) => v as int?),
+          minWordSizefor1Typo: $checkedConvert(
+              'minWordSizefor1Typo', (v) => (v as num?)?.toInt()),
+          minWordSizefor2Typos: $checkedConvert(
+              'minWordSizefor2Typos', (v) => (v as num?)?.toInt()),
           typoTolerance: $checkedConvert('typoTolerance', (v) => v),
           allowTyposOnNumericTokens:
               $checkedConvert('allowTyposOnNumericTokens', (v) => v as bool?),
@@ -76,11 +76,12 @@ BaseRecommendIndexSettings _$BaseRecommendIndexSettingsFromJson(
           distinct: $checkedConvert('distinct', (v) => v),
           replaceSynonymsInHighlight:
               $checkedConvert('replaceSynonymsInHighlight', (v) => v as bool?),
-          minProximity: $checkedConvert('minProximity', (v) => v as int?),
+          minProximity:
+              $checkedConvert('minProximity', (v) => (v as num?)?.toInt()),
           responseFields: $checkedConvert('responseFields',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           maxValuesPerFacet:
-              $checkedConvert('maxValuesPerFacet', (v) => v as int?),
+              $checkedConvert('maxValuesPerFacet', (v) => (v as num?)?.toInt()),
           sortFacetValuesBy:
               $checkedConvert('sortFacetValuesBy', (v) => v as String?),
           attributeCriteriaComputedByMinProximity: $checkedConvert(

@@ -33,8 +33,8 @@ BaseRecommendSearchParams _$BaseRecommendSearchParamsFromJson(
               $checkedConvert('aroundLatLngViaIP', (v) => v as bool?),
           aroundRadius: $checkedConvert('aroundRadius', (v) => v),
           aroundPrecision: $checkedConvert('aroundPrecision', (v) => v),
-          minimumAroundRadius:
-              $checkedConvert('minimumAroundRadius', (v) => v as int?),
+          minimumAroundRadius: $checkedConvert(
+              'minimumAroundRadius', (v) => (v as num?)?.toInt()),
           insideBoundingBox: $checkedConvert('insideBoundingBox', (v) => v),
           insidePolygon: $checkedConvert(
               'insidePolygon',
@@ -50,8 +50,8 @@ BaseRecommendSearchParams _$BaseRecommendSearchParamsFromJson(
                   .toList()),
           ruleContexts: $checkedConvert('ruleContexts',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          personalizationImpact:
-              $checkedConvert('personalizationImpact', (v) => v as int?),
+          personalizationImpact: $checkedConvert(
+              'personalizationImpact', (v) => (v as num?)?.toInt()),
           userToken: $checkedConvert('userToken', (v) => v as String?),
           getRankingInfo: $checkedConvert('getRankingInfo', (v) => v as bool?),
           synonyms: $checkedConvert('synonyms', (v) => v as bool?),

@@ -12,7 +12,7 @@ DeletedAtResponse _$DeletedAtResponseFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = DeletedAtResponse(
-          taskID: $checkedConvert('taskID', (v) => v as int),
+          taskID: $checkedConvert('taskID', (v) => (v as num).toInt()),
           deletedAt: $checkedConvert('deletedAt', (v) => v as String),
         );
         return val;

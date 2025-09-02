@@ -13,9 +13,13 @@ EstimateABTestResponse _$EstimateABTestResponseFromJson(
       json,
       ($checkedConvert) {
         final val = EstimateABTestResponse(
-          durationDays: $checkedConvert('durationDays', (v) => v as int?),
-          sampleSizes: $checkedConvert('sampleSizes',
-              (v) => (v as List<dynamic>?)?.map((e) => e as int).toList()),
+          durationDays:
+              $checkedConvert('durationDays', (v) => (v as num?)?.toInt()),
+          sampleSizes: $checkedConvert(
+              'sampleSizes',
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) => (e as num).toInt())
+                  .toList()),
         );
         return val;
       },

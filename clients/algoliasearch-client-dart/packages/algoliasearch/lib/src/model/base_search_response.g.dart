@@ -12,8 +12,9 @@ BaseSearchResponse _$BaseSearchResponseFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = BaseSearchResponse(
-          abTestID: $checkedConvert('abTestID', (v) => v as int?),
-          abTestVariantID: $checkedConvert('abTestVariantID', (v) => v as int?),
+          abTestID: $checkedConvert('abTestID', (v) => (v as num?)?.toInt()),
+          abTestVariantID:
+              $checkedConvert('abTestVariantID', (v) => (v as num?)?.toInt()),
           aroundLatLng: $checkedConvert('aroundLatLng', (v) => v as String?),
           automaticRadius:
               $checkedConvert('automaticRadius', (v) => v as String?),
@@ -43,10 +44,11 @@ BaseSearchResponse _$BaseSearchResponseFromJson(Map<String, dynamic> json) =>
           index: $checkedConvert('index', (v) => v as String?),
           indexUsed: $checkedConvert('indexUsed', (v) => v as String?),
           message: $checkedConvert('message', (v) => v as String?),
-          nbSortedHits: $checkedConvert('nbSortedHits', (v) => v as int?),
+          nbSortedHits:
+              $checkedConvert('nbSortedHits', (v) => (v as num?)?.toInt()),
           parsedQuery: $checkedConvert('parsedQuery', (v) => v as String?),
           processingTimeMS:
-              $checkedConvert('processingTimeMS', (v) => v as int?),
+              $checkedConvert('processingTimeMS', (v) => (v as num?)?.toInt()),
           processingTimingsMS: $checkedConvert('processingTimingsMS', (v) => v),
           queryAfterRemoval:
               $checkedConvert('queryAfterRemoval', (v) => v as String?),
@@ -60,7 +62,8 @@ BaseSearchResponse _$BaseSearchResponseFromJson(Map<String, dynamic> json) =>
               (v) => v == null
                   ? null
                   : RenderingContent.fromJson(v as Map<String, dynamic>)),
-          serverTimeMS: $checkedConvert('serverTimeMS', (v) => v as int?),
+          serverTimeMS:
+              $checkedConvert('serverTimeMS', (v) => (v as num?)?.toInt()),
           serverUsed: $checkedConvert('serverUsed', (v) => v as String?),
           userData: $checkedConvert('userData', (v) => v),
           queryID: $checkedConvert('queryID', (v) => v as String?),

@@ -21,7 +21,8 @@ Hit _$HitFromJson(Map<String, dynamic> json) => $checkedCreate(
               (v) => v == null
                   ? null
                   : RankingInfo.fromJson(v as Map<String, dynamic>)),
-          distinctSeqID: $checkedConvert('_distinctSeqID', (v) => v as int?),
+          distinctSeqID:
+              $checkedConvert('_distinctSeqID', (v) => (v as num?)?.toInt()),
         );
         return val;
       },

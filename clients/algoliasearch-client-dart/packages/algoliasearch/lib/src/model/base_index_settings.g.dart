@@ -16,8 +16,8 @@ BaseIndexSettings _$BaseIndexSettingsFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           replicas: $checkedConvert('replicas',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          paginationLimitedTo:
-              $checkedConvert('paginationLimitedTo', (v) => v as int?),
+          paginationLimitedTo: $checkedConvert(
+              'paginationLimitedTo', (v) => (v as num?)?.toInt()),
           unretrievableAttributes: $checkedConvert('unretrievableAttributes',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           disableTypoToleranceOnWords: $checkedConvert(
@@ -55,7 +55,8 @@ BaseIndexSettings _$BaseIndexSettingsFromJson(Map<String, dynamic> json) =>
                   )),
           attributeForDistinct:
               $checkedConvert('attributeForDistinct', (v) => v as String?),
-          maxFacetHits: $checkedConvert('maxFacetHits', (v) => v as int?),
+          maxFacetHits:
+              $checkedConvert('maxFacetHits', (v) => (v as num?)?.toInt()),
           keepDiacriticsOnCharacters: $checkedConvert(
               'keepDiacriticsOnCharacters', (v) => v as String?),
           customRanking: $checkedConvert('customRanking',

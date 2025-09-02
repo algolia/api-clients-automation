@@ -14,7 +14,7 @@ MatchedGeoLocation _$MatchedGeoLocationFromJson(Map<String, dynamic> json) =>
         final val = MatchedGeoLocation(
           lat: $checkedConvert('lat', (v) => (v as num?)?.toDouble()),
           lng: $checkedConvert('lng', (v) => (v as num?)?.toDouble()),
-          distance: $checkedConvert('distance', (v) => v as int?),
+          distance: $checkedConvert('distance', (v) => (v as num?)?.toInt()),
         );
         return val;
       },

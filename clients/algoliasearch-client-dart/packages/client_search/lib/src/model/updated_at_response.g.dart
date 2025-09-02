@@ -12,7 +12,7 @@ UpdatedAtResponse _$UpdatedAtResponseFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = UpdatedAtResponse(
-          taskID: $checkedConvert('taskID', (v) => v as int),
+          taskID: $checkedConvert('taskID', (v) => (v as num).toInt()),
           updatedAt: $checkedConvert('updatedAt', (v) => v as String),
         );
         return val;

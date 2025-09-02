@@ -13,7 +13,7 @@ SaveObjectResponse _$SaveObjectResponseFromJson(Map<String, dynamic> json) =>
       ($checkedConvert) {
         final val = SaveObjectResponse(
           createdAt: $checkedConvert('createdAt', (v) => v as String),
-          taskID: $checkedConvert('taskID', (v) => v as int),
+          taskID: $checkedConvert('taskID', (v) => (v as num).toInt()),
           objectID: $checkedConvert('objectID', (v) => v as String?),
         );
         return val;

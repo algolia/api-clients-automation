@@ -22,7 +22,8 @@ RecommendHit _$RecommendHitFromJson(Map<String, dynamic> json) =>
               (v) => v == null
                   ? null
                   : RankingInfo.fromJson(v as Map<String, dynamic>)),
-          distinctSeqID: $checkedConvert('_distinctSeqID', (v) => v as int?),
+          distinctSeqID:
+              $checkedConvert('_distinctSeqID', (v) => (v as num?)?.toInt()),
           score: $checkedConvert('_score', (v) => (v as num?)?.toDouble()),
         );
         return val;

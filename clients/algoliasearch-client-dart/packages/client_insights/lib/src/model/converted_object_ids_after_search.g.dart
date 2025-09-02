@@ -23,7 +23,7 @@ ConvertedObjectIDsAfterSearch _$ConvertedObjectIDsAfterSearchFromJson(
           userToken: $checkedConvert('userToken', (v) => v as String),
           authenticatedUserToken:
               $checkedConvert('authenticatedUserToken', (v) => v as String?),
-          timestamp: $checkedConvert('timestamp', (v) => v as int?),
+          timestamp: $checkedConvert('timestamp', (v) => (v as num?)?.toInt()),
         );
         return val;
       },

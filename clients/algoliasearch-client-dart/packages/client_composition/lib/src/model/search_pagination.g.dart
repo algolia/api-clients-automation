@@ -12,10 +12,11 @@ SearchPagination _$SearchPaginationFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = SearchPagination(
-          page: $checkedConvert('page', (v) => v as int),
-          nbHits: $checkedConvert('nbHits', (v) => v as int),
-          nbPages: $checkedConvert('nbPages', (v) => v as int),
-          hitsPerPage: $checkedConvert('hitsPerPage', (v) => v as int),
+          page: $checkedConvert('page', (v) => (v as num).toInt()),
+          nbHits: $checkedConvert('nbHits', (v) => (v as num).toInt()),
+          nbPages: $checkedConvert('nbPages', (v) => (v as num).toInt()),
+          hitsPerPage:
+              $checkedConvert('hitsPerPage', (v) => (v as num).toInt()),
         );
         return val;
       },

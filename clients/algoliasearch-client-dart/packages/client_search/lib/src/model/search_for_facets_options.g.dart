@@ -16,7 +16,8 @@ SearchForFacetsOptions _$SearchForFacetsOptionsFromJson(
           facet: $checkedConvert('facet', (v) => v as String),
           indexName: $checkedConvert('indexName', (v) => v as String),
           facetQuery: $checkedConvert('facetQuery', (v) => v as String?),
-          maxFacetHits: $checkedConvert('maxFacetHits', (v) => v as int?),
+          maxFacetHits:
+              $checkedConvert('maxFacetHits', (v) => (v as num?)?.toInt()),
           type: $checkedConvert(
               'type', (v) => $enumDecode(_$SearchTypeFacetEnumMap, v)),
         );

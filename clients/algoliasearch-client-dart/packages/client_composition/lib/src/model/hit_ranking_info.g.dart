@@ -12,11 +12,13 @@ HitRankingInfo _$HitRankingInfoFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = HitRankingInfo(
-          filters: $checkedConvert('filters', (v) => v as int?),
+          filters: $checkedConvert('filters', (v) => (v as num?)?.toInt()),
           firstMatchedWord:
-              $checkedConvert('firstMatchedWord', (v) => v as int),
-          geoDistance: $checkedConvert('geoDistance', (v) => v as int),
-          geoPrecision: $checkedConvert('geoPrecision', (v) => v as int?),
+              $checkedConvert('firstMatchedWord', (v) => (v as num).toInt()),
+          geoDistance:
+              $checkedConvert('geoDistance', (v) => (v as num).toInt()),
+          geoPrecision:
+              $checkedConvert('geoPrecision', (v) => (v as num?)?.toInt()),
           matchedGeoLocation: $checkedConvert(
               'matchedGeoLocation',
               (v) => v == null
@@ -27,13 +29,14 @@ HitRankingInfo _$HitRankingInfoFromJson(Map<String, dynamic> json) =>
               (v) => v == null
                   ? null
                   : Personalization.fromJson(v as Map<String, dynamic>)),
-          nbExactWords: $checkedConvert('nbExactWords', (v) => v as int),
-          nbTypos: $checkedConvert('nbTypos', (v) => v as int),
+          nbExactWords:
+              $checkedConvert('nbExactWords', (v) => (v as num).toInt()),
+          nbTypos: $checkedConvert('nbTypos', (v) => (v as num).toInt()),
           promoted: $checkedConvert('promoted', (v) => v as bool?),
           proximityDistance:
-              $checkedConvert('proximityDistance', (v) => v as int?),
-          userScore: $checkedConvert('userScore', (v) => v as int),
-          words: $checkedConvert('words', (v) => v as int?),
+              $checkedConvert('proximityDistance', (v) => (v as num?)?.toInt()),
+          userScore: $checkedConvert('userScore', (v) => (v as num).toInt()),
+          words: $checkedConvert('words', (v) => (v as num?)?.toInt()),
           promotedByReRanking:
               $checkedConvert('promotedByReRanking', (v) => v as bool?),
           composed: $checkedConvert(
