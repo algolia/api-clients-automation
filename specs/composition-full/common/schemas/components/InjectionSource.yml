@@ -4,31 +4,41 @@ SearchSource:
   type: object
   additionalProperties: false
   properties:
-    index:
-      type: string
-      description: Composition Index name.
-      example: Products
-    params:
-      $ref: './Injection.yml#/injectedItemsQueryParameters'
-  required:
-    - index
+    search:
+      title: searchSource
+      type: object
+      additionalProperties: false
+      properties:
+        index:
+          type: string
+          description: Composition Index name.
+          example: Products
+        params:
+          $ref: './Injection.yml#/injectedItemsQueryParameters'
+      required:
+        - index
 
 ExternalSource:
   title: external
   description: Injected items will originate from externally provided objectIDs (that must exist in the index) given at runtime in the run request payload.
   type: object
   additionalProperties: false
-  allOf:
-    - $ref: '#/SearchSource'
-    - $ref: '#/externalFields'
-
-externalFields:
-  title: externalSourceFields
-  type: object
-  additionalProperties: false
   properties:
-    ordering:
-      $ref: '#/externalOrdering'
+    external:
+      title: externalSource
+      type: object
+      additionalProperties: false
+      properties:
+        index:
+          type: string
+          description: Composition Index name.
+          example: Products
+        params:
+          $ref: './Injection.yml#/injectedItemsQueryParameters'
+        ordering:
+          $ref: '#/externalOrdering'
+      required:
+        - index
 
 externalOrdering:
   enum: ['default', 'userDefined']
