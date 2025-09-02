@@ -44,7 +44,7 @@ externalInjectedItem:
     items:
       type: array
       items:
-        title: externalInjectedItemsArray
+        title: externalInjection
         type: object
         additionalProperties: false
         properties:
@@ -63,3 +63,5 @@ externalInjectedItem:
           - objectID
         example:
           {'objectID': 'my-object-1', 'metadata': {'my-field': 'my-value'}}
+  required:
+    - items

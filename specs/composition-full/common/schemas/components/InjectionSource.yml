@@ -1,11 +1,11 @@
 SearchSource:
-  title: search
+  title: searchSource
   description: Injected items will originate from a search request performed on the specified index.
   type: object
   additionalProperties: false
   properties:
     search:
-      title: searchSource
+      title: search
       type: object
       additionalProperties: false
       properties:
@@ -17,15 +17,17 @@ SearchSource:
           $ref: './Injection.yml#/injectedItemsQueryParameters'
       required:
         - index
+  required:
+    - search
 
 ExternalSource:
-  title: external
+  title: externalSource
   description: Injected items will originate from externally provided objectIDs (that must exist in the index) given at runtime in the run request payload.
   type: object
   additionalProperties: false
   properties:
     external:
-      title: externalSource
+      title: external
       type: object
       additionalProperties: false
       properties:
@@ -39,6 +41,8 @@ ExternalSource:
           $ref: '#/externalOrdering'
       required:
         - index
+  required:
+    - external
 
 externalOrdering:
   enum: ['default', 'userDefined']
