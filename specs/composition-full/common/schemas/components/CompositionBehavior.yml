@@ -88,13 +88,6 @@ injectedItem:
     - length
 
 injectedItemSource:
-  type: object
-  additionalProperties: false
-  properties:
-    search:
-      $ref: './InjectionSource.yml#/search'
-    external:
-      $ref: './InjectionSource.yml#/external'
   oneOf:
-    - required: [search]
-    - required: [external]
+    - $ref: './InjectionSource.yml#/SearchSource'
+    - $ref: './InjectionSource.yml#/ExternalSource'
