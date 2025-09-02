@@ -73,6 +73,7 @@ final class AlgoliaWaitException implements AlgoliaException {
 final class UnreachableHostsException implements AlgoliaException {
   /// The list of errors associated with each unreachable host.
   final List<AlgoliaException> errors;
+  final String message;
 
   /// Constructs an [UnreachableHostsException] with the provided list of errors.
   const UnreachableHostsException(this.errors);
