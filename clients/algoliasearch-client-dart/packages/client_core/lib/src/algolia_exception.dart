@@ -79,6 +79,6 @@ final class UnreachableHostsException implements AlgoliaException {
 
   @override
   String toString() {
-    return 'UnreachableHostsException{errors: $errors}';
+    return 'UnreachableHostsException{errors: $errors, message: If the error persists, please visit our help center <SUPPORT_LINK_HERE> or reach out to the Algolia Support team: https://alg.li/support.}';
   }
 }
