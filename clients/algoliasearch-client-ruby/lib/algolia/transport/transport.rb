@@ -85,7 +85,7 @@ module Algolia
           end
         end
 
-        raise Algolia::AlgoliaUnreachableHostError.new("Unreachable hosts. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support.", retry_errors)
+        raise Algolia::AlgoliaUnreachableHostError.new("Unreachable hosts. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support", retry_errors)
       end
 
       private
