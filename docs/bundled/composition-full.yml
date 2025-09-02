@@ -445,6 +445,149 @@ paths:
               --header 'accept: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+    put:
+      tags:
+        - Compositions
+      operationId: putComposition
+      x-acl:
+        - editSettings
+        - settings
+      summary: Upsert a composition
+      description: |
+        Upsert a composition in the current Algolia application.
+      parameters:
+        - $ref: '#/components/parameters/compositionID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/composition'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: taskIDResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  taskID:
+                    $ref: '#/components/schemas/taskID'
+                required:
+                  - taskID
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = compositionClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.putComposition({
+              compositionID: '1234',
+              composition: {
+                objectID: '1234',
+                name: 'my first composition',
+                behavior: {
+                  injection: {
+                    main: { source: { search: { index: 'foo' } } },
+                    injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
+                  },
+                },
+              },
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PUT \
+              --url https://algolia_application_id.algolia.net/1/compositions/my_composition_object_id \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"objectID":"my_composition_object_id","name":"my lovely crafted composition","description":"my lovely crafted composition that is used for X purpose","behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":["*"],"hitsPerPage":20,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}]}}}'
+    delete:
+      tags:
+        - Compositions
+      operationId: deleteComposition
+      x-acl:
+        - editSettings
+        - settings
+      summary: Delete a composition
+      description: |
+        Delete a composition from the current Algolia application.
+      parameters:
+        - $ref: '#/components/parameters/compositionID'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: taskIDResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  taskID:
+                    $ref: '#/components/schemas/taskID'
+                required:
+                  - taskID
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = compositionClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.deleteComposition({ compositionID:
+            '1234' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
+              --url https://algolia_application_id.algolia.net/1/compositions/my_composition_object_id \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/compositions/*/batch:
     post:
       tags:
@@ -604,6 +747,158 @@ paths:
           label: curl
           source: |-
             curl --request GET \
+              --url https://algolia_application_id.algolia.net/1/compositions/my_composition_object_id/rules/lorem \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
+    put:
+      tags:
+        - Rules
+      operationId: putCompositionRule
+      x-acl:
+        - editSettings
+        - settings
+      summary: Upsert a composition rule
+      description: |
+        Upsert a Composition Rule for the specified composition ID.
+      parameters:
+        - $ref: '#/components/parameters/compositionID'
+        - $ref: '#/components/parameters/ObjectIDRule'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/compositionRule'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: taskIDResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  taskID:
+                    $ref: '#/components/schemas/taskID'
+                required:
+                  - taskID
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/CompositionNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = compositionClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.putCompositionRule({
+              compositionID: '1234',
+              objectID: '5678',
+              compositionRule: {
+                objectID: '5678',
+                conditions: [{ anchoring: 'is', pattern: 'test' }],
+                consequence: {
+                  behavior: {
+                    injection: {
+                      main: { source: { search: { index: 'foo' } } },
+                      injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
+                    },
+                  },
+                },
+              },
+            });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request PUT \
+              --url https://algolia_application_id.algolia.net/1/compositions/my_composition_object_id/rules/lorem \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"objectID":"my_composition_rule_object_id","conditions":[{"pattern":"{facet:genre}","anchoring":"is","context":"mobile","filters":"genre:comedy"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":["*"],"hitsPerPage":20,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}]}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}]}'
+    delete:
+      tags:
+        - Rules
+      operationId: deleteCompositionRule
+      x-acl:
+        - editSettings
+        - settings
+      summary: Delete a Composition Rule
+      description: |
+        Delete a Composition Rule from the specified Composition ID.
+      parameters:
+        - $ref: '#/components/parameters/compositionID'
+        - $ref: '#/components/parameters/ObjectIDRule'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: taskIDResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  taskID:
+                    $ref: '#/components/schemas/taskID'
+                required:
+                  - taskID
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/CompositionNotFound'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = compositionClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.deleteCompositionRule({ compositionID:
+            '1234', objectID: '5678' });
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request DELETE \
               --url https://algolia_application_id.algolia.net/1/compositions/my_composition_object_id/rules/lorem \
               --header 'accept: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
@@ -3555,6 +3850,17 @@ components:
         - objectID
         - behavior
         - name
+    taskID:
+      type: integer
+      format: int64
+      example: 1514562690001
+      description: >
+        Unique identifier of a task.
+
+
+        A successful API response means that a task was added to a queue. It
+        might not run immediately. You can check the task's progress with the
+        [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.
     action:
       type: string
       enum:
@@ -3574,17 +3880,6 @@ components:
       oneOf:
         - $ref: '#/components/schemas/composition'
         - $ref: '#/components/schemas/deleteCompositionAction'
-    taskID:
-      type: integer
-      format: int64
-      example: 1514562690001
-      description: >
-        Unique identifier of a task.
-
-
-        A successful API response means that a task was added to a queue. It
-        might not run immediately. You can check the task's progress with the
-        [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.
     ruleID:
       title: objectID
       type: string
@@ -3848,6 +4143,12 @@ components:
             $ref: '#/components/schemas/ErrorBase'
     CompositionNotFound:
       description: Composition not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    UnprocessableEntity:
+      description: Unprocessable Entity.
       content:
         application/json:
           schema:

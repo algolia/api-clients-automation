@@ -119,7 +119,7 @@ func TestSearchE2E_GetSettings(t *testing.T) {
 	t.Run("getSettings", func(t *testing.T) {
 		client := createE2ESearchClient(t)
 		res, err := client.GetSettings(client.NewApiGetSettingsRequest(
-			"cts_e2e_settings"))
+			"cts_e2e_settings").WithGetVersion(2))
 		require.NoError(t, err)
 		_ = res
 

@@ -1306,6 +1306,7 @@ paths:
       summary: Retrieve index settings
       parameters:
         - $ref: '#/components/parameters/IndexName'
+        - $ref: '#/components/parameters/getVersion'
       responses:
         '200':
           description: OK
@@ -6447,6 +6448,7 @@ components:
         A hit is a record from your index, augmented with special attributes for
         highlighting, snippeting, and ranking.
       x-is-generic: true
+      x-is-hit-object: true
       additionalProperties: true
       required:
         - objectID
@@ -8590,6 +8592,15 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/objectID'
+    getVersion:
+      name: getVersion
+      description: >-
+        When set to 2, the endpoint will not include `synonyms` in the response.
+        This parameter is here for backward compatibility.
+      in: query
+      schema:
+        type: integer
+        default: 1
     ForwardToReplicas:
       in: query
       name: forwardToReplicas

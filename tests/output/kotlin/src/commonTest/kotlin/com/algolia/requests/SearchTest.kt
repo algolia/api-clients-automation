@@ -1437,11 +1437,13 @@ class SearchTest {
       call = {
         getSettings(
           indexName = "cts_e2e_settings",
+          getVersion = 2,
         )
       },
       intercept = {
         assertEquals("/1/indexes/cts_e2e_settings/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
+        assertQueryParams("""{"getVersion":"2"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )

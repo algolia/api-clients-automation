@@ -1923,7 +1923,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getSettingsWithHTTPInfo(indexName: "cts_e2e_settings")
+        let response = try await client.getSettingsWithHTTPInfo(indexName: "cts_e2e_settings", getVersion: 2)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1932,7 +1932,13 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/1/indexes/cts_e2e_settings/settings")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        XCTAssertNil(echoResponse.queryParameters)
+        let expectedQueryParameters = try XCTUnwrap("{\"getVersion\":\"2\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
     /// getSources

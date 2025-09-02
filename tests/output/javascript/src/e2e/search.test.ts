@@ -62,7 +62,7 @@ describe('getRule', () => {
 
 describe('getSettings', () => {
   test('getSettings', async () => {
-    const resp = await client.getSettings({ indexName: 'cts_e2e_settings' });
+    const resp = await client.getSettings({ indexName: 'cts_e2e_settings', getVersion: 2 });
 
     const expectedBody = {
       minWordSizefor1Typo: 4,

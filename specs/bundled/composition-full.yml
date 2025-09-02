@@ -278,6 +278,78 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/CompositionNotFound'
+    put:
+      tags:
+        - composition-full
+      operationId: putComposition
+      x-acl:
+        - editSettings
+        - settings
+      summary: Upsert a composition
+      description: |
+        Upsert a composition in the current Algolia application.
+      parameters:
+        - $ref: '#/components/parameters/compositionID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/composition'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: taskIDResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  taskID:
+                    $ref: '#/components/schemas/taskID'
+                required:
+                  - taskID
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    delete:
+      tags:
+        - composition-full
+      operationId: deleteComposition
+      x-acl:
+        - editSettings
+        - settings
+      summary: Delete a composition
+      description: |
+        Delete a composition from the current Algolia application.
+      parameters:
+        - $ref: '#/components/parameters/compositionID'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: taskIDResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  taskID:
+                    $ref: '#/components/schemas/taskID'
+                required:
+                  - taskID
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
   /1/compositions/*/batch:
     post:
       tags:
@@ -370,6 +442,84 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+    put:
+      tags:
+        - composition-full
+      operationId: putCompositionRule
+      x-acl:
+        - editSettings
+        - settings
+      summary: Upsert a composition rule
+      description: |
+        Upsert a Composition Rule for the specified composition ID.
+      parameters:
+        - $ref: '#/components/parameters/compositionID'
+        - $ref: '#/components/parameters/ObjectIDRule'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/compositionRule'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: taskIDResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  taskID:
+                    $ref: '#/components/schemas/taskID'
+                required:
+                  - taskID
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/CompositionNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    delete:
+      tags:
+        - composition-full
+      operationId: deleteCompositionRule
+      x-acl:
+        - editSettings
+        - settings
+      summary: Delete a Composition Rule
+      description: |
+        Delete a Composition Rule from the specified Composition ID.
+      parameters:
+        - $ref: '#/components/parameters/compositionID'
+        - $ref: '#/components/parameters/ObjectIDRule'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: taskIDResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  taskID:
+                    $ref: '#/components/schemas/taskID'
+                required:
+                  - taskID
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/CompositionNotFound'
   /1/compositions/{compositionID}/rules/batch:
     post:
       tags:
@@ -3247,6 +3397,17 @@ components:
         - objectID
         - behavior
         - name
+    taskID:
+      type: integer
+      format: int64
+      example: 1514562690001
+      description: >
+        Unique identifier of a task.
+
+
+        A successful API response means that a task was added to a queue. It
+        might not run immediately. You can check the task's progress with the
+        [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.
     action:
       type: string
       enum:
@@ -3266,17 +3427,6 @@ components:
       oneOf:
         - $ref: '#/components/schemas/composition'
         - $ref: '#/components/schemas/deleteCompositionAction'
-    taskID:
-      type: integer
-      format: int64
-      example: 1514562690001
-      description: >
-        Unique identifier of a task.
-
-
-        A successful API response means that a task was added to a queue. It
-        might not run immediately. You can check the task's progress with the
-        [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.
     ruleID:
       title: objectID
       type: string
@@ -3540,6 +3690,12 @@ components:
             $ref: '#/components/schemas/ErrorBase'
     CompositionNotFound:
       description: Composition not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    UnprocessableEntity:
+      description: Unprocessable Entity.
       content:
         application/json:
           schema:
