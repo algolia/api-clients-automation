@@ -20,6 +20,12 @@ external:
   additionalProperties: false
   allOf:
     - $ref: '#/search'
+    - $ref: '#/externalFields'
+
+externalFields:
+  title: externalSourceFields
+  type: object
+  additionalProperties: false
   properties:
     ordering:
       $ref: '#/externalOrdering'
