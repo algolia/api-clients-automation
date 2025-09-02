@@ -6,7 +6,9 @@ package com.algolia.model.composition;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /** Params */
@@ -89,6 +91,9 @@ public class Params {
 
   @JsonProperty("enableReRanking")
   private Boolean enableReRanking;
+
+  @JsonProperty("injectedItems")
+  private Map<String, ExternalInjectedItem> injectedItems;
 
   public Params setQuery(String query) {
     this.query = query;
@@ -492,6 +497,25 @@ public class Params {
     return enableReRanking;
   }
 
+  public Params setInjectedItems(Map<String, ExternalInjectedItem> injectedItems) {
+    this.injectedItems = injectedItems;
+    return this;
+  }
+
+  public Params putInjectedItems(String key, ExternalInjectedItem injectedItemsItem) {
+    if (this.injectedItems == null) {
+      this.injectedItems = new HashMap<>();
+    }
+    this.injectedItems.put(key, injectedItemsItem);
+    return this;
+  }
+
+  /** A list of extenrally injected objectID groups into from an external source. */
+  @javax.annotation.Nullable
+  public Map<String, ExternalInjectedItem> getInjectedItems() {
+    return injectedItems;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -527,7 +551,8 @@ public class Params {
       Objects.equals(this.analytics, params.analytics) &&
       Objects.equals(this.analyticsTags, params.analyticsTags) &&
       Objects.equals(this.enableABTest, params.enableABTest) &&
-      Objects.equals(this.enableReRanking, params.enableReRanking)
+      Objects.equals(this.enableReRanking, params.enableReRanking) &&
+      Objects.equals(this.injectedItems, params.injectedItems)
     );
   }
 
@@ -559,7 +584,8 @@ public class Params {
       analytics,
       analyticsTags,
       enableABTest,
-      enableReRanking
+      enableReRanking,
+      injectedItems
     );
   }
 
@@ -593,6 +619,7 @@ public class Params {
     sb.append("    analyticsTags: ").append(toIndentedString(analyticsTags)).append("\n");
     sb.append("    enableABTest: ").append(toIndentedString(enableABTest)).append("\n");
     sb.append("    enableReRanking: ").append(toIndentedString(enableReRanking)).append("\n");
+    sb.append("    injectedItems: ").append(toIndentedString(injectedItems)).append("\n");
     sb.append("}");
     return sb.toString();
   }

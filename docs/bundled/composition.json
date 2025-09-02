@@ -677,6 +677,56 @@
           "Filtering"
         ]
       },
+      "externalInjectedItem": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "title": "externalInjection",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "objectID": {
+                  "type": "string",
+                  "description": "An objectID injected into an external source."
+                },
+                "metadata": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "description": "User-defined key-values that will be added to the injected item in the response.\nThis is identical to Hits metadata defined in Composition or Composition Rule,\nwith the benefit of being set at runtime.\n",
+                  "example": {
+                    "my-field": "my-value"
+                  }
+                }
+              },
+              "required": [
+                "objectID"
+              ],
+              "example": {
+                "objectID": "my-object-1",
+                "metadata": {
+                  "my-field": "my-value"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "injectedItems": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/externalInjectedItem"
+        },
+        "description": "A list of extenrally injected objectID groups into from an external source.\n",
+        "default": {},
+        "x-categories": [
+          "Advanced"
+        ]
+      },
       "params": {
         "title": "Run composition parameters as object",
         "type": "object",
@@ -759,6 +809,9 @@
           },
           "enableReRanking": {
             "$ref": "#/components/schemas/enableReRanking"
+          },
+          "injectedItems": {
+            "$ref": "#/components/schemas/injectedItems"
           }
         }
       },

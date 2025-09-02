@@ -12,6 +12,8 @@ import 'package:algolia_client_composition/src/model/composition_run_search_resp
 import 'package:algolia_client_composition/src/model/compositions_search_response.dart';
 import 'package:algolia_client_composition/src/model/error_base.dart';
 import 'package:algolia_client_composition/src/model/exhaustive.dart';
+import 'package:algolia_client_composition/src/model/external_injected_item.dart';
+import 'package:algolia_client_composition/src/model/external_injection.dart';
 import 'package:algolia_client_composition/src/model/facet_hits.dart';
 import 'package:algolia_client_composition/src/model/facet_ordering.dart';
 import 'package:algolia_client_composition/src/model/facet_stats.dart';
@@ -106,6 +108,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return ErrorBase.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'Exhaustive':
       return Exhaustive.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ExternalInjectedItem':
+      return ExternalInjectedItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ExternalInjection':
+      return ExternalInjection.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'FacetHits':
       return FacetHits.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'FacetOrdering':

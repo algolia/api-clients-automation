@@ -118,6 +118,8 @@ import algoliasearch.composition.SupportedLanguage._
   * @param enableReRanking
   *   Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) This
   *   setting only has an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
+  * @param injectedItems
+  *   A list of extenrally injected objectID groups into from an external source.
   */
 case class Params(
     query: Option[String] = scala.None,
@@ -145,5 +147,6 @@ case class Params(
     analytics: Option[Boolean] = scala.None,
     analyticsTags: Option[Seq[String]] = scala.None,
     enableABTest: Option[Boolean] = scala.None,
-    enableReRanking: Option[Boolean] = scala.None
+    enableReRanking: Option[Boolean] = scala.None,
+    injectedItems: Option[Map[String, ExternalInjectedItem]] = scala.None
 )

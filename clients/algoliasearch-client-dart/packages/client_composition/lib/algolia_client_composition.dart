@@ -19,6 +19,8 @@ export 'src/model/composition_run_search_response.dart';
 export 'src/model/compositions_search_response.dart';
 export 'src/model/error_base.dart';
 export 'src/model/exhaustive.dart';
+export 'src/model/external_injected_item.dart';
+export 'src/model/external_injection.dart';
 export 'src/model/facet_hits.dart';
 export 'src/model/facet_ordering.dart';
 export 'src/model/facet_stats.dart';

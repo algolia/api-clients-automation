@@ -58,6 +58,14 @@ Params _$ParamsFromJson(Map<String, dynamic> json) => $checkedCreate(
           enableABTest: $checkedConvert('enableABTest', (v) => v as bool?),
           enableReRanking:
               $checkedConvert('enableReRanking', (v) => v as bool?),
+          injectedItems: $checkedConvert(
+              'injectedItems',
+              (v) => (v as Map<String, dynamic>?)?.map(
+                    (k, e) => MapEntry(
+                        k,
+                        ExternalInjectedItem.fromJson(
+                            e as Map<String, dynamic>)),
+                  )),
         );
         return val;
       },
@@ -100,6 +108,8 @@ Map<String, dynamic> _$ParamsToJson(Params instance) {
   writeNotNull('analyticsTags', instance.analyticsTags);
   writeNotNull('enableABTest', instance.enableABTest);
   writeNotNull('enableReRanking', instance.enableReRanking);
+  writeNotNull('injectedItems',
+      instance.injectedItems?.map((k, e) => MapEntry(k, e.toJson())));
   return val;
 }
 
