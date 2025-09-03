@@ -73,12 +73,14 @@ final class AlgoliaWaitException implements AlgoliaException {
 final class UnreachableHostsException implements AlgoliaException {
   /// The list of errors associated with each unreachable host.
   final List<AlgoliaException> errors;
+  final String message =
+      "If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support";
 
   /// Constructs an [UnreachableHostsException] with the provided list of errors.
   const UnreachableHostsException(this.errors);
 
   @override
   String toString() {
-    return 'UnreachableHostsException{errors: $errors}';
+    return 'UnreachableHostsException{errors: $errors, message: $message}';
   }
 }
