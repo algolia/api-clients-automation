@@ -5,6 +5,7 @@ import { isPreRelease } from './versionsHistory.ts';
 
 export async function updateJavaScriptPackages(releaseType: ReleaseType) {
   const cwd = getLanguageFolder('javascript');
+  await run('yarn', { cwd });
   const packages = JSON.parse(await run('yarn lerna ls --json --all --loglevel silent', { cwd })) as Array<{
     version: string;
     location: string;
