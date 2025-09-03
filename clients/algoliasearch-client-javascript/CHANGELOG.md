@@ -1,3 +1,13 @@
+## [5.37.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.36.0...5.37.0)
+
+- [8f4abf3a1b](https://github.com/algolia/api-clients-automation/commit/8f4abf3a1b) fix(specs): Cross-reference filerPromotes to relevant guide ([#5279](https://github.com/algolia/api-clients-automation/pull/5279)) by [@gazconroy](https://github.com/gazconroy/)
+- [1f4a3a9f77](https://github.com/algolia/api-clients-automation/commit/1f4a3a9f77) feat(specs): add put task endpoint to ingestion api ([#5281](https://github.com/algolia/api-clients-automation/pull/5281)) by [@shortcuts](https://github.com/shortcuts/)
+- [08e9d1888a](https://github.com/algolia/api-clients-automation/commit/08e9d1888a) fix(specs): add getVersion parameter to getSettings ([#5254](https://github.com/algolia/api-clients-automation/pull/5254)) by [@millotp](https://github.com/millotp/)
+- [aa340dc23b](https://github.com/algolia/api-clients-automation/commit/aa340dc23b) feat(specs): add put and delete API for compositions and rules ([#5282](https://github.com/algolia/api-clients-automation/pull/5282)) by [@ben-kalmus](https://github.com/ben-kalmus/)
+- [716aa852f6](https://github.com/algolia/api-clients-automation/commit/716aa852f6) chore(deps): dependencies 2025-09-01 ([#5285](https://github.com/algolia/api-clients-automation/pull/5285)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [f4eee1c4a6](https://github.com/algolia/api-clients-automation/commit/f4eee1c4a6) chore(website): exclude schema from generated variables file ([#5306](https://github.com/algolia/api-clients-automation/pull/5306)) by [@Fluf22](https://github.com/Fluf22/)
+- [2fa0389f88](https://github.com/algolia/api-clients-automation/commit/2fa0389f88) fix(clients): link to support/help center on unreachable hosts ([#5305](https://github.com/algolia/api-clients-automation/pull/5305)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.36.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.35.0...5.36.0)
 
 - [40f3bebfde](https://github.com/algolia/api-clients-automation/commit/40f3bebfde) fix(clients): prefix tags with v ([#5186](https://github.com/algolia/api-clients-automation/pull/5186)) by [@millotp](https://github.com/millotp/)
