@@ -718,4 +718,4 @@ jobs:
           token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
             channel: ${{ secrets.SLACK_CHANNEL_ID }}
-            text: ":alert: Some clients failed to release :alert: \n${{ steps.waitForAllReleases.outputs.FAILED_RELEASES }}\nYou can retry the CI jobs to release them again, it will not affect already released clients."
+            text: ":alert: Some clients failed to release :alert: \n**${{ steps.waitForAllReleases.outputs.FAILED_RELEASES }}**\n\nYou can retry the CI jobs to release them again, it will not affect already released clients."
