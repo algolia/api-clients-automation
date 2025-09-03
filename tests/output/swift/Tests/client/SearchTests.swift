@@ -93,7 +93,7 @@ final class SearchClientClientTests: XCTestCase {
         } catch {
             XCTAssertEqual(
                 error.localizedDescription,
-                "All hosts are unreachable. You can use 'exposeIntermediateErrors: true' in the config to investigate."
+                "All hosts are unreachable. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support You can use 'exposeIntermediateErrors: true' in the config to investigate."
             )
         }
     }

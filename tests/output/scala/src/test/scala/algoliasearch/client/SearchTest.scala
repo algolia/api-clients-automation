@@ -133,7 +133,9 @@ class SearchTest extends AnyFunSuite {
         .build()
     )
 
-    assertError("Error(s) while processing the retry strategy") {
+    assertError(
+      "Error(s) while processing the retry strategy. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support"
+    ) {
       var res = Await.result(
         client.customGet[JObject](
           path = "1/test/hang/scala"

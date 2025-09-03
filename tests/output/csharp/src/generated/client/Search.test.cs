@@ -143,7 +143,7 @@ public class SearchClientTests
       var res = await client.CustomGetAsync("1/test/hang/csharp");
     });
     Assert.Equal(
-      "RetryStrategy failed to connect to Algolia. Reason: The operation has timed out.".ToLowerInvariant(),
+      "RetryStrategy failed to connect to Algolia. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support Reason: The operation has timed out.".ToLowerInvariant(),
       _ex.Message.ToLowerInvariant()
     );
   }

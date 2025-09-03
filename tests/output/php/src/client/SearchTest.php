@@ -117,7 +117,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             );
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Impossible to connect, please check your Algolia Application Id.');
+            $this->assertEquals($e->getMessage(), 'Impossible to connect, please check your Algolia Application Id. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support');
         }
     }
 

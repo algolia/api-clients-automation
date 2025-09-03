@@ -98,10 +98,8 @@ class TestClientSearchClient < Test::Unit::TestCase
       assert(false, "An error should have been raised")
     rescue => e
       assert_equal(
-        "Unreachable hosts. Last error for %localhost%: Net::ReadTimeout with #<TCPSocket:(closed)>".sub(
-          "%localhost%",
-          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
-        ),
+        "Unreachable hosts. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support Last error for %localhost%: Net::ReadTimeout with #<TCPSocket:(closed)>"
+          .sub("%localhost%", ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"),
         e.message
       )
     end

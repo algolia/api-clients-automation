@@ -86,7 +86,7 @@ class SearchTest {
       client.customGet(
         path = "1/test/hang/kotlin",
       )
-    }.let { error -> assertError(error, "Error\\(s\\) while processing the retry strategy".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
+    }.let { error -> assertError(error, "Error\\(s\\) while processing the retry strategy. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
   @Test

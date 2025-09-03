@@ -127,7 +127,10 @@ class TestSearchClient:
             )
             assert False
         except (ValueError, Exception) as e:
-            assert str(e) == "Unreachable hosts"
+            assert (
+                str(e)
+                == "Unreachable hosts. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support"
+            )
 
     async def test_api_5(self):
         """
@@ -1506,7 +1509,10 @@ class TestSearchClientSync:
             )
             assert False
         except (ValueError, Exception) as e:
-            assert str(e) == "Unreachable hosts"
+            assert (
+                str(e)
+                == "Unreachable hosts. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support"
+            )
 
     def test_api_5(self):
         """

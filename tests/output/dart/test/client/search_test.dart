@@ -102,7 +102,7 @@ void main() {
               scheme: 'http'),
         ]));
     await expectError(
-      'UnreachableHostsException{errors: [AlgoliaTimeoutException{error: DioException [receive timeout]: The request took longer than 0:00:05.000000 to receive data. It was aborted. To get rid of this exception, try raising the RequestOptions.receiveTimeout above the duration of 0:00:05.000000 or improve the response time of the server.}]}',
+      'UnreachableHostsException{errors: [AlgoliaTimeoutException{error: DioException [receive timeout]: The request took longer than 0:00:05.000000 to receive data. It was aborted. To get rid of this exception, try raising the RequestOptions.receiveTimeout above the duration of 0:00:05.000000 or improve the response time of the server.}], message: If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support}',
       () async {
         try {
           final res = await client.customGet(

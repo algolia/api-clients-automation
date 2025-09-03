@@ -142,7 +142,10 @@ class SearchClientClientTests {
         Object res = client.customGet("1/test/hang/java");
       });
       assertEquals(
-        "Error(s) while processing the retry strategy\n" + "Caused by: java.net.SocketTimeoutException: timeout",
+        "Error(s) while processing the retry strategy. If the error persists, please visit our" +
+        " help center https://alg.li/support-unreachable-hosts or reach out to the Algolia" +
+        " Support team: https://alg.li/support\n" +
+        "Caused by: java.net.SocketTimeoutException: timeout",
         exception.getMessage()
       );
     }
