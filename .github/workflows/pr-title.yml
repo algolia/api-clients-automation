@@ -14,6 +14,6 @@ jobs:
           fetch-depth: 0
 
       - name: Pull Request title rules
-        uses: Slashgear/action-check-pr-title@v4.3.0
+        uses: Slashgear/action-check-pr-title@v5.0.1
         with:
           regexp: '^(docs|chore|snippets|guides)|((?:feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)\((?:clients|generators|playground|csharp|dart|go|java|javascript|kotlin|php|python|ruby|scala|swift|cts|specs|scripts|ci|templates|deps)\)): .+'
