@@ -38,9 +38,9 @@ func TestInsightsE2E_PushEvents(t *testing.T) {
 
 			insights.NewEmptyInsightsEvents().SetEvents(
 				[]insights.EventsItems{*insights.ConvertedObjectIDsAfterSearchAsEventsItems(
-					insights.NewEmptyConvertedObjectIDsAfterSearch().SetEventType(insights.ConversionEvent("conversion")).SetEventName("Product Purchased").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1756857600000).SetObjectIDs(
+					insights.NewEmptyConvertedObjectIDsAfterSearch().SetEventType(insights.ConversionEvent("conversion")).SetEventName("Product Purchased").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1757116800000).SetObjectIDs(
 						[]string{"9780545139700", "9780439784542"}).SetQueryID("43b15df305339e827f0ac0bdc5ebcaa7")), *insights.ViewedObjectIDsAsEventsItems(
-					insights.NewEmptyViewedObjectIDs().SetEventType(insights.ViewEvent("view")).SetEventName("Product Detail Page Viewed").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1756857600000).SetObjectIDs(
+					insights.NewEmptyViewedObjectIDs().SetEventType(insights.ViewEvent("view")).SetEventName("Product Detail Page Viewed").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1757116800000).SetObjectIDs(
 						[]string{"9780545139700", "9780439784542"}))})))
 		require.NoError(t, err)
 		_ = res
