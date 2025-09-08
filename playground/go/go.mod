@@ -1,8 +1,6 @@
 module playground
 
-go 1.23.0
-
-toolchain go1.24.1
+go 1.21.11
 
 replace github.com/algolia/algoliasearch-client-go/v4 => ../../clients/algoliasearch-client-go
 
