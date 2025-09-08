@@ -1,6 +1,6 @@
 module playground
 
-go 1.23.0
+go 1.21.11
 
 toolchain go1.24.1
 
