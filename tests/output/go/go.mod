@@ -1,6 +1,6 @@
 module gotests
 
-go 1.22
+go 1.21.11
 
 toolchain go1.23.7
 

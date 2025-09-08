@@ -2,6 +2,8 @@ module playground
 
 go 1.21.11
 
+toolchain go1.24.1
+
 replace github.com/algolia/algoliasearch-client-go/v4 => ../../clients/algoliasearch-client-go
 
 require (
