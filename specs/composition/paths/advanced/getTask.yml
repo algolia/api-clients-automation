@@ -1,6 +1,6 @@
 get:
   tags:
-    - Compositions
+    - Advanced
   operationId: getTask
   x-acl:
     - editSettings

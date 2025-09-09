@@ -110,9 +110,12 @@ tags:
   - name: Search
     description: Search one or more indices for matching records or facet values.
 x-tagGroups:
-  - name: Search
+  - name: Composition
     tags:
+      - Search
       - Compositions
+      - Composition Rules
+      - Advanced
 paths:
   # ######################
   # ### Custom request ###

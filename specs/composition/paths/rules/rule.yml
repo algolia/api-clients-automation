@@ -1,6 +1,6 @@
 get:
   tags:
-    - Rules
+    - Composition Rules
   operationId: getRule
   x-acl:
     - editSettings

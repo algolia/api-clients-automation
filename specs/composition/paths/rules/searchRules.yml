@@ -1,6 +1,6 @@
 post:
   tags:
-    - Rules
+    - Composition Rules
   operationId: searchCompositionRules
   x-acl:
     - settings
