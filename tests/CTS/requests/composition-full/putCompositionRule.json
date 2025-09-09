@@ -1,85 +1,6 @@
 [
   {
     "parameters": {
-      "compositionID": "1234",
-      "objectID": "5678",
-      "compositionRule": {
-        "objectID": "5678",
-        "conditions": [
-          {
-            "anchoring": "is",
-            "pattern": "test"
-          }
-        ],
-        "consequence": {
-          "behavior": {
-            "injection": {
-              "main": {
-                "source": {
-                  "search": {
-                    "index": "foo"
-                  }
-                }
-              },
-              "injectedItems": [
-                {
-                  "key": "injectedItem1",
-                  "source": {
-                    "search": {
-                      "index": "foo"
-                    }
-                  },
-                  "position": 2,
-                  "length": 1
-                }
-              ]
-            }
-          }
-        }
-      }
-    },
-    "request": {
-      "path": "/1/compositions/1234/rules/5678",
-      "method": "PUT",
-      "body": {
-        "objectID": "5678",
-        "conditions": [
-          {
-            "anchoring": "is",
-            "pattern": "test"
-          }
-        ],
-        "consequence": {
-          "behavior": {
-            "injection": {
-              "main": {
-                "source": {
-                  "search": {
-                    "index": "foo"
-                  }
-                }
-              },
-              "injectedItems": [
-                {
-                  "key": "injectedItem1",
-                  "source": {
-                    "search": {
-                      "index": "foo"
-                    }
-                  },
-                  "position": 2,
-                  "length": 1
-                }
-              ]
-            }
-          }
-        }
-      }
-    }
-  },
-
-  {
-    "parameters": {
       "compositionID": "compositionID",
       "objectID": "ruleID",
       "compositionRule": {
@@ -105,27 +26,11 @@
                   "key": "injectedItem1",
                   "source": {
                     "search": {
-                      "index": "foo",
-                      "params": {
-                        "filters": "brand:adidas"
-                      }
+                      "index": "foo"
                     }
                   },
                   "position": 2,
-                  "length": 1,
-                  "metadata": {
-                    "hits": {
-                      "addItemKey": true,
-                      "extra": {
-                        "my-string": "string",
-                        "my-bool": true,
-                        "my-number": 42,
-                        "my-object": { "sub-key": "sub-value" },
-                        "my-array": [1, 2, 3],
-                        "my-empty-object": {}
-                      }
-                    }
-                  }
+                  "length": 1
                 }
               ]
             }
@@ -159,6 +64,101 @@
                   "key": "injectedItem1",
                   "source": {
                     "search": {
+                      "index": "foo"
+                    }
+                  },
+                  "position": 2,
+                  "length": 1
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+
+  {
+    "parameters": {
+      "compositionID": "compositionID",
+      "objectID": "rule-with-metadata",
+      "compositionRule": {
+        "objectID": "rule-with-metadata",
+        "conditions": [
+          {
+            "anchoring": "is",
+            "pattern": "test"
+          }
+        ],
+        "consequence": {
+          "behavior": {
+            "injection": {
+              "main": {
+                "source": {
+                  "search": {
+                    "index": "foo"
+                  }
+                }
+              },
+              "injectedItems": [
+                {
+                  "key": "injectedItem1",
+                  "source": {
+                    "search": {
+                      "index": "foo",
+                      "params": {
+                        "filters": "brand:adidas"
+                      }
+                    }
+                  },
+                  "position": 2,
+                  "length": 1,
+                  "metadata": {
+                    "hits": {
+                      "addItemKey": true,
+                      "extra": {
+                        "my-string": "string",
+                        "my-bool": true,
+                        "my-number": 42,
+                        "my-object": { "sub-key": "sub-value" },
+                        "my-array": [1, 2, 3],
+                        "my-empty-object": {}
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/compositions/compositionID/rules/rule-with-metadata",
+      "method": "PUT",
+      "body": {
+        "objectID": "rule-with-metadata",
+        "conditions": [
+          {
+            "anchoring": "is",
+            "pattern": "test"
+          }
+        ],
+        "consequence": {
+          "behavior": {
+            "injection": {
+              "main": {
+                "source": {
+                  "search": {
+                    "index": "foo"
+                  }
+                }
+              },
+              "injectedItems": [
+                {
+                  "key": "injectedItem1",
+                  "source": {
+                    "search": {
                       "index": "foo",
                       "params": {
                         "filters": "brand:adidas"
@@ -192,9 +192,9 @@
   {
     "parameters": {
       "compositionID": "compositionID",
-      "objectID": "ruleID",
+      "objectID": "rule-with-exernal-source",
       "compositionRule": {
-        "objectID": "ruleID",
+        "objectID": "rule-with-exernal-source",
         "description": "my description",
         "tags": ["tag1", "tag2"],
         "enabled": true,
@@ -218,9 +218,10 @@
                 {
                   "key": "injectedItem",
                   "source": {
-                    "search": {
+                    "external": {
                       "index": "my-index",
-                      "params": { "filters": "brand:adidas" }
+                      "params": { "filters": "brand:adidas" },
+                      "ordering": "userDefined"
                     }
                   },
                   "position": 0,
@@ -233,10 +234,10 @@
       }
     },
     "request": {
-      "path": "/1/compositions/compositionID/rules/ruleID",
+      "path": "/1/compositions/compositionID/rules/rule-with-exernal-source",
       "method": "PUT",
       "body": {
-        "objectID": "ruleID",
+        "objectID": "rule-with-exernal-source",
         "description": "my description",
         "tags": ["tag1", "tag2"],
         "enabled": true,
@@ -260,9 +261,10 @@
                 {
                   "key": "injectedItem",
                   "source": {
-                    "search": {
+                    "external": {
                       "index": "my-index",
-                      "params": { "filters": "brand:adidas" }
+                      "params": { "filters": "brand:adidas" },
+                      "ordering": "userDefined"
                     }
                   },
                   "position": 0,
