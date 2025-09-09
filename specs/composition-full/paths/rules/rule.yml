@@ -3,6 +3,7 @@ get:
     - Rules
   operationId: getRule
   x-acl:
+    - editSettings
     - settings
   summary: Retrieve a rule
   description: |
@@ -34,7 +35,6 @@ put:
   operationId: putCompositionRule
   x-acl:
     - editSettings
-    - settings
   summary: Upsert a composition rule
   description: |
     Upsert a Composition Rule for the specified composition ID.
@@ -78,7 +78,6 @@ delete:
   operationId: deleteCompositionRule
   x-acl:
     - editSettings
-    - settings
   summary: Delete a Composition Rule
   description: |
     Delete a Composition Rule from the specified Composition ID.
