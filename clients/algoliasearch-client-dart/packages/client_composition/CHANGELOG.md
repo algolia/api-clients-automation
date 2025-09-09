@@ -1,3 +1,7 @@
+## [1.36.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.36.1...1.36.2)
+
+- [ca25c44e2](https://github.com/algolia/api-clients-automation/commit/ca25c44e2) chore(deps): dependencies 2025-09-08 ([#5310](https://github.com/algolia/api-clients-automation/pull/5310)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [1.36.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.36.0...1.36.1)
 
 - [8f4abf3a1](https://github.com/algolia/api-clients-automation/commit/8f4abf3a1) fix(specs): Cross-reference filerPromotes to relevant guide ([#5279](https://github.com/algolia/api-clients-automation/pull/5279)) by [@gazconroy](https://github.com/gazconroy/)
