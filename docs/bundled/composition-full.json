@@ -474,8 +474,7 @@
         ],
         "operationId": "putComposition",
         "x-acl": [
-          "editSettings",
-          "settings"
+          "editSettings"
         ],
         "summary": "Upsert a composition",
         "description": "Upsert a composition in the current Algolia application.\n",
@@ -535,8 +534,7 @@
         ],
         "operationId": "deleteComposition",
         "x-acl": [
-          "editSettings",
-          "settings"
+          "editSettings"
         ],
         "summary": "Delete a composition",
         "description": "Delete a composition from the current Algolia application.\n",
@@ -674,6 +672,7 @@
         ],
         "operationId": "getRule",
         "x-acl": [
+          "editSettings",
           "settings"
         ],
         "summary": "Retrieve a rule",
@@ -717,8 +716,7 @@
         ],
         "operationId": "putCompositionRule",
         "x-acl": [
-          "editSettings",
-          "settings"
+          "editSettings"
         ],
         "summary": "Upsert a composition rule",
         "description": "Upsert a Composition Rule for the specified composition ID.\n",
@@ -784,8 +782,7 @@
         ],
         "operationId": "deleteCompositionRule",
         "x-acl": [
-          "editSettings",
-          "settings"
+          "editSettings"
         ],
         "summary": "Delete a Composition Rule",
         "description": "Delete a Composition Rule from the specified Composition ID.\n",
