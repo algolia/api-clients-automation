@@ -1,7 +1,7 @@
 post:
   tags:
     - sources
-  summary: Validates an update of a source payload
+  summary: Validate an update of a source payload
   description: |
     Validates an update of a source payload to ensure it can be created and that the data source can be reached by Algolia.
   operationId: validateSourceBeforeUpdate
