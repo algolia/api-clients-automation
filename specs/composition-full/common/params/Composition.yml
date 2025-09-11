@@ -1,20 +1,13 @@
-enableABTest:
-  type: boolean
-  description: |
-    Whether to enable index level A/B testing for this run request.
-    If the composition mixes multiple indices, the A/B test is ignored.
-  default: true
-  x-categories:
-    - Advanced
+# ######################
+# ### Category Rules ###
+# ######################
 
 enableRules:
   type: boolean
   description: Whether to enable composition rules.
   default: true
-
-getRankingInfo:
-  type: boolean
-  description: Whether the run response should include detailed ranking information.
+  x-categories:
+    - Rules
 
 ruleContexts:
   type: array
@@ -28,6 +21,10 @@ ruleContexts:
   x-categories:
     - Rules
 
+# ####################
+# ### Category RMN ###
+# ####################
+
 injectedItems:
   type: object
   additionalProperties:
@@ -36,7 +33,7 @@ injectedItems:
     A list of extenrally injected objectID groups into from an external source.
   default: {}
   x-categories:
-    - Advanced
+    - Retail Media Network
 
 externalInjectedItem:
   type: object
@@ -65,3 +62,23 @@ externalInjectedItem:
           {'objectID': 'my-object-1', 'metadata': {'my-field': 'my-value'}}
   required:
     - items
+
+# #########################
+# ### Category Advanced ###
+# #########################
+
+getRankingInfo:
+  type: boolean
+  description: Whether the run response should include detailed ranking information.
+  default: false
+  x-categories:
+    - Advanced
+
+enableABTest:
+  type: boolean
+  description: |
+    Whether to enable index level A/B testing for this run request.
+    If the composition mixes multiple indices, the A/B test is ignored.
+  default: true
+  x-categories:
+    - Advanced
