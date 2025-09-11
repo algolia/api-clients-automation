@@ -250,6 +250,35 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+  /1/compositions:
+    get:
+      tags:
+        - composition-full
+      operationId: listCompositions
+      x-acl:
+        - editSettings
+        - settings
+      summary: List compositions
+      description: |
+        Lists all compositions in the current Algolia application.
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/HitsPerPage'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listCompositionsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/CompositionNotFound'
   /1/compositions/{compositionID}:
     get:
       tags:
@@ -700,35 +729,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/compositions:
-    get:
-      tags:
-        - composition-full
-      operationId: listCompositions
-      x-acl:
-        - editSettings
-        - settings
-      summary: List compositions
-      description: |
-        Lists all compositions in the current Algolia application.
-      parameters:
-        - $ref: '#/components/parameters/Page'
-        - $ref: '#/components/parameters/HitsPerPage'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/listCompositionsResponse'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/CompositionNotFound'
   /setClientApiKey:
     get:
       x-helper: true
@@ -829,13 +829,6 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/compositionObjectID'
-    ObjectIDRule:
-      in: path
-      name: objectID
-      description: Unique identifier of a rule object.
-      required: true
-      schema:
-        $ref: '#/components/schemas/ruleID'
     Page:
       in: query
       name: page
@@ -857,6 +850,13 @@ components:
       schema:
         type: integer
         default: 100
+    ObjectIDRule:
+      in: path
+      name: objectID
+      description: Unique identifier of a rule object.
+      required: true
+      schema:
+        $ref: '#/components/schemas/ruleID'
   schemas:
     ErrorBase:
       description: Error.
@@ -3483,6 +3483,37 @@ components:
         - objectID
         - behavior
         - name
+    listCompositionsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          description: All compositions in your Algolia application.
+          items:
+            $ref: '#/components/schemas/composition'
+        nbPages:
+          type: integer
+          description: Number of pages.
+          example: 100
+        page:
+          type: integer
+          description: Current page.
+          example: 0
+        hitsPerPage:
+          type: integer
+          description: Number of items per page.
+          example: 20
+        nbHits:
+          type: integer
+          description: Number of items.
+          example: 200
+      required:
+        - hitsPerPage
+        - items
+        - nbHits
+        - nbPages
+        - page
     taskID:
       type: integer
       format: int64
@@ -3718,37 +3749,6 @@ components:
           $ref: '#/components/schemas/taskStatus'
       required:
         - status
-    listCompositionsResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          description: All compositions in your Algolia application.
-          items:
-            $ref: '#/components/schemas/composition'
-        nbPages:
-          type: integer
-          description: Number of pages.
-          example: 100
-        page:
-          type: integer
-          description: Current page.
-          example: 0
-        hitsPerPage:
-          type: integer
-          description: Number of items per page.
-          example: 20
-        nbHits:
-          type: integer
-          description: Number of items.
-          example: 200
-      required:
-        - hitsPerPage
-        - items
-        - nbHits
-        - nbPages
-        - page
   responses:
     BadRequest:
       description: Bad request or request arguments.
