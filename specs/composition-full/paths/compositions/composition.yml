@@ -32,7 +32,6 @@ put:
   operationId: putComposition
   x-acl:
     - editSettings
-    - settings
   summary: Upsert a composition
   description: |
     Upsert a composition in the current Algolia application.
@@ -73,7 +72,6 @@ delete:
   operationId: deleteComposition
   x-acl:
     - editSettings
-    - settings
   summary: Delete a composition
   description: |
     Delete a composition from the current Algolia application.
