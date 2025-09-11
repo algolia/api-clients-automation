@@ -62,6 +62,7 @@
       }
     }
   },
+
   {
     "parameters": {
       "compositionID": "my-external-injection-compo",
@@ -126,6 +127,156 @@
                 },
                 "position": 2,
                 "length": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+
+  {
+    "parameters": {
+      "compositionID": "my-metadata-compo",
+      "composition": {
+        "objectID": "my-metadata-compo",
+        "name": "my composition",
+        "behavior": {
+          "injection": {
+            "main": {
+              "source": {
+                "search": {
+                  "index": "foo",
+                  "params": { "filters": "brand:adidas" }
+                }
+              }
+            },
+            "injectedItems": [
+              {
+                "key": "injectedItem1",
+                "source": {
+                  "search": {
+                    "index": "foo",
+                    "params": {
+                      "filters": "brand:adidas"
+                    }
+                  }
+                },
+                "position": 2,
+                "length": 1,
+                "metadata": {
+                  "hits": {
+                    "addItemKey": true,
+                    "extra": {
+                      "my-string": "string",
+                      "my-bool": true,
+                      "my-number": 42,
+                      "my-object": { "sub-key": "sub-value" },
+                      "my-array": [1, 2, 3],
+                      "my-empty-object": {}
+                    }
+                  }
+                }
+              },
+              {
+                "key": "externalItem",
+                "source": {
+                  "search": {
+                    "index": "foo",
+                    "params": {
+                      "filters": "brand:puma"
+                    }
+                  }
+                },
+                "position": 5,
+                "length": 5,
+                "metadata": {
+                  "hits": {
+                    "addItemKey": true,
+                    "extra": {
+                      "my-string": "string",
+                      "my-bool": true,
+                      "my-number": 42,
+                      "my-object": { "sub-key": "sub-value" },
+                      "my-array": [1, 2, 3],
+                      "my-empty-object": {}
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/compositions/my-metadata-compo",
+      "method": "PUT",
+      "body": {
+        "objectID": "my-metadata-compo",
+        "name": "my composition",
+        "behavior": {
+          "injection": {
+            "main": {
+              "source": {
+                "search": {
+                  "index": "foo",
+                  "params": { "filters": "brand:adidas" }
+                }
+              }
+            },
+            "injectedItems": [
+              {
+                "key": "injectedItem1",
+                "source": {
+                  "search": {
+                    "index": "foo",
+                    "params": {
+                      "filters": "brand:adidas"
+                    }
+                  }
+                },
+                "position": 2,
+                "length": 1,
+                "metadata": {
+                  "hits": {
+                    "addItemKey": true,
+                    "extra": {
+                      "my-string": "string",
+                      "my-bool": true,
+                      "my-number": 42,
+                      "my-object": { "sub-key": "sub-value" },
+                      "my-array": [1, 2, 3],
+                      "my-empty-object": {}
+                    }
+                  }
+                }
+              },
+              {
+                "key": "externalItem",
+                "source": {
+                  "search": {
+                    "index": "foo",
+                    "params": {
+                      "filters": "brand:puma"
+                    }
+                  }
+                },
+                "position": 5,
+                "length": 5,
+                "metadata": {
+                  "hits": {
+                    "addItemKey": true,
+                    "extra": {
+                      "my-string": "string",
+                      "my-bool": true,
+                      "my-number": 42,
+                      "my-object": { "sub-key": "sub-value" },
+                      "my-array": [1, 2, 3],
+                      "my-empty-object": {}
+                    }
+                  }
+                }
               }
             ]
           }

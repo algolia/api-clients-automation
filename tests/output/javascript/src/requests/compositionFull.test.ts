@@ -363,6 +363,184 @@ describe('multipleBatch', () => {
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('multipleBatch', async () => {
+    const req = (await client.multipleBatch({
+      requests: [
+        {
+          action: 'upsert',
+          body: {
+            objectID: 'my-external-injection-compo',
+            name: 'my first composition',
+            behavior: {
+              injection: {
+                main: { source: { search: { index: 'foo' } } },
+                injectedItems: [
+                  {
+                    key: 'injectedItem1',
+                    source: {
+                      external: { index: 'foo', ordering: 'userDefined', params: { filters: 'brand:adidas' } },
+                    },
+                    position: 2,
+                    length: 1,
+                  },
+                ],
+              },
+            },
+          },
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/*/batch');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          action: 'upsert',
+          body: {
+            objectID: 'my-external-injection-compo',
+            name: 'my first composition',
+            behavior: {
+              injection: {
+                main: { source: { search: { index: 'foo' } } },
+                injectedItems: [
+                  {
+                    key: 'injectedItem1',
+                    source: {
+                      external: { index: 'foo', ordering: 'userDefined', params: { filters: 'brand:adidas' } },
+                    },
+                    position: 2,
+                    length: 1,
+                  },
+                ],
+              },
+            },
+          },
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('multipleBatch', async () => {
+    const req = (await client.multipleBatch({
+      requests: [
+        {
+          action: 'upsert',
+          body: {
+            objectID: 'my-metadata-compo',
+            name: 'my composition',
+            behavior: {
+              injection: {
+                main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
+                injectedItems: [
+                  {
+                    key: 'injectedItem1',
+                    source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
+                    position: 2,
+                    length: 1,
+                    metadata: {
+                      hits: {
+                        addItemKey: true,
+                        extra: {
+                          'my-string': 'string',
+                          'my-bool': true,
+                          'my-number': 42,
+                          'my-object': { 'sub-key': 'sub-value' },
+                          'my-array': [1, 2, 3],
+                          'my-empty-object': {},
+                        },
+                      },
+                    },
+                  },
+                  {
+                    key: 'externalItem',
+                    source: { search: { index: 'foo', params: { filters: 'brand:puma' } } },
+                    position: 5,
+                    length: 5,
+                    metadata: {
+                      hits: {
+                        addItemKey: true,
+                        extra: {
+                          'my-string': 'string',
+                          'my-bool': true,
+                          'my-number': 42,
+                          'my-object': { 'sub-key': 'sub-value' },
+                          'my-array': [1, 2, 3],
+                          'my-empty-object': {},
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/*/batch');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          action: 'upsert',
+          body: {
+            objectID: 'my-metadata-compo',
+            name: 'my composition',
+            behavior: {
+              injection: {
+                main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
+                injectedItems: [
+                  {
+                    key: 'injectedItem1',
+                    source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
+                    position: 2,
+                    length: 1,
+                    metadata: {
+                      hits: {
+                        addItemKey: true,
+                        extra: {
+                          'my-string': 'string',
+                          'my-bool': true,
+                          'my-number': 42,
+                          'my-object': { 'sub-key': 'sub-value' },
+                          'my-array': [1, 2, 3],
+                          'my-empty-object': {},
+                        },
+                      },
+                    },
+                  },
+                  {
+                    key: 'externalItem',
+                    source: { search: { index: 'foo', params: { filters: 'brand:puma' } } },
+                    position: 5,
+                    length: 5,
+                    metadata: {
+                      hits: {
+                        addItemKey: true,
+                        extra: {
+                          'my-string': 'string',
+                          'my-bool': true,
+                          'my-number': 42,
+                          'my-object': { 'sub-key': 'sub-value' },
+                          'my-array': [1, 2, 3],
+                          'my-empty-object': {},
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('putComposition', () => {
@@ -439,15 +617,123 @@ describe('putComposition', () => {
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('putComposition', async () => {
+    const req = (await client.putComposition({
+      compositionID: 'my-metadata-compo',
+      composition: {
+        objectID: 'my-metadata-compo',
+        name: 'my composition',
+        behavior: {
+          injection: {
+            main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
+            injectedItems: [
+              {
+                key: 'injectedItem1',
+                source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
+                position: 2,
+                length: 1,
+                metadata: {
+                  hits: {
+                    addItemKey: true,
+                    extra: {
+                      'my-string': 'string',
+                      'my-bool': true,
+                      'my-number': 42,
+                      'my-object': { 'sub-key': 'sub-value' },
+                      'my-array': [1, 2, 3],
+                      'my-empty-object': {},
+                    },
+                  },
+                },
+              },
+              {
+                key: 'externalItem',
+                source: { search: { index: 'foo', params: { filters: 'brand:puma' } } },
+                position: 5,
+                length: 5,
+                metadata: {
+                  hits: {
+                    addItemKey: true,
+                    extra: {
+                      'my-string': 'string',
+                      'my-bool': true,
+                      'my-number': 42,
+                      'my-object': { 'sub-key': 'sub-value' },
+                      'my-array': [1, 2, 3],
+                      'my-empty-object': {},
+                    },
+                  },
+                },
+              },
+            ],
+          },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/my-metadata-compo');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'my-metadata-compo',
+      name: 'my composition',
+      behavior: {
+        injection: {
+          main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
+          injectedItems: [
+            {
+              key: 'injectedItem1',
+              source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
+              position: 2,
+              length: 1,
+              metadata: {
+                hits: {
+                  addItemKey: true,
+                  extra: {
+                    'my-string': 'string',
+                    'my-bool': true,
+                    'my-number': 42,
+                    'my-object': { 'sub-key': 'sub-value' },
+                    'my-array': [1, 2, 3],
+                    'my-empty-object': {},
+                  },
+                },
+              },
+            },
+            {
+              key: 'externalItem',
+              source: { search: { index: 'foo', params: { filters: 'brand:puma' } } },
+              position: 5,
+              length: 5,
+              metadata: {
+                hits: {
+                  addItemKey: true,
+                  extra: {
+                    'my-string': 'string',
+                    'my-bool': true,
+                    'my-number': 42,
+                    'my-object': { 'sub-key': 'sub-value' },
+                    'my-array': [1, 2, 3],
+                    'my-empty-object': {},
+                  },
+                },
+              },
+            },
+          ],
+        },
+      },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('putCompositionRule', () => {
   test('putCompositionRule', async () => {
     const req = (await client.putCompositionRule({
-      compositionID: '1234',
-      objectID: '5678',
+      compositionID: 'compositionID',
+      objectID: 'ruleID',
       compositionRule: {
-        objectID: '5678',
+        objectID: 'ruleID',
         conditions: [{ anchoring: 'is', pattern: 'test' }],
         consequence: {
           behavior: {
@@ -460,16 +746,158 @@ describe('putCompositionRule', () => {
       },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/compositions/1234/rules/5678');
+    expect(req.path).toEqual('/1/compositions/compositionID/rules/ruleID');
     expect(req.method).toEqual('PUT');
     expect(req.data).toEqual({
-      objectID: '5678',
+      objectID: 'ruleID',
       conditions: [{ anchoring: 'is', pattern: 'test' }],
       consequence: {
         behavior: {
           injection: {
             main: { source: { search: { index: 'foo' } } },
             injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
+          },
+        },
+      },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('putCompositionRule', async () => {
+    const req = (await client.putCompositionRule({
+      compositionID: 'compositionID',
+      objectID: 'rule-with-metadata',
+      compositionRule: {
+        objectID: 'rule-with-metadata',
+        conditions: [{ anchoring: 'is', pattern: 'test' }],
+        consequence: {
+          behavior: {
+            injection: {
+              main: { source: { search: { index: 'foo' } } },
+              injectedItems: [
+                {
+                  key: 'injectedItem1',
+                  source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
+                  position: 2,
+                  length: 1,
+                  metadata: {
+                    hits: {
+                      addItemKey: true,
+                      extra: {
+                        'my-string': 'string',
+                        'my-bool': true,
+                        'my-number': 42,
+                        'my-object': { 'sub-key': 'sub-value' },
+                        'my-array': [1, 2, 3],
+                        'my-empty-object': {},
+                      },
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/compositionID/rules/rule-with-metadata');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'rule-with-metadata',
+      conditions: [{ anchoring: 'is', pattern: 'test' }],
+      consequence: {
+        behavior: {
+          injection: {
+            main: { source: { search: { index: 'foo' } } },
+            injectedItems: [
+              {
+                key: 'injectedItem1',
+                source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
+                position: 2,
+                length: 1,
+                metadata: {
+                  hits: {
+                    addItemKey: true,
+                    extra: {
+                      'my-string': 'string',
+                      'my-bool': true,
+                      'my-number': 42,
+                      'my-object': { 'sub-key': 'sub-value' },
+                      'my-array': [1, 2, 3],
+                      'my-empty-object': {},
+                    },
+                  },
+                },
+              },
+            ],
+          },
+        },
+      },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('putCompositionRule', async () => {
+    const req = (await client.putCompositionRule({
+      compositionID: 'compositionID',
+      objectID: 'rule-with-exernal-source',
+      compositionRule: {
+        objectID: 'rule-with-exernal-source',
+        description: 'my description',
+        tags: ['tag1', 'tag2'],
+        enabled: true,
+        validity: [{ from: 1704063600, until: 1704083600 }],
+        conditions: [
+          { anchoring: 'contains', pattern: 'harry' },
+          { anchoring: 'contains', pattern: 'potter' },
+        ],
+        consequence: {
+          behavior: {
+            injection: {
+              main: { source: { search: { index: 'my-index', params: { filters: 'brand:adidas' } } } },
+              injectedItems: [
+                {
+                  key: 'injectedItem',
+                  source: {
+                    external: { index: 'my-index', params: { filters: 'brand:adidas' }, ordering: 'userDefined' },
+                  },
+                  position: 0,
+                  length: 3,
+                },
+              ],
+            },
+          },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/compositionID/rules/rule-with-exernal-source');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'rule-with-exernal-source',
+      description: 'my description',
+      tags: ['tag1', 'tag2'],
+      enabled: true,
+      validity: [{ from: 1704063600, until: 1704083600 }],
+      conditions: [
+        { anchoring: 'contains', pattern: 'harry' },
+        { anchoring: 'contains', pattern: 'potter' },
+      ],
+      consequence: {
+        behavior: {
+          injection: {
+            main: { source: { search: { index: 'my-index', params: { filters: 'brand:adidas' } } } },
+            injectedItems: [
+              {
+                key: 'injectedItem',
+                source: {
+                  external: { index: 'my-index', params: { filters: 'brand:adidas' }, ordering: 'userDefined' },
+                },
+                position: 0,
+                length: 3,
+              },
+            ],
           },
         },
       },
@@ -514,6 +942,174 @@ describe('saveRules', () => {
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('saveRules', async () => {
+    const req = (await client.saveRules({
+      compositionID: 'rule-with-metadata',
+      rules: {
+        requests: [
+          {
+            action: 'upsert',
+            body: {
+              objectID: 'rule-with-metadata',
+              conditions: [{ anchoring: 'is', pattern: 'test' }],
+              consequence: {
+                behavior: {
+                  injection: {
+                    main: { source: { search: { index: 'foo' } } },
+                    injectedItems: [
+                      {
+                        key: 'injectedItem1',
+                        source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
+                        position: 2,
+                        length: 1,
+                        metadata: {
+                          hits: {
+                            addItemKey: true,
+                            extra: {
+                              'my-string': 'string',
+                              'my-bool': true,
+                              'my-number': 42,
+                              'my-object': { 'sub-key': 'sub-value' },
+                              'my-array': [1, 2, 3],
+                              'my-empty-object': {},
+                            },
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/rule-with-metadata/rules/batch');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          action: 'upsert',
+          body: {
+            objectID: 'rule-with-metadata',
+            conditions: [{ anchoring: 'is', pattern: 'test' }],
+            consequence: {
+              behavior: {
+                injection: {
+                  main: { source: { search: { index: 'foo' } } },
+                  injectedItems: [
+                    {
+                      key: 'injectedItem1',
+                      source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
+                      position: 2,
+                      length: 1,
+                      metadata: {
+                        hits: {
+                          addItemKey: true,
+                          extra: {
+                            'my-string': 'string',
+                            'my-bool': true,
+                            'my-number': 42,
+                            'my-object': { 'sub-key': 'sub-value' },
+                            'my-array': [1, 2, 3],
+                            'my-empty-object': {},
+                          },
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('saveRules', async () => {
+    const req = (await client.saveRules({
+      compositionID: 'rule-with-exernal-source',
+      rules: {
+        requests: [
+          {
+            action: 'upsert',
+            body: {
+              objectID: 'rule-with-exernal-source',
+              description: 'my description',
+              tags: ['tag1', 'tag2'],
+              enabled: true,
+              validity: [{ from: 1704063600, until: 1704083600 }],
+              conditions: [
+                { anchoring: 'contains', pattern: 'harry' },
+                { anchoring: 'contains', pattern: 'potter' },
+              ],
+              consequence: {
+                behavior: {
+                  injection: {
+                    main: { source: { search: { index: 'my-index', params: { filters: 'brand:adidas' } } } },
+                    injectedItems: [
+                      {
+                        key: 'injectedItem',
+                        source: {
+                          external: { index: 'my-index', params: { filters: 'brand:adidas' }, ordering: 'userDefined' },
+                        },
+                        position: 0,
+                        length: 3,
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/rule-with-exernal-source/rules/batch');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          action: 'upsert',
+          body: {
+            objectID: 'rule-with-exernal-source',
+            description: 'my description',
+            tags: ['tag1', 'tag2'],
+            enabled: true,
+            validity: [{ from: 1704063600, until: 1704083600 }],
+            conditions: [
+              { anchoring: 'contains', pattern: 'harry' },
+              { anchoring: 'contains', pattern: 'potter' },
+            ],
+            consequence: {
+              behavior: {
+                injection: {
+                  main: { source: { search: { index: 'my-index', params: { filters: 'brand:adidas' } } } },
+                  injectedItems: [
+                    {
+                      key: 'injectedItem',
+                      source: {
+                        external: { index: 'my-index', params: { filters: 'brand:adidas' }, ordering: 'userDefined' },
+                      },
+                      position: 0,
+                      length: 3,
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('search', () => {
@@ -537,7 +1133,20 @@ describe('search', () => {
           query: 'batman',
           injectedItems: {
             injectedItem1: {
-              items: [{ objectID: 'my-object-1' }, { objectID: 'my-object-2', metadata: { 'my-key': 'my-value' } }],
+              items: [
+                { objectID: 'my-object-1' },
+                {
+                  objectID: 'my-object-2',
+                  metadata: {
+                    'my-string': 'string',
+                    'my-bool': true,
+                    'my-number': 42,
+                    'my-object': { 'sub-key': 'sub-value' },
+                    'my-array': [1, 2, 3],
+                    'my-empty-object': {},
+                  },
+                },
+              ],
             },
           },
         },
@@ -551,7 +1160,20 @@ describe('search', () => {
         query: 'batman',
         injectedItems: {
           injectedItem1: {
-            items: [{ objectID: 'my-object-1' }, { objectID: 'my-object-2', metadata: { 'my-key': 'my-value' } }],
+            items: [
+              { objectID: 'my-object-1' },
+              {
+                objectID: 'my-object-2',
+                metadata: {
+                  'my-string': 'string',
+                  'my-bool': true,
+                  'my-number': 42,
+                  'my-object': { 'sub-key': 'sub-value' },
+                  'my-array': [1, 2, 3],
+                  'my-empty-object': {},
+                },
+              },
+            ],
           },
         },
       },
