@@ -61,17 +61,19 @@ paths:
   /1/compositions/{compositionID}/facets/{facetName}/query:
     $ref: 'paths/search/searchForFacetValues.yml'
 
-  # #########################
-  # ### Objects Endpoints ###
-  # #########################
+  # #####################################
+  # ### Manage Compositions Endpoints ###
+  # #####################################
+  /1/compositions:
+    $ref: 'paths/compositions/list.yml'
   /1/compositions/{compositionID}:
-    $ref: 'paths/objects/objects.yml'
+    $ref: 'paths/compositions/composition.yml'
   /1/compositions/*/batch:
-    $ref: 'paths/objects/multipleBatch.yml'
+    $ref: 'paths/compositions/batch.yml'
 
-  # #######################
-  # ### Rules Endpoints ###
-  # #######################
+  # ##########################################
+  # ### Manage Composition Rules Endpoints ###
+  # ##########################################
   /1/compositions/{compositionID}/rules/{objectID}:
     $ref: 'paths/rules/rule.yml'
   /1/compositions/{compositionID}/rules/batch:
@@ -84,12 +86,6 @@ paths:
   # ##########################
   /1/compositions/{compositionID}/task/{taskID}:
     $ref: 'paths/advanced/getTask.yml'
-
-  # #####################################
-  # ### Manage Compositions Endpoints ###
-  # #####################################
-  /1/compositions:
-    $ref: 'paths/manage_compositions/listCompositions.yml'
 
   # ###############
   # ### Helpers ###
