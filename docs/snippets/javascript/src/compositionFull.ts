@@ -492,7 +492,7 @@ export async function snippetForListCompositions1(): Promise<void> {
 //
 // multipleBatch
 export async function snippetForMultipleBatch(): Promise<void> {
-  // >SEPARATOR multipleBatch default
+  // >SEPARATOR multipleBatch multipleBatch
   // Initialize the client
   const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -508,6 +508,118 @@ export async function snippetForMultipleBatch(): Promise<void> {
         },
       },
       { action: 'delete', body: { objectID: 'baz' } },
+    ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the multipleBatch method.
+//
+// multipleBatch
+export async function snippetForMultipleBatch1(): Promise<void> {
+  // >SEPARATOR multipleBatch multipleBatch
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.multipleBatch({
+    requests: [
+      {
+        action: 'upsert',
+        body: {
+          objectID: 'my-external-injection-compo',
+          name: 'my first composition',
+          behavior: {
+            injection: {
+              main: { source: { search: { index: 'foo' } } },
+              injectedItems: [
+                {
+                  key: 'injectedItem1',
+                  source: { external: { index: 'foo', ordering: 'userDefined', params: { filters: 'brand:adidas' } } },
+                  position: 2,
+                  length: 1,
+                },
+              ],
+            },
+          },
+        },
+      },
+    ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the multipleBatch method.
+//
+// multipleBatch
+export async function snippetForMultipleBatch2(): Promise<void> {
+  // >SEPARATOR multipleBatch multipleBatch
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.multipleBatch({
+    requests: [
+      {
+        action: 'upsert',
+        body: {
+          objectID: 'my-metadata-compo',
+          name: 'my composition',
+          behavior: {
+            injection: {
+              main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
+              injectedItems: [
+                {
+                  key: 'injectedItem1',
+                  source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
+                  position: 2,
+                  length: 1,
+                  metadata: {
+                    hits: {
+                      addItemKey: true,
+                      extra: {
+                        'my-string': 'string',
+                        'my-bool': true,
+                        'my-number': 42,
+                        'my-object': { 'sub-key': 'sub-value' },
+                        'my-array': [1, 2, 3],
+                        'my-empty-object': {},
+                      },
+                    },
+                  },
+                },
+                {
+                  key: 'externalItem',
+                  source: { search: { index: 'foo', params: { filters: 'brand:puma' } } },
+                  position: 5,
+                  length: 5,
+                  metadata: {
+                    hits: {
+                      addItemKey: true,
+                      extra: {
+                        'my-string': 'string',
+                        'my-bool': true,
+                        'my-number': 42,
+                        'my-object': { 'sub-key': 'sub-value' },
+                        'my-array': [1, 2, 3],
+                        'my-empty-object': {},
+                      },
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
     ],
   });
 
@@ -582,20 +694,88 @@ export async function snippetForPutComposition1(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the putComposition method.
+//
+// putComposition
+export async function snippetForPutComposition2(): Promise<void> {
+  // >SEPARATOR putComposition putComposition
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.putComposition({
+    compositionID: 'my-metadata-compo',
+    composition: {
+      objectID: 'my-metadata-compo',
+      name: 'my composition',
+      behavior: {
+        injection: {
+          main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
+          injectedItems: [
+            {
+              key: 'injectedItem1',
+              source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
+              position: 2,
+              length: 1,
+              metadata: {
+                hits: {
+                  addItemKey: true,
+                  extra: {
+                    'my-string': 'string',
+                    'my-bool': true,
+                    'my-number': 42,
+                    'my-object': { 'sub-key': 'sub-value' },
+                    'my-array': [1, 2, 3],
+                    'my-empty-object': {},
+                  },
+                },
+              },
+            },
+            {
+              key: 'externalItem',
+              source: { search: { index: 'foo', params: { filters: 'brand:puma' } } },
+              position: 5,
+              length: 5,
+              metadata: {
+                hits: {
+                  addItemKey: true,
+                  extra: {
+                    'my-string': 'string',
+                    'my-bool': true,
+                    'my-number': 42,
+                    'my-object': { 'sub-key': 'sub-value' },
+                    'my-array': [1, 2, 3],
+                    'my-empty-object': {},
+                  },
+                },
+              },
+            },
+          ],
+        },
+      },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the putCompositionRule method.
 //
 // putCompositionRule
 export async function snippetForPutCompositionRule(): Promise<void> {
-  // >SEPARATOR putCompositionRule default
+  // >SEPARATOR putCompositionRule putCompositionRule
   // Initialize the client
   const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.putCompositionRule({
-    compositionID: '1234',
-    objectID: '5678',
+    compositionID: 'compositionID',
+    objectID: 'ruleID',
     compositionRule: {
-      objectID: '5678',
+      objectID: 'ruleID',
       conditions: [{ anchoring: 'is', pattern: 'test' }],
       consequence: {
         behavior: {
@@ -614,11 +794,111 @@ export async function snippetForPutCompositionRule(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the putCompositionRule method.
+//
+// putCompositionRule
+export async function snippetForPutCompositionRule1(): Promise<void> {
+  // >SEPARATOR putCompositionRule putCompositionRule
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.putCompositionRule({
+    compositionID: 'compositionID',
+    objectID: 'rule-with-metadata',
+    compositionRule: {
+      objectID: 'rule-with-metadata',
+      conditions: [{ anchoring: 'is', pattern: 'test' }],
+      consequence: {
+        behavior: {
+          injection: {
+            main: { source: { search: { index: 'foo' } } },
+            injectedItems: [
+              {
+                key: 'injectedItem1',
+                source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
+                position: 2,
+                length: 1,
+                metadata: {
+                  hits: {
+                    addItemKey: true,
+                    extra: {
+                      'my-string': 'string',
+                      'my-bool': true,
+                      'my-number': 42,
+                      'my-object': { 'sub-key': 'sub-value' },
+                      'my-array': [1, 2, 3],
+                      'my-empty-object': {},
+                    },
+                  },
+                },
+              },
+            ],
+          },
+        },
+      },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the putCompositionRule method.
+//
+// putCompositionRule
+export async function snippetForPutCompositionRule2(): Promise<void> {
+  // >SEPARATOR putCompositionRule putCompositionRule
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.putCompositionRule({
+    compositionID: 'compositionID',
+    objectID: 'rule-with-exernal-source',
+    compositionRule: {
+      objectID: 'rule-with-exernal-source',
+      description: 'my description',
+      tags: ['tag1', 'tag2'],
+      enabled: true,
+      validity: [{ from: 1704063600, until: 1704083600 }],
+      conditions: [
+        { anchoring: 'contains', pattern: 'harry' },
+        { anchoring: 'contains', pattern: 'potter' },
+      ],
+      consequence: {
+        behavior: {
+          injection: {
+            main: { source: { search: { index: 'my-index', params: { filters: 'brand:adidas' } } } },
+            injectedItems: [
+              {
+                key: 'injectedItem',
+                source: {
+                  external: { index: 'my-index', params: { filters: 'brand:adidas' }, ordering: 'userDefined' },
+                },
+                position: 0,
+                length: 3,
+              },
+            ],
+          },
+        },
+      },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the saveRules method.
 //
 // saveRules
 export async function snippetForSaveRules(): Promise<void> {
-  // >SEPARATOR saveRules default
+  // >SEPARATOR saveRules saveRules
   // Initialize the client
   const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -633,6 +913,118 @@ export async function snippetForSaveRules(): Promise<void> {
             objectID: '123',
             conditions: [{ pattern: 'a' }],
             consequence: { behavior: { injection: { main: { source: { search: { index: '<YOUR_INDEX_NAME>' } } } } } },
+          },
+        },
+      ],
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRules method.
+//
+// saveRules
+export async function snippetForSaveRules1(): Promise<void> {
+  // >SEPARATOR saveRules saveRules
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRules({
+    compositionID: 'rule-with-metadata',
+    rules: {
+      requests: [
+        {
+          action: 'upsert',
+          body: {
+            objectID: 'rule-with-metadata',
+            conditions: [{ anchoring: 'is', pattern: 'test' }],
+            consequence: {
+              behavior: {
+                injection: {
+                  main: { source: { search: { index: 'foo' } } },
+                  injectedItems: [
+                    {
+                      key: 'injectedItem1',
+                      source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
+                      position: 2,
+                      length: 1,
+                      metadata: {
+                        hits: {
+                          addItemKey: true,
+                          extra: {
+                            'my-string': 'string',
+                            'my-bool': true,
+                            'my-number': 42,
+                            'my-object': { 'sub-key': 'sub-value' },
+                            'my-array': [1, 2, 3],
+                            'my-empty-object': {},
+                          },
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRules method.
+//
+// saveRules
+export async function snippetForSaveRules2(): Promise<void> {
+  // >SEPARATOR saveRules saveRules
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRules({
+    compositionID: 'rule-with-exernal-source',
+    rules: {
+      requests: [
+        {
+          action: 'upsert',
+          body: {
+            objectID: 'rule-with-exernal-source',
+            description: 'my description',
+            tags: ['tag1', 'tag2'],
+            enabled: true,
+            validity: [{ from: 1704063600, until: 1704083600 }],
+            conditions: [
+              { anchoring: 'contains', pattern: 'harry' },
+              { anchoring: 'contains', pattern: 'potter' },
+            ],
+            consequence: {
+              behavior: {
+                injection: {
+                  main: { source: { search: { index: 'my-index', params: { filters: 'brand:adidas' } } } },
+                  injectedItems: [
+                    {
+                      key: 'injectedItem',
+                      source: {
+                        external: { index: 'my-index', params: { filters: 'brand:adidas' }, ordering: 'userDefined' },
+                      },
+                      position: 0,
+                      length: 3,
+                    },
+                  ],
+                },
+              },
+            },
           },
         },
       ],
@@ -678,7 +1070,20 @@ export async function snippetForSearch1(): Promise<void> {
         query: 'batman',
         injectedItems: {
           injectedItem1: {
-            items: [{ objectID: 'my-object-1' }, { objectID: 'my-object-2', metadata: { 'my-key': 'my-value' } }],
+            items: [
+              { objectID: 'my-object-1' },
+              {
+                objectID: 'my-object-2',
+                metadata: {
+                  'my-string': 'string',
+                  'my-bool': true,
+                  'my-number': 42,
+                  'my-object': { 'sub-key': 'sub-value' },
+                  'my-array': [1, 2, 3],
+                  'my-empty-object': {},
+                },
+              },
+            ],
           },
         },
       },

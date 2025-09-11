@@ -3665,6 +3665,13 @@ components:
           description: Time periods when the rule is active.
           items:
             $ref: '#/components/schemas/timeRange'
+        tags:
+          type: array
+          description: A list of tags.
+          items:
+            type: string
+          example:
+            - conditional
       required:
         - objectID
         - conditions

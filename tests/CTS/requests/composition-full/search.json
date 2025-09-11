@@ -29,7 +29,12 @@
                 {
                   "objectID": "my-object-2",
                   "metadata": {
-                    "my-key": "my-value"
+                    "my-string": "string",
+                    "my-bool": true,
+                    "my-number": 42,
+                    "my-object": { "sub-key": "sub-value" },
+                    "my-array": [1, 2, 3],
+                    "my-empty-object": {}
                   }
                 }
               ]
@@ -53,7 +58,12 @@
                 {
                   "objectID": "my-object-2",
                   "metadata": {
-                    "my-key": "my-value"
+                    "my-string": "string",
+                    "my-bool": true,
+                    "my-number": 42,
+                    "my-object": { "sub-key": "sub-value" },
+                    "my-array": [1, 2, 3],
+                    "my-empty-object": {}
                   }
                 }
               ]
