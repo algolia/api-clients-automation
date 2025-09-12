@@ -51,7 +51,7 @@ export type RepositoryConfiguration = {
 };
 
 export const pushToRepositoryConfiguration: {
-  [k in 'AlgoliaWeb' | 'doc' | 'mcp-node' | 'docs-new']: RepositoryConfiguration;
+  [k in 'AlgoliaWeb' | 'doc' | 'mcp-node' | 'docs-new' | 'n8n-nodes-algolia']: RepositoryConfiguration;
 } = {
   AlgoliaWeb: {
     baseBranch: 'develop',
@@ -140,6 +140,21 @@ export const pushToRepositoryConfiguration: {
           type: 'specs',
           ext: 'json',
           output: 'src/data',
+          placeholderVariables: { appId: 'applicationId' },
+        },
+      },
+    ],
+  },
+  'n8n-nodes-algolia': {
+    baseBranch: 'main',
+    tasks: [
+      {
+        prBranch: 'feat/auto-openapi-sync',
+        commitMessage: 'feat: update OpenAPI specs',
+        files: {
+          type: 'specs',
+          ext: 'json',
+          output: 'src/nodes/Algolia/specs',
           placeholderVariables: { appId: 'applicationId' },
         },
       },
