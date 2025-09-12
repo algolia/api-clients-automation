@@ -250,6 +250,35 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+  /1/compositions:
+    get:
+      tags:
+        - composition-full
+      operationId: listCompositions
+      x-acl:
+        - editSettings
+        - settings
+      summary: List compositions
+      description: |
+        Lists all compositions in the current Algolia application.
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/HitsPerPage'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listCompositionsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/CompositionNotFound'
   /1/compositions/{compositionID}:
     get:
       tags:
@@ -284,7 +313,6 @@ paths:
       operationId: putComposition
       x-acl:
         - editSettings
-        - settings
       summary: Upsert a composition
       description: |
         Upsert a composition in the current Algolia application.
@@ -324,7 +352,6 @@ paths:
       operationId: deleteComposition
       x-acl:
         - editSettings
-        - settings
       summary: Delete a composition
       description: |
         Delete a composition from the current Algolia application.
@@ -417,6 +444,7 @@ paths:
         - composition-full
       operationId: getRule
       x-acl:
+        - editSettings
         - settings
       summary: Retrieve a rule
       description: >
@@ -448,7 +476,6 @@ paths:
       operationId: putCompositionRule
       x-acl:
         - editSettings
-        - settings
       summary: Upsert a composition rule
       description: |
         Upsert a Composition Rule for the specified composition ID.
@@ -491,7 +518,6 @@ paths:
       operationId: deleteCompositionRule
       x-acl:
         - editSettings
-        - settings
       summary: Delete a Composition Rule
       description: |
         Delete a Composition Rule from the specified Composition ID.
@@ -700,35 +726,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /1/compositions:
-    get:
-      tags:
-        - composition-full
-      operationId: listCompositions
-      x-acl:
-        - editSettings
-        - settings
-      summary: List compositions
-      description: |
-        Lists all compositions in the current Algolia application.
-      parameters:
-        - $ref: '#/components/parameters/Page'
-        - $ref: '#/components/parameters/HitsPerPage'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/listCompositionsResponse'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/CompositionNotFound'
   /setClientApiKey:
     get:
       x-helper: true
@@ -829,13 +826,6 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/compositionObjectID'
-    ObjectIDRule:
-      in: path
-      name: objectID
-      description: Unique identifier of a rule object.
-      required: true
-      schema:
-        $ref: '#/components/schemas/ruleID'
     Page:
       in: query
       name: page
@@ -857,6 +847,13 @@ components:
       schema:
         type: integer
         default: 100
+    ObjectIDRule:
+      in: path
+      name: objectID
+      description: Unique identifier of a rule object.
+      required: true
+      schema:
+        $ref: '#/components/schemas/ruleID'
   schemas:
     ErrorBase:
       description: Error.
@@ -3483,6 +3480,37 @@ components:
         - objectID
         - behavior
         - name
+    listCompositionsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          description: All compositions in your Algolia application.
+          items:
+            $ref: '#/components/schemas/composition'
+        nbPages:
+          type: integer
+          description: Number of pages.
+          example: 100
+        page:
+          type: integer
+          description: Current page.
+          example: 0
+        hitsPerPage:
+          type: integer
+          description: Number of items per page.
+          example: 20
+        nbHits:
+          type: integer
+          description: Number of items.
+          example: 200
+      required:
+        - hitsPerPage
+        - items
+        - nbHits
+        - nbPages
+        - page
     taskID:
       type: integer
       format: int64
@@ -3634,6 +3662,13 @@ components:
           description: Time periods when the rule is active.
           items:
             $ref: '#/components/schemas/timeRange'
+        tags:
+          type: array
+          description: A list of tags.
+          items:
+            type: string
+          example:
+            - conditional
       required:
         - objectID
         - conditions
@@ -3718,37 +3753,6 @@ components:
           $ref: '#/components/schemas/taskStatus'
       required:
         - status
-    listCompositionsResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          description: All compositions in your Algolia application.
-          items:
-            $ref: '#/components/schemas/composition'
-        nbPages:
-          type: integer
-          description: Number of pages.
-          example: 100
-        page:
-          type: integer
-          description: Current page.
-          example: 0
-        hitsPerPage:
-          type: integer
-          description: Number of items per page.
-          example: 20
-        nbHits:
-          type: integer
-          description: Number of items.
-          example: 200
-      required:
-        - hitsPerPage
-        - items
-        - nbHits
-        - nbPages
-        - page
   responses:
     BadRequest:
       description: Bad request or request arguments.

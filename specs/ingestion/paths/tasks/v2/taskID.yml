@@ -23,7 +23,7 @@ get:
 put:
   tags:
     - tasks
-  summary: Fully updates a task
+  summary: Fully update a task
   description: Fully updates a task by its ID, use partialUpdateTask if you only want to update a subset of fields.
   operationId: replaceTask
   parameters:
@@ -48,7 +48,7 @@ put:
 patch:
   tags:
     - tasks
-  summary: Partially updates a task
+  summary: Partially update a task
   description: Partially updates a task by its ID.
   operationId: updateTask
   parameters:

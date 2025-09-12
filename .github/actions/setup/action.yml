@@ -38,7 +38,7 @@ runs:
 
     # JavaScript for monorepo and tooling
     - name: Install Node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v5
       with:
         node-version-file: .nvmrc
         cache: yarn
@@ -50,7 +50,7 @@ runs:
     # Csharp
     - name: Install dotnet
       if: ${{ inputs.language == 'csharp' }}
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
         dotnet-version: ${{ inputs.version }}
 
@@ -69,7 +69,7 @@ runs:
     # Golang
     - name: Install golang
       if: ${{ inputs.language == 'go' }}
-      uses: actions/setup-go@v5
+      uses: actions/setup-go@v6
       with:
         cache-dependency-path: clients/algoliasearch-client-go/go.sum
         go-version: ${{ inputs.version }}
@@ -144,7 +144,7 @@ runs:
       shell: bash
       run: pipx install poetry==2
 
-    - uses: actions/setup-python@v5
+    - uses: actions/setup-python@v6
       if: ${{ inputs.language == 'python' }}
       with:
         python-version: ${{ inputs.version }}

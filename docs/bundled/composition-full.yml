@@ -277,7 +277,20 @@ paths:
                   query: 'batman',
                   injectedItems: {
                     injectedItem1: {
-                      items: [{ objectID: 'my-object-1' }, { objectID: 'my-object-2', metadata: { 'my-key': 'my-value' } }],
+                      items: [
+                        { objectID: 'my-object-1' },
+                        {
+                          objectID: 'my-object-2',
+                          metadata: {
+                            'my-string': 'string',
+                            'my-bool': true,
+                            'my-number': 42,
+                            'my-object': { 'sub-key': 'sub-value' },
+                            'my-array': [1, 2, 3],
+                            'my-empty-object': {},
+                          },
+                        },
+                      ],
                     },
                   },
                 },
@@ -399,6 +412,63 @@ paths:
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
               --data '{"params":{"query":"","maxFacetHits":10,"searchQuery":{"query":"","filters":"(category:Book OR category:Ebook) AND _tags:published","page":0,"getRankingInfo":true,"relevancyStrictness":90,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"hitsPerPage":20,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"queryLanguages":["es"],"naturalLanguages":[],"enableRules":true,"ruleContexts":["mobile"],"userToken":"test-user-123","clickAnalytics":false,"analytics":true,"analyticsTags":[],"enableABTest":true,"enableReRanking":true,"injectedItems":{}}}}'
+  /1/compositions:
+    get:
+      tags:
+        - Compositions
+      operationId: listCompositions
+      x-acl:
+        - editSettings
+        - settings
+      summary: List compositions
+      description: |
+        Lists all compositions in the current Algolia application.
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/HitsPerPage'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listCompositionsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/CompositionNotFound'
+      x-codeSamples:
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = compositionClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.listCompositions();
+
+
+            // >LOG
+
+            // use typed response
+
+            console.log(response);
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url 'https://algolia_application_id.algolia.net/1/compositions?page=0&hitsPerPage=100' \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/compositions/{compositionID}:
     get:
       tags:
@@ -462,7 +532,6 @@ paths:
       operationId: putComposition
       x-acl:
         - editSettings
-        - settings
       summary: Upsert a composition
       description: |
         Upsert a composition in the current Algolia application.
@@ -509,19 +578,51 @@ paths:
             // Call the API
 
             const response = await client.putComposition({
-              compositionID: 'my-external-injection-compo',
+              compositionID: 'my-metadata-compo',
               composition: {
-                objectID: 'my-external-injection-compo',
-                name: 'my first composition',
+                objectID: 'my-metadata-compo',
+                name: 'my composition',
                 behavior: {
                   injection: {
-                    main: { source: { search: { index: 'foo' } } },
+                    main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
                     injectedItems: [
                       {
                         key: 'injectedItem1',
-                        source: { external: { index: 'foo', ordering: 'userDefined', params: { filters: 'brand:adidas' } } },
+                        source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
                         position: 2,
                         length: 1,
+                        metadata: {
+                          hits: {
+                            addItemKey: true,
+                            extra: {
+                              'my-string': 'string',
+                              'my-bool': true,
+                              'my-number': 42,
+                              'my-object': { 'sub-key': 'sub-value' },
+                              'my-array': [1, 2, 3],
+                              'my-empty-object': {},
+                            },
+                          },
+                        },
+                      },
+                      {
+                        key: 'externalItem',
+                        source: { search: { index: 'foo', params: { filters: 'brand:puma' } } },
+                        position: 5,
+                        length: 5,
+                        metadata: {
+                          hits: {
+                            addItemKey: true,
+                            extra: {
+                              'my-string': 'string',
+                              'my-bool': true,
+                              'my-number': 42,
+                              'my-object': { 'sub-key': 'sub-value' },
+                              'my-array': [1, 2, 3],
+                              'my-empty-object': {},
+                            },
+                          },
+                        },
                       },
                     ],
                   },
@@ -551,7 +652,6 @@ paths:
       operationId: deleteComposition
       x-acl:
         - editSettings
-        - settings
       summary: Delete a composition
       description: |
         Delete a composition from the current Algolia application.
@@ -684,12 +784,55 @@ paths:
                 {
                   action: 'upsert',
                   body: {
-                    objectID: 'foo',
-                    name: 'my first composition',
-                    behavior: { injection: { main: { source: { search: { index: 'bar' } } }, injectedItems: [] } },
+                    objectID: 'my-metadata-compo',
+                    name: 'my composition',
+                    behavior: {
+                      injection: {
+                        main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
+                        injectedItems: [
+                          {
+                            key: 'injectedItem1',
+                            source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
+                            position: 2,
+                            length: 1,
+                            metadata: {
+                              hits: {
+                                addItemKey: true,
+                                extra: {
+                                  'my-string': 'string',
+                                  'my-bool': true,
+                                  'my-number': 42,
+                                  'my-object': { 'sub-key': 'sub-value' },
+                                  'my-array': [1, 2, 3],
+                                  'my-empty-object': {},
+                                },
+                              },
+                            },
+                          },
+                          {
+                            key: 'externalItem',
+                            source: { search: { index: 'foo', params: { filters: 'brand:puma' } } },
+                            position: 5,
+                            length: 5,
+                            metadata: {
+                              hits: {
+                                addItemKey: true,
+                                extra: {
+                                  'my-string': 'string',
+                                  'my-bool': true,
+                                  'my-number': 42,
+                                  'my-object': { 'sub-key': 'sub-value' },
+                                  'my-array': [1, 2, 3],
+                                  'my-empty-object': {},
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
                   },
                 },
-                { action: 'delete', body: { objectID: 'baz' } },
               ],
             });
 
@@ -715,6 +858,7 @@ paths:
         - Rules
       operationId: getRule
       x-acl:
+        - editSettings
         - settings
       summary: Retrieve a rule
       description: >
@@ -775,7 +919,6 @@ paths:
       operationId: putCompositionRule
       x-acl:
         - editSettings
-        - settings
       summary: Upsert a composition rule
       description: |
         Upsert a Composition Rule for the specified composition ID.
@@ -825,16 +968,32 @@ paths:
             // Call the API
 
             const response = await client.putCompositionRule({
-              compositionID: '1234',
-              objectID: '5678',
+              compositionID: 'compositionID',
+              objectID: 'rule-with-exernal-source',
               compositionRule: {
-                objectID: '5678',
-                conditions: [{ anchoring: 'is', pattern: 'test' }],
+                objectID: 'rule-with-exernal-source',
+                description: 'my description',
+                tags: ['tag1', 'tag2'],
+                enabled: true,
+                validity: [{ from: 1704063600, until: 1704083600 }],
+                conditions: [
+                  { anchoring: 'contains', pattern: 'harry' },
+                  { anchoring: 'contains', pattern: 'potter' },
+                ],
                 consequence: {
                   behavior: {
                     injection: {
-                      main: { source: { search: { index: 'foo' } } },
-                      injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
+                      main: { source: { search: { index: 'my-index', params: { filters: 'brand:adidas' } } } },
+                      injectedItems: [
+                        {
+                          key: 'injectedItem',
+                          source: {
+                            external: { index: 'my-index', params: { filters: 'brand:adidas' }, ordering: 'userDefined' },
+                          },
+                          position: 0,
+                          length: 3,
+                        },
+                      ],
                     },
                   },
                 },
@@ -856,14 +1015,13 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"objectID":"my_composition_rule_object_id","conditions":[{"pattern":"{facet:genre}","anchoring":"is","context":"mobile","filters":"genre:comedy"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":["*"],"hitsPerPage":20,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}]}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}]}'
+              --data '{"objectID":"my_composition_rule_object_id","conditions":[{"pattern":"{facet:genre}","anchoring":"is","context":"mobile","filters":"genre:comedy"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":["*"],"hitsPerPage":20,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}]}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}],"tags":["conditional"]}'
     delete:
       tags:
         - Rules
       operationId: deleteCompositionRule
       x-acl:
         - editSettings
-        - settings
       summary: Delete a Composition Rule
       description: |
         Delete a Composition Rule from the specified Composition ID.
@@ -993,15 +1151,38 @@ paths:
             // Call the API
 
             const response = await client.saveRules({
-              compositionID: 'foo',
+              compositionID: 'rule-with-exernal-source',
               rules: {
                 requests: [
                   {
                     action: 'upsert',
                     body: {
-                      objectID: '123',
-                      conditions: [{ pattern: 'a' }],
-                      consequence: { behavior: { injection: { main: { source: { search: { index: '<YOUR_INDEX_NAME>' } } } } } },
+                      objectID: 'rule-with-exernal-source',
+                      description: 'my description',
+                      tags: ['tag1', 'tag2'],
+                      enabled: true,
+                      validity: [{ from: 1704063600, until: 1704083600 }],
+                      conditions: [
+                        { anchoring: 'contains', pattern: 'harry' },
+                        { anchoring: 'contains', pattern: 'potter' },
+                      ],
+                      consequence: {
+                        behavior: {
+                          injection: {
+                            main: { source: { search: { index: 'my-index', params: { filters: 'brand:adidas' } } } },
+                            injectedItems: [
+                              {
+                                key: 'injectedItem',
+                                source: {
+                                  external: { index: 'my-index', params: { filters: 'brand:adidas' }, ordering: 'userDefined' },
+                                },
+                                position: 0,
+                                length: 3,
+                              },
+                            ],
+                          },
+                        },
+                      },
                     },
                   },
                 ],
@@ -1023,7 +1204,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"requests":[{"action":"upsert","body":{"objectID":"my_composition_rule_object_id","conditions":[{"pattern":"{facet:genre}","anchoring":"is","context":"mobile","filters":"genre:comedy"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":["*"],"hitsPerPage":20,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}]}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}]}}]}'
+              --data '{"requests":[{"action":"upsert","body":{"objectID":"my_composition_rule_object_id","conditions":[{"pattern":"{facet:genre}","anchoring":"is","context":"mobile","filters":"genre:comedy"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":["*"],"hitsPerPage":20,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}]}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}],"tags":["conditional"]}}]}'
   /1/compositions/{compositionID}/rules/search:
     post:
       tags:
@@ -1207,63 +1388,6 @@ paths:
               --header 'accept: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
-  /1/compositions:
-    get:
-      tags:
-        - Compositions
-      operationId: listCompositions
-      x-acl:
-        - editSettings
-        - settings
-      summary: List compositions
-      description: |
-        Lists all compositions in the current Algolia application.
-      parameters:
-        - $ref: '#/components/parameters/Page'
-        - $ref: '#/components/parameters/HitsPerPage'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/listCompositionsResponse'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/CompositionNotFound'
-      x-codeSamples:
-        - lang: javascript
-          label: JavaScript
-          source: >
-            // Initialize the client
-
-            const client = compositionClient('ALGOLIA_APPLICATION_ID',
-            'ALGOLIA_API_KEY');
-
-
-            // Call the API
-
-            const response = await client.listCompositions();
-
-
-            // >LOG
-
-            // use typed response
-
-            console.log(response);
-        - lang: cURL
-          label: curl
-          source: |-
-            curl --request GET \
-              --url 'https://algolia_application_id.algolia.net/1/compositions?page=0&hitsPerPage=100' \
-              --header 'accept: application/json' \
-              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
-              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
 components:
   securitySchemes:
     appId:
@@ -1306,13 +1430,6 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/compositionObjectID'
-    ObjectIDRule:
-      in: path
-      name: objectID
-      description: Unique identifier of a rule object.
-      required: true
-      schema:
-        $ref: '#/components/schemas/ruleID'
     Page:
       in: query
       name: page
@@ -1334,6 +1451,13 @@ components:
       schema:
         type: integer
         default: 100
+    ObjectIDRule:
+      in: path
+      name: objectID
+      description: Unique identifier of a rule object.
+      required: true
+      schema:
+        $ref: '#/components/schemas/ruleID'
   schemas:
     ErrorBase:
       description: Error.
@@ -3954,6 +4078,37 @@ components:
         - objectID
         - behavior
         - name
+    listCompositionsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          description: All compositions in your Algolia application.
+          items:
+            $ref: '#/components/schemas/composition'
+        nbPages:
+          type: integer
+          description: Number of pages.
+          example: 100
+        page:
+          type: integer
+          description: Current page.
+          example: 0
+        hitsPerPage:
+          type: integer
+          description: Number of items per page.
+          example: 20
+        nbHits:
+          type: integer
+          description: Number of items.
+          example: 200
+      required:
+        - hitsPerPage
+        - items
+        - nbHits
+        - nbPages
+        - page
     taskID:
       type: integer
       format: int64
@@ -4105,6 +4260,13 @@ components:
           description: Time periods when the rule is active.
           items:
             $ref: '#/components/schemas/timeRange'
+        tags:
+          type: array
+          description: A list of tags.
+          items:
+            type: string
+          example:
+            - conditional
       required:
         - objectID
         - conditions
@@ -4189,37 +4351,6 @@ components:
           $ref: '#/components/schemas/taskStatus'
       required:
         - status
-    listCompositionsResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          description: All compositions in your Algolia application.
-          items:
-            $ref: '#/components/schemas/composition'
-        nbPages:
-          type: integer
-          description: Number of pages.
-          example: 100
-        page:
-          type: integer
-          description: Current page.
-          example: 0
-        hitsPerPage:
-          type: integer
-          description: Number of items per page.
-          example: 20
-        nbHits:
-          type: integer
-          description: Number of items.
-          example: 200
-      required:
-        - hitsPerPage
-        - items
-        - nbHits
-        - nbPages
-        - page
   responses:
     BadRequest:
       description: Bad request or request arguments.

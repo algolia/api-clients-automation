@@ -3333,14 +3333,12 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by
+   * Pushes records through the pipeline, directly to an index. You can make the call synchronous by
    * providing the `watch` parameter, for asynchronous calls, you can use the observability
-   * endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the
-   * [pre-indexing data
-   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
-   * this is the recommended way of ingesting your records. This method is similar to `push`, but
-   * requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target
-   * the same `indexName`.
+   * endpoints or the debugger dashboard to see the status of your task. If you want to transform
+   * your data before indexing, this is the recommended way of ingesting your records. This method
+   * is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when
+   * many `destinations` target the same `indexName`.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param pushTaskPayload (required)
@@ -3360,14 +3358,12 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by
+   * Pushes records through the pipeline, directly to an index. You can make the call synchronous by
    * providing the `watch` parameter, for asynchronous calls, you can use the observability
-   * endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the
-   * [pre-indexing data
-   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
-   * this is the recommended way of ingesting your records. This method is similar to `push`, but
-   * requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target
-   * the same `indexName`.
+   * endpoints or the debugger dashboard to see the status of your task. If you want to transform
+   * your data before indexing, this is the recommended way of ingesting your records. This method
+   * is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when
+   * many `destinations` target the same `indexName`.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param pushTaskPayload (required)
@@ -3381,14 +3377,12 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by
+   * Pushes records through the pipeline, directly to an index. You can make the call synchronous by
    * providing the `watch` parameter, for asynchronous calls, you can use the observability
-   * endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the
-   * [pre-indexing data
-   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
-   * this is the recommended way of ingesting your records. This method is similar to `push`, but
-   * requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target
-   * the same `indexName`.
+   * endpoints or the debugger dashboard to see the status of your task. If you want to transform
+   * your data before indexing, this is the recommended way of ingesting your records. This method
+   * is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when
+   * many `destinations` target the same `indexName`.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param pushTaskPayload (required)
@@ -3402,14 +3396,12 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by
+   * Pushes records through the pipeline, directly to an index. You can make the call synchronous by
    * providing the `watch` parameter, for asynchronous calls, you can use the observability
-   * endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the
-   * [pre-indexing data
-   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
-   * this is the recommended way of ingesting your records. This method is similar to `push`, but
-   * requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target
-   * the same `indexName`.
+   * endpoints or the debugger dashboard to see the status of your task. If you want to transform
+   * your data before indexing, this is the recommended way of ingesting your records. This method
+   * is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when
+   * many `destinations` target the same `indexName`.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param pushTaskPayload (required)
@@ -3420,14 +3412,12 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Pushes records through the Pipeline, directly to an index. You can make the
+   * (asynchronously) Pushes records through the pipeline, directly to an index. You can make the
    * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
-   * observability endpoints and/or debugger dashboard to see the status of your task. If you want
-   * to leverage the [pre-indexing data
-   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
-   * this is the recommended way of ingesting your records. This method is similar to `push`, but
-   * requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target
-   * the same `indexName`.
+   * observability endpoints or the debugger dashboard to see the status of your task. If you want
+   * to transform your data before indexing, this is the recommended way of ingesting your records.
+   * This method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is
+   * useful when many `destinations` target the same `indexName`.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param pushTaskPayload (required)
@@ -3465,14 +3455,12 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Pushes records through the Pipeline, directly to an index. You can make the
+   * (asynchronously) Pushes records through the pipeline, directly to an index. You can make the
    * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
-   * observability endpoints and/or debugger dashboard to see the status of your task. If you want
-   * to leverage the [pre-indexing data
-   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
-   * this is the recommended way of ingesting your records. This method is similar to `push`, but
-   * requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target
-   * the same `indexName`.
+   * observability endpoints or the debugger dashboard to see the status of your task. If you want
+   * to transform your data before indexing, this is the recommended way of ingesting your records.
+   * This method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is
+   * useful when many `destinations` target the same `indexName`.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param pushTaskPayload (required)
@@ -3486,14 +3474,12 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Pushes records through the Pipeline, directly to an index. You can make the
+   * (asynchronously) Pushes records through the pipeline, directly to an index. You can make the
    * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
-   * observability endpoints and/or debugger dashboard to see the status of your task. If you want
-   * to leverage the [pre-indexing data
-   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
-   * this is the recommended way of ingesting your records. This method is similar to `push`, but
-   * requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target
-   * the same `indexName`.
+   * observability endpoints or the debugger dashboard to see the status of your task. If you want
+   * to transform your data before indexing, this is the recommended way of ingesting your records.
+   * This method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is
+   * useful when many `destinations` target the same `indexName`.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param pushTaskPayload (required)
@@ -3510,14 +3496,12 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Pushes records through the Pipeline, directly to an index. You can make the
+   * (asynchronously) Pushes records through the pipeline, directly to an index. You can make the
    * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
-   * observability endpoints and/or debugger dashboard to see the status of your task. If you want
-   * to leverage the [pre-indexing data
-   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
-   * this is the recommended way of ingesting your records. This method is similar to `push`, but
-   * requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target
-   * the same `indexName`.
+   * observability endpoints or the debugger dashboard to see the status of your task. If you want
+   * to transform your data before indexing, this is the recommended way of ingesting your records.
+   * This method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is
+   * useful when many `destinations` target the same `indexName`.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param pushTaskPayload (required)

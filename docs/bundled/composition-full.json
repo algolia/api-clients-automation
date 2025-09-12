@@ -380,6 +380,52 @@
         }
       }
     },
+    "/1/compositions": {
+      "get": {
+        "tags": [
+          "Compositions"
+        ],
+        "operationId": "listCompositions",
+        "x-acl": [
+          "editSettings",
+          "settings"
+        ],
+        "summary": "List compositions",
+        "description": "Lists all compositions in the current Algolia application.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/HitsPerPage"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listCompositionsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/CompositionNotFound"
+          }
+        }
+      }
+    },
     "/1/compositions/{compositionID}": {
       "get": {
         "tags": [
@@ -428,8 +474,7 @@
         ],
         "operationId": "putComposition",
         "x-acl": [
-          "editSettings",
-          "settings"
+          "editSettings"
         ],
         "summary": "Upsert a composition",
         "description": "Upsert a composition in the current Algolia application.\n",
@@ -489,8 +534,7 @@
         ],
         "operationId": "deleteComposition",
         "x-acl": [
-          "editSettings",
-          "settings"
+          "editSettings"
         ],
         "summary": "Delete a composition",
         "description": "Delete a composition from the current Algolia application.\n",
@@ -628,6 +672,7 @@
         ],
         "operationId": "getRule",
         "x-acl": [
+          "editSettings",
           "settings"
         ],
         "summary": "Retrieve a rule",
@@ -671,8 +716,7 @@
         ],
         "operationId": "putCompositionRule",
         "x-acl": [
-          "editSettings",
-          "settings"
+          "editSettings"
         ],
         "summary": "Upsert a composition rule",
         "description": "Upsert a Composition Rule for the specified composition ID.\n",
@@ -738,8 +782,7 @@
         ],
         "operationId": "deleteCompositionRule",
         "x-acl": [
-          "editSettings",
-          "settings"
+          "editSettings"
         ],
         "summary": "Delete a Composition Rule",
         "description": "Delete a Composition Rule from the specified Composition ID.\n",
@@ -1046,52 +1089,6 @@
         }
       }
     },
-    "/1/compositions": {
-      "get": {
-        "tags": [
-          "Compositions"
-        ],
-        "operationId": "listCompositions",
-        "x-acl": [
-          "editSettings",
-          "settings"
-        ],
-        "summary": "List compositions",
-        "description": "Lists all compositions in the current Algolia application.\n",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/Page"
-          },
-          {
-            "$ref": "#/components/parameters/HitsPerPage"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/listCompositionsResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "402": {
-            "$ref": "#/components/responses/FeatureNotEnabled"
-          },
-          "403": {
-            "$ref": "#/components/responses/MethodNotAllowed"
-          },
-          "404": {
-            "$ref": "#/components/responses/CompositionNotFound"
-          }
-        }
-      }
-    },
     "/setClientApiKey": {
       "get": {
         "x-helper": true,
@@ -1212,15 +1209,6 @@
           "$ref": "#/components/schemas/compositionObjectID"
         }
       },
-      "ObjectIDRule": {
-        "in": "path",
-        "name": "objectID",
-        "description": "Unique identifier of a rule object.",
-        "required": true,
-        "schema": {
-          "$ref": "#/components/schemas/ruleID"
-        }
-      },
       "Page": {
         "in": "query",
         "name": "page",
@@ -1247,6 +1235,15 @@
         "schema": {
           "type": "integer",
           "default": 100
+        }
+      },
+      "ObjectIDRule": {
+        "in": "path",
+        "name": "objectID",
+        "description": "Unique identifier of a rule object.",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/ruleID"
         }
       }
     },
@@ -3841,6 +3838,46 @@
           "name"
         ]
       },
+      "listCompositionsResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "description": "All compositions in your Algolia application.",
+            "items": {
+              "$ref": "#/components/schemas/composition"
+            }
+          },
+          "nbPages": {
+            "type": "integer",
+            "description": "Number of pages.",
+            "example": 100
+          },
+          "page": {
+            "type": "integer",
+            "description": "Current page.",
+            "example": 0
+          },
+          "hitsPerPage": {
+            "type": "integer",
+            "description": "Number of items per page.",
+            "example": 20
+          },
+          "nbHits": {
+            "type": "integer",
+            "description": "Number of items.",
+            "example": 200
+          }
+        },
+        "required": [
+          "hitsPerPage",
+          "items",
+          "nbHits",
+          "nbPages",
+          "page"
+        ]
+      },
       "taskID": {
         "type": "integer",
         "format": "int64",
@@ -3988,6 +4025,16 @@
             "items": {
               "$ref": "#/components/schemas/timeRange"
             }
+          },
+          "tags": {
+            "type": "array",
+            "description": "A list of tags.",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "conditional"
+            ]
           }
         },
         "required": [
@@ -4055,46 +4102,6 @@
         },
         "required": [
           "status"
-        ]
-      },
-      "listCompositionsResponse": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "items": {
-            "type": "array",
-            "description": "All compositions in your Algolia application.",
-            "items": {
-              "$ref": "#/components/schemas/composition"
-            }
-          },
-          "nbPages": {
-            "type": "integer",
-            "description": "Number of pages.",
-            "example": 100
-          },
-          "page": {
-            "type": "integer",
-            "description": "Current page.",
-            "example": 0
-          },
-          "hitsPerPage": {
-            "type": "integer",
-            "description": "Number of items per page.",
-            "example": 20
-          },
-          "nbHits": {
-            "type": "integer",
-            "description": "Number of items.",
-            "example": 200
-          }
-        },
-        "required": [
-          "hitsPerPage",
-          "items",
-          "nbHits",
-          "nbPages",
-          "page"
         ]
       }
     },
