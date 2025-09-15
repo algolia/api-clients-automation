@@ -13,7 +13,10 @@
     },
     "request": {
       "path": "/1/transformations&type=noCode",
-      "method": "GET"
+      "method": "GET",
+      "queryParameters": {
+        "type": "noCode"
+      }
     }
   }
 ]
