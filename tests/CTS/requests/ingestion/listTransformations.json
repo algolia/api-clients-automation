@@ -12,7 +12,7 @@
       "type":"noCode"
     },
     "request": {
-      "path": "/1/transformations&type=noCode",
+      "path": "/1/transformations",
       "method": "GET",
       "queryParameters": {
         "type": "noCode"
