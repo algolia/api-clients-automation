@@ -136,12 +136,6 @@ __metadata:
   languageName: node
   linkType: soft
 
-"@algolia/client-composition@link:../../../clients/algoliasearch-client-javascript/packages/client-composition::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode":
-  version: 0.0.0-use.local
-  resolution: "@algolia/client-composition@link:../../../clients/algoliasearch-client-javascript/packages/client-composition::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode"
-  languageName: node
-  linkType: soft
-
 "@algolia/client-insights@link:../../../clients/algoliasearch-client-javascript/packages/client-insights::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode":
   version: 0.0.0-use.local
   resolution: "@algolia/client-insights@link:../../../clients/algoliasearch-client-javascript/packages/client-insights::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode"
@@ -5828,7 +5822,6 @@ __metadata:
     "@algolia/client-abtesting": "link:../../../clients/algoliasearch-client-javascript/packages/client-abtesting"
     "@algolia/client-analytics": "link:../../../clients/algoliasearch-client-javascript/packages/client-analytics"
     "@algolia/client-common": "link:../../../clients/algoliasearch-client-javascript/packages/client-common"
-    "@algolia/client-composition": "link:../../../clients/algoliasearch-client-javascript/packages/client-composition"
     "@algolia/client-insights": "link:../../../clients/algoliasearch-client-javascript/packages/client-insights"
     "@algolia/client-personalization": "link:../../../clients/algoliasearch-client-javascript/packages/client-personalization"
     "@algolia/client-query-suggestions": "link:../../../clients/algoliasearch-client-javascript/packages/client-query-suggestions"

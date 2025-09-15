@@ -9,9 +9,9 @@ import {
   serializeQueryParameters,
   createIterablePromise,
   {{/isSearchClient}}
-  {{#isCompositionFullClient}}
+  {{#isCompositionClient}}
   createIterablePromise,
-  {{/isCompositionFullClient}}
+  {{/isCompositionClient}}
   {{#isIngestionClient}}
   createIterablePromise,
   ApiError,
@@ -49,9 +49,9 @@ import type {
     WaitForAppTaskOptions,
     WaitForTaskOptions,
   {{/isSearchClient}}
-  {{#isCompositionFullClient}}
+  {{#isCompositionClient}}
     WaitForCompositionTaskOptions,
-  {{/isCompositionFullClient}}
+  {{/isCompositionClient}}
   {{#operation}}
     {{#vendorExtensions}}
       {{#x-create-wrapping-object}}

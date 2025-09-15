@@ -12,7 +12,7 @@
     logger: createNullLogger(),
     requester: createXhrRequester(),
     algoliaAgents: [{ segment: 'Browser' }],
-    authMode: 'Within{{#isCompositionClient}}Headers{{/isCompositionClient}}{{#isAdvancedPersonalizationClient}}Headers{{/isAdvancedPersonalizationClient}}{{#isCompositionFullClient}}Headers{{/isCompositionFullClient}}{{^isAdvancedPersonalizationClient}}{{^isCompositionClient}}{{^isCompositionFullClient}}QueryParameters{{/isCompositionFullClient}}{{/isCompositionClient}}{{/isAdvancedPersonalizationClient}}',
+    authMode: 'Within{{#isCompositionClient}}Headers{{/isCompositionClient}}{{#isAdvancedPersonalizationClient}}Headers{{/isAdvancedPersonalizationClient}}{{^isAdvancedPersonalizationClient}}{{^isCompositionClient}}QueryParameters{{/isCompositionClient}}{{/isAdvancedPersonalizationClient}}',
     responsesCache: createMemoryCache(),
     requestsCache: createMemoryCache({ serializable: false }),
     hostsCache: createFallbackableCache({
