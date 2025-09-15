@@ -191,12 +191,6 @@
       {
         "name": "search",
         "output": "clients/algoliasearch-client-javascript/packages/client-search"
-      },
-      {
-        "name": "composition-full",
-        "output": "clients/algoliasearch-client-javascript/packages/client-composition",
-        "isStandaloneClient": true,
-        "clientName": "composition"
       }
     ],
     "folder": "clients/algoliasearch-client-javascript",
