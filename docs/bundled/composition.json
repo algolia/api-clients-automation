@@ -259,7 +259,11 @@
       },
       "getRankingInfo": {
         "type": "boolean",
-        "description": "Whether the run response should include detailed ranking information."
+        "description": "Whether the run response should include detailed ranking information.",
+        "default": false,
+        "x-categories": [
+          "Advanced"
+        ]
       },
       "relevancyStrictness": {
         "type": "integer",
@@ -613,7 +617,10 @@
       "enableRules": {
         "type": "boolean",
         "description": "Whether to enable composition rules.",
-        "default": true
+        "default": true,
+        "x-categories": [
+          "Rules"
+        ]
       },
       "ruleContexts": {
         "type": "array",
@@ -724,7 +731,7 @@
         "description": "A list of extenrally injected objectID groups into from an external source.\n",
         "default": {},
         "x-categories": [
-          "Advanced"
+          "Retail Media Network"
         ]
       },
       "params": {

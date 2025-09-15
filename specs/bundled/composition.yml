@@ -352,6 +352,9 @@ components:
     getRankingInfo:
       type: boolean
       description: Whether the run response should include detailed ranking information.
+      default: false
+      x-categories:
+        - Advanced
     relevancyStrictness:
       type: integer
       example: 90
@@ -787,6 +790,8 @@ components:
       type: boolean
       description: Whether to enable composition rules.
       default: true
+      x-categories:
+        - Rules
     ruleContexts:
       type: array
       items:
@@ -902,7 +907,7 @@ components:
         source.
       default: {}
       x-categories:
-        - Advanced
+        - Retail Media Network
     params:
       title: Run composition parameters as object
       type: object
