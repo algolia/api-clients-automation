@@ -5,5 +5,15 @@
       "path": "/1/transformations",
       "method": "GET"
     }
+  },
+  {
+    "testName": "allows filtering by type",
+    "parameters": {
+      "type":"noCode"
+    },
+    "request": {
+      "path": "/1/transformations&type=noCode",
+      "method": "GET"
+    }
   }
 ]
