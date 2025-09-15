@@ -5174,7 +5174,7 @@ paths:
     post:
       tags:
         - sources
-      summary: Validates a source payload
+      summary: Validate a source payload
       description: >
         Validates a source payload to ensure it can be created and that the data
         source can be reached by Algolia.
@@ -6548,7 +6548,7 @@ paths:
     post:
       tags:
         - sources
-      summary: Validates an update of a source payload
+      summary: Validate an update of a source payload
       description: >
         Validates an update of a source payload to ensure it can be created and
         that the data source can be reached by Algolia.
@@ -8442,7 +8442,7 @@ paths:
     put:
       tags:
         - tasks
-      summary: Fully updates a task
+      summary: Fully update a task
       description: >-
         Fully updates a task by its ID, use partialUpdateTask if you only want
         to update a subset of fields.
@@ -8713,7 +8713,7 @@ paths:
     patch:
       tags:
         - tasks
-      summary: Partially updates a task
+      summary: Partially update a task
       description: Partially updates a task by its ID.
       operationId: updateTask
       parameters:
@@ -9459,21 +9459,25 @@ paths:
     post:
       tags:
         - tasks
-      summary: Push records by taskID
+      summary: Push records by task ID
       description: >
-        Pushes records through the Pipeline, directly to an index. You can make
+        Pushes records through the pipeline, directly to an index. You can make
         the call synchronous by providing the `watch` parameter, for
-        asynchronous calls, you can use the observability endpoints and/or
+        asynchronous calls, you can use the observability endpoints or the
         debugger dashboard to see the status of your task.
 
-        If you want to leverage the [pre-indexing data
-        transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
-        this is the recommended way of ingesting your records.
+        If you want to transform your data before indexing, this is the
+        recommended way of ingesting your records.
 
         This method is similar to `push`, but requires a `taskID` instead of a
         `indexName`, which is useful when many `destinations` target the same
         `indexName`.
       operationId: pushTask
+      externalDocs:
+        url: >-
+          https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/
+        description: |
+          Related guide: Pre-indexing data transformation.
       x-acl:
         - addObject
         - deleteIndex
