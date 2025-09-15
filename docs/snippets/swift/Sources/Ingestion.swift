@@ -999,12 +999,32 @@ final class IngestionClientSnippet {
     ///
     /// listTransformations
     func snippetForListTransformations() async throws {
-        // >SEPARATOR listTransformations default
+        // >SEPARATOR listTransformations listTransformations
         // Initialize the client
         let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.listTransformations()
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the listTransformations method.
+    ///
+    /// list with every parameters
+    func snippetForListTransformations1() async throws {
+        // >SEPARATOR listTransformations list with every parameters
+        // Initialize the client
+        let client = try IngestionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.listTransformations(
+            itemsPerPage: 2,
+            page: 1,
+            sort: TransformationSortKeys.createdAt,
+            order: OrderKeys.asc,
+            type: TransformationType.noCode
+        )
         // >LOG
         // SEPARATOR<
     }

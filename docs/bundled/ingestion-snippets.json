@@ -132,7 +132,8 @@
       "default": "var response = await client.ListTasksV1Async();"
     },
     "listTransformations": {
-      "default": "var response = await client.ListTransformationsAsync();"
+      "listTransformations": "var response = await client.ListTransformationsAsync();",
+      "list with every parameters": "var response = await client.ListTransformationsAsync(\n  2,\n  1,\n  Enum.Parse<TransformationSortKeys>(\"CreatedAt\"),\n  Enum.Parse<OrderKeys>(\"Asc\"),\n  Enum.Parse<TransformationType>(\"NoCode\")\n);"
     },
     "push": {
       "global push": "var response = await client.PushAsync(\n  \"<YOUR_INDEX_NAME>\",\n  new PushTaskPayload\n  {\n    Action = Enum.Parse<Action>(\"AddObject\"),\n    Records = new List<PushTaskRecords>\n    {\n      new PushTaskRecords\n      {\n        ObjectID = \"o\",\n        AdditionalProperties = new Dictionary<string, object>\n        {\n          { \"key\", \"bar\" },\n          { \"foo\", \"1\" },\n        },\n      },\n      new PushTaskRecords\n      {\n        ObjectID = \"k\",\n        AdditionalProperties = new Dictionary<string, object>\n        {\n          { \"key\", \"baz\" },\n          { \"foo\", \"2\" },\n        },\n      },\n    },\n  }\n);",
@@ -350,7 +351,8 @@
       "default": "response, err := client.ListTasksV1(client.NewApiListTasksV1Request())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listTransformations": {
-      "default": "response, err := client.ListTransformations(client.NewApiListTransformationsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "listTransformations": "response, err := client.ListTransformations(client.NewApiListTransformationsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "list with every parameters": "response, err := client.ListTransformations(client.NewApiListTransformationsRequest().WithItemsPerPage(2).WithPage(1).WithSort(ingestion.TransformationSortKeys(\"createdAt\")).WithOrder(ingestion.OrderKeys(\"asc\")).WithType(ingestion.TransformationType(\"noCode\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "push": {
       "global push": "response, err := client.Push(client.NewApiPushRequest(\n  \"<YOUR_INDEX_NAME>\",\n  ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action(\"addObject\")).SetRecords(\n    []ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"bar\").SetAdditionalProperty(\"foo\", \"1\").SetObjectID(\"o\"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty(\"key\", \"baz\").SetAdditionalProperty(\"foo\", \"2\").SetObjectID(\"k\")})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -567,7 +569,8 @@
       "default": "client.listTasksV1();"
     },
     "listTransformations": {
-      "default": "client.listTransformations();"
+      "listTransformations": "client.listTransformations();",
+      "list with every parameters": "client.listTransformations(2, 1, TransformationSortKeys.CREATED_AT, OrderKeys.ASC, TransformationType.NO_CODE);"
     },
     "push": {
       "global push": "client.push(\n  \"<YOUR_INDEX_NAME>\",\n  new PushTaskPayload()\n    .setAction(Action.ADD_OBJECT)\n    .setRecords(\n      Arrays.asList(\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"bar\").setAdditionalProperty(\"foo\", \"1\").setObjectID(\"o\"),\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"baz\").setAdditionalProperty(\"foo\", \"2\").setObjectID(\"k\")\n      )\n    )\n);",
@@ -784,7 +787,8 @@
       "default": "const response = await client.listTasksV1();"
     },
     "listTransformations": {
-      "default": "const response = await client.listTransformations();"
+      "listTransformations": "const response = await client.listTransformations();",
+      "list with every parameters": "const response = await client.listTransformations({\n  itemsPerPage: 2,\n  page: 1,\n  sort: 'createdAt',\n  order: 'asc',\n  type: 'noCode',\n});"
     },
     "push": {
       "global push": "const response = await client.push({\n  indexName: 'foo',\n  pushTaskPayload: {\n    action: 'addObject',\n    records: [\n      { key: 'bar', foo: '1', objectID: 'o' },\n      { key: 'baz', foo: '2', objectID: 'k' },\n    ],\n  },\n});",
@@ -1001,7 +1005,8 @@
       "default": "var response = client.listTasksV1()"
     },
     "listTransformations": {
-      "default": "var response = client.listTransformations()"
+      "listTransformations": "var response = client.listTransformations()",
+      "list with every parameters": "var response = client.listTransformations(\n  itemsPerPage = 2,\n  page = 1,\n  sort = TransformationSortKeys.entries.first { it.value == \"createdAt\" },\n  order = OrderKeys.entries.first { it.value == \"asc\" },\n  type = TransformationType.entries.first { it.value == \"noCode\" },\n)"
     },
     "push": {
       "global push": "var response = client.push(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  pushTaskPayload = PushTaskPayload(\n    action = Action.entries.first { it.value == \"addObject\" },\n    records = listOf(\n      PushTaskRecords(\n        objectID = \"o\",\n        additionalProperties = mapOf(\n          \"key\" to JsonPrimitive(\"bar\"),\n          \"foo\" to JsonPrimitive(\"1\"),\n        ),\n      ),\n      PushTaskRecords(\n        objectID = \"k\",\n        additionalProperties = mapOf(\n          \"key\" to JsonPrimitive(\"baz\"),\n          \"foo\" to JsonPrimitive(\"2\"),\n        ),\n      ),\n    ),\n  ),\n)",
@@ -1218,7 +1223,8 @@
       "default": "$response = $client->listTasksV1();"
     },
     "listTransformations": {
-      "default": "$response = $client->listTransformations();"
+      "listTransformations": "$response = $client->listTransformations();",
+      "list with every parameters": "$response = $client->listTransformations(\n    2,\n    1,\n    'createdAt',\n    'asc',\n    'noCode',\n);"
     },
     "push": {
       "global push": "$response = $client->push(\n    '<YOUR_INDEX_NAME>',\n    ['action' => 'addObject',\n        'records' => [\n            ['key' => 'bar',\n                'foo' => '1',\n                'objectID' => 'o',\n            ],\n\n            ['key' => 'baz',\n                'foo' => '2',\n                'objectID' => 'k',\n            ],\n        ],\n    ],\n);",
@@ -1435,7 +1441,8 @@
       "default": "response = client.list_tasks_v1()"
     },
     "listTransformations": {
-      "default": "response = client.list_transformations()"
+      "listTransformations": "response = client.list_transformations()",
+      "list with every parameters": "response = client.list_transformations(\n    items_per_page=2,\n    page=1,\n    sort=\"createdAt\",\n    order=\"asc\",\n    type=\"noCode\",\n)"
     },
     "push": {
       "global push": "response = client.push(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    push_task_payload={\n        \"action\": \"addObject\",\n        \"records\": [\n            {\n                \"key\": \"bar\",\n                \"foo\": \"1\",\n                \"objectID\": \"o\",\n            },\n            {\n                \"key\": \"baz\",\n                \"foo\": \"2\",\n                \"objectID\": \"k\",\n            },\n        ],\n    },\n)",
@@ -1652,7 +1659,8 @@
       "default": "response = client.list_tasks_v1"
     },
     "listTransformations": {
-      "default": "response = client.list_transformations"
+      "listTransformations": "response = client.list_transformations",
+      "list with every parameters": "response = client.list_transformations(2, 1, \"createdAt\", \"asc\", \"noCode\")"
     },
     "push": {
       "global push": "response = client.push(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Ingestion::PushTaskPayload.new(\n    action: \"addObject\",\n    records: [\n      Algolia::Ingestion::PushTaskRecords.new(key: \"bar\", foo: \"1\", algolia_object_id: \"o\"),\n      Algolia::Ingestion::PushTaskRecords.new(key: \"baz\", foo: \"2\", algolia_object_id: \"k\")\n    ]\n  )\n)",
@@ -1869,7 +1877,8 @@
       "default": "val response = Await.result(\n  client.listTasksV1(\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "listTransformations": {
-      "default": "val response = Await.result(\n  client.listTransformations(\n  ),\n  Duration(100, \"sec\")\n)"
+      "listTransformations": "val response = Await.result(\n  client.listTransformations(\n  ),\n  Duration(100, \"sec\")\n)",
+      "list with every parameters": "val response = Await.result(\n  client.listTransformations(\n    itemsPerPage = Some(2),\n    page = Some(1),\n    sort = Some(TransformationSortKeys.withName(\"createdAt\")),\n    order = Some(OrderKeys.withName(\"asc\")),\n    `type` = Some(TransformationType.withName(\"noCode\"))\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "push": {
       "global push": "val response = Await.result(\n  client.push(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    pushTaskPayload = PushTaskPayload(\n      action = Action.withName(\"addObject\"),\n      records = Seq(\n        PushTaskRecords(\n          objectID = \"o\",\n          additionalProperties = Some(List(JField(\"key\", JString(\"bar\")), JField(\"foo\", JString(\"1\"))))\n        ),\n        PushTaskRecords(\n          objectID = \"k\",\n          additionalProperties = Some(List(JField(\"key\", JString(\"baz\")), JField(\"foo\", JString(\"2\"))))\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)",
@@ -2086,7 +2095,8 @@
       "default": "let response = try await client.listTasksV1()"
     },
     "listTransformations": {
-      "default": "let response = try await client.listTransformations()"
+      "listTransformations": "let response = try await client.listTransformations()",
+      "list with every parameters": "let response = try await client.listTransformations(\n    itemsPerPage: 2,\n    page: 1,\n    sort: TransformationSortKeys.createdAt,\n    order: OrderKeys.asc,\n    type: TransformationType.noCode\n)"
     },
     "push": {
       "global push": "let response = try await client.push(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    pushTaskPayload: PushTaskPayload(\n        action: IngestionAction.addObject,\n        records: [\n            PushTaskRecords(from: [\n                \"objectID\": AnyCodable(\"o\"),\n                \"key\": AnyCodable(\"bar\"),\n                \"foo\": AnyCodable(\"1\"),\n            ]),\n            PushTaskRecords(from: [\n                \"objectID\": AnyCodable(\"k\"),\n                \"key\": AnyCodable(\"baz\"),\n                \"foo\": AnyCodable(\"2\"),\n            ]),\n        ]\n    )\n)",

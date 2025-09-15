@@ -1302,12 +1302,34 @@ class SnippetIngestionClient {
   }
 
   suspend fun snippetForListTransformations() {
-    // >SEPARATOR listTransformations default
+    // >SEPARATOR listTransformations listTransformations
     // Initialize the client
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
     var response = client.listTransformations()
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForListTransformations1() {
+    // >SEPARATOR listTransformations list with every parameters
+    // Initialize the client
+    val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
+
+    // Call the API
+    var response = client.listTransformations(
+      itemsPerPage = 2,
+      page = 1,
+      sort = TransformationSortKeys.entries.first { it.value == "createdAt" },
+      order = OrderKeys.entries.first { it.value == "asc" },
+      type = TransformationType.entries.first { it.value == "noCode" },
+    )
 
     // >LOG
     // Use the response

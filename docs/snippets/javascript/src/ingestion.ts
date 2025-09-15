@@ -1189,13 +1189,37 @@ export async function snippetForListTasksV1(): Promise<void> {
 //
 // listTransformations
 export async function snippetForListTransformations(): Promise<void> {
-  // >SEPARATOR listTransformations default
+  // >SEPARATOR listTransformations listTransformations
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
 
   // Call the API
   const response = await client.listTransformations();
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the listTransformations method.
+//
+// list with every parameters
+export async function snippetForListTransformations1(): Promise<void> {
+  // >SEPARATOR listTransformations list with every parameters
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initIngestion({ region: 'us' });
+
+  // Call the API
+  const response = await client.listTransformations({
+    itemsPerPage: 2,
+    page: 1,
+    sort: 'createdAt',
+    order: 'asc',
+    type: 'noCode',
+  });
 
   // >LOG
   // use typed response

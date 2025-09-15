@@ -928,6 +928,21 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
+  # list with every parameters
+  def test_list_transformations1
+    req = @client.list_transformations_with_http_info(2, 1, "createdAt", "asc", "noCode")
+
+    assert_equal(:get, req.method)
+    assert_equal("/1/transformations", req.path)
+    assert_equal(
+      {:"itemsPerPage" => "2", :"page" => "1", :"sort" => "createdAt", :"order" => "asc", :"type" => "noCode"}.to_a,
+      req.query_params.to_a
+    )
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
   # global push
   def test_push
     req = @client.push_with_http_info(

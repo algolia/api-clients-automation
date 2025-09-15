@@ -72,6 +72,7 @@ import algoliasearch.ingestion.TransformationSearch
 import algoliasearch.ingestion.TransformationSortKeys._
 import algoliasearch.ingestion.TransformationTry
 import algoliasearch.ingestion.TransformationTryResponse
+import algoliasearch.ingestion.TransformationType._
 import algoliasearch.ingestion.TransformationUpdateResponse
 import algoliasearch.ingestion.TriggerType._
 import algoliasearch.ingestion.WatchResponse
@@ -1185,12 +1186,15 @@ class IngestionClient(
     *   Property by which to sort the list of transformations.
     * @param order
     *   Sort order of the response, ascending or descending.
+    * @param `type`
+    *   Whether to filter the list of transformations by the type of transformation.
     */
   def listTransformations(
       itemsPerPage: Option[Int] = None,
       page: Option[Int] = None,
       sort: Option[TransformationSortKeys] = None,
       order: Option[OrderKeys] = None,
+      `type`: Option[TransformationType] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ListTransformationsResponse] = Future {
 
@@ -1202,6 +1206,7 @@ class IngestionClient(
       .withQueryParameter("page", page)
       .withQueryParameter("sort", sort)
       .withQueryParameter("order", order)
+      .withQueryParameter("type", `type`)
       .build()
     execute[ListTransformationsResponse](request, requestOptions)
   }

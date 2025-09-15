@@ -2998,6 +2998,8 @@ public class IngestionClient extends ApiClient {
    * @param sort Property by which to sort the list of transformations. (optional, default to
    *     createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param type Whether to filter the list of transformations by the type of transformation.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3007,9 +3009,10 @@ public class IngestionClient extends ApiClient {
     Integer page,
     TransformationSortKeys sort,
     OrderKeys order,
+    TransformationType type,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(listTransformationsAsync(itemsPerPage, page, sort, order, requestOptions));
+    return LaunderThrowable.await(listTransformationsAsync(itemsPerPage, page, sort, order, type, requestOptions));
   }
 
   /**
@@ -3020,11 +3023,18 @@ public class IngestionClient extends ApiClient {
    * @param sort Property by which to sort the list of transformations. (optional, default to
    *     createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param type Whether to filter the list of transformations by the type of transformation.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public ListTransformationsResponse listTransformations(Integer itemsPerPage, Integer page, TransformationSortKeys sort, OrderKeys order)
-    throws AlgoliaRuntimeException {
-    return this.listTransformations(itemsPerPage, page, sort, order, null);
+  public ListTransformationsResponse listTransformations(
+    Integer itemsPerPage,
+    Integer page,
+    TransformationSortKeys sort,
+    OrderKeys order,
+    TransformationType type
+  ) throws AlgoliaRuntimeException {
+    return this.listTransformations(itemsPerPage, page, sort, order, type, null);
   }
 
   /**
@@ -3035,7 +3045,7 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListTransformationsResponse listTransformations(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.listTransformations(null, null, null, null, requestOptions);
+    return this.listTransformations(null, null, null, null, null, requestOptions);
   }
 
   /**
@@ -3044,7 +3054,7 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListTransformationsResponse listTransformations() throws AlgoliaRuntimeException {
-    return this.listTransformations(null, null, null, null, null);
+    return this.listTransformations(null, null, null, null, null, null);
   }
 
   /**
@@ -3055,6 +3065,8 @@ public class IngestionClient extends ApiClient {
    * @param sort Property by which to sort the list of transformations. (optional, default to
    *     createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param type Whether to filter the list of transformations by the type of transformation.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3064,6 +3076,7 @@ public class IngestionClient extends ApiClient {
     Integer page,
     TransformationSortKeys sort,
     OrderKeys order,
+    TransformationType type,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     HttpRequest request = HttpRequest.builder()
@@ -3073,6 +3086,7 @@ public class IngestionClient extends ApiClient {
       .addQueryParameter("page", page)
       .addQueryParameter("sort", sort)
       .addQueryParameter("order", order)
+      .addQueryParameter("type", type)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<ListTransformationsResponse>() {});
   }
@@ -3085,15 +3099,18 @@ public class IngestionClient extends ApiClient {
    * @param sort Property by which to sort the list of transformations. (optional, default to
    *     createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param type Whether to filter the list of transformations by the type of transformation.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListTransformationsResponse> listTransformationsAsync(
     Integer itemsPerPage,
     Integer page,
     TransformationSortKeys sort,
-    OrderKeys order
+    OrderKeys order,
+    TransformationType type
   ) throws AlgoliaRuntimeException {
-    return this.listTransformationsAsync(itemsPerPage, page, sort, order, null);
+    return this.listTransformationsAsync(itemsPerPage, page, sort, order, type, null);
   }
 
   /**
@@ -3105,7 +3122,7 @@ public class IngestionClient extends ApiClient {
    */
   public CompletableFuture<ListTransformationsResponse> listTransformationsAsync(@Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return this.listTransformationsAsync(null, null, null, null, requestOptions);
+    return this.listTransformationsAsync(null, null, null, null, null, requestOptions);
   }
 
   /**
@@ -3114,7 +3131,7 @@ public class IngestionClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListTransformationsResponse> listTransformationsAsync() throws AlgoliaRuntimeException {
-    return this.listTransformationsAsync(null, null, null, null, null);
+    return this.listTransformationsAsync(null, null, null, null, null, null);
   }
 
   /**

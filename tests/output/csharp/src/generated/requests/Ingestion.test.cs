@@ -1216,6 +1216,36 @@ public class IngestionClientRequestTests
     Assert.Null(req.Body);
   }
 
+  [Fact(DisplayName = "list with every parameters")]
+  public async Task ListTransformationsTest1()
+  {
+    await client.ListTransformationsAsync(
+      2,
+      1,
+      Enum.Parse<TransformationSortKeys>("CreatedAt"),
+      Enum.Parse<OrderKeys>("Asc"),
+      Enum.Parse<TransformationType>("NoCode")
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/transformations", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"itemsPerPage\":\"2\",\"page\":\"1\",\"sort\":\"createdAt\",\"order\":\"asc\",\"type\":\"noCode\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
+  }
+
   [Fact(DisplayName = "global push")]
   public async Task PushTest()
   {

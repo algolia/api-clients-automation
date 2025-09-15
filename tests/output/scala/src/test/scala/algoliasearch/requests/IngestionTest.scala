@@ -1279,6 +1279,34 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
+  test("list with every parameters1") {
+    val (client, echo) = testClient()
+    val future = client.listTransformations(
+      itemsPerPage = Some(2),
+      page = Some(1),
+      sort = Some(TransformationSortKeys.withName("createdAt")),
+      order = Some(OrderKeys.withName("asc")),
+      `type` = Some(TransformationType.withName("noCode"))
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/transformations")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+    val expectedQuery = parse("""{"itemsPerPage":"2","page":"1","sort":"createdAt","order":"asc","type":"noCode"}""")
+      .asInstanceOf[JObject]
+      .obj
+      .toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
   test("global push") {
     val (client, echo) = testClient()
     val future = client.push(

@@ -1323,12 +1323,32 @@ end
 #
 # listTransformations
 def snippet_for_list_transformations
-  # >SEPARATOR listTransformations default
+  # >SEPARATOR listTransformations listTransformations
   # Initialize the client
   client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.list_transformations
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the listTransformations method.
+#
+# list with every parameters
+def snippet_for_list_transformations1
+  # >SEPARATOR listTransformations list with every parameters
+  # Initialize the client
+  client = Algolia::IngestionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.list_transformations(2, 1, "createdAt", "asc", "noCode")
 
   # >LOG
   # use the class directly

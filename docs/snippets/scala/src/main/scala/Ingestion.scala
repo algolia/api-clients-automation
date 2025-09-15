@@ -1631,7 +1631,7 @@ class SnippetIngestionClient {
     * listTransformations
     */
   def snippetForIngestionClientListTransformations(): Unit = {
-    // >SEPARATOR listTransformations default
+    // >SEPARATOR listTransformations listTransformations
     // Initialize the client
     val client = IngestionClient(
       appId = "ALGOLIA_APPLICATION_ID",
@@ -1642,6 +1642,34 @@ class SnippetIngestionClient {
     // Call the API
     val response = Await.result(
       client.listTransformations(
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the listTransformations method.
+    *
+    * list with every parameters
+    */
+  def snippetForIngestionClientListTransformations1(): Unit = {
+    // >SEPARATOR listTransformations list with every parameters
+    // Initialize the client
+    val client = IngestionClient(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = "ALGOLIA_APPLICATION_REGION"
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.listTransformations(
+        itemsPerPage = Some(2),
+        page = Some(1),
+        sort = Some(TransformationSortKeys.withName("createdAt")),
+        order = Some(OrderKeys.withName("asc")),
+        `type` = Some(TransformationType.withName("noCode"))
       ),
       Duration(100, "sec")
     )
