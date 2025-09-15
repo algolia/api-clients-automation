@@ -7,14 +7,22 @@
     }
   },
   {
-    "testName": "allows filtering by type",
+    "testName": "list with every parameters",
     "parameters": {
+      "itemsPerPage": 2,
+      "page": 1,
+      "sort": "createdAt",
+      "order": "asc",
       "type":"noCode"
     },
     "request": {
       "path": "/1/transformations",
       "method": "GET",
       "queryParameters": {
+        "itemsPerPage": "2",
+        "page": "1",
+        "sort": "createdAt",
+        "order": "asc",
         "type": "noCode"
       }
     }
