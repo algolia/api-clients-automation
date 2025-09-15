@@ -77,7 +77,6 @@
       }
     }
   },
-
   {
     "parameters": {
       "compositionID": "compositionID",
@@ -120,8 +119,14 @@
                         "my-string": "string",
                         "my-bool": true,
                         "my-number": 42,
-                        "my-object": { "sub-key": "sub-value" },
-                        "my-array": [1, 2, 3],
+                        "my-object": {
+                          "sub-key": "sub-value"
+                        },
+                        "my-array": [
+                          1,
+                          2,
+                          3
+                        ],
                         "my-empty-object": {}
                       }
                     }
@@ -174,8 +179,14 @@
                         "my-string": "string",
                         "my-bool": true,
                         "my-number": 42,
-                        "my-object": { "sub-key": "sub-value" },
-                        "my-array": [1, 2, 3],
+                        "my-object": {
+                          "sub-key": "sub-value"
+                        },
+                        "my-array": [
+                          1,
+                          2,
+                          3
+                        ],
                         "my-empty-object": {}
                       }
                     }
@@ -188,7 +199,6 @@
       }
     }
   },
-
   {
     "parameters": {
       "compositionID": "compositionID",
@@ -196,12 +206,26 @@
       "compositionRule": {
         "objectID": "rule-with-exernal-source",
         "description": "my description",
-        "tags": ["tag1", "tag2"],
+        "tags": [
+          "tag1",
+          "tag2"
+        ],
         "enabled": true,
-        "validity": [{ "from": 1704063600, "until": 1704083600 }],
+        "validity": [
+          {
+            "from": 1704063600,
+            "until": 1704083600
+          }
+        ],
         "conditions": [
-          { "anchoring": "contains", "pattern": "harry" },
-          { "anchoring": "contains", "pattern": "potter" }
+          {
+            "anchoring": "contains",
+            "pattern": "harry"
+          },
+          {
+            "anchoring": "contains",
+            "pattern": "potter"
+          }
         ],
         "consequence": {
           "behavior": {
@@ -210,7 +234,9 @@
                 "source": {
                   "search": {
                     "index": "my-index",
-                    "params": { "filters": "brand:adidas" }
+                    "params": {
+                      "filters": "brand:adidas"
+                    }
                   }
                 }
               },
@@ -220,7 +246,9 @@
                   "source": {
                     "external": {
                       "index": "my-index",
-                      "params": { "filters": "brand:adidas" },
+                      "params": {
+                        "filters": "brand:adidas"
+                      },
                       "ordering": "userDefined"
                     }
                   },
@@ -239,12 +267,26 @@
       "body": {
         "objectID": "rule-with-exernal-source",
         "description": "my description",
-        "tags": ["tag1", "tag2"],
+        "tags": [
+          "tag1",
+          "tag2"
+        ],
         "enabled": true,
-        "validity": [{ "from": 1704063600, "until": 1704083600 }],
+        "validity": [
+          {
+            "from": 1704063600,
+            "until": 1704083600
+          }
+        ],
         "conditions": [
-          { "anchoring": "contains", "pattern": "harry" },
-          { "anchoring": "contains", "pattern": "potter" }
+          {
+            "anchoring": "contains",
+            "pattern": "harry"
+          },
+          {
+            "anchoring": "contains",
+            "pattern": "potter"
+          }
         ],
         "consequence": {
           "behavior": {
@@ -253,7 +295,9 @@
                 "source": {
                   "search": {
                     "index": "my-index",
-                    "params": { "filters": "brand:adidas" }
+                    "params": {
+                      "filters": "brand:adidas"
+                    }
                   }
                 }
               },
@@ -263,7 +307,9 @@
                   "source": {
                     "external": {
                       "index": "my-index",
-                      "params": { "filters": "brand:adidas" },
+                      "params": {
+                        "filters": "brand:adidas"
+                      },
                       "ordering": "userDefined"
                     }
                   },

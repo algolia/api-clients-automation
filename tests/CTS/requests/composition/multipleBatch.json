@@ -63,7 +63,6 @@
       }
     }
   },
-
   {
     "parameters": {
       "requests": [
@@ -146,7 +145,6 @@
       }
     }
   },
-
   {
     "parameters": {
       "requests": [
@@ -161,7 +159,9 @@
                   "source": {
                     "search": {
                       "index": "foo",
-                      "params": { "filters": "brand:adidas" }
+                      "params": {
+                        "filters": "brand:adidas"
+                      }
                     }
                   }
                 },
@@ -185,8 +185,14 @@
                           "my-string": "string",
                           "my-bool": true,
                           "my-number": 42,
-                          "my-object": { "sub-key": "sub-value" },
-                          "my-array": [1, 2, 3],
+                          "my-object": {
+                            "sub-key": "sub-value"
+                          },
+                          "my-array": [
+                            1,
+                            2,
+                            3
+                          ],
                           "my-empty-object": {}
                         }
                       }
@@ -211,8 +217,14 @@
                           "my-string": "string",
                           "my-bool": true,
                           "my-number": 42,
-                          "my-object": { "sub-key": "sub-value" },
-                          "my-array": [1, 2, 3],
+                          "my-object": {
+                            "sub-key": "sub-value"
+                          },
+                          "my-array": [
+                            1,
+                            2,
+                            3
+                          ],
                           "my-empty-object": {}
                         }
                       }
@@ -241,7 +253,9 @@
                     "source": {
                       "search": {
                         "index": "foo",
-                        "params": { "filters": "brand:adidas" }
+                        "params": {
+                          "filters": "brand:adidas"
+                        }
                       }
                     }
                   },
@@ -265,8 +279,14 @@
                             "my-string": "string",
                             "my-bool": true,
                             "my-number": 42,
-                            "my-object": { "sub-key": "sub-value" },
-                            "my-array": [1, 2, 3],
+                            "my-object": {
+                              "sub-key": "sub-value"
+                            },
+                            "my-array": [
+                              1,
+                              2,
+                              3
+                            ],
                             "my-empty-object": {}
                           }
                         }
@@ -291,8 +311,14 @@
                             "my-string": "string",
                             "my-bool": true,
                             "my-number": 42,
-                            "my-object": { "sub-key": "sub-value" },
-                            "my-array": [1, 2, 3],
+                            "my-object": {
+                              "sub-key": "sub-value"
+                            },
+                            "my-array": [
+                              1,
+                              2,
+                              3
+                            ],
                             "my-empty-object": {}
                           }
                         }

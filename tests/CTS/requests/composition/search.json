@@ -3,14 +3,18 @@
     "parameters": {
       "compositionID": "foo",
       "requestBody": {
-        "params": { "query": "batman" }
+        "params": {
+          "query": "batman"
+        }
       }
     },
     "request": {
       "path": "/1/compositions/foo/run",
       "method": "POST",
       "body": {
-        "params": { "query": "batman" }
+        "params": {
+          "query": "batman"
+        }
       }
     }
   },
@@ -32,8 +36,14 @@
                     "my-string": "string",
                     "my-bool": true,
                     "my-number": 42,
-                    "my-object": { "sub-key": "sub-value" },
-                    "my-array": [1, 2, 3],
+                    "my-object": {
+                      "sub-key": "sub-value"
+                    },
+                    "my-array": [
+                      1,
+                      2,
+                      3
+                    ],
                     "my-empty-object": {}
                   }
                 }
@@ -61,8 +71,14 @@
                     "my-string": "string",
                     "my-bool": true,
                     "my-number": 42,
-                    "my-object": { "sub-key": "sub-value" },
-                    "my-array": [1, 2, 3],
+                    "my-object": {
+                      "sub-key": "sub-value"
+                    },
+                    "my-array": [
+                      1,
+                      2,
+                      3
+                    ],
                     "my-empty-object": {}
                   }
                 }
