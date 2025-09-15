@@ -1,3 +1,11 @@
+type:
+  name: type
+  in: query
+  description: Whether to filter the list of transformations by the type of transformation.
+  required: false
+  schema:
+    $ref: './schemas/transformation.yml#/TransformationType'
+
 sort:
   name: sort
   in: query
