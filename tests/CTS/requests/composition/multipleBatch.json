@@ -185,8 +185,7 @@
                           "my-number": 42,
                           "my-object": {
                             "sub-key": "sub-value"
-                          },
-                          "my-empty-object": {}
+                          }
                         }
                       }
                     }
@@ -212,8 +211,7 @@
                           "my-number": 42,
                           "my-object": {
                             "sub-key": "sub-value"
-                          },
-                          "my-empty-object": {}
+                          }
                         }
                       }
                     }
@@ -269,8 +267,7 @@
                             "my-number": 42,
                             "my-object": {
                               "sub-key": "sub-value"
-                            },
-                            "my-empty-object": {}
+                            }
                           }
                         }
                       }
@@ -296,8 +293,7 @@
                             "my-number": 42,
                             "my-object": {
                               "sub-key": "sub-value"
-                            },
-                            "my-empty-object": {}
+                            }
                           }
                         }
                       }
