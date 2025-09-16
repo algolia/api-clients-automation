@@ -12,9 +12,12 @@ using dotenv.net;
 using Action = Algolia.Search.Models.Search.Action;
 using Range = Algolia.Search.Models.Search.Range;
 {{/isSearchClient}}
-{{^isSearchClient}}
+{{#isIngestionClient}}
 using Action = Algolia.Search.Models.Ingestion.Action;
-{{/isSearchClient}}
+{{/isIngestionClient}}
+{{#isCompositionClient}}
+using Action = Algolia.Search.Models.Composition.Action;
+{{/isCompositionClient}}
 
 namespace Algolia.Search.requests;
 

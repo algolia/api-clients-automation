@@ -48,6 +48,6 @@ public class CSharpCTSManager implements CTSManager {
 
   @Override
   public void addMustacheLambdas(Map<String, Lambda> lambdas) {
-    lambdas.put("identifier", new CSharpIdentifierLambda());
+    lambdas.put("identifier", new CSharpIdentifierLambda(client));
   }
 }

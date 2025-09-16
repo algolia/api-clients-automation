@@ -547,6 +547,8 @@ public class ParametersWithDataType {
             return "int";
           case "String":
             return "string";
+          case "search":
+            return "Algolia.Search.Models.Composition.Search"; // conflict with the Search namespace
         }
         break;
       case "go":
