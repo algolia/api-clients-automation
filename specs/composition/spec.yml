@@ -126,26 +126,26 @@ paths:
   # ########################
   # ### Search Endpoints ###
   # ########################
-  # /1/compositions/{compositionID}/run:
-  #   $ref: 'paths/search/search.yml'
+  /1/compositions/{compositionID}/run:
+    $ref: 'paths/search/search.yml'
   /1/compositions/{compositionID}/facets/{facetName}/query:
     $ref: 'paths/search/searchForFacetValues.yml'
-  #
+
   # #####################################
   # ### Manage Compositions Endpoints ###
   # #####################################
   /1/compositions:
     $ref: 'paths/compositions/list.yml'
-  # /1/compositions/{compositionID}:
-  #   $ref: 'paths/compositions/composition.yml'
-  # /1/compositions/*/batch:
-  #   $ref: 'paths/compositions/batch.yml'
-  #
+  /1/compositions/{compositionID}:
+    $ref: 'paths/compositions/composition.yml'
+  /1/compositions/*/batch:
+    $ref: 'paths/compositions/batch.yml'
+
   # ##########################################
   # ### Manage Composition Rules Endpoints ###
   # ##########################################
-  # /1/compositions/{compositionID}/rules/{objectID}:
-  #   $ref: 'paths/rules/rule.yml'
+  /1/compositions/{compositionID}/rules/{objectID}:
+    $ref: 'paths/rules/rule.yml'
   /1/compositions/{compositionID}/rules/batch:
     $ref: 'paths/rules/saveRules.yml'
   /1/compositions/{compositionID}/rules/search:
