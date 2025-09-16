@@ -3,8 +3,6 @@ package com.algolia.codegen;
 import static org.apache.commons.lang3.StringUtils.*;
 
 import com.algolia.codegen.utils.*;
-import com.google.common.collect.ImmutableMap;
-import com.samskivert.mustache.Mustache;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
@@ -113,11 +111,6 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
   }
 
   @Override
-  protected ImmutableMap.Builder<String, Mustache.Lambda> addMustacheLambdas() {
-    return super.addMustacheLambdas();
-  }
-
-  @Override
   public void processOpenAPI(OpenAPI openAPI) {
     super.processOpenAPI(openAPI);
     Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
@@ -152,6 +145,15 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
   @Override
   public String toModelFilename(String name) {
     return support.classnames().contains(name) ? null : super.toModelFilename(name);
+  }
+
+  @Override
+  public String toModelName(String name) {
+    if (name.equals("external")) {
+      return "External";
+    }
+
+    return super.toModelName(name);
   }
 }
 

@@ -36,6 +36,8 @@
           {
             "action": "upsert",
             "body": {
+              "objectID": "foo",
+              "name": "my first composition",
               "behavior": {
                 "injection": {
                   "main": {
@@ -46,9 +48,7 @@
                     }
                   }
                 }
-              },
-              "name": "my first composition",
-              "objectID": "foo"
+              }
             }
           },
           {
