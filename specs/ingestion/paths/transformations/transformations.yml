@@ -14,6 +14,7 @@ get:
     - $ref: '../../common/parameters.yml#/page'
     - $ref: '../../common/transformationParameters.yml#/sort'
     - $ref: '../../common/parameters.yml#/order'
+    - $ref: '../../common/transformationParameters.yml#/type'
   responses:
     '200':
       description: OK

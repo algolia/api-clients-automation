@@ -1087,12 +1087,26 @@ class SnippetIngestionClient {
   //
   // listTransformations
   void snippetForListTransformations() throws Exception {
-    // >SEPARATOR listTransformations default
+    // >SEPARATOR listTransformations listTransformations
     // Initialize the client
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     client.listTransformations();
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the listTransformations method.
+  //
+  // list with every parameters
+  void snippetForListTransformations1() throws Exception {
+    // >SEPARATOR listTransformations list with every parameters
+    // Initialize the client
+    IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.listTransformations(2, 1, TransformationSortKeys.CREATED_AT, OrderKeys.ASC, TransformationType.NO_CODE);
     // >LOG
     // SEPARATOR<
   }

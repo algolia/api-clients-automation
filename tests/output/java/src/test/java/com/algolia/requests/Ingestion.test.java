@@ -1349,6 +1349,33 @@ class IngestionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("list with every parameters")
+  void listTransformationsTest1() {
+    assertDoesNotThrow(() -> {
+      client.listTransformations(2, 1, TransformationSortKeys.CREATED_AT, OrderKeys.ASC, TransformationType.NO_CODE);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+
+    try {
+      Map<String, String> expectedQuery = json.readValue(
+        "{\"itemsPerPage\":\"2\",\"page\":\"1\",\"sort\":\"createdAt\",\"order\":\"asc\",\"type\":\"noCode\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
   @DisplayName("global push")
   void pushTest() {
     assertDoesNotThrow(() -> {

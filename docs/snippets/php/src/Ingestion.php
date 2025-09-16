@@ -1487,12 +1487,38 @@ class SnippetIngestionClient
      */
     public function snippetForListTransformations(): void
     {
-        // >SEPARATOR listTransformations default
+        // >SEPARATOR listTransformations listTransformations
         // Initialize the client
         $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->listTransformations();
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ListTransformations method.
+     *
+     * list with every parameters
+     */
+    public function snippetForListTransformations1(): void
+    {
+        // >SEPARATOR listTransformations list with every parameters
+        // Initialize the client
+        $client = IngestionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->listTransformations(
+            2,
+            1,
+            'createdAt',
+            'asc',
+            'noCode',
+        );
 
         // >LOG
         // play with the response

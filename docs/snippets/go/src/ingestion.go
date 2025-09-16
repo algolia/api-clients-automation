@@ -1670,7 +1670,7 @@ func SnippetForListTransformationsOfIngestion() {
 	   listTransformations
 	*/
 
-	// >SEPARATOR listTransformations default
+	// >SEPARATOR listTransformations listTransformations
 	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
 	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
 	if err != nil {
@@ -1680,6 +1680,33 @@ func SnippetForListTransformationsOfIngestion() {
 
 	// Call the API
 	response, err := client.ListTransformations(client.NewApiListTransformationsRequest())
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForListTransformationsOfIngestion1() {
+	/*
+	   Snippet for the listTransformations method.
+
+	   list with every parameters
+	*/
+
+	// >SEPARATOR listTransformations list with every parameters
+	// Initialize the client with your application region, eg. ingestion.ALGOLIA_APPLICATION_REGION
+	client, err := ingestion.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ListTransformations(client.NewApiListTransformationsRequest().WithItemsPerPage(2).WithPage(1).WithSort(ingestion.TransformationSortKeys("createdAt")).WithOrder(ingestion.OrderKeys("asc")).WithType(ingestion.TransformationType("noCode")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

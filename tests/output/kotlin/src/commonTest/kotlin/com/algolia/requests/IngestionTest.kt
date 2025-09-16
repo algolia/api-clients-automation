@@ -1296,6 +1296,27 @@ class IngestionTest {
     )
   }
 
+  @Test
+  fun `list with every parameters1`() = runTest {
+    client.runTest(
+      call = {
+        listTransformations(
+          itemsPerPage = 2,
+          page = 1,
+          sort = TransformationSortKeys.entries.first { it.value == "createdAt" },
+          order = OrderKeys.entries.first { it.value == "asc" },
+          type = TransformationType.entries.first { it.value == "noCode" },
+        )
+      },
+      intercept = {
+        assertEquals("/1/transformations".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertQueryParams("""{"itemsPerPage":"2","page":"1","sort":"createdAt","order":"asc","type":"noCode"}""", it.url.encodedParameters)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // push
 
   @Test

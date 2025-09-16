@@ -12673,6 +12673,7 @@ paths:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/transformationParameters_sort'
         - $ref: '#/components/parameters/order'
+        - $ref: '#/components/parameters/transformationParameters_type'
       responses:
         '200':
           description: OK
@@ -12894,7 +12895,7 @@ paths:
           label: curl
           source: |-
             curl --request GET \
-              --url 'https://data.us.algolia.com/1/transformations?itemsPerPage=10&page=1&sort=createdAt&order=desc' \
+              --url 'https://data.us.algolia.com/1/transformations?itemsPerPage=10&page=1&sort=createdAt&order=desc&type=code' \
               --header 'accept: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
@@ -16194,6 +16195,15 @@ components:
       required: false
       schema:
         $ref: '#/components/schemas/transformationSortKeys'
+    transformationParameters_type:
+      name: type
+      in: query
+      description: >-
+        Whether to filter the list of transformations by the type of
+        transformation.
+      required: false
+      schema:
+        $ref: '#/components/schemas/TransformationType'
     pathTransformationID:
       name: transformationID
       in: path
@@ -18202,6 +18212,12 @@ components:
         - name
         - updatedAt
         - createdAt
+    TransformationType:
+      type: string
+      description: The type of transformation, which can be either 'code' or 'noCode'.
+      enum:
+        - code
+        - noCode
     AuthenticationIDs:
       description: The authentications associated with the current transformation.
       type: array
@@ -18213,12 +18229,6 @@ components:
       description: >-
         It is deprecated. Use the `input` field with proper `type` instead to
         specify the transformation code.
-    TransformationType:
-      type: string
-      description: The type of transformation, which can be either 'code' or 'noCode'.
-      enum:
-        - code
-        - noCode
     TransformationCode:
       type: object
       additionalProperties: false

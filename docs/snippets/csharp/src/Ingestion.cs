@@ -1366,7 +1366,7 @@ public class SnippetIngestionClient
   /// </summary>
   public async Task SnippetForIngestionClientListTransformations()
   {
-    // >SEPARATOR listTransformations default
+    // >SEPARATOR listTransformations listTransformations
     // Initialize the client
     var client = new IngestionClient(
       new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -1374,6 +1374,31 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.ListTransformationsAsync();
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ListTransformations method.
+  ///
+  /// list with every parameters
+  /// </summary>
+  public async Task SnippetForIngestionClientListTransformations1()
+  {
+    // >SEPARATOR listTransformations list with every parameters
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+    );
+
+    // Call the API
+    var response = await client.ListTransformationsAsync(
+      2,
+      1,
+      Enum.Parse<TransformationSortKeys>("CreatedAt"),
+      Enum.Parse<OrderKeys>("Asc"),
+      Enum.Parse<TransformationType>("NoCode")
+    );
     // >LOG
     // SEPARATOR<
   }

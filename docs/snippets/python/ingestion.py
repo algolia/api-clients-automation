@@ -1633,7 +1633,7 @@ def snippet_for_list_transformations():
 
     listTransformations
     """
-    # >SEPARATOR listTransformations default
+    # >SEPARATOR listTransformations listTransformations
     # Initialize the client
     # In an asynchronous context, you can use IngestionClient instead, which exposes the exact same methods.
     client = IngestionClientSync(
@@ -1642,6 +1642,34 @@ def snippet_for_list_transformations():
 
     # Call the API
     response = client.list_transformations()
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_list_transformations1():
+    """
+    Snippet for the listTransformations method.
+
+    list with every parameters
+    """
+    # >SEPARATOR listTransformations list with every parameters
+    # Initialize the client
+    # In an asynchronous context, you can use IngestionClient instead, which exposes the exact same methods.
+    client = IngestionClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.list_transformations(
+        items_per_page=2,
+        page=1,
+        sort="createdAt",
+        order="asc",
+        type="noCode",
+    )
 
     # >LOG
     # use the class directly

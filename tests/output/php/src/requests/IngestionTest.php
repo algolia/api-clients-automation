@@ -1243,6 +1243,28 @@ class IngestionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('list with every parameters')]
+    public function testListTransformations1(): void
+    {
+        $client = $this->getClient();
+        $client->listTransformations(
+            2,
+            1,
+            'createdAt',
+            'asc',
+            'noCode',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/transformations',
+                'method' => 'GET',
+                'body' => null,
+                'queryParameters' => json_decode('{"itemsPerPage":"2","page":"1","sort":"createdAt","order":"asc","type":"noCode"}', true),
+            ],
+        ]);
+    }
+
     #[TestDox('global push')]
     public function testPush(): void
     {

@@ -1809,6 +1809,43 @@ final class IngestionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// list with every parameters
+    func testListTransformationsTest1() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: IngestionClientRequestsTests.APPLICATION_ID,
+            apiKey: IngestionClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.listTransformationsWithHTTPInfo(
+            itemsPerPage: 2,
+            page: 1,
+            sort: TransformationSortKeys.createdAt,
+            order: OrderKeys.asc,
+            type: TransformationType.noCode
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/1/transformations")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"itemsPerPage\":\"2\",\"page\":\"1\",\"sort\":\"createdAt\",\"order\":\"asc\",\"type\":\"noCode\"}"
+                .data(using: .utf8)
+        )
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
     /// global push
     func testPushTest() async throws {
         let configuration = try IngestionClientConfiguration(

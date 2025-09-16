@@ -1131,6 +1131,33 @@ class TestIngestionClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
+    async def test_list_transformations_1(self):
+        """
+        list with every parameters
+        """
+        _req = await self._client.list_transformations_with_http_info(
+            items_per_page=2,
+            page=1,
+            sort="createdAt",
+            order="asc",
+            type="noCode",
+        )
+
+        assert _req.path == "/1/transformations"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {
+                "itemsPerPage": "2",
+                "page": "1",
+                "sort": "createdAt",
+                "order": "asc",
+                "type": "noCode",
+            }.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
     async def test_push_(self):
         """
         global push
@@ -2939,6 +2966,33 @@ class TestIngestionClientSync:
         assert _req.path == "/1/transformations"
         assert _req.verb == "GET"
         assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    def test_list_transformations_1(self):
+        """
+        list with every parameters
+        """
+        _req = self._client.list_transformations_with_http_info(
+            items_per_page=2,
+            page=1,
+            sort="createdAt",
+            order="asc",
+            type="noCode",
+        )
+
+        assert _req.path == "/1/transformations"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {
+                "itemsPerPage": "2",
+                "page": "1",
+                "sort": "createdAt",
+                "order": "asc",
+                "type": "noCode",
+            }.items()
+        )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 

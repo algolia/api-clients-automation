@@ -866,6 +866,27 @@ describe('listTransformations', () => {
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('list with every parameters', async () => {
+    const req = (await client.listTransformations({
+      itemsPerPage: 2,
+      page: 1,
+      sort: 'createdAt',
+      order: 'asc',
+      type: 'noCode',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/transformations');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({
+      itemsPerPage: '2',
+      page: '1',
+      sort: 'createdAt',
+      order: 'asc',
+      type: 'noCode',
+    });
+  });
 });
 
 describe('push', () => {
