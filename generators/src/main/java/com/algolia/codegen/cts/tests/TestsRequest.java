@@ -124,7 +124,6 @@ public class TestsRequest extends TestsGenerator {
         Map<String, Object> test = new HashMap<>();
         Request req = op[i];
         test.put("method", operationId);
-        if (!operationId.equals("search")) {continue;}
         test.put("testName", req.testName == null ? operationId : req.testName);
         test.put("testIndex", i == 0 ? "" : i);
         if (ope.returnType != null && ope.returnType.length() > 0) {

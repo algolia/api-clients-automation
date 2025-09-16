@@ -174,11 +174,6 @@
                       "my-object": {
                         "sub-key": "sub-value"
                       },
-                      "my-array": [
-                        1,
-                        2,
-                        3
-                      ],
                       "my-empty-object": {}
                     }
                   }
@@ -206,11 +201,6 @@
                       "my-object": {
                         "sub-key": "sub-value"
                       },
-                      "my-array": [
-                        1,
-                        2,
-                        3
-                      ],
                       "my-empty-object": {}
                     }
                   }
@@ -262,11 +252,6 @@
                       "my-object": {
                         "sub-key": "sub-value"
                       },
-                      "my-array": [
-                        1,
-                        2,
-                        3
-                      ],
                       "my-empty-object": {}
                     }
                   }
@@ -294,11 +279,6 @@
                       "my-object": {
                         "sub-key": "sub-value"
                       },
-                      "my-array": [
-                        1,
-                        2,
-                        3
-                      ],
                       "my-empty-object": {}
                     }
                   }
