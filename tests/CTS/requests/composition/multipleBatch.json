@@ -15,8 +15,7 @@
                       "index": "bar"
                     }
                   }
-                },
-                "injectedItems": []
+                }
               }
             }
           }
@@ -39,7 +38,6 @@
             "body": {
               "behavior": {
                 "injection": {
-                  "injectedItems": [],
                   "main": {
                     "source": {
                       "search": {

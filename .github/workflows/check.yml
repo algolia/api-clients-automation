@@ -316,6 +316,8 @@ jobs:
       ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
       ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
+      METIS_APPLICATION_ID: ${{ secrets.METIS_APPLICATION_ID }}
+      METIS_API_KEY: ${{ secrets.METIS_API_KEY }}
     outputs:
       hasBreakingChanges: ${{ steps.breakingChanges.outputs.hasBreakingChanges }}
     name: client ${{ matrix.client.language }}@${{ matrix.client.version }}

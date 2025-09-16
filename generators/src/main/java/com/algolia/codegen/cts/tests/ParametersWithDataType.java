@@ -640,26 +640,26 @@ public class ParametersWithDataType {
   }
 
   private void transferPrimitiveData(IJsonSchemaValidationProperties spec, Map<String, Object> output) throws CTSException {
-    switch (getTypeName(spec)) {
-      case "String":
+    switch (getTypeName(spec).toLowerCase()) {
+      case "string":
         output.put("isString", true);
         break;
-      case "UUID":
+      case "uuid":
         output.put("isString", true);
         break;
-      case "Integer":
+      case "integer":
         output.put("isInteger", true);
         output.put("isNumber", true);
         break;
-      case "Long":
+      case "long":
         output.put("isLong", true);
         output.put("isNumber", true);
         break;
-      case "Double":
+      case "double":
         output.put("isDouble", true);
         output.put("isNumber", true);
         break;
-      case "Boolean":
+      case "boolean":
         output.put("isBoolean", true);
         break;
       case "oas_any_type_not_mapped":

@@ -161,7 +161,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
   }
 
   public static Boolean isReservedModelName(String name, String client) {
-    return reservedModelNames.contains(name.toLowerCase());
+    return client.equalsIgnoreCase("composition") || reservedModelNames.contains(name.toLowerCase());
   }
 
   public static String prefixReservedModelName(String name, String client) {
