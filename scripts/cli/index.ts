@@ -60,8 +60,6 @@ program
 
     setVerbose(Boolean(verbose));
 
-    console.log({ withDebugger });
-
     await generate(generatorList({ language, client, clientList }), Boolean(withDebugger));
   });
 
