@@ -4,8 +4,9 @@ post:
   operationId: computeRealtimeUser
   x-acl:
     - recommendation
-  summary: Compute the user's personalization profile
-  description: Sends a request to compute the user's personalization profile.
+  summary: Compute the real-time user's personalization profile
+  description: Sends a request to compute the real-time user's personalization profile.
+  deprecated: true
   parameters:
     - $ref: '../common/parameters.yml#/UserToken'
   responses:
