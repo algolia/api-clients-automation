@@ -3,10 +3,14 @@ import { getTestOutputFolder } from '../config.ts';
 import { formatter } from '../formatter.ts';
 import type { Generator } from '../types.ts';
 
-export async function docsGenerateMany(generators: Generator[], scope: 'guides' | 'snippets'): Promise<void> {
+export async function docsGenerateMany(
+  generators: Generator[],
+  scope: 'guides' | 'snippets',
+  withDebugger: boolean,
+): Promise<void> {
   await setupAndGen(generators, scope, async (gen) => {
     if (getTestOutputFolder(gen.language)) {
-      await callGenerator(gen);
+      await callGenerator(gen, withDebugger);
     }
   });
 

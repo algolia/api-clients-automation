@@ -8,10 +8,10 @@ async function preGen(gen: Generator): Promise<void> {
   await removeExistingCodegen(gen);
 }
 
-export async function generate(generators: Generator[]): Promise<void> {
+export async function generate(generators: Generator[], withDebugger: boolean): Promise<void> {
   await setupAndGen(generators, 'client', async (gen) => {
     await preGen(gen);
-    await callGenerator(gen);
+    await callGenerator(gen, withDebugger);
   });
 
   for (const lang of new Set(generators.map((gen) => gen.language))) {

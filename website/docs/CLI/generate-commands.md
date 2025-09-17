@@ -24,9 +24,10 @@ apic generate <language | all> <client... | all>
 
 ### Available options
 
-| Option  | Command       | Description                                                   |
-| ------- | :------------ | :------------------------------------------------------------ |
-| verbose | -v, --verbose | Make the process verbose, display logs from third party tools |
+| Option   | Command        | Description                                                                       |
+|----------|:---------------|:----------------------------------------------------------------------------------|
+| verbose  | -v, --verbose  | Make the process verbose, display logs from third party tools                     |
+| debugger | -d, --debugger | runs the generator in debug mode, it will wait for a Java debugger to be attached |
 
 ## Generate
 
