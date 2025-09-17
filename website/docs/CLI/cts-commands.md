@@ -26,9 +26,10 @@ apic cts generate <language | all> <client... | all>
 
 ### Available options
 
-| Option  | Command       | Description                                                   |
-| ------- | :------------ | :------------------------------------------------------------ |
-| verbose | -v, --verbose | Make the process verbose, display logs from third party tools |
+| Option   | Command        | Description                                                                       |
+|----------|:---------------|:----------------------------------------------------------------------------------|
+| verbose  | -v, --verbose  | Make the process verbose, display logs from third party tools                     |
+| debugger | -d, --debugger | runs the generator in debug mode, it will wait for a Java debugger to be attached |
 
 ## Generate
 
@@ -49,6 +50,32 @@ apic cts generate java search
 ```bash
 apic cts generate php insights recommend search
 ```
+
+### Attach a debugger to the generator
+
+Using VS code extension [Debugger For Java](https://code.visualstudio.com/docs/java/java-debugging), you can attach breakpoint to the generator.
+Example config for VS Code in `.vscode/launch.json`:
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "APIC Generator",
+      "request": "attach",
+      "hostName": "localhost",
+      "port": "5009"
+    }
+  ]
+}
+```
+
+```bash
+apic cts generate java search -d
+```
+
+Then you can connect you favorite Java debugger, either IntelliJ, VS Code, or jdb.
 
 ## Run
 
