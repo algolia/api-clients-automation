@@ -278,23 +278,11 @@ export async function callGenerator(gen: Generator, withDebugger: boolean): Prom
     return;
   }
 
-  console.log(chalk.yellow('Running the generator in debug mode, waiting for debugger to be attached on port 5009'));
-
-  /*
-  example .vscode/launch.json config to attach the debugger
-  {
-    "version": "0.2.0",
-    "configurations": [
-      {
-        "type": "java",
-        "name": "APIC Generator",
-        "request": "attach",
-        "hostName": "localhost",
-        "port": "5009"
-      }
-    ]
-  }
-  */
+  console.log(
+    chalk.yellow(
+      'Running the generator in debug mode, waiting for debugger to be attached on port 5009\nsee the doc for reference: https://api-clients-automation.netlify.app/docs/CLI/cts-commands#attach-a-debugger-to-the-generator',
+    ),
+  );
 
   const verbose = isVerbose();
   setVerbose(false); // verbose messes up the order of execution
