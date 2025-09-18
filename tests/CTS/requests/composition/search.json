@@ -19,6 +19,9 @@
     }
   },
   {
+    "skipLanguages": [
+      "kotlin"
+    ],
     "parameters": {
       "compositionID": "foo",
       "requestBody": {

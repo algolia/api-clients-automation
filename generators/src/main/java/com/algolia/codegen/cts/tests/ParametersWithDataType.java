@@ -473,9 +473,7 @@ public class ParametersWithDataType {
     }
 
     Map<String, Object> vars = (Map<String, Object>) param;
-
     List<Object> values = new ArrayList<>();
-
     CodegenProperty items = spec.getItems();
 
     for (Entry<String, Object> entry : vars.entrySet()) {

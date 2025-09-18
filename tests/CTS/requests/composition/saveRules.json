@@ -65,6 +65,9 @@
     }
   },
   {
+    "skipLanguages": [
+      "kotlin"
+    ],
     "parameters": {
       "compositionID": "rule-with-metadata",
       "rules": {

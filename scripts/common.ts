@@ -284,12 +284,17 @@ export async function callGenerator(gen: Generator, withDebugger: boolean): Prom
     ),
   );
 
+  // verbose messes up the order of execution
   const verbose = isVerbose();
-  setVerbose(false); // verbose messes up the order of execution
+  setVerbose(false);
 
-  // kill previous debuggers
-  await run('(killall -9 java && sleep 1) || true', { language: 'java' });
+  const previous = await run('lsof -ti:5009 || true', { language: 'java' });
+  if (previous) {
+    console.log(chalk.italic(`killing previous generator on port 5009: ${previous}`));
+    await run(`kill -9 ${previous} && sleep 2`, { language: 'java' });
+  }
   setVerbose(verbose);
+
   await run(`JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5009" ${cmd}`, {
     language: 'java',
   });

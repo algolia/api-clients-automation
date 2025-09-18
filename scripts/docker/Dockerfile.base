@@ -16,8 +16,8 @@ SHELL ["/bin/bash", "--login", "-c"]
 # Global dependencies
 RUN apt-get update \
   && apt-get install -y --no-install-recommends git curl zip unzip libexpat1-dev libicu76 \
-  # for killall and ps
-  && apt-get install -y procps \
+  # for killall and ps, and lsof for finding the port
+  && apt-get install -y procps lsof \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 

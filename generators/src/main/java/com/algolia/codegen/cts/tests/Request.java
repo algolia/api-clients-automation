@@ -1,5 +1,6 @@
 package com.algolia.codegen.cts.tests;
 
+import java.util.List;
 import java.util.Map;
 
 public class Request {
@@ -10,6 +11,7 @@ public class Request {
   public RequestOptions requestOptions;
   public RequestProp request;
   public ResponseProp response;
+  public List<String> skipLanguages;
 
   @Override
   public String toString() {

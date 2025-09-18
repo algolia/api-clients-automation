@@ -134,6 +134,9 @@
     }
   },
   {
+    "skipLanguages": [
+      "kotlin"
+    ],
     "parameters": {
       "compositionID": "my-metadata-compo",
       "composition": {

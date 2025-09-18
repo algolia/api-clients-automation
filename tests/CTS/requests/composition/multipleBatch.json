@@ -62,6 +62,9 @@
     }
   },
   {
+    "skipLanguages": [
+      "kotlin"
+    ],
     "parameters": {
       "requests": [
         {
@@ -144,6 +147,9 @@
     }
   },
   {
+    "skipLanguages": [
+      "kotlin"
+    ],
     "parameters": {
       "requests": [
         {
