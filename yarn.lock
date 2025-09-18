@@ -97,7 +97,7 @@ __metadata:
     eslint-plugin-yml: "npm:1.18.0"
     husky: "npm:9.1.7"
     lint-staged: "npm:16.1.6"
-    oxlint: "npm:1.14.0"
+    oxlint: "npm:1.15.0"
     prettier: "npm:3.6.2"
     prettier-plugin-java: "npm:2.7.4"
     prettier-plugin-organize-imports: "npm:4.2.0"
@@ -1757,58 +1757,58 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@oxlint/darwin-arm64@npm:1.14.0":
-  version: 1.14.0
-  resolution: "@oxlint/darwin-arm64@npm:1.14.0"
+"@oxlint/darwin-arm64@npm:1.15.0":
+  version: 1.15.0
+  resolution: "@oxlint/darwin-arm64@npm:1.15.0"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@oxlint/darwin-x64@npm:1.14.0":
-  version: 1.14.0
-  resolution: "@oxlint/darwin-x64@npm:1.14.0"
+"@oxlint/darwin-x64@npm:1.15.0":
+  version: 1.15.0
+  resolution: "@oxlint/darwin-x64@npm:1.15.0"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@oxlint/linux-arm64-gnu@npm:1.14.0":
-  version: 1.14.0
-  resolution: "@oxlint/linux-arm64-gnu@npm:1.14.0"
+"@oxlint/linux-arm64-gnu@npm:1.15.0":
+  version: 1.15.0
+  resolution: "@oxlint/linux-arm64-gnu@npm:1.15.0"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@oxlint/linux-arm64-musl@npm:1.14.0":
-  version: 1.14.0
-  resolution: "@oxlint/linux-arm64-musl@npm:1.14.0"
+"@oxlint/linux-arm64-musl@npm:1.15.0":
+  version: 1.15.0
+  resolution: "@oxlint/linux-arm64-musl@npm:1.15.0"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@oxlint/linux-x64-gnu@npm:1.14.0":
-  version: 1.14.0
-  resolution: "@oxlint/linux-x64-gnu@npm:1.14.0"
+"@oxlint/linux-x64-gnu@npm:1.15.0":
+  version: 1.15.0
+  resolution: "@oxlint/linux-x64-gnu@npm:1.15.0"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@oxlint/linux-x64-musl@npm:1.14.0":
-  version: 1.14.0
-  resolution: "@oxlint/linux-x64-musl@npm:1.14.0"
+"@oxlint/linux-x64-musl@npm:1.15.0":
+  version: 1.15.0
+  resolution: "@oxlint/linux-x64-musl@npm:1.15.0"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@oxlint/win32-arm64@npm:1.14.0":
-  version: 1.14.0
-  resolution: "@oxlint/win32-arm64@npm:1.14.0"
+"@oxlint/win32-arm64@npm:1.15.0":
+  version: 1.15.0
+  resolution: "@oxlint/win32-arm64@npm:1.15.0"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@oxlint/win32-x64@npm:1.14.0":
-  version: 1.14.0
-  resolution: "@oxlint/win32-x64@npm:1.14.0"
+"@oxlint/win32-x64@npm:1.15.0":
+  version: 1.15.0
+  resolution: "@oxlint/win32-x64@npm:1.15.0"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -2469,12 +2469,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:19.1.12":
-  version: 19.1.12
-  resolution: "@types/react@npm:19.1.12"
+"@types/react@npm:19.1.13":
+  version: 19.1.13
+  resolution: "@types/react@npm:19.1.13"
   dependencies:
     csstype: "npm:^3.0.2"
-  checksum: 10/c03d595b84faecb15079757555c96871e84ea6eef9a5eddb13ec1f648f718f9624bebc4199e86267edb825b23df97758324ea39ff840d9ad328386f96971f588
+  checksum: 10/a4e12df335ded76e931cc2ba2a4c8a61872ed840081eca83612fbdadc4afbf0cbd0ae31fdedc7fae7f0e02c90dac98dda517dfa73bec653dd4b1de2755431a62
   languageName: node
   linkType: hard
 
@@ -3403,10 +3403,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:5.6.0, chalk@npm:^5.6.0":
-  version: 5.6.0
-  resolution: "chalk@npm:5.6.0"
-  checksum: 10/f0e0646a72adbd0f6e73441d3872d7f2f40ba98052924f08a30c10634ec6b1e2cd19cc3c40cc21081dad640e2a1a2749030418571690b89bd7782babf7f89866
+"chalk@npm:5.6.2":
+  version: 5.6.2
+  resolution: "chalk@npm:5.6.2"
+  checksum: 10/1b2f48f6fba1370670d5610f9cd54c391d6ede28f4b7062dd38244ea5768777af72e5be6b74fb6c6d54cb84c4a2dff3f3afa9b7cb5948f7f022cfd3d087989e0
   languageName: node
   linkType: hard
 
@@ -3418,6 +3418,13 @@ __metadata:
     escape-string-regexp: "npm:^1.0.5"
     supports-color: "npm:^5.3.0"
   checksum: 10/3d1d103433166f6bfe82ac75724951b33769675252d8417317363ef9d54699b7c3b2d46671b772b893a8e50c3ece70c4b933c73c01e81bc60ea4df9b55afa303
+  languageName: node
+  linkType: hard
+
+"chalk@npm:^5.6.0":
+  version: 5.6.0
+  resolution: "chalk@npm:5.6.0"
+  checksum: 10/f0e0646a72adbd0f6e73441d3872d7f2f40ba98052924f08a30c10634ec6b1e2cd19cc3c40cc21081dad640e2a1a2749030418571690b89bd7782babf7f89866
   languageName: node
   linkType: hard
 
@@ -3626,10 +3633,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:14.0.0, commander@npm:^14.0.0":
-  version: 14.0.0
-  resolution: "commander@npm:14.0.0"
-  checksum: 10/c05418bfc35a3e8b5c67bd9f75f5b773f386f9b85f83e70e7c926047f270929cb06cf13cd68f387dd6e7e23c6157de8171b28ba606abd3e6256028f1f789becf
+"commander@npm:14.0.1":
+  version: 14.0.1
+  resolution: "commander@npm:14.0.1"
+  checksum: 10/783115e9403caeca29c0fcbd4e0358f70c67760e4e4933f3453fcdd5ddba2ec44173c8da5213d7ce5e404f51c7e71203a42c548164dbe27b668b32a8981577f1
   languageName: node
   linkType: hard
 
@@ -3637,6 +3644,13 @@ __metadata:
   version: 8.3.0
   resolution: "commander@npm:8.3.0"
   checksum: 10/6b7b5d334483ce24bd73c5dac2eab901a7dbb25fd983ea24a1eeac6e7166bb1967f641546e8abf1920afbde86a45fbfe5812fbc69d0dc451bb45ca416a12a3a3
+  languageName: node
+  linkType: hard
+
+"commander@npm:^14.0.0":
+  version: 14.0.0
+  resolution: "commander@npm:14.0.0"
+  checksum: 10/c05418bfc35a3e8b5c67bd9f75f5b773f386f9b85f83e70e7c926047f270929cb06cf13cd68f387dd6e7e23c6157de8171b28ba606abd3e6256028f1f789becf
   languageName: node
   linkType: hard
 
@@ -5795,7 +5809,7 @@ __metadata:
   resolution: "javascript-playground-browser@workspace:playground/javascript/browser"
   dependencies:
     "@eslint/js": "npm:9.35.0"
-    "@types/react": "npm:19.1.12"
+    "@types/react": "npm:19.1.13"
     "@types/react-dom": "npm:19.1.9"
     "@vitejs/plugin-react-swc": "npm:3.11.0"
     algoliasearch: "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
@@ -5809,7 +5823,7 @@ __metadata:
     react-instantsearch: "npm:^7.15.3"
     typescript: "npm:5.9.2"
     typescript-eslint: "npm:8.33.0"
-    vite: "npm:7.1.4"
+    vite: "npm:7.1.5"
   languageName: unknown
   linkType: soft
 
@@ -6881,20 +6895,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"oxlint@npm:1.14.0":
-  version: 1.14.0
-  resolution: "oxlint@npm:1.14.0"
+"oxlint@npm:1.15.0":
+  version: 1.15.0
+  resolution: "oxlint@npm:1.15.0"
   dependencies:
-    "@oxlint/darwin-arm64": "npm:1.14.0"
-    "@oxlint/darwin-x64": "npm:1.14.0"
-    "@oxlint/linux-arm64-gnu": "npm:1.14.0"
-    "@oxlint/linux-arm64-musl": "npm:1.14.0"
-    "@oxlint/linux-x64-gnu": "npm:1.14.0"
-    "@oxlint/linux-x64-musl": "npm:1.14.0"
-    "@oxlint/win32-arm64": "npm:1.14.0"
-    "@oxlint/win32-x64": "npm:1.14.0"
+    "@oxlint/darwin-arm64": "npm:1.15.0"
+    "@oxlint/darwin-x64": "npm:1.15.0"
+    "@oxlint/linux-arm64-gnu": "npm:1.15.0"
+    "@oxlint/linux-arm64-musl": "npm:1.15.0"
+    "@oxlint/linux-x64-gnu": "npm:1.15.0"
+    "@oxlint/linux-x64-musl": "npm:1.15.0"
+    "@oxlint/win32-arm64": "npm:1.15.0"
+    "@oxlint/win32-x64": "npm:1.15.0"
   peerDependencies:
-    oxlint-tsgolint: ">=0.1.5"
+    oxlint-tsgolint: ">=0.2.0"
   dependenciesMeta:
     "@oxlint/darwin-arm64":
       optional: true
@@ -6918,7 +6932,7 @@ __metadata:
   bin:
     oxc_language_server: bin/oxc_language_server
     oxlint: bin/oxlint
-  checksum: 10/b5b17f85250626a5b2993e11b4c1a22c55f07765eb4e6b12b5977ec759c7586fd81d9b71cc23f473fe385928dc02e3c7d982d0bd4e26e2b420f94a9e8618a32c
+  checksum: 10/1ee632ad359b3e63a3a5fccadfcab23ac4b0881b06f2e6c29431db56377858571592005459f247b2eef822d1da4c9d68afdf23965afe6ec6a5fe092f60239fa8
   languageName: node
   linkType: hard
 
@@ -7797,8 +7811,8 @@ __metadata:
     "@types/semver": "npm:7.7.1"
     "@types/spinnies": "npm:0.5.3"
     chai: "npm:6.0.1"
-    chalk: "npm:5.6.0"
-    commander: "npm:14.0.0"
+    chalk: "npm:5.6.2"
+    commander: "npm:14.0.1"
     crc: "npm:4.3.2"
     esbuild: "npm:0.25.9"
     execa: "npm:9.6.0"
@@ -8507,6 +8521,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tinyglobby@npm:^0.2.15":
+  version: 0.2.15
+  resolution: "tinyglobby@npm:0.2.15"
+  dependencies:
+    fdir: "npm:^6.5.0"
+    picomatch: "npm:^4.0.3"
+  checksum: 10/d72bd826a8b0fa5fa3929e7fe5ba48fceb2ae495df3a231b6c5408cd7d8c00b58ab5a9c2a76ba56a62ee9b5e083626f1f33599734bed1ffc4b792406408f0ca2
+  languageName: node
+  linkType: hard
+
 "tinypool@npm:^1.1.1":
   version: 1.1.1
   resolution: "tinypool@npm:1.1.1"
@@ -8887,9 +8911,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:7.1.4":
-  version: 7.1.4
-  resolution: "vite@npm:7.1.4"
+"vite@npm:7.1.5":
+  version: 7.1.5
+  resolution: "vite@npm:7.1.5"
   dependencies:
     esbuild: "npm:^0.25.0"
     fdir: "npm:^6.5.0"
@@ -8897,7 +8921,7 @@ __metadata:
     picomatch: "npm:^4.0.3"
     postcss: "npm:^8.5.6"
     rollup: "npm:^4.43.0"
-    tinyglobby: "npm:^0.2.14"
+    tinyglobby: "npm:^0.2.15"
   peerDependencies:
     "@types/node": ^20.19.0 || >=22.12.0
     jiti: ">=1.21.0"
@@ -8938,7 +8962,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10/40c6292227e8177470b9f1014fabe2fa324222d6bdc06eb994f7aa6872a56790cd1e45a2f7017a381413eb2fde48fde0f2f58933a045936ca6af2061862bf338
+  checksum: 10/59edeef7e98757a668b2ad8a1731a5657fa83e22a165a36b7359225ea98a9be39b2f486710c0cf5085edb85daee7c8b6b6b0bd85d0ef32a1aa84aef71aabd0f0
   languageName: node
   linkType: hard
 

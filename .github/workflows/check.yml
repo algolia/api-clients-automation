@@ -588,7 +588,7 @@ jobs:
             echo 'BREAKING_CHANGES_SECTION<<EOF'
             echo "# 💥 Breaking changes detected !!"
             echo "Either this PR or a previous PR not released yet introduced breaking changes, be careful when merging."
-            echo "You can find the details in the 'client java@17' CI job."
+            echo "You can find the details in the 'client java@21' CI job."
             echo 'EOF'
           } >> "$GITHUB_OUTPUT"
 
