@@ -572,8 +572,8 @@
         "x-acl": [
           "recommendation"
         ],
-        "summary": "Retrieve the user's personalization profile",
-        "description": "Retrieves the user's personalization profiles containing search filters.",
+        "summary": "Retrieve the real-time user's personalization profile",
+        "description": "Retrieves the real-time user's personalization profiles containing search filters.",
         "parameters": [
           {
             "$ref": "#/components/parameters/UserToken"
@@ -614,8 +614,9 @@
         "x-acl": [
           "recommendation"
         ],
-        "summary": "Compute the user's personalization profile",
-        "description": "Sends a request to compute the user's personalization profile.",
+        "summary": "Compute the real-time user's personalization profile",
+        "description": "Sends a request to compute the real-time user's personalization profile.",
+        "deprecated": true,
         "parameters": [
           {
             "$ref": "#/components/parameters/UserToken"
