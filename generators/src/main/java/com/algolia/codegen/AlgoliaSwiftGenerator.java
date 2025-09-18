@@ -147,7 +147,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "widgets"
   );
 
-  private static final List<String> reservedModelNamesForCollections = List.of(
+  private static final List<String> reservedModelNamesForComposition = List.of(
     "batchparams",
     "facethits",
     "gettaskresponse",
@@ -178,7 +178,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
   public static Boolean isReservedModelName(String name, String client) {
     return (
       reservedModelNames.contains(name.toLowerCase()) ||
-      (client.equalsIgnoreCase("composition") && reservedModelNamesForCollections.contains(name.toLowerCase()))
+      (client.equalsIgnoreCase("composition") && reservedModelNamesForComposition.contains(name.toLowerCase()))
     );
   }
 
