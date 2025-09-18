@@ -101,12 +101,12 @@ security:
   - appId: []
     apiKey: []
 tags:
+  - name: Advanced
+    description: Advanced endpoints to manage tasks.
+  - name: Composition Rules
+    description: Manage your compositions rules.
   - name: Compositions
-    description: |
-      Manage your compositions and composition settings.
-  - name: Rules
-    description: |
-      Manage your compositions rules.
+    description: Manage your compositions and composition settings.
   - name: Search
     description: Search one or more indices for matching records or facet values.
 x-tagGroups:

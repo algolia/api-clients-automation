@@ -31,7 +31,7 @@ get:
 
 put:
   tags:
-    - Rules
+    - Composition Rules
   operationId: putCompositionRule
   x-acl:
     - editSettings
@@ -74,7 +74,7 @@ put:
 
 delete:
   tags:
-    - Rules
+    - Composition Rules
   operationId: deleteCompositionRule
   x-acl:
     - editSettings

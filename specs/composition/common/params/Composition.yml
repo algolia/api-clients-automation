@@ -7,7 +7,7 @@ enableRules:
   description: Whether to enable composition rules.
   default: true
   x-categories:
-    - Rules
+    - Composition Rules
 
 ruleContexts:
   type: array
@@ -19,7 +19,7 @@ ruleContexts:
   default: []
   example: [mobile]
   x-categories:
-    - Rules
+    - Composition Rules
 
 # ####################
 # ### Category RMN ###
