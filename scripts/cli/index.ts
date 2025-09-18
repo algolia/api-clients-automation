@@ -1,4 +1,4 @@
-import { Argument, program } from 'commander';
+import { Argument, Option, program } from 'commander';
 import semver from 'semver';
 
 import { buildLanguages } from '../buildLanguages.ts';
@@ -29,10 +29,11 @@ const args = {
 };
 
 const flags = {
-  verbose: {
-    flag: '-v, --verbose',
-    description: 'make the generation verbose',
-  },
+  verbose: new Option('-v, --verbose', 'make the generation verbose'),
+  debugger: new Option(
+    '-d, --debugger',
+    'runs the generator in debug mode, it will wait for a Java debugger to be attached',
+  ),
 };
 
 program.name('cli');
@@ -49,8 +50,9 @@ program
   .description('Generate a specified client')
   .addArgument(args.language)
   .addArgument(args.clients)
-  .option(flags.verbose.flag, flags.verbose.description)
-  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+  .addOption(flags.verbose)
+  .addOption(flags.debugger)
+  .action(async (langArg: LangArg, clientArg: string[], { verbose, debugger: withDebugger }) => {
     const { language, client, clientList } = transformSelection({
       langArg,
       clientArg,
@@ -58,7 +60,7 @@ program
 
     setVerbose(Boolean(verbose));
 
-    await generate(generatorList({ language, client, clientList }));
+    await generate(generatorList({ language, client, clientList }), Boolean(withDebugger));
   });
 
 const buildCommand = program.command('build').description('Build the clients or specs');
@@ -68,7 +70,7 @@ buildCommand
   .description('Build a specified client')
   .addArgument(args.language)
   .addArgument(args.clients)
-  .option(flags.verbose.flag, flags.verbose.description)
+  .addOption(flags.verbose)
   .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
     const { language, client, clientList } = transformSelection({
       langArg,
@@ -85,7 +87,7 @@ buildCommand
   .description('Build a specified playground')
   .addArgument(args.language)
   .addArgument(args.clients)
-  .option(flags.verbose.flag, flags.verbose.description)
+  .addOption(flags.verbose)
   .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
     const { language, client, clientList } = transformSelection({
       langArg,
@@ -102,7 +104,7 @@ buildCommand
   .description('Build a specified snippets')
   .addArgument(args.language)
   .addArgument(args.clients)
-  .option(flags.verbose.flag, flags.verbose.description)
+  .addOption(flags.verbose)
   .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
     const { language, client, clientList } = transformSelection({
       langArg,
@@ -119,7 +121,7 @@ buildCommand
   .description('Build a specified guides')
   .addArgument(args.language)
   .addArgument(args.clients)
-  .option(flags.verbose.flag, flags.verbose.description)
+  .addOption(flags.verbose)
   .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
     const { language, client, clientList } = transformSelection({
       langArg,
@@ -135,7 +137,7 @@ buildCommand
   .command('specs')
   .description('Build a specified spec')
   .addArgument(args.clients)
-  .option(flags.verbose.flag, flags.verbose.description)
+  .addOption(flags.verbose)
   .option('-s, --skip-cache', 'skip cache checking to force building specs')
   .option('-j, --json', 'outputs the spec in JSON instead of yml')
   .option('-d, --docs', 'generates the doc specs with the code snippets')
@@ -172,9 +174,10 @@ ctsCommand
   .description('Generate the CTS tests')
   .addArgument(args.language)
   .addArgument(args.clients)
-  .option(flags.verbose.flag, flags.verbose.description)
+  .addOption(flags.verbose)
+  .addOption(flags.debugger)
   .option('--lv, --language-version <version>', 'the version of the language to use')
-  .action(async (langArg: LangArg, clientArg: string[], { verbose, languageVersion }) => {
+  .action(async (langArg: LangArg, clientArg: string[], { verbose, debugger: withDebugger, languageVersion }) => {
     const { language, client, clientList } = transformSelection({
       langArg,
       clientArg,
@@ -182,7 +185,7 @@ ctsCommand
 
     setVerbose(Boolean(verbose));
 
-    await ctsGenerateMany(generatorList({ language, client, clientList }), languageVersion);
+    await ctsGenerateMany(generatorList({ language, client, clientList }), withDebugger, languageVersion);
   });
 
 ctsCommand
@@ -190,7 +193,7 @@ ctsCommand
   .description('Run the tests for the CTS')
   .addArgument(args.language)
   .addArgument(args.clients)
-  .option(flags.verbose.flag, flags.verbose.description)
+  .addOption(flags.verbose)
   .option('-e, --no-e2e', 'skip the e2e tests, that requires internet connection')
   .option('-c, --no-client', 'skip the client tests')
   .option('-r, --no-requests', 'skip the requests tests')
@@ -250,7 +253,7 @@ program
   .description('Format the specified folder for a specific language')
   .addArgument(args.requiredLanguage)
   .argument('folder', 'The folder to format')
-  .option(flags.verbose.flag, flags.verbose.description)
+  .addOption(flags.verbose)
   .action(async (language: string, folder: string, { verbose }) => {
     setVerbose(Boolean(verbose));
 
@@ -262,8 +265,9 @@ program
   .description('Generate the snippets')
   .addArgument(args.language)
   .addArgument(args.clients)
-  .option(flags.verbose.flag, flags.verbose.description)
-  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+  .addOption(flags.verbose)
+  .addOption(flags.debugger)
+  .action(async (langArg: LangArg, clientArg: string[], { verbose, debugger: withDebugger }) => {
     const { language, client, clientList } = transformSelection({
       langArg,
       clientArg,
@@ -271,7 +275,7 @@ program
 
     setVerbose(Boolean(verbose));
 
-    await docsGenerateMany(generatorList({ language, client, clientList }), 'snippets');
+    await docsGenerateMany(generatorList({ language, client, clientList }), 'snippets', Boolean(withDebugger));
   });
 
 program
@@ -279,8 +283,9 @@ program
   .description('Generate the guides')
   .addArgument(args.language)
   .addArgument(args.clients)
-  .option(flags.verbose.flag, flags.verbose.description)
-  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+  .addOption(flags.verbose)
+  .addOption(flags.debugger)
+  .action(async (langArg: LangArg, clientArg: string[], { verbose, debugger: withDebugger }) => {
     const { language, client, clientList } = transformSelection({
       langArg,
       clientArg,
@@ -293,13 +298,14 @@ program
         existsSync(toAbsolutePath(`templates/${gen.language}/guides/${gen.client}`)),
       ),
       'guides',
+      Boolean(withDebugger),
     );
   });
 
 program
   .command('release')
   .description('Releases the client')
-  .option(flags.verbose.flag, flags.verbose.description)
+  .addOption(flags.verbose)
   .option<semver.ReleaseType>(
     '--rt --release-type <type>',
     'triggers a release for the given language list with the given releaseType',

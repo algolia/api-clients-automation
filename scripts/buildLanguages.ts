@@ -69,7 +69,10 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
     case 'kotlin':
       // the playground specify search but it will still build everything
       const isTestClass = buildType === 'guides' || buildType === 'snippets';
-      await run(`./gradle/gradlew -p ${cwd} ${isTestClass ? 'testClasses' : 'assemble'} ${language == 'kotlin' ? '-Pclient=Search' : ''}`, { language });
+      await run(
+        `./gradle/gradlew -p ${cwd} ${isTestClass ? 'testClasses' : 'assemble'} ${language == 'kotlin' ? '-Pclient=Search' : ''}`,
+        { language },
+      );
       break;
     case 'php':
       // await runComposerInstall();
