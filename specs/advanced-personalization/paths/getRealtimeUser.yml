@@ -4,8 +4,8 @@ get:
   operationId: getRealtimeUser
   x-acl:
     - recommendation
-  summary: Retrieve the user's personalization profile
-  description: Retrieves the user's personalization profiles containing search filters.
+  summary: Retrieve the real-time user's personalization profile
+  description: Retrieves the real-time user's personalization profiles containing search filters.
   parameters:
     - $ref: '../common/parameters.yml#/UserToken'
   responses:
