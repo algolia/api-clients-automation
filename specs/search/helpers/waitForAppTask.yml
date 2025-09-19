@@ -1,6 +1,17 @@
 method:
   get:
     x-helper: true
+    x-available-languages:
+      - csharp
+      - go
+      - java
+      - javascript
+      - kotlin
+      - php
+      - python
+      - ruby
+      - scala
+      - swift
     operationId: waitForAppTask
     summary: Wait for application-level operation to complete
     description: Wait for a application-level task to complete.

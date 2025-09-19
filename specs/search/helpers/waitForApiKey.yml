@@ -3,6 +3,17 @@ method:
     x-helper: true
     tags:
       - Api Keys
+    x-available-languages:
+      - csharp
+      - go
+      - java
+      - javascript
+      - kotlin
+      - php
+      - python
+      - ruby
+      - scala
+      - swift
     operationId: waitForApiKey
     summary: Wait for an API key operation
     description: Waits for an API key to be added, updated, or deleted.
