@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -54,6 +55,1094 @@ public class CompositionClient extends ApiClient {
     Collections.shuffle(commonHosts, new Random());
 
     return Stream.concat(hosts.stream(), commonHosts.stream()).collect(Collectors.toList());
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customDelete(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customDeleteAsync(path, parameters, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customDelete(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
+    return this.customDelete(path, parameters, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customDelete(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customDelete(path, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customDelete(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customDelete(path, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customDeleteAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
+
+    HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
+    return executeAsync(request, requestOptions, new TypeReference<Object>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customDeleteAsync(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
+    return this.customDeleteAsync(path, parameters, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customDeleteAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customDeleteAsync(path, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customDeleteAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customDeleteAsync(path, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customGet(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customGetAsync(path, parameters, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customGet(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
+    return this.customGet(path, parameters, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customGet(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customGet(path, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customGet(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customGet(path, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customGetAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
+
+    HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("GET").addQueryParameters(parameters).build();
+    return executeAsync(request, requestOptions, new TypeReference<Object>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customGetAsync(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
+    return this.customGetAsync(path, parameters, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customGetAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customGetAsync(path, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customGetAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customGetAsync(path, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customPost(@Nonnull String path, Map<String, Object> parameters, Object body, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customPostAsync(path, parameters, body, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customPost(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
+    return this.customPost(path, parameters, body, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customPost(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customPost(path, null, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customPost(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPost(path, null, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customPostAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPathEncoded("/{path}", path)
+      .setMethod("POST")
+      .setBody(body)
+      .addQueryParameters(parameters)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Object>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customPostAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
+    throws AlgoliaRuntimeException {
+    return this.customPostAsync(path, parameters, body, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customPostAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customPostAsync(path, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customPostAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPostAsync(path, null, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customPut(@Nonnull String path, Map<String, Object> parameters, Object body, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customPutAsync(path, parameters, body, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customPut(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
+    return this.customPut(path, parameters, body, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customPut(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customPut(path, null, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Object customPut(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPut(path, null, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customPutAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPathEncoded("/{path}", path)
+      .setMethod("PUT")
+      .setBody(body)
+      .addQueryParameters(parameters)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Object>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customPutAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
+    throws AlgoliaRuntimeException {
+    return this.customPutAsync(path, parameters, body, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customPutAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customPutAsync(path, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Object> customPutAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPutAsync(path, null, null, null);
+  }
+
+  /**
+   * Delete a composition from the current Algolia application.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TaskIDResponse deleteComposition(@Nonnull String compositionID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(deleteCompositionAsync(compositionID, requestOptions));
+  }
+
+  /**
+   * Delete a composition from the current Algolia application.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TaskIDResponse deleteComposition(@Nonnull String compositionID) throws AlgoliaRuntimeException {
+    return this.deleteComposition(compositionID, null);
+  }
+
+  /**
+   * (asynchronously) Delete a composition from the current Algolia application.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TaskIDResponse> deleteCompositionAsync(@Nonnull String compositionID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `deleteComposition`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/compositions/{compositionID}", compositionID).setMethod("DELETE").build();
+    return executeAsync(request, requestOptions, new TypeReference<TaskIDResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Delete a composition from the current Algolia application.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TaskIDResponse> deleteCompositionAsync(@Nonnull String compositionID) throws AlgoliaRuntimeException {
+    return this.deleteCompositionAsync(compositionID, null);
+  }
+
+  /**
+   * Delete a Composition Rule from the specified Composition ID.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param objectID Unique identifier of a rule object. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TaskIDResponse deleteCompositionRule(
+    @Nonnull String compositionID,
+    @Nonnull String objectID,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(deleteCompositionRuleAsync(compositionID, objectID, requestOptions));
+  }
+
+  /**
+   * Delete a Composition Rule from the specified Composition ID.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param objectID Unique identifier of a rule object. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TaskIDResponse deleteCompositionRule(@Nonnull String compositionID, @Nonnull String objectID) throws AlgoliaRuntimeException {
+    return this.deleteCompositionRule(compositionID, objectID, null);
+  }
+
+  /**
+   * (asynchronously) Delete a Composition Rule from the specified Composition ID.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param objectID Unique identifier of a rule object. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TaskIDResponse> deleteCompositionRuleAsync(
+    @Nonnull String compositionID,
+    @Nonnull String objectID,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `deleteCompositionRule`.");
+
+    Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `deleteCompositionRule`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/compositions/{compositionID}/rules/{objectID}", compositionID, objectID)
+      .setMethod("DELETE")
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<TaskIDResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Delete a Composition Rule from the specified Composition ID.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param objectID Unique identifier of a rule object. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TaskIDResponse> deleteCompositionRuleAsync(@Nonnull String compositionID, @Nonnull String objectID)
+    throws AlgoliaRuntimeException {
+    return this.deleteCompositionRuleAsync(compositionID, objectID, null);
+  }
+
+  /**
+   * Retrieve a single composition in the current Algolia application.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Composition getComposition(@Nonnull String compositionID, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getCompositionAsync(compositionID, requestOptions));
+  }
+
+  /**
+   * Retrieve a single composition in the current Algolia application.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Composition getComposition(@Nonnull String compositionID) throws AlgoliaRuntimeException {
+    return this.getComposition(compositionID, null);
+  }
+
+  /**
+   * (asynchronously) Retrieve a single composition in the current Algolia application.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Composition> getCompositionAsync(@Nonnull String compositionID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `getComposition`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/compositions/{compositionID}", compositionID).setMethod("GET").build();
+    return executeAsync(request, requestOptions, new TypeReference<Composition>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieve a single composition in the current Algolia application.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Composition> getCompositionAsync(@Nonnull String compositionID) throws AlgoliaRuntimeException {
+    return this.getCompositionAsync(compositionID, null);
+  }
+
+  /**
+   * Retrieves a rule by its ID. To find the object ID of rules, use the [`search`
+   * operation](#tag/Rules/operation/searchRules).
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param objectID Unique identifier of a rule object. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompositionRule getRule(@Nonnull String compositionID, @Nonnull String objectID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getRuleAsync(compositionID, objectID, requestOptions));
+  }
+
+  /**
+   * Retrieves a rule by its ID. To find the object ID of rules, use the [`search`
+   * operation](#tag/Rules/operation/searchRules).
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param objectID Unique identifier of a rule object. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompositionRule getRule(@Nonnull String compositionID, @Nonnull String objectID) throws AlgoliaRuntimeException {
+    return this.getRule(compositionID, objectID, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a rule by its ID. To find the object ID of rules, use the [`search`
+   * operation](#tag/Rules/operation/searchRules).
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param objectID Unique identifier of a rule object. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<CompositionRule> getRuleAsync(
+    @Nonnull String compositionID,
+    @Nonnull String objectID,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `getRule`.");
+
+    Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `getRule`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/compositions/{compositionID}/rules/{objectID}", compositionID, objectID)
+      .setMethod("GET")
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<CompositionRule>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves a rule by its ID. To find the object ID of rules, use the [`search`
+   * operation](#tag/Rules/operation/searchRules).
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param objectID Unique identifier of a rule object. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<CompositionRule> getRuleAsync(@Nonnull String compositionID, @Nonnull String objectID)
+    throws AlgoliaRuntimeException {
+    return this.getRuleAsync(compositionID, objectID, null);
+  }
+
+  /**
+   * Checks the status of a given task.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param taskID Unique task identifier. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public GetTaskResponse getTask(@Nonnull String compositionID, @Nonnull Long taskID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getTaskAsync(compositionID, taskID, requestOptions));
+  }
+
+  /**
+   * Checks the status of a given task.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param taskID Unique task identifier. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public GetTaskResponse getTask(@Nonnull String compositionID, @Nonnull Long taskID) throws AlgoliaRuntimeException {
+    return this.getTask(compositionID, taskID, null);
+  }
+
+  /**
+   * (asynchronously) Checks the status of a given task.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param taskID Unique task identifier. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<GetTaskResponse> getTaskAsync(
+    @Nonnull String compositionID,
+    @Nonnull Long taskID,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `getTask`.");
+
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `getTask`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/compositions/{compositionID}/task/{taskID}", compositionID, taskID)
+      .setMethod("GET")
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<GetTaskResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Checks the status of a given task.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param taskID Unique task identifier. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<GetTaskResponse> getTaskAsync(@Nonnull String compositionID, @Nonnull Long taskID)
+    throws AlgoliaRuntimeException {
+    return this.getTaskAsync(compositionID, taskID, null);
+  }
+
+  /**
+   * Lists all compositions in the current Algolia application.
+   *
+   * @param page Requested page of the API response. If `null`, the API response is not paginated.
+   *     (optional)
+   * @param hitsPerPage Number of hits per page. (optional, default to 100)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListCompositionsResponse listCompositions(Integer page, Integer hitsPerPage, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(listCompositionsAsync(page, hitsPerPage, requestOptions));
+  }
+
+  /**
+   * Lists all compositions in the current Algolia application.
+   *
+   * @param page Requested page of the API response. If `null`, the API response is not paginated.
+   *     (optional)
+   * @param hitsPerPage Number of hits per page. (optional, default to 100)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListCompositionsResponse listCompositions(Integer page, Integer hitsPerPage) throws AlgoliaRuntimeException {
+    return this.listCompositions(page, hitsPerPage, null);
+  }
+
+  /**
+   * Lists all compositions in the current Algolia application.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListCompositionsResponse listCompositions(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listCompositions(null, null, requestOptions);
+  }
+
+  /**
+   * Lists all compositions in the current Algolia application.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ListCompositionsResponse listCompositions() throws AlgoliaRuntimeException {
+    return this.listCompositions(null, null, null);
+  }
+
+  /**
+   * (asynchronously) Lists all compositions in the current Algolia application.
+   *
+   * @param page Requested page of the API response. If `null`, the API response is not paginated.
+   *     (optional)
+   * @param hitsPerPage Number of hits per page. (optional, default to 100)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListCompositionsResponse> listCompositionsAsync(
+    Integer page,
+    Integer hitsPerPage,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/compositions")
+      .setMethod("GET")
+      .addQueryParameter("page", page)
+      .addQueryParameter("hitsPerPage", hitsPerPage)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<ListCompositionsResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Lists all compositions in the current Algolia application.
+   *
+   * @param page Requested page of the API response. If `null`, the API response is not paginated.
+   *     (optional)
+   * @param hitsPerPage Number of hits per page. (optional, default to 100)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListCompositionsResponse> listCompositionsAsync(Integer page, Integer hitsPerPage)
+    throws AlgoliaRuntimeException {
+    return this.listCompositionsAsync(page, hitsPerPage, null);
+  }
+
+  /**
+   * (asynchronously) Lists all compositions in the current Algolia application.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListCompositionsResponse> listCompositionsAsync(@Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.listCompositionsAsync(null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Lists all compositions in the current Algolia application.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ListCompositionsResponse> listCompositionsAsync() throws AlgoliaRuntimeException {
+    return this.listCompositionsAsync(null, null, null);
+  }
+
+  /**
+   * Adds, updates, or deletes compositions with a single API request.
+   *
+   * @param batchParams (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public MultipleBatchResponse multipleBatch(@Nonnull BatchParams batchParams, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(multipleBatchAsync(batchParams, requestOptions));
+  }
+
+  /**
+   * Adds, updates, or deletes compositions with a single API request.
+   *
+   * @param batchParams (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public MultipleBatchResponse multipleBatch(@Nonnull BatchParams batchParams) throws AlgoliaRuntimeException {
+    return this.multipleBatch(batchParams, null);
+  }
+
+  /**
+   * (asynchronously) Adds, updates, or deletes compositions with a single API request.
+   *
+   * @param batchParams (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<MultipleBatchResponse> multipleBatchAsync(
+    @Nonnull BatchParams batchParams,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(batchParams, "Parameter `batchParams` is required when calling `multipleBatch`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/compositions/*/batch").setMethod("POST").setBody(batchParams).build();
+    return executeAsync(request, requestOptions, new TypeReference<MultipleBatchResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Adds, updates, or deletes compositions with a single API request.
+   *
+   * @param batchParams (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<MultipleBatchResponse> multipleBatchAsync(@Nonnull BatchParams batchParams) throws AlgoliaRuntimeException {
+    return this.multipleBatchAsync(batchParams, null);
+  }
+
+  /**
+   * Upsert a composition in the current Algolia application.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param composition (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TaskIDResponse putComposition(
+    @Nonnull String compositionID,
+    @Nonnull Composition composition,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(putCompositionAsync(compositionID, composition, requestOptions));
+  }
+
+  /**
+   * Upsert a composition in the current Algolia application.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param composition (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TaskIDResponse putComposition(@Nonnull String compositionID, @Nonnull Composition composition) throws AlgoliaRuntimeException {
+    return this.putComposition(compositionID, composition, null);
+  }
+
+  /**
+   * (asynchronously) Upsert a composition in the current Algolia application.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param composition (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TaskIDResponse> putCompositionAsync(
+    @Nonnull String compositionID,
+    @Nonnull Composition composition,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `putComposition`.");
+
+    Parameters.requireNonNull(composition, "Parameter `composition` is required when calling `putComposition`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/compositions/{compositionID}", compositionID)
+      .setMethod("PUT")
+      .setBody(composition)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<TaskIDResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Upsert a composition in the current Algolia application.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param composition (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TaskIDResponse> putCompositionAsync(@Nonnull String compositionID, @Nonnull Composition composition)
+    throws AlgoliaRuntimeException {
+    return this.putCompositionAsync(compositionID, composition, null);
+  }
+
+  /**
+   * Upsert a Composition Rule for the specified composition ID.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param objectID Unique identifier of a rule object. (required)
+   * @param compositionRule (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TaskIDResponse putCompositionRule(
+    @Nonnull String compositionID,
+    @Nonnull String objectID,
+    @Nonnull CompositionRule compositionRule,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(putCompositionRuleAsync(compositionID, objectID, compositionRule, requestOptions));
+  }
+
+  /**
+   * Upsert a Composition Rule for the specified composition ID.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param objectID Unique identifier of a rule object. (required)
+   * @param compositionRule (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TaskIDResponse putCompositionRule(
+    @Nonnull String compositionID,
+    @Nonnull String objectID,
+    @Nonnull CompositionRule compositionRule
+  ) throws AlgoliaRuntimeException {
+    return this.putCompositionRule(compositionID, objectID, compositionRule, null);
+  }
+
+  /**
+   * (asynchronously) Upsert a Composition Rule for the specified composition ID.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param objectID Unique identifier of a rule object. (required)
+   * @param compositionRule (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TaskIDResponse> putCompositionRuleAsync(
+    @Nonnull String compositionID,
+    @Nonnull String objectID,
+    @Nonnull CompositionRule compositionRule,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `putCompositionRule`.");
+
+    Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `putCompositionRule`.");
+
+    Parameters.requireNonNull(compositionRule, "Parameter `compositionRule` is required when calling `putCompositionRule`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/compositions/{compositionID}/rules/{objectID}", compositionID, objectID)
+      .setMethod("PUT")
+      .setBody(compositionRule)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<TaskIDResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Upsert a Composition Rule for the specified composition ID.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param objectID Unique identifier of a rule object. (required)
+   * @param compositionRule (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TaskIDResponse> putCompositionRuleAsync(
+    @Nonnull String compositionID,
+    @Nonnull String objectID,
+    @Nonnull CompositionRule compositionRule
+  ) throws AlgoliaRuntimeException {
+    return this.putCompositionRuleAsync(compositionID, objectID, compositionRule, null);
+  }
+
+  /**
+   * Create or update or delete multiple composition rules.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param rules (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RulesMultipleBatchResponse saveRules(
+    @Nonnull String compositionID,
+    @Nonnull CompositionRulesBatchParams rules,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(saveRulesAsync(compositionID, rules, requestOptions));
+  }
+
+  /**
+   * Create or update or delete multiple composition rules.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param rules (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public RulesMultipleBatchResponse saveRules(@Nonnull String compositionID, @Nonnull CompositionRulesBatchParams rules)
+    throws AlgoliaRuntimeException {
+    return this.saveRules(compositionID, rules, null);
+  }
+
+  /**
+   * (asynchronously) Create or update or delete multiple composition rules.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param rules (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RulesMultipleBatchResponse> saveRulesAsync(
+    @Nonnull String compositionID,
+    @Nonnull CompositionRulesBatchParams rules,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `saveRules`.");
+
+    Parameters.requireNonNull(rules, "Parameter `rules` is required when calling `saveRules`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/compositions/{compositionID}/rules/batch", compositionID)
+      .setMethod("POST")
+      .setBody(rules)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<RulesMultipleBatchResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Create or update or delete multiple composition rules.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param rules (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<RulesMultipleBatchResponse> saveRulesAsync(
+    @Nonnull String compositionID,
+    @Nonnull CompositionRulesBatchParams rules
+  ) throws AlgoliaRuntimeException {
+    return this.saveRulesAsync(compositionID, rules, null);
   }
 
   /**
@@ -131,6 +1220,124 @@ public class CompositionClient extends ApiClient {
     Class<T> innerType
   ) throws AlgoliaRuntimeException {
     return this.searchAsync(compositionID, requestBody, innerType, null);
+  }
+
+  /**
+   * Searches for composition rules in your index.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param searchCompositionRulesParams (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public SearchCompositionRulesResponse searchCompositionRules(
+    @Nonnull String compositionID,
+    SearchCompositionRulesParams searchCompositionRulesParams,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(searchCompositionRulesAsync(compositionID, searchCompositionRulesParams, requestOptions));
+  }
+
+  /**
+   * Searches for composition rules in your index.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param searchCompositionRulesParams (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public SearchCompositionRulesResponse searchCompositionRules(
+    @Nonnull String compositionID,
+    SearchCompositionRulesParams searchCompositionRulesParams
+  ) throws AlgoliaRuntimeException {
+    return this.searchCompositionRules(compositionID, searchCompositionRulesParams, null);
+  }
+
+  /**
+   * Searches for composition rules in your index.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public SearchCompositionRulesResponse searchCompositionRules(@Nonnull String compositionID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.searchCompositionRules(compositionID, null, requestOptions);
+  }
+
+  /**
+   * Searches for composition rules in your index.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public SearchCompositionRulesResponse searchCompositionRules(@Nonnull String compositionID) throws AlgoliaRuntimeException {
+    return this.searchCompositionRules(compositionID, null, null);
+  }
+
+  /**
+   * (asynchronously) Searches for composition rules in your index.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param searchCompositionRulesParams (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<SearchCompositionRulesResponse> searchCompositionRulesAsync(
+    @Nonnull String compositionID,
+    SearchCompositionRulesParams searchCompositionRulesParams,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(compositionID, "Parameter `compositionID` is required when calling `searchCompositionRules`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/compositions/{compositionID}/rules/search", compositionID)
+      .setMethod("POST")
+      .setBody(searchCompositionRulesParams)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<SearchCompositionRulesResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Searches for composition rules in your index.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param searchCompositionRulesParams (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<SearchCompositionRulesResponse> searchCompositionRulesAsync(
+    @Nonnull String compositionID,
+    SearchCompositionRulesParams searchCompositionRulesParams
+  ) throws AlgoliaRuntimeException {
+    return this.searchCompositionRulesAsync(compositionID, searchCompositionRulesParams, null);
+  }
+
+  /**
+   * (asynchronously) Searches for composition rules in your index.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<SearchCompositionRulesResponse> searchCompositionRulesAsync(
+    @Nonnull String compositionID,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.searchCompositionRulesAsync(compositionID, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Searches for composition rules in your index.
+   *
+   * @param compositionID Unique Composition ObjectID. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<SearchCompositionRulesResponse> searchCompositionRulesAsync(@Nonnull String compositionID)
+    throws AlgoliaRuntimeException {
+    return this.searchCompositionRulesAsync(compositionID, null, null);
   }
 
   /**

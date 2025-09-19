@@ -12,6 +12,1028 @@ class TestCompositionClient < Test::Unit::TestCase
     )
   end
 
+  # allow del method for a custom path with minimal parameters
+  def test_custom_delete
+    req = @client.custom_delete_with_http_info("test/minimal")
+
+    assert_equal(:delete, req.method)
+    assert_equal("/test/minimal", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # allow del method for a custom path with all parameters
+  def test_custom_delete1
+    req = @client.custom_delete_with_http_info("test/all", {query: "parameters"})
+
+    assert_equal(:delete, req.method)
+    assert_equal("/test/all", req.path)
+    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # allow get method for a custom path with minimal parameters
+  def test_custom_get
+    req = @client.custom_get_with_http_info("test/minimal")
+
+    assert_equal(:get, req.method)
+    assert_equal("/test/minimal", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # allow get method for a custom path with all parameters
+  def test_custom_get1
+    req = @client.custom_get_with_http_info("test/all", {query: "parameters with space"})
+
+    assert_equal(:get, req.method)
+    assert_equal("/test/all", req.path)
+    assert_equal({:"query" => "parameters%20with%20space"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # requestOptions should be escaped too
+  def test_custom_get2
+    req = @client.custom_get_with_http_info(
+      "test/all",
+      {query: "to be overriden"},
+      {
+        :header_params => {"x-header-1" => "spaces are left alone"},
+        :query_params => JSON.parse(
+          "{\"query\":\"parameters with space\",\"and an array\":[\"array\",\"with spaces\"]}",
+          :symbolize_names => true
+        )
+      }
+    )
+
+    assert_equal(:get, req.method)
+    assert_equal("/test/all", req.path)
+    assert_equal(
+      {:"query" => "parameters%20with%20space", :"and%20an%20array" => "array%2Cwith%20spaces"}.to_a,
+      req.query_params.to_a
+    )
+    assert(
+      ({:"x-header-1" => "spaces are left alone"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      req.headers.to_s
+    )
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # allow post method for a custom path with minimal parameters
+  def test_custom_post
+    req = @client.custom_post_with_http_info("test/minimal")
+
+    assert_equal(:post, req.method)
+    assert_equal("/test/minimal", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{}"), JSON.parse(req.body))
+  end
+
+  # allow post method for a custom path with all parameters
+  def test_custom_post1
+    req = @client.custom_post_with_http_info("test/all", {query: "parameters"}, {body: "parameters"})
+
+    assert_equal(:post, req.method)
+    assert_equal("/test/all", req.path)
+    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"body\":\"parameters\"}"), JSON.parse(req.body))
+  end
+
+  # requestOptions can override default query parameters
+  def test_custom_post2
+    req = @client.custom_post_with_http_info(
+      "test/requestOptions",
+      {query: "parameters"},
+      {facet: "filters"},
+      {:query_params => JSON.parse("{\"query\":\"myQueryParameter\"}", :symbolize_names => true)}
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/test/requestOptions", req.path)
+    assert_equal({:"query" => "myQueryParameter"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
+  end
+
+  # requestOptions merges query parameters with default ones
+  def test_custom_post3
+    req = @client.custom_post_with_http_info(
+      "test/requestOptions",
+      {query: "parameters"},
+      {facet: "filters"},
+      {:query_params => JSON.parse("{\"query2\":\"myQueryParameter\"}", :symbolize_names => true)}
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/test/requestOptions", req.path)
+    assert_equal({:"query" => "parameters", :"query2" => "myQueryParameter"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
+  end
+
+  # requestOptions can override default headers
+  def test_custom_post4
+    req = @client.custom_post_with_http_info(
+      "test/requestOptions",
+      {query: "parameters"},
+      {facet: "filters"},
+      {:header_params => {"x-algolia-api-key" => "ALGOLIA_API_KEY"}}
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/test/requestOptions", req.path)
+    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert(
+      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      req.headers.to_s
+    )
+    assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
+  end
+
+  # requestOptions merges headers with default ones
+  def test_custom_post5
+    req = @client.custom_post_with_http_info(
+      "test/requestOptions",
+      {query: "parameters"},
+      {facet: "filters"},
+      {:header_params => {"x-algolia-api-key" => "ALGOLIA_API_KEY"}}
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/test/requestOptions", req.path)
+    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert(
+      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      req.headers.to_s
+    )
+    assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
+  end
+
+  # requestOptions queryParameters accepts booleans
+  def test_custom_post6
+    req = @client.custom_post_with_http_info(
+      "test/requestOptions",
+      {query: "parameters"},
+      {facet: "filters"},
+      {:query_params => JSON.parse("{\"isItWorking\":true}", :symbolize_names => true)}
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/test/requestOptions", req.path)
+    assert_equal({:"query" => "parameters", :"isItWorking" => "true"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
+  end
+
+  # requestOptions queryParameters accepts integers
+  def test_custom_post7
+    req = @client.custom_post_with_http_info(
+      "test/requestOptions",
+      {query: "parameters"},
+      {facet: "filters"},
+      {:query_params => JSON.parse("{\"myParam\":2}", :symbolize_names => true)}
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/test/requestOptions", req.path)
+    assert_equal({:"query" => "parameters", :"myParam" => "2"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
+  end
+
+  # requestOptions queryParameters accepts list of string
+  def test_custom_post8
+    req = @client.custom_post_with_http_info(
+      "test/requestOptions",
+      {query: "parameters"},
+      {facet: "filters"},
+      {:query_params => JSON.parse("{\"myParam\":[\"b and c\",\"d\"]}", :symbolize_names => true)}
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/test/requestOptions", req.path)
+    assert_equal({:"query" => "parameters", :"myParam" => "b%20and%20c%2Cd"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
+  end
+
+  # requestOptions queryParameters accepts list of booleans
+  def test_custom_post9
+    req = @client.custom_post_with_http_info(
+      "test/requestOptions",
+      {query: "parameters"},
+      {facet: "filters"},
+      {:query_params => JSON.parse("{\"myParam\":[true,true,false]}", :symbolize_names => true)}
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/test/requestOptions", req.path)
+    assert_equal({:"query" => "parameters", :"myParam" => "true%2Ctrue%2Cfalse"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
+  end
+
+  # requestOptions queryParameters accepts list of integers
+  def test_custom_post10
+    req = @client.custom_post_with_http_info(
+      "test/requestOptions",
+      {query: "parameters"},
+      {facet: "filters"},
+      {:query_params => JSON.parse("{\"myParam\":[1,2]}", :symbolize_names => true)}
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/test/requestOptions", req.path)
+    assert_equal({:"query" => "parameters", :"myParam" => "1%2C2"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
+  end
+
+  # allow put method for a custom path with minimal parameters
+  def test_custom_put
+    req = @client.custom_put_with_http_info("test/minimal")
+
+    assert_equal(:put, req.method)
+    assert_equal("/test/minimal", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{}"), JSON.parse(req.body))
+  end
+
+  # allow put method for a custom path with all parameters
+  def test_custom_put1
+    req = @client.custom_put_with_http_info("test/all", {query: "parameters"}, {body: "parameters"})
+
+    assert_equal(:put, req.method)
+    assert_equal("/test/all", req.path)
+    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"body\":\"parameters\"}"), JSON.parse(req.body))
+  end
+
+  # deleteComposition
+  def test_delete_composition
+    req = @client.delete_composition_with_http_info("1234")
+
+    assert_equal(:delete, req.method)
+    assert_equal("/1/compositions/1234", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # deleteCompositionRule
+  def test_delete_composition_rule
+    req = @client.delete_composition_rule_with_http_info("1234", "5678")
+
+    assert_equal(:delete, req.method)
+    assert_equal("/1/compositions/1234/rules/5678", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # getComposition
+  def test_get_composition
+    req = @client.get_composition_with_http_info("foo")
+
+    assert_equal(:get, req.method)
+    assert_equal("/1/compositions/foo", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # getRule
+  def test_get_rule
+    req = @client.get_rule_with_http_info("foo", "123")
+
+    assert_equal(:get, req.method)
+    assert_equal("/1/compositions/foo/rules/123", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # getTask
+  def test_get_task
+    req = @client.get_task_with_http_info("foo", 42)
+
+    assert_equal(:get, req.method)
+    assert_equal("/1/compositions/foo/task/42", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # listCompositions
+  def test_list_compositions
+    req = @client.list_compositions_with_http_info
+
+    assert_equal(:get, req.method)
+    assert_equal("/1/compositions", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # listCompositions
+  def test_list_compositions1
+    req = @client.list_compositions_with_http_info
+
+    assert_equal(:get, req.method)
+    assert_equal("/1/compositions", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # multipleBatch
+  def test_multiple_batch
+    req = @client.multiple_batch_with_http_info(
+      Algolia::Composition::BatchParams.new(
+        requests: [
+          Algolia::Composition::MultipleBatchRequest.new(
+            action: "upsert",
+            body: Algolia::Composition::Composition.new(
+              algolia_object_id: "foo",
+              name: "my first composition",
+              behavior: Algolia::Composition::CompositionBehavior.new(
+                injection: Algolia::Composition::Injection.new(
+                  main: Algolia::Composition::Main.new(
+                    source: Algolia::Composition::CompositionSource.new(
+                      search: Algolia::Composition::CompositionSourceSearch.new(index: "bar")
+                    )
+                  )
+                )
+              )
+            )
+          ),
+          Algolia::Composition::MultipleBatchRequest.new(
+            action: "delete",
+            body: Algolia::Composition::DeleteCompositionAction.new(algolia_object_id: "baz")
+          )
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/compositions/*/batch", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"foo\",\"name\":\"my first composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"bar\"}}}}}}},{\"action\":\"delete\",\"body\":{\"objectID\":\"baz\"}}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # multipleBatch
+  def test_multiple_batch1
+    req = @client.multiple_batch_with_http_info(
+      Algolia::Composition::BatchParams.new(
+        requests: [
+          Algolia::Composition::MultipleBatchRequest.new(
+            action: "upsert",
+            body: Algolia::Composition::Composition.new(
+              algolia_object_id: "my-external-injection-compo",
+              name: "my first composition",
+              behavior: Algolia::Composition::CompositionBehavior.new(
+                injection: Algolia::Composition::Injection.new(
+                  main: Algolia::Composition::Main.new(
+                    source: Algolia::Composition::CompositionSource.new(
+                      search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
+                    )
+                  ),
+                  injected_items: [
+                    Algolia::Composition::InjectedItem.new(
+                      key: "injectedItem1",
+                      source: Algolia::Composition::ExternalSource.new(
+                        external: Algolia::Composition::External.new(
+                          index: "foo",
+                          ordering: "userDefined",
+                          params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas")
+                        )
+                      ),
+                      position: 2,
+                      length: 1
+                    )
+                  ]
+                )
+              )
+            )
+          )
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/compositions/*/batch", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"my-external-injection-compo\",\"name\":\"my first composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"external\":{\"index\":\"foo\",\"ordering\":\"userDefined\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1}]}}}}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # multipleBatch
+  def test_multiple_batch2
+    req = @client.multiple_batch_with_http_info(
+      Algolia::Composition::BatchParams.new(
+        requests: [
+          Algolia::Composition::MultipleBatchRequest.new(
+            action: "upsert",
+            body: Algolia::Composition::Composition.new(
+              algolia_object_id: "my-metadata-compo",
+              name: "my composition",
+              behavior: Algolia::Composition::CompositionBehavior.new(
+                injection: Algolia::Composition::Injection.new(
+                  main: Algolia::Composition::Main.new(
+                    source: Algolia::Composition::CompositionSource.new(
+                      search: Algolia::Composition::CompositionSourceSearch.new(
+                        index: "foo",
+                        params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
+                      )
+                    )
+                  ),
+                  injected_items: [
+                    Algolia::Composition::InjectedItem.new(
+                      key: "injectedItem1",
+                      source: Algolia::Composition::SearchSource.new(
+                        search: Algolia::Composition::Search.new(
+                          index: "foo",
+                          params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas")
+                        )
+                      ),
+                      position: 2,
+                      length: 1,
+                      metadata: Algolia::Composition::InjectedItemMetadata.new(
+                        hits: Algolia::Composition::InjectedItemHitsMetadata.new(
+                          add_item_key: true,
+                          extra: {
+                            :"my-string" => "string",
+                            :"my-bool" => true,
+                            :"my-number" => 42,
+                            :"my-object" => {:"sub-key" => "sub-value"}
+                          }
+                        )
+                      )
+                    ),
+                    Algolia::Composition::InjectedItem.new(
+                      key: "externalItem",
+                      source: Algolia::Composition::SearchSource.new(
+                        search: Algolia::Composition::Search.new(
+                          index: "foo",
+                          params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:puma")
+                        )
+                      ),
+                      position: 5,
+                      length: 5,
+                      metadata: Algolia::Composition::InjectedItemMetadata.new(
+                        hits: Algolia::Composition::InjectedItemHitsMetadata.new(
+                          add_item_key: true,
+                          extra: {
+                            :"my-string" => "string",
+                            :"my-bool" => true,
+                            :"my-number" => 42,
+                            :"my-object" => {:"sub-key" => "sub-value"}
+                          }
+                        )
+                      )
+                    )
+                  ]
+                )
+              )
+            )
+          )
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/compositions/*/batch", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"my-metadata-compo\",\"name\":\"my composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}},{\"key\":\"externalItem\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:puma\"}}},\"position\":5,\"length\":5,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # putComposition
+  def test_put_composition
+    req = @client.put_composition_with_http_info(
+      "1234",
+      Algolia::Composition::Composition.new(
+        algolia_object_id: "1234",
+        name: "my first composition",
+        behavior: Algolia::Composition::CompositionBehavior.new(
+          injection: Algolia::Composition::Injection.new(
+            main: Algolia::Composition::Main.new(
+              source: Algolia::Composition::CompositionSource.new(
+                search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
+              )
+            ),
+            injected_items: [
+              Algolia::Composition::InjectedItem.new(
+                key: "injectedItem1",
+                source: Algolia::Composition::SearchSource.new(search: Algolia::Composition::Search.new(index: "foo")),
+                position: 2,
+                length: 1
+              )
+            ]
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/compositions/1234", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"1234\",\"name\":\"my first composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}]}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # putComposition
+  def test_put_composition1
+    req = @client.put_composition_with_http_info(
+      "my-external-injection-compo",
+      Algolia::Composition::Composition.new(
+        algolia_object_id: "my-external-injection-compo",
+        name: "my first composition",
+        behavior: Algolia::Composition::CompositionBehavior.new(
+          injection: Algolia::Composition::Injection.new(
+            main: Algolia::Composition::Main.new(
+              source: Algolia::Composition::CompositionSource.new(
+                search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
+              )
+            ),
+            injected_items: [
+              Algolia::Composition::InjectedItem.new(
+                key: "injectedItem1",
+                source: Algolia::Composition::ExternalSource.new(
+                  external: Algolia::Composition::External.new(
+                    index: "foo",
+                    ordering: "userDefined",
+                    params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas")
+                  )
+                ),
+                position: 2,
+                length: 1
+              )
+            ]
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/compositions/my-external-injection-compo", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"my-external-injection-compo\",\"name\":\"my first composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"external\":{\"index\":\"foo\",\"ordering\":\"userDefined\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1}]}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # putComposition
+  def test_put_composition2
+    req = @client.put_composition_with_http_info(
+      "my-metadata-compo",
+      Algolia::Composition::Composition.new(
+        algolia_object_id: "my-metadata-compo",
+        name: "my composition",
+        behavior: Algolia::Composition::CompositionBehavior.new(
+          injection: Algolia::Composition::Injection.new(
+            main: Algolia::Composition::Main.new(
+              source: Algolia::Composition::CompositionSource.new(
+                search: Algolia::Composition::CompositionSourceSearch.new(
+                  index: "foo",
+                  params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
+                )
+              )
+            ),
+            injected_items: [
+              Algolia::Composition::InjectedItem.new(
+                key: "injectedItem1",
+                source: Algolia::Composition::SearchSource.new(
+                  search: Algolia::Composition::Search.new(
+                    index: "foo",
+                    params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas")
+                  )
+                ),
+                position: 2,
+                length: 1,
+                metadata: Algolia::Composition::InjectedItemMetadata.new(
+                  hits: Algolia::Composition::InjectedItemHitsMetadata.new(
+                    add_item_key: true,
+                    extra: {
+                      :"my-string" => "string",
+                      :"my-bool" => true,
+                      :"my-number" => 42,
+                      :"my-object" => {:"sub-key" => "sub-value"}
+                    }
+                  )
+                )
+              ),
+              Algolia::Composition::InjectedItem.new(
+                key: "externalItem",
+                source: Algolia::Composition::SearchSource.new(
+                  search: Algolia::Composition::Search.new(
+                    index: "foo",
+                    params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:puma")
+                  )
+                ),
+                position: 5,
+                length: 5,
+                metadata: Algolia::Composition::InjectedItemMetadata.new(
+                  hits: Algolia::Composition::InjectedItemHitsMetadata.new(
+                    add_item_key: true,
+                    extra: {
+                      :"my-string" => "string",
+                      :"my-bool" => true,
+                      :"my-number" => 42,
+                      :"my-object" => {:"sub-key" => "sub-value"}
+                    }
+                  )
+                )
+              )
+            ]
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/compositions/my-metadata-compo", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"my-metadata-compo\",\"name\":\"my composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}},{\"key\":\"externalItem\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:puma\"}}},\"position\":5,\"length\":5,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # putCompositionRule
+  def test_put_composition_rule
+    req = @client.put_composition_rule_with_http_info(
+      "compositionID",
+      "ruleID",
+      Algolia::Composition::CompositionRule.new(
+        algolia_object_id: "ruleID",
+        conditions: [Algolia::Composition::Condition.new(anchoring: "is", pattern: "test")],
+        consequence: Algolia::Composition::CompositionRuleConsequence.new(
+          behavior: Algolia::Composition::CompositionBehavior.new(
+            injection: Algolia::Composition::Injection.new(
+              main: Algolia::Composition::Main.new(
+                source: Algolia::Composition::CompositionSource.new(
+                  search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
+                )
+              ),
+              injected_items: [
+                Algolia::Composition::InjectedItem.new(
+                  key: "injectedItem1",
+                  source: Algolia::Composition::SearchSource.new(search: Algolia::Composition::Search.new(index: "foo")),
+                  position: 2,
+                  length: 1
+                )
+              ]
+            )
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/compositions/compositionID/rules/ruleID", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"ruleID\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"test\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}]}}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # putCompositionRule
+  def test_put_composition_rule1
+    req = @client.put_composition_rule_with_http_info(
+      "compositionID",
+      "rule-with-metadata",
+      Algolia::Composition::CompositionRule.new(
+        algolia_object_id: "rule-with-metadata",
+        conditions: [Algolia::Composition::Condition.new(anchoring: "is", pattern: "test")],
+        consequence: Algolia::Composition::CompositionRuleConsequence.new(
+          behavior: Algolia::Composition::CompositionBehavior.new(
+            injection: Algolia::Composition::Injection.new(
+              main: Algolia::Composition::Main.new(
+                source: Algolia::Composition::CompositionSource.new(
+                  search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
+                )
+              ),
+              injected_items: [
+                Algolia::Composition::InjectedItem.new(
+                  key: "injectedItem1",
+                  source: Algolia::Composition::SearchSource.new(
+                    search: Algolia::Composition::Search.new(
+                      index: "foo",
+                      params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas")
+                    )
+                  ),
+                  position: 2,
+                  length: 1,
+                  metadata: Algolia::Composition::InjectedItemMetadata.new(
+                    hits: Algolia::Composition::InjectedItemHitsMetadata.new(
+                      add_item_key: true,
+                      extra: {
+                        :"my-string" => "string",
+                        :"my-bool" => true,
+                        :"my-number" => 42,
+                        :"my-object" => {:"sub-key" => "sub-value"}
+                      }
+                    )
+                  )
+                )
+              ]
+            )
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/compositions/compositionID/rules/rule-with-metadata", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"rule-with-metadata\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"test\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # putCompositionRule
+  def test_put_composition_rule2
+    req = @client.put_composition_rule_with_http_info(
+      "compositionID",
+      "rule-with-exernal-source",
+      Algolia::Composition::CompositionRule.new(
+        algolia_object_id: "rule-with-exernal-source",
+        description: "my description",
+        tags: ["tag1", "tag2"],
+        enabled: true,
+        validity: [Algolia::Composition::TimeRange.new(from: 1704063600, _until: 1704083600)],
+        conditions: [
+          Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry"),
+          Algolia::Composition::Condition.new(anchoring: "contains", pattern: "potter")
+        ],
+        consequence: Algolia::Composition::CompositionRuleConsequence.new(
+          behavior: Algolia::Composition::CompositionBehavior.new(
+            injection: Algolia::Composition::Injection.new(
+              main: Algolia::Composition::Main.new(
+                source: Algolia::Composition::CompositionSource.new(
+                  search: Algolia::Composition::CompositionSourceSearch.new(
+                    index: "my-index",
+                    params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
+                  )
+                )
+              ),
+              injected_items: [
+                Algolia::Composition::InjectedItem.new(
+                  key: "injectedItem",
+                  source: Algolia::Composition::ExternalSource.new(
+                    external: Algolia::Composition::External.new(
+                      index: "my-index",
+                      params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas"),
+                      ordering: "userDefined"
+                    )
+                  ),
+                  position: 0,
+                  length: 3
+                )
+              ]
+            )
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/compositions/compositionID/rules/rule-with-exernal-source", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"rule-with-exernal-source\",\"description\":\"my description\",\"tags\":[\"tag1\",\"tag2\"],\"enabled\":true,\"validity\":[{\"from\":1704063600,\"until\":1704083600}],\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"anchoring\":\"contains\",\"pattern\":\"potter\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"injectedItem\",\"source\":{\"external\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"},\"ordering\":\"userDefined\"}},\"position\":0,\"length\":3}]}}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # saveRules
+  def test_save_rules
+    req = @client.save_rules_with_http_info(
+      "foo",
+      Algolia::Composition::CompositionRulesBatchParams.new(
+        requests: [
+          Algolia::Composition::RulesMultipleBatchRequest.new(
+            action: "upsert",
+            body: Algolia::Composition::CompositionRule.new(
+              algolia_object_id: "123",
+              conditions: [Algolia::Composition::Condition.new(pattern: "a")],
+              consequence: Algolia::Composition::CompositionRuleConsequence.new(
+                behavior: Algolia::Composition::CompositionBehavior.new(
+                  injection: Algolia::Composition::Injection.new(
+                    main: Algolia::Composition::Main.new(
+                      source: Algolia::Composition::CompositionSource.new(
+                        search: Algolia::Composition::CompositionSourceSearch.new(index: "<YOUR_INDEX_NAME>")
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/compositions/foo/rules/batch", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"123\",\"conditions\":[{\"pattern\":\"a\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"<YOUR_INDEX_NAME>\"}}}}}}}}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # saveRules
+  def test_save_rules1
+    req = @client.save_rules_with_http_info(
+      "rule-with-metadata",
+      Algolia::Composition::CompositionRulesBatchParams.new(
+        requests: [
+          Algolia::Composition::RulesMultipleBatchRequest.new(
+            action: "upsert",
+            body: Algolia::Composition::CompositionRule.new(
+              algolia_object_id: "rule-with-metadata",
+              conditions: [Algolia::Composition::Condition.new(anchoring: "is", pattern: "test")],
+              consequence: Algolia::Composition::CompositionRuleConsequence.new(
+                behavior: Algolia::Composition::CompositionBehavior.new(
+                  injection: Algolia::Composition::Injection.new(
+                    main: Algolia::Composition::Main.new(
+                      source: Algolia::Composition::CompositionSource.new(
+                        search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
+                      )
+                    ),
+                    injected_items: [
+                      Algolia::Composition::InjectedItem.new(
+                        key: "injectedItem1",
+                        source: Algolia::Composition::SearchSource.new(
+                          search: Algolia::Composition::Search.new(
+                            index: "foo",
+                            params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas")
+                          )
+                        ),
+                        position: 2,
+                        length: 1,
+                        metadata: Algolia::Composition::InjectedItemMetadata.new(
+                          hits: Algolia::Composition::InjectedItemHitsMetadata.new(
+                            add_item_key: true,
+                            extra: {
+                              :"my-string" => "string",
+                              :"my-bool" => true,
+                              :"my-number" => 42,
+                              :"my-object" => {:"sub-key" => "sub-value"}
+                            }
+                          )
+                        )
+                      )
+                    ]
+                  )
+                )
+              )
+            )
+          )
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/compositions/rule-with-metadata/rules/batch", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-metadata\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"test\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}}}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # saveRules
+  def test_save_rules2
+    req = @client.save_rules_with_http_info(
+      "rule-with-exernal-source",
+      Algolia::Composition::CompositionRulesBatchParams.new(
+        requests: [
+          Algolia::Composition::RulesMultipleBatchRequest.new(
+            action: "upsert",
+            body: Algolia::Composition::CompositionRule.new(
+              algolia_object_id: "rule-with-exernal-source",
+              description: "my description",
+              tags: ["tag1", "tag2"],
+              enabled: true,
+              validity: [Algolia::Composition::TimeRange.new(from: 1704063600, _until: 1704083600)],
+              conditions: [
+                Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry"),
+                Algolia::Composition::Condition.new(anchoring: "contains", pattern: "potter")
+              ],
+              consequence: Algolia::Composition::CompositionRuleConsequence.new(
+                behavior: Algolia::Composition::CompositionBehavior.new(
+                  injection: Algolia::Composition::Injection.new(
+                    main: Algolia::Composition::Main.new(
+                      source: Algolia::Composition::CompositionSource.new(
+                        search: Algolia::Composition::CompositionSourceSearch.new(
+                          index: "my-index",
+                          params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
+                        )
+                      )
+                    ),
+                    injected_items: [
+                      Algolia::Composition::InjectedItem.new(
+                        key: "injectedItem",
+                        source: Algolia::Composition::ExternalSource.new(
+                          external: Algolia::Composition::External.new(
+                            index: "my-index",
+                            params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas"),
+                            ordering: "userDefined"
+                          )
+                        ),
+                        position: 0,
+                        length: 3
+                      )
+                    ]
+                  )
+                )
+              )
+            )
+          )
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/compositions/rule-with-exernal-source/rules/batch", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-exernal-source\",\"description\":\"my description\",\"tags\":[\"tag1\",\"tag2\"],\"enabled\":true,\"validity\":[{\"from\":1704063600,\"until\":1704083600}],\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"anchoring\":\"contains\",\"pattern\":\"potter\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"injectedItem\",\"source\":{\"external\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"},\"ordering\":\"userDefined\"}},\"position\":0,\"length\":3}]}}}}}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # search
   def test_search
     req = @client.search_with_http_info(
@@ -24,6 +1046,59 @@ class TestCompositionClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"params\":{\"query\":\"batman\"}}"), JSON.parse(req.body))
+  end
+
+  # search
+  def test_search1
+    req = @client.search_with_http_info(
+      "foo",
+      Algolia::Composition::RequestBody.new(
+        params: Algolia::Composition::Params.new(
+          query: "batman",
+          injected_items: {
+            injectedItem1: Algolia::Composition::ExternalInjectedItem.new(
+              items: [
+                Algolia::Composition::ExternalInjection.new(algolia_object_id: "my-object-1"),
+                Algolia::Composition::ExternalInjection.new(
+                  algolia_object_id: "my-object-2",
+                  metadata: {
+                    :"my-string" => "string",
+                    :"my-bool" => true,
+                    :"my-number" => 42,
+                    :"my-object" => {:"sub-key" => "sub-value"}
+                  }
+                )
+              ]
+            )
+          }
+        )
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/compositions/foo/run", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"params\":{\"query\":\"batman\",\"injectedItems\":{\"injectedItem1\":{\"items\":[{\"objectID\":\"my-object-1\"},{\"objectID\":\"my-object-2\",\"metadata\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}]}}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # searchCompositionRules
+  def test_search_composition_rules
+    req = @client.search_composition_rules_with_http_info(
+      "foo",
+      Algolia::Composition::SearchCompositionRulesParams.new(query: "batman")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/compositions/foo/rules/search", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"query\":\"batman\"}"), JSON.parse(req.body))
   end
 
   # searchForFacetValues

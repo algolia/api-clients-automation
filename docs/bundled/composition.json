@@ -2,7 +2,7 @@
   "openapi": "3.0.2",
   "info": {
     "title": "Composition API",
-    "description": "The Algolia Composition API lets you run composed search requests on your Compositions.\n\n## Client libraries\n\nUse Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps.\n\nSee: [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/)\n\n## Base URLs\n\nThe base URLs for requests to the Composition API are:\n\n- `https://{APPLICATION_ID}.algolia.net`\n- `https://{APPLICATION_ID}-dsn.algolia.net`.\n  If your subscription includes a [Distributed Search Network](https://dashboard.algolia.com/infra),\n  this ensures that requests are sent to servers closest to users.\n\nBoth URLs provide high availability by distributing requests with load balancing.\n\n**All requests must use HTTPS.**\n\n## Retry strategy\n\nTo guarantee high availability, implement a retry strategy for all API requests using the URLs of your servers as fallbacks:\n\n- `https://{APPLICATION_ID}-1.algolianet.com`\n- `https://{APPLICATION_ID}-2.algolianet.com`\n- `https://{APPLICATION_ID}-3.algolianet.com`\n\nThese URLs use a different DNS provider than the primary URLs.\nYou should randomize this list to ensure an even load across the three servers.\n\nAll Algolia API clients implement this retry strategy.\n\n## Authentication\n\nTo authenticate your API requests, add these headers:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account).\n\n## Request format\n\nDepending on the endpoint, request bodies are either JSON objects or arrays of JSON objects,\n\n## Parameters\n\nParameters are passed as query parameters for GET and DELETE requests,\nand in the request body for POST and PUT requests.\n\nQuery parameters must be [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).\nNon-ASCII characters must be UTF-8 encoded.\nPlus characters (`+`) are interpreted as spaces.\nArrays as query parameters must be one of:\n\n- A comma-separated string: `attributesToRetrieve=title,description`\n- A URL-encoded JSON array: `attributesToRetrieve=%5B%22title%22,%22description%22%D`\n\n## Response status and errors\n\nThe Composition API returns JSON responses.\nSince JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\nSuccessful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Composition API is version 1, as indicated by the `/1/` in each endpoint's URL.\n",
+    "description": "The Algolia Composition API lets you run composed search requests on your Compositions.\n\n## Client libraries\n\nUse Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps.\n\nSee: [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/)\n\n## Base URLs\n\nThe base URLs for requests to the Composition API are:\n\n- `https://{APPLICATION_ID}.algolia.net`\n- `https://{APPLICATION_ID}-dsn.algolia.net`.\n  If your subscription includes a [Distributed Search Network](https://dashboard.algolia.com/infra),\n  this ensures that requests are sent to servers closest to users.\n\nBoth URLs provide high availability by distributing requests with load balancing.\n\n**All requests must use HTTPS.**\n\n## Retry strategy\n\nTo guarantee high availability, implement a retry strategy for all API requests using the URLs of your servers as fallbacks:\n\n- `https://{APPLICATION_ID}-1.algolianet.com`\n- `https://{APPLICATION_ID}-2.algolianet.com`\n- `https://{APPLICATION_ID}-3.algolianet.com`\n\nThese URLs use a different DNS provider than the primary URLs.\nYou should randomize this list to ensure an even load across the three servers.\n\nAll Algolia API clients implement this retry strategy.\n\n## Authentication\n\nTo authenticate your API requests, add these headers:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account).\n\n## Request format\n\nDepending on the endpoint, request bodies are either JSON objects or arrays of JSON objects,\n\n## Parameters\n\nParameters are passed in the request body for POST and PUT requests.\nQuery parameters must be [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).\nNon-ASCII characters must be UTF-8 encoded.\nPlus characters (`+`) are interpreted as spaces.\n\n## Response status and errors\n\nThe Composition API returns JSON responses.\nSince JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\nSuccessful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Composition API is version 1, as indicated by the `/1/` in each endpoint's URL.\n",
     "version": "1.0.0"
   },
   "servers": [
@@ -55,19 +55,193 @@
   ],
   "tags": [
     {
-      "name": "Compositions",
-      "description": "Manage your compositions and composition settings.\n"
+      "name": "Advanced",
+      "description": "Advanced endpoints to manage tasks."
     },
     {
-      "name": "Rules",
-      "description": "Manage your compositions rules.\n"
+      "name": "Composition Rules",
+      "description": "Manage your compositions rules."
+    },
+    {
+      "name": "Compositions",
+      "description": "Manage your compositions and composition settings."
     },
     {
       "name": "Search",
-      "description": "Search one composition for matching records or facet values."
+      "description": "Search one or more indices for matching records or facet values."
     }
   ],
   "paths": {
+    "/{path}": {
+      "get": {
+        "operationId": "customGet",
+        "summary": "Send requests to the Algolia REST API",
+        "description": "This method lets you send requests to the Algolia REST API.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PathInPath"
+          },
+          {
+            "$ref": "#/components/parameters/Parameters"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/IndexNotFound"
+          }
+        }
+      },
+      "post": {
+        "operationId": "customPost",
+        "requestBody": {
+          "description": "Parameters to send with the custom request.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "summary": "Send requests to the Algolia REST API",
+        "description": "This method lets you send requests to the Algolia REST API.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PathInPath"
+          },
+          {
+            "$ref": "#/components/parameters/Parameters"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/IndexNotFound"
+          }
+        }
+      },
+      "put": {
+        "operationId": "customPut",
+        "requestBody": {
+          "description": "Parameters to send with the custom request.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "summary": "Send requests to the Algolia REST API",
+        "description": "This method lets you send requests to the Algolia REST API.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PathInPath"
+          },
+          {
+            "$ref": "#/components/parameters/Parameters"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/IndexNotFound"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "customDelete",
+        "summary": "Send requests to the Algolia REST API",
+        "description": "This method lets you send requests to the Algolia REST API.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PathInPath"
+          },
+          {
+            "$ref": "#/components/parameters/Parameters"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/IndexNotFound"
+          }
+        }
+      }
+    },
     "/1/compositions/{compositionID}/run": {
       "post": {
         "tags": [
@@ -209,6 +383,790 @@
           }
         }
       }
+    },
+    "/1/compositions": {
+      "get": {
+        "tags": [
+          "Compositions"
+        ],
+        "operationId": "listCompositions",
+        "x-acl": [
+          "editSettings",
+          "settings"
+        ],
+        "summary": "List compositions",
+        "description": "Lists all compositions in the current Algolia application.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/HitsPerPage"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listCompositionsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/CompositionNotFound"
+          }
+        }
+      }
+    },
+    "/1/compositions/{compositionID}": {
+      "get": {
+        "tags": [
+          "Compositions"
+        ],
+        "operationId": "getComposition",
+        "x-acl": [
+          "editSettings",
+          "settings"
+        ],
+        "summary": "Retrieve a composition",
+        "description": "Retrieve a single composition in the current Algolia application.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/compositionID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/composition"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/CompositionNotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Compositions"
+        ],
+        "operationId": "putComposition",
+        "x-acl": [
+          "editSettings"
+        ],
+        "summary": "Upsert a composition",
+        "description": "Upsert a composition in the current Algolia application.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/compositionID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/composition"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "taskIDResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "taskID": {
+                      "$ref": "#/components/schemas/taskID"
+                    }
+                  },
+                  "required": [
+                    "taskID"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Compositions"
+        ],
+        "operationId": "deleteComposition",
+        "x-acl": [
+          "editSettings"
+        ],
+        "summary": "Delete a composition",
+        "description": "Delete a composition from the current Algolia application.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/compositionID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "taskIDResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "taskID": {
+                      "$ref": "#/components/schemas/taskID"
+                    }
+                  },
+                  "required": [
+                    "taskID"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          }
+        }
+      }
+    },
+    "/1/compositions/*/batch": {
+      "post": {
+        "tags": [
+          "Compositions"
+        ],
+        "operationId": "multipleBatch",
+        "description": "Adds, updates, or deletes compositions with a single API request.\n",
+        "x-acl": [
+          "editSettings"
+        ],
+        "summary": "Batch action to multiple compositions",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "batchParams",
+                "description": "Batch parameters.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "requests": {
+                    "type": "array",
+                    "items": {
+                      "title": "multipleBatchRequest",
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "action": {
+                          "$ref": "#/components/schemas/action"
+                        },
+                        "body": {
+                          "$ref": "#/components/schemas/batchCompositionAction"
+                        }
+                      },
+                      "required": [
+                        "action",
+                        "body"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "requests"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "multipleBatchResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "taskID": {
+                      "type": "object",
+                      "description": "Task IDs. One for each index.",
+                      "additionalProperties": {
+                        "$ref": "#/components/schemas/taskID"
+                      }
+                    }
+                  },
+                  "required": [
+                    "taskID"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/IndexNotFound"
+          }
+        }
+      }
+    },
+    "/1/compositions/{compositionID}/rules/{objectID}": {
+      "get": {
+        "tags": [
+          "Composition Rules"
+        ],
+        "operationId": "getRule",
+        "x-acl": [
+          "editSettings",
+          "settings"
+        ],
+        "summary": "Retrieve a rule",
+        "description": "Retrieves a rule by its ID.\nTo find the object ID of rules, use the [`search` operation](#tag/Rules/operation/searchRules).\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/compositionID"
+          },
+          {
+            "$ref": "#/components/parameters/ObjectIDRule"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/compositionRule"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/IndexNotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Composition Rules"
+        ],
+        "operationId": "putCompositionRule",
+        "x-acl": [
+          "editSettings"
+        ],
+        "summary": "Upsert a composition rule",
+        "description": "Upsert a Composition Rule for the specified composition ID.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/compositionID"
+          },
+          {
+            "$ref": "#/components/parameters/ObjectIDRule"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/compositionRule"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "taskIDResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "taskID": {
+                      "$ref": "#/components/schemas/taskID"
+                    }
+                  },
+                  "required": [
+                    "taskID"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/CompositionNotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Composition Rules"
+        ],
+        "operationId": "deleteCompositionRule",
+        "x-acl": [
+          "editSettings"
+        ],
+        "summary": "Delete a Composition Rule",
+        "description": "Delete a Composition Rule from the specified Composition ID.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/compositionID"
+          },
+          {
+            "$ref": "#/components/parameters/ObjectIDRule"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "taskIDResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "taskID": {
+                      "$ref": "#/components/schemas/taskID"
+                    }
+                  },
+                  "required": [
+                    "taskID"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/CompositionNotFound"
+          }
+        }
+      }
+    },
+    "/1/compositions/{compositionID}/rules/batch": {
+      "post": {
+        "tags": [
+          "Composition Rules"
+        ],
+        "operationId": "saveRules",
+        "x-acl": [
+          "editSettings"
+        ],
+        "summary": "Create or update or delete composition rules",
+        "description": "Create or update or delete multiple composition rules.\n",
+        "x-codegen-request-body-name": "rules",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/compositionID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "compositionRulesBatchParams",
+                "description": "Composition rules batch parameters.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "requests": {
+                    "type": "array",
+                    "items": {
+                      "title": "rulesMultipleBatchRequest",
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "action": {
+                          "$ref": "#/components/schemas/action"
+                        },
+                        "body": {
+                          "$ref": "#/components/schemas/rulesBatchCompositionAction"
+                        }
+                      },
+                      "required": [
+                        "action",
+                        "body"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "rulesMultipleBatchResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "taskID": {
+                      "$ref": "#/components/schemas/taskID"
+                    }
+                  },
+                  "required": [
+                    "taskID"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/IndexNotFound"
+          }
+        }
+      }
+    },
+    "/1/compositions/{compositionID}/rules/search": {
+      "post": {
+        "tags": [
+          "Composition Rules"
+        ],
+        "operationId": "searchCompositionRules",
+        "x-acl": [
+          "settings"
+        ],
+        "summary": "Search for composition rules",
+        "description": "Searches for composition rules in your index.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/compositionID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "searchCompositionRulesParams",
+                "type": "object",
+                "description": "Composition Rules search parameters.",
+                "additionalProperties": false,
+                "properties": {
+                  "query": {
+                    "$ref": "#/components/schemas/parameters_query"
+                  },
+                  "anchoring": {
+                    "$ref": "#/components/schemas/anchoring"
+                  },
+                  "context": {
+                    "type": "string",
+                    "description": "Only return composition rules that match the context (exact match).",
+                    "example": "mobile"
+                  },
+                  "page": {
+                    "$ref": "#/components/schemas/parameters_page"
+                  },
+                  "hitsPerPage": {
+                    "$ref": "#/components/schemas/parameters_hitsPerPage"
+                  },
+                  "enabled": {
+                    "oneOf": [
+                      {
+                        "type": "boolean",
+                        "description": "If `true`, return only enabled composition rules.\nIf `false`, return only inactive composition rules.\nBy default, _all_ composition rules are returned.\n"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "searchCompositionRulesResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "hits",
+                    "nbHits",
+                    "page",
+                    "nbPages"
+                  ],
+                  "properties": {
+                    "hits": {
+                      "type": "array",
+                      "description": "Composition rules that matched the search criteria.",
+                      "items": {
+                        "$ref": "#/components/schemas/compositionRule"
+                      }
+                    },
+                    "nbHits": {
+                      "type": "integer",
+                      "description": "Number of composition rules that matched the search criteria."
+                    },
+                    "page": {
+                      "type": "integer",
+                      "description": "Current page."
+                    },
+                    "nbPages": {
+                      "type": "integer",
+                      "description": "Number of pages."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/IndexNotFound"
+          }
+        }
+      }
+    },
+    "/1/compositions/{compositionID}/task/{taskID}": {
+      "get": {
+        "tags": [
+          "Advanced"
+        ],
+        "operationId": "getTask",
+        "x-acl": [
+          "editSettings",
+          "settings",
+          "addObject",
+          "deleteObject",
+          "deleteIndex"
+        ],
+        "description": "Checks the status of a given task.\n",
+        "summary": "Check task status",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/compositionID"
+          },
+          {
+            "name": "taskID",
+            "in": "path",
+            "description": "Unique task identifier.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1506303845001
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTaskResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/IndexNotFound"
+          }
+        }
+      }
+    },
+    "/setClientApiKey": {
+      "get": {
+        "x-helper": true,
+        "x-asynchronous-helper": false,
+        "tags": [
+          "Api Key"
+        ],
+        "operationId": "setClientApiKey",
+        "summary": "Switch the API key used to authenticate requests",
+        "description": "Switch the API key used to authenticate requests.\n",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "apiKey",
+            "description": "API key to be used from now on.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content."
+          }
+        }
+      }
+    },
+    "/waitForCompositionTask": {
+      "get": {
+        "x-helper": true,
+        "tags": [
+          "Records"
+        ],
+        "operationId": "waitForCompositionTask",
+        "summary": "Wait for operation to complete",
+        "description": "Wait for a task to complete to ensure synchronized composition updates.\n\nAll Algolia write operations are asynchronous. When you make a request for a write operation, for example, to upsert or delete a composition, Algolia creates a task on a queue and returns a taskID. The task itself runs separately, depending on the server load.\n",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "compositionID",
+            "description": "The ID of the composition on which the operation was performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "taskID",
+            "description": "The taskID returned by the operation.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTaskResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/CompositionNotFound"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -226,7 +1184,86 @@
         "description": "Your Algolia API key with the necessary permissions to make the request.\nPermissions are controlled through access control lists (ACL) and access restrictions.\nThe required ACL to make a request is listed in each endpoint's reference.\n"
       }
     },
+    "parameters": {
+      "PathInPath": {
+        "name": "path",
+        "in": "path",
+        "description": "Path of the endpoint, for example `1/newFeature`.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "/keys"
+        }
+      },
+      "Parameters": {
+        "name": "parameters",
+        "in": "query",
+        "description": "Query parameters to apply to the current query.",
+        "schema": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "compositionID": {
+        "in": "path",
+        "name": "compositionID",
+        "description": "Unique Composition ObjectID.",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/compositionObjectID"
+        }
+      },
+      "Page": {
+        "in": "query",
+        "name": "page",
+        "description": "Requested page of the API response.\nIf `null`, the API response is not paginated.\n",
+        "required": false,
+        "schema": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "HitsPerPage": {
+        "in": "query",
+        "name": "hitsPerPage",
+        "description": "Number of hits per page.",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "default": 100
+        }
+      },
+      "ObjectIDRule": {
+        "in": "path",
+        "name": "objectID",
+        "description": "Unique identifier of a rule object.",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/ruleID"
+        }
+      }
+    },
     "schemas": {
+      "ErrorBase": {
+        "description": "Error.",
+        "type": "object",
+        "x-keep-model": true,
+        "additionalProperties": true,
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Invalid Application-Id or API-Key"
+          }
+        }
+      },
       "compositionObjectID": {
         "type": "string",
         "example": "my_composition_object_id",
@@ -619,7 +1656,7 @@
         "description": "Whether to enable composition rules.",
         "default": true,
         "x-categories": [
-          "Rules"
+          "Composition Rules"
         ]
       },
       "ruleContexts": {
@@ -633,7 +1670,7 @@
           "mobile"
         ],
         "x-categories": [
-          "Rules"
+          "Composition Rules"
         ]
       },
       "userToken": {
@@ -1785,18 +2822,6 @@
           }
         ]
       },
-      "ErrorBase": {
-        "description": "Error.",
-        "type": "object",
-        "x-keep-model": true,
-        "additionalProperties": true,
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Invalid Application-Id or API-Key"
-          }
-        }
-      },
       "maxFacetHits": {
         "type": "integer",
         "description": "Maximum number of facet values to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).",
@@ -1870,17 +2895,1225 @@
             }
           }
         }
-      }
-    },
-    "parameters": {
-      "compositionID": {
-        "in": "path",
-        "name": "compositionID",
-        "description": "Unique Composition ObjectID.",
-        "required": true,
-        "schema": {
-          "$ref": "#/components/schemas/compositionObjectID"
+      },
+      "advancedSyntax": {
+        "type": "boolean",
+        "description": "Whether to support phrase matching and excluding words from search queries\nUse the `advancedSyntaxFeatures` parameter to control which feature is supported.\n",
+        "default": false,
+        "x-categories": [
+          "Query strategy"
+        ]
+      },
+      "advancedSyntaxFeatures": {
+        "type": "string",
+        "enum": [
+          "exactPhrase",
+          "excludeWords"
+        ],
+        "x-categories": [
+          "Query strategy"
+        ]
+      },
+      "IndexSettings_advancedSyntaxFeatures": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/advancedSyntaxFeatures"
+        },
+        "description": "Advanced search syntax features you want to support\n- `exactPhrase`.\n  Phrases in quotes must match exactly.\n  For example, `sparkly blue \"iPhone case\"` only returns records with the exact string \"iPhone case\"\n- `excludeWords`.\n  Query words prefixed with a `-` must not occur in a record.\n  For example, `search -engine` matches records that contain \"search\" but not \"engine\"\nThis setting only has an effect if `advancedSyntax` is true.\n",
+        "default": [
+          "exactPhrase",
+          "excludeWords"
+        ],
+        "x-categories": [
+          "Query strategy"
+        ]
+      },
+      "allowTyposOnNumericTokens": {
+        "type": "boolean",
+        "description": "Whether to allow typos on numbers in the search query\nTurn off this setting to reduce the number of irrelevant matches\nwhen searching in large sets of similar numbers.\n",
+        "default": true,
+        "x-categories": [
+          "Typos"
+        ]
+      },
+      "alternativesAsExact": {
+        "type": "string",
+        "enum": [
+          "ignorePlurals",
+          "singleWordSynonym",
+          "multiWordsSynonym",
+          "ignoreConjugations"
+        ],
+        "x-categories": [
+          "Query strategy"
+        ]
+      },
+      "IndexSettings_alternativesAsExact": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/alternativesAsExact"
+        },
+        "description": "Determine which plurals and synonyms should be considered an exact matches\nBy default, Algolia treats singular and plural forms of a word, and single-word synonyms, as [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact) matches when searching.\nFor example\n- \"swimsuit\" and \"swimsuits\" are treated the same\n- \"swimsuit\" and \"swimwear\" are treated the same (if they are [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms))\n- `ignorePlurals`.\n  Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches\n- `singleWordSynonym`.\n  Single-word synonyms, such as \"NY\" = \"NYC\", are considered exact matches\n- `multiWordsSynonym`.\n  Multi-word synonyms, such as \"NY\" = \"New York\", are considered exact matches.\n",
+        "default": [
+          "ignorePlurals",
+          "singleWordSynonym"
+        ],
+        "x-categories": [
+          "Query strategy"
+        ]
+      },
+      "attributeCriteriaComputedByMinProximity": {
+        "type": "boolean",
+        "description": "Whether the best matching attribute should be determined by minimum proximity\nThis setting only affects ranking if the Attribute ranking criterion comes before Proximity in the `ranking` setting.\nIf true, the best matching attribute is selected based on the minimum proximity of multiple matches.\nOtherwise, the best matching attribute is determined by the order in the `searchableAttributes` setting.\n",
+        "default": false,
+        "x-categories": [
+          "Advanced"
+        ]
+      },
+      "attributesToHighlight": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "example": [
+          "author",
+          "title",
+          "conten",
+          "content"
+        ],
+        "description": "Attributes to highlight\nBy default, all searchable attributes are highlighted.\nUse `*` to highlight all attributes or use an empty array `[]` to turn off highlighting.\nAttribute names are case-sensitive\nWith highlighting, strings that match the search query are surrounded by HTML tags defined by `highlightPreTag` and `highlightPostTag`.\nYou can use this to visually highlight matching parts of a search query in your UI\nFor more information, see [Highlighting and snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js/).\n",
+        "x-categories": [
+          "Highlighting and Snippeting"
+        ]
+      },
+      "attributesToRetrieve": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "example": [
+          "author",
+          "title",
+          "content"
+        ],
+        "description": "Attributes to include in the API response\nTo reduce the size of your response, you can retrieve only some of the attributes.\nAttribute names are case-sensitive\n- `*` retrieves all attributes, except attributes included in the `customRanking` and `unretrievableAttributes` settings.\n- To retrieve all attributes except a specific one, prefix the attribute with a dash and combine it with the `*`: `[\"*\", \"-ATTRIBUTE\"]`.\n- The `objectID` attribute is always included.\n",
+        "default": [
+          "*"
+        ],
+        "x-categories": [
+          "Attributes"
+        ]
+      },
+      "attributesToSnippet": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "example": [
+          "content:80",
+          "description"
+        ],
+        "description": "Attributes for which to enable snippets.\nAttribute names are case-sensitive\nSnippets provide additional context to matched words.\nIf you enable snippets, they include 10 words, including the matched word.\nThe matched word will also be wrapped by HTML tags for highlighting.\nYou can adjust the number of words with the following notation: `ATTRIBUTE:NUMBER`,\nwhere `NUMBER` is the number of words to be extracted.\n",
+        "default": [],
+        "x-categories": [
+          "Highlighting and Snippeting"
+        ]
+      },
+      "decompoundQuery": {
+        "type": "boolean",
+        "description": "Whether to split compound words in the query into their building blocks\nFor more information, see [Word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words).\nWord segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and Norwegian.\nDecompounding doesn't work for words with [non-spacing mark Unicode characters](https://www.charactercodes.net/category/non-spacing_mark).\nFor example, `Gartenstühle` won't be decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).\n",
+        "default": true,
+        "x-categories": [
+          "Languages"
+        ]
+      },
+      "disableExactOnAttributes": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "example": [
+          "description"
+        ],
+        "description": "Searchable attributes for which you want to [turn off the Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).\nAttribute names are case-sensitive\nThis can be useful for attributes with long values, where the likelihood of an exact match is high,\nsuch as product descriptions.\nTurning off the Exact ranking criterion for these attributes favors exact matching on other attributes.\nThis reduces the impact of individual attributes with a lot of content on ranking.\n",
+        "default": [],
+        "x-categories": [
+          "Query strategy"
+        ]
+      },
+      "disableTypoToleranceOnAttributes": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "example": [
+          "sku"
+        ],
+        "description": "Attributes for which you want to turn off [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).\nAttribute names are case-sensitive\nReturning only exact matches can help when\n- [Searching in hyphenated attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/).\n- Reducing the number of matches when you have too many.\n  This can happen with attributes that are long blocks of text, such as product descriptions\nConsider alternatives such as `disableTypoToleranceOnWords` or adding synonyms if your attributes have intentional unusual spellings that might look like typos.\n",
+        "default": [],
+        "x-categories": [
+          "Typos"
+        ]
+      },
+      "distinct": {
+        "description": "Determines how many records of a group are included in the search results.\n\nRecords with the same value for the `attributeForDistinct` attribute are considered a group.\nThe `distinct` setting controls how many members of the group are returned.\nThis is useful for [deduplication and grouping](https://www.algolia.com/doc/guides/managing-results/refine-results/grouping/#introducing-algolias-distinct-feature).\n\nThe `distinct` setting is ignored if `attributeForDistinct` is not set.\n",
+        "example": 1,
+        "oneOf": [
+          {
+            "type": "boolean",
+            "description": "Whether deduplication is turned on. If true, only one member of a group is shown in the search results."
+          },
+          {
+            "type": "integer",
+            "description": "Number of members of a group of records to include in the search results.\n\n- Don't use `distinct > 1` for records that might be [promoted by rules](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/promote-hits/).\n  The number of hits won't be correct and faceting won't work as expected.\n- With `distinct > 1`, the `hitsPerPage` parameter controls the number of returned groups.\n  For example, with `hitsPerPage: 10` and `distinct: 2`, up to 20 records are returned.\n  Likewise, the `nbHits` response attribute contains the number of returned groups.\n",
+            "minimum": 0,
+            "maximum": 4,
+            "default": 0
+          }
+        ],
+        "x-categories": [
+          "Advanced"
+        ]
+      },
+      "SearchParams_enableABTest": {
+        "type": "boolean",
+        "description": "Whether to enable A/B testing for this search.",
+        "default": true,
+        "x-categories": [
+          "Advanced"
+        ]
+      },
+      "enablePersonalization": {
+        "type": "boolean",
+        "description": "Whether to enable Personalization.",
+        "default": false,
+        "x-categories": [
+          "Personalization"
+        ]
+      },
+      "IndexSettings_enableRules": {
+        "type": "boolean",
+        "description": "Whether to enable rules.",
+        "default": true,
+        "x-categories": [
+          "Rules"
+        ]
+      },
+      "exactOnSingleWordQuery": {
+        "type": "string",
+        "enum": [
+          "attribute",
+          "none",
+          "word"
+        ],
+        "description": "Determines how the [Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes) is computed when the search query has only one word.\n\n- `attribute`.\n  The Exact ranking criterion is 1 if the query word and attribute value are the same.\n  For example, a search for \"road\" will match the value \"road\", but not \"road trip\".\n\n- `none`.\n  The Exact ranking criterion is ignored on single-word searches.\n\n- `word`.\n  The Exact ranking criterion is 1 if the query word is found in the attribute value.\n  The query word must have at least 3 characters and must not be a stop word.\n  Only exact matches will be highlighted,\n  partial and prefix matches won't.\n",
+        "default": "attribute",
+        "x-categories": [
+          "Query strategy"
+        ]
+      },
+      "SearchParams_getRankingInfo": {
+        "type": "boolean",
+        "description": "Whether the search response should include detailed ranking information.",
+        "default": false,
+        "x-categories": [
+          "Advanced"
+        ]
+      },
+      "highlightPostTag": {
+        "type": "string",
+        "description": "HTML tag to insert after the highlighted parts in all highlighted results and snippets.",
+        "default": "</em>",
+        "x-categories": [
+          "Highlighting and Snippeting"
+        ]
+      },
+      "highlightPreTag": {
+        "type": "string",
+        "description": "HTML tag to insert before the highlighted parts in all highlighted results and snippets.",
+        "default": "<em>",
+        "x-categories": [
+          "Highlighting and Snippeting"
+        ]
+      },
+      "booleanString": {
+        "type": "string",
+        "enum": [
+          "true",
+          "false"
+        ]
+      },
+      "ignorePlurals": {
+        "description": "Treat singular, plurals, and other forms of declensions as equivalent.\nYou should only use this feature for the languages used in your index.\n",
+        "example": [
+          "ca",
+          "es"
+        ],
+        "oneOf": [
+          {
+            "type": "array",
+            "description": "ISO code for languages for which this feature should be active.\nThis overrides languages you set with `queryLanguages`.\n",
+            "items": {
+              "$ref": "#/components/schemas/supportedLanguage"
+            }
+          },
+          {
+            "$ref": "#/components/schemas/booleanString"
+          },
+          {
+            "type": "boolean",
+            "description": "If true, `ignorePlurals` is active for all languages included in `queryLanguages`, or for all supported languages, if `queryLanguges` is empty.\nIf false, singulars, plurals, and other declensions won't be considered equivalent.\n",
+            "default": false
+          }
+        ],
+        "x-categories": [
+          "Languages"
+        ]
+      },
+      "minProximity": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 7,
+        "description": "Minimum proximity score for two matching words\nThis adjusts the [Proximity ranking criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity)\nby equally scoring matches that are farther apart\nFor example, if `minProximity` is 2, neighboring matches and matches with one word between them would have the same score.\n",
+        "default": 1,
+        "x-categories": [
+          "Advanced"
+        ]
+      },
+      "minWordSizefor1Typo": {
+        "type": "integer",
+        "description": "Minimum number of characters a word in the search query must contain to accept matches with [one typo](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).",
+        "default": 4,
+        "x-categories": [
+          "Typos"
+        ]
+      },
+      "minWordSizefor2Typos": {
+        "type": "integer",
+        "description": "Minimum number of characters a word in the search query must contain to accept matches with [two typos](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).",
+        "default": 8,
+        "x-categories": [
+          "Typos"
+        ]
+      },
+      "optionalWordsArray": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "example": [
+          "blue",
+          "iphone case"
+        ],
+        "description": "List of [optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).",
+        "default": [],
+        "x-categories": [
+          "Query strategy"
+        ]
+      },
+      "optionalWords": {
+        "description": "Words that should be considered optional when found in the query.\n\nBy default, records must match all words in the search query to be included in the search results.\nAdding optional words can help to increase the number of search results by running an additional search query that doesn't include the optional words.\nFor example, if the search query is \"action video\" and \"video\" is an optional word,\nthe search engine runs two queries. One for \"action video\" and one for \"action\".\nRecords that match all words are ranked higher.\n\nFor a search query with 4 or more words **and** all its words are optional,\nthe number of matched words required for a record to be included in the search results increases for every 1,000 records:\n\n- If `optionalWords` has less than 10 words, the required number of matched words increases by 1:\n  results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words.\n- If `optionalWords` has 10 or more words, the number of required matched words increases by the number of optional words divided by 5 (rounded down).\n  For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.\n\nFor more information, see [Optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).\n",
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "$ref": "#/components/schemas/optionalWordsArray"
+          }
+        ]
+      },
+      "percentileComputation": {
+        "type": "boolean",
+        "description": "Whether to include this search when calculating processing-time percentiles.",
+        "default": true,
+        "x-categories": [
+          "Advanced"
+        ]
+      },
+      "personalizationImpact": {
+        "type": "integer",
+        "description": "Impact that Personalization should have on this search\nThe higher this value is, the more Personalization determines the ranking compared to other factors.\nFor more information, see [Understanding Personalization impact](https://www.algolia.com/doc/guides/personalization/personalizing-results/in-depth/configuring-personalization/#understanding-personalization-impact).\n",
+        "default": 100,
+        "minimum": 0,
+        "maximum": 100,
+        "x-categories": [
+          "Personalization"
+        ]
+      },
+      "queryType": {
+        "type": "string",
+        "enum": [
+          "prefixLast",
+          "prefixAll",
+          "prefixNone"
+        ],
+        "description": "Determines if and how query words are interpreted as prefixes.\n\nBy default, only the last query word is treated as a prefix (`prefixLast`).\nTo turn off prefix search, use `prefixNone`.\nAvoid `prefixAll`, which treats all query words as prefixes.\nThis might lead to counterintuitive results and makes your search slower.\n\nFor more information, see [Prefix searching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching/).\n",
+        "default": "prefixLast",
+        "x-categories": [
+          "Query strategy"
+        ]
+      },
+      "removeStopWords": {
+        "description": "Removes stop words from the search query.\n\nStop words are common words like articles, conjunctions, prepositions, or pronouns that have little or no meaning on their own.\nIn English, \"the\", \"a\", or \"and\" are stop words.\n\nYou should only use this feature for the languages used in your index.\n",
+        "example": [
+          "ca",
+          "es"
+        ],
+        "oneOf": [
+          {
+            "type": "array",
+            "description": "ISO code for languages for which stop words should be removed. This overrides languages you set in `queryLanguges`.",
+            "items": {
+              "$ref": "#/components/schemas/supportedLanguage"
+            }
+          },
+          {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, stop words are removed for all languages you included in `queryLanguages`, or for all supported languages, if `queryLanguages` is empty.\nIf false, stop words are not removed.\n"
+          }
+        ],
+        "x-categories": [
+          "Languages"
+        ]
+      },
+      "removeWordsIfNoResults": {
+        "type": "string",
+        "enum": [
+          "none",
+          "lastWords",
+          "firstWords",
+          "allOptional"
+        ],
+        "example": "firstWords",
+        "description": "Strategy for removing words from the query when it doesn't return any results.\nThis helps to avoid returning empty search results.\n\n- `none`.\n  No words are removed when a query doesn't return results.\n\n- `lastWords`.\n  Treat the last (then second to last, then third to last) word as optional,\n  until there are results or at most 5 words have been removed.\n\n- `firstWords`.\n  Treat the first (then second, then third) word as optional,\n  until there are results or at most 5 words have been removed.\n\n- `allOptional`.\n  Treat all words as optional.\n\nFor more information, see [Remove words to improve results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results/).\n",
+        "default": "none",
+        "x-categories": [
+          "Query strategy"
+        ]
+      },
+      "replaceSynonymsInHighlight": {
+        "type": "boolean",
+        "description": "Whether to replace a highlighted word with the matched synonym\nBy default, the original words are highlighted even if a synonym matches.\nFor example, with `home` as a synonym for `house` and a search for `home`,\nrecords matching either \"home\" or \"house\" are included in the search results,\nand either \"home\" or \"house\" are highlighted\nWith `replaceSynonymsInHighlight` set to `true`, a search for `home` still matches the same records,\nbut all occurrences of \"house\" are replaced by \"home\" in the highlighted response.\n",
+        "default": false,
+        "x-categories": [
+          "Highlighting and Snippeting"
+        ]
+      },
+      "responseFields": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Properties to include in the API response of search and browse requests\nBy default, all response properties are included.\nTo reduce the response size, you can select which properties should be included\nAn empty list may lead to an empty API response (except properties you can't exclude)\nYou can't exclude these properties:\n`message`, `warning`, `cursor`, `abTestVariantID`,\nor any property added by setting `getRankingInfo` to true\nYour search depends on the `hits` field. If you omit this field, searches won't return any results.\nYour UI might also depend on other properties, for example, for pagination.\nBefore restricting the response size, check the impact on your search experience.\n",
+        "default": [
+          "*"
+        ],
+        "x-categories": [
+          "Advanced"
+        ]
+      },
+      "restrictHighlightAndSnippetArrays": {
+        "type": "boolean",
+        "description": "Whether to restrict highlighting and snippeting to items that at least partially matched the search query.\nBy default, all items are highlighted and snippeted.\n",
+        "default": false,
+        "x-categories": [
+          "Highlighting and Snippeting"
+        ]
+      },
+      "restrictSearchableAttributes": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "example": [
+          "title",
+          "author"
+        ],
+        "description": "Restricts a search to a subset of your searchable attributes.\nAttribute names are case-sensitive.\n",
+        "default": [],
+        "x-categories": [
+          "Filtering"
+        ]
+      },
+      "SearchParams_ruleContexts": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Assigns a rule context to the search query\n[Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context) are strings that you can use to trigger matching rules.\n",
+        "default": [],
+        "example": [
+          "mobile"
+        ],
+        "x-categories": [
+          "Rules"
+        ]
+      },
+      "snippetEllipsisText": {
+        "type": "string",
+        "description": "String used as an ellipsis indicator when a snippet is truncated.",
+        "default": "…",
+        "x-categories": [
+          "Highlighting and Snippeting"
+        ]
+      },
+      "synonyms": {
+        "type": "boolean",
+        "description": "Whether to take into account an index's synonyms for this search.",
+        "default": true,
+        "x-categories": [
+          "Advanced"
+        ]
+      },
+      "typoToleranceEnum": {
+        "type": "string",
+        "title": "typo tolerance",
+        "description": "- `min`. Return matches with the lowest number of typos.\n  For example, if you have matches without typos, only include those.\n  But if there are no matches without typos (with 1 typo), include matches with 1 typo (2 typos).\n- `strict`. Return matches with the two lowest numbers of typos.\n  With `strict`, the Typo ranking criterion is applied first in the `ranking` setting.\n",
+        "enum": [
+          "min",
+          "strict",
+          "true",
+          "false"
+        ]
+      },
+      "typoTolerance": {
+        "description": "Whether [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/) is enabled and how it is applied.\n\nIf typo tolerance is true, `min`, or `strict`, [word splitting and concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/) are also active.\n",
+        "oneOf": [
+          {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether typo tolerance is active. If true, matches with typos are included in the search results and rank after exact matches."
+          },
+          {
+            "$ref": "#/components/schemas/typoToleranceEnum"
+          }
+        ],
+        "x-categories": [
+          "Typos"
+        ]
+      },
+      "baseInjectionQueryParameters": {
+        "title": "Composition common query parameters between main and injected items as object",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "advancedSyntax": {
+            "$ref": "#/components/schemas/advancedSyntax"
+          },
+          "advancedSyntaxFeatures": {
+            "$ref": "#/components/schemas/IndexSettings_advancedSyntaxFeatures"
+          },
+          "allowTyposOnNumericTokens": {
+            "$ref": "#/components/schemas/allowTyposOnNumericTokens"
+          },
+          "alternativesAsExact": {
+            "$ref": "#/components/schemas/IndexSettings_alternativesAsExact"
+          },
+          "analytics": {
+            "$ref": "#/components/schemas/analytics"
+          },
+          "attributeCriteriaComputedByMinProximity": {
+            "$ref": "#/components/schemas/attributeCriteriaComputedByMinProximity"
+          },
+          "attributesToHighlight": {
+            "$ref": "#/components/schemas/attributesToHighlight"
+          },
+          "attributesToRetrieve": {
+            "$ref": "#/components/schemas/attributesToRetrieve"
+          },
+          "attributesToSnippet": {
+            "$ref": "#/components/schemas/attributesToSnippet"
+          },
+          "clickAnalytics": {
+            "$ref": "#/components/schemas/clickAnalytics"
+          },
+          "decompoundQuery": {
+            "$ref": "#/components/schemas/decompoundQuery"
+          },
+          "disableExactOnAttributes": {
+            "$ref": "#/components/schemas/disableExactOnAttributes"
+          },
+          "disableTypoToleranceOnAttributes": {
+            "$ref": "#/components/schemas/disableTypoToleranceOnAttributes"
+          },
+          "distinct": {
+            "$ref": "#/components/schemas/distinct"
+          },
+          "enableABTest": {
+            "$ref": "#/components/schemas/SearchParams_enableABTest"
+          },
+          "enablePersonalization": {
+            "$ref": "#/components/schemas/enablePersonalization"
+          },
+          "enableReRanking": {
+            "$ref": "#/components/schemas/enableReRanking"
+          },
+          "enableRules": {
+            "$ref": "#/components/schemas/IndexSettings_enableRules"
+          },
+          "exactOnSingleWordQuery": {
+            "$ref": "#/components/schemas/exactOnSingleWordQuery"
+          },
+          "facetFilters": {
+            "$ref": "#/components/schemas/facetFilters"
+          },
+          "filters": {
+            "$ref": "#/components/schemas/filters"
+          },
+          "getRankingInfo": {
+            "$ref": "#/components/schemas/SearchParams_getRankingInfo"
+          },
+          "highlightPostTag": {
+            "$ref": "#/components/schemas/highlightPostTag"
+          },
+          "highlightPreTag": {
+            "$ref": "#/components/schemas/highlightPreTag"
+          },
+          "ignorePlurals": {
+            "$ref": "#/components/schemas/ignorePlurals"
+          },
+          "maxFacetHits": {
+            "$ref": "#/components/schemas/maxFacetHits"
+          },
+          "minProximity": {
+            "$ref": "#/components/schemas/minProximity"
+          },
+          "minWordSizefor1Typo": {
+            "$ref": "#/components/schemas/minWordSizefor1Typo"
+          },
+          "minWordSizefor2Typos": {
+            "$ref": "#/components/schemas/minWordSizefor2Typos"
+          },
+          "naturalLanguages": {
+            "$ref": "#/components/schemas/naturalLanguages"
+          },
+          "numericFilters": {
+            "$ref": "#/components/schemas/numericFilters"
+          },
+          "optionalFilters": {
+            "$ref": "#/components/schemas/optionalFilters"
+          },
+          "optionalWords": {
+            "$ref": "#/components/schemas/optionalWords"
+          },
+          "percentileComputation": {
+            "$ref": "#/components/schemas/percentileComputation"
+          },
+          "personalizationImpact": {
+            "$ref": "#/components/schemas/personalizationImpact"
+          },
+          "queryLanguages": {
+            "$ref": "#/components/schemas/queryLanguages"
+          },
+          "queryType": {
+            "$ref": "#/components/schemas/queryType"
+          },
+          "removeStopWords": {
+            "$ref": "#/components/schemas/removeStopWords"
+          },
+          "removeWordsIfNoResults": {
+            "$ref": "#/components/schemas/removeWordsIfNoResults"
+          },
+          "replaceSynonymsInHighlight": {
+            "$ref": "#/components/schemas/replaceSynonymsInHighlight"
+          },
+          "responseFields": {
+            "$ref": "#/components/schemas/responseFields"
+          },
+          "restrictHighlightAndSnippetArrays": {
+            "$ref": "#/components/schemas/restrictHighlightAndSnippetArrays"
+          },
+          "restrictSearchableAttributes": {
+            "$ref": "#/components/schemas/restrictSearchableAttributes"
+          },
+          "ruleContexts": {
+            "$ref": "#/components/schemas/SearchParams_ruleContexts"
+          },
+          "snippetEllipsisText": {
+            "$ref": "#/components/schemas/snippetEllipsisText"
+          },
+          "synonyms": {
+            "$ref": "#/components/schemas/synonyms"
+          },
+          "typoTolerance": {
+            "$ref": "#/components/schemas/typoTolerance"
+          }
         }
+      },
+      "facetingAfterDistinct": {
+        "type": "boolean",
+        "description": "Whether faceting should be applied after deduplication with `distinct`\nThis leads to accurate facet counts when using faceting in combination with `distinct`.\nIt's usually better to use `afterDistinct` modifiers in the `attributesForFaceting` setting,\nas `facetingAfterDistinct` only computes correct facet counts if all records have the same facet values for the `attributeForDistinct`.\n",
+        "default": false,
+        "x-categories": [
+          "Faceting"
+        ]
+      },
+      "properties-facets": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Facets for which to retrieve facet values that match the search criteria and the number of matching facet values\nTo retrieve all facets, use the wildcard character `*`.\nFor more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).\n",
+        "default": [],
+        "example": [
+          "*"
+        ],
+        "x-categories": [
+          "Faceting"
+        ]
+      },
+      "maxValuesPerFacet": {
+        "type": "integer",
+        "description": "Maximum number of facet values to return for each facet.",
+        "default": 100,
+        "maximum": 1000,
+        "x-categories": [
+          "Faceting"
+        ]
+      },
+      "sortFacetValuesBy": {
+        "type": "string",
+        "description": "Order in which to retrieve facet values\n- `count`.\n  Facet values are retrieved by decreasing count.\n  The count is the number of matching records containing this facet value\n- `alpha`.\n  Retrieve facet values alphabetically\nThis setting doesn't influence how facet values are displayed in your UI (see `renderingContent`).\nFor more information, see [facet value display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js/).\n",
+        "default": "count",
+        "x-categories": [
+          "Faceting"
+        ]
+      },
+      "sumOrFiltersScores": {
+        "type": "boolean",
+        "description": "Whether to sum all filter scores\nIf true, all filter scores are summed.\nOtherwise, the maximum filter score is kept.\nFor more information, see [filter scores](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#accumulating-scores-with-sumorfiltersscores).\n",
+        "default": false,
+        "x-categories": [
+          "Filtering"
+        ]
+      },
+      "mainInjectionQueryParameters": {
+        "title": "Composition Main Injection Query parameters as object",
+        "type": "object",
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/baseInjectionQueryParameters"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "facetingAfterDistinct": {
+                "$ref": "#/components/schemas/facetingAfterDistinct"
+              },
+              "facets": {
+                "$ref": "#/components/schemas/properties-facets"
+              },
+              "hitsPerPage": {
+                "$ref": "#/components/schemas/hitsPerPage"
+              },
+              "maxValuesPerFacet": {
+                "$ref": "#/components/schemas/maxValuesPerFacet"
+              },
+              "sortFacetValuesBy": {
+                "$ref": "#/components/schemas/sortFacetValuesBy"
+              },
+              "sumOrFiltersScores": {
+                "$ref": "#/components/schemas/sumOrFiltersScores"
+              }
+            }
+          }
+        ]
+      },
+      "SearchSource": {
+        "title": "searchSource",
+        "description": "Injected items will originate from a search request performed on the specified index.",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "search": {
+            "title": "search",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "index": {
+                "type": "string",
+                "description": "Composition Index name.",
+                "example": "Products"
+              },
+              "params": {
+                "$ref": "#/components/schemas/baseInjectionQueryParameters"
+              }
+            },
+            "required": [
+              "index"
+            ]
+          }
+        },
+        "required": [
+          "search"
+        ]
+      },
+      "externalOrdering": {
+        "enum": [
+          "default",
+          "userDefined"
+        ],
+        "default": "default"
+      },
+      "ExternalSource": {
+        "title": "externalSource",
+        "description": "Injected items will originate from externally provided objectIDs (that must exist in the index) given at runtime in the run request payload.",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "external": {
+            "title": "external",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "index": {
+                "type": "string",
+                "description": "Composition Index name.",
+                "example": "Products"
+              },
+              "params": {
+                "$ref": "#/components/schemas/baseInjectionQueryParameters"
+              },
+              "ordering": {
+                "$ref": "#/components/schemas/externalOrdering"
+              }
+            },
+            "required": [
+              "index"
+            ]
+          }
+        },
+        "required": [
+          "external"
+        ]
+      },
+      "injectedItemSource": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/SearchSource"
+          },
+          {
+            "$ref": "#/components/schemas/ExternalSource"
+          }
+        ]
+      },
+      "injectedItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "injected Item unique identifier."
+          },
+          "source": {
+            "description": "Search source to be used to inject items into result set.",
+            "$ref": "#/components/schemas/injectedItemSource"
+          },
+          "position": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 19
+          },
+          "length": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 20
+          },
+          "metadata": {
+            "title": "injectedItemMetadata",
+            "type": "object",
+            "description": "Used to add metadata to the results of the injectedItem.",
+            "properties": {
+              "hits": {
+                "title": "injectedItemHitsMetadata",
+                "type": "object",
+                "description": "Adds the provided metadata to each injected hit via an `_extra` attribute.",
+                "properties": {
+                  "addItemKey": {
+                    "type": "boolean",
+                    "description": "When true, the `_injectedItemKey` field is set in the `_extra` object of each affected hit."
+                  },
+                  "extra": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "description": "The user-defined key-value pairs that will be placed in the `_extra` field of each affected hit."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "key",
+          "source",
+          "position",
+          "length"
+        ]
+      },
+      "compositionBehavior": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "injection": {
+            "title": "injection",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "main": {
+                "title": "main",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "source": {
+                    "title": "compositionSource",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "search": {
+                        "title": "compositionSourceSearch",
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "index": {
+                            "type": "string",
+                            "description": "Composition Main Index name.",
+                            "example": "Products"
+                          },
+                          "params": {
+                            "$ref": "#/components/schemas/mainInjectionQueryParameters"
+                          }
+                        },
+                        "required": [
+                          "index"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "search"
+                    ]
+                  }
+                },
+                "required": [
+                  "source"
+                ]
+              },
+              "injectedItems": {
+                "type": "array",
+                "description": "list of injected items of the current Composition.",
+                "minItems": 0,
+                "maxItems": 2,
+                "items": {
+                  "$ref": "#/components/schemas/injectedItem"
+                }
+              }
+            },
+            "required": [
+              "main"
+            ]
+          }
+        },
+        "required": [
+          "injection"
+        ]
+      },
+      "composition": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "objectID": {
+            "$ref": "#/components/schemas/compositionObjectID"
+          },
+          "name": {
+            "type": "string",
+            "description": "Composition name.",
+            "example": "my lovely crafted composition"
+          },
+          "description": {
+            "type": "string",
+            "description": "Composition description.",
+            "example": "my lovely crafted composition that is used for X purpose"
+          },
+          "behavior": {
+            "$ref": "#/components/schemas/compositionBehavior"
+          }
+        },
+        "required": [
+          "objectID",
+          "behavior",
+          "name"
+        ]
+      },
+      "listCompositionsResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "description": "All compositions in your Algolia application.",
+            "items": {
+              "$ref": "#/components/schemas/composition"
+            }
+          },
+          "nbPages": {
+            "type": "integer",
+            "description": "Number of pages.",
+            "example": 100
+          },
+          "page": {
+            "type": "integer",
+            "description": "Current page.",
+            "example": 0
+          },
+          "hitsPerPage": {
+            "type": "integer",
+            "description": "Number of items per page.",
+            "example": 20
+          },
+          "nbHits": {
+            "type": "integer",
+            "description": "Number of items.",
+            "example": 200
+          }
+        },
+        "required": [
+          "hitsPerPage",
+          "items",
+          "nbHits",
+          "nbPages",
+          "page"
+        ]
+      },
+      "taskID": {
+        "type": "integer",
+        "format": "int64",
+        "example": 1514562690001,
+        "description": "Unique identifier of a task.\n\nA successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.\n"
+      },
+      "action": {
+        "type": "string",
+        "enum": [
+          "upsert",
+          "delete"
+        ],
+        "description": "Type of Composition Batch operation."
+      },
+      "deleteCompositionAction": {
+        "type": "object",
+        "description": "Operation arguments when deleting.",
+        "additionalProperties": false,
+        "properties": {
+          "objectID": {
+            "$ref": "#/components/schemas/compositionObjectID"
+          }
+        },
+        "required": [
+          "objectID"
+        ]
+      },
+      "batchCompositionAction": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/composition"
+          },
+          {
+            "$ref": "#/components/schemas/deleteCompositionAction"
+          }
+        ]
+      },
+      "ruleID": {
+        "title": "objectID",
+        "type": "string",
+        "description": "Unique identifier of a rule object."
+      },
+      "compositionRuleObjectID": {
+        "type": "string",
+        "example": "my_composition_rule_object_id",
+        "description": "Composition rule unique identifier."
+      },
+      "anchoring": {
+        "type": "string",
+        "description": "Which part of the search query the pattern should match:\n\n- `startsWith`. The pattern must match the beginning of the query.\n- `endsWith`. The pattern must match the end of the query.\n- `is`. The pattern must match the query exactly.\n- `contains`. The pattern must match anywhere in the query.\n\nEmpty queries are only allowed as patterns with `anchoring: is`.\n",
+        "enum": [
+          "is",
+          "startsWith",
+          "endsWith",
+          "contains"
+        ]
+      },
+      "context": {
+        "type": "string",
+        "pattern": "[A-Za-z0-9_-]+",
+        "description": "An additional restriction that only triggers the rule, when the search has the same value as `ruleContexts` parameter.\nFor example, if `context: mobile`, the rule is only triggered when the search request has a matching `ruleContexts: mobile`.\nA rule context must only contain alphanumeric characters.\n",
+        "example": "mobile"
+      },
+      "condition": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "pattern": {
+            "type": "string",
+            "description": "Query pattern that triggers the rule.\n\nYou can use either a literal string, or a special pattern `{facet:ATTRIBUTE}`, where `ATTRIBUTE` is a facet name.\nThe rule is triggered if the query matches the literal string or a value of the specified facet.\nFor example, with `pattern: {facet:genre}`, the rule is triggered when users search for a genre, such as \"comedy\".\n",
+            "example": "{facet:genre}"
+          },
+          "anchoring": {
+            "$ref": "#/components/schemas/anchoring"
+          },
+          "context": {
+            "$ref": "#/components/schemas/context"
+          },
+          "filters": {
+            "type": "string",
+            "description": "Filters that trigger the rule.\n\nYou can add add filters using the syntax `facet:value` so that the rule is triggered, when the specific filter is selected.\nYou can use `filters` on its own or combine it with the `pattern` parameter.\n",
+            "example": "genre:comedy"
+          }
+        }
+      },
+      "timeRange": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "from": {
+            "type": "integer",
+            "format": "int64",
+            "description": "When the rule should start to be active, in Unix epoch time."
+          },
+          "until": {
+            "type": "integer",
+            "format": "int64",
+            "description": "When the rule should stop to be active, in Unix epoch time."
+          }
+        }
+      },
+      "compositionRule": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "objectID": {
+            "$ref": "#/components/schemas/compositionRuleObjectID"
+          },
+          "conditions": {
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 25,
+            "description": "Conditions that trigger a composition rule.",
+            "items": {
+              "$ref": "#/components/schemas/condition"
+            }
+          },
+          "consequence": {
+            "title": "compositionRuleConsequence",
+            "type": "object",
+            "description": "Effect of the rule.",
+            "additionalProperties": false,
+            "properties": {
+              "behavior": {
+                "$ref": "#/components/schemas/compositionBehavior"
+              }
+            },
+            "required": [
+              "behavior"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the rule's purpose to help you distinguish between different rules.",
+            "example": "Display a promotional banner"
+          },
+          "enabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether the rule is active."
+          },
+          "validity": {
+            "type": "array",
+            "description": "Time periods when the rule is active.",
+            "items": {
+              "$ref": "#/components/schemas/timeRange"
+            }
+          },
+          "tags": {
+            "type": "array",
+            "description": "A list of tags.",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "conditional"
+            ]
+          }
+        },
+        "required": [
+          "objectID",
+          "conditions",
+          "consequence"
+        ]
+      },
+      "deleteCompositionRuleAction": {
+        "type": "object",
+        "description": "Operation arguments when deleting.",
+        "additionalProperties": false,
+        "properties": {
+          "objectID": {
+            "$ref": "#/components/schemas/compositionRuleObjectID"
+          }
+        },
+        "required": [
+          "objectID"
+        ]
+      },
+      "rulesBatchCompositionAction": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/compositionRule"
+          },
+          {
+            "$ref": "#/components/schemas/deleteCompositionRuleAction"
+          }
+        ]
+      },
+      "parameters_query": {
+        "type": "string",
+        "description": "Search query for rules.",
+        "default": ""
+      },
+      "parameters_page": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Requested page of the API response.\n\nAlgolia uses `page` and `hitsPerPage` to control how search results are displayed ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/)).\n\n- `hitsPerPage`: sets the number of search results (_hits_) displayed per page.\n- `page`: specifies the page number of the search results you want to retrieve. Page numbering starts at 0, so the first page is `page=0`, the second is `page=1`, and so on.\n\nFor example, to display 10 results per page starting from the third page, set `hitsPerPage` to 10 and `page` to 2.\n"
+      },
+      "parameters_hitsPerPage": {
+        "type": "integer",
+        "default": 20,
+        "minimum": 1,
+        "maximum": 1000,
+        "description": "Maximum number of hits per page.\n\nAlgolia uses `page` and `hitsPerPage` to control how search results are displayed ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/)).\n\n- `hitsPerPage`: sets the number of search results (_hits_) displayed per page.\n- `page`: specifies the page number of the search results you want to retrieve. Page numbering starts at 0, so the first page is `page=0`, the second is `page=1`, and so on.\n\nFor example, to display 10 results per page starting from the third page, set `hitsPerPage` to 10 and `page` to 2.\n"
+      },
+      "taskStatus": {
+        "type": "string",
+        "enum": [
+          "published",
+          "notPublished"
+        ],
+        "description": "Task status, `published` if the task is completed, `notPublished` otherwise."
+      },
+      "GetTaskResponse": {
+        "title": "getTaskResponse",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/taskStatus"
+          }
+        },
+        "required": [
+          "status"
+        ]
       }
     },
     "responses": {
@@ -1923,14 +4156,37 @@
             }
           }
         }
+      },
+      "CompositionNotFound": {
+        "description": "Composition not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorBase"
+            }
+          }
+        }
+      },
+      "UnprocessableEntity": {
+        "description": "Unprocessable Entity.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorBase"
+            }
+          }
+        }
       }
     }
   },
   "x-tagGroups": [
     {
-      "name": "Compositions",
+      "name": "Composition",
       "tags": [
-        "Search"
+        "Search",
+        "Compositions",
+        "Composition Rules",
+        "Advanced"
       ]
     }
   ]

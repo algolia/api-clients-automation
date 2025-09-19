@@ -2,13 +2,17 @@
 package client
 
 import (
+	"encoding/json"
+	"regexp"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 
 	"gotests/tests"
 
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/composition"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/compression"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
@@ -46,9 +50,8 @@ func TestCompositionapi0(t *testing.T) {
 	}
 	client, err = composition.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	res, err = client.Search(client.NewApiSearchRequest(
-		"test-composition-id",
-		composition.NewEmptyRequestBody()))
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
+		"test"))
 	require.NoError(t, err)
 	require.Equal(t, "test-app-id-dsn.algolia.net", echo.Host)
 }
@@ -72,9 +75,104 @@ func TestCompositionapi1(t *testing.T) {
 	}
 	client, err = composition.NewClientWithConfig(cfg)
 	require.NoError(t, err)
-	res, err = client.Search(client.NewApiSearchRequest(
-		"test-composition-id",
-		composition.NewEmptyRequestBody()))
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
+		"test"))
 	require.NoError(t, err)
-	require.Equal(t, "test-app-id-dsn.algolia.net", echo.Host)
+	require.Equal(t, "test-app-id.algolia.net", echo.Host)
+}
+
+// test the compression strategy
+func TestCompositionapi2(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *composition.APIClient
+	var cfg composition.CompositionConfiguration
+	_ = client
+	_ = echo
+	cfg = composition.CompositionConfiguration{
+		Configuration: transport.Configuration{
+			AppID:       "test-app-id",
+			ApiKey:      "test-api-key",
+			Hosts:       []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6678", call.IsReadWrite)},
+			Compression: compression.GZIP,
+		},
+	}
+	client, err = composition.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
+		"1/test/gzip").WithParameters(map[string]any{}).WithBody(map[string]any{"message": "this is a compressed body"}))
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `{"message":"ok compression test server response","body":{"message":"this is a compressed body"}}`, string(rawBody))
+}
+
+// calls api with correct user agent
+func TestCompositioncommonApi0(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	client, echo := createCompositionClient(t)
+	_ = echo
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
+		"1/test"))
+	require.NoError(t, err)
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Composition (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
+}
+
+// the user agent contains the latest version
+func TestCompositioncommonApi1(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	client, echo := createCompositionClient(t)
+	_ = echo
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
+		"1/test"))
+	require.NoError(t, err)
+	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.25.0\).*`), echo.Header.Get("User-Agent"))
+}
+
+// switch API key
+func TestCompositionsetClientApiKey0(t *testing.T) {
+	var err error
+	var res any
+	_ = res
+	echo := &tests.EchoRequester{}
+	var client *composition.APIClient
+	var cfg composition.CompositionConfiguration
+	_ = client
+	_ = echo
+	cfg = composition.CompositionConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6683", call.IsReadWrite)},
+		},
+	}
+	client, err = composition.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	{
+		res, err = client.CustomGet(client.NewApiCustomGetRequest(
+			"check-api-key/1"))
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"headerAPIKeyValue":"test-api-key"}`, string(rawBody))
+	}
+	{
+		err = client.SetClientApiKey(
+			"updated-api-key")
+		require.NoError(t, err)
+	}
+	{
+		res, err = client.CustomGet(client.NewApiCustomGetRequest(
+			"check-api-key/2"))
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"headerAPIKeyValue":"updated-api-key"}`, string(rawBody))
+	}
 }

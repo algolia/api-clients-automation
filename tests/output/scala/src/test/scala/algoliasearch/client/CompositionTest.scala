@@ -39,10 +39,8 @@ class CompositionTest extends AnyFunSuite {
 
     val (client, echo) = testClient(appId = "test-app-id", apiKey = "test-api-key")
     Await.ready(
-      client.search(
-        compositionID = "test-composition-id",
-        requestBody = RequestBody(
-        )
+      client.customGet[JObject](
+        path = "test"
       ),
       Duration.Inf
     )
@@ -53,14 +51,123 @@ class CompositionTest extends AnyFunSuite {
 
     val (client, echo) = testClient(appId = "test-app-id", apiKey = "test-api-key")
     Await.ready(
-      client.search(
-        compositionID = "test-composition-id",
-        requestBody = RequestBody(
-        )
+      client.customPost[JObject](
+        path = "test"
       ),
       Duration.Inf
     )
-    assert(echo.lastResponse.get.host == "test-app-id-dsn.algolia.net")
+    assert(echo.lastResponse.get.host == "test-app-id.algolia.net")
+  }
+
+  test("test the compression strategy") {
+
+    val client = CompositionClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6678)
+            )
+          )
+        )
+        .withCompressionType(CompressionType.Gzip)
+        .build()
+    )
+
+    var res = Await.result(
+      client.customPost[JObject](
+        path = "1/test/gzip",
+        parameters = Some(Map()),
+        body = Some(JObject(List(JField("message", JString("this is a compressed body")))))
+      ),
+      Duration.Inf
+    )
+    assert(
+      parse(write(res)) == parse(
+        "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this is a compressed body\"}}"
+      )
+    )
+  }
+
+  test("calls api with correct user agent") {
+    val (client, echo) = testClient()
+
+    Await.ready(
+      client.customPost[JObject](
+        path = "1/test"
+      ),
+      Duration.Inf
+    )
+    val regexp =
+      """^Algolia for Scala \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Composition (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$""".r
+    val header = echo.lastResponse.get.headers("user-agent")
+    assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
+  }
+
+  test("the user agent contains the latest version") {
+    val (client, echo) = testClient()
+
+    Await.ready(
+      client.customPost[JObject](
+        path = "1/test"
+      ),
+      Duration.Inf
+    )
+    val regexp = """^Algolia for Scala \(2.27.0\).*""".r
+    val header = echo.lastResponse.get.headers("user-agent")
+    assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
+  }
+
+  test("switch API key") {
+
+    val client = CompositionClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6683)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.customGet[JObject](
+          path = "check-api-key/1"
+        ),
+        Duration.Inf
+      )
+      assert(parse(write(res)) == parse("{\"headerAPIKeyValue\":\"test-api-key\"}"))
+    }
+    {
+
+      client.setClientApiKey(
+        apiKey = "updated-api-key"
+      )
+    }
+    {
+      var res = Await.result(
+        client.customGet[JObject](
+          path = "check-api-key/2"
+        ),
+        Duration.Inf
+      )
+      assert(parse(write(res)) == parse("{\"headerAPIKeyValue\":\"updated-api-key\"}"))
+    }
   }
 
 }

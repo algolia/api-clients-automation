@@ -31,7 +31,7 @@ public class CompositionClientTests
   {
     var client = new CompositionClient(new CompositionConfig("test-app-id", "test-api-key"), _echo);
 
-    await client.SearchAsync<Hit>("test-composition-id", new RequestBody { });
+    await client.CustomGetAsync("test");
     EchoResponse result = _echo.LastResponse;
 
     Assert.Equal("test-app-id-dsn.algolia.net", result.Host);
@@ -42,9 +42,118 @@ public class CompositionClientTests
   {
     var client = new CompositionClient(new CompositionConfig("test-app-id", "test-api-key"), _echo);
 
-    await client.SearchAsync<Hit>("test-composition-id", new RequestBody { });
+    await client.CustomPostAsync("test");
     EchoResponse result = _echo.LastResponse;
 
-    Assert.Equal("test-app-id-dsn.algolia.net", result.Host);
+    Assert.Equal("test-app-id.algolia.net", result.Host);
+  }
+
+  [Fact(DisplayName = "test the compression strategy")]
+  public async Task ApiTest2()
+  {
+    CompositionConfig _config = new CompositionConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6678,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+      Compression = CompressionType.Gzip,
+    };
+    var client = new CompositionClient(_config);
+
+    var res = await client.CustomPostAsync(
+      "1/test/gzip",
+      new Dictionary<string, object> { },
+      new Dictionary<string, string> { { "message", "this is a compressed body" } }
+    );
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this is a compressed body\"}}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "calls api with correct user agent")]
+  public async Task CommonApiTest0()
+  {
+    var client = new CompositionClient(new CompositionConfig("appId", "apiKey"), _echo);
+    await client.CustomPostAsync("1/test");
+    EchoResponse result = _echo.LastResponse;
+    {
+      var regexp = new Regex(
+        "^Algolia for Csharp \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Composition (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
+      );
+      Assert.Matches(regexp, result.Headers["user-agent"]);
+    }
+  }
+
+  [Fact(DisplayName = "the user agent contains the latest version")]
+  public async Task CommonApiTest1()
+  {
+    var client = new CompositionClient(new CompositionConfig("appId", "apiKey"), _echo);
+    await client.CustomPostAsync("1/test");
+    EchoResponse result = _echo.LastResponse;
+    {
+      var regexp = new Regex("^Algolia for Csharp \\(7.26.0\\).*");
+      Assert.Matches(regexp, result.Headers["user-agent"]);
+    }
+  }
+
+  [Fact(DisplayName = "switch API key")]
+  public async Task SetClientApiKeyTest0()
+  {
+    CompositionConfig _config = new CompositionConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6683,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new CompositionClient(_config);
+
+    {
+      var res = await client.CustomGetAsync("check-api-key/1");
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"headerAPIKeyValue\":\"test-api-key\"}",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
+    {
+      client.SetClientApiKey("updated-api-key");
+    }
+    {
+      var res = await client.CustomGetAsync("check-api-key/2");
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"headerAPIKeyValue\":\"updated-api-key\"}",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
   }
 }

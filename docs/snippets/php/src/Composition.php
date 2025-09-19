@@ -12,13 +12,1317 @@ use Algolia\AlgoliaSearch\Api\CompositionClient;
 class SnippetCompositionClient
 {
     /**
+     * Snippet for the CustomDelete method.
+     *
+     * allow del method for a custom path with minimal parameters
+     */
+    public function snippetForCustomDelete(): void
+    {
+        // >SEPARATOR customDelete allow del method for a custom path with minimal parameters
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customDelete(
+            'test/minimal',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomDelete method.
+     *
+     * allow del method for a custom path with all parameters
+     */
+    public function snippetForCustomDelete1(): void
+    {
+        // >SEPARATOR customDelete allow del method for a custom path with all parameters
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customDelete(
+            'test/all',
+            ['query' => 'parameters',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomGet method.
+     *
+     * allow get method for a custom path with minimal parameters
+     */
+    public function snippetForCustomGet(): void
+    {
+        // >SEPARATOR customGet allow get method for a custom path with minimal parameters
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customGet(
+            'test/minimal',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomGet method.
+     *
+     * allow get method for a custom path with all parameters
+     */
+    public function snippetForCustomGet1(): void
+    {
+        // >SEPARATOR customGet allow get method for a custom path with all parameters
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customGet(
+            'test/all',
+            ['query' => 'parameters with space',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomGet method.
+     *
+     * requestOptions should be escaped too
+     */
+    public function snippetForCustomGet2(): void
+    {
+        // >SEPARATOR customGet requestOptions should be escaped too
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customGet(
+            'test/all',
+            ['query' => 'to be overriden',
+            ],
+            [
+                'queryParameters' => [
+                    'query' => 'parameters with space',
+                    'and an array' => ['array', 'with spaces',
+                    ],
+                ],
+                'headers' => [
+                    'x-header-1' => 'spaces are left alone',
+                ],
+            ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * allow post method for a custom path with minimal parameters
+     */
+    public function snippetForCustomPost(): void
+    {
+        // >SEPARATOR customPost allow post method for a custom path with minimal parameters
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/minimal',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * allow post method for a custom path with all parameters
+     */
+    public function snippetForCustomPost1(): void
+    {
+        // >SEPARATOR customPost allow post method for a custom path with all parameters
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/all',
+            ['query' => 'parameters',
+            ],
+            ['body' => 'parameters',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions can override default query parameters
+     */
+    public function snippetForCustomPost2(): void
+    {
+        // >SEPARATOR customPost requestOptions can override default query parameters
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'query' => 'myQueryParameter',
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions merges query parameters with default ones
+     */
+    public function snippetForCustomPost3(): void
+    {
+        // >SEPARATOR customPost requestOptions merges query parameters with default ones
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'query2' => 'myQueryParameter',
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions can override default headers
+     */
+    public function snippetForCustomPost4(): void
+    {
+        // >SEPARATOR customPost requestOptions can override default headers
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'headers' => [
+                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
+                ],
+            ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions merges headers with default ones
+     */
+    public function snippetForCustomPost5(): void
+    {
+        // >SEPARATOR customPost requestOptions merges headers with default ones
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'headers' => [
+                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
+                ],
+            ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions queryParameters accepts booleans
+     */
+    public function snippetForCustomPost6(): void
+    {
+        // >SEPARATOR customPost requestOptions queryParameters accepts booleans
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'isItWorking' => true,
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions queryParameters accepts integers
+     */
+    public function snippetForCustomPost7(): void
+    {
+        // >SEPARATOR customPost requestOptions queryParameters accepts integers
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'myParam' => 2,
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions queryParameters accepts list of string
+     */
+    public function snippetForCustomPost8(): void
+    {
+        // >SEPARATOR customPost requestOptions queryParameters accepts list of string
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'myParam' => ['b and c', 'd',
+                    ],
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions queryParameters accepts list of booleans
+     */
+    public function snippetForCustomPost9(): void
+    {
+        // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'myParam' => [true, true, false,
+                    ],
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPost method.
+     *
+     * requestOptions queryParameters accepts list of integers
+     */
+    public function snippetForCustomPost10(): void
+    {
+        // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'myParam' => [1, 2,
+                    ],
+                ], ]
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPut method.
+     *
+     * allow put method for a custom path with minimal parameters
+     */
+    public function snippetForCustomPut(): void
+    {
+        // >SEPARATOR customPut allow put method for a custom path with minimal parameters
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPut(
+            'test/minimal',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CustomPut method.
+     *
+     * allow put method for a custom path with all parameters
+     */
+    public function snippetForCustomPut1(): void
+    {
+        // >SEPARATOR customPut allow put method for a custom path with all parameters
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->customPut(
+            'test/all',
+            ['query' => 'parameters',
+            ],
+            ['body' => 'parameters',
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the DeleteComposition method.
+     *
+     * deleteComposition
+     */
+    public function snippetForDeleteComposition(): void
+    {
+        // >SEPARATOR deleteComposition default
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->deleteComposition(
+            '1234',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the DeleteCompositionRule method.
+     *
+     * deleteCompositionRule
+     */
+    public function snippetForDeleteCompositionRule(): void
+    {
+        // >SEPARATOR deleteCompositionRule default
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->deleteCompositionRule(
+            '1234',
+            '5678',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetComposition method.
+     *
+     * getComposition
+     */
+    public function snippetForGetComposition(): void
+    {
+        // >SEPARATOR getComposition default
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->getComposition(
+            'foo',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetRule method.
+     *
+     * getRule
+     */
+    public function snippetForGetRule(): void
+    {
+        // >SEPARATOR getRule default
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->getRule(
+            'foo',
+            '123',
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetTask method.
+     *
+     * getTask
+     */
+    public function snippetForGetTask(): void
+    {
+        // >SEPARATOR getTask default
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->getTask(
+            'foo',
+            42,
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ListCompositions method.
+     *
+     * listCompositions
+     */
+    public function snippetForListCompositions(): void
+    {
+        // >SEPARATOR listCompositions listCompositions
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->listCompositions();
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ListCompositions method.
+     *
+     * listCompositions
+     */
+    public function snippetForListCompositions1(): void
+    {
+        // >SEPARATOR listCompositions listCompositions
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->listCompositions();
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the MultipleBatch method.
+     *
+     * multipleBatch
+     */
+    public function snippetForMultipleBatch(): void
+    {
+        // >SEPARATOR multipleBatch multipleBatch
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->multipleBatch(
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'foo',
+                        'name' => 'my first composition',
+                        'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'bar',
+                        ],
+                        ],
+                        ],
+                        ],
+                        ],
+                    ],
+                ],
+
+                ['action' => 'delete',
+                    'body' => ['objectID' => 'baz',
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the MultipleBatch method.
+     *
+     * multipleBatch
+     */
+    public function snippetForMultipleBatch1(): void
+    {
+        // >SEPARATOR multipleBatch multipleBatch
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->multipleBatch(
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'my-external-injection-compo',
+                        'name' => 'my first composition',
+                        'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                        ],
+                        ],
+                        ],
+                            'injectedItems' => [
+                                ['key' => 'injectedItem1',
+                                    'source' => ['external' => ['index' => 'foo',
+                                        'ordering' => 'userDefined',
+                                        'params' => ['filters' => 'brand:adidas',
+                                        ],
+                                    ],
+                                    ],
+                                    'position' => 2,
+                                    'length' => 1,
+                                ],
+                            ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the MultipleBatch method.
+     *
+     * multipleBatch
+     */
+    public function snippetForMultipleBatch2(): void
+    {
+        // >SEPARATOR multipleBatch multipleBatch
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->multipleBatch(
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'my-metadata-compo',
+                        'name' => 'my composition',
+                        'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                            'params' => ['filters' => 'brand:adidas',
+                            ],
+                        ],
+                        ],
+                        ],
+                            'injectedItems' => [
+                                ['key' => 'injectedItem1',
+                                    'source' => ['search' => ['index' => 'foo',
+                                        'params' => ['filters' => 'brand:adidas',
+                                        ],
+                                    ],
+                                    ],
+                                    'position' => 2,
+                                    'length' => 1,
+                                    'metadata' => ['hits' => ['addItemKey' => true,
+                                        'extra' => ['my-string' => 'string',
+                                            'my-bool' => true,
+                                            'my-number' => 42,
+                                            'my-object' => ['sub-key' => 'sub-value'],
+                                        ],
+                                    ],
+                                    ],
+                                ],
+
+                                ['key' => 'externalItem',
+                                    'source' => ['search' => ['index' => 'foo',
+                                        'params' => ['filters' => 'brand:puma',
+                                        ],
+                                    ],
+                                    ],
+                                    'position' => 5,
+                                    'length' => 5,
+                                    'metadata' => ['hits' => ['addItemKey' => true,
+                                        'extra' => ['my-string' => 'string',
+                                            'my-bool' => true,
+                                            'my-number' => 42,
+                                            'my-object' => ['sub-key' => 'sub-value'],
+                                        ],
+                                    ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PutComposition method.
+     *
+     * putComposition
+     */
+    public function snippetForPutComposition(): void
+    {
+        // >SEPARATOR putComposition putComposition
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->putComposition(
+            '1234',
+            ['objectID' => '1234',
+                'name' => 'my first composition',
+                'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'injectedItem1',
+                            'source' => ['search' => ['index' => 'foo',
+                            ],
+                            ],
+                            'position' => 2,
+                            'length' => 1,
+                        ],
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PutComposition method.
+     *
+     * putComposition
+     */
+    public function snippetForPutComposition1(): void
+    {
+        // >SEPARATOR putComposition putComposition
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->putComposition(
+            'my-external-injection-compo',
+            ['objectID' => 'my-external-injection-compo',
+                'name' => 'my first composition',
+                'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'injectedItem1',
+                            'source' => ['external' => ['index' => 'foo',
+                                'ordering' => 'userDefined',
+                                'params' => ['filters' => 'brand:adidas',
+                                ],
+                            ],
+                            ],
+                            'position' => 2,
+                            'length' => 1,
+                        ],
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PutComposition method.
+     *
+     * putComposition
+     */
+    public function snippetForPutComposition2(): void
+    {
+        // >SEPARATOR putComposition putComposition
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->putComposition(
+            'my-metadata-compo',
+            ['objectID' => 'my-metadata-compo',
+                'name' => 'my composition',
+                'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                    'params' => ['filters' => 'brand:adidas',
+                    ],
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'injectedItem1',
+                            'source' => ['search' => ['index' => 'foo',
+                                'params' => ['filters' => 'brand:adidas',
+                                ],
+                            ],
+                            ],
+                            'position' => 2,
+                            'length' => 1,
+                            'metadata' => ['hits' => ['addItemKey' => true,
+                                'extra' => ['my-string' => 'string',
+                                    'my-bool' => true,
+                                    'my-number' => 42,
+                                    'my-object' => ['sub-key' => 'sub-value'],
+                                ],
+                            ],
+                            ],
+                        ],
+
+                        ['key' => 'externalItem',
+                            'source' => ['search' => ['index' => 'foo',
+                                'params' => ['filters' => 'brand:puma',
+                                ],
+                            ],
+                            ],
+                            'position' => 5,
+                            'length' => 5,
+                            'metadata' => ['hits' => ['addItemKey' => true,
+                                'extra' => ['my-string' => 'string',
+                                    'my-bool' => true,
+                                    'my-number' => 42,
+                                    'my-object' => ['sub-key' => 'sub-value'],
+                                ],
+                            ],
+                            ],
+                        ],
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PutCompositionRule method.
+     *
+     * putCompositionRule
+     */
+    public function snippetForPutCompositionRule(): void
+    {
+        // >SEPARATOR putCompositionRule putCompositionRule
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->putCompositionRule(
+            'compositionID',
+            'ruleID',
+            ['objectID' => 'ruleID',
+                'conditions' => [
+                    ['anchoring' => 'is',
+                        'pattern' => 'test',
+                    ],
+                ],
+                'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'injectedItem1',
+                            'source' => ['search' => ['index' => 'foo',
+                            ],
+                            ],
+                            'position' => 2,
+                            'length' => 1,
+                        ],
+                    ],
+                ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PutCompositionRule method.
+     *
+     * putCompositionRule
+     */
+    public function snippetForPutCompositionRule1(): void
+    {
+        // >SEPARATOR putCompositionRule putCompositionRule
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->putCompositionRule(
+            'compositionID',
+            'rule-with-metadata',
+            ['objectID' => 'rule-with-metadata',
+                'conditions' => [
+                    ['anchoring' => 'is',
+                        'pattern' => 'test',
+                    ],
+                ],
+                'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'injectedItem1',
+                            'source' => ['search' => ['index' => 'foo',
+                                'params' => ['filters' => 'brand:adidas',
+                                ],
+                            ],
+                            ],
+                            'position' => 2,
+                            'length' => 1,
+                            'metadata' => ['hits' => ['addItemKey' => true,
+                                'extra' => ['my-string' => 'string',
+                                    'my-bool' => true,
+                                    'my-number' => 42,
+                                    'my-object' => ['sub-key' => 'sub-value'],
+                                ],
+                            ],
+                            ],
+                        ],
+                    ],
+                ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PutCompositionRule method.
+     *
+     * putCompositionRule
+     */
+    public function snippetForPutCompositionRule2(): void
+    {
+        // >SEPARATOR putCompositionRule putCompositionRule
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->putCompositionRule(
+            'compositionID',
+            'rule-with-exernal-source',
+            ['objectID' => 'rule-with-exernal-source',
+                'description' => 'my description',
+                'tags' => [
+                    'tag1',
+
+                    'tag2',
+                ],
+                'enabled' => true,
+                'validity' => [
+                    ['from' => 1704063600,
+                        'until' => 1704083600,
+                    ],
+                ],
+                'conditions' => [
+                    ['anchoring' => 'contains',
+                        'pattern' => 'harry',
+                    ],
+
+                    ['anchoring' => 'contains',
+                        'pattern' => 'potter',
+                    ],
+                ],
+                'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'my-index',
+                    'params' => ['filters' => 'brand:adidas',
+                    ],
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'injectedItem',
+                            'source' => ['external' => ['index' => 'my-index',
+                                'params' => ['filters' => 'brand:adidas',
+                                ],
+                                'ordering' => 'userDefined',
+                            ],
+                            ],
+                            'position' => 0,
+                            'length' => 3,
+                        ],
+                    ],
+                ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRules method.
+     *
+     * saveRules
+     */
+    public function snippetForSaveRules(): void
+    {
+        // >SEPARATOR saveRules saveRules
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRules(
+            'foo',
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => '123',
+                        'conditions' => [
+                            ['pattern' => 'a',
+                            ],
+                        ],
+                        'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => '<YOUR_INDEX_NAME>',
+                        ],
+                        ],
+                        ],
+                        ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRules method.
+     *
+     * saveRules
+     */
+    public function snippetForSaveRules1(): void
+    {
+        // >SEPARATOR saveRules saveRules
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRules(
+            'rule-with-metadata',
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'rule-with-metadata',
+                        'conditions' => [
+                            ['anchoring' => 'is',
+                                'pattern' => 'test',
+                            ],
+                        ],
+                        'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                        ],
+                        ],
+                        ],
+                            'injectedItems' => [
+                                ['key' => 'injectedItem1',
+                                    'source' => ['search' => ['index' => 'foo',
+                                        'params' => ['filters' => 'brand:adidas',
+                                        ],
+                                    ],
+                                    ],
+                                    'position' => 2,
+                                    'length' => 1,
+                                    'metadata' => ['hits' => ['addItemKey' => true,
+                                        'extra' => ['my-string' => 'string',
+                                            'my-bool' => true,
+                                            'my-number' => 42,
+                                            'my-object' => ['sub-key' => 'sub-value'],
+                                        ],
+                                    ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRules method.
+     *
+     * saveRules
+     */
+    public function snippetForSaveRules2(): void
+    {
+        // >SEPARATOR saveRules saveRules
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRules(
+            'rule-with-exernal-source',
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'rule-with-exernal-source',
+                        'description' => 'my description',
+                        'tags' => [
+                            'tag1',
+
+                            'tag2',
+                        ],
+                        'enabled' => true,
+                        'validity' => [
+                            ['from' => 1704063600,
+                                'until' => 1704083600,
+                            ],
+                        ],
+                        'conditions' => [
+                            ['anchoring' => 'contains',
+                                'pattern' => 'harry',
+                            ],
+
+                            ['anchoring' => 'contains',
+                                'pattern' => 'potter',
+                            ],
+                        ],
+                        'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'my-index',
+                            'params' => ['filters' => 'brand:adidas',
+                            ],
+                        ],
+                        ],
+                        ],
+                            'injectedItems' => [
+                                ['key' => 'injectedItem',
+                                    'source' => ['external' => ['index' => 'my-index',
+                                        'params' => ['filters' => 'brand:adidas',
+                                        ],
+                                        'ordering' => 'userDefined',
+                                    ],
+                                    ],
+                                    'position' => 0,
+                                    'length' => 3,
+                                ],
+                            ],
+                        ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the Search method.
      *
      * search
      */
     public function snippetForSearch(): void
     {
-        // >SEPARATOR search default
+        // >SEPARATOR search search
         // Initialize the client
         $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -27,6 +1331,69 @@ class SnippetCompositionClient
             'foo',
             ['params' => ['query' => 'batman',
             ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the Search method.
+     *
+     * search
+     */
+    public function snippetForSearch1(): void
+    {
+        // >SEPARATOR search search
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->search(
+            'foo',
+            ['params' => ['query' => 'batman',
+                'injectedItems' => ['injectedItem1' => ['items' => [
+                    ['objectID' => 'my-object-1',
+                    ],
+
+                    ['objectID' => 'my-object-2',
+                        'metadata' => ['my-string' => 'string',
+                            'my-bool' => true,
+                            'my-number' => 42,
+                            'my-object' => ['sub-key' => 'sub-value'],
+                        ],
+                    ],
+                ],
+                ],
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchCompositionRules method.
+     *
+     * searchCompositionRules
+     */
+    public function snippetForSearchCompositionRules(): void
+    {
+        // >SEPARATOR searchCompositionRules default
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchCompositionRules(
+            'foo',
+            ['query' => 'batman',
             ],
         );
 
@@ -59,6 +1426,26 @@ class SnippetCompositionClient
         // >LOG
         // play with the response
         var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetClientApiKey method.
+     *
+     * switch API key
+     */
+    public function snippetForSetClientApiKey(): void
+    {
+        // >SEPARATOR setClientApiKey default
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
+
+        // >LOG
         // SEPARATOR<
     }
 }

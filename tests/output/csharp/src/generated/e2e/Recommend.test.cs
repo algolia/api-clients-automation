@@ -8,7 +8,6 @@ using Algolia.Search.Tests.Utils;
 using dotenv.net;
 using Quibble.Xunit;
 using Xunit;
-using Action = Algolia.Search.Models.Ingestion.Action;
 
 namespace Algolia.Search.e2e;
 

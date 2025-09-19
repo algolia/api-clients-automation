@@ -3,11 +3,1346 @@
 import 'package:algolia_client_composition/algolia_client_composition.dart';
 // IMPORT<
 
+// Snippet for the customDelete method.
+//
+// allow del method for a custom path with minimal parameters
+void snippetForcustomDelete() async {
+  // >SEPARATOR customDelete allow del method for a custom path with minimal parameters
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customDelete(
+    path: "test/minimal",
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customDelete method.
+//
+// allow del method for a custom path with all parameters
+void snippetForcustomDelete1() async {
+  // >SEPARATOR customDelete allow del method for a custom path with all parameters
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customDelete(
+    path: "test/all",
+    parameters: {
+      'query': "parameters",
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customGet method.
+//
+// allow get method for a custom path with minimal parameters
+void snippetForcustomGet() async {
+  // >SEPARATOR customGet allow get method for a custom path with minimal parameters
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customGet(
+    path: "test/minimal",
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customGet method.
+//
+// allow get method for a custom path with all parameters
+void snippetForcustomGet1() async {
+  // >SEPARATOR customGet allow get method for a custom path with all parameters
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customGet(
+    path: "test/all",
+    parameters: {
+      'query': "parameters with space",
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customGet method.
+//
+// requestOptions should be escaped too
+void snippetForcustomGet2() async {
+  // >SEPARATOR customGet requestOptions should be escaped too
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customGet(
+    path: "test/all",
+    parameters: {
+      'query': "to be overriden",
+    },
+    requestOptions: RequestOptions(
+      headers: {
+        'x-header-1': 'spaces are left alone',
+      },
+      urlParameters: {
+        'query': "parameters with space",
+        'and an array': [
+          "array",
+          "with spaces",
+        ],
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// allow post method for a custom path with minimal parameters
+void snippetForcustomPost() async {
+  // >SEPARATOR customPost allow post method for a custom path with minimal parameters
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/minimal",
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// allow post method for a custom path with all parameters
+void snippetForcustomPost1() async {
+  // >SEPARATOR customPost allow post method for a custom path with all parameters
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/all",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'body': "parameters",
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions can override default query parameters
+void snippetForcustomPost2() async {
+  // >SEPARATOR customPost requestOptions can override default query parameters
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'query': "myQueryParameter",
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions merges query parameters with default ones
+void snippetForcustomPost3() async {
+  // >SEPARATOR customPost requestOptions merges query parameters with default ones
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'query2': "myQueryParameter",
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions can override default headers
+void snippetForcustomPost4() async {
+  // >SEPARATOR customPost requestOptions can override default headers
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      headers: {
+        'x-algolia-api-key': 'ALGOLIA_API_KEY',
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions merges headers with default ones
+void snippetForcustomPost5() async {
+  // >SEPARATOR customPost requestOptions merges headers with default ones
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      headers: {
+        'x-algolia-api-key': 'ALGOLIA_API_KEY',
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts booleans
+void snippetForcustomPost6() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts booleans
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'isItWorking': true,
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts integers
+void snippetForcustomPost7() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts integers
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'myParam': 2,
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of string
+void snippetForcustomPost8() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of string
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'myParam': [
+          "b and c",
+          "d",
+        ],
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of booleans
+void snippetForcustomPost9() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'myParam': [
+          true,
+          true,
+          false,
+        ],
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPost method.
+//
+// requestOptions queryParameters accepts list of integers
+void snippetForcustomPost10() async {
+  // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPost(
+    path: "test/requestOptions",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'facet': "filters",
+    },
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'myParam': [
+          1,
+          2,
+        ],
+      },
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPut method.
+//
+// allow put method for a custom path with minimal parameters
+void snippetForcustomPut() async {
+  // >SEPARATOR customPut allow put method for a custom path with minimal parameters
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPut(
+    path: "test/minimal",
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the customPut method.
+//
+// allow put method for a custom path with all parameters
+void snippetForcustomPut1() async {
+  // >SEPARATOR customPut allow put method for a custom path with all parameters
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.customPut(
+    path: "test/all",
+    parameters: {
+      'query': "parameters",
+    },
+    body: {
+      'body': "parameters",
+    },
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the deleteComposition method.
+//
+// deleteComposition
+void snippetFordeleteComposition() async {
+  // >SEPARATOR deleteComposition default
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.deleteComposition(
+    compositionID: "1234",
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the deleteCompositionRule method.
+//
+// deleteCompositionRule
+void snippetFordeleteCompositionRule() async {
+  // >SEPARATOR deleteCompositionRule default
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.deleteCompositionRule(
+    compositionID: "1234",
+    objectID: "5678",
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the getComposition method.
+//
+// getComposition
+void snippetForgetComposition() async {
+  // >SEPARATOR getComposition default
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getComposition(
+    compositionID: "foo",
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the getRule method.
+//
+// getRule
+void snippetForgetRule() async {
+  // >SEPARATOR getRule default
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getRule(
+    compositionID: "foo",
+    objectID: "123",
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the getTask method.
+//
+// getTask
+void snippetForgetTask() async {
+  // >SEPARATOR getTask default
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getTask(
+    compositionID: "foo",
+    taskID: 42,
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the listCompositions method.
+//
+// listCompositions
+void snippetForlistCompositions() async {
+  // >SEPARATOR listCompositions listCompositions
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.listCompositions();
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the listCompositions method.
+//
+// listCompositions
+void snippetForlistCompositions1() async {
+  // >SEPARATOR listCompositions listCompositions
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.listCompositions();
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the multipleBatch method.
+//
+// multipleBatch
+void snippetFormultipleBatch() async {
+  // >SEPARATOR multipleBatch multipleBatch
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.multipleBatch(
+    batchParams: BatchParams(
+      requests: [
+        MultipleBatchRequest(
+          action: Action.fromJson("upsert"),
+          body: Composition(
+            objectID: "foo",
+            name: "my first composition",
+            behavior: CompositionBehavior(
+              injection: Injection(
+                main: Main(
+                  source: CompositionSource(
+                    search: CompositionSourceSearch(
+                      index: "bar",
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        MultipleBatchRequest(
+          action: Action.fromJson("delete"),
+          body: DeleteCompositionAction(
+            objectID: "baz",
+          ),
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the multipleBatch method.
+//
+// multipleBatch
+void snippetFormultipleBatch1() async {
+  // >SEPARATOR multipleBatch multipleBatch
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.multipleBatch(
+    batchParams: BatchParams(
+      requests: [
+        MultipleBatchRequest(
+          action: Action.fromJson("upsert"),
+          body: Composition(
+            objectID: "my-external-injection-compo",
+            name: "my first composition",
+            behavior: CompositionBehavior(
+              injection: Injection(
+                main: Main(
+                  source: CompositionSource(
+                    search: CompositionSourceSearch(
+                      index: "foo",
+                    ),
+                  ),
+                ),
+                injectedItems: [
+                  InjectedItem(
+                    key: "injectedItem1",
+                    source: ExternalSource(
+                      external_: External(
+                        index: "foo",
+                        ordering: ExternalOrdering.fromJson("userDefined"),
+                        params: BaseInjectionQueryParameters(
+                          filters: "brand:adidas",
+                        ),
+                      ),
+                    ),
+                    position: 2,
+                    length: 1,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the multipleBatch method.
+//
+// multipleBatch
+void snippetFormultipleBatch2() async {
+  // >SEPARATOR multipleBatch multipleBatch
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.multipleBatch(
+    batchParams: BatchParams(
+      requests: [
+        MultipleBatchRequest(
+          action: Action.fromJson("upsert"),
+          body: Composition(
+            objectID: "my-metadata-compo",
+            name: "my composition",
+            behavior: CompositionBehavior(
+              injection: Injection(
+                main: Main(
+                  source: CompositionSource(
+                    search: CompositionSourceSearch(
+                      index: "foo",
+                      params: MainInjectionQueryParameters(
+                        filters: "brand:adidas",
+                      ),
+                    ),
+                  ),
+                ),
+                injectedItems: [
+                  InjectedItem(
+                    key: "injectedItem1",
+                    source: SearchSource(
+                      search: Search(
+                        index: "foo",
+                        params: BaseInjectionQueryParameters(
+                          filters: "brand:adidas",
+                        ),
+                      ),
+                    ),
+                    position: 2,
+                    length: 1,
+                    metadata: InjectedItemMetadata(
+                      hits: InjectedItemHitsMetadata(
+                        addItemKey: true,
+                        extra: {
+                          'my-string': "string",
+                          'my-bool': true,
+                          'my-number': 42,
+                          'my-object': {
+                            'sub-key': 'sub-value',
+                          },
+                        },
+                      ),
+                    ),
+                  ),
+                  InjectedItem(
+                    key: "externalItem",
+                    source: SearchSource(
+                      search: Search(
+                        index: "foo",
+                        params: BaseInjectionQueryParameters(
+                          filters: "brand:puma",
+                        ),
+                      ),
+                    ),
+                    position: 5,
+                    length: 5,
+                    metadata: InjectedItemMetadata(
+                      hits: InjectedItemHitsMetadata(
+                        addItemKey: true,
+                        extra: {
+                          'my-string': "string",
+                          'my-bool': true,
+                          'my-number': 42,
+                          'my-object': {
+                            'sub-key': 'sub-value',
+                          },
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the putComposition method.
+//
+// putComposition
+void snippetForputComposition() async {
+  // >SEPARATOR putComposition putComposition
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.putComposition(
+    compositionID: "1234",
+    composition: Composition(
+      objectID: "1234",
+      name: "my first composition",
+      behavior: CompositionBehavior(
+        injection: Injection(
+          main: Main(
+            source: CompositionSource(
+              search: CompositionSourceSearch(
+                index: "foo",
+              ),
+            ),
+          ),
+          injectedItems: [
+            InjectedItem(
+              key: "injectedItem1",
+              source: SearchSource(
+                search: Search(
+                  index: "foo",
+                ),
+              ),
+              position: 2,
+              length: 1,
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the putComposition method.
+//
+// putComposition
+void snippetForputComposition1() async {
+  // >SEPARATOR putComposition putComposition
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.putComposition(
+    compositionID: "my-external-injection-compo",
+    composition: Composition(
+      objectID: "my-external-injection-compo",
+      name: "my first composition",
+      behavior: CompositionBehavior(
+        injection: Injection(
+          main: Main(
+            source: CompositionSource(
+              search: CompositionSourceSearch(
+                index: "foo",
+              ),
+            ),
+          ),
+          injectedItems: [
+            InjectedItem(
+              key: "injectedItem1",
+              source: ExternalSource(
+                external_: External(
+                  index: "foo",
+                  ordering: ExternalOrdering.fromJson("userDefined"),
+                  params: BaseInjectionQueryParameters(
+                    filters: "brand:adidas",
+                  ),
+                ),
+              ),
+              position: 2,
+              length: 1,
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the putComposition method.
+//
+// putComposition
+void snippetForputComposition2() async {
+  // >SEPARATOR putComposition putComposition
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.putComposition(
+    compositionID: "my-metadata-compo",
+    composition: Composition(
+      objectID: "my-metadata-compo",
+      name: "my composition",
+      behavior: CompositionBehavior(
+        injection: Injection(
+          main: Main(
+            source: CompositionSource(
+              search: CompositionSourceSearch(
+                index: "foo",
+                params: MainInjectionQueryParameters(
+                  filters: "brand:adidas",
+                ),
+              ),
+            ),
+          ),
+          injectedItems: [
+            InjectedItem(
+              key: "injectedItem1",
+              source: SearchSource(
+                search: Search(
+                  index: "foo",
+                  params: BaseInjectionQueryParameters(
+                    filters: "brand:adidas",
+                  ),
+                ),
+              ),
+              position: 2,
+              length: 1,
+              metadata: InjectedItemMetadata(
+                hits: InjectedItemHitsMetadata(
+                  addItemKey: true,
+                  extra: {
+                    'my-string': "string",
+                    'my-bool': true,
+                    'my-number': 42,
+                    'my-object': {
+                      'sub-key': 'sub-value',
+                    },
+                  },
+                ),
+              ),
+            ),
+            InjectedItem(
+              key: "externalItem",
+              source: SearchSource(
+                search: Search(
+                  index: "foo",
+                  params: BaseInjectionQueryParameters(
+                    filters: "brand:puma",
+                  ),
+                ),
+              ),
+              position: 5,
+              length: 5,
+              metadata: InjectedItemMetadata(
+                hits: InjectedItemHitsMetadata(
+                  addItemKey: true,
+                  extra: {
+                    'my-string': "string",
+                    'my-bool': true,
+                    'my-number': 42,
+                    'my-object': {
+                      'sub-key': 'sub-value',
+                    },
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the putCompositionRule method.
+//
+// putCompositionRule
+void snippetForputCompositionRule() async {
+  // >SEPARATOR putCompositionRule putCompositionRule
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.putCompositionRule(
+    compositionID: "compositionID",
+    objectID: "ruleID",
+    compositionRule: CompositionRule(
+      objectID: "ruleID",
+      conditions: [
+        Condition(
+          anchoring: Anchoring.fromJson("is"),
+          pattern: "test",
+        ),
+      ],
+      consequence: CompositionRuleConsequence(
+        behavior: CompositionBehavior(
+          injection: Injection(
+            main: Main(
+              source: CompositionSource(
+                search: CompositionSourceSearch(
+                  index: "foo",
+                ),
+              ),
+            ),
+            injectedItems: [
+              InjectedItem(
+                key: "injectedItem1",
+                source: SearchSource(
+                  search: Search(
+                    index: "foo",
+                  ),
+                ),
+                position: 2,
+                length: 1,
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the putCompositionRule method.
+//
+// putCompositionRule
+void snippetForputCompositionRule1() async {
+  // >SEPARATOR putCompositionRule putCompositionRule
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.putCompositionRule(
+    compositionID: "compositionID",
+    objectID: "rule-with-metadata",
+    compositionRule: CompositionRule(
+      objectID: "rule-with-metadata",
+      conditions: [
+        Condition(
+          anchoring: Anchoring.fromJson("is"),
+          pattern: "test",
+        ),
+      ],
+      consequence: CompositionRuleConsequence(
+        behavior: CompositionBehavior(
+          injection: Injection(
+            main: Main(
+              source: CompositionSource(
+                search: CompositionSourceSearch(
+                  index: "foo",
+                ),
+              ),
+            ),
+            injectedItems: [
+              InjectedItem(
+                key: "injectedItem1",
+                source: SearchSource(
+                  search: Search(
+                    index: "foo",
+                    params: BaseInjectionQueryParameters(
+                      filters: "brand:adidas",
+                    ),
+                  ),
+                ),
+                position: 2,
+                length: 1,
+                metadata: InjectedItemMetadata(
+                  hits: InjectedItemHitsMetadata(
+                    addItemKey: true,
+                    extra: {
+                      'my-string': "string",
+                      'my-bool': true,
+                      'my-number': 42,
+                      'my-object': {
+                        'sub-key': 'sub-value',
+                      },
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the putCompositionRule method.
+//
+// putCompositionRule
+void snippetForputCompositionRule2() async {
+  // >SEPARATOR putCompositionRule putCompositionRule
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.putCompositionRule(
+    compositionID: "compositionID",
+    objectID: "rule-with-exernal-source",
+    compositionRule: CompositionRule(
+      objectID: "rule-with-exernal-source",
+      description: "my description",
+      tags: [
+        "tag1",
+        "tag2",
+      ],
+      enabled: true,
+      validity: [
+        TimeRange(
+          from: 1704063600,
+          until: 1704083600,
+        ),
+      ],
+      conditions: [
+        Condition(
+          anchoring: Anchoring.fromJson("contains"),
+          pattern: "harry",
+        ),
+        Condition(
+          anchoring: Anchoring.fromJson("contains"),
+          pattern: "potter",
+        ),
+      ],
+      consequence: CompositionRuleConsequence(
+        behavior: CompositionBehavior(
+          injection: Injection(
+            main: Main(
+              source: CompositionSource(
+                search: CompositionSourceSearch(
+                  index: "my-index",
+                  params: MainInjectionQueryParameters(
+                    filters: "brand:adidas",
+                  ),
+                ),
+              ),
+            ),
+            injectedItems: [
+              InjectedItem(
+                key: "injectedItem",
+                source: ExternalSource(
+                  external_: External(
+                    index: "my-index",
+                    params: BaseInjectionQueryParameters(
+                      filters: "brand:adidas",
+                    ),
+                    ordering: ExternalOrdering.fromJson("userDefined"),
+                  ),
+                ),
+                position: 0,
+                length: 3,
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRules method.
+//
+// saveRules
+void snippetForsaveRules() async {
+  // >SEPARATOR saveRules saveRules
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRules(
+    compositionID: "foo",
+    rules: CompositionRulesBatchParams(
+      requests: [
+        RulesMultipleBatchRequest(
+          action: Action.fromJson("upsert"),
+          body: CompositionRule(
+            objectID: "123",
+            conditions: [
+              Condition(
+                pattern: "a",
+              ),
+            ],
+            consequence: CompositionRuleConsequence(
+              behavior: CompositionBehavior(
+                injection: Injection(
+                  main: Main(
+                    source: CompositionSource(
+                      search: CompositionSourceSearch(
+                        index: "<YOUR_INDEX_NAME>",
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRules method.
+//
+// saveRules
+void snippetForsaveRules1() async {
+  // >SEPARATOR saveRules saveRules
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRules(
+    compositionID: "rule-with-metadata",
+    rules: CompositionRulesBatchParams(
+      requests: [
+        RulesMultipleBatchRequest(
+          action: Action.fromJson("upsert"),
+          body: CompositionRule(
+            objectID: "rule-with-metadata",
+            conditions: [
+              Condition(
+                anchoring: Anchoring.fromJson("is"),
+                pattern: "test",
+              ),
+            ],
+            consequence: CompositionRuleConsequence(
+              behavior: CompositionBehavior(
+                injection: Injection(
+                  main: Main(
+                    source: CompositionSource(
+                      search: CompositionSourceSearch(
+                        index: "foo",
+                      ),
+                    ),
+                  ),
+                  injectedItems: [
+                    InjectedItem(
+                      key: "injectedItem1",
+                      source: SearchSource(
+                        search: Search(
+                          index: "foo",
+                          params: BaseInjectionQueryParameters(
+                            filters: "brand:adidas",
+                          ),
+                        ),
+                      ),
+                      position: 2,
+                      length: 1,
+                      metadata: InjectedItemMetadata(
+                        hits: InjectedItemHitsMetadata(
+                          addItemKey: true,
+                          extra: {
+                            'my-string': "string",
+                            'my-bool': true,
+                            'my-number': 42,
+                            'my-object': {
+                              'sub-key': 'sub-value',
+                            },
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRules method.
+//
+// saveRules
+void snippetForsaveRules2() async {
+  // >SEPARATOR saveRules saveRules
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRules(
+    compositionID: "rule-with-exernal-source",
+    rules: CompositionRulesBatchParams(
+      requests: [
+        RulesMultipleBatchRequest(
+          action: Action.fromJson("upsert"),
+          body: CompositionRule(
+            objectID: "rule-with-exernal-source",
+            description: "my description",
+            tags: [
+              "tag1",
+              "tag2",
+            ],
+            enabled: true,
+            validity: [
+              TimeRange(
+                from: 1704063600,
+                until: 1704083600,
+              ),
+            ],
+            conditions: [
+              Condition(
+                anchoring: Anchoring.fromJson("contains"),
+                pattern: "harry",
+              ),
+              Condition(
+                anchoring: Anchoring.fromJson("contains"),
+                pattern: "potter",
+              ),
+            ],
+            consequence: CompositionRuleConsequence(
+              behavior: CompositionBehavior(
+                injection: Injection(
+                  main: Main(
+                    source: CompositionSource(
+                      search: CompositionSourceSearch(
+                        index: "my-index",
+                        params: MainInjectionQueryParameters(
+                          filters: "brand:adidas",
+                        ),
+                      ),
+                    ),
+                  ),
+                  injectedItems: [
+                    InjectedItem(
+                      key: "injectedItem",
+                      source: ExternalSource(
+                        external_: External(
+                          index: "my-index",
+                          params: BaseInjectionQueryParameters(
+                            filters: "brand:adidas",
+                          ),
+                          ordering: ExternalOrdering.fromJson("userDefined"),
+                        ),
+                      ),
+                      position: 0,
+                      length: 3,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the search method.
 //
 // search
 void snippetForsearch() async {
-  // >SEPARATOR search default
+  // >SEPARATOR search search
   // Initialize the client
   final client = CompositionClient(
       appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -19,6 +1354,68 @@ void snippetForsearch() async {
       params: Params(
         query: "batman",
       ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search
+void snippetForsearch1() async {
+  // >SEPARATOR search search
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    compositionID: "foo",
+    requestBody: RequestBody(
+      params: Params(
+        query: "batman",
+        injectedItems: {
+          'injectedItem1': ExternalInjectedItem(
+            items: [
+              ExternalInjection(
+                objectID: "my-object-1",
+              ),
+              ExternalInjection(
+                objectID: "my-object-2",
+                metadata: {
+                  'my-string': "string",
+                  'my-bool': true,
+                  'my-number': 42,
+                  'my-object': {
+                    'sub-key': 'sub-value',
+                  },
+                },
+              ),
+            ],
+          ),
+        },
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the searchCompositionRules method.
+//
+// searchCompositionRules
+void snippetForsearchCompositionRules() async {
+  // >SEPARATOR searchCompositionRules default
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchCompositionRules(
+    compositionID: "foo",
+    searchCompositionRulesParams: SearchCompositionRulesParams(
+      query: "batman",
     ),
   );
   // >LOG
@@ -43,6 +1440,23 @@ void snippetForsearchForFacetValues() async {
         maxFacetHits: 10,
       ),
     ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the setClientApiKey method.
+//
+// switch API key
+void snippetForsetClientApiKey() async {
+  // >SEPARATOR setClientApiKey default
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  client.setClientApiKey(
+    apiKey: "updated-api-key",
   );
   // >LOG
   // SEPARATOR<
