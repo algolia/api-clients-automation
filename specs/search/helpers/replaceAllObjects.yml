@@ -3,6 +3,17 @@ method:
     x-helper: true
     tags:
       - Records
+    x-available-languages:
+      - csharp
+      - go
+      - java
+      - javascript
+      - kotlin
+      - php
+      - python
+      - ruby
+      - scala
+      - swift
     operationId: replaceAllObjects
     summary: Replace all records in an index
     description: |

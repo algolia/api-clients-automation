@@ -3,6 +3,17 @@ method:
     x-helper: true
     tags:
       - Records
+    x-available-languages:
+      - csharp
+      - go
+      - java
+      - javascript
+      - kotlin
+      - php
+      - python
+      - ruby
+      - scala
+      - swift
     operationId: partialUpdateObjects
     summary: Replaces object content of all the given objects according to their respective `objectID` field
     description: |

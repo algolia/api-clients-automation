@@ -38,10 +38,7 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
       await run('dotnet build --configuration Release', { cwd, language });
       break;
     case 'dart':
-      if (buildType !== 'snippets') {
-        // fix the snippets at some point
-        await run('dart pub get && dart analyze', { cwd, language });
-      }
+      await run('dart pub get && dart analyze', { cwd, language });
       break;
     case 'go':
       await run('go build -o /dev/null ./...', { cwd, language });

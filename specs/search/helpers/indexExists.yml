@@ -3,6 +3,17 @@ method:
     x-helper: true
     tags:
       - Index
+    x-available-languages:
+      - csharp
+      - go
+      - java
+      - javascript
+      - kotlin
+      - php
+      - python
+      - ruby
+      - scala
+      - swift
     operationId: indexExists
     summary: Check if an index exists or not
     description: |
