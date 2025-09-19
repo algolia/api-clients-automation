@@ -4,11 +4,1282 @@ require "algolia"
 
 # IMPORT<
 
+# Snippet for the customDelete method.
+#
+# allow del method for a custom path with minimal parameters
+def snippet_for_custom_delete
+  # >SEPARATOR customDelete allow del method for a custom path with minimal parameters
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.custom_delete("test/minimal")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customDelete method.
+#
+# allow del method for a custom path with all parameters
+def snippet_for_custom_delete1
+  # >SEPARATOR customDelete allow del method for a custom path with all parameters
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.custom_delete("test/all", {query: "parameters"})
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customGet method.
+#
+# allow get method for a custom path with minimal parameters
+def snippet_for_custom_get
+  # >SEPARATOR customGet allow get method for a custom path with minimal parameters
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.custom_get("test/minimal")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customGet method.
+#
+# allow get method for a custom path with all parameters
+def snippet_for_custom_get1
+  # >SEPARATOR customGet allow get method for a custom path with all parameters
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.custom_get("test/all", {query: "parameters with space"})
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customGet method.
+#
+# requestOptions should be escaped too
+def snippet_for_custom_get2
+  # >SEPARATOR customGet requestOptions should be escaped too
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.custom_get(
+    "test/all",
+    {query: "to be overriden"},
+    {
+      :header_params => {"x-header-1" => "spaces are left alone"},
+      :query_params => JSON.parse(
+        "{\"query\":\"parameters with space\",\"and an array\":[\"array\",\"with spaces\"]}",
+        :symbolize_names => true
+      )
+    }
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# allow post method for a custom path with minimal parameters
+def snippet_for_custom_post
+  # >SEPARATOR customPost allow post method for a custom path with minimal parameters
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.custom_post("test/minimal")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# allow post method for a custom path with all parameters
+def snippet_for_custom_post1
+  # >SEPARATOR customPost allow post method for a custom path with all parameters
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.custom_post("test/all", {query: "parameters"}, {body: "parameters"})
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions can override default query parameters
+def snippet_for_custom_post2
+  # >SEPARATOR customPost requestOptions can override default query parameters
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:query_params => JSON.parse("{\"query\":\"myQueryParameter\"}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions merges query parameters with default ones
+def snippet_for_custom_post3
+  # >SEPARATOR customPost requestOptions merges query parameters with default ones
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:query_params => JSON.parse("{\"query2\":\"myQueryParameter\"}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions can override default headers
+def snippet_for_custom_post4
+  # >SEPARATOR customPost requestOptions can override default headers
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:header_params => {"x-algolia-api-key" => "ALGOLIA_API_KEY"}}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions merges headers with default ones
+def snippet_for_custom_post5
+  # >SEPARATOR customPost requestOptions merges headers with default ones
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:header_params => {"x-algolia-api-key" => "ALGOLIA_API_KEY"}}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions queryParameters accepts booleans
+def snippet_for_custom_post6
+  # >SEPARATOR customPost requestOptions queryParameters accepts booleans
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:query_params => JSON.parse("{\"isItWorking\":true}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions queryParameters accepts integers
+def snippet_for_custom_post7
+  # >SEPARATOR customPost requestOptions queryParameters accepts integers
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:query_params => JSON.parse("{\"myParam\":2}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions queryParameters accepts list of string
+def snippet_for_custom_post8
+  # >SEPARATOR customPost requestOptions queryParameters accepts list of string
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:query_params => JSON.parse("{\"myParam\":[\"b and c\",\"d\"]}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions queryParameters accepts list of booleans
+def snippet_for_custom_post9
+  # >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:query_params => JSON.parse("{\"myParam\":[true,true,false]}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPost method.
+#
+# requestOptions queryParameters accepts list of integers
+def snippet_for_custom_post10
+  # >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.custom_post(
+    "test/requestOptions",
+    {query: "parameters"},
+    {facet: "filters"},
+    {:query_params => JSON.parse("{\"myParam\":[1,2]}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPut method.
+#
+# allow put method for a custom path with minimal parameters
+def snippet_for_custom_put
+  # >SEPARATOR customPut allow put method for a custom path with minimal parameters
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.custom_put("test/minimal")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the customPut method.
+#
+# allow put method for a custom path with all parameters
+def snippet_for_custom_put1
+  # >SEPARATOR customPut allow put method for a custom path with all parameters
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.custom_put("test/all", {query: "parameters"}, {body: "parameters"})
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the deleteComposition method.
+#
+# deleteComposition
+def snippet_for_delete_composition
+  # >SEPARATOR deleteComposition default
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.delete_composition("1234")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the deleteCompositionRule method.
+#
+# deleteCompositionRule
+def snippet_for_delete_composition_rule
+  # >SEPARATOR deleteCompositionRule default
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.delete_composition_rule("1234", "5678")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the getComposition method.
+#
+# getComposition
+def snippet_for_get_composition
+  # >SEPARATOR getComposition default
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.get_composition("foo")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the getRule method.
+#
+# getRule
+def snippet_for_get_rule
+  # >SEPARATOR getRule default
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.get_rule("foo", "123")
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the getTask method.
+#
+# getTask
+def snippet_for_get_task
+  # >SEPARATOR getTask default
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.get_task("foo", 42)
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the listCompositions method.
+#
+# listCompositions
+def snippet_for_list_compositions
+  # >SEPARATOR listCompositions listCompositions
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.list_compositions
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the listCompositions method.
+#
+# listCompositions
+def snippet_for_list_compositions1
+  # >SEPARATOR listCompositions listCompositions
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.list_compositions
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the multipleBatch method.
+#
+# multipleBatch
+def snippet_for_multiple_batch
+  # >SEPARATOR multipleBatch multipleBatch
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.multiple_batch(
+    Algolia::Composition::BatchParams.new(
+      requests: [
+        Algolia::Composition::MultipleBatchRequest.new(
+          action: "upsert",
+          body: Algolia::Composition::Composition.new(
+            algolia_object_id: "foo",
+            name: "my first composition",
+            behavior: Algolia::Composition::CompositionBehavior.new(
+              injection: Algolia::Composition::Injection.new(
+                main: Algolia::Composition::Main.new(
+                  source: Algolia::Composition::CompositionSource.new(
+                    search: Algolia::Composition::CompositionSourceSearch.new(index: "bar")
+                  )
+                )
+              )
+            )
+          )
+        ),
+        Algolia::Composition::MultipleBatchRequest.new(
+          action: "delete",
+          body: Algolia::Composition::DeleteCompositionAction.new(algolia_object_id: "baz")
+        )
+      ]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the multipleBatch method.
+#
+# multipleBatch
+def snippet_for_multiple_batch1
+  # >SEPARATOR multipleBatch multipleBatch
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.multiple_batch(
+    Algolia::Composition::BatchParams.new(
+      requests: [
+        Algolia::Composition::MultipleBatchRequest.new(
+          action: "upsert",
+          body: Algolia::Composition::Composition.new(
+            algolia_object_id: "my-external-injection-compo",
+            name: "my first composition",
+            behavior: Algolia::Composition::CompositionBehavior.new(
+              injection: Algolia::Composition::Injection.new(
+                main: Algolia::Composition::Main.new(
+                  source: Algolia::Composition::CompositionSource.new(
+                    search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
+                  )
+                ),
+                injected_items: [
+                  Algolia::Composition::InjectedItem.new(
+                    key: "injectedItem1",
+                    source: Algolia::Composition::ExternalSource.new(
+                      external: Algolia::Composition::External.new(
+                        index: "foo",
+                        ordering: "userDefined",
+                        params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas")
+                      )
+                    ),
+                    position: 2,
+                    length: 1
+                  )
+                ]
+              )
+            )
+          )
+        )
+      ]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the multipleBatch method.
+#
+# multipleBatch
+def snippet_for_multiple_batch2
+  # >SEPARATOR multipleBatch multipleBatch
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.multiple_batch(
+    Algolia::Composition::BatchParams.new(
+      requests: [
+        Algolia::Composition::MultipleBatchRequest.new(
+          action: "upsert",
+          body: Algolia::Composition::Composition.new(
+            algolia_object_id: "my-metadata-compo",
+            name: "my composition",
+            behavior: Algolia::Composition::CompositionBehavior.new(
+              injection: Algolia::Composition::Injection.new(
+                main: Algolia::Composition::Main.new(
+                  source: Algolia::Composition::CompositionSource.new(
+                    search: Algolia::Composition::CompositionSourceSearch.new(
+                      index: "foo",
+                      params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
+                    )
+                  )
+                ),
+                injected_items: [
+                  Algolia::Composition::InjectedItem.new(
+                    key: "injectedItem1",
+                    source: Algolia::Composition::SearchSource.new(
+                      search: Algolia::Composition::Search.new(
+                        index: "foo",
+                        params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas")
+                      )
+                    ),
+                    position: 2,
+                    length: 1,
+                    metadata: Algolia::Composition::InjectedItemMetadata.new(
+                      hits: Algolia::Composition::InjectedItemHitsMetadata.new(
+                        add_item_key: true,
+                        extra: {
+                          :"my-string" => "string",
+                          :"my-bool" => true,
+                          :"my-number" => 42,
+                          :"my-object" => {:"sub-key" => "sub-value"}
+                        }
+                      )
+                    )
+                  ),
+                  Algolia::Composition::InjectedItem.new(
+                    key: "externalItem",
+                    source: Algolia::Composition::SearchSource.new(
+                      search: Algolia::Composition::Search.new(
+                        index: "foo",
+                        params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:puma")
+                      )
+                    ),
+                    position: 5,
+                    length: 5,
+                    metadata: Algolia::Composition::InjectedItemMetadata.new(
+                      hits: Algolia::Composition::InjectedItemHitsMetadata.new(
+                        add_item_key: true,
+                        extra: {
+                          :"my-string" => "string",
+                          :"my-bool" => true,
+                          :"my-number" => 42,
+                          :"my-object" => {:"sub-key" => "sub-value"}
+                        }
+                      )
+                    )
+                  )
+                ]
+              )
+            )
+          )
+        )
+      ]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the putComposition method.
+#
+# putComposition
+def snippet_for_put_composition
+  # >SEPARATOR putComposition putComposition
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.put_composition(
+    "1234",
+    Algolia::Composition::Composition.new(
+      algolia_object_id: "1234",
+      name: "my first composition",
+      behavior: Algolia::Composition::CompositionBehavior.new(
+        injection: Algolia::Composition::Injection.new(
+          main: Algolia::Composition::Main.new(
+            source: Algolia::Composition::CompositionSource.new(
+              search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
+            )
+          ),
+          injected_items: [
+            Algolia::Composition::InjectedItem.new(
+              key: "injectedItem1",
+              source: Algolia::Composition::SearchSource.new(search: Algolia::Composition::Search.new(index: "foo")),
+              position: 2,
+              length: 1
+            )
+          ]
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the putComposition method.
+#
+# putComposition
+def snippet_for_put_composition1
+  # >SEPARATOR putComposition putComposition
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.put_composition(
+    "my-external-injection-compo",
+    Algolia::Composition::Composition.new(
+      algolia_object_id: "my-external-injection-compo",
+      name: "my first composition",
+      behavior: Algolia::Composition::CompositionBehavior.new(
+        injection: Algolia::Composition::Injection.new(
+          main: Algolia::Composition::Main.new(
+            source: Algolia::Composition::CompositionSource.new(
+              search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
+            )
+          ),
+          injected_items: [
+            Algolia::Composition::InjectedItem.new(
+              key: "injectedItem1",
+              source: Algolia::Composition::ExternalSource.new(
+                external: Algolia::Composition::External.new(
+                  index: "foo",
+                  ordering: "userDefined",
+                  params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas")
+                )
+              ),
+              position: 2,
+              length: 1
+            )
+          ]
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the putComposition method.
+#
+# putComposition
+def snippet_for_put_composition2
+  # >SEPARATOR putComposition putComposition
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.put_composition(
+    "my-metadata-compo",
+    Algolia::Composition::Composition.new(
+      algolia_object_id: "my-metadata-compo",
+      name: "my composition",
+      behavior: Algolia::Composition::CompositionBehavior.new(
+        injection: Algolia::Composition::Injection.new(
+          main: Algolia::Composition::Main.new(
+            source: Algolia::Composition::CompositionSource.new(
+              search: Algolia::Composition::CompositionSourceSearch.new(
+                index: "foo",
+                params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
+              )
+            )
+          ),
+          injected_items: [
+            Algolia::Composition::InjectedItem.new(
+              key: "injectedItem1",
+              source: Algolia::Composition::SearchSource.new(
+                search: Algolia::Composition::Search.new(
+                  index: "foo",
+                  params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas")
+                )
+              ),
+              position: 2,
+              length: 1,
+              metadata: Algolia::Composition::InjectedItemMetadata.new(
+                hits: Algolia::Composition::InjectedItemHitsMetadata.new(
+                  add_item_key: true,
+                  extra: {
+                    :"my-string" => "string",
+                    :"my-bool" => true,
+                    :"my-number" => 42,
+                    :"my-object" => {:"sub-key" => "sub-value"}
+                  }
+                )
+              )
+            ),
+            Algolia::Composition::InjectedItem.new(
+              key: "externalItem",
+              source: Algolia::Composition::SearchSource.new(
+                search: Algolia::Composition::Search.new(
+                  index: "foo",
+                  params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:puma")
+                )
+              ),
+              position: 5,
+              length: 5,
+              metadata: Algolia::Composition::InjectedItemMetadata.new(
+                hits: Algolia::Composition::InjectedItemHitsMetadata.new(
+                  add_item_key: true,
+                  extra: {
+                    :"my-string" => "string",
+                    :"my-bool" => true,
+                    :"my-number" => 42,
+                    :"my-object" => {:"sub-key" => "sub-value"}
+                  }
+                )
+              )
+            )
+          ]
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the putCompositionRule method.
+#
+# putCompositionRule
+def snippet_for_put_composition_rule
+  # >SEPARATOR putCompositionRule putCompositionRule
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.put_composition_rule(
+    "compositionID",
+    "ruleID",
+    Algolia::Composition::CompositionRule.new(
+      algolia_object_id: "ruleID",
+      conditions: [Algolia::Composition::Condition.new(anchoring: "is", pattern: "test")],
+      consequence: Algolia::Composition::CompositionRuleConsequence.new(
+        behavior: Algolia::Composition::CompositionBehavior.new(
+          injection: Algolia::Composition::Injection.new(
+            main: Algolia::Composition::Main.new(
+              source: Algolia::Composition::CompositionSource.new(
+                search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
+              )
+            ),
+            injected_items: [
+              Algolia::Composition::InjectedItem.new(
+                key: "injectedItem1",
+                source: Algolia::Composition::SearchSource.new(search: Algolia::Composition::Search.new(index: "foo")),
+                position: 2,
+                length: 1
+              )
+            ]
+          )
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the putCompositionRule method.
+#
+# putCompositionRule
+def snippet_for_put_composition_rule1
+  # >SEPARATOR putCompositionRule putCompositionRule
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.put_composition_rule(
+    "compositionID",
+    "rule-with-metadata",
+    Algolia::Composition::CompositionRule.new(
+      algolia_object_id: "rule-with-metadata",
+      conditions: [Algolia::Composition::Condition.new(anchoring: "is", pattern: "test")],
+      consequence: Algolia::Composition::CompositionRuleConsequence.new(
+        behavior: Algolia::Composition::CompositionBehavior.new(
+          injection: Algolia::Composition::Injection.new(
+            main: Algolia::Composition::Main.new(
+              source: Algolia::Composition::CompositionSource.new(
+                search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
+              )
+            ),
+            injected_items: [
+              Algolia::Composition::InjectedItem.new(
+                key: "injectedItem1",
+                source: Algolia::Composition::SearchSource.new(
+                  search: Algolia::Composition::Search.new(
+                    index: "foo",
+                    params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas")
+                  )
+                ),
+                position: 2,
+                length: 1,
+                metadata: Algolia::Composition::InjectedItemMetadata.new(
+                  hits: Algolia::Composition::InjectedItemHitsMetadata.new(
+                    add_item_key: true,
+                    extra: {
+                      :"my-string" => "string",
+                      :"my-bool" => true,
+                      :"my-number" => 42,
+                      :"my-object" => {:"sub-key" => "sub-value"}
+                    }
+                  )
+                )
+              )
+            ]
+          )
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the putCompositionRule method.
+#
+# putCompositionRule
+def snippet_for_put_composition_rule2
+  # >SEPARATOR putCompositionRule putCompositionRule
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.put_composition_rule(
+    "compositionID",
+    "rule-with-exernal-source",
+    Algolia::Composition::CompositionRule.new(
+      algolia_object_id: "rule-with-exernal-source",
+      description: "my description",
+      tags: ["tag1", "tag2"],
+      enabled: true,
+      validity: [Algolia::Composition::TimeRange.new(from: 1704063600, _until: 1704083600)],
+      conditions: [
+        Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry"),
+        Algolia::Composition::Condition.new(anchoring: "contains", pattern: "potter")
+      ],
+      consequence: Algolia::Composition::CompositionRuleConsequence.new(
+        behavior: Algolia::Composition::CompositionBehavior.new(
+          injection: Algolia::Composition::Injection.new(
+            main: Algolia::Composition::Main.new(
+              source: Algolia::Composition::CompositionSource.new(
+                search: Algolia::Composition::CompositionSourceSearch.new(
+                  index: "my-index",
+                  params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
+                )
+              )
+            ),
+            injected_items: [
+              Algolia::Composition::InjectedItem.new(
+                key: "injectedItem",
+                source: Algolia::Composition::ExternalSource.new(
+                  external: Algolia::Composition::External.new(
+                    index: "my-index",
+                    params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas"),
+                    ordering: "userDefined"
+                  )
+                ),
+                position: 0,
+                length: 3
+              )
+            ]
+          )
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRules method.
+#
+# saveRules
+def snippet_for_save_rules
+  # >SEPARATOR saveRules saveRules
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rules(
+    "foo",
+    Algolia::Composition::CompositionRulesBatchParams.new(
+      requests: [
+        Algolia::Composition::RulesMultipleBatchRequest.new(
+          action: "upsert",
+          body: Algolia::Composition::CompositionRule.new(
+            algolia_object_id: "123",
+            conditions: [Algolia::Composition::Condition.new(pattern: "a")],
+            consequence: Algolia::Composition::CompositionRuleConsequence.new(
+              behavior: Algolia::Composition::CompositionBehavior.new(
+                injection: Algolia::Composition::Injection.new(
+                  main: Algolia::Composition::Main.new(
+                    source: Algolia::Composition::CompositionSource.new(
+                      search: Algolia::Composition::CompositionSourceSearch.new(index: "<YOUR_INDEX_NAME>")
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRules method.
+#
+# saveRules
+def snippet_for_save_rules1
+  # >SEPARATOR saveRules saveRules
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rules(
+    "rule-with-metadata",
+    Algolia::Composition::CompositionRulesBatchParams.new(
+      requests: [
+        Algolia::Composition::RulesMultipleBatchRequest.new(
+          action: "upsert",
+          body: Algolia::Composition::CompositionRule.new(
+            algolia_object_id: "rule-with-metadata",
+            conditions: [Algolia::Composition::Condition.new(anchoring: "is", pattern: "test")],
+            consequence: Algolia::Composition::CompositionRuleConsequence.new(
+              behavior: Algolia::Composition::CompositionBehavior.new(
+                injection: Algolia::Composition::Injection.new(
+                  main: Algolia::Composition::Main.new(
+                    source: Algolia::Composition::CompositionSource.new(
+                      search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
+                    )
+                  ),
+                  injected_items: [
+                    Algolia::Composition::InjectedItem.new(
+                      key: "injectedItem1",
+                      source: Algolia::Composition::SearchSource.new(
+                        search: Algolia::Composition::Search.new(
+                          index: "foo",
+                          params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas")
+                        )
+                      ),
+                      position: 2,
+                      length: 1,
+                      metadata: Algolia::Composition::InjectedItemMetadata.new(
+                        hits: Algolia::Composition::InjectedItemHitsMetadata.new(
+                          add_item_key: true,
+                          extra: {
+                            :"my-string" => "string",
+                            :"my-bool" => true,
+                            :"my-number" => 42,
+                            :"my-object" => {:"sub-key" => "sub-value"}
+                          }
+                        )
+                      )
+                    )
+                  ]
+                )
+              )
+            )
+          )
+        )
+      ]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRules method.
+#
+# saveRules
+def snippet_for_save_rules2
+  # >SEPARATOR saveRules saveRules
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rules(
+    "rule-with-exernal-source",
+    Algolia::Composition::CompositionRulesBatchParams.new(
+      requests: [
+        Algolia::Composition::RulesMultipleBatchRequest.new(
+          action: "upsert",
+          body: Algolia::Composition::CompositionRule.new(
+            algolia_object_id: "rule-with-exernal-source",
+            description: "my description",
+            tags: ["tag1", "tag2"],
+            enabled: true,
+            validity: [Algolia::Composition::TimeRange.new(from: 1704063600, _until: 1704083600)],
+            conditions: [
+              Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry"),
+              Algolia::Composition::Condition.new(anchoring: "contains", pattern: "potter")
+            ],
+            consequence: Algolia::Composition::CompositionRuleConsequence.new(
+              behavior: Algolia::Composition::CompositionBehavior.new(
+                injection: Algolia::Composition::Injection.new(
+                  main: Algolia::Composition::Main.new(
+                    source: Algolia::Composition::CompositionSource.new(
+                      search: Algolia::Composition::CompositionSourceSearch.new(
+                        index: "my-index",
+                        params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
+                      )
+                    )
+                  ),
+                  injected_items: [
+                    Algolia::Composition::InjectedItem.new(
+                      key: "injectedItem",
+                      source: Algolia::Composition::ExternalSource.new(
+                        external: Algolia::Composition::External.new(
+                          index: "my-index",
+                          params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas"),
+                          ordering: "userDefined"
+                        )
+                      ),
+                      position: 0,
+                      length: 3
+                    )
+                  ]
+                )
+              )
+            )
+          )
+        )
+      ]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the search method.
 #
 # search
 def snippet_for_search
-  # >SEPARATOR search default
+  # >SEPARATOR search search
   # Initialize the client
   client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
@@ -16,6 +1287,72 @@ def snippet_for_search
   response = client.search(
     "foo",
     Algolia::Composition::RequestBody.new(params: Algolia::Composition::Params.new(query: "batman"))
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the search method.
+#
+# search
+def snippet_for_search1
+  # >SEPARATOR search search
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search(
+    "foo",
+    Algolia::Composition::RequestBody.new(
+      params: Algolia::Composition::Params.new(
+        query: "batman",
+        injected_items: {
+          injectedItem1: Algolia::Composition::ExternalInjectedItem.new(
+            items: [
+              Algolia::Composition::ExternalInjection.new(algolia_object_id: "my-object-1"),
+              Algolia::Composition::ExternalInjection.new(
+                algolia_object_id: "my-object-2",
+                metadata: {
+                  :"my-string" => "string",
+                  :"my-bool" => true,
+                  :"my-number" => 42,
+                  :"my-object" => {:"sub-key" => "sub-value"}
+                }
+              )
+            ]
+          )
+        }
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the searchCompositionRules method.
+#
+# searchCompositionRules
+def snippet_for_search_composition_rules
+  # >SEPARATOR searchCompositionRules default
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_composition_rules(
+    "foo",
+    Algolia::Composition::SearchCompositionRulesParams.new(query: "batman")
   )
 
   # >LOG
@@ -50,5 +1387,19 @@ def snippet_for_search_for_facet_values
 
   # print the JSON response
   puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the setClientApiKey method.
+#
+# switch API key
+def snippet_for_set_client_api_key
+  # >SEPARATOR setClientApiKey default
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  client.set_client_api_key("updated-api-key")
+  # >LOG
   # SEPARATOR<
 end

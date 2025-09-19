@@ -12,7 +12,7 @@ class TestClientCompositionClient < Test::Unit::TestCase
 
       {requester: Algolia::Transport::EchoRequester.new}
     )
-    req = client.search_with_http_info("test-composition-id", Algolia::Composition::RequestBody.new)
+    req = client.custom_get_with_http_info("test")
     assert_equal("test-app-id-dsn.algolia.net", req.host.url)
   end
 
@@ -25,8 +25,85 @@ class TestClientCompositionClient < Test::Unit::TestCase
 
       {requester: Algolia::Transport::EchoRequester.new}
     )
-    req = client.search_with_http_info("test-composition-id", Algolia::Composition::RequestBody.new)
-    assert_equal("test-app-id-dsn.algolia.net", req.host.url)
+    req = client.custom_post_with_http_info("test")
+    assert_equal("test-app-id.algolia.net", req.host.url)
+  end
+
+  # test the compression strategy
+  def test_api2
+    client = Algolia::CompositionClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6678,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "compositionClient",
+        compression_type: "gzip"
+      )
+    )
+    req = client.custom_post("1/test/gzip", {}, {message: "this is a compressed body"})
+    assert_equal(
+      {:"message" => "ok compression test server response", :"body" => {:"message" => "this is a compressed body"}},
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
+  end
+
+  # calls api with correct user agent
+  def test_common_api0
+    client = Algolia::CompositionClient.create(
+      "APP_ID",
+      "API_KEY",
+
+      {requester: Algolia::Transport::EchoRequester.new}
+    )
+    req = client.custom_post_with_http_info("1/test")
+    assert(
+      req.headers["user-agent"].match(
+        /^Algolia for Ruby \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Composition (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/
+      )
+    )
+  end
+
+  # the user agent contains the latest version
+  def test_common_api1
+    client = Algolia::CompositionClient.create(
+      "APP_ID",
+      "API_KEY",
+
+      {requester: Algolia::Transport::EchoRequester.new}
+    )
+    req = client.custom_post_with_http_info("1/test")
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.25.0\).*/))
+  end
+
+  # switch API key
+  def test_set_client_api_key0
+    client = Algolia::CompositionClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6683,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "compositionClient"
+      )
+    )
+    req = client.custom_get("check-api-key/1")
+    assert_equal({:"headerAPIKeyValue" => "test-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    client.set_client_api_key("updated-api-key")
+    req = client.custom_get("check-api-key/2")
+    assert_equal({:"headerAPIKeyValue" => "updated-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
 end

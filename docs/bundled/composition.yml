@@ -390,7 +390,27 @@ paths:
 
             response = client.search(
               "foo",
-              Algolia::Composition::RequestBody.new(params: Algolia::Composition::Params.new(query: "batman"))
+              Algolia::Composition::RequestBody.new(
+                params: Algolia::Composition::Params.new(
+                  query: "batman",
+                  injected_items: {
+                    injectedItem1: Algolia::Composition::ExternalInjectedItem.new(
+                      items: [
+                        Algolia::Composition::ExternalInjection.new(algolia_object_id: "my-object-1"),
+                        Algolia::Composition::ExternalInjection.new(
+                          algolia_object_id: "my-object-2",
+                          metadata: {
+                            :"my-string" => "string",
+                            :"my-bool" => true,
+                            :"my-number" => 42,
+                            :"my-object" => {:"sub-key" => "sub-value"}
+                          }
+                        )
+                      ]
+                    )
+                  }
+                )
+              )
             )
 
 
