@@ -3242,6 +3242,17 @@ paths:
       x-helper: true
       tags:
         - search
+      x-available-languages:
+        - csharp
+        - go
+        - java
+        - javascript
+        - kotlin
+        - php
+        - python
+        - ruby
+        - scala
+        - swift
       operationId: waitForApiKey
       summary: Wait for an API key operation
       description: Waits for an API key to be added, updated, or deleted.
@@ -3280,6 +3291,17 @@ paths:
       x-helper: true
       tags:
         - search
+      x-available-languages:
+        - csharp
+        - go
+        - java
+        - javascript
+        - kotlin
+        - php
+        - python
+        - ruby
+        - scala
+        - swift
       operationId: waitForTask
       summary: Wait for operation to complete
       description: >
@@ -3316,6 +3338,17 @@ paths:
   /waitForAppTask:
     get:
       x-helper: true
+      x-available-languages:
+        - csharp
+        - go
+        - java
+        - javascript
+        - kotlin
+        - php
+        - python
+        - ruby
+        - scala
+        - swift
       operationId: waitForAppTask
       summary: Wait for application-level operation to complete
       description: Wait for a application-level task to complete.
@@ -3381,6 +3414,17 @@ paths:
       x-asynchronous-helper: false
       tags:
         - search
+      x-available-languages:
+        - csharp
+        - go
+        - java
+        - javascript
+        - kotlin
+        - php
+        - python
+        - ruby
+        - scala
+        - swift
       operationId: generateSecuredApiKey
       summary: Create secured API keys
       description: >
@@ -3504,6 +3548,17 @@ paths:
       x-helper: true
       tags:
         - search
+      x-available-languages:
+        - csharp
+        - go
+        - java
+        - javascript
+        - kotlin
+        - php
+        - python
+        - ruby
+        - scala
+        - swift
       operationId: replaceAllObjects
       summary: Replace all records in an index
       description: >
@@ -3730,6 +3785,17 @@ paths:
       x-helper: true
       tags:
         - search
+      x-available-languages:
+        - csharp
+        - go
+        - java
+        - javascript
+        - kotlin
+        - php
+        - python
+        - ruby
+        - scala
+        - swift
       operationId: saveObjects
       summary: Saves the given array of objects in the given index
       description: >
@@ -3866,6 +3932,17 @@ paths:
       x-helper: true
       tags:
         - search
+      x-available-languages:
+        - csharp
+        - go
+        - java
+        - javascript
+        - kotlin
+        - php
+        - python
+        - ruby
+        - scala
+        - swift
       operationId: deleteObjects
       summary: Deletes every records for the given objectIDs
       description: >
@@ -3926,6 +4003,17 @@ paths:
       x-helper: true
       tags:
         - search
+      x-available-languages:
+        - csharp
+        - go
+        - java
+        - javascript
+        - kotlin
+        - php
+        - python
+        - ruby
+        - scala
+        - swift
       operationId: partialUpdateObjects
       summary: >-
         Replaces object content of all the given objects according to their
@@ -4083,6 +4171,17 @@ paths:
       x-helper: true
       tags:
         - search
+      x-available-languages:
+        - csharp
+        - go
+        - java
+        - javascript
+        - kotlin
+        - php
+        - python
+        - ruby
+        - scala
+        - swift
       operationId: indexExists
       summary: Check if an index exists or not
       description: >
