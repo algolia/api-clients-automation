@@ -51,8 +51,8 @@
   "dependencies": {
     "@algolia/client-common": "5.37.0",
     "@algolia/requester-browser-xhr": "5.37.0",
-    "@algolia/requester-fetch": "5.37.0",
-    "@algolia/requester-node-http": "5.37.0"
+    "@algolia/requester-node-http": "5.37.0",
+    "@algolia/requester-fetch": "5.37.0"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",

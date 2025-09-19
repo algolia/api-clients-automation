@@ -147,6 +147,21 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "widgets"
   );
 
+  private static final List<String> reservedModelNamesForComposition = List.of(
+    "batchparams",
+    "facethits",
+    "gettaskresponse",
+    "hit",
+    "main",
+    "multiplebatchrequest",
+    "multiplebatchresponse",
+    "searchforfacetvaluesrequest",
+    "searchforfacetvaluesresponse",
+    "searchhits",
+    "searchresponse",
+    "searchsource"
+  );
+
   // This is used for the CTS generation
   private static final AlgoliaSwiftGenerator INSTANCE = new AlgoliaSwiftGenerator();
 
@@ -161,7 +176,10 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
   }
 
   public static Boolean isReservedModelName(String name, String client) {
-    return client.equalsIgnoreCase("composition") || reservedModelNames.contains(name.toLowerCase());
+    return (
+      reservedModelNames.contains(name.toLowerCase()) ||
+      (client.equalsIgnoreCase("composition") && reservedModelNamesForComposition.contains(name.toLowerCase()))
+    );
   }
 
   public static String prefixReservedModelName(String name, String client) {

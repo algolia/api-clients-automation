@@ -12,7 +12,6 @@
     "@algolia/client-abtesting": "link:../../../clients/algoliasearch-client-javascript/packages/client-abtesting",
     "@algolia/client-analytics": "link:../../../clients/algoliasearch-client-javascript/packages/client-analytics",
     "@algolia/client-common": "link:../../../clients/algoliasearch-client-javascript/packages/client-common",
-    "@algolia/client-composition": "link:../../../clients/algoliasearch-client-javascript/packages/client-composition",
     "@algolia/client-insights": "link:../../../clients/algoliasearch-client-javascript/packages/client-insights",
     "@algolia/client-personalization": "link:../../../clients/algoliasearch-client-javascript/packages/client-personalization",
     "@algolia/client-query-suggestions": "link:../../../clients/algoliasearch-client-javascript/packages/client-query-suggestions",

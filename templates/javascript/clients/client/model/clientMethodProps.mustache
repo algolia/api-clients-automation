@@ -218,7 +218,7 @@ export type AccountCopyIndexOptions = {
 };
 {{/isAlgoliasearchClient}}
 {{/isSearchClient}}
-{{#isCompositionFullClient}}
+{{#isCompositionClient}}
 export type WaitForCompositionTaskOptions = {
   /**
    * The maximum number of retries. 50 by default.
@@ -240,7 +240,7 @@ export type WaitForCompositionTaskOptions = {
    */
   compositionID: string;
 };
-{{/isCompositionFullClient}}
+{{/isCompositionClient}}
 {{#isIngestionClient}}
 export type ChunkedPushOptions = {
   /**

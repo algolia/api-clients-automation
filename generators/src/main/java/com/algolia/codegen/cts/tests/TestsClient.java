@@ -114,11 +114,6 @@ public class TestsClient extends TestsGenerator {
             } else if (step.type.equals("method")) {
               ope = operations.get(step.method);
               if (ope == null) {
-                // some clients don't have custom methods
-                if (step.method.startsWith("custom") && client.equals("composition")) {
-                  continue skipTest;
-                }
-
                 throw new CTSException("Cannot find operation for method: " + step.method, test.testName);
               }
 

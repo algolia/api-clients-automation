@@ -27,6 +27,10 @@ public class RubyIdentifierLambda implements Mustache.Lambda {
       text = Helpers.toSnakeCase(text);
     }
 
+    if (text.contains("-")) {
+      text = "'" + text + "'";
+    }
+
     return text;
   }
 

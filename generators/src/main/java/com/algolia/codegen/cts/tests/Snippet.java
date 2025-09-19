@@ -16,6 +16,7 @@ public class Snippet {
   public String method;
   public Map<String, Object> parameters;
   public RequestOptions requestOptions;
+  public List<String> skipLanguages;
 
   public Snippet(String method, String testName, Map<String, Object> parameters, RequestOptions requestOptions) {
     this.method = method;

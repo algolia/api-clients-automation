@@ -52,16 +52,10 @@ info:
 
     ## Parameters
 
-    Parameters are passed as query parameters for GET and DELETE requests,
-    and in the request body for POST and PUT requests.
-
+    Parameters are passed in the request body for POST and PUT requests.
     Query parameters must be [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).
     Non-ASCII characters must be UTF-8 encoded.
     Plus characters (`+`) are interpreted as spaces.
-    Arrays as query parameters must be one of:
-
-    - A comma-separated string: `attributesToRetrieve=title,description`
-    - A URL-encoded JSON array: `attributesToRetrieve=%5B%22title%22,%22description%22%D`
 
     ## Response status and errors
 
@@ -107,23 +101,67 @@ security:
   - appId: []
     apiKey: []
 tags:
+  - name: Advanced
+    description: Advanced endpoints to manage tasks.
+  - name: Composition Rules
+    description: Manage your compositions rules.
   - name: Compositions
-    description: |
-      Manage your compositions and composition settings.
-  - name: Rules
-    description: |
-      Manage your compositions rules.
+    description: Manage your compositions and composition settings.
   - name: Search
-    description: Search one composition for matching records or facet values.
+    description: Search one or more indices for matching records or facet values.
 x-tagGroups:
-  - name: Compositions
+  - name: Composition
     tags:
       - Search
+      - Compositions
+      - Composition Rules
+      - Advanced
 paths:
+  # ######################
+  # ### Custom request ###
+  # ######################
+  /{path}:
+    $ref: '../common/paths/customRequest.yml'
+
   # ########################
   # ### Search Endpoints ###
   # ########################
   /1/compositions/{compositionID}/run:
-    $ref: '../composition-full/paths/search/search.yml'
+    $ref: 'paths/search/search.yml'
   /1/compositions/{compositionID}/facets/{facetName}/query:
-    $ref: '../composition-full/paths/search/searchForFacetValues.yml'
+    $ref: 'paths/search/searchForFacetValues.yml'
+
+  # #####################################
+  # ### Manage Compositions Endpoints ###
+  # #####################################
+  /1/compositions:
+    $ref: 'paths/compositions/list.yml'
+  /1/compositions/{compositionID}:
+    $ref: 'paths/compositions/composition.yml'
+  /1/compositions/*/batch:
+    $ref: 'paths/compositions/batch.yml'
+
+  # ##########################################
+  # ### Manage Composition Rules Endpoints ###
+  # ##########################################
+  /1/compositions/{compositionID}/rules/{objectID}:
+    $ref: 'paths/rules/rule.yml'
+  /1/compositions/{compositionID}/rules/batch:
+    $ref: 'paths/rules/saveRules.yml'
+  /1/compositions/{compositionID}/rules/search:
+    $ref: 'paths/rules/searchRules.yml'
+
+  # ##########################
+  # ### Advanced Endpoints ###
+  # ##########################
+  /1/compositions/{compositionID}/task/{taskID}:
+    $ref: 'paths/advanced/getTask.yml'
+
+  # ###############
+  # ### Helpers ###
+  # ###############
+  /setClientApiKey:
+    $ref: '../common/helpers/setClientApiKey.yml#/method'
+
+  /waitForCompositionTask:
+    $ref: 'helpers/waitForCompositionTask.yml#/method'

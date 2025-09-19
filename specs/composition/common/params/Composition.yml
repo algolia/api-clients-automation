@@ -1,0 +1,84 @@
+# ######################
+# ### Category Rules ###
+# ######################
+
+enableRules:
+  type: boolean
+  description: Whether to enable composition rules.
+  default: true
+  x-categories:
+    - Composition Rules
+
+ruleContexts:
+  type: array
+  items:
+    type: string
+  description: |
+    Assigns a rule context to the run query
+    [Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context) are strings that you can use to trigger matching rules.
+  default: []
+  example: [mobile]
+  x-categories:
+    - Composition Rules
+
+# ####################
+# ### Category RMN ###
+# ####################
+
+injectedItems:
+  type: object
+  additionalProperties:
+    $ref: '#/externalInjectedItem'
+  description: |
+    A list of extenrally injected objectID groups into from an external source.
+  default: {}
+  x-categories:
+    - Retail Media Network
+
+externalInjectedItem:
+  type: object
+  properties:
+    items:
+      type: array
+      items:
+        title: externalInjection
+        type: object
+        additionalProperties: false
+        properties:
+          objectID:
+            type: string
+            description: An objectID injected into an external source.
+          metadata:
+            type: object
+            additionalProperties: true
+            description: |
+              User-defined key-values that will be added to the injected item in the response.
+              This is identical to Hits metadata defined in Composition or Composition Rule,
+              with the benefit of being set at runtime.
+            example: {'my-field': 'my-value'}
+        required:
+          - objectID
+        example:
+          {'objectID': 'my-object-1', 'metadata': {'my-field': 'my-value'}}
+  required:
+    - items
+
+# #########################
+# ### Category Advanced ###
+# #########################
+
+getRankingInfo:
+  type: boolean
+  description: Whether the run response should include detailed ranking information.
+  default: false
+  x-categories:
+    - Advanced
+
+enableABTest:
+  type: boolean
+  description: |
+    Whether to enable index level A/B testing for this run request.
+    If the composition mixes multiple indices, the A/B test is ignored.
+  default: true
+  x-categories:
+    - Advanced

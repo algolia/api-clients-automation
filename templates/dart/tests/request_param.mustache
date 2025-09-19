@@ -1,5 +1,5 @@
 {{^isAdditionalProperty}}
-{{#lambda.camelcase}}{{{key}}}{{/lambda.camelcase}} : {{> tests/param_value}},
+{{#lambda.identifier}}{{{key}}}{{/lambda.identifier}} : {{> tests/param_value}},
 {{/isAdditionalProperty}}
 {{#isAdditionalProperty}}
 additionalProperties : { '{{{key}}}' : '{{{value}}}' },

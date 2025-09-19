@@ -29,8 +29,8 @@ public struct {{#lambda.client-to-name}}{{{client}}}{{/lambda.client-to-name}}Cl
       readTimeout: TimeInterval = {{#lambda.toSeconds}}{{x-timeouts.server.read}}{{/lambda.toSeconds}},
       logLevel: LogLevel = DefaultConfiguration.default.logLevel,
       defaultHeaders: [String: String]? = DefaultConfiguration.default.defaultHeaders,
-      hosts: [RetryableHost]? = nil{{#isSearchClient}},
-      compression: CompressionAlgorithm = .none{{/isSearchClient}}
+      hosts: [RetryableHost]? = nil,
+      compression: CompressionAlgorithm = .none
   ) throws {
     guard !appID.isEmpty else {
       throw AlgoliaError.invalidCredentials("appId")
@@ -50,7 +50,7 @@ public struct {{#lambda.client-to-name}}{{{client}}}{{/lambda.client-to-name}}Cl
       "X-Algolia-API-Key": apiKey,
       "Content-Type": "application/json"
     ].merging(defaultHeaders ?? [:]) { (_, new) in new }
-    self.compression = {{#isSearchClient}}compression{{/isSearchClient}}{{^isSearchClient}}.none{{/isSearchClient}}
+    self.compression = compression
 
     UserAgentController.append(UserAgent(title: "{{#lambda.client-to-name}}{{client}}{{/lambda.client-to-name}}", version: Version.current.description))
 
