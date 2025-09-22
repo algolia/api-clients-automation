@@ -5823,7 +5823,7 @@ __metadata:
     react-instantsearch: "npm:^7.15.3"
     typescript: "npm:5.9.2"
     typescript-eslint: "npm:8.33.0"
-    vite: "npm:7.1.5"
+    vite: "npm:7.1.7"
   languageName: unknown
   linkType: soft
 
@@ -8911,9 +8911,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:7.1.5":
-  version: 7.1.5
-  resolution: "vite@npm:7.1.5"
+"vite@npm:7.1.7":
+  version: 7.1.7
+  resolution: "vite@npm:7.1.7"
   dependencies:
     esbuild: "npm:^0.25.0"
     fdir: "npm:^6.5.0"
@@ -8962,7 +8962,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10/59edeef7e98757a668b2ad8a1731a5657fa83e22a165a36b7359225ea98a9be39b2f486710c0cf5085edb85daee7c8b6b6b0bd85d0ef32a1aa84aef71aabd0f0
+  checksum: 10/824703387717e1c90fac2e263021bf8ed5cddd5ac14f8c6ee80e54f8351be579869950438accb6daeb1e238f2108fddbadf98ec3cf8b0442f1fd8a25fb0ecab3
   languageName: node
   linkType: hard
 
