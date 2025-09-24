@@ -1,3 +1,9 @@
+## [1.37.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.36.1...1.37.0)
+
+- [ca25c44e2](https://github.com/algolia/api-clients-automation/commit/ca25c44e2) chore(deps): dependencies 2025-09-08 ([#5310](https://github.com/algolia/api-clients-automation/pull/5310)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [323e06d6f](https://github.com/algolia/api-clients-automation/commit/323e06d6f) chore(deps): dependencies 2025-09-15 ([#5341](https://github.com/algolia/api-clients-automation/pull/5341)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [9884be690](https://github.com/algolia/api-clients-automation/commit/9884be690) feat(specs): merge `composition` & `composition-full` ([#5333](https://github.com/algolia/api-clients-automation/pull/5333)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+
 ## [1.36.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.36.0...1.36.1)
 
 - [8f4abf3a1](https://github.com/algolia/api-clients-automation/commit/8f4abf3a1) fix(specs): Cross-reference filerPromotes to relevant guide ([#5279](https://github.com/algolia/api-clients-automation/pull/5279)) by [@gazconroy](https://github.com/gazconroy/)
